@@ -38,7 +38,7 @@ namespace remoting_client
 
 
 
-      typedef ::array_base<unsigned int> Palette;
+      typedef ::array_base<::u32> Palette;
       ::array_base<char> m_pixels;
       ::array_base<char> m_zlibDataReadAndInflate;
       ::memory m_unpackedData;
@@ -111,7 +111,7 @@ namespace remoting_client
       // 5. size of paletteRle: subenc + paletteSzie + data:
       //    1 + paletteSize * pixelSize + rle * width * height = 1 + 128 * 4 + (1 + 1) * 64 * 64 = 8705
       static const size_t MAXIMAL_TILE_SIZE = 20481;
-      static const size_t TILE_LENGTH_SIZE = sizeof(unsigned int);
+      static const size_t TILE_LENGTH_SIZE = sizeof(::u32);
 
       static size_t getMaxSizeOfRectangle(const ::int_rectangle &  rectangleTarget);
    };

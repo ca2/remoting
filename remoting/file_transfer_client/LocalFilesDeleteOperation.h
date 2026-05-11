@@ -52,7 +52,7 @@ namespace remoting
          //protected:
          ::file::path m_pathToTargetRoot;
          ::pointer_array<FileInfo> m_fileinfoaDelete;
-         //unsigned int m_filesCount;
+         //::u32 m_filesCount;
       };
    }
 }

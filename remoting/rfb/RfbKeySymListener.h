@@ -29,7 +29,7 @@ namespace remoting
    class CLASS_DECL_REMOTING RfbKeySymListener
    {
    public:
-      virtual void onRfbKeySymEvent(unsigned int rfbKeySym, bool down) = 0;
+      virtual void onRfbKeySymEvent(::u32 rfbKeySym, bool down) = 0;
    };
 
    //// __RFBKEYSYMLISTENER_H__

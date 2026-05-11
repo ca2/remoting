@@ -44,7 +44,7 @@ namespace remoting_client
     }
 
    
-   bool FullscreenWarningDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool FullscreenWarningDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
         
       if (controlID == ::innate_subsystem::e_control_id_ok) 

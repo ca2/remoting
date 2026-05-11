@@ -298,7 +298,7 @@ namespace remoting_client
    //    UnregisterClass(m_viewerWndClass.lpszClassName, GetModuleHandle(0));
    // }
 
-   // LRESULT CALLBACK remoting_impact::wndProcViewer(HWND hWnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
+   // LRESULT CALLBACK remoting_impact::wndProcViewer(HWND hWnd, ::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam)
    // {
    //    BaseWindow *_this = 0;
    //
@@ -446,7 +446,7 @@ namespace remoting_client
    // }
 
 
-   void remoting_impact::onMainThreadMessage(unsigned int message, ::wparam wparam, ::lparam lparam)
+   void remoting_impact::onMainThreadMessage(::u32 message, ::wparam wparam, ::lparam lparam)
    {
 
       auto _this = this;
@@ -489,7 +489,7 @@ namespace remoting_client
    }
 
 
-   // LRESULT CALLBACK remoting_impact::wndProc(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam)
+   // LRESULT CALLBACK remoting_impact::wndProc(HWND hWnd, ::u32 msg, ::wparam wparam, ::lparam lparam)
    // {
    //    if (msg >= WM_USER || msg == WM_TIMER) {
    //       remoting_impact *_this = reinterpret_cast<remoting_impact *>(GetWindowLongPtr(hWnd, GWLP_USERDATA));

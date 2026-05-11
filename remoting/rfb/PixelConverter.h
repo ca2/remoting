@@ -76,7 +76,7 @@ namespace remoting
 
       void fillHexBitsTable(const ::innate_subsystem::PixelFormat & pixelformatTarget, const ::innate_subsystem::PixelFormat & pixelformatSource);
       void fill32BitsTable(const ::innate_subsystem::PixelFormat & pixelformatTarget, const ::innate_subsystem::PixelFormat & pixelformatSource);
-      unsigned int rotateUint32(unsigned int value) const;
+      ::u32 rotateUint32(::u32 value) const;
 
       enum ConvertMode
       {
@@ -86,10 +86,10 @@ namespace remoting
        };
 
       ConvertMode m_convertMode;
-      ::array_base<unsigned int> m_hexBitsTable;
-      ::array_base<unsigned int> m_redTable;
-      ::array_base<unsigned int> m_grnTable;
-      ::array_base<unsigned int> m_bluTable;
+      ::array_base<::u32> m_hexBitsTable;
+      ::array_base<::u32> m_redTable;
+      ::array_base<::u32> m_grnTable;
+      ::array_base<::u32> m_bluTable;
 
       ::innate_subsystem::PixelFormat m_srcFormat;
       ::innate_subsystem::PixelFormat m_dstFormat;

@@ -47,7 +47,7 @@ namespace  remoting
          FileTransferMessageProcessor();
          ~FileTransferMessageProcessor();
 
-         void processRfbMessage(::DataInputStream * pinput, unsigned int rfbMessage);
+         void processRfbMessage(::DataInputStream * pinput, ::u32 rfbMessage);
       };
    }
 }

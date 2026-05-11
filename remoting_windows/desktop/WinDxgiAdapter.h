@@ -42,7 +42,7 @@ namespace remoting_windows
       // This function try to get output for iOutput from the adapter.
       // Throws the WinDxRecoverableException exception if output not found,
       // and throws WinDxCriticalException on other errors.
-      void getDxgiOutput(unsigned int iOutput, IDXGIOutput **iDxgiOutput);
+      void getDxgiOutput(::u32 iOutput, IDXGIOutput **iDxgiOutput);
 
    private:
       IDXGIAdapter *m_dxgiAdapter;

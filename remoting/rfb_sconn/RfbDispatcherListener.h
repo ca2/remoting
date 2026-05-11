@@ -36,7 +36,7 @@ namespace remoting
    {
    public:
       virtual ~RfbDispatcherListener() {};
-      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input) = 0;
+      virtual void onRequest(::u32 reqCode, ::remoting::RfbInputGate *input) = 0;
    };
 
 

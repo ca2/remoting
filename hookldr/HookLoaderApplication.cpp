@@ -56,12 +56,12 @@ void HookLoaderApplication::registerWindowClass(WNDCLASS *wndClass)
 int HookLoaderApplication::processMessages()
 {
   // m_commandLine - is a target window hwnd by 64-bit text number.
-  unsigned long long targetWinValue = 0;
+  ::u64 targetWinValue = 0;
   HWND targetWinHwnd = 0;
   if (!MainSubsystem().StringParser().parseUInt64(m_commandLine,
                                  &targetWinValue)) {
     throw ::subsystem::Exception("HookLoaderApplication failed: Can't"
-                    " parse the command line to unsigned long long");
+                    " parse the command line to ::u64");
   }
   targetWinHwnd = (HWND)targetWinValue;
 
@@ -81,7 +81,7 @@ int HookLoaderApplication::processMessages()
 }
 
 LRESULT CALLBACK HookLoaderApplication::hookLoaderWndProc(HWND hWnd,
-                                                          unsigned int msg,
+                                                          ::u32 msg,
                                                           ::wparam wparam,
                                                           ::lparam lparam)
 {

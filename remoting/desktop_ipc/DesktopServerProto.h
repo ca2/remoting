@@ -71,8 +71,8 @@ namespace remoting
       virtual void readNewClipboard(::string &newClipboard, BlockingGate *pblockinggate);
       virtual void sendNewPointerPos(const ::int_point pointNewPosition, unsigned char keyFlag, BlockingGate *pblockinggate);
       virtual void readNewPointerPos(::int_point *pointNewPosition, unsigned char *keyFlag, BlockingGate *pblockinggate);
-      virtual void sendKeyEvent(unsigned int keySym, bool down, BlockingGate *pblockinggate);
-      virtual void readKeyEvent(unsigned int *keySym, bool *down, BlockingGate *pblockinggate);
+      virtual void sendKeyEvent(::u32 keySym, bool down, BlockingGate *pblockinggate);
+      virtual void readKeyEvent(::u32 *keySym, bool *down, BlockingGate *pblockinggate);
       virtual void sendUserInfo(const ::scoped_string &desktopName, const ::scoped_string &userName,
                                 BlockingGate *pblockinggate);
       virtual void readUserInfo(::string &desktopName, ::string &userName, BlockingGate *pblockinggate);

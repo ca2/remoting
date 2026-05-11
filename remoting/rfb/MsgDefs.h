@@ -32,27 +32,27 @@ namespace remoting
    class CLASS_DECL_REMOTING ClientMsgDefs
    {
    public:
-      static const unsigned int SET_PIXEL_FORMAT = 0;
-      static const unsigned int FIX_COLOR_MAP_ENTRIES = 1;
-      static const unsigned int SET_ENCODINGS = 2;
-      static const unsigned int FB_UPDATE_REQUEST = 3;
-      static const unsigned int KEYBOARD_EVENT = 4;
-      static const unsigned int POINTER_EVENT = 5;
-      static const unsigned int CLIENT_CUT_TEXT = 6;
-      static const unsigned int CLIENT_CUT_TEXT_UTF8 = 0xFC000200;
-      static const unsigned int ENABLE_CUT_TEXT_UTF8 = 0xFC000201;
-      static const unsigned int ECHO_REQUEST = 0xFC000300;
+      static const ::u32 SET_PIXEL_FORMAT = 0;
+      static const ::u32 FIX_COLOR_MAP_ENTRIES = 1;
+      static const ::u32 SET_ENCODINGS = 2;
+      static const ::u32 FB_UPDATE_REQUEST = 3;
+      static const ::u32 KEYBOARD_EVENT = 4;
+      static const ::u32 POINTER_EVENT = 5;
+      static const ::u32 CLIENT_CUT_TEXT = 6;
+      static const ::u32 CLIENT_CUT_TEXT_UTF8 = 0xFC000200;
+      static const ::u32 ENABLE_CUT_TEXT_UTF8 = 0xFC000201;
+      static const ::u32 ECHO_REQUEST = 0xFC000300;
    };
 
    class CLASS_DECL_REMOTING ServerMsgDefs
    {
    public:
-      static const unsigned int FB_UPDATE = 0;
-      static const unsigned int SET_COLOR_MAP_ENTRIES = 1;
-      static const unsigned int BELL = 2;
-      static const unsigned int SERVER_CUT_TEXT = 3;
-      static const unsigned int SERVER_CUT_TEXT_UTF8 = 0xFC000200;
-      static const unsigned int ECHO_RESPONSE = 0xFC000300;
+      static const ::u32 FB_UPDATE = 0;
+      static const ::u32 SET_COLOR_MAP_ENTRIES = 1;
+      static const ::u32 BELL = 2;
+      static const ::u32 SERVER_CUT_TEXT = 3;
+      static const ::u32 SERVER_CUT_TEXT_UTF8 = 0xFC000200;
+      static const ::u32 ECHO_RESPONSE = 0xFC000300;
    };
 
    class CLASS_DECL_REMOTING Utf8CutTextDefs

@@ -171,7 +171,7 @@ namespace remoting_windows
       m_pclipboard->writeToClipBoard(newClipboard);
    }
 
-   void WindowsUserInput::setKeyboardEvent(unsigned int keySym, bool down)
+   void WindowsUserInput::setKeyboardEvent(::u32 keySym, bool down)
    {
       try
       {

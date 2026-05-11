@@ -50,7 +50,7 @@ namespace remoting_node
        * @param value [out, optional] value will contain output result.
        * @return true if text in textbox is valid.
        */
-      static bool queryValueAsUInt(::innate_subsystem::TextBox *textBox, unsigned int *value);
+      static bool queryValueAsUInt(::innate_subsystem::TextBox *textBox, ::u32 *value);
    private:
       /**
        * Don't allow instanizing of this class, only static methods.

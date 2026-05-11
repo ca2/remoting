@@ -342,7 +342,7 @@ namespace remoting_node_desktop
          statusString = MainSubsystem().StringTable().getString(IDS_SERVER_NOT_LISTENING);
       } // not accepting connections.
 
-      unsigned int stringId = m_bRunAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
+      ::u32 stringId = m_bRunAsService ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
       info->m_statusText.format("{} - {}",
                                 MainSubsystem().StringTable().getString(stringId),
@@ -468,7 +468,7 @@ namespace remoting_node_desktop
          psecurityattributes->setInheritable();
          psecurityattributes->shareToAllUsers();
 
-         const unsigned int maxControlServerPipeBufferSize = 0x10000;
+         const ::u32 maxControlServerPipeBufferSize = 0x10000;
          auto ppipeserver = createø< ::subsystem::PipeServer>();
          ppipeserver->initialize_pipe_server(pipeName, maxControlServerPipeBufferSize, psecurityattributes);
          m_pcontrolserver = new ControlServer(m_pconfigurator,ppipeserver , m_prfbclientmanager, m_plogwriter);

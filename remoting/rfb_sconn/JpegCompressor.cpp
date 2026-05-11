@@ -321,9 +321,9 @@ namespace remoting
    StandardJpegCompressor::convertRow24(JSAMPLE *dst, const void *src,
                                         const ::innate_subsystem::PixelFormat & fmt, int numPixels)
    {
-      const unsigned int *srcPixels = (const unsigned int *)src;
+      const ::u32 *srcPixels = (const ::u32 *)src;
       while (numPixels--) {
-         unsigned int pixel = *srcPixels++;
+         ::u32 pixel = *srcPixels++;
          *dst++ = (JSAMPLE)(pixel >> fmt.redShift);
          *dst++ = (JSAMPLE)(pixel >> fmt.greenShift);
          *dst++ = (JSAMPLE)(pixel >> fmt.blueShift);
@@ -335,9 +335,9 @@ namespace remoting
                                       const ::innate_subsystem::PixelFormat & fmt, int numPixels)
    {
       if (fmt.bitsPerPixel == 32) {
-         const unsigned int *srcPixels = (const unsigned int *)src;
+         const ::u32 *srcPixels = (const ::u32 *)src;
          for (int x = 0; x < numPixels; x++) {
-            unsigned int pixel = *srcPixels++;
+            ::u32 pixel = *srcPixels++;
             *dst++ = (JSAMPLE)((pixel >> fmt.redShift & fmt.redMax) * 255 / fmt.redMax);
             *dst++ = (JSAMPLE)((pixel >> fmt.greenShift & fmt.greenMax) * 255 / fmt.greenMax);
             *dst++ = (JSAMPLE)((pixel >> fmt.blueShift & fmt.blueMax) * 255 / fmt.blueMax);

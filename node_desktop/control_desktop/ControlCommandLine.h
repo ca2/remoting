@@ -90,7 +90,7 @@ namespace remoting_control_desktop
       unsigned char getShareDisplayNumber();
       void getShareWindowName(::string & out);
       ::int_rectangle getShareRect();
-      unsigned int getSharedAppProcessId();
+      ::u32 getSharedAppProcessId();
 
       ::string getPrimaryVncPassword() const;
       ::string getControlPassword() const;
@@ -112,7 +112,7 @@ namespace remoting_control_desktop
       ::int_rectangle m_shareRect;
       unsigned char m_displayNumber;
       ::string m_windowHeaderName;
-      unsigned int m_sharedAppProcessId;
+      ::u32 m_sharedAppProcessId;
    };
 } // namespace remoting_control_desktop
 

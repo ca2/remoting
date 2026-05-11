@@ -28,7 +28,7 @@
 
 namespace remoting_client
 {
-    unsigned int ControlTrayIcon::WM_USER_TASKBAR;
+    ::u32 ControlTrayIcon::WM_USER_TASKBAR;
 
     ControlTrayIcon::ControlTrayIcon(remoting_impact *viewerApplication)
     :
@@ -58,7 +58,7 @@ namespace remoting_client
     {
     }
 
-    // LRESULT ControlTrayIcon::windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc)
+    // LRESULT ControlTrayIcon::windowProc(HWND hWnd, ::u32 uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc)
     // {
     //     if (m_inWindowProc) {
     //         // This call is recursive, do not do any real work.
@@ -94,7 +94,7 @@ namespace remoting_client
     //     m_inWindowProc = false;
     //     return 0;
     // }
-    // bool ControlTrayIcon::on_window_procedure(lresult &lresult, unsigned int message, wparam wparam, lparam lparam)
+    // bool ControlTrayIcon::on_window_procedure(lresult &lresult, ::u32 message, wparam wparam, lparam lparam)
     // {
     //
     //    if (m_inWindowProc) {

@@ -349,7 +349,7 @@ namespace remoting_client
       // Send a keyboard event. Arguments specify the event as defined in the
       // RFB v.3 protocol specification.
       //
-      void sendKeyboardEvent(bool downFlag, unsigned int key);
+      void sendKeyboardEvent(bool downFlag, ::u32 key);
 
       //
       // Send a pointer (mouse) event. Arguments specify the event as defined in
@@ -429,32 +429,32 @@ namespace remoting_client
       //
 
       void addAuthCapability(AuthHandler *authHandler,
-                                     unsigned int code,
+                                     ::u32 code,
                                      const char *vendorSignature,
                                      const char *nameSignature,
                                      const ::string description = "") override;
 
       void addServerMsgCapability(ServerMessageListener *listener,
-                                          unsigned int code,
+                                          ::u32 code,
                                           const char *vendorSignature,
                                           const char *nameSignature,
                                           const ::string description = "")override;
 
-      void addClientMsgCapability(unsigned int code,
+      void addClientMsgCapability(::u32 code,
                                           const char *vendorSignature,
                                           const char *nameSignature,
                                           const ::string description = "")override;
 
       virtual void addEncodingCapability(Decoder *decoder,
                                          int priorityEncoding,
-                                         unsigned int code,
+                                         ::u32 code,
                                          const char *vendorSignature,
                                          const char *nameSignature,
                                          const ::string description = "");
 
-      virtual void getEnabledClientMsgCapabilities(::array_base<unsigned int> *codes) const;
-      virtual void getEnabledServerMsgCapabilities(::array_base<unsigned int> *codes) const;
-      virtual void getEnabledEncodingCapabilities(::array_base<unsigned int> *codes) const;
+      void getEnabledClientMsgCapabilities(::array_base<::u32> *codes) const override;
+      void getEnabledServerMsgCapabilities(::array_base<::u32> *codes) const override;
+      void getEnabledEncodingCapabilities(::array_base<::u32> *codes) const override;
 
       // returns ::list_base of server displays offsets and dimensions
       ::int_rectangle_array_base getDesktops();
@@ -464,7 +464,7 @@ namespace remoting_client
       //
       // Overrides Thread::execute(). Implements the input thread.
       //
-      void execute();
+      void execute() override;
 
       //
       // This function includes common initialization code used by constructors.
@@ -483,9 +483,9 @@ namespace remoting_client
       //
       // Read a scopedstrMessage type code (unsigned char) from the data connection.
       // If the code is 0xFC then it's a beginning of TightVNC-specific extended
-      // code so we read next 3 bytes and compose unsigned int scopedstrMessage type.
+      // code so we read next 3 bytes and compose ::u32 scopedstrMessage type.
       //
-      unsigned int receiveServerMessageType();
+      ::u32 receiveServerMessageType();
 
       //
       // Read pixel format from the data connection and return it.
@@ -545,11 +545,11 @@ namespace remoting_client
       int negotiateSecurityType();
       void authenticate();
       void clientAndServerInit();
-      void readSecurityTypeList(::array_base<unsigned int> *secTypes);
-      ::string getSecurityTypeName(unsigned int securityType) const;
-      ::string getAuthenticationTypeName(unsigned int authenticationType) const;
-      int selectSecurityType(const ::array_base<unsigned int> *secTypes,
-                             const ::map<unsigned int, AuthHandler *> *authHandlers,
+      void readSecurityTypeList(::array_base<::u32> *secTypes);
+      ::string getSecurityTypeName(::u32 securityType) const;
+      ::string getAuthenticationTypeName(::u32 authenticationType) const;
+      int selectSecurityType(const ::array_base<::u32> *secTypes,
+                             const ::map<::u32, AuthHandler *> *authHandlers,
                              const bool isTightEnabled) const;
       void initTunnelling();
       int initAuthentication();
@@ -583,17 +583,17 @@ namespace remoting_client
       //
       // This method add ::pair <code, handler> to ::map m_authHandler.
       //
-      void registerAuthHandler(const unsigned int code, AuthHandler *handler);
+      void registerAuthHandler(const ::u32 code, AuthHandler *handler);
 
       //
       // This method add ::pair <code, listener> to ::map m_serverMsgHandlers.
       //
-      void registerMessageListener(const unsigned int code, ServerMessageListener *listener);
+      void registerMessageListener(const ::u32 code, ServerMessageListener *listener);
 
       //
       // This method add ::pair <code, decoder> to ::map m_decoderHandlers.
       //
-      void registerDecoderHandler(const unsigned int code, Decoder *decoder, int priority);
+      void registerDecoderHandler(const ::u32 code, Decoder *decoder, int priority);
 
       ::subsystem::LogWriter * m_plogwriter;
 
@@ -620,15 +620,15 @@ namespace remoting_client
       ::pointer < FbUpdateNotifier > m_pfbupdatenotifier;
 
       CapsContainer m_authCaps;
-      ::map<unsigned int, AuthHandler *> m_authHandlers;
+      ::map<::u32, AuthHandler *> m_authHandlers;
 
       CapsContainer m_clientMsgCaps;
       CapsContainer m_serverMsgCaps;
-      ::map<unsigned int, ServerMessageListener *> m_serverMsgHandlers;
+      ::map<::u32, ServerMessageListener *> m_serverMsgHandlers;
 
       CapsContainer m_encodingCaps;
-      ::map<unsigned int, Decoder *> m_decoderHandlers;
-      ::map<unsigned int, int> m_decoderPriority;
+      ::map<::u32, Decoder *> m_decoderHandlers;
+      ::map<::u32, int> m_decoderPriority;
 
       // This flag is set after call start().
       mutable lockable_critical_section m_startLock;

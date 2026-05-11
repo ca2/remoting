@@ -62,12 +62,12 @@ namespace remoting_control_desktop
       return true;
    }
 
-   bool ControlAuthDialog::onNotify(unsigned int controlID, ::lparam data)
+   bool ControlAuthDialog::onNotify(::u32 controlID, ::lparam data)
    {
       return true;
    }
 
-   bool ControlAuthDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool ControlAuthDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       switch (controlID) {
          case ::innate_subsystem::e_control_id_ok:

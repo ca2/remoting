@@ -176,7 +176,7 @@ namespace remoting
       // Listener function which implements RfbDispatcherListener. It will be
       // called on receiving client messages if we registered as a handler for
       // corresponding RFB scopedstrMessage types.
-      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input) override;
+      virtual void onRequest(::u32 reqCode, ::remoting::RfbInputGate *input) override;
 
       // Handlers for individual RFB client messages. Called by onRequest().
       void readUpdateRequest(::remoting::RfbInputGate *io);

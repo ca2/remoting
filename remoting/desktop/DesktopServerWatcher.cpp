@@ -131,7 +131,7 @@ namespace remoting
                shMemName+=(char)('a' + rand() % ('z' - 'a'));
             }
             ::subsystem_windows::SharedMemory sharedMemory(shMemName, 72);
-            unsigned long long *mem = (unsigned long long *)sharedMemory.getMemPointer();
+            ::u64 *mem = (::u64 *)sharedMemory.getMemPointer();
 
             // Sets memory ready flag to false.
             mem[0] = 0;
@@ -162,12 +162,12 @@ namespace remoting
              ::cast <subsystem::PipeInterface > ppipeFrom = otherSidePipeChanFrom;
 
             // Transfer other side handles by the memory channel
-            mem[1] = (unsigned long long)otherSidePipeChanTo->getWriteFile()->_HANDLE();
-            mem[2] = (unsigned long long)otherSidePipeChanTo->getReadFile()->_HANDLE();
-            mem[3] = (unsigned long long)ppipeTo->getMaxPortionSize();
-            mem[4] = (unsigned long long)otherSidePipeChanFrom->getWriteFile()->_HANDLE();
-            mem[5] = (unsigned long long)otherSidePipeChanFrom->getReadFile()->_HANDLE();
-            mem[6] = (unsigned long long)ppipeFrom->getMaxPortionSize();
+            mem[1] = (::u64)otherSidePipeChanTo->getWriteFile()->_HANDLE();
+            mem[2] = (::u64)otherSidePipeChanTo->getReadFile()->_HANDLE();
+            mem[3] = (::u64)ppipeTo->getMaxPortionSize();
+            mem[4] = (::u64)otherSidePipeChanFrom->getWriteFile()->_HANDLE();
+            mem[5] = (::u64)otherSidePipeChanFrom->getReadFile()->_HANDLE();
+            mem[6] = (::u64)ppipeFrom->getMaxPortionSize();
 
             // Sets memory ready flag to true.
             mem[0] = 1;

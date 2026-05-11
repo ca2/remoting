@@ -201,7 +201,7 @@ namespace remoting_client
 
    }
 
-   bool control::_001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point &pointRoot,
+   bool control::_001OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &pointRoot,
                                const ::int_point &pointClient, bool &bDoDefaultProcessing)
    {
 
@@ -248,7 +248,7 @@ namespace remoting_client
 
    }
 
-   //bool control::_001OnMouseEx(unsigned int uMessage, const ::int_point& pointRoot, const ::int_point& pointClient)
+   //bool control::_001OnMouseEx(::u32 uMessage, const ::int_point& pointRoot, const ::int_point& pointClient)
    //{
 
    //    auto rectangleClient = get_client_rectangle();
@@ -309,7 +309,7 @@ namespace remoting_client
    }
 
 
-   bool control::_000OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point &pointRoot,
+   bool control::_000OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &pointRoot,
                                const ::int_point &pointClientParam, bool &bDoDefaultProcessing)
    {
 
@@ -405,7 +405,7 @@ namespace remoting_client
 
    }
 
-   //bool control::_000OnMouseEx(unsigned int uMessage, const ::int_point& pointRoot, const ::int_point& pointClientParam)
+   //bool control::_000OnMouseEx(::u32 uMessage, const ::int_point& pointRoot, const ::int_point& pointClientParam)
    //{
 
    //    auto pointClient = pointClientParam;
@@ -687,7 +687,7 @@ namespace remoting_client
    }
 
 
-   bool toolbar::_001OnMouseEx(unsigned int uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient, bool & bDoDefaultProcessing)
+   bool toolbar::_001OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient, bool & bDoDefaultProcessing)
    {
 
       //auto pointClient = pointClientParameter * m_pdesktopwindow->m_scManager.getScale();

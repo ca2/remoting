@@ -43,7 +43,7 @@ namespace remoting_node_desktop
       // without ban. If failure count greater than failureMaxCount then
       // the authenticate() function will be blocked for the failureTimeInterval
       // time elapsed from first failure authentication.
-      ControlAppAuthenticator(const class ::time & timeFailureInterval, unsigned int failureMaxCount);
+      ControlAppAuthenticator(const class ::time & timeFailureInterval, ::u32 failureMaxCount);
       virtual ~ControlAppAuthenticator();
 
       // Returns true if authentication has succeed and still has not been called

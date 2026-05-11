@@ -96,7 +96,7 @@ namespace remoting
    //    }
    // }
 
-   void EventLog::reportInfo(unsigned int messageId, const char *fmt, ...)
+   void EventLog::reportInfo(::u32 messageId, const char *fmt, ...)
    {
       va_list vl;
       va_start(vl, fmt);
@@ -104,7 +104,7 @@ namespace remoting
       va_end(vl);
    }
 
-   void EventLog::reportWarning(unsigned int messageId, const char *fmt, ...)
+   void EventLog::reportWarning(::u32 messageId, const char *fmt, ...)
    {
       va_list vl;
       va_start(vl, fmt);
@@ -112,7 +112,7 @@ namespace remoting
       va_end(vl);
    }
 
-   void EventLog::reportError(unsigned int messageId, const char *fmt, ...)
+   void EventLog::reportError(::u32 messageId, const char *fmt, ...)
    {
       va_list vl;
       va_start(vl, fmt);
@@ -123,7 +123,7 @@ namespace remoting
 // #pragma warning(push)
 // #pragma warning(disable:4996)
 
-   void EventLog::reportEvent(unsigned int messageId,
+   void EventLog::reportEvent(::u32 messageId,
    int eventType,
                                const char *fmt,
                                va_list argList)

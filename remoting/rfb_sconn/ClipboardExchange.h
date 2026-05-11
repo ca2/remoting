@@ -45,7 +45,7 @@ namespace remoting
 
    protected:
       // Listen function
-      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input);
+      virtual void onRequest(::u32 reqCode, ::remoting::RfbInputGate *input);
       virtual void execute();
       virtual void onTerminate();
 

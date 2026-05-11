@@ -212,7 +212,7 @@ namespace remoting_client
 
    void LoginDialog::onAbout() { m_premotingimpact->postMessage(remoting_impact::_WM_USER_ABOUT); }
 
-   bool LoginDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool LoginDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       switch (controlID)
       {

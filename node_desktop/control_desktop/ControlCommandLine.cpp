@@ -282,7 +282,7 @@ namespace remoting_control_desktop
       return m_shareRect;
    }
 
-   unsigned int ControlCommandLine::getSharedAppProcessId()
+   ::u32 ControlCommandLine::getSharedAppProcessId()
    {
       return m_sharedAppProcessId;
    }

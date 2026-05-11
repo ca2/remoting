@@ -51,7 +51,7 @@ namespace remoting
       virtual void sendInit(BlockingGate *pblockinggate)  override;
       virtual void setNewClipboard(const ::scoped_string &newClipboard)  override;
       virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)  override;
-      virtual void setKeyboardEvent(unsigned int keySym, bool down)  override;
+      virtual void setKeyboardEvent(::u32 keySym, bool down)  override;
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName)  override;
       virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle)  override;
       virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber)  override;

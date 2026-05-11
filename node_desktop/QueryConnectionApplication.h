@@ -78,7 +78,7 @@ namespace remoting_node_desktop
        * @return application exit code (0 means accept connection, 1 means reject connection).
        * @throws ::subsystem::Exception on fail.
        */
-      int execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, unsigned int timeOutSec);
+      int execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, ::u32 timeOutSec);
 
       //private:
       ::string m_cmdLine;

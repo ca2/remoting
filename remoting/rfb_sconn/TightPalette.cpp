@@ -52,7 +52,7 @@ namespace remoting
       }
    }
 
-   int TightPalette::insert(unsigned int rgb, int numPixels)
+   int TightPalette::insert(::u32 rgb, int numPixels)
    {
       TightColorList *pnode;
       TightColorList *prev_pnode = NULL;

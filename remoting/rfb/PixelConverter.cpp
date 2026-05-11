@@ -51,8 +51,8 @@ namespace remoting
          ::innate_subsystem::PixelFormat pixelformatTarget = pframebufferTarget->getPixelFormat();
          ::innate_subsystem::PixelFormat pixelformatSource = pframebufferSource->getPixelFormat();
 
-         unsigned int dstPixelSize = pixelformatTarget.bitsPerPixel / 8;
-         unsigned int srcPixelSize = pixelformatSource.bitsPerPixel / 8;
+         ::u32 dstPixelSize = pixelformatTarget.bitsPerPixel / 8;
+         ::u32 srcPixelSize = pixelformatSource.bitsPerPixel / 8;
 
          // FIXME: Make ::innate_subsystem::Framebuffer do the math.
          unsigned char *dstPixP = (unsigned char *)pframebufferTarget->getBuffer() +
@@ -66,9 +66,9 @@ namespace remoting
                for (int j = 0; j < rectWidth; j++,
                                               dstPixP += dstPixelSize,
                                               srcPixP += srcPixelSize) {
-                  unsigned int dstPixel = m_hexBitsTable[*(unsigned short *)srcPixP];
+                  ::u32 dstPixel = m_hexBitsTable[*(unsigned short *)srcPixP];
                   if (dstPixelSize == 4) {
-                     *(unsigned int *)dstPixP = (unsigned int)dstPixel;
+                     *(::u32 *)dstPixP = (::u32)dstPixel;
                   } else if (dstPixelSize == 2) {
                      *(unsigned short *)dstPixP = (unsigned short)dstPixel;
                   } else if (dstPixelSize == 1) {
@@ -78,9 +78,9 @@ namespace remoting
                  }
          } else if (m_convertMode == CONVERT_FROM_32) {
             bool bigEndianDiffs = pixelformatTarget.bigEndian != pixelformatSource.bigEndian;
-            unsigned int srcRedMax = pixelformatSource.redMax;
-            unsigned int srcGrnMax = pixelformatSource.greenMax;
-            unsigned int srcBluMax = pixelformatSource.blueMax;
+            ::u32 srcRedMax = pixelformatSource.redMax;
+            ::u32 srcGrnMax = pixelformatSource.greenMax;
+            ::u32 srcBluMax = pixelformatSource.blueMax;
 
             for (int i = 0; i < rectHeight; i++,
                  dstPixP += (fbWidth - rectWidth) * dstPixelSize,
@@ -88,16 +88,16 @@ namespace remoting
                for (int j = 0; j < rectWidth; j++,
                                               dstPixP += dstPixelSize,
                                               srcPixP += srcPixelSize) {
-                  unsigned int dstPixel = m_redTable[*(unsigned int *)srcPixP >>
+                  ::u32 dstPixel = m_redTable[*(::u32 *)srcPixP >>
                                                pixelformatSource.redShift & srcRedMax] |
-                                    m_grnTable[*(unsigned int *)srcPixP >>
+                                    m_grnTable[*(::u32 *)srcPixP >>
                                                pixelformatSource.greenShift & srcGrnMax] |
-                                    m_bluTable[*(unsigned int *)srcPixP >>
+                                    m_bluTable[*(::u32 *)srcPixP >>
                                                pixelformatSource.blueShift & srcBluMax];
                   if (dstPixelSize == 4) {
-                     *(unsigned int *)dstPixP = dstPixel;
+                     *(::u32 *)dstPixP = dstPixel;
                      if (bigEndianDiffs) {
-                        *(unsigned int *)dstPixP = rotateUint32(*(unsigned int *)dstPixP);
+                        *(::u32 *)dstPixP = rotateUint32(*(::u32 *)dstPixP);
                      }
                   } else if (dstPixelSize == 2) {
                      *(unsigned short *)dstPixP = dstPixel;
@@ -188,31 +188,31 @@ namespace remoting
    {
       m_hexBitsTable.resize(65536);
 
-      unsigned int dstRedMax = pixelformatTarget.redMax;
-      unsigned int dstGrnMax = pixelformatTarget.greenMax;
-      unsigned int dstBluMax = pixelformatTarget.blueMax;
+      ::u32 dstRedMax = pixelformatTarget.redMax;
+      ::u32 dstGrnMax = pixelformatTarget.greenMax;
+      ::u32 dstBluMax = pixelformatTarget.blueMax;
 
-      unsigned int dstRedShift = pixelformatTarget.redShift;
-      unsigned int dstGrnShift = pixelformatTarget.greenShift;
-      unsigned int dstBluShift = pixelformatTarget.blueShift;
+      ::u32 dstRedShift = pixelformatTarget.redShift;
+      ::u32 dstGrnShift = pixelformatTarget.greenShift;
+      ::u32 dstBluShift = pixelformatTarget.blueShift;
 
-      unsigned int srcRedMax = pixelformatSource.redMax;
-      unsigned int srcGrnMax = pixelformatSource.greenMax;
-      unsigned int srcBluMax = pixelformatSource.blueMax;
+      ::u32 srcRedMax = pixelformatSource.redMax;
+      ::u32 srcGrnMax = pixelformatSource.greenMax;
+      ::u32 srcBluMax = pixelformatSource.blueMax;
 
-      unsigned int srcRedMask = srcRedMax << pixelformatSource.redShift;
-      unsigned int srcGrnMask = srcGrnMax << pixelformatSource.greenShift;
-      unsigned int srcBluMask = srcBluMax << pixelformatSource.blueShift;
+      ::u32 srcRedMask = srcRedMax << pixelformatSource.redShift;
+      ::u32 srcGrnMask = srcGrnMax << pixelformatSource.greenShift;
+      ::u32 srcBluMask = srcBluMax << pixelformatSource.blueShift;
 
-      for (unsigned int i = 0; i < 65536; i++) {
+      for (::u32 i = 0; i < 65536; i++) {
          // Get source color component
-         unsigned int srcRed = (i & srcRedMask) >> pixelformatSource.redShift;
-         unsigned int srcGrn = (i & srcGrnMask) >> pixelformatSource.greenShift;
-         unsigned int srcBlu = (i & srcBluMask) >> pixelformatSource.blueShift;
+         ::u32 srcRed = (i & srcRedMask) >> pixelformatSource.redShift;
+         ::u32 srcGrn = (i & srcGrnMask) >> pixelformatSource.greenShift;
+         ::u32 srcBlu = (i & srcBluMask) >> pixelformatSource.blueShift;
 
-         unsigned int dstRed = (srcRed * dstRedMax / srcRedMax) << dstRedShift;
-         unsigned int dstGrn = (srcGrn * dstGrnMax / srcGrnMax) << dstGrnShift;
-         unsigned int dstBlu = (srcBlu * dstBluMax / srcBluMax) << dstBluShift;
+         ::u32 dstRed = (srcRed * dstRedMax / srcRedMax) << dstRedShift;
+         ::u32 dstGrn = (srcGrn * dstGrnMax / srcGrnMax) << dstGrnShift;
+         ::u32 dstBlu = (srcBlu * dstBluMax / srcBluMax) << dstBluShift;
          m_hexBitsTable[i] = dstRed | dstGrn | dstBlu;
          if (pixelformatTarget.bigEndian != pixelformatSource.bigEndian) {
             if (pixelformatTarget.bitsPerPixel == 32) {
@@ -228,36 +228,36 @@ namespace remoting
    void PixelConverter::fill32BitsTable(const ::innate_subsystem::PixelFormat & pixelformatTarget,
                                         const ::innate_subsystem::PixelFormat & pixelformatSource)
    {
-      unsigned int dstRedMax = pixelformatTarget.redMax;
-      unsigned int dstGrnMax = pixelformatTarget.greenMax;
-      unsigned int dstBluMax = pixelformatTarget.blueMax;
+      ::u32 dstRedMax = pixelformatTarget.redMax;
+      ::u32 dstGrnMax = pixelformatTarget.greenMax;
+      ::u32 dstBluMax = pixelformatTarget.blueMax;
 
-      unsigned int dstRedShift = pixelformatTarget.redShift;
-      unsigned int dstGrnShift = pixelformatTarget.greenShift;
-      unsigned int dstBluShift = pixelformatTarget.blueShift;
+      ::u32 dstRedShift = pixelformatTarget.redShift;
+      ::u32 dstGrnShift = pixelformatTarget.greenShift;
+      ::u32 dstBluShift = pixelformatTarget.blueShift;
 
-      unsigned int srcRedMax = pixelformatSource.redMax;
-      unsigned int srcGrnMax = pixelformatSource.greenMax;
-      unsigned int srcBluMax = pixelformatSource.blueMax;
+      ::u32 srcRedMax = pixelformatSource.redMax;
+      ::u32 srcGrnMax = pixelformatSource.greenMax;
+      ::u32 srcBluMax = pixelformatSource.blueMax;
 
       m_redTable.resize(srcRedMax + 1);
       m_grnTable.resize(srcGrnMax + 1);
       m_bluTable.resize(srcBluMax + 1);
 
-      for (unsigned int i = 0; i <= srcRedMax; i++) {
+      for (::u32 i = 0; i <= srcRedMax; i++) {
          m_redTable[i] = ((i * dstRedMax + srcRedMax / 2) / srcRedMax) << dstRedShift;
       }
-      for (unsigned int i = 0; i <= srcGrnMax; i++) {
+      for (::u32 i = 0; i <= srcGrnMax; i++) {
          m_grnTable[i] = ((i * dstGrnMax + srcGrnMax / 2) / srcGrnMax) << dstGrnShift;
       }
-      for (unsigned int i = 0; i <= srcBluMax; i++) {
+      for (::u32 i = 0; i <= srcBluMax; i++) {
          m_bluTable[i] = ((i * dstBluMax + srcBluMax / 2) / srcBluMax) << dstBluShift;
       }
    }
 
-   unsigned int PixelConverter::rotateUint32(unsigned int value) const
+   ::u32 PixelConverter::rotateUint32(::u32 value) const
    {
-      unsigned int result;
+      ::u32 result;
       char *src = (char *)&value;
       char *dst = (char *)&result;
       dst[0] = src[3];

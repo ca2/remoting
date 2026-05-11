@@ -91,7 +91,7 @@ namespace remoting_node_desktop
 
    }
 
-   int QueryConnectionApplication::execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, unsigned int timeOutSec)
+   int QueryConnectionApplication::execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, ::u32 timeOutSec)
    {
       // Prepare command for execution.
 

@@ -32,13 +32,13 @@ namespace remoting_client
    class CLASS_DECL_REMOTING RfbKeyEventClientMessage : public RfbClientToServerMessage
    {
    public:
-      RfbKeyEventClientMessage(bool downFlag, unsigned int key);
+      RfbKeyEventClientMessage(bool downFlag, ::u32 key);
       ~RfbKeyEventClientMessage();
 
       void send(::remoting::RfbOutputGate *output);
 
    private:
-      unsigned int m_key;
+      ::u32 m_key;
       bool m_downFlag;
    };
 }

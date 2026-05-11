@@ -43,7 +43,7 @@ namespace remoting_client
    {
       ::string cutTextAnsi;
       cutTextAnsi = m_cutText;
-      unsigned int length = static_cast<unsigned int>(cutTextAnsi.length());
+      ::u32 length = static_cast<::u32>(cutTextAnsi.length());
 
       critical_section_lock al(prfboutputgate);
       prfboutputgate->writeUInt8(::remoting::ClientMsgDefs::CLIENT_CUT_TEXT);
@@ -59,7 +59,7 @@ namespace remoting_client
    {
       ::string cutTextUtf;
       cutTextUtf = m_cutText;
-      unsigned int length = static_cast<unsigned int>(cutTextUtf.length());
+      ::u32 length = static_cast<::u32>(cutTextUtf.length());
 
       critical_section_lock al(prfboutputgate);
       prfboutputgate->writeUInt32(::remoting::ClientMsgDefs::CLIENT_CUT_TEXT_UTF8);

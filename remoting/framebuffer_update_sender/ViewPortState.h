@@ -76,7 +76,7 @@ namespace remoting
       // After calling this function the update() function will set the view
       // port rectangle to "Full desktop" and the view port region to a region constrained
       // by windows of the process id.
-      void setProcessId(unsigned int processId);
+      void setProcessId(::u32 processId);
 
    private:
       static const int FULL_DESKTOP = 0;
@@ -92,7 +92,7 @@ namespace remoting
       ::string m_windowName;
       bool m_windowIsResolved;
       unsigned char m_displayNumber;
-      unsigned int m_processId;
+      ::u32 m_processId;
 
       friend class CLASS_DECL_REMOTING  Viewport;
    };

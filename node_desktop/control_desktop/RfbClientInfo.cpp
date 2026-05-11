@@ -26,7 +26,7 @@
 
 namespace remoting_control_desktop
 {
-   RfbClientInfo::RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrPeerAddr)
+   RfbClientInfo::RfbClientInfo(::u32 id, const ::scoped_string & scopedstrPeerAddr)
    : m_id(id), m_peerAddr(scopedstrPeerAddr)
    {
    }

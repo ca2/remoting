@@ -51,7 +51,7 @@ namespace remoting_node_desktop
 {
 
 
-   const unsigned int ControlClient::REQUIRES_AUTH[] = {
+   const ::u32 ControlClient::REQUIRES_AUTH[] = {
       ::remoting_control_desktop::ControlProto::ADD_CLIENT_MSG_ID,      ::remoting_control_desktop::ControlProto::DISCONNECT_ALL_CLIENTS_MSG_ID,
       ::remoting_control_desktop::ControlProto::GET_CONFIG_MSG_ID,      ::remoting_control_desktop::ControlProto::SET_CONFIG_MSG_ID,
       ::remoting_control_desktop::ControlProto::SHUTDOWN_SERVER_MSG_ID, ::remoting_control_desktop::ControlProto::SHARE_PRIMARY_MSG_ID,
@@ -59,7 +59,7 @@ namespace remoting_node_desktop
       ::remoting_control_desktop::ControlProto::SHARE_RECT_MSG_ID,      ::remoting_control_desktop::ControlProto::SHARE_APP_MSG_ID,
       ::remoting_control_desktop::ControlProto::SHARE_FULL_MSG_ID,      ::remoting_control_desktop::ControlProto::CONNECT_TO_TCPDISP_MSG_ID};
 
-   const unsigned int ControlClient::WITHOUT_AUTH[] = {::remoting_control_desktop::ControlProto::AUTH_MSG_ID,
+   const ::u32 ControlClient::WITHOUT_AUTH[] = {::remoting_control_desktop::ControlProto::AUTH_MSG_ID,
                                                        ::remoting_control_desktop::ControlProto::RELOAD_CONFIG_MSG_ID,
                                                        ::remoting_control_desktop::ControlProto::GET_SERVER_INFO_MSG_ID,
                                                        ::remoting_control_desktop::ControlProto::GET_CLIENT_LIST_MSG_ID,
@@ -100,11 +100,11 @@ namespace remoting_node_desktop
       {
          while (!isTerminating())
          {
-            unsigned int messageId = m_pcontrolgate->readUInt32();
-            unsigned int messageSize = m_pcontrolgate->readUInt32();
+            ::u32 messageId = m_pcontrolgate->readUInt32();
+            ::u32 messageSize = m_pcontrolgate->readUInt32();
 
-            m_plogwriter->debug("Recieved control scopedstrMessage ID %u, size %u", (unsigned int)messageId,
-                                (unsigned int)messageSize);
+            m_plogwriter->debug("Recieved control scopedstrMessage ID %u, size %u", (::u32)messageId,
+                                (::u32)messageSize);
             if (++i % 10 == 0)
             {
 
@@ -116,7 +116,7 @@ namespace remoting_node_desktop
             // Check if scopedstrMessage requires TightVNC admin privilegies.
             if (requiresControlAuth)
             {
-               for (size_t i = 0; i < sizeof(WITHOUT_AUTH) / sizeof(unsigned int); i++)
+               for (size_t i = 0; i < sizeof(WITHOUT_AUTH) / sizeof(::u32); i++)
                {
                   if (messageId == WITHOUT_AUTH[i])
                   {
@@ -302,15 +302,15 @@ namespace remoting_node_desktop
 
    void ControlClient::getClientsListMsgRcvd()
    {
-      unsigned int clientCount = 0;
+      ::u32 clientCount = 0;
 
       ::remoting_control_desktop::RfbClientInfoList clients;
 
       m_prfbclientmanager->getClientsInfo(&clients);
 
       m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
-      ASSERT(clients.size() == (unsigned int)clients.size());
-      m_pcontrolgate->writeUInt32((unsigned int)clients.size());
+      ASSERT(clients.size() == (::u32)clients.size());
+      m_pcontrolgate->writeUInt32((::u32)clients.size());
 
       for (auto it = clients.begin(); it != clients.end(); it++)
       {
@@ -565,7 +565,7 @@ namespace remoting_node_desktop
 
    void ControlClient::shareAppIdMsgRcvd()
    {
-      unsigned int procId = m_pcontrolgate->readUInt32();
+      ::u32 procId = m_pcontrolgate->readUInt32();
       m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
       ::remoting::ViewPortState dynViewPort;

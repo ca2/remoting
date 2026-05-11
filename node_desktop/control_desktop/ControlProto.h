@@ -37,13 +37,13 @@ namespace remoting_control_desktop
     * Client to server control messages are request-reply oriented and have format
     * descripbed above:
     *
-    * unsigned int command code.
-    * unsigned int scopedstrMessage body size (in bytes).
-    * unsigned int[] scopedstrMessage body (byte array with length that equals to scopedstrMessage body size).
+    * ::u32 command code.
+    * ::u32 scopedstrMessage body size (in bytes).
+    * ::u32[] scopedstrMessage body (byte array with length that equals to scopedstrMessage body size).
     *
     * @section Server replies.
     * Server to client messages (eq replies to client requests) have following format:
-    * unsigned int reply code (REPLY_OK - no error, REPLY_ERROR - error during request processing,
+    * ::u32 reply code (REPLY_OK - no error, REPLY_ERROR - error during request processing,
     * REPLY_AUTH_NEEDED - authorization needed for this request).
     * unsigned char[] body (reply body with unknown length (i mean body is individual for every reply,
     * some replies can have no body).
@@ -54,32 +54,32 @@ namespace remoting_control_desktop
       /**
        * Reply code OK (request processed, reply body contains result).
        */
-      static const unsigned int REPLY_OK = 0x0;
+      static const ::u32 REPLY_OK = 0x0;
 
       /**
        * Reply code ERROR (failed to process request, reply body contains error description
        * in UTF8).
        */
-      static const unsigned int REPLY_ERROR = 0x1;
+      static const ::u32 REPLY_ERROR = 0x1;
 
       /**
        * Reply code ERROR AUTH NEEDED (your requested wasn't processed and you
        * need to authorize before you can execute your request).
        */
-      static const unsigned int REPLY_AUTH_NEEDED = 0x2;
+      static const ::u32 REPLY_AUTH_NEEDED = 0x2;
 
       /**
        * Get ::list_base of clients of rfb server.
        *
        * Request body: [empty].
        * Reply body:
-       *   unsigned int clientsCount.
+       *   ::u32 clientsCount.
        *   struct {
-       *     unsigned int clientId.
+       *     ::u32 clientId.
        *     StringUTF8 peerAddr.
        *   } clientsInfo[clientsCount].
        */
-      static const unsigned int GET_CLIENT_LIST_MSG_ID = 0x4;
+      static const ::u32 GET_CLIENT_LIST_MSG_ID = 0x4;
 
       /**
        * Reload rfb server configuration.
@@ -89,21 +89,21 @@ namespace remoting_control_desktop
        *
        * @deprecated.
        */
-      static const unsigned int RELOAD_CONFIG_MSG_ID = 0x5;
+      static const ::u32 RELOAD_CONFIG_MSG_ID = 0x5;
 
       /**
        * Disconnect all clients from rfb server.
        * Request body: [empty].
        * Reply body: [empty].
        */
-      static const unsigned int DISCONNECT_ALL_CLIENTS_MSG_ID = 0x6;
+      static const ::u32 DISCONNECT_ALL_CLIENTS_MSG_ID = 0x6;
 
       /**
        * Shutdown TightVNC server.
        * Request body: [empty].
        * Reply body: [empty].
        */
-      static const unsigned int SHUTDOWN_SERVER_MSG_ID = 0x7;
+      static const ::u32 SHUTDOWN_SERVER_MSG_ID = 0x7;
 
       /**
        * Make outgoing (reverse) rfb connection from server.
@@ -112,7 +112,7 @@ namespace remoting_control_desktop
        *   unsigned char viewOnlyFlag.
        * Reply body: [empty].
        */
-      static const unsigned int ADD_CLIENT_MSG_ID = 0x8;
+      static const ::u32 ADD_CLIENT_MSG_ID = 0x8;
 
       /**
        * Make connection to a TcpDispatcher from server.
@@ -120,7 +120,7 @@ namespace remoting_control_desktop
        *   StringUTF8 connectString.
        * Reply body: [empty].
        */
-      static const unsigned int CONNECT_TO_TCPDISP_MSG_ID = 0x9;
+      static const ::u32 CONNECT_TO_TCPDISP_MSG_ID = 0x9;
 
       /**
        * Send new configuration to TightVNC server.
@@ -128,7 +128,7 @@ namespace remoting_control_desktop
        *   serialized ::remoting_node::ServerConfig.
        * Reply body: [empty].
        */
-      static const unsigned int SET_CONFIG_MSG_ID = 0x10;
+      static const ::u32 SET_CONFIG_MSG_ID = 0x10;
 
       /**
        * Get server status info.
@@ -140,7 +140,7 @@ namespace remoting_control_desktop
        *   StringUTF8 logFilePath.
        *   StringUTF8 serverStatusText.
        */
-      static const unsigned int GET_SERVER_INFO_MSG_ID = 0x11;
+      static const ::u32 GET_SERVER_INFO_MSG_ID = 0x11;
 
       /**
        * Get current configuration of TightVNC server.
@@ -148,7 +148,7 @@ namespace remoting_control_desktop
        * Reply body:
        *   serialized ::remoting_node::ServerConfig.
        */
-      static const unsigned int GET_CONFIG_MSG_ID = 0x12;
+      static const ::u32 GET_CONFIG_MSG_ID = 0x12;
 
       /**
        * Client to server messages.
@@ -158,7 +158,7 @@ namespace remoting_control_desktop
        * Special scopedstrMessage to make to authorize client using VNC-style auth.
        * After server recieves this scopedstrMessage VNC-style auth must be done.
        */
-      static const unsigned int AUTH_MSG_ID = 0x13;
+      static const ::u32 AUTH_MSG_ID = 0x13;
 
       /**
        * Gets flag for autowork mode of TvnControl.
@@ -172,33 +172,33 @@ namespace remoting_control_desktop
        * Reply body:
        *   unsigned char runTvnControlFlag.
        */
-      static const unsigned int GET_SHOW_TRAY_ICON_FLAG = 0x14;
+      static const ::u32 GET_SHOW_TRAY_ICON_FLAG = 0x14;
 
       /**
        * Updates tvncontrol process id on server side.
        * Request body:
-       *  unsigned int processId.
+       *  ::u32 processId.
        * Reply body: [empty].
        */
-      static const unsigned int UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID = 0x15;
+      static const ::u32 UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID = 0x15;
 
       // Send to server a command that to share only a primary desktop.
-      static const unsigned int SHARE_PRIMARY_MSG_ID = 0x20;
+      static const ::u32 SHARE_PRIMARY_MSG_ID = 0x20;
 
       // Send to server a command to share only the display.
-      static const unsigned int SHARE_DISPLAY_MSG_ID = 0x21;
+      static const ::u32 SHARE_DISPLAY_MSG_ID = 0x21;
 
       // Send to server a command to share rectangle constrained by a window.
-      static const unsigned int SHARE_WINDOW_MSG_ID = 0x22;
+      static const ::u32 SHARE_WINDOW_MSG_ID = 0x22;
 
       // Send to server a command to share only the rectangle.
-      static const unsigned int SHARE_RECT_MSG_ID = 0x23;
+      static const ::u32 SHARE_RECT_MSG_ID = 0x23;
 
       // Send to server a command to share only the rectangle.
-      static const unsigned int SHARE_FULL_MSG_ID = 0x24;
+      static const ::u32 SHARE_FULL_MSG_ID = 0x24;
 
       // Send to server a command to share only the rectangle.
-      static const unsigned int SHARE_APP_MSG_ID = 0x25;
+      static const ::u32 SHARE_APP_MSG_ID = 0x25;
    };
 } // namespace remoting_control_desktop
 

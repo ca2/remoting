@@ -77,7 +77,7 @@ namespace remoting
       } else if (m_pxFormat.bitsPerPixel == 16) {
          m_bytesPerPixel = 2;
       } else if (m_pxFormat.bitsPerPixel == 32) {
-         unsigned int colorMaxValue =  m_pxFormat.blueMax  << m_pxFormat.blueShift  |
+         ::u32 colorMaxValue =  m_pxFormat.blueMax  << m_pxFormat.blueShift  |
                                  m_pxFormat.greenMax << m_pxFormat.greenShift |
                                  m_pxFormat.redMax   << m_pxFormat.redShift;
          //from big-endian to local
@@ -109,7 +109,7 @@ namespace remoting
       } else if (bpp == 16) {
          sendRect<unsigned short>(rectangle, serverFb, clientFb, options);
       } else if (bpp == 32) {
-         sendRect<unsigned int>(rectangle, serverFb, clientFb, options);
+         sendRect<::u32>(rectangle, serverFb, clientFb, options);
       } else {
          ASSERT(0);
       }
@@ -210,7 +210,7 @@ namespace remoting
                              m_rgbData.size());
          m_deflater.deflate();
 
-         m_pdataoutputstream->writeUInt32(m_deflater.getOutputSize());
+         m_pdataoutputstream->writeUInt32((::u32)m_deflater.getOutputSize());
          m_pdataoutputstream->write(m_deflater.getOutput(),
                               m_deflater.getOutputSize());
       }
@@ -233,7 +233,7 @@ namespace remoting
    void ZrleEncoder::writeSolidTile()
    {
       m_oldSize = m_rgbData.size();
-      unsigned int colorPixel = m_pal.getEntry(0);
+      ::u32 colorPixel = m_pal.getEntry(0);
       m_rgbData.resize(m_oldSize + m_bytesPerPixel + 1);
       m_rgbData[m_oldSize] = 1;
       memcpy(&m_rgbData[m_oldSize + 1], &colorPixel + m_numberFirstByte, m_bytesPerPixel);
@@ -263,7 +263,7 @@ namespace remoting
 
       // Write palette.
       for (int i = 0; i < numColors; i++) {
-         unsigned int buf = m_pal.getEntry(i);
+         ::u32 buf = m_pal.getEntry(i);
          memcpy(&m_rgbData[m_oldSize + 1 + i * m_bytesPerPixel],
                   &buf + m_numberFirstByte,
                   m_bytesPerPixel);
@@ -335,7 +335,7 @@ namespace remoting
 
       // Write palette.
       for (int i = 0; i < numColors; i++) {
-         unsigned int buf = m_pal.getEntry(i);
+         ::u32 buf = m_pal.getEntry(i);
          memcpy(&paletteRleData[1 + i * m_bytesPerPixel],
                   &buf + m_numberFirstByte,
                   m_bytesPerPixel);

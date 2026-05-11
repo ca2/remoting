@@ -30,7 +30,7 @@ namespace remoting_windows
 {
 
 
-   WinCustomD3D11Texture2D::Texture2DDescInitializer::Texture2DDescInitializer(unsigned int width, unsigned int height,
+   WinCustomD3D11Texture2D::Texture2DDescInitializer::Texture2DDescInitializer(::u32 width, ::u32 height,
                                                                                DXGI_MODE_ROTATION rotation)
    {
       if (rotation == DXGI_MODE_ROTATION_ROTATE90 || rotation == DXGI_MODE_ROTATION_ROTATE270)
@@ -56,7 +56,7 @@ namespace remoting_windows
 
    const D3D11_TEXTURE2D_DESC *WinCustomD3D11Texture2D::Texture2DDescInitializer::getDesc() const { return &m_desc; }
 
-   WinCustomD3D11Texture2D::WinCustomD3D11Texture2D(ID3D11Device *device, unsigned int width, unsigned int height,
+   WinCustomD3D11Texture2D::WinCustomD3D11Texture2D(ID3D11Device *device, ::u32 width, ::u32 height,
                                                     DXGI_MODE_ROTATION rotation) :
        m_textDescInitializer(width, height, rotation), m_textureWrapper(device, m_textDescInitializer.getDesc())
    {

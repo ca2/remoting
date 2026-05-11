@@ -62,7 +62,7 @@ namespace remoting_node
    {
       bool validationOk = true;
 
-      unsigned int parsedValue = 0;
+      ::u32 parsedValue = 0;
 
       if (!UIDataAccess::queryValueAsUInt(textBox, &parsedValue)) {
          validationOk = false;

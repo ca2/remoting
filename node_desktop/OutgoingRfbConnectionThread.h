@@ -50,7 +50,7 @@ namespace remoting_node_desktop
       @param viewOnly flag that determinates mode for rfb connection.
       @param clientManager rfb client manager.
       */
-      OutgoingRfbConnectionThread(const ::scoped_string &scopedstrConnectHost, unsigned int connectPort, bool viewOnly,
+      OutgoingRfbConnectionThread(const ::scoped_string &scopedstrConnectHost, ::u32 connectPort, bool viewOnly,
                                   RfbClientManager *clientManager, ::subsystem::LogWriter * plogwriter);
       virtual ~OutgoingRfbConnectionThread();
 
@@ -59,7 +59,7 @@ namespace remoting_node_desktop
 
    private:
       ::string m_connectHost;
-      unsigned int m_connectPort;
+      ::u32 m_connectPort;
       bool m_viewOnly;
       RfbClientManager *m_clientManager;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

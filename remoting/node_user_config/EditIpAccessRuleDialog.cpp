@@ -96,7 +96,7 @@ namespace remoting_node
       return false;
    }
 
-   bool EditIpAccessRuleDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool EditIpAccessRuleDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       if (notificationID == ::user::e_notification_button_clicked) {
          switch (controlID) {

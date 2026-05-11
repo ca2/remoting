@@ -122,11 +122,11 @@ namespace remoting
          ::pointer < ::file::writable > m_pwriteable;
 
          // Initial file offset for current download (broken downloads)
-         unsigned long long m_fileOffset;
+         ::u64 m_fileOffset;
 
          // Helper member to know how many folders to download left
          // to get their file size
-         unsigned int m_foldersToCalcSizeLeft;
+         ::u32 m_foldersToCalcSizeLeft;
 
          // request data size changes dynamicaly depends on request rate
          size_t m_bufferSize;

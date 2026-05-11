@@ -66,13 +66,13 @@ namespace remoting
          m_plogwriter->debug("Echo extension request handler deleted");
       }
 
-      void EchoExtensionRequestHandler::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate)
+      void EchoExtensionRequestHandler::onRequest(::u32 reqCode, ::remoting::RfbInputGate *pblockinggate)
       {
          m_input = pblockinggate;
 
          try {
             if (reqCode == ClientMsgDefs::ECHO_REQUEST) {
-               unsigned int number = m_input->readUInt32();
+               ::u32 number = m_input->readUInt32();
                m_plogwriter->debug("got echo request with number {}", number);
                {
                   critical_section_lock l(m_output);

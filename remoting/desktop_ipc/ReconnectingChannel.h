@@ -53,7 +53,7 @@ namespace remoting
 
 
 
-      //ReconnectingChannel(unsigned int timeOut, ::subsystem::LogWriter * plogwriter);
+      //ReconnectingChannel(::u32 timeOut, ::subsystem::LogWriter * plogwriter);
       ReconnectingChannel();
       ReconnectingChannel(const class CLASS_DECL_REMOTING  ::time & timeTimeout, ::subsystem::LogWriter * plogwriter);
       ~ReconnectingChannel() override;

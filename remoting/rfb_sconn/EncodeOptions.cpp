@@ -55,7 +55,7 @@ namespace remoting
       m_enableDesktopConfiguration = false;
    }
 
-   void EncodeOptions::setEncodings(const int_array & ia)
+   void EncodeOptions::setEncodings(const i32_array & ia)
    {
       reset();
       bool encoderWasSet = false;

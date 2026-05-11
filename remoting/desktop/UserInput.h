@@ -58,7 +58,7 @@ namespace remoting
       // By the keyFlag argument will be set the mouse button state as described in
       // the rfb protocol.
       virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag) = 0;
-      virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
+      virtual void setKeyboardEvent(::u32 keySym, bool down) = 0;
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;
 
       virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle) = 0;

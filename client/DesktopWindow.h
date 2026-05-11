@@ -106,12 +106,12 @@ namespace remoting_client
         //
         // Overrides RfbKeySymListener::onRfbKeySymEvent().
         //
-        void onRfbKeySymEvent(unsigned int rfbKeySym, bool down) override;
+        void onRfbKeySymEvent(::u32 rfbKeySym, bool down) override;
 
         //
         // Inherited from BaseWindow.
         //
-        bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam) override;
+        bool onMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam) override;
         //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
         void onPaint();
         bool onCreate(void * pCreateStruct) override;
@@ -123,7 +123,7 @@ namespace remoting_client
         bool onKey(::wparam wParam, ::lparam lParam);
         bool onChar(::wparam wParam, ::lparam lParam);
         bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, const ::int_point & pointPosition) override;
-        bool onMouseEx(unsigned int message, int iButtonMask, unsigned short wspeed, const ::int_point &pointPosition,
+        bool onMouseEx(::u32 message, int iButtonMask, unsigned short wspeed, const ::int_point &pointPosition,
                        bool &bDoDefaultProcessing) override;
         //bool onSize(::wparam wParam, ::lparam lParam);
         void onSize() override;
@@ -136,7 +136,7 @@ namespace remoting_client
         // This function check pointer to viewer core and send event.
         // If into viewer core throwing exception ::subsystem::Exception, then it catching
         // in this function and logged.
-        void sendKeyboardEvent(bool downFlag, unsigned int key);
+        void sendKeyboardEvent(bool downFlag, ::u32 key);
         void sendPointerEvent(unsigned char buttonMask, const ::int_point &pointPosition);
         void sendCutTextEvent(const ::scoped_string & cutText);
 

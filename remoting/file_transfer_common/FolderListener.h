@@ -56,14 +56,14 @@ namespace  remoting
 
          ::file::path m_pathFolder;
          ::pointer_array < FileInfo > m_fileinfoa;
-         //unsigned int m_filesCount;
+         //::u32 m_filesCount;
 
 
          FolderListener(::particle * pparticle, const ::file::path & pathFolder);
          ~FolderListener();
 
          //const FileInfo *getFilesInfo() const;
-         //unsigned int getFilesCount() const;
+         //::u32 getFilesCount() const;
 
          bool list();
 

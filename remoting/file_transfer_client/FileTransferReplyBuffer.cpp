@@ -59,7 +59,7 @@ namespace  remoting
          return m_isCompressionSupported;
       }
 
-      // unsigned int FileTransferReplyBuffer::getFilesInfoCount()
+      // ::u32 FileTransferReplyBuffer::getFilesInfoCount()
       // {
       //    return m_filesInfoCount;
       // }
@@ -69,7 +69,7 @@ namespace  remoting
       //    return m_filesInfo;
       // }
 
-      unsigned int FileTransferReplyBuffer::getDownloadBufferSize()
+      ::u32 FileTransferReplyBuffer::getDownloadBufferSize()
       {
          return m_downloadBufferSize;
       }
@@ -79,12 +79,12 @@ namespace  remoting
          return m_downloadFileFlags;
       }
 
-      unsigned long long FileTransferReplyBuffer::getDownloadLastModified()
+      ::u64 FileTransferReplyBuffer::getDownloadLastModified()
       {
          return m_downloadLastModified;
       }
 
-      unsigned long long FileTransferReplyBuffer::getDirSize()
+      ::u64 FileTransferReplyBuffer::getDirSize()
       {
          return m_dirSize;
       }
@@ -105,8 +105,8 @@ namespace  remoting
       void FileTransferReplyBuffer::onFileListReply(::DataInputStream * pinput)
       {
          unsigned char compressionLevel = 0;
-         unsigned int compressedSize = 0;
-         unsigned int uncompressedSize = 0;
+         ::u32 compressedSize = 0;
+         ::u32 uncompressedSize = 0;
 
          ::array_base<unsigned char> buffer;
 
@@ -147,7 +147,7 @@ namespace  remoting
 //               m_filesInfo = new FileInfo[m_filesInfoCount];
 //            }
 
-            for (unsigned int i = 0; i < filesInfoCount; i++)
+            for (::u32 i = 0; i < filesInfoCount; i++)
          {
 
                auto & pfileinfo = m_fileinfoa[i];
@@ -201,8 +201,8 @@ namespace  remoting
       void FileTransferReplyBuffer::onDownloadDataReply(::DataInputStream * pinput)
       {
          unsigned char coLevel = pinput->readUInt8();
-         unsigned int coBufferSize = pinput->readUInt32();
-         unsigned int uncoBufferSize = pinput->readUInt32();
+         ::u32 coBufferSize = pinput->readUInt32();
+         ::u32 uncoBufferSize = pinput->readUInt32();
 
          m_downloadBuffer = readCompressedDataBlock(pinput, coBufferSize, uncoBufferSize, coLevel);
          m_downloadBufferSize = uncoBufferSize;
@@ -260,8 +260,8 @@ namespace  remoting
 
 
       ::array_base<unsigned char> FileTransferReplyBuffer::readCompressedDataBlock(::DataInputStream * pinput,
-                                                                     unsigned int compressedSize,
-                                                                     unsigned int uncompressedSize,
+                                                                     ::u32 compressedSize,
+                                                                     ::u32 uncompressedSize,
                                                                      unsigned char compressionLevel)
       {
          //
@@ -269,8 +269,8 @@ namespace  remoting
          // When not using compression uncoBuffer = coBuffer.
          //
 
-         unsigned int coSize = compressedSize;
-         unsigned int uncoSize = uncompressedSize;
+         ::u32 coSize = compressedSize;
+         ::u32 uncoSize = uncompressedSize;
 
          ::array_base<unsigned char> coBuffer(coSize);
 

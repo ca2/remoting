@@ -217,9 +217,9 @@ namespace remoting
          return false;
       }
 
-      unsigned long long UploadOperation::getInputFilesSize()
+      ::u64 UploadOperation::getInputFilesSize()
       {
-         unsigned long long totalFilesSize = 0;
+         ::u64 totalFilesSize = 0;
 
          FileInfoList *fil = m_toCopy;
          while (fil != NULL) {
@@ -240,9 +240,9 @@ namespace remoting
       }
 
 
-      unsigned long long UploadOperation::getFileSize(const ::file::path & pathToFile)
+      ::u64 UploadOperation::getFileSize(const ::file::path & pathToFile)
       {
-         unsigned long long fileSize = 0;
+         ::u64 fileSize = 0;
 
          auto pfileitem = m_plogwriter->file_item(pathToFile);
 
@@ -279,7 +279,7 @@ namespace remoting
             else
             {
 
-               fileSize = (unsigned long long)len;
+               fileSize = (::u64)len;
 
             }
          }
@@ -359,10 +359,10 @@ namespace remoting
             delete m_pfileitem;
          }
 
-         unsigned long long initialFileOffset = 0;
+         ::u64 initialFileOffset = 0;
 
          // Search if file already exists on remote machine
-         for (unsigned int i = 0; i < m_fileinfoaRemote; i++) {
+         for (::u32 i = 0; i < m_fileinfoaRemote; i++) {
             FileInfo *localFileInfo = m_toCopy->getFileInfo();
             FileInfo *remoteFileInfo = m_fileinfoaRemote[i];
 
@@ -442,11 +442,11 @@ namespace remoting
          m_timeLastRequest.Now();
 
          ::array_base<char> buffer(m_bufferSize);
-         unsigned int read = 0;
+         ::u32 read = 0;
          try {
             size_t portion = m_preadable->read(buffer.data(), m_bufferSize);
-            ASSERT((unsigned int)portion == portion);
-            read = (unsigned int)portion;
+            ASSERT((::u32)portion == portion);
+            read = (::u32)portion;
          } catch (EOFException) {
 
             //
@@ -570,7 +570,7 @@ namespace remoting
          m_fileinfoaRemote = fileinfoa;
          // m_remoteFilesCount = count;
          // m_remoteFilesInfo = new FileInfo[count];
-         // for (unsigned int i = 0; i < count; i++) {
+         // for (::u32 i = 0; i < count; i++) {
          //    m_remoteFilesInfo[i] = remoteFilesInfo[i];
          // }
       }

@@ -99,12 +99,12 @@ namespace remoting_client
         return true;
     }
 
-    bool FileExistDialog::onNotify(unsigned int controlID, ::lparam data)
+    bool FileExistDialog::onNotify(::u32 controlID, ::lparam data)
     {
         return true;
     }
 
-    bool FileExistDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    bool FileExistDialog::onCommand(::u32 controlID, ::u32 notificationID)
     {
         switch (controlID) {
             case IDC_OVERWRITE_BUTTON:

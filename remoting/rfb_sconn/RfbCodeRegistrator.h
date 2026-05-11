@@ -39,10 +39,10 @@ namespace remoting
                          CapContainer *encCaps);
       virtual ~RfbCodeRegistrator();
 
-      void regCode(unsigned int code, RfbDispatcherListener *listener);
-      void addSrvToClCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
-      void addClToSrvCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
-      void addEncCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
+      void regCode(::u32 code, RfbDispatcherListener *listener);
+      void addSrvToClCap(::u32 code, const char *vendorSignature, const char *nameSignature);
+      void addClToSrvCap(::u32 code, const char *vendorSignature, const char *nameSignature);
+      void addEncCap(::u32 code, const char *vendorSignature, const char *nameSignature);
 
    private:
       RfbDispatcher *m_pdesktopsrvdispatcher;

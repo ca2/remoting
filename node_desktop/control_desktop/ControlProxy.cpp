@@ -94,12 +94,12 @@ namespace remoting_control_desktop
 
       createMessage(ControlProto::GET_CLIENT_LIST_MSG_ID)->send();
 
-      unsigned int count = m_pcontrolgate->readUInt32();
+      ::u32 count = m_pcontrolgate->readUInt32();
 
-      for (unsigned int i = 0; i < count; i++) {
+      for (::u32 i = 0; i < count; i++) {
          ::string peerAddr;
 
-         unsigned int id = m_pcontrolgate->readUInt32();
+         ::u32 id = m_pcontrolgate->readUInt32();
 
          peerAddr = m_pcontrolgate->readUtf8();
 
@@ -124,7 +124,7 @@ namespace remoting_control_desktop
    void ControlProxy::makeTcpDispatcherConnection(const ::scoped_string & scopedstrConnectString,
                                                   const ::scoped_string & scopedstrDispatcherName,
                                                   const ::scoped_string & scopedstrKeyword,
-                                                  unsigned int connectionId)
+                                                  ::u32 connectionId)
    {
       critical_section_lock l(m_pcontrolgate);
 
@@ -181,7 +181,7 @@ namespace remoting_control_desktop
       msg->send();
    }
 
-   void ControlProxy::shareApp(unsigned int procId)
+   void ControlProxy::shareApp(::u32 procId)
    {
       critical_section_lock l(m_pcontrolgate);
       ControlMessage *msg = createMessage(ControlProto::SHARE_APP_MSG_ID);

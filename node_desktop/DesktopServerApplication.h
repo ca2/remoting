@@ -97,7 +97,7 @@ namespace remoting_node_desktop
 
       ::pointer < ::subsystem::SessionChangesWatcher >m_psessionchangeswatcher;
 
-      unsigned int m_contextSwitchResolution; // in ms
+      ::u32 m_contextSwitchResolution; // in ms
    };
 
 

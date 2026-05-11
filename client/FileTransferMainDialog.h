@@ -62,26 +62,26 @@ namespace remoting_client
         //
         int onFtTargetFileExists(::remoting::file_transfer::FileInfo *sourceFileInfo,
                                  ::remoting::file_transfer::FileInfo *targetFileInfo,
-                                 const ::file::path & pathToTargetFile);
-        void setProgress(double progress);
+                                 const ::file::path & pathToTargetFile) override;
+        void setProgress(double progress) override;
 
-        void onFtOpError(const ::scoped_string & scopedstrMessage);
-        void onFtOpInfo(const ::scoped_string & scopedstrMessage);
-        void onFtOpStarted();
-        void onFtOpFinished(int state, int result);
+        void onFtOpError(const ::scoped_string & scopedstrMessage) override;
+        void onFtOpInfo(const ::scoped_string & scopedstrMessage) override;
+        void onFtOpStarted() override;
+        void onFtOpFinished(int state, int result) override;
 
         //
         // filetransfer's operation is finished. Need update of control
         //
-        void setNothingState();
+        void setNothingState() override;
 
         //
         // Called if local file ::list_base is updated
         //
-        void onRefreshLocalFileList();
+        void onRefreshLocalFileList() override;
 
         // Called if remote file ::list_base is updated
-        void onRefreshRemoteFileList();
+        void onRefreshRemoteFileList() override;
 
         //
         // Shows error scopedstrMessage and throws exception
@@ -95,10 +95,10 @@ namespace remoting_client
         // Inherited from BaseDialog
         //
 
-        virtual bool onInitDialog();
-        //virtual bool onNotify(unsigned int controlID, ::lparam data);
-        virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
-        virtual bool onDestroy();
+        bool onInitDialog() override;
+        //virtual bool onNotify(::u32 controlID, ::lparam data);
+        bool onCommand(::u32 controlID, ::u32 notificationID) override;
+        bool onDestroy() override;
 
          bool _002OnAction(int iControl) override;
          bool _002OnKeyDownNotification(int iControl, ::user::enum_key ekey) override;
@@ -106,7 +106,7 @@ namespace remoting_client
          bool _002OnSelectionChange(int iControl) override;
 
 
-        virtual void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
+        void onMessageReceived(::u32 uMsg, ::wparam wParam, ::lparam lParam) override;
 
         //
         // Button event handlers
@@ -283,7 +283,7 @@ namespace remoting_client
 
         //private:
 
-        static const unsigned int WM_OPERATION_FINISHED = WM_USER + 2;
+        static const ::u32 WM_OPERATION_FINISHED = WM_USER + 2;
     };
 
 

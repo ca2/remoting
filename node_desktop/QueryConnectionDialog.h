@@ -50,10 +50,10 @@ namespace remoting_node_desktop
       //
 
       virtual bool onInitDialog();
-      virtual bool onNotify(unsigned int controlID, ::lparam data);
-      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onNotify(::u32 controlID, ::lparam data);
+      virtual bool onCommand(::u32 controlID, ::u32 notificationID);
       virtual bool onDestroy();
-      virtual void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
+      virtual void onMessageReceived(::u32 uMsg, ::wparam wParam, ::lparam lParam);
 
       void initControls();
 

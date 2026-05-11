@@ -120,7 +120,7 @@ namespace remoting_node
       m_pconfigurator->load();
    }
 
-   bool ConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool ConfigDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       switch (controlID) {
          case ::innate_subsystem::e_control_id_ok:
@@ -136,7 +136,7 @@ namespace remoting_node
       return true;
    }
 
-   // bool ConfigDialog::onNotify(unsigned int controlID, ::lparam data)
+   // bool ConfigDialog::onNotify(::u32 controlID, ::lparam data)
    // {
    //    switch (controlID) {
    //       case IDC_CONFIG_TAB:

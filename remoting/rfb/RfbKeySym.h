@@ -43,9 +43,9 @@ namespace remoting
       // This function doesn't distinguish between left and right modifiers.
       void sendModifier(::user::enum_key ekeyModifier, bool down);
 
-      void processKeyEvent(::user::enum_key ekey, unsigned int addKeyData);
+      void processKeyEvent(::user::enum_key ekey, ::u32 addKeyData);
       bool vkCodeToString(::user::enum_key ekey, bool isKeyDown, ::wstring *res);
-      void processCharEvent(int charCode, unsigned int addKeyData);
+      void processCharEvent(int charCode, ::u32 addKeyData);
       // Checks a new modifiers state after focus restoration and sends difference
       void processFocusRestoration();
       // This function release all modifiers unconditionally.
@@ -71,10 +71,10 @@ namespace remoting
       void checkAndSendDiff(::user::enum_key ekey, unsigned char state);
 
       // Send one key event (Alt translated to Meta if Scroll Lock is on).
-      virtual void sendKeySymEvent(unsigned int rfbKeySym, bool down);
+      virtual void sendKeySymEvent(::u32 rfbKeySym, bool down);
 
       // Send one key event (Alt not translated to Meta).
-      virtual void sendVerbatimKeySymEvent(unsigned int rfbKeySym, bool down);
+      virtual void sendVerbatimKeySymEvent(::u32 rfbKeySym, bool down);
 
       // helper functions
       //int GettingCharFromCtrlSymbol(int ctrlSymbol);

@@ -88,7 +88,7 @@ namespace remoting
 
       // Returns application PID if we share one application. Check getOnlyApplication() as well,
       // to make sure the returned value is relevant.
-      unsigned int getApplicationId();
+      ::u32 getApplicationId();
 
       // Returns a region that has rectangles of application which was visible
       // window parts at latest calling of the update() function. The region

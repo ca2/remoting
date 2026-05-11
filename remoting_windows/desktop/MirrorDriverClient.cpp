@@ -407,7 +407,7 @@ namespace remoting_windows
       }
    }
 
-   bool MirrorDriverClient::processMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
+   bool MirrorDriverClient::processMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam)
    {
       if (scopedstrMessage == WM_DISPLAYCHANGE)
       {

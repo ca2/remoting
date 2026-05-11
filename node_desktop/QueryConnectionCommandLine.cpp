@@ -71,7 +71,7 @@ namespace remoting_node_desktop
 
    bool QueryConnectionCommandLine::isDefaultActionAccept() { return optionSpecified(ACCEPT); }
 
-   unsigned int QueryConnectionCommandLine::getTimeout() { return m_timeout; }
+   ::u32 QueryConnectionCommandLine::getTimeout() { return m_timeout; }
 
 
 } // namespace remoting_node_desktop

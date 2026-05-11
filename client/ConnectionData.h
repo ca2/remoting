@@ -56,7 +56,7 @@ namespace remoting_client
       ::string m_defaultPassword;
 
       bool m_isSetDispatchId;
-      unsigned int m_dispatchId;
+      ::u32 m_dispatchId;
 
 
       ConnectionData();
@@ -97,9 +97,9 @@ namespace remoting_client
       bool isSetPassword() const;
       void resetPassword();
 
-      unsigned int getDispatchId() const;
+      ::u32 getDispatchId() const;
       bool isSetDispatchId() const;
-      void setDispatchId(unsigned int id);
+      void setDispatchId(::u32 id);
       void unsetDispatchId();
 
       void setIncoming(bool isIncoming);

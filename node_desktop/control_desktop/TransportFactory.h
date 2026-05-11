@@ -57,7 +57,7 @@ namespace remoting_control_desktop
        * @throws SocketException on socket error.
        */
       static ::pointer < Transport > createSocketClientTransport(const ::scoped_string & scopedstrConnectHost,
-                                                    unsigned int connectPort);
+                                                    ::u32 connectPort);
       /**
        * Creates server transport that uses bound socket.
        *
@@ -71,7 +71,7 @@ namespace remoting_control_desktop
        * @throws SocketException on socket error.
        */
       static ::pointer < Transport > createSocketServerTransport(const ::scoped_string & scopedstrBindHost,
-                                                    unsigned int bindPort);
+                                                    ::u32 bindPort);
 
       /**
        * Creates client transport that uses named pipe.

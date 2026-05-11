@@ -129,12 +129,12 @@ namespace remoting
       return setInt(scopedstrName, value ? 1 : 0);
    }
 
-   bool IniFileSettingsManager::getUINT(const ::scoped_string &scopedstrName, unsigned int *value)
+   bool IniFileSettingsManager::getUINT(const ::scoped_string &scopedstrName, ::u32 *value)
    {
-      return getIntAndCastTo<unsigned int>(scopedstrName, value);
+      return getIntAndCastTo<::u32>(scopedstrName, value);
    }
 
-   bool IniFileSettingsManager::setUINT(const ::scoped_string &scopedstrName, unsigned int value)
+   bool IniFileSettingsManager::setUINT(const ::scoped_string &scopedstrName, ::u32 value)
    {
       ::string stringVal;
       stringVal.format("%u", value);
@@ -148,8 +148,8 @@ namespace remoting
       // so use this trick, if returning value is defVal, than key does not
       // exists and method must return false.
       // FIXME: This trick will not work in some cases
-      unsigned int defVal = 0xABCDEF;
-      unsigned int ret = ::acme::GetPrivateProfileInt(::string(m_appName), ::string(scopedstrName), defVal, m_path);
+      ::u32 defVal = 0xABCDEF;
+      ::u32 ret = ::acme::GetPrivateProfileInt(::string(m_appName), ::string(scopedstrName), defVal, m_path);
       if (ret == defVal)
       {
          return false;
@@ -198,7 +198,7 @@ namespace remoting
 
       ::memory buffer;
 
-      unsigned int bufferSize = 1024;
+      ::u32 bufferSize = 1024;
 
       bool tooSmall = false;
 
@@ -210,7 +210,7 @@ namespace remoting
          buffer.set_size(bufferSize);
 
          // Try to get string value from storage
-         unsigned int ret =
+         ::u32 ret =
             ::acme::GetPrivateProfileString(::string(m_appName), ::string(scopedstrName), ::string(scopedstrDefaultValue),
                                     (char*) buffer.data(), bufferSize, m_path);
 

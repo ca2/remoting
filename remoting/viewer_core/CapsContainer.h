@@ -39,7 +39,7 @@ namespace remoting_client
       static const size_t nameSigSize = 8;
 
    public:
-      unsigned int code;                            // numeric identifier
+      ::u32 code;                            // numeric identifier
       char vendorSignature[vendorSigSize];    // vendor identification
       char nameSignature[nameSigSize];        // abbreviated option name
 
@@ -63,27 +63,27 @@ namespace remoting_client
       // records with the same code.
       //
       void add(const RfbCapabilityInfo *capinfo, const ::string desc = "");
-      void add(unsigned int code, const char *vendor, const char *name,
+      void add(::u32 code, const char *vendor, const char *name,
                ::string desc = "");
 
       //
       // Check if a capability with the specified code was added earlier.
       //
-      bool isAdded(unsigned int code) const;
+      bool isAdded(::u32 code) const;
 
       //
       // Fill in a rfbCapabilityInfo structure with contents corresponding to the
       // specified code. Returns true on success, false if the specified code is
       // not known.
       //
-      bool getInfo(unsigned int code, RfbCapabilityInfo *capinfo);
+      bool getInfo(::u32 code, RfbCapabilityInfo *capinfo);
 
       //
       // Get a description string for the specified capability code. Returns NULL
       // either if the code is not known, or if there is no description for this
       // capability.
       //
-      ::string getDescription(unsigned int code) const;
+      ::string getDescription(::u32 code) const;
 
       //
       // Mark the specified capability as "enabled". This function checks "vendor"
@@ -95,7 +95,7 @@ namespace remoting_client
       //
       // Check if the specified capability is known and enabled.
       //
-      bool isEnabled(unsigned int code) const;
+      bool isEnabled(::u32 code) const;
 
       //
       // This function return count of enabled pcapabilitiesmanager.
@@ -107,12 +107,12 @@ namespace remoting_client
       // List of pcapabilitiesmanager contained only enabled capability.
       // If the index is not valid, return 0.
       //
-      unsigned int getByOrder(size_t idx);
+      ::u32 getByOrder(size_t idx);
 
       //
       // This method return ::list_base of enabled pcapabilitiesmanager.
       //
-      void getEnabledCapabilities(::array_base<unsigned int> &codes) const;
+      void getEnabledCapabilities(::array_base<::u32> &codes) const;
 
 
    private:
@@ -120,14 +120,14 @@ namespace remoting_client
       // Check if a capability with the specified code was added earlier.
       // This function isn't thread-safe.
       //
-      bool isKnown(unsigned int code) const;
+      bool isKnown(::u32 code) const;
 
-      ::map<unsigned int, RfbCapabilityInfo> infoMap;
-      ::map<unsigned int, ::string> descMap;
-      ::map<unsigned int, bool> enableMap;
+      ::map<::u32, RfbCapabilityInfo> infoMap;
+      ::map<::u32, ::string> descMap;
+      ::map<::u32, bool> enableMap;
 
       // List of enabled caps.
-      ::array_base<unsigned int> m_plist;
+      ::array_base<::u32> m_plist;
 
       mutable lockable_critical_section m_mapLock;
    };

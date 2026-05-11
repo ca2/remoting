@@ -64,7 +64,7 @@ namespace remoting
           * Inherited from RfbDispatcherListener.
           * Processes echo extension client messages.
           */
-         virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate);
+         virtual void onRequest(::u32 reqCode, ::remoting::RfbInputGate *pblockinggate);
 
          bool isEchoExtensionEnabled();
 

@@ -206,7 +206,7 @@ namespace remoting_client
         m_toolbar.enableButton(IDS_TB_CTRLESC, isEnable);
         m_toolbar.enableButton(IDS_TB_CTRLALTDEL, isEnable);
 
-        unsigned int enableMenu = static_cast<unsigned int>(!isEnable);
+        ::u32 enableMenu = static_cast<::u32>(!isEnable);
         m_menu.enableMenuItem(IDS_TB_CTRLALTDEL, enableMenu);
         m_menu.enableMenuItem(IDS_TB_CTRLESC, enableMenu);
         m_menu.enableMenuItem(IDS_TB_CTRL, enableMenu);
@@ -237,7 +237,7 @@ namespace remoting_client
         bool bFileTransfer = m_fileTransfer && m_fileTransfer->isEnabled();
 
         m_toolbar.enableButton(IDS_TB_TRANSFER, bFileTransfer && !m_pconnectionconfig->isViewOnly());
-        unsigned int enableMenu = static_cast<unsigned int>(!(bFileTransfer && !m_pconnectionconfig->isViewOnly()));
+        ::u32 enableMenu = static_cast<::u32>(!(bFileTransfer && !m_pconnectionconfig->isViewOnly()));
         m_menu.enableMenuItem(IDS_TB_TRANSFER, enableMenu);
 
         m_pviewercore->allowCopyRect(m_pconnectionconfig->isCopyRectAllowed());
@@ -325,7 +325,7 @@ namespace remoting_client
 
     }
 
-    bool ViewerWindow::onMessage(unsigned int message, ::wparam wParam, ::lparam lParam)
+    bool ViewerWindow::onMessage(::u32 message, ::wparam wParam, ::lparam lParam)
     {
         switch (message) {
             case WM_NCDESTROY:
@@ -804,7 +804,7 @@ namespace remoting_client
         m_poperatingsystemapplication->postMessage(remoting_impact::_WM_USER_ABOUT);
     }
 
-    bool ViewerWindow::onCommand(unsigned int controlID, unsigned int notificationID)
+    bool ViewerWindow::onCommand(::u32 controlID, ::u32 notificationID)
     {
 
 
@@ -1013,7 +1013,7 @@ namespace remoting_client
              m_toolbar.hide();
           }
 
-          unsigned int isEnable = static_cast<unsigned int>(m_pconnectionconfig->isViewOnly());
+          ::u32 isEnable = static_cast<::u32>(m_pconnectionconfig->isViewOnly());
           m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
        }
 
@@ -1141,7 +1141,7 @@ namespace remoting_client
     //         m_toolbar.hide();
     //     }
     //
-    //     unsigned int isEnable = static_cast<unsigned int>(m_pconnectionconfig->isViewOnly());
+    //     ::u32 isEnable = static_cast<::u32>(m_pconnectionconfig->isViewOnly());
     //     m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
     //
     //    doRestoreFromFullScreen();
@@ -1174,7 +1174,7 @@ namespace remoting_client
     //     //    m_toolbar.hide();
     //     //}
     //
-    //     //unsigned int isEnable = static_cast<unsigned int>(m_pconnectionconfig->isViewOnly());
+    //     //::u32 isEnable = static_cast<::u32>(m_pconnectionconfig->isViewOnly());
     //     //m_menu.enableMenuItem(IDS_TB_TOOLBAR, isEnable);
     //
     //     //// Restore pointPosition, style and exstyle of windowed window.
@@ -1404,10 +1404,10 @@ namespace remoting_client
         m_fileTransfer->setOutput(output);
 
         // Update ::list_base of supported operation for file transfer.
-        ::array_base<unsigned int> clientMsgCodes;
+        ::array_base<::u32> clientMsgCodes;
         m_pviewercore->getEnabledClientMsgCapabilities(&clientMsgCodes);
 
-        ::array_base<unsigned int> serverMsgCodes;
+        ::array_base<::u32> serverMsgCodes;
         m_pviewercore->getEnabledServerMsgCapabilities(&serverMsgCodes);
 
         m_fileTransfer->getCore()->updateSupportedOperations(&clientMsgCodes, &serverMsgCodes);
@@ -1587,11 +1587,11 @@ namespace remoting_client
           // newLParam |= ((str->flags & LLKHF_UP) > 0) << 31;
          if (emessage == ::user::e_message_key_down || emessage == ::user::e_message_sys_key_down)
          {
-             m_pdesktopwindow->postMessage((unsigned int) emessage, iVkCode, lparam);
+             m_pdesktopwindow->postMessage((::u32) emessage, iVkCode, lparam);
          }
          else if (emessage == ::user::e_message_key_up || emessage == ::user::e_message_sys_key_up)
          {
-             m_pdesktopwindow->postMessage((unsigned int) emessage, iVkCode, lparam);
+             m_pdesktopwindow->postMessage((::u32) emessage, iVkCode, lparam);
          }
          lresult = 1;
           return true;

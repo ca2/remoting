@@ -92,7 +92,7 @@ namespace remoting
       static void packPixels(unsigned char *buf, int count, const ::innate_subsystem::PixelFormat & pixelformat);
 
       // Fill in the palette (m_pal) assuming that pixels have the type PIXEL_T
-      // (where PIXEL_T can be unsigned char, unsigned short or unsigned int). Do not allow more than
+      // (where PIXEL_T can be unsigned char, unsigned short or ::u32). Do not allow more than
       // maxColors in the palette, reset the palette size to 0 if actual number of
       // colors exceeds this limitation.
       template<class PIXEL_T>

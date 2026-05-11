@@ -68,7 +68,7 @@ namespace remoting_control_desktop
        * uses on auth needed instead of the dialog box. This parameter ignores if
        * *password parameter is presented.
        */
-      ControlMessage(unsigned int messageId, ControlGate * pcontrolgate,
+      ControlMessage(::u32 messageId, ControlGate * pcontrolgate,
                      const ::scoped_string & scopedstrPasswordFile = 0,
                      bool getPassFromConfigEnabled = false,
                      bool forService = false);
@@ -114,7 +114,7 @@ namespace remoting_control_desktop
       /**
        * ::innate_subsystem::Control scopedstrMessage id.
        */
-      unsigned int m_messageId;
+      ::u32 m_messageId;
 
       ::string m_passwordFile;
       bool m_getPassFromConfigEnabled;

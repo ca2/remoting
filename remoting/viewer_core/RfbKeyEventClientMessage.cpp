@@ -26,7 +26,7 @@
 
 namespace remoting_client
 {
-   RfbKeyEventClientMessage::RfbKeyEventClientMessage(bool downFlag, unsigned int key)
+   RfbKeyEventClientMessage::RfbKeyEventClientMessage(bool downFlag, ::u32 key)
    : m_downFlag(downFlag),
      m_key(key)
    {

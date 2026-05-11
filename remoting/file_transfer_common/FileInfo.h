@@ -64,7 +64,7 @@ namespace remoting
          // in constructor's arguments.
          //
 
-         FileInfo(unsigned long long size, unsigned long long modTime,
+         FileInfo(::u64 size, ::u64 modTime,
                   unsigned short flags, const ::scoped_string & scopedstrFileName);
 
          //
@@ -90,13 +90,13 @@ namespace remoting
          // Sets last modification time (in seconds from unix epoch)
          //
 
-         void setLastModified(unsigned long long time);
+         void setLastModified(::u64 time);
 
          //
          // Sets file size (in bytes)
          //
 
-         void setSize(unsigned long long size);
+         void setSize(::u64 size);
 
          //
          // Sets file flags (see static FileInfo constants)
@@ -114,13 +114,13 @@ namespace remoting
          // Returns file last modified time (in secords, starts from unix epoch)
          //
 
-         unsigned long long lastModified() const;
+         ::u64 lastModified() const;
 
          //
          // Returns file size in bytes
          //
 
-         unsigned long long getSize() const;
+         ::u64 getSize() const;
 
          //
          // Returns file flags (see FileInfo static constants)
@@ -135,7 +135,7 @@ namespace remoting
          ::string getFileName() const;
 
          ///protected:
-         unsigned long long m_sizeInBytes;
+         ::u64 m_sizeInBytes;
          class ::time  m_lastModified;
          unsigned short m_flags;
          ::string m_strFileName;

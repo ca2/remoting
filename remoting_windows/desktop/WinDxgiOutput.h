@@ -39,7 +39,7 @@ namespace remoting_windows
    virtual public ::particle
    {
    public:
-      WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, unsigned int iOutput);
+      WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, ::u32 iOutput);
       WinDxgiOutput(const WinDxgiOutput &src);
       virtual ~WinDxgiOutput();
 

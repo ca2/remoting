@@ -34,7 +34,7 @@ namespace remoting
    class CLASS_DECL_REMOTING  UpdSenderClientMsgDefs
    {
    public:
-      static const unsigned int RFB_VIDEO_FREEZE = 152;
+      static const ::u32 RFB_VIDEO_FREEZE = 152;
       static ::string_literal RFB_VIDEO_FREEZE_SIG;
    };
 

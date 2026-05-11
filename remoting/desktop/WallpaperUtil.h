@@ -36,6 +36,9 @@ namespace remoting
    {
    public:
 
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      ::string m_strWallpaperPath;
+      bool m_bWasDisabled;
 
 
       WallpaperUtil();
@@ -52,15 +55,12 @@ namespace remoting
    //private:
       // Hides the desktop wallpaper.
       // @throws SystemException on a fail.
-      void disableWallpaper();
+      virtual void disableWallpaper() = 0;
 
       // Restores the desktop wallpaper.
       // @throws SystemException on a fail.
-      void restoreWallpaper();
+      virtual void restoreWallpaper() = 0;
 
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
-      ::string m_strWallpaperPath;
-      bool m_bWasDisabled;
    };
 
    //// __WALLPAPERUTIL_H__

@@ -35,7 +35,7 @@ namespace remoting_windows
    HHOOK WindowsInputBlocker::m_hSoftMouseHook = 0;
 
    class ::time WindowsInputBlocker::m_lastInputTime;
-   unsigned int WindowsInputBlocker::m_timeInterval = INFINITE;
+   ::u32 WindowsInputBlocker::m_timeInterval = INFINITE;
    lockable_critical_section WindowsInputBlocker::m_lastInputTimeMutex;
 
    WindowsInputBlocker *WindowsInputBlocker::m_instance = 0;
@@ -124,7 +124,7 @@ namespace remoting_windows
       PostThreadMessage(getThreadId(), 0, 0, 0);
    }
 
-   void WindowsInputBlocker::setSoftKeyboardBlocking(bool block, unsigned int timeInterval)
+   void WindowsInputBlocker::setSoftKeyboardBlocking(bool block, ::u32 timeInterval)
    {
       if (block) {
          m_timeInterval = timeInterval;
@@ -133,7 +133,7 @@ namespace remoting_windows
       PostThreadMessage(getThreadId(), 0, 0, 0);
    }
 
-   void WindowsInputBlocker::setSoftMouseBlocking(bool block, unsigned int timeInterval)
+   void WindowsInputBlocker::setSoftMouseBlocking(bool block, ::u32 timeInterval)
    {
       if (block) {
          m_timeInterval = timeInterval;

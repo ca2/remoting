@@ -194,7 +194,7 @@ namespace remoting
          
          REFDBG_THIS(pparticle);
 
-         for (unsigned int i = 0; i < fileinfoa.size(); i++) {
+         for (::u32 i = 0; i < fileinfoa.size(); i++) {
             pcurrent = allocateø ::remoting::file_transfer::FileInfoList (pparticle, *fileinfoa[i]);
             pcurrent->setPrev(pprev);
             if (pprev) {

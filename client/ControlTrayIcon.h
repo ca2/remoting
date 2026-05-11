@@ -48,11 +48,11 @@ namespace remoting_client
         void showIcon();
 
         //protected:
-        static unsigned int WM_USER_TASKBAR;
+        static ::u32 WM_USER_TASKBAR;
 
         //protected:
-        //virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
-       //bool on_window_procedure(::lresult & lresult, unsigned int message, ::wparam wparam, ::lparam lparam) override;
+        //virtual LRESULT windowProc(HWND hWnd, ::u32 uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
+       //bool on_window_procedure(::lresult & lresult, ::u32 message, ::wparam wparam, ::lparam lparam) override;
         //
         // Show login-dialog after click "New connection..." in pop-up menu of tray icon
         //

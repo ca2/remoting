@@ -97,8 +97,8 @@ namespace remoting_node
       static ::string_literal HOOK_LOADER_WINDOW_CLASS;
       static ::string_literal HOOK_TARGET_WIN_CLASS_NAME;
       static ::string_literal HOOK_LOADER_NAME;
-      static const unsigned int LOADER_CLOSE_CODE;
-      static const unsigned int SPEC_IPC_CODE;
+      static const ::u32 LOADER_CLOSE_CODE;
+      static const ::u32 SPEC_IPC_CODE;
    };
 
    class CLASS_DECL_REMOTING DefaultNames

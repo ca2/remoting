@@ -47,8 +47,8 @@ namespace remoting
          m_isDownloadSupported = false;
       }
 
-      OperationSupport::OperationSupport(const ::array_base<unsigned int> &clientCodes,
-                                         const ::array_base<unsigned int> &serverCodes)
+      OperationSupport::OperationSupport(const ::array_base<::u32> &clientCodes,
+                                         const ::array_base<::u32> &serverCodes)
       {
          m_isFileListSupported = isSupport(clientCodes, FTMessage::FILE_LIST_REQUEST) &&
                                  isSupport(serverCodes, FTMessage::FILE_LIST_REPLY);
@@ -137,7 +137,7 @@ namespace remoting
          return m_isDirSizeSupported;
       }
 
-      bool OperationSupport::isSupport(const ::array_base<unsigned int> &codes, unsigned int code)
+      bool OperationSupport::isSupport(const ::array_base<::u32> &codes, ::u32 code)
       {
          return std::find(codes.begin(), codes.end(), code) != codes.end();
       }

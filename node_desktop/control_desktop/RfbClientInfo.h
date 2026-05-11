@@ -34,13 +34,13 @@ namespace remoting_control_desktop
    class RfbClientInfo
    {
    public:
-      RfbClientInfo(unsigned int id, const ::scoped_string & scopedstrPeerAddr);
+      RfbClientInfo(::u32 id, const ::scoped_string & scopedstrPeerAddr);
       virtual ~RfbClientInfo();
 
       // FIXME: Debug.
       // FIXME: These members must be protected.
    public:
-      unsigned int m_id;
+      ::u32 m_id;
       ::string m_peerAddr;
    };
 

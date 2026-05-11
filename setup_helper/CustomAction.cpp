@@ -49,7 +49,7 @@ void allowSas()
   regKey.setValueAsInt32(SAS_REG_KEY, sasValue);
 }
 
-unsigned int __stdcall AllowSas(MSIHANDLE hInstall)
+::u32 __stdcall AllowSas(MSIHANDLE hInstall)
 {
   allowSas();
   return ERROR_SUCCESS;
@@ -103,7 +103,7 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
 }
 
 
-unsigned int __stdcall SetRfbPassword(MSIHANDLE hInstall)
+::u32 __stdcall SetRfbPassword(MSIHANDLE hInstall)
 {
   try {
     writePasswordToRegistry(hInstall,
@@ -114,7 +114,7 @@ unsigned int __stdcall SetRfbPassword(MSIHANDLE hInstall)
   return ERROR_SUCCESS;
 }
 
-unsigned int __stdcall SetViewOnlyPassword(MSIHANDLE hInstall)
+::u32 __stdcall SetViewOnlyPassword(MSIHANDLE hInstall)
 {
   try {
     writePasswordToRegistry(hInstall,
@@ -125,7 +125,7 @@ unsigned int __stdcall SetViewOnlyPassword(MSIHANDLE hInstall)
   return ERROR_SUCCESS;
 }
 
-unsigned int __stdcall SetControlPassword(MSIHANDLE hInstall)
+::u32 __stdcall SetControlPassword(MSIHANDLE hInstall)
 {
   try {
     writePasswordToRegistry(hInstall,

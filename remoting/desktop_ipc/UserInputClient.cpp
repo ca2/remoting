@@ -116,7 +116,7 @@ void UserInputClient::setNewClipboard(const ::scoped_string & newClipboard)
   }
 }
 
-void UserInputClient::setKeyboardEvent(unsigned int keySym, bool down)
+void UserInputClient::setKeyboardEvent(::u32 keySym, bool down)
 {
   critical_section_lock al(m_pcontrolgate);
   try {
@@ -219,7 +219,7 @@ void UserInputClient::getWindowCoords(const ::operating_system::window & operati
     try {
       // Send request
       m_pcontrolgate->writeUInt8(WINDOW_COORDS_REQ);
-      m_pcontrolgate->writeUInt64((unsigned long long)::as_HWND(operatingsystemwindow));
+      m_pcontrolgate->writeUInt64((::u64)::as_uptr(operatingsystemwindow));
       bool isBrokenWindow = m_pcontrolgate->readUInt8() != 0;
       if (!isBrokenWindow)
       {

@@ -98,7 +98,7 @@ namespace remoting
             sendAnyRect<unsigned short>(rectangle, serverFb, clientFb, options);
             break;
          case 32:
-            sendAnyRect<unsigned int>(rectangle, serverFb, clientFb, options);
+            sendAnyRect<::u32>(rectangle, serverFb, clientFb, options);
             break;
          default:
             ASSERT(0);
@@ -326,19 +326,19 @@ namespace remoting
    void TightEncoder::packPixels(unsigned char *buf, int count, const ::innate_subsystem::PixelFormat & pixelformat)
    {
       unsigned char *dst = buf;
-      unsigned int pix;
+      ::u32 pix;
 
       while (count--) {
          if (!pixelformat.bigEndian) {
-            pix = (unsigned int)buf[3] << 24 |
-                  (unsigned int)buf[2] << 16 |
-                  (unsigned int)buf[1] << 8 |
-                  (unsigned int)buf[0];
+            pix = (::u32)buf[3] << 24 |
+                  (::u32)buf[2] << 16 |
+                  (::u32)buf[1] << 8 |
+                  (::u32)buf[0];
          } else {
-            pix = (unsigned int)buf[0] << 24 |
-                  (unsigned int)buf[1] << 16 |
-                  (unsigned int)buf[2] << 8 |
-                  (unsigned int)buf[3];
+            pix = (::u32)buf[0] << 24 |
+                  (::u32)buf[1] << 16 |
+                  (::u32)buf[2] << 8 |
+                  (::u32)buf[3];
          }
          buf += 4;
          *dst++ = (unsigned char)(pix >> pixelformat.redShift);
@@ -357,9 +357,9 @@ namespace remoting
       // Shortcuts.
       const PIXEL_T *pixels = (const PIXEL_T *)pframebuffer->getBuffer();
       int stride = pframebuffer->getDimension().cx;
-      unsigned int pixel = pixels[r.top * stride + r.left];
-      unsigned int oldPixel = 0;
-      unsigned int runLength = 0;
+      ::u32 pixel = pixels[r.top * stride + r.left];
+      ::u32 oldPixel = 0;
+      ::u32 runLength = 0;
 
       for (int y = r.top; y < r.bottom; y++) {
          for (int x = r.left; x < r.right; x++) {
@@ -408,7 +408,7 @@ namespace remoting
       const int h = rectangle.height();
       const PIXEL_T bg = (PIXEL_T)m_pal.getEntry(0);
 
-      unsigned int value, mask;
+      ::u32 value, mask;
       int x, y, bits;
       const int alignedWidth = w - w % 8;
       const int skipPixels = pframebuffer->getDimension().cx - w;
@@ -505,12 +505,12 @@ namespace remoting
       charBuff.set_size(compressedBufferSize);
       char *compressedData = charBuff.data();
 
-      ASSERT((unsigned int)dataLen == dataLen);
-      ASSERT((unsigned int)compressedBufferSize == compressedBufferSize);
+      ASSERT((::u32)dataLen == dataLen);
+      ASSERT((::u32)compressedBufferSize == compressedBufferSize);
       pz->next_in = (Bytef *)data;
-      pz->avail_in = (unsigned int)dataLen;
+      pz->avail_in = (::u32)dataLen;
       pz->next_out = (Bytef *)compressedData;
-      pz->avail_out = (unsigned int)compressedBufferSize;
+      pz->avail_out = (::u32)compressedBufferSize;
 
       // Change compression parameters if needed.
       if (zlibLevel != m_zsLevel[streamId]) {

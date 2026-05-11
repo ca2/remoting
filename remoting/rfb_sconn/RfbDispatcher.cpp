@@ -71,14 +71,14 @@ namespace remoting
    {
       try {
          while (!isTerminating()) {
-            unsigned int code = m_prfbinputgate->readUInt8();
+            ::u32 code = m_prfbinputgate->readUInt8();
             if (code == 0xfc) { // special TightVNC code
                code = code << 24;
                code += m_prfbinputgate->readUInt8() << 16;
                code += m_prfbinputgate->readUInt8() << 8;
                code += m_prfbinputgate->readUInt8();
             }
-            ::map<unsigned int, RfbDispatcherListener *>::iterator iter = m_handlers.find(code);
+            ::map<::u32, RfbDispatcherListener *>::iterator iter = m_handlers.find(code);
             if (iter == m_handlers.end()) {
                ::string errMess;
                errMess.format("unhandled {} code has been received from a client",
@@ -92,7 +92,7 @@ namespace remoting
       notifyAbTermination();
    }
 
-   void RfbDispatcher::registerNewHandle(unsigned int code, RfbDispatcherListener *listener)
+   void RfbDispatcher::registerNewHandle(::u32 code, RfbDispatcherListener *listener)
    {
       m_handlers[code] = listener;
    }

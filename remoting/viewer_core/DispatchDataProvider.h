@@ -35,6 +35,6 @@ namespace remoting_client
       //
       // This function should return true if data is available, false otherwise.
       //
-      virtual bool getDispatchData(unsigned int *id, ::string & dispatcherName, ::string & keyword) = 0;
+      virtual bool getDispatchData(::u32 *id, ::string & dispatcherName, ::string & keyword) = 0;
    };
 } // namespace remoting_client

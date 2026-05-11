@@ -60,7 +60,7 @@ namespace remoting
          // file system during copy operation execution
          //
 
-         virtual void dataChunkCopied(unsigned long long totalBytesCopied, unsigned long long totalBytesToCopy) = 0;
+         virtual void dataChunkCopied(::u64 totalBytesCopied, ::u64 totalBytesToCopy) = 0;
 
          //
          // Method called by copy operation when some file must be copied,

@@ -47,7 +47,7 @@ namespace remoting_client
         m_poperatingsystemapplication = application;
     }
 
-    bool ConfigurationDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    bool ConfigurationDialog::onCommand(::u32 controlID, ::u32 notificationID)
     {
         // if (controlID == IDC_EVERBLVL) {
         //     if (notificationID == EN_CHANGE) {

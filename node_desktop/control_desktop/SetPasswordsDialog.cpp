@@ -137,12 +137,12 @@ namespace remoting_control_desktop
       return false;
    }
 
-   bool SetPasswordsDialog::onNotify(unsigned int controlID, ::lparam data)
+   bool SetPasswordsDialog::onNotify(::u32 controlID, ::lparam data)
    {
       return false;
    }
 
-   bool SetPasswordsDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool SetPasswordsDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       if (notificationID == ::user::e_notification_button_clicked) {
          readRadio();

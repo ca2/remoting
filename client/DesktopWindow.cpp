@@ -160,7 +160,7 @@ namespace remoting_client
     // }
     //
 
-    bool DesktopWindow::onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
+    bool DesktopWindow::onMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam)
     {
         switch (scopedstrMessage)
         {
@@ -308,7 +308,7 @@ namespace remoting_client
         return true;
     }
 
-    bool DesktopWindow::onMouseEx(unsigned int uMessage, int iButtonMask, unsigned short wheelSpeed,
+    bool DesktopWindow::onMouseEx(::u32 uMessage, int iButtonMask, unsigned short wheelSpeed,
                                   const ::int_point &point, bool &bDoDefaultProcessing)
     {
 
@@ -508,14 +508,14 @@ namespace remoting_client
         if (!m_pconnectionconfig->isViewOnly())
         {
             unsigned short virtualKey = static_cast<unsigned short>(wParam);
-            unsigned int additionalInfo = static_cast<unsigned int>(lParam);
-            static const unsigned int DOWN_FLAG = 0x80000000;
+            ::u32 additionalInfo = static_cast<::u32>(lParam);
+            static const ::u32 DOWN_FLAG = 0x80000000;
             bool isDown = (additionalInfo & DOWN_FLAG) == 0;
 
             if (virtualKey == VK_PROCESSKEY)
             {
                 bool extended = HIWORD(lParam) & KF_EXTENDED;
-                unsigned int scancode = HIWORD(lParam) & 0xFF;
+                ::u32 scancode = HIWORD(lParam) & 0xFF;
                 if (extended)
                 {
                     scancode += 0xE000;
@@ -542,7 +542,7 @@ namespace remoting_client
     {
         if (!m_pconnectionconfig->isViewOnly())
         {
-            m_rfbKeySym->processCharEvent(static_cast<WCHAR>(wParam), static_cast<unsigned int>(lParam));
+            m_rfbKeySym->processCharEvent(static_cast<WCHAR>(wParam), static_cast<::u32>(lParam));
         }
         return true;
     }
@@ -992,7 +992,7 @@ namespace remoting_client
         }
     }
 
-    void DesktopWindow::onRfbKeySymEvent(unsigned int rfbKeySym, bool down) { sendKeyboardEvent(down, rfbKeySym); }
+    void DesktopWindow::onRfbKeySymEvent(::u32 rfbKeySym, bool down) { sendKeyboardEvent(down, rfbKeySym); }
 
     void DesktopWindow::setCtrlState(const bool ctrlState) { m_ctrlDown = ctrlState; }
 
@@ -1009,7 +1009,7 @@ namespace remoting_client
 
     void DesktopWindow::sendCtrlAltDel() { m_rfbKeySym->sendCtrlAltDel(); }
 
-    void DesktopWindow::sendKeyboardEvent(bool downFlag, unsigned int key)
+    void DesktopWindow::sendKeyboardEvent(bool downFlag, ::u32 key)
     {
         if (m_pconnectionconfig->isViewOnly())
         {

@@ -35,7 +35,7 @@ namespace remoting
    virtual public ::particle
    {
    public:
-      virtual void onKeyboardEvent(unsigned int keySym, bool down) = 0;
+      virtual void onKeyboardEvent(::u32 keySym, bool down) = 0;
       virtual void onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
    };
 

@@ -109,7 +109,7 @@ namespace remoting
                doUpdate();
             }
          }
-         unsigned int pollInterval = 200;
+         ::u32 pollInterval = 200;
          m_intervalWaiter.wait(pollInterval * 1_ms);
       }
    }

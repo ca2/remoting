@@ -365,7 +365,7 @@ namespace remoting_node_desktop
       auto it = m_banList.find(ip);
       if (it != m_banList.end())
       {
-         unsigned int count = (*it).m_element2.count;
+         ::u32 count = (*it).m_element2.count;
          class ::time lastTime = (*it).m_element2.banLastTime;
          class ::time now = ::time::now();
          if (count > 13)
@@ -427,7 +427,7 @@ namespace remoting_node_desktop
       {
          ::string ip = it->m_element1;
          ::string s;
-         unsigned int count = it->m_element2.count;
+         ::u32 count = it->m_element2.count;
          class ::time lastTime = it->m_element2.banLastTime;
          ::string time;
 

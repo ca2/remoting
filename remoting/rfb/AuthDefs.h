@@ -31,19 +31,19 @@ namespace remoting
    class CLASS_DECL_REMOTING SecurityDefs
    {
    public:
-      static const unsigned int INVALID = 0;
-      static const unsigned int NONE = 1;
-      static const unsigned int VNC = 2;
-      static const unsigned int TIGHT = 16;
-      static unsigned int convertFromAuthType(unsigned int authType);
+      static const ::u32 INVALID = 0;
+      static const ::u32 NONE = 1;
+      static const ::u32 VNC = 2;
+      static const ::u32 TIGHT = 16;
+      static ::u32 convertFromAuthType(::u32 authType);
    };
 
    class CLASS_DECL_REMOTING AuthDefs
    {
    public:
-      static const unsigned int NONE = 1;
-      static const unsigned int VNC = 2;
-      static const unsigned int EXTERNAL = 130;
+      static const ::u32 NONE = 1;
+      static const ::u32 VNC = 2;
+      static const ::u32 EXTERNAL = 130;
 
       static const char *const SIG_NONE;
       static const char *const SIG_VNC;
@@ -52,7 +52,7 @@ namespace remoting
       // Return TightVNC authentication method corresponding to a VNC-style
       // security type. Returns 0 if the specified security type does not ::map
       // to any valid authentication type supported in TightVNC.
-      static unsigned int convertFromSecurityType(unsigned int securityType);
+      static ::u32 convertFromSecurityType(::u32 securityType);
    };
 
    //// __RFB_AUTH_DEFS_H_INCLUDED__

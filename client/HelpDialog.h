@@ -38,7 +38,7 @@ namespace remoting_client
 
     //protected:
         bool onInitDialog() ;
-        bool onCommand(unsigned int controlID, unsigned int notificationID);
+        bool onCommand(::u32 controlID, ::u32 notificationID);
         ::pointer < ::innate_subsystem::TextBox >  m_shelp;
 
     };

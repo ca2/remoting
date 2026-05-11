@@ -88,12 +88,12 @@ namespace remoting_windows
          return ~dummy & byte;
       };
 
-      static unsigned int getAlphaMask(const ::innate_subsystem::PixelFormat & pixelformat);
-      static unsigned int getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO &shapeInfo);
-      static bool isPixelTransparent(char *const buffer, unsigned int type, unsigned int height, unsigned int pitch,
-                                     unsigned int x, unsigned int y);
-      static bool isColorPixelTransparent(unsigned int pixel, unsigned int type);
-      static bool isMonochromePixelTransparent(char andByte, char xorByte, unsigned int x);
+      static ::u32 getAlphaMask(const ::innate_subsystem::PixelFormat & pixelformat);
+      static ::u32 getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO &shapeInfo);
+      static bool isPixelTransparent(char *const buffer, ::u32 type, ::u32 height, ::u32 pitch,
+                                     ::u32 x, ::u32 y);
+      static bool isColorPixelTransparent(::u32 pixel, ::u32 type);
+      static bool isMonochromePixelTransparent(char andByte, char xorByte, ::u32 x);
       static void trimTransparent(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo);
    };
 
@@ -109,7 +109,7 @@ namespace remoting_windows
       int fbHeight = pixels->getDimension().cy;
 
       bool hasAlphaChannel = false;
-      unsigned int alphaMask = getAlphaMask(pixelformat);
+      ::u32 alphaMask = getAlphaMask(pixelformat);
 
       for (int iRow = 0; iRow < fbHeight; iRow++)
       {

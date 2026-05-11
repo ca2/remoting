@@ -72,12 +72,12 @@ namespace remoting_client
          * Inherited from BaseDialog.
          * Does nothing.
          */
-        virtual bool onNotify(unsigned int controlID, ::lparam data);
+        virtual bool onNotify(::u32 controlID, ::lparam data);
         /**
          * Inherited from BaseDialog.
          * Handles buttons events.
          */
-        bool onCommand(unsigned int controlID, unsigned int notificationID) override;
+        bool onCommand(::u32 controlID, ::u32 notificationID) override;
         /**
          * Inherited from BaseDialog.
          * Does nothing.

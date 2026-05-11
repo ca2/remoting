@@ -43,7 +43,7 @@ namespace remoting_control_desktop
 {
 
 
-   ControlMessage::ControlMessage(unsigned int messageId, ControlGate * pcontrolgate,
+   ControlMessage::ControlMessage(::u32 messageId, ControlGate * pcontrolgate,
                                   const ::scoped_string & scopedstrPasswordFile,
                                   bool getPassFromConfigEnabled,
                                   bool forService)
@@ -72,14 +72,14 @@ namespace remoting_control_desktop
    void ControlMessage::sendData()
    {
       m_pcontrolgate->writeUInt32(m_messageId);
-      ASSERT((unsigned int)m_tunnel->size() == m_tunnel->size());
-      m_pcontrolgate->writeUInt32((unsigned int)m_tunnel->size());
+      ASSERT((::u32)m_tunnel->size() == m_tunnel->size());
+      m_pcontrolgate->writeUInt32((::u32)m_tunnel->size());
       m_pcontrolgate->write(m_tunnel->toByteArray(), m_tunnel->size());
    }
 
    void ControlMessage::checkRetCode()
    {
-      unsigned int messageId = m_pcontrolgate->readUInt32();
+      ::u32 messageId = m_pcontrolgate->readUInt32();
 
       switch (messageId) {
          case ControlProto::REPLY_ERROR:

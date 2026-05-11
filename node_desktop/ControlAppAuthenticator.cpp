@@ -31,7 +31,7 @@ namespace remoting_node_desktop
 
 
    ControlAppAuthenticator::ControlAppAuthenticator(const class ::time & timeFailureInterval,
-                                                    unsigned int failureMaxCount) :
+                                                    ::u32 failureMaxCount) :
        AuthTracker(timeFailureInterval, failureMaxCount), m_isBreaked(false)
    {
    }
@@ -64,7 +64,7 @@ namespace remoting_node_desktop
    void ControlAppAuthenticator::checkBeforeAuth()
    {
       // Wait ban time before authentication
-      unsigned long long banTime = 1;
+      ::u64 banTime = 1;
       while (banTime != 0 && !m_isBreaked)
       {
          banTime = checkBan();

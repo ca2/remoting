@@ -33,7 +33,7 @@ namespace remoting_windows
 {
 
 
-   WinDxgiOutput::WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, unsigned int iOutput)
+   WinDxgiOutput::WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, ::u32 iOutput)
    {
       dxgiAdapter->getDxgiOutput(iOutput, &m_dxgiOutput);
 

@@ -59,7 +59,7 @@ namespace remoting_node
       return true;
    }
 
-   // bool ServerConfigDialog::onNotify(unsigned int controlID, ::lparam data)
+   // bool ServerConfigDialog::onNotify(::u32 controlID, ::lparam data)
    // {
    //    if (controlID == IDC_POLLING_INTERVAL_SPIN) {
    //       LPNMUPDOWN scopedstrMessage = (LPNMUPDOWN)data;
@@ -86,7 +86,7 @@ namespace remoting_node
 
    }
 
-   bool ServerConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool ServerConfigDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       if (notificationID == ::user::e_notification_button_clicked) {
          switch (controlID) {
@@ -190,7 +190,7 @@ namespace remoting_node
          return false;
       }
 
-      unsigned int pollingInterval;
+      ::u32 pollingInterval;
 
       UIDataAccess::queryValueAsUInt(&m_pollingInterval, &pollingInterval);
 
@@ -201,7 +201,7 @@ namespace remoting_node
          return false;
       }
 
-      unsigned int inactivityTimeout;
+      ::u32 inactivityTimeout;
 
       UIDataAccess::queryValueAsUInt(&m_localInputPriorityTimeout, &inactivityTimeout);
 
@@ -324,7 +324,7 @@ namespace remoting_node
       m_config->setLocalInputPriority(m_localInputPriority.isChecked());
       if (MainSubsystem().StringParser().parseInt(liptStringStorage, &timeout)) {
          timeout = maximum(0, timeout);
-         m_config->setLocalInputPriorityTimeout((unsigned int)timeout);
+         m_config->setLocalInputPriorityTimeout((::u32)timeout);
       }
       m_config->blockLocalInput(m_blockLocalInput.isChecked());
       m_config->blockRemoteInput(m_blockRemoteInput.isChecked());

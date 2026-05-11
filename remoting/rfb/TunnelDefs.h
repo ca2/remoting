@@ -32,7 +32,7 @@ namespace remoting
    class CLASS_DECL_REMOTING TunnelDefs
    {
    public:
-      static const unsigned int NOTUNNEL = 0;
+      static const ::u32 NOTUNNEL = 0;
       static const char *const SIG_NONE;
    private:
    };

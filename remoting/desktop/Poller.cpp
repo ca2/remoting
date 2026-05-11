@@ -129,7 +129,7 @@ namespace remoting
             doUpdate();
          }
 
-         unsigned int pollInterval = m_pconfigurator->getServerConfig()->getPollingInterval();
+         ::u32 pollInterval = m_pconfigurator->getServerConfig()->getPollingInterval();
          m_intervalWaiter.wait(pollInterval * 1_ms);
       }
    }

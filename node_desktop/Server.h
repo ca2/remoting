@@ -124,7 +124,7 @@ namespace remoting_node_desktop
 
       ::pointer < LogInitListener  > m_ploginitlistener;
 
-      unsigned int m_contextSwitchResolution; // in ms
+      ::u32 m_contextSwitchResolution; // in ms
       /**
        * Creates and starts TightVNC server execution (in separate thread).
        *
@@ -268,7 +268,7 @@ namespace remoting_node_desktop
 
       //LogInitListener *m_logInitListener;
 
-      //unsigned int m_contextSwitchResolution; // in ms
+      //::u32 m_contextSwitchResolution; // in ms
    };
 
 

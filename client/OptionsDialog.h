@@ -71,8 +71,8 @@ namespace remoting_client
         ::innate_subsystem::CheckBox       m_checkboxArrow;
         ::innate_subsystem::CheckBox       m_checkboxNlocal;
 
-        void onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam);
-        bool onCommand(unsigned int controlID, unsigned int notificationID);
+        void onMessageReceived(::u32 uMsg, ::wparam wParam, ::lparam lParam);
+        bool onCommand(::u32 controlID, ::u32 notificationID);
         bool onInitDialog();
 
         ::pointer < ::remoting::ConnectionConfig  >m_pconnectionconfig;

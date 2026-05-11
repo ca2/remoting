@@ -149,7 +149,7 @@ namespace remoting
 
    bool Viewport::getOnlyApplication() { return m_viewportstate.m_mode == ViewPortState::APPLICATION; }
 
-   unsigned int Viewport::getApplicationId() { return m_viewportstate.m_processId; }
+   ::u32 Viewport::getApplicationId() { return m_viewportstate.m_processId; }
 
    void Viewport::getApplicationRegion(Region & region) { region = m_regionApp; }
 

@@ -46,8 +46,8 @@ namespace remoting_client
       // shorcut
       const int bytesPerPixel = pframebuffer->getBytesPerPixel();
 
-      unsigned int background = 0;
-      unsigned int foreground = 0;
+      ::u32 background = 0;
+      ::u32 foreground = 0;
 
       bool backgroundAccepted = false;
 

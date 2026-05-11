@@ -187,7 +187,7 @@ namespace remoting_windows
       {
          if (pixels->getBitsPerPixel() == 32)
          {
-            if (WinCursorShapeUtils::winColorShapeToRfb<unsigned int>(pixels, mask, widthBytes))
+            if (WinCursorShapeUtils::winColorShapeToRfb<::u32>(pixels, mask, widthBytes))
             {
                // If the alpha channel is presented.
                WinCursorShapeUtils::fixAlphaChannel(pixels, mask, false, widthBytes);

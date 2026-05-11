@@ -35,7 +35,7 @@ namespace  remoting
       {
       }
 
-      FileInfo::FileInfo(unsigned long long size, unsigned long long modTime,
+      FileInfo::FileInfo(::u64 size, ::u64 modTime,
                          unsigned short flags, const ::scoped_string & scopedstrFileName)
       : m_sizeInBytes(size), m_lastModified(modTime), m_flags(flags)
       {
@@ -73,12 +73,12 @@ namespace  remoting
          return (m_flags & FileInfo::EXECUTABLE) ? true : false;
       }
 
-      void FileInfo::setLastModified(unsigned long long time)
+      void FileInfo::setLastModified(::u64 time)
       {
          m_lastModified = time;
       }
 
-      void FileInfo::setSize(unsigned long long size)
+      void FileInfo::setSize(::u64 size)
       {
          m_sizeInBytes = size;
       }
@@ -93,12 +93,12 @@ namespace  remoting
          m_strFileName= scopedstrFileName;
       }
 
-      unsigned long long FileInfo::lastModified() const
+      ::u64 FileInfo::lastModified() const
       {
          return m_lastModified.m_iSecond;
       }
 
-      unsigned long long FileInfo::getSize() const
+      ::u64 FileInfo::getSize() const
       {
          return m_sizeInBytes;
       }

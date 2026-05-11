@@ -86,7 +86,7 @@ namespace remoting
       m_operatingsystemwindow = nullptr;
    }
 
-   void ViewPortState::setProcessId(unsigned int processId)
+   void ViewPortState::setProcessId(::u32 processId)
    {
       m_mode = APPLICATION;
       m_processId = processId;

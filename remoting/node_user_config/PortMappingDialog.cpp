@@ -55,7 +55,7 @@ namespace remoting_node
       dialog_item(m_removeButton, IDC_REMOVE_PORT);
    }
 
-   bool PortMappingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool PortMappingDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       switch (controlID) {
          case IDC_ADD_PORT:

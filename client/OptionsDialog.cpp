@@ -47,7 +47,7 @@ namespace remoting_client
         m_connected = true;
     }
 
-    bool OptionsDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    bool OptionsDialog::onCommand(::u32 controlID, ::u32 notificationID)
     {
         if (controlID == ::innate_subsystem::e_control_id_ok) {
             if (onOkPressed()) {
@@ -328,7 +328,7 @@ namespace remoting_client
         m_controlQuality2.setText(labelText);
     }
 
-    void OptionsDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
+    void OptionsDialog::onMessageReceived(::u32 uMsg, ::wparam wParam, ::lparam lParam)
     {
         switch (uMsg) {
            case ::user::e_message_scroll_x:

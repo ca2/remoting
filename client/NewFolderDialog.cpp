@@ -63,12 +63,12 @@ namespace remoting_client
         return true;
     }
 
-    bool NewFolderDialog::onNotify(unsigned int controlID, ::lparam data)
+    bool NewFolderDialog::onNotify(::u32 controlID, ::lparam data)
     {
         return true;
     }
 
-    bool NewFolderDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    bool NewFolderDialog::onCommand(::u32 controlID, ::u32 notificationID)
     {
         switch (controlID) {
             case ::innate_subsystem::e_control_id_ok:

@@ -42,7 +42,7 @@ namespace remoting
    {
       TightColorList *next;
       int idx;
-      unsigned int rgb;
+      ::u32 rgb;
    };
 
    struct TightPaletteEntry
@@ -57,7 +57,7 @@ namespace remoting
    protected:
 
       // FIXME: Bigger hash table? Better hash function?
-      inline static int hashFunc(unsigned int rgb) { return (rgb ^ (rgb >> 13)) & 0xFF; }
+      inline static int hashFunc(::u32 rgb) { return (rgb ^ (rgb >> 13)) & 0xFF; }
 
    public:
 
@@ -82,7 +82,7 @@ namespace remoting
       // reports zero colors and cannot be used any more without calling
       // reset().
       //
-      int insert(unsigned int rgb, int numPixels);
+      int insert(::u32 rgb, int numPixels);
 
       //
       // Return the number of colors in the palette. If the palette is full,
@@ -93,9 +93,9 @@ namespace remoting
       //
       // Return the color specified by its index in the palette.
       //
-      inline unsigned int getEntry(int i) const
+      inline ::u32 getEntry(int i) const
       {
-         return (i < m_numColors) ? m_entry[i].listNode->rgb : (unsigned int)-1;
+         return (i < m_numColors) ? m_entry[i].listNode->rgb : (::u32)-1;
       }
 
       //
@@ -106,7 +106,7 @@ namespace remoting
       //
       // Return the index of a specified color.
       //
-      inline unsigned char getIndex(unsigned int rgb) const
+      inline unsigned char getIndex(::u32 rgb) const
       {
          TightColorList *pnode = m_hash[hashFunc(rgb)];
          while (pnode != NULL)

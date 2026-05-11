@@ -138,7 +138,7 @@ UpdateSender::UpdateSender() :
 
    void UpdateSender::onTerminate() { m_newUpdatesEvent.set_happening(); }
 
-   void UpdateSender::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input)
+   void UpdateSender::onRequest(::u32 reqCode, ::remoting::RfbInputGate *input)
    {
       // UpdateSender internal dispatcher
       switch (reqCode)
@@ -351,7 +351,7 @@ UpdateSender::UpdateSender() :
       m_prfboutputgate->writeUInt8(0); // pad
       m_prfboutputgate->writeUInt16(0); // first color
       m_prfboutputgate->writeUInt16(256); // number of colors
-      for (unsigned int i = 0; i < 256; i++)
+      for (::u32 i = 0; i < 256; i++)
       {
          m_prfboutputgate->writeUInt16(((i >> pixelformat.redShift) & pixelformat.redMax) * 65535 / pixelformat.redMax); // red
          m_prfboutputgate->writeUInt16(((i >> pixelformat.greenShift) & pixelformat.greenMax) * 65535 / pixelformat.greenMax); // green
@@ -376,7 +376,7 @@ UpdateSender::UpdateSender() :
          return;
       }
       m_plogwriter->debug("Time between request and a point after extractReqRegions (in milliseconds): %u",
-                          (unsigned int)timeReqPoint.elapsed().integral_millisecond());
+                          (::u32)timeReqPoint.elapsed().integral_millisecond());
       m_plogwriter->debug("A request has been made, continuing");
       m_plogwriter->debug("The incremental region has {} rectangles", (int)regionRequestedIncremental.getCount());
       m_plogwriter->debug("The full region has {} rectangles", (int)regionRequestedFull.getCount());
@@ -651,7 +651,7 @@ UpdateSender::UpdateSender() :
             }
 
             m_plogwriter->debug("Time between request and a point before send and coding (in milliseconds): %u",
-                                (unsigned int) timeReqPoint.elapsed().integral_millisecond());
+                                (::u32) timeReqPoint.elapsed().integral_millisecond());
             m_plogwriter->debug("Sending video rectangles");
             sendRectangles(m_pencoderstore->getJpegEncoder(), rectangleaVideo, pframebuffer, &encodeOptions);
             m_plogwriter->debug("Sending normal rectangles");
@@ -673,7 +673,7 @@ UpdateSender::UpdateSender() :
                                 processortimes2.m_process, processortimes2.m_kernel, dt);
 
             m_plogwriter->information("Time between request and answer is (in milliseconds): %u",
-                                      (unsigned int) timeReqPoint.elapsed().integral_millisecond());
+                                      (::u32) timeReqPoint.elapsed().integral_millisecond());
          }
          else
          {
@@ -870,7 +870,7 @@ UpdateSender::UpdateSender() :
       io->readUInt8(); // padding
       int numCodes = io->readUInt16();
 
-      int_array ia;
+      i32_array ia;
       ia.set_size(numCodes);
       for (int i = 0; i < numCodes; i++)
       {

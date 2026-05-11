@@ -61,7 +61,7 @@ namespace remoting
       {
          critical_section_lock al(m_output);
 
-         unsigned int messageId = FTMessage::FILE_LIST_REQUEST;
+         ::u32 messageId = FTMessage::FILE_LIST_REQUEST;
          unsigned char compressionLevel = useCompression ? (unsigned char)1 : (unsigned char)0;
 
          m_plogwriter->information("Sending file ::list_base request with parameters:\n"
@@ -77,7 +77,7 @@ namespace remoting
       }
 
       void FileTransferRequestSender::sendDownloadRequest(const ::scoped_string & scopedstrFullPathName,
-                                                          unsigned long long offset)
+                                                          ::u64 offset)
       {
          critical_section_lock al(m_output);
 
@@ -92,7 +92,7 @@ namespace remoting
          m_output->flush();
       }
 
-      void FileTransferRequestSender::sendDownloadDataRequest(unsigned int size,
+      void FileTransferRequestSender::sendDownloadDataRequest(::u32 size,
                                                               bool useCompression)
       {
          critical_section_lock al(m_output);
@@ -154,7 +154,7 @@ namespace remoting
 
       void FileTransferRequestSender::sendUploadRequest(const ::scoped_string & scopedstrFullPathName,
                                                         bool overwrite,
-                                                        unsigned long long offset)
+                                                        ::u64 offset)
       {
          critical_section_lock al(m_output);
 
@@ -179,7 +179,7 @@ namespace remoting
       }
 
       void FileTransferRequestSender::sendUploadDataRequest(const char *buffer,
-                                                            unsigned int size,
+                                                            ::u32 size,
                                                             bool useCompression)
       {
          critical_section_lock al(m_output);
@@ -211,7 +211,7 @@ namespace remoting
       }
 
       void FileTransferRequestSender::sendUploadEndRequest(unsigned char fileFlags,
-                                                           unsigned long long modificationTime)
+                                                           ::u64 modificationTime)
       {
          critical_section_lock al(m_output);
 

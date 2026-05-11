@@ -109,7 +109,7 @@ namespace remoting
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
-      m_plogwriter->information("get the %u display coordinates", (unsigned int)dispNumber);
+      m_plogwriter->information("get the %u display coordinates", (::u32)dispNumber);
       try
       {
          m_puserinput->getDisplayNumberCoords(rectangle, dispNumber);
@@ -192,7 +192,7 @@ namespace remoting
       return 0;
    }
 
-   void DesktopBaseImpl::getApplicationRegion(unsigned int procId, Region & region)
+   void DesktopBaseImpl::getApplicationRegion(::u32 procId, Region & region)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -208,7 +208,7 @@ namespace remoting
       }
    }
 
-   bool DesktopBaseImpl::isApplicationInFocus(unsigned int procId)
+   bool DesktopBaseImpl::isApplicationInFocus(::u32 procId)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -234,7 +234,7 @@ namespace remoting
       return enabled;
    }
 
-   void DesktopBaseImpl::setKeyboardEvent(unsigned int keySym, bool down)
+   void DesktopBaseImpl::setKeyboardEvent(::u32 keySym, bool down)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -259,8 +259,8 @@ namespace remoting
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
 
-      m_plogwriter->information("set mouse event (x = %u, y = %u, mask = %u)", (unsigned int)x, (unsigned int)y,
-                                (unsigned int)buttonMask);
+      m_plogwriter->information("set mouse event (x = %u, y = %u, mask = %u)", (::u32)x, (::u32)y,
+                                (::u32)buttonMask);
       ::int_point point(x, y);
       try
       {

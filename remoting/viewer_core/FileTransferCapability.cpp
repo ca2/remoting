@@ -76,7 +76,7 @@ namespace remoting_client
          m_ftCore.setInterface(ftInterface);
       }
 
-      void FileTransferCapability::onServerMessage(unsigned int code, ::DataInputStream * pinput)
+      void FileTransferCapability::onServerMessage(::u32 code, ::DataInputStream * pinput)
       {
          m_ftMessageProcessor.processRfbMessage(pinput, code);
       }

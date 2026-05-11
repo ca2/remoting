@@ -154,7 +154,7 @@ namespace remoting
       }
    }
 
-   void HooksUpdateDetector::broadcastMessage(unsigned int scopedstrMessage)
+   void HooksUpdateDetector::broadcastMessage(::u32 scopedstrMessage)
    {
       HWND hwndFound = FindWindowEx(HWND_MESSAGE, 0, 0, 0);
       while (hwndFound)

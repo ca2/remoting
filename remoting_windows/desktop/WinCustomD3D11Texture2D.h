@@ -44,7 +44,7 @@ namespace remoting_windows
    {
    public:
       // Initializes ID3D11Texture2D compatible to textures returned from the AcquireNextFrame() function.
-      WinCustomD3D11Texture2D(ID3D11Device *device, unsigned int width, unsigned int height,
+      WinCustomD3D11Texture2D(ID3D11Device *device, ::u32 width, ::u32 height,
                               DXGI_MODE_ROTATION rotation);
       WinCustomD3D11Texture2D(const WinCustomD3D11Texture2D &other);
       virtual ~WinCustomD3D11Texture2D();
@@ -61,7 +61,7 @@ namespace remoting_windows
       class CLASS_DECL_REMOTING_WINDOWS Texture2DDescInitializer
       {
       public:
-         Texture2DDescInitializer(unsigned int width, unsigned int height, DXGI_MODE_ROTATION rotation);
+         Texture2DDescInitializer(::u32 width, ::u32 height, DXGI_MODE_ROTATION rotation);
 
          const D3D11_TEXTURE2D_DESC *getDesc() const;
       private:

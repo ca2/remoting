@@ -167,7 +167,7 @@ namespace remoting
       ::int_rectangle_array_base::iterator iRect;
       auto rectanglea = region.getRects();
 
-      unsigned int numRects = (unsigned int)rectanglea.size();
+      ::u32 numRects = (::u32)rectanglea.size();
       ASSERT(numRects == rectanglea.size());
       pblockinggate->writeUInt32(numRects);
 
@@ -181,8 +181,8 @@ namespace remoting
    void DesktopServerProto::readRegion(Region & region, BlockingGate *pblockinggate)
    {
       region.clear();
-      unsigned int rectCount = pblockinggate->readUInt32();
-      for (unsigned int i = 0; i < rectCount; i++)
+      ::u32 rectCount = pblockinggate->readUInt32();
+      for (::u32 i = 0; i < rectCount; i++)
       {
          ::int_rectangle r = readRect(pblockinggate);
          if (r.is_ok())
@@ -247,13 +247,13 @@ namespace remoting
       *keyFlag = pblockinggate->readUInt8();
    }
 
-   void DesktopServerProto::sendKeyEvent(unsigned int keySym, bool down, BlockingGate *pblockinggate)
+   void DesktopServerProto::sendKeyEvent(::u32 keySym, bool down, BlockingGate *pblockinggate)
    {
       pblockinggate->writeUInt32(keySym);
       pblockinggate->writeUInt8((unsigned char)down);
    }
 
-   void DesktopServerProto::readKeyEvent(unsigned int *keySym, bool *down, BlockingGate *pblockinggate)
+   void DesktopServerProto::readKeyEvent(::u32 *keySym, bool *down, BlockingGate *pblockinggate)
    {
       *keySym = pblockinggate->readUInt32();
       *down = pblockinggate->readUInt8() != 0;
@@ -295,7 +295,7 @@ namespace remoting
       ::string_array *wndClassNames = pserverconfig->getVideoClassNames();
       ::string_array::iterator iter = wndClassNames->begin();
       size_t stringCount = wndClassNames->size();
-      pblockinggate->writeUInt32((unsigned int)stringCount);
+      pblockinggate->writeUInt32((::u32)stringCount);
       for (; iter < wndClassNames->end(); iter++)
       {
          pblockinggate->writeUTF8((*iter));
@@ -303,7 +303,7 @@ namespace remoting
       // Send video rectanglea
       ::int_rectangle_array_base *Rects = pserverconfig->getVideoRects();
       size_t size = Rects->size();
-      pblockinggate->writeUInt32((unsigned int)size);
+      pblockinggate->writeUInt32((::u32)size);
       for (size_t i = 0; i < size; i++)
       {
          ::string s;

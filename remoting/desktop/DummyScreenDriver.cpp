@@ -29,7 +29,7 @@ namespace remoting
 
    //
    // DummyScreenDriver::DummyScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
-   //                                   unsigned int interval, ::subsystem::LogWriter * plogwriter) :
+   //                                   ::u32 interval, ::subsystem::LogWriter * plogwriter) :
    //  m_pupdatelistener = pupdatelistener;m_pupdatekeeper = pupdatekeeper; m_interval(interval)
    //  {
    //
@@ -61,7 +61,7 @@ namespace remoting
 
 
    void DummyScreenDriver::initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
-                                     unsigned int interval, ::subsystem::LogWriter * plogwriter)
+                                     ::u32 interval, ::subsystem::LogWriter * plogwriter)
    {
       m_pupdatelistener = pupdatelistener;
       m_pupdatekeeper = pupdatekeeper;
@@ -100,7 +100,7 @@ namespace remoting
                ::int_rectangle r(0, 0, x, y);
                r.offset(rand() % w, rand() % h);
                int m = 0xffffff / RAND_MAX;
-               unsigned int color = rand() * m + rand() % m;
+               ::u32 color = rand() * m + rand() % m;
                ::int_rectangle rectangle(0, 0, w, h);
                Region region(rectangle);
                if (m_detectionEnabled)

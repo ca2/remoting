@@ -67,8 +67,8 @@ namespace remoting
 
          // Members that needed to know how many bytes of data transfered
          // and how many left to copy
-         unsigned long long m_totalBytesToCopy;
-         unsigned long long m_totalBytesCopied;
+         ::u64 m_totalBytesToCopy;
+         ::u64 m_totalBytesCopied;
       };
    }
 }

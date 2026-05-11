@@ -180,7 +180,7 @@ namespace remoting
       bool success = false;
       while (!success)
       {
-         unsigned int timeForWait = maximum((m_timeTimeout - timeStart.elapsed()).integral_millisecond(), 0);
+         ::u32 timeForWait = maximum((m_timeTimeout - timeStart.elapsed()).integral_millisecond(), 0);
          if (timeForWait == 0 || m_bIsClosed)
          { // Break this function with
            // critical error

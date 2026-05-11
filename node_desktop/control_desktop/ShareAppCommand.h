@@ -34,13 +34,13 @@ namespace remoting_control_desktop
    class ShareAppCommand : public ::subsystem::Command
    {
    public:
-      ShareAppCommand(ControlProxy *serverControl, unsigned int procId);
+      ShareAppCommand(ControlProxy *serverControl, ::u32 procId);
       virtual ~ShareAppCommand();
 
       virtual void execute();
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
-      unsigned int m_procId;
+      ::u32 m_procId;
    };
 } // namespace remoting_control_desktop
 

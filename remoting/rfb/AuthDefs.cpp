@@ -31,7 +31,7 @@ namespace remoting
    const char *const AuthDefs::SIG_VNC = "VNCAUTH_";
    const char *const AuthDefs::SIG_EXTERNAL = "XTRNAUTH";
 
-   unsigned int SecurityDefs::convertFromAuthType(unsigned int authType)
+   ::u32 SecurityDefs::convertFromAuthType(::u32 authType)
    {
       switch (authType) {
          case AuthDefs::NONE:
@@ -43,7 +43,7 @@ namespace remoting
       return INVALID; // no corresponding authentication method
    }
 
-   unsigned int AuthDefs::convertFromSecurityType(unsigned int securityType)
+   ::u32 AuthDefs::convertFromSecurityType(::u32 securityType)
    {
       switch (securityType) {
          case SecurityDefs::NONE:

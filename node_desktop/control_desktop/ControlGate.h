@@ -40,7 +40,7 @@ namespace remoting_control_desktop
       ControlGate(Channel *stream);
       virtual ~ControlGate();
 
-      void skipBytes(unsigned int length);
+      void skipBytes(::u32 length);
    };
 } //   namespace remoting_control_desktop
 

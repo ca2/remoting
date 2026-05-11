@@ -79,7 +79,7 @@ namespace remoting
                               const ::file::path & pathToSourceRoot,
                               const ::file::path & pathToTargetRoot);
          void localFilesDeleteOperation(const ::pointer_array< FileInfo > &fileinfoaToDelete,
-                                        //unsigned int filesCount,
+                                        //::u32 filesCount,
                                         const ::file::path & pathToTargetRoot);
          void remoteFilesDeleteOperation(const ::pointer_array< FileInfo > &fileinfoaToDelete,
                                          //size_t filesCount,
@@ -98,15 +98,15 @@ namespace remoting
          void onUpdateState(int state, int result);
 
          // FIXME: Debug.
-         void updateSupportedOperations(const ::array_base<unsigned int> *clientCaps,
-                                        const ::array_base<unsigned int> *serverCaps);
+         void updateSupportedOperations(const ::array_base<::u32> *clientCaps,
+                                        const ::array_base<::u32> *serverCaps);
 
       protected:
          //
          // Inherited from CopyFileEventListener
          //
 
-         virtual void dataChunkCopied(unsigned long long totalBytesCopied, unsigned long long totalBytesToCopy);
+         virtual void dataChunkCopied(::u64 totalBytesCopied, ::u64 totalBytesToCopy);
 
          virtual int targetFileExists(FileInfo *sourceFileInfo,
                                       FileInfo *targetFileInfo,

@@ -156,9 +156,9 @@ namespace remoting
          m_plogwriter->debug("UpdateHandlerClient: Get video region");
          readRegion(updatecontainer.m_regionVideo, m_pcontrolgate);
          // Get changed region
-         unsigned int countChangedRect = m_pcontrolgate->readUInt32();
+         ::u32 countChangedRect = m_pcontrolgate->readUInt32();
          m_plogwriter->information("UpdateHandlerClient: count changed rectangles = %u", countChangedRect);
-         for (unsigned int i = 0; i < countChangedRect; i++)
+         for (::u32 i = 0; i < countChangedRect; i++)
          {
             ::int_rectangle r = readRect(m_pcontrolgate);
             updatecontainer.m_regionChanged.addRect(r);

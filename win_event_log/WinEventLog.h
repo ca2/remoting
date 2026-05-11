@@ -42,12 +42,12 @@ public:
   // before that all report will be ignored.
   void enable();
 
-  void reportInfo(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...);
-  void reportWarning(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...);
-  void reportError(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...);
+  void reportInfo(::u32 messageId, const ::scoped_string & scopedstrFmt, ...);
+  void reportWarning(::u32 messageId, const ::scoped_string & scopedstrFmt, ...);
+  void reportError(::u32 messageId, const ::scoped_string & scopedstrFmt, ...);
 
 private:
-  void reportEvent(unsigned int messageId,
+  void reportEvent(::u32 messageId,
                    WORD eventType,
                    const ::scoped_string & scopedstrFmt,
                    va_list argList);

@@ -125,7 +125,7 @@ namespace remoting_notify_node
       
       
       
-      //bool application::is_application_installed(const ::file::path & pathExe, const ::scoped_string & scopedstrAppId, string & strBuild, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, unsigned int & dwGoodToCheckAgain)
+      //bool application::is_application_installed(const ::file::path & pathExe, const ::scoped_string & scopedstrAppId, string & strBuild, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, ::u32 & dwGoodToCheckAgain)
       //{
       
       //   class status & status = m_mapInstalled[strAppId];
@@ -163,7 +163,7 @@ namespace remoting_notify_node
       //}
       
       
-      //bool application::is_application_installed(const ::scoped_string & scopedstrAppId, string & strBuild, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, unsigned int & dwGoodToCheckAgain)
+      //bool application::is_application_installed(const ::scoped_string & scopedstrAppId, string & strBuild, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, ::u32 & dwGoodToCheckAgain)
       //{
       
       //   ::file::path pathExe;
@@ -174,7 +174,7 @@ namespace remoting_notify_node
       
       //}
       
-      //bool application::is_application_updated(const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, unsigned int & dwGoodToCheckAgain)
+      //bool application::is_application_updated(const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, ::u32 & dwGoodToCheckAgain)
       //{
       
       //   ::file::path pathExe = ::get_application_path(strAppId, strPlatform, strConfiguration);
@@ -1058,7 +1058,7 @@ namespace remoting_notify_node
 //         
 //      }
 //      
-//      int application::check_soon_launch(const ::scoped_string & scopedstrCommandLine, bool bLaunch, unsigned int & dwGoodToCheckAgain)
+//      int application::check_soon_launch(const ::scoped_string & scopedstrCommandLine, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         string strId;
@@ -1136,7 +1136,7 @@ namespace remoting_notify_node
 //         
 //      }
 //      
-//      int application::check_soon_file_launch(const ::scoped_string & scopedstr, bool bLaunch, unsigned int & dwGoodToCheckAgain)
+//      int application::check_soon_file_launch(const ::scoped_string & scopedstr, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         return check_soon_app_id(get_app_id(scopedstr), bLaunch, dwGoodToCheckAgain);
@@ -1144,7 +1144,7 @@ namespace remoting_notify_node
 //      }
 //      
 //      
-//      int application::check_soon_app_id(const ::scoped_string & scopedstrId, bool bLaunch, unsigned int & dwGoodToCheckAgain)
+//      int application::check_soon_app_id(const ::scoped_string & scopedstrId, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         if (check_soon_app_id1(scopedstrId, bLaunch, dwGoodToCheckAgain))
@@ -1166,7 +1166,7 @@ namespace remoting_notify_node
 //      }
 //      
 //      
-//      int application::check_soon_app_id1(const ::scoped_string & scopedstrId, bool bLaunch, unsigned int & dwGoodToCheckAgain)
+//      int application::check_soon_app_id1(const ::scoped_string & scopedstrId, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         if (scopedstrId.length() <= 0)
@@ -1261,7 +1261,7 @@ namespace remoting_notify_node
 //      }
 //      
 //      
-//      int application::check_soon_app_id2(const ::scoped_string & scopedstrId, bool bLaunch, unsigned int & dwGoodToCheckAgain)
+//      int application::check_soon_app_id2(const ::scoped_string & scopedstrId, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         if (scopedstrId.length() <= 0)
@@ -1421,7 +1421,7 @@ namespace remoting_notify_node
 //         
 //         //      char lpPathBuffer[MAX_PATH * 4];
 //         //
-//         //      unsigned int dwRetVal = //GetTempPath(sizeof(lpPathBuffer), lpPathBuffer);
+//         //      ::u32 dwRetVal = //GetTempPath(sizeof(lpPathBuffer), lpPathBuffer);
 //         //
 //         //      if (dwRetVal > sizeof(lpPathBuffer) || (dwRetVal == 0))
 //         //      {
@@ -1556,7 +1556,7 @@ namespace remoting_notify_node
       //}
       
       
-      //bool application::is_application_updated(const ::file::path & pathExe, const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, unsigned int & dwGoodToCheckAgain)
+      //bool application::is_application_updated(const ::file::path & pathExe, const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, ::u32 & dwGoodToCheckAgain)
       //{
       
       //   string strBuild;

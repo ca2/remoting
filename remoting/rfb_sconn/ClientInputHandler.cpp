@@ -43,14 +43,14 @@ namespace remoting
    {
    }
 
-   void ClientInputHandler::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *prfbinputgate)
+   void ClientInputHandler::onRequest(::u32 reqCode, ::remoting::RfbInputGate *prfbinputgate)
    {
       switch (reqCode) {
          case ClientMsgDefs::KEYBOARD_EVENT:
          {
             bool down = prfbinputgate->readUInt8() != 0;
             prfbinputgate->readUInt16(); // Pad
-            unsigned int keyCode = prfbinputgate->readUInt32();
+            ::u32 keyCode = prfbinputgate->readUInt32();
             if (!m_viewOnly) {
                m_extEventListener->onKeyboardEvent(keyCode, down);
             }

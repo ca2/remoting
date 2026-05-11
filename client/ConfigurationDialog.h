@@ -55,7 +55,7 @@ namespace remoting_client
       void setListenerOfUpdate(::subsystem::OperatingSystemApplicationInterface *application);
 
       //protected:
-      bool onCommand(unsigned int controlID, unsigned int notificationID);
+      bool onCommand(::u32 controlID, ::u32 notificationID);
       void onLogLevelChange();
       void onOpenFolderButtonClick();
       bool onInitDialog();

@@ -51,7 +51,7 @@ namespace  remoting
       //   return m_filesInfo;
       // }
       //
-      // unsigned int FolderListener::getFilesCount() const
+      // ::u32 FolderListener::getFilesCount() const
       // {
       //   return m_filesCount;
       // }
@@ -94,7 +94,7 @@ namespace  remoting
          // }
          auto & pathFolder = m_pathFolder;
 
-         for (unsigned int i = 0; i < listing.size(); i++)
+         for (::u32 i = 0; i < listing.size(); i++)
          {
 
             auto & strName = listing[i];

@@ -62,7 +62,7 @@ namespace remoting
       wait();
    }
 
-   void ClipboardExchange::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *prfbinputgate)
+   void ClipboardExchange::onRequest(::u32 reqCode, ::remoting::RfbInputGate *prfbinputgate)
    {
 
       switch (reqCode) {
@@ -86,7 +86,7 @@ namespace remoting
    }
    void ClipboardExchange::onRequestWorker(bool utf8flag, ::remoting::RfbInputGate *prfbinputgate)
    {
-      unsigned int length = prfbinputgate->readUInt32();
+      ::u32 length = prfbinputgate->readUInt32();
 
       ::array_base<char> charBuff(length + 1);
 
@@ -148,7 +148,7 @@ namespace remoting
                   data = charBuff;
                   length = charBuff.length();
                   m_plogwriter->debug("Sending Utf8 Clipboard, payload length {}", length);
-                  m_output->writeUInt32((unsigned int)length);
+                  m_output->writeUInt32((::u32)length);
                   m_output->write(data, length);
                }
                else {
@@ -164,7 +164,7 @@ namespace remoting
                   data = charBuff;
                   length = charBuff.length();
                   m_plogwriter->debug("Sending Clipboard, payload length {}", length);
-                  m_output->writeUInt32((unsigned int)length);
+                  m_output->writeUInt32((::u32)length);
                   m_output->write(data, length);
                }
                m_output->flush();

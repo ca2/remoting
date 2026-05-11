@@ -49,7 +49,7 @@ namespace remoting_client
         return true;
     }
 
-    bool HelpDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    bool HelpDialog::onCommand(::u32 controlID, ::u32 notificationID)
     {
         if (controlID == ::innate_subsystem::e_control_id_ok) {
             closeDialog(1);

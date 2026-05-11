@@ -35,7 +35,7 @@ namespace remoting
    {
    }
 
-   void CapContainer::addCap(unsigned int code, const char *vendorSignature,
+   void CapContainer::addCap(::u32 code, const char *vendorSignature,
                              const char *nameSignature)
    {
       ASSERT(strlen(vendorSignature) == 4);
@@ -47,9 +47,9 @@ namespace remoting
       m_caps.add(cap);
    }
 
-   unsigned int CapContainer::getCapCount() const
+   ::u32 CapContainer::getCapCount() const
    {
-      unsigned int capsSize = (unsigned int)m_caps.size();
+      ::u32 capsSize = (::u32)m_caps.size();
       ASSERT(capsSize == m_caps.size());
       return capsSize;
    }
@@ -63,7 +63,7 @@ namespace remoting
       }
    }
 
-   bool CapContainer::includes(unsigned int code) const
+   bool CapContainer::includes(::u32 code) const
    {
       bool result = false;
       for (CapVectorConstIter iter = m_caps.begin(); iter < m_caps.end(); iter++) {

@@ -41,24 +41,24 @@ namespace remoting
    {
    }
 
-   void RfbCodeRegistrator::regCode(unsigned int code, RfbDispatcherListener *listener)
+   void RfbCodeRegistrator::regCode(::u32 code, RfbDispatcherListener *listener)
    {
       m_pdesktopsrvdispatcher->registerNewHandle(code, listener);
    }
 
-   void RfbCodeRegistrator::addSrvToClCap(unsigned int code, const char *vendorSignature,
+   void RfbCodeRegistrator::addSrvToClCap(::u32 code, const char *vendorSignature,
                                           const char *nameSignature)
    {
       m_srvToClCaps->addCap(code, vendorSignature, nameSignature);
    }
 
-   void RfbCodeRegistrator::addClToSrvCap(unsigned int code, const char *vendorSignature,
+   void RfbCodeRegistrator::addClToSrvCap(::u32 code, const char *vendorSignature,
                                           const char *nameSignature)
    {
       m_clToSrvCaps->addCap(code, vendorSignature, nameSignature);
    }
 
-   void RfbCodeRegistrator::addEncCap(unsigned int code, const char *vendorSignature,
+   void RfbCodeRegistrator::addEncCap(::u32 code, const char *vendorSignature,
                                       const char *nameSignature)
    {
       m_encCaps->addCap(code, vendorSignature, nameSignature);

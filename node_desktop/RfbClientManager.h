@@ -54,7 +54,7 @@ namespace remoting_node_desktop
 
    struct BanProp
    {
-      unsigned int count;
+      ::u32 count;
       class ::time banLastTime;
    };
    typedef ::map<::string, BanProp> BanList;
@@ -158,7 +158,7 @@ namespace remoting_node_desktop
       ::remoting::DesktopFactory *m_desktopFactory;
 
       // Inforamtion
-      unsigned int m_nextClientId;
+      ::u32 m_nextClientId;
 
       ::pointer<::remoting_node::Configurator> m_pconfigurator;
       ::pointer<::remoting_node::NewConnectionEvents> m_pnewconnectionevents;

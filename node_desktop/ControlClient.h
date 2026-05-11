@@ -218,13 +218,13 @@ namespace remoting_node_desktop
        */
       bool m_authPassed;
       bool m_repeatAuthPassed;
-      unsigned int m_authReqMessageId;
+      ::u32 m_authReqMessageId;
 
       ::pointer <ControlAppAuthenticator >m_pcontrolappauthenticator;
 
       // A connection identifier will be used by a viewer to connect to
       // the server across a tcp dispatcher.
-      unsigned int m_uTcpDispId;
+      ::u32 m_uTcpDispId;
       ::string m_strGotDispatcherName;
       lockable_critical_section m_criticalsectionTcpDispValues;
 
@@ -235,8 +235,8 @@ namespace remoting_node_desktop
       /**
        * Array of client messages that needs client to be auth.
        */
-      static const unsigned int REQUIRES_AUTH[];
-      static const unsigned int WITHOUT_AUTH[];
+      static const ::u32 REQUIRES_AUTH[];
+      static const ::u32 WITHOUT_AUTH[];
    };
 
 

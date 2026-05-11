@@ -149,7 +149,7 @@ namespace remoting
 
          bool compression = m_replyBuffer->isCompressionSupported();
 
-         m_sender->sendDownloadDataRequest((unsigned int)m_bufferSize,
+         m_sender->sendDownloadDataRequest((::u32)m_bufferSize,
                                            compression);
          m_timeLastRequest.Now();
       }
@@ -201,7 +201,7 @@ namespace remoting
          if (m_bufferSize > 400000) {
             m_bufferSize = 400000;
          }
-         m_sender->sendDownloadDataRequest((unsigned int)m_bufferSize, compression);
+         m_sender->sendDownloadDataRequest((::u32)m_bufferSize, compression);
          m_timeLastRequest.Now();
       }
 

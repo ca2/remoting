@@ -73,12 +73,12 @@ namespace remoting_control_desktop
        * Inherited from BaseDialog.
        * Does nothing.
        */
-      virtual bool onNotify(unsigned int controlID, ::lparam data);
+      virtual bool onNotify(::u32 controlID, ::lparam data);
       /**
        * Inherited from BaseDialog.
        * Handles buttons events.
        */
-      virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+      virtual bool onCommand(::u32 controlID, ::u32 notificationID);
       /**
        * Inherited from BaseDialog.
        * Does nothing.

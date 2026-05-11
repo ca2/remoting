@@ -90,15 +90,15 @@ namespace remoting_notify_node
          
          void on_request(::request * prequest) override;
          
-         //virtual bool is_application_installed(const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, unsigned int & dwGoodToCheckAgain);
+         //virtual bool is_application_installed(const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, ::u32 & dwGoodToCheckAgain);
          
-         //bool is_application_installed(const ::file::path & pathExe, const ::scoped_string & scopedstrAppId, string & strBuild, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, unsigned int & dwGoodToCheckAgain);
+         //bool is_application_installed(const ::file::path & pathExe, const ::scoped_string & scopedstrAppId, string & strBuild, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, ::u32 & dwGoodToCheckAgain);
          
-         //bool is_application_installed(const ::scoped_string & scopedstrAppId, string & strBuild, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, unsigned int & dwGoodToCheckAgain);
+         //bool is_application_installed(const ::scoped_string & scopedstrAppId, string & strBuild, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, ::u32 & dwGoodToCheckAgain);
          
-         //bool is_application_updated(const ::file::path & pathExe, const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, unsigned int & dwGoodToCheckAgain);
+         //bool is_application_updated(const ::file::path & pathExe, const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, ::u32 & dwGoodToCheckAgain);
          
-         //bool is_application_updated(const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, unsigned int & dwGoodToCheckAgain);
+         //bool is_application_updated(const ::scoped_string & scopedstrAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema, ::u32 & dwGoodToCheckAgain);
          
          //::install::installer & installer()
          //{
@@ -112,11 +112,11 @@ namespace remoting_notify_node
          //
          //      virtual string install_get_build();
          //
-         //      virtual int check_soon_launch(const ::scoped_string & scopedstrAppId, bool bLaunch, unsigned int & dwGoodToCheckAgain);
-         //      virtual int check_soon_file_launch(const ::scoped_string & scopedstrAppId, bool bLaunch, unsigned int & dwGoodToCheckAgain);
-         //      virtual int check_soon_app_id(const ::scoped_string & scopedstrAppId, bool bLaunch, unsigned int & dwGoodToCheckAgain);
-         //      virtual int check_soon_app_id1(const ::scoped_string & scopedstrAppId, bool bLaunch, unsigned int & dwGoodToCheckAgain);
-         //      virtual int check_soon_app_id2(const ::scoped_string & scopedstrAppId, bool bLaunch, unsigned int & dwGoodToCheckAgain);
+         //      virtual int check_soon_launch(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
+         //      virtual int check_soon_file_launch(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
+         //      virtual int check_soon_app_id(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
+         //      virtual int check_soon_app_id1(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
+         //      virtual int check_soon_app_id2(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
          //
          //
          //      virtual string get_install_configuration();

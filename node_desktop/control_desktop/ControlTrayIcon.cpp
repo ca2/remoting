@@ -47,7 +47,7 @@
 
 namespace remoting_control_desktop
 {
-   unsigned int ControlTrayIcon::WM_USER_TASKBAR;
+   ::u32 ControlTrayIcon::WM_USER_TASKBAR;
 
    ControlTrayIcon::ControlTrayIcon(::remoting_node::Configurator * pconfigurator, ControlProxy *pcontrolproxy,
                                     ::remoting_node::Notificator *notificator,
@@ -108,13 +108,13 @@ initialize(::system());
    }
 
 
-   bool ControlTrayIcon::on_window_procedure(::lresult & lresult, unsigned int message, ::wparam wparam, ::lparam lparam)
+   bool ControlTrayIcon::on_window_procedure(::lresult & lresult, ::u32 message, ::wparam wparam, ::lparam lparam)
    {
 
 
    // }
    //
-   // LRESULT ControlTrayIcon::windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam,
+   // LRESULT ControlTrayIcon::windowProc(HWND hWnd, ::u32 uMsg, ::wparam wParam, ::lparam lParam,
    //                                     bool *useDefWindowProc)
    //{
       // if (m_inWindowProc) {
@@ -284,7 +284,7 @@ initialize(::system());
 
          ::string userMessage;
 
-         unsigned int stringId = serverInfo.m_serviceFlag ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
+         ::u32 stringId = serverInfo.m_serviceFlag ? IDS_TVNSERVER_SERVICE : IDS_TVNSERVER_APP;
 
          userMessage.runtime_format(
            MainSubsystem().StringTable().getString(IDS_SHUTDOWN_NOTIFICATION_FORMAT),

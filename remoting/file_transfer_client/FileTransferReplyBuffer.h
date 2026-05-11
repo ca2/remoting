@@ -51,16 +51,16 @@ namespace  remoting
 
          bool isCompressionSupported();
 
-         //unsigned int getFilesInfoCount();
+         //::u32 getFilesInfoCount();
          //FileInfo *getFilesInfo();
 
-         unsigned int getDownloadBufferSize();
+         ::u32 getDownloadBufferSize();
          ::array_base<unsigned char> getDownloadBuffer();
 
          unsigned char getDownloadFileFlags();
-         unsigned long long getDownloadLastModified();
+         ::u64 getDownloadLastModified();
 
-         unsigned long long getDirSize();
+         ::u64 getDirSize();
 
          //
          // Inherited from FileTransferEventHandler abstract class
@@ -88,8 +88,8 @@ namespace  remoting
       //private:
 
          ::array_base<unsigned char> readCompressedDataBlock(::DataInputStream * pinput,
-                                               unsigned int compressedSize,
-                                               unsigned int uncompressedSize,
+                                               ::u32 compressedSize,
+                                               ::u32 uncompressedSize,
                                                unsigned char compressionLevel)
        ;
 
@@ -113,7 +113,7 @@ namespace  remoting
          bool m_isCompressionSupported;
 
          // ::file::item ::list_base reply
-         //unsigned int m_filesInfoCount;
+         //::u32 m_filesInfoCount;
          ::pointer_array <FileInfo > m_fileinfoa;
 
          // Last request scopedstrMessage failed reply
@@ -121,14 +121,14 @@ namespace  remoting
 
          // Download data reply
          ::array_base<unsigned char> m_downloadBuffer;
-         unsigned int m_downloadBufferSize;
+         ::u32 m_downloadBufferSize;
 
          // Download end reply
          unsigned char m_downloadFileFlags;
-         unsigned long long m_downloadLastModified;
+         ::u64 m_downloadLastModified;
 
          // Dirsize reply data
-         unsigned long long m_dirSize;
+         ::u64 m_dirSize;
       };
    } //    namespace file_transfer
 } // namespace remoting

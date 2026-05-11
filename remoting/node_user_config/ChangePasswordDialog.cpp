@@ -67,7 +67,7 @@ namespace remoting_node
       return true;
    }
 
-   bool ChangePasswordDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool ChangePasswordDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       if (notificationID == ::user::e_notification_button_clicked) {
          switch (controlID) {

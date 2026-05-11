@@ -98,9 +98,9 @@ namespace remoting_control_desktop
        *
        * Overrides default tray icon window behavour.
        */
-      //virtual LRESULT windowProc(HWND hWnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
+      //virtual LRESULT windowProc(HWND hWnd, ::u32 uMsg, ::wparam wParam, ::lparam lParam, bool *useDefWindowProc);
 
-      bool on_window_procedure(::lresult & lresult, unsigned int message, ::wparam wparam, ::lparam lparam) override;
+      bool on_window_procedure(::lresult & lresult, ::u32 message, ::wparam wparam, ::lparam lparam) override;
 
       /**
        * Handlers of tray icon window events.
@@ -120,7 +120,7 @@ namespace remoting_control_desktop
       void onCloseControlInterfaceMenuItemClick();
 
    protected:
-      static unsigned int WM_USER_TASKBAR;
+      static ::u32 WM_USER_TASKBAR;
 
    protected:
 

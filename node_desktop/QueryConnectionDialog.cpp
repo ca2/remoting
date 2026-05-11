@@ -66,9 +66,9 @@ namespace remoting_node_desktop
       return false;
    }
 
-   bool QueryConnectionDialog::onNotify(unsigned int controlID, ::lparam data) { return true; }
+   bool QueryConnectionDialog::onNotify(::u32 controlID, ::lparam data) { return true; }
 
-   bool QueryConnectionDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool QueryConnectionDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       switch (controlID)
       {
@@ -84,7 +84,7 @@ namespace remoting_node_desktop
 
    bool QueryConnectionDialog::onDestroy() { return true; }
 
-   void QueryConnectionDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
+   void QueryConnectionDialog::onMessageReceived(::u32 uMsg, ::wparam wParam, ::lparam lParam)
    {
       if (uMsg == WM_TIMER)
       {

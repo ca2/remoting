@@ -36,7 +36,7 @@ public:
   int run();
 
 private:
-  virtual void onRfbKeySymEvent(unsigned int rfbKeySym, bool down);
+  virtual void onRfbKeySymEvent(::u32 rfbKeySym, bool down);
 
   static const TCHAR VALID_WORD_LETTERS[];
 

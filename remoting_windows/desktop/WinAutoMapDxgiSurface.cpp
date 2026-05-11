@@ -31,7 +31,7 @@ namespace remoting_windows
 {
 
 
-   WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(WinDxgiSurface *surface, unsigned int mapFlags) : m_surface(surface)
+   WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(WinDxgiSurface *surface, ::u32 mapFlags) : m_surface(surface)
    {
       HRESULT hr = m_surface->getSurface()->Map(&m_mappedRect, mapFlags);
       if (FAILED(hr))

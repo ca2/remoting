@@ -48,9 +48,9 @@ namespace remoting_client
    private:
       void reset();
       void resetDecoders(unsigned char compControl);
-      unsigned int readTightPixel(::remoting::RfbInputGate *input, int bytesPerCPixel);
+      ::u32 readTightPixel(::remoting::RfbInputGate *input, int bytesPerCPixel);
       int readCompactSize(::remoting::RfbInputGate *input);
-      ::array_base<unsigned int> readPalette(::remoting::RfbInputGate *input,
+      ::array_base<::u32> readPalette(::remoting::RfbInputGate *input,
                               int paletteSize,
                               int bytesPerCPixel);
       void processJpeg(::remoting::RfbInputGate *input,
@@ -69,7 +69,7 @@ namespace remoting_client
                               size_t expectedLength,
                               const int decoderId);
       void drawPalette(::innate_subsystem::Framebuffer *pframebuffer,
-                       const ::array_base<unsigned int> &palette,
+                       const ::array_base<::u32> &palette,
                        const ::array_base<unsigned char> &pixels,
                        const ::int_rectangle &  rectangleTarget);
       void drawGradient(::innate_subsystem::Framebuffer *pframebuffer,
@@ -82,7 +82,7 @@ namespace remoting_client
                          const ::array_base<unsigned char> *pixels,
                          const ::int_rectangle &  rectangleTarget);
 
-      unsigned int getRawTightColor(const ::innate_subsystem::PixelFormat & pixelformat,
+      ::u32 getRawTightColor(const ::innate_subsystem::PixelFormat & pixelformat,
                               const ::array_base<unsigned char> &pixels,
                               size_t offset);
       void fillRawComponents(const ::innate_subsystem::PixelFormat & pixelformat,
@@ -90,7 +90,7 @@ namespace remoting_client
                              const ::array_base<unsigned char> &pixels,
                              size_t pixelOffset);
 
-      unsigned int transformPixelToTight(unsigned int color);
+      ::u32 transformPixelToTight(::u32 color);
       ::array_base<unsigned char> transformArray(const ::array_base<unsigned char> &buffer);
 
       ::pointer_array_base<::subsystem::Inflater > m_inflater;

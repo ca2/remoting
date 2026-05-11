@@ -51,8 +51,8 @@ namespace remoting_windows
          m_dxgiOutput1.add(allocateø WinDxgiOutput1(dxgiOutput[i]));
          m_outDupl.add(allocateø WinDxgiOutputDuplication(m_dxgiOutput1[i], &m_device));
          m_rotations.add(dxgiOutput[i]->getRotation());
-         m_stageTextures2D.add(allocateø WinCustomD3D11Texture2D(m_device.getDevice(), (unsigned int)targetRect[i].width(),
-                                                       (unsigned int)targetRect[i].height(), m_rotations[i]));
+         m_stageTextures2D.add(allocateø WinCustomD3D11Texture2D(m_device.getDevice(), (::u32)targetRect[i].width(),
+                                                       (::u32)targetRect[i].height(), m_rotations[i]));
       }
       m_plogwriter->debug("Win8DeskDuplication created");
       resume();

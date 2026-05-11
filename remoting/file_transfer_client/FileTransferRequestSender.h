@@ -46,14 +46,14 @@ namespace remoting
 
          void sendCompressionSupportRequest();
          void sendFileListRequest(const ::scoped_string & scopedstrFullPath, bool useCompression);
-         void sendDownloadRequest(const ::scoped_string & scopedstrFullPathName, unsigned long long offset);
-         void sendDownloadDataRequest(unsigned int size, bool useCompression);
+         void sendDownloadRequest(const ::scoped_string & scopedstrFullPathName, ::u64 offset);
+         void sendDownloadDataRequest(::u32 size, bool useCompression);
          void sendRmFileRequest(const ::scoped_string & scopedstrFullPathName);
          void sendMkDirRequest(const ::scoped_string & scopedstrFullPathName);
          void sendMvFileRequest(const ::scoped_string & scopedstroldFileName, const ::scoped_string & scopedstrNewFileName);
-         void sendUploadRequest(const ::scoped_string & scopedstrFullPathName, bool overwrite, unsigned long long offset);
-         void sendUploadDataRequest(const char *buffer, unsigned int size, bool useCompression);
-         void sendUploadEndRequest(unsigned char fileFlags, unsigned long long modificationTime);
+         void sendUploadRequest(const ::scoped_string & scopedstrFullPathName, bool overwrite, ::u64 offset);
+         void sendUploadDataRequest(const char *buffer, ::u32 size, bool useCompression);
+         void sendUploadEndRequest(unsigned char fileFlags, ::u64 modificationTime);
          void sendFolderSizeRequest(const ::scoped_string & scopedstrFullPath);
 
       protected:

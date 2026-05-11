@@ -88,7 +88,7 @@ FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *regis
   registrator->addClToSrvCap(FTMessage::RENAME_REQUEST, VendorDefs::TIGHTVNC, FTMessage::RENAME_REQUEST_SIG);
   registrator->addClToSrvCap(FTMessage::DIRSIZE_REQUEST, VendorDefs::TIGHTVNC, FTMessage::DIRSIZE_REQUEST_SIG);
 
-  unsigned int rfbMessagesToProcess[] = {
+  ::u32 rfbMessagesToProcess[] = {
     FTMessage::COMPRESSION_SUPPORT_REQUEST,
     FTMessage::FILE_LIST_REQUEST,
     FTMessage::MD5_REQUEST,
@@ -103,7 +103,7 @@ FileTransferRequestHandler::FileTransferRequestHandler(RfbCodeRegistrator *regis
     FTMessage::DIRSIZE_REQUEST
   };
 
-  for (size_t i = 0; i < sizeof(rfbMessagesToProcess) / sizeof(unsigned int); i++) {
+  for (size_t i = 0; i < sizeof(rfbMessagesToProcess) / sizeof(::u32); i++) {
     registrator->regCode(rfbMessagesToProcess[i], this);
   }
 
@@ -130,7 +130,7 @@ FileTransferRequestHandler::~FileTransferRequestHandler()
   m_plogwriter->debug("::file::item transfer request handler deleted");
 }
 
-void FileTransferRequestHandler::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate)
+void FileTransferRequestHandler::onRequest(::u32 reqCode, ::remoting::RfbInputGate *pblockinggate)
 {
   m_security->beginMessageProcessing();
 
@@ -233,10 +233,10 @@ void FileTransferRequestHandler::fileListRequested()
   checkAccess();
 
   unsigned char compressionLevel = requestedCompressionLevel;
-  unsigned int compressedSize = 0;
-  unsigned int uncompressedSize = 0;
-  unsigned int filesCount = 0;
-  unsigned int filesInfoDataSize = 0;
+  ::u32 compressedSize = 0;
+  ::u32 uncompressedSize = 0;
+  ::u32 filesCount = 0;
+  ::u32 filesInfoDataSize = 0;
   const FileInfo *files = NULL;
 
   //
@@ -260,15 +260,15 @@ void FileTransferRequestHandler::fileListRequested()
   DataOutputStream outMemStream(&memStream);
 
   outMemStream.writeUInt32(filesCount);
-  for (unsigned int i = 0; i < filesCount; i++) {
+  for (::u32 i = 0; i < filesCount; i++) {
     outMemStream.writeUInt64(files[i].getSize());
     outMemStream.writeUInt64(files[i].lastModified());
     outMemStream.writeUInt16(files[i].getFlags());
     outMemStream.writeUTF8(files[i].getFileName());
   } // for
 
-  ASSERT((unsigned int)memStream.size() == memStream.size());
-  uncompressedSize = (unsigned int)memStream.size();
+  ASSERT((::u32)memStream.size() == memStream.size());
+  uncompressedSize = (::u32)memStream.size();
 
   //
   // Buffer for data in "CompressedData" block
@@ -279,8 +279,8 @@ void FileTransferRequestHandler::fileListRequested()
   if (compressionLevel != 0) {
     m_deflater.setInput(memStream.toByteArray(), memStream.size());
     m_deflater.deflate();
-    ASSERT((unsigned int)m_deflater.getOutputSize() == m_deflater.getOutputSize());
-    compressedSize = (unsigned int)m_deflater.getOutputSize();
+    ASSERT((::u32)m_deflater.getOutputSize() == m_deflater.getOutputSize());
+    compressedSize = (::u32)m_deflater.getOutputSize();
   }
 
   //
@@ -415,7 +415,7 @@ void FileTransferRequestHandler::dirSizeRequested()
 
   checkAccess();
 
-  unsigned long long directorySize = 0;
+  ::u64 directorySize = 0;
 
   if (!getDirectorySize(fullPathName, &directorySize)) {
     throw SystemException();
@@ -435,8 +435,8 @@ void FileTransferRequestHandler::md5Requested()
 {
   WinFilePath fullPathName;
 
-  unsigned long long offset;
-  unsigned long long dataLen;
+  ::u64 offset;
+  ::u64 dataLen;
 
   {
     m_input->readUTF8(&fullPathName);
@@ -467,11 +467,11 @@ void FileTransferRequestHandler::md5Requested()
   //
 
   DWORD bytesToRead = 1024 * 1024;
-  unsigned long long bytesToReadTotal = dataLen;
+  ::u64 bytesToReadTotal = dataLen;
   size_t bytesRead = 0;
-  unsigned long long bytesReadTotal = 0;
+  ::u64 bytesReadTotal = 0;
 
-  if (dataLen < (unsigned long long)bytesToRead) {
+  if (dataLen < (::u64)bytesToRead) {
     bytesToRead = (DWORD)dataLen;
   }
 
@@ -482,11 +482,11 @@ void FileTransferRequestHandler::md5Requested()
     bytesReadTotal += bytesRead;
     bytesToReadTotal -= bytesRead;
 
-    if (bytesToReadTotal < (unsigned long long)bytesToRead) {
+    if (bytesToReadTotal < (::u64)bytesToRead) {
       bytesToRead = (DWORD)bytesToReadTotal;
     }
 
-    md5calculator.update(&buffer.front(), (unsigned int)bytesRead);
+    md5calculator.update(&buffer.front(), (::u32)bytesRead);
   } // while
 
   md5calculator.finalize();
@@ -509,7 +509,7 @@ void FileTransferRequestHandler::uploadStartRequested()
 
   WinFilePath fullPathName;
   unsigned char uploadFlags;
-  unsigned long long initialOffset;
+  ::u64 initialOffset;
 
   {
     m_input->readUTF8(&fullPathName);
@@ -576,8 +576,8 @@ void FileTransferRequestHandler::uploadDataRequested()
   //
 
   unsigned char compressionLevel;
-  unsigned int compressedSize;
-  unsigned int uncompressedSize;
+  ::u32 compressedSize;
+  ::u32 uncompressedSize;
 
   compressionLevel = m_input->readUInt8();
   compressedSize = m_input->readUInt32();
@@ -622,7 +622,7 @@ void FileTransferRequestHandler::uploadDataRequested()
 void FileTransferRequestHandler::uploadEndRequested()
 {
   unsigned short fileFlags;
-  unsigned long long modificationTime;
+  ::u64 modificationTime;
 
   {
     fileFlags = m_input->readUInt16();
@@ -689,7 +689,7 @@ void FileTransferRequestHandler::uploadEndRequested()
 void FileTransferRequestHandler::downloadStartRequested()
 {
   WinFilePath fullPathName;
-  unsigned long long initialOffset;
+  ::u64 initialOffset;
 
   //
   // Reading command arguments
@@ -749,7 +749,7 @@ void FileTransferRequestHandler::downloadDataRequested()
   //
 
   unsigned char requestedCompressionLevel;
-  unsigned int dataSize;
+  ::u32 dataSize;
 
   {
     requestedCompressionLevel = m_input->readUInt8();
@@ -765,8 +765,8 @@ void FileTransferRequestHandler::downloadDataRequested()
   //
 
   unsigned char compressionLevel = requestedCompressionLevel;
-  unsigned int compressedSize;
-  unsigned int uncompressedSize;
+  ::u32 compressedSize;
+  ::u32 uncompressedSize;
 
   //
   // Client cannot send this request cause there is no
@@ -828,8 +828,8 @@ void FileTransferRequestHandler::downloadDataRequested()
     if (dataSize != 0) {
       m_deflater.setInput(&buffer.front(), uncompressedSize);
       m_deflater.deflate();
-      ASSERT((unsigned int)m_deflater.getOutputSize() == m_deflater.getOutputSize());
-      compressedSize = (unsigned int)m_deflater.getOutputSize();
+      ASSERT((::u32)m_deflater.getOutputSize() == m_deflater.getOutputSize());
+      compressedSize = (::u32)m_deflater.getOutputSize();
     }
   }
 
@@ -874,11 +874,11 @@ void FileTransferRequestHandler::lastRequestFailed(const ::scoped_string & scope
   }
 }
 
-bool FileTransferRequestHandler::getDirectorySize(const ::scoped_string & scopedstrPathname, unsigned long long *dirSize)
+bool FileTransferRequestHandler::getDirectorySize(const ::scoped_string & scopedstrPathname, ::u64 *dirSize)
 {
-  unsigned long long currentDirSize = 0;
-  unsigned int filesCount = 0;
-  unsigned int dataSize = 0;
+  ::u64 currentDirSize = 0;
+  ::u32 filesCount = 0;
+  ::u32 dataSize = 0;
 
   ::file::item folder(pathname);
 
@@ -899,11 +899,11 @@ bool FileTransferRequestHandler::getDirectorySize(const ::scoped_string & scoped
 
     folder.::list_base(&fileNames.front(), NULL);
 
-    for (unsigned int i = 0; i < filesCount; i++) {
+    for (::u32 i = 0; i < filesCount; i++) {
       ::file::item subfile(pathname, fileNames[i]);
       if (subfile.isDirectory()) {
 
-        unsigned long long subDirSize = 0;
+        ::u64 subDirSize = 0;
         ::string subDirPath;
 
         subfile.getPath(&subDirPath);

@@ -40,7 +40,7 @@ namespace remoting_node_desktop
       static ::string_literal TIMEOUT;
       static ::string_literal ACCEPT;
 
-      unsigned int m_timeout;
+      ::u32 m_timeout;
 
    public:
       QueryConnectionCommandLine();
@@ -56,10 +56,10 @@ namespace remoting_node_desktop
       // Returns true if default action is accept.
       bool isDefaultActionAccept();
       // Returns timeout in seconds.
-      unsigned int getTimeout();
+      ::u32 getTimeout();
 
       // protected:
-      // unsigned int m_timeout;
+      // ::u32 m_timeout;
    };
 
 

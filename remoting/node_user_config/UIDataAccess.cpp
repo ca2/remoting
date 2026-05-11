@@ -43,7 +43,7 @@ namespace remoting_node
       return MainSubsystem().StringParser().parseInt(textBoxText, value);
    }
 
-   bool UIDataAccess::queryValueAsUInt(::innate_subsystem::TextBox *textBox, unsigned int *value)
+   bool UIDataAccess::queryValueAsUInt(::innate_subsystem::TextBox *textBox, ::u32 *value)
    {
       ASSERT(textBox != 0);
 

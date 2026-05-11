@@ -58,7 +58,7 @@ namespace remoting
          }
       }
 
-      void FileTransferCore::dataChunkCopied(unsigned long long totalBytesCopied, unsigned long long totalBytesToCopy)
+      void FileTransferCore::dataChunkCopied(::u64 totalBytesCopied, ::u64 totalBytesToCopy)
       {
          if (m_state == NOTHING_STATE) {
             return;
@@ -101,7 +101,7 @@ namespace remoting
             throw "FileTransferCore: listLocalFolder";
          }
          //m_localFilesInfo.resize(fl.getFilesCount());
-         //for (unsigned int i = 0; i < fl.getFilesCount(); i++)
+         //for (::u32 i = 0; i < fl.getFilesCount(); i++)
          //   m_localFilesInfo[i] = fl.getFilesInfo()[i];
 
          m_localFilesInfo = fl.m_fileinfoa;
@@ -116,8 +116,8 @@ namespace remoting
          return m_remoteFilesInfo;
       }
 
-      void FileTransferCore::updateSupportedOperations(const ::array_base<unsigned int> *clientCaps,
-                                                       const ::array_base<unsigned int> *serverCaps)
+      void FileTransferCore::updateSupportedOperations(const ::array_base<::u32> *clientCaps,
+                                                       const ::array_base<::u32> *serverCaps)
       {
          m_supportedOps = OperationSupport(*clientCaps, *serverCaps);
       }
@@ -143,9 +143,9 @@ namespace remoting
                // Copy files info to class members
                //
 
-               // unsigned int numberFiles = m_replyBuffer->getFilesInfoCount();
+               // ::u32 numberFiles = m_replyBuffer->getFilesInfoCount();
                // m_remoteFilesInfo.resize(numberFiles);
-               // for (unsigned int i = 0; i < numberFiles; i++) {
+               // for (::u32 i = 0; i < numberFiles; i++) {
                //    m_remoteFilesInfo[i] = m_replyBuffer->getFilesInfo()[i];
 
                   m_remoteFilesInfo = m_replyBuffer->m_fileinfoa;

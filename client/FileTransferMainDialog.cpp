@@ -174,7 +174,7 @@ namespace remoting_client
       return false;
    }
 
-    // bool FileTransferMainDialog::onNotify(unsigned int controlID, ::lparam data)
+    // bool FileTransferMainDialog::onNotify(::u32 controlID, ::lparam data)
     // {
     //     LPNMHDR nmhdr = (LPNMHDR)data;
     //     switch (controlID) {
@@ -236,7 +236,7 @@ namespace remoting_client
     //     return true;
     // }
 
-    bool FileTransferMainDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+    bool FileTransferMainDialog::onCommand(::u32 controlID, ::u32 notificationID)
     {
         switch (controlID) {
             case ::innate_subsystem::e_control_id_cancel:
@@ -284,7 +284,7 @@ namespace remoting_client
         return true;
     }
 
-    void FileTransferMainDialog::onMessageReceived(unsigned int uMsg, ::wparam wParam, ::lparam lParam)
+    void FileTransferMainDialog::onMessageReceived(::u32 uMsg, ::wparam wParam, ::lparam lParam)
     {
         switch (uMsg) {
             case WM_OPERATION_FINISHED:
@@ -396,7 +396,7 @@ namespace remoting_client
 
     void FileTransferMainDialog::onRemoveRemoteButtonClick()
     {
-        unsigned int siCount = m_remoteFileListView.getSelectedItemsCount();
+        ::u32 siCount = m_remoteFileListView.getSelectedItemsCount();
 
         if (siCount == 0) {
             MainSubsystem().message_box(operating_system_window(),
@@ -411,7 +411,7 @@ namespace remoting_client
         ::pointer_array< ::remoting::file_transfer::FileInfo> fileinfoa;
 
         auto indexes = m_remoteFileListView.getSelectedItemsIndexes();
-        for (unsigned int i = 0; i < indexes.size(); i++) {
+        for (::u32 i = 0; i < indexes.size(); i++) {
             ::remoting::file_transfer::FileInfo * pfileinfo = reinterpret_cast<::remoting::file_transfer::FileInfo *>(m_remoteFileListView.getItemData(indexes[i]).m_lparam);
             fileinfoa.add(pfileinfo);
         }
@@ -556,7 +556,7 @@ namespace remoting_client
 
     void FileTransferMainDialog::onRemoveLocalButtonClick()
     {
-        unsigned int siCount = m_localFileListView.getSelectedItemsCount();
+        ::u32 siCount = m_localFileListView.getSelectedItemsCount();
 
         if (siCount == 0) {
             MainSubsystem().message_box(operating_system_window(),
@@ -570,7 +570,7 @@ namespace remoting_client
         ::pointer_array<::remoting::file_transfer::FileInfo> fileinfoa;
 
         auto indexes = m_localFileListView.getSelectedItemsIndexes();
-        for (unsigned int i = 0; i < indexes.size(); i++) {
+        for (::u32 i = 0; i < indexes.size(); i++) {
             auto pfileInfo = m_localFileListView.getItemData(indexes[i]).raw_cast<::remoting::file_transfer::FileInfo*>();
             fileinfoa.add(pfileInfo);
         }
@@ -601,7 +601,7 @@ namespace remoting_client
 
     void FileTransferMainDialog::onUploadButtonClick()
     {
-        //unsigned int siCount = m_localFileListView.getSelectedItemsCount();
+        //::u32 siCount = m_localFileListView.getSelectedItemsCount();
         ::pointer_array<::remoting::file_transfer::FileInfo> fileinfoa;
 
         auto indexes = m_localFileListView.getSelectedItemsIndexes();
@@ -616,7 +616,7 @@ namespace remoting_client
         ///int *indexes = new int[siCount];
         //FileInfo *filesInfo = new FileInfo[siCount];
 
-        for (unsigned int i = 0; i < indexes.size(); i++) {
+        for (::u32 i = 0; i < indexes.size(); i++) {
             auto pfileInfo = m_localFileListView.getItemData(indexes[i]).raw_cast<::remoting::file_transfer::FileInfo *>();
             fileinfoa.add(pfileInfo);
         }
@@ -665,7 +665,7 @@ namespace remoting_client
         ::pointer_array<::remoting::file_transfer::FileInfo> fileinfoa;
 
         //m_remoteFileListView.getSelectedItemsIndexes(indexes);
-        for (unsigned int i = 0; i < indexes.size(); i++) {
+        for (::u32 i = 0; i < indexes.size(); i++) {
             auto pfileInfo = m_remoteFileListView.getItemData(indexes[i]).raw_cast<::remoting::file_transfer::FileInfo *>();
             fileinfoa.add(pfileInfo);
         }

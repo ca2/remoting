@@ -33,7 +33,7 @@
 namespace remoting_control_desktop
 {
    ::pointer < Transport >TransportFactory::createSocketClientTransport(const ::scoped_string & scopedstrConnectHost,
-                                                            unsigned int connectPort)
+                                                            ::u32 connectPort)
    {
       auto psocket = ::system()->createø<::subsystem::SocketIPv4Interface>();
 
@@ -48,7 +48,7 @@ namespace remoting_control_desktop
    }
 
    ::pointer < Transport >TransportFactory::createSocketServerTransport(const ::scoped_string & scopedstrBindHost,
-                                                            unsigned int bindPort)
+                                                            ::u32 bindPort)
    {
       auto psocket = ::system()->createø<::subsystem::SocketIPv4Interface>();
 

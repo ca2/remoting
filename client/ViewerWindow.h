@@ -150,7 +150,7 @@ namespace remoting_client
         static const int TIMER_DESKTOP_STATE = 1;
         static const int TIMER_DESKTOP_STATE_DELAY = 50;
 
-        bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
+        bool onMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam);
         //bool onEraseBackground(HDC hdc);
 
         bool onDisconnect();
@@ -162,7 +162,7 @@ namespace remoting_client
         void onSize() override;
         //bool onCreate(LPCREATESTRUCT lps);
        bool onCreate(void *pCreateStruct) override;
-        bool onCommand(unsigned int controlID, unsigned int notificationID) override;
+        bool onCommand(::u32 controlID, ::u32 notificationID) override;
         //bool onNotify(int idCtrl, LPNMHDR pnmh);
         bool onSysCommand(::wparam wParam, ::lparam lParam);
         bool onClose();

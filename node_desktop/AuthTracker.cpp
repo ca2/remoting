@@ -30,18 +30,18 @@ namespace remoting_node_desktop
 {
 
 
-   AuthTracker::AuthTracker(const class ::time & timeFailureInterval, unsigned int failureMaxCount) :
+   AuthTracker::AuthTracker(const class ::time & timeFailureInterval, ::u32 failureMaxCount) :
        m_uFailureCount(0), m_timeFailureInterval(timeFailureInterval), m_uFailureMaxCount(failureMaxCount)
    {
    }
 
    AuthTracker::~AuthTracker() {}
 
-   unsigned long long AuthTracker::checkBan()
+   ::u64 AuthTracker::checkBan()
    {
       refresh();
 
-      unsigned long long banTime = 0;
+      ::u64 banTime = 0;
       {
          critical_section_lock al(&m_criticalsectionCount);
          if (m_uFailureCount >= m_uFailureMaxCount)

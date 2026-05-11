@@ -44,7 +44,7 @@ namespace remoting
       void reset();
 
       // Process the ::list_base of encodings requested by the RFB client.
-      void setEncodings(const int_array & ia);
+      void setEncodings(const i32_array & ia);
 
       // Return preferred encoding as previously set with setEncodings().
       // Preferred encoding is the first "normal" encoding from the ::list_base passed

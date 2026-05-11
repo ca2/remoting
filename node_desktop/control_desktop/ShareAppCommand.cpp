@@ -26,7 +26,7 @@
 
 namespace remoting_control_desktop
 {
-   ShareAppCommand::ShareAppCommand(ControlProxy *serverControl, unsigned int procId)
+   ShareAppCommand::ShareAppCommand(ControlProxy *serverControl, ::u32 procId)
    : m_pcontrolproxy(serverControl),
      m_procId(procId)
    {

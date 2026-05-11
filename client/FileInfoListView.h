@@ -86,12 +86,12 @@ namespace remoting_client
         //   0, if first == second
         //   1, if first > second
         //
-        virtual int compareUInt64(unsigned long long first, unsigned long long second);
+        virtual int compareUInt64(::u64 first, ::u64 second);
 
         ::pointer < ::innate_subsystem::ImageListInterface > m_pimagelistSmall;
 
         //private:
-        virtual bool window_procedure(::lresult & lresult, unsigned int scopedstrMessage, ::wparam wparam, ::lparam lparam);
+        virtual bool window_procedure(::lresult & lresult, ::u32 scopedstrMessage, ::wparam wparam, ::lparam lparam);
 
         static const int IMAGE_FOLDER_UP_INDEX = 0;
         static const int IMAGE_FOLDER_INDEX = 1;

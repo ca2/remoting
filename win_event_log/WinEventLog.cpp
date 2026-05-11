@@ -85,7 +85,7 @@ void WinEventLog::updateEventSourcesSubkey()
   }
 }
 
-void WinEventLog::reportInfo(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...)
+void WinEventLog::reportInfo(::u32 messageId, const ::scoped_string & scopedstrFmt, ...)
 {
   va_list vl;
   va_start(vl, fmt);
@@ -93,7 +93,7 @@ void WinEventLog::reportInfo(unsigned int messageId, const ::scoped_string & sco
   va_end(vl);
 }
 
-void WinEventLog::reportWarning(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...)
+void WinEventLog::reportWarning(::u32 messageId, const ::scoped_string & scopedstrFmt, ...)
 {
   va_list vl;
   va_start(vl, fmt);
@@ -101,7 +101,7 @@ void WinEventLog::reportWarning(unsigned int messageId, const ::scoped_string & 
   va_end(vl);
 }
 
-void WinEventLog::reportError(unsigned int messageId, const ::scoped_string & scopedstrFmt, ...)
+void WinEventLog::reportError(::u32 messageId, const ::scoped_string & scopedstrFmt, ...)
 {
   va_list vl;
   va_start(vl, fmt);
@@ -112,7 +112,7 @@ void WinEventLog::reportError(unsigned int messageId, const ::scoped_string & sc
 #pragma warning(push)
 #pragma warning(disable:4996)
 
-void WinEventLog::reportEvent(unsigned int messageId,
+void WinEventLog::reportEvent(::u32 messageId,
                             WORD eventType,
                             const ::scoped_string & scopedstrFmt,
                             va_list argList)

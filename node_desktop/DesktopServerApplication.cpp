@@ -78,14 +78,14 @@ namespace remoting_node_desktop
 
          auto memory = MainSubsystem().OperatingSystem().getSharedMemorySnapshot(shMemName, 72, 10_s);
 
-         auto mem= (unsigned long long *) memory.data();
+         auto mem= (::u64 *) memory.data();
 
          HANDLE readPipeHandle, writePipeHandle;
-         unsigned int maxPortionSize;
+         ::u32 maxPortionSize;
 
          readPipeHandle = (HANDLE)mem[1];
          writePipeHandle = (HANDLE)mem[2];
-         maxPortionSize = (unsigned int)mem[3];
+         maxPortionSize = (::u32)mem[3];
          auto ppipeClient = create_newø<::subsystem::AnonymousPipe>();
          auto pfileClientRead = MainSubsystem().fileFrom_HANDLE(readPipeHandle);
          auto pfileClientWrite = MainSubsystem().fileFrom_HANDLE(writePipeHandle);
@@ -98,7 +98,7 @@ namespace remoting_node_desktop
 
          readPipeHandle = (HANDLE)mem[4];
          writePipeHandle = (HANDLE)mem[5];
-         maxPortionSize = (unsigned int)mem[6];
+         maxPortionSize = (::u32)mem[6];
          auto ppipeServer = create_newø<::subsystem::AnonymousPipe>();
          auto pfileServerRead = MainSubsystem().fileFrom_HANDLE(readPipeHandle);
          auto pfileServerWrite = MainSubsystem().fileFrom_HANDLE(writePipeHandle);

@@ -38,14 +38,14 @@
  *  2) Server to client messages.
  *
  * Client to server messages have following format:
- *  unsigned int messageId 32 bit scopedstrMessage id.
+ *  ::u32 messageId 32 bit scopedstrMessage id.
  *  unsigned char[] messageBody scopedstrMessage body depends on messageId.
  * @remark rfb dispatcher in common case read first byte (unsigned char) as scopedstrMessage id,
  * but if first byte is equal to 0xFC then it's TightVNC extension scopedstrMessage and
- * must read next 3 bytes and create unsigned int scopedstrMessage id for processing.
+ * must read next 3 bytes and create ::u32 scopedstrMessage id for processing.
  *
  * Server to client scopedstrMessage have following format:
- *  unsigned int scopedstrMessage id meaning like in client->server messages.
+ *  ::u32 scopedstrMessage id meaning like in client->server messages.
  *  unsigned char[] messageBody meaning like in client->server messages.
  *
  * -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@
  * Structures used in file transfer proto:
  *
  *  struct StringUTF8 { string encoded in UTF8 encoding.
- *    unsigned int size;        // size of encoded string buffer in bytes;
+ *    ::u32 size;        // size of encoded string buffer in bytes;
  *    unsigned char buffer[size]; // buffer with encoded string data.
  *
  * -----------------------------------------------------------------------------
@@ -100,8 +100,8 @@
  * Data that can be compressed marked as "CompressedBlock:" in messages description.
  * "CompressedBlock:" has several mandatory fields:
  *   unsigned char compressionLevel compression level (0 - not compressed, [1..9] compressed).
- *   unsigned int compressedSize size of compressed data.
- *   unsigned int uncompressedSize size of uncompressed data.
+ *   ::u32 compressedSize size of compressed data.
+ *   ::u32 uncompressedSize size of uncompressed data.
  *   unsigned char compressedData[compressedSize] compressed usefull data.
  * @note that if compressionLevel is zero than compressedSize is equals to uncompressedSize and
  * compressedData is not compressed.
@@ -122,14 +122,14 @@ public:
    *
    * @reply COMPRESSION_SUPPORT_REQUEST scopedstrMessage.
    */
-  const static unsigned int COMPRESSION_SUPPORT_REQUEST = 0xFC000100;
+  const static ::u32 COMPRESSION_SUPPORT_REQUEST = 0xFC000100;
   /**
    * Reply to COMPRESSION_SUPPORT_REQUEST scopedstrMessage.
    *
    * @body:
    *   unsigned char isCompressionSupported - 1 if compression supported, 0 otherwise.
    */
-  const static unsigned int COMPRESSION_SUPPORT_REPLY = 0xFC000101;
+  const static ::u32 COMPRESSION_SUPPORT_REPLY = 0xFC000101;
 
   static string_literal FILE_LIST_REQUEST_SIG;
   static string_literal FILE_LIST_REPLY_SIG;
@@ -144,23 +144,23 @@ public:
    *
    * @see readme tags of FTMessage class.
    */
-  const static unsigned int FILE_LIST_REQUEST = 0xFC000102;
+  const static ::u32 FILE_LIST_REQUEST = 0xFC000102;
   /*
    * Success reply to FILE_LIST_REQUEST scopedstrMessage.
    *
    * @body:
    *  @compressedBlock:
-   *    unsigned int filesCount count of files.
+   *    ::u32 filesCount count of files.
    *    struct {
-   *      unsigned long long fileSize file size in bytes (0 if directory).
-   *      unsigned long long modTime file last modification time.
+   *      ::u64 fileSize file size in bytes (0 if directory).
+   *      ::u64 modTime file last modification time.
    *      unsigned char fileFlags flags of file.
    *      StringUTF8 relFilename filename relative to parent folder without first "/" (sample "test.txt",
    *                             but not "/test.txt" and not "/a/test.txt")
    *    } fileInfo[filesCount] array of structures containing files info.
    * @see readme tags of FTMessage class.
    */
-  const static unsigned int FILE_LIST_REPLY = 0xFC000103;
+  const static ::u32 FILE_LIST_REPLY = 0xFC000103;
 
   static string_literal MD5_REQUEST_SIG;
   static string_literal MD5_REPLY_SIG;
@@ -169,69 +169,69 @@ public:
    *
    * @body
    *   StringUTF pathToFile absolute path to file.
-   *   unsigned long long offset begin offset of file chunk in bytes.
-   *   unsigned long long dataSize size of data in bytes.
+   *   ::u64 offset begin offset of file chunk in bytes.
+   *   ::u64 dataSize size of data in bytes.
    *
    * @reply MD5_REPLY on success, LAST_REQUEST_FAILED_REPLY on fail.
    */
-  const static unsigned int MD5_REQUEST = 0xFC000104;
+  const static ::u32 MD5_REQUEST = 0xFC000104;
   /**
    * Reply for MD5_REQUEST scopedstrMessage.
    *
    * @body
    *   unsigned char md5[16] md5 hash of requested file chunk.
    */
-  const static unsigned int MD5_REPLY = 0xFC000105;
+  const static ::u32 MD5_REPLY = 0xFC000105;
 
   static string_literal UPLOAD_START_REQUEST_SIG;
   static string_literal UPLOAD_START_REPLY_SIG;
-  const static unsigned int UPLOAD_START_REQUEST = 0xFC000106;
-  const static unsigned int UPLOAD_START_REPLY = 0xFC000107;
+  const static ::u32 UPLOAD_START_REQUEST = 0xFC000106;
+  const static ::u32 UPLOAD_START_REPLY = 0xFC000107;
 
   static string_literal UPLOAD_DATA_REQUEST_SIG;
   static string_literal UPLOAD_DATA_REPLY_SIG;
-  const static unsigned int UPLOAD_DATA_REQUEST = 0xFC000108;
-  const static unsigned int UPLOAD_DATA_REPLY = 0xFC000109;
+  const static ::u32 UPLOAD_DATA_REQUEST = 0xFC000108;
+  const static ::u32 UPLOAD_DATA_REPLY = 0xFC000109;
 
   static string_literal UPLOAD_END_REQUEST_SIG;
   static string_literal UPLOAD_END_REPLY_SIG;
-  const static unsigned int UPLOAD_END_REQUEST = 0xFC00010A;
-  const static unsigned int UPLOAD_END_REPLY = 0xFC00010B;
+  const static ::u32 UPLOAD_END_REQUEST = 0xFC00010A;
+  const static ::u32 UPLOAD_END_REPLY = 0xFC00010B;
 
   static string_literal DOWNLOAD_START_REQUEST_SIG;
   static string_literal DOWNLOAD_START_REPLY_SIG;
-  const static unsigned int DOWNLOAD_START_REQUEST = 0xFC00010C;
-  const static unsigned int DOWNLOAD_START_REPLY = 0xFC00010D;
+  const static ::u32 DOWNLOAD_START_REQUEST = 0xFC00010C;
+  const static ::u32 DOWNLOAD_START_REPLY = 0xFC00010D;
 
   static string_literal DOWNLOAD_DATA_REQUEST_SIG;
   static string_literal DOWNLOAD_DATA_REPLY_SIG;
-  const static unsigned int DOWNLOAD_DATA_REQUEST = 0xFC00010E;
-  const static unsigned int DOWNLOAD_DATA_REPLY = 0xFC00010F;
+  const static ::u32 DOWNLOAD_DATA_REQUEST = 0xFC00010E;
+  const static ::u32 DOWNLOAD_DATA_REPLY = 0xFC00010F;
 
   static string_literal DOWNLOAD_END_REPLY_SIG;
-  const static unsigned int DOWNLOAD_END_REPLY = 0xFC000110;
+  const static ::u32 DOWNLOAD_END_REPLY = 0xFC000110;
 
   static string_literal MKDIR_REQUEST_SIG;
   static string_literal MKDIR_REPLY_SIG;
-  const static unsigned int MKDIR_REQUEST = 0xFC000111;
-  const static unsigned int MKDIR_REPLY = 0xFC000112;
+  const static ::u32 MKDIR_REQUEST = 0xFC000111;
+  const static ::u32 MKDIR_REPLY = 0xFC000112;
 
   static string_literal REMOVE_REQUEST_SIG;
   static string_literal REMOVE_REPLY_SIG;
-  const static unsigned int REMOVE_REQUEST = 0xFC000113;
-  const static unsigned int REMOVE_REPLY = 0xFC000114;
+  const static ::u32 REMOVE_REQUEST = 0xFC000113;
+  const static ::u32 REMOVE_REPLY = 0xFC000114;
 
   static string_literal RENAME_REQUEST_SIG;
   static string_literal RENAME_REPLY_SIG;
-  const static unsigned int RENAME_REQUEST = 0xFC000115;
-  const static unsigned int RENAME_REPLY = 0xFC000116;
+  const static ::u32 RENAME_REQUEST = 0xFC000115;
+  const static ::u32 RENAME_REPLY = 0xFC000116;
 
   static string_literal DIRSIZE_REQUEST_SIG;
   static string_literal DIRSIZE_REPLY_SIG;
-  const static unsigned int DIRSIZE_REQUEST = 0xFC000117;
-  const static unsigned int DIRSIZE_REPLY = 0xFC000118;
+  const static ::u32 DIRSIZE_REQUEST = 0xFC000117;
+  const static ::u32 DIRSIZE_REPLY = 0xFC000118;
 
-  const static unsigned int LAST_REQUEST_FAILED_REPLY = 0xFC000119;
+  const static ::u32 LAST_REQUEST_FAILED_REPLY = 0xFC000119;
   static string_literal LAST_REQUEST_FAILED_REPLY_SIG;
 };
 

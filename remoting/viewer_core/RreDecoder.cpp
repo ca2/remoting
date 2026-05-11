@@ -41,20 +41,20 @@ namespace remoting_client
                            ::innate_subsystem::Framebuffer *pframebuffer,
                            const ::int_rectangle &  rectangleTarget)
    {
-      unsigned int numberRectangle = pinput->readUInt32();
+      ::u32 numberRectangle = pinput->readUInt32();
       size_t bytesPerPixel = pframebuffer->getBytesPerPixel();
 
-      unsigned int backgroundColor;
+      ::u32 backgroundColor;
       pinput->readFully(&backgroundColor, bytesPerPixel);
       pframebuffer->fillRect(rectangleTarget, backgroundColor);
 
       while (numberRectangle--) {
-         unsigned int color;
+         ::u32 color;
          pinput->readFully(&color, bytesPerPixel);
-         unsigned int x = pinput->readUInt16();
-         unsigned int y = pinput->readUInt16();
-         unsigned int w = pinput->readUInt16();
-         unsigned int h = pinput->readUInt16();
+         ::u32 x = pinput->readUInt16();
+         ::u32 y = pinput->readUInt16();
+         ::u32 w = pinput->readUInt16();
+         ::u32 h = pinput->readUInt16();
 
          ::int_rectangle rectangle(x, y, x + w, y + h);
          rectangle.offset(rectangleTarget.left, rectangleTarget.top);

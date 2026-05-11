@@ -48,7 +48,7 @@ namespace remoting
       ::pointer < DataInputStream > m_pdatainputstream;
 
       bool m_shared;
-      unsigned int m_minorVerNum;
+      ::u32 m_minorVerNum;
       bool m_viewOnlyAuth;
       bool m_tightEnabled;
       bool m_bAuthAllowed;
@@ -88,7 +88,7 @@ namespace remoting
       void sendInteractionCaps(const CapContainer *srvToClCaps, const CapContainer *clToSrvCaps,
                                const CapContainer *encCaps);
 
-      void doAuth(unsigned int authType);
+      void doAuth(::u32 authType);
       void doTightAuth();
       void doVncAuth();
       void doAuthNone();
@@ -101,7 +101,7 @@ namespace remoting
       // that the format is valid and that the major version number is 3. Returns
       // minor version number without checking its value. If the format is invalid
       // or major version number is not 3, an ::subsystem::Exception will be thrown.
-      unsigned int getProtocolMinorVersion(const char str[12]);
+      ::u32 getProtocolMinorVersion(const char str[12]);
 
    };
 

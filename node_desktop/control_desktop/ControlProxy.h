@@ -119,7 +119,7 @@ namespace remoting_control_desktop
       void makeTcpDispatcherConnection(const ::scoped_string & scopedstrConnectString,
                                        const ::scoped_string & scopedstrDispatcherName,
                                        const ::scoped_string & scopedstrKeyword,
-                                       unsigned int connectionId);
+                                       ::u32 connectionId);
 
       // Share only primary display for all clients.
       void sharePrimary();
@@ -138,7 +138,7 @@ namespace remoting_control_desktop
       void shareFull();
 
       // Share only application region for all clients. Other regions must be painted to black.
-      void shareApp(unsigned int procId);
+      void shareApp(::u32 procId);
 
       /**
        * Sends new configuration to server.

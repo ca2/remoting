@@ -64,9 +64,9 @@ namespace remoting_node
    ::string_literal HookDefinitions::HOOK_LOADER_WINDOW_CLASS = "TvnHookLoaderWindowClass";
    //::string_literal HookDefinitions::HOOK_TARGET_WIN_CLASS_NAME = "HookTargetWinClassName";
    ::string_literal HookDefinitions::HOOK_LOADER_NAME = "hookldr.exe";
-   // const unsigned int HookDefinitions::LOADER_CLOSE_CODE =
+   // const ::u32 HookDefinitions::LOADER_CLOSE_CODE =
    // RegisterWindowMessage("TVN.HOOK.LOADER.CLOSE.CODE");
-   // const unsigned int HookDefinitions::SPEC_IPC_CODE =
+   // const ::u32 HookDefinitions::SPEC_IPC_CODE =
    // RegisterWindowMessage("TVN.HOOK.MESSAGE.CODE");
 
    ::string_literal DefaultNames::DEFAULT_COMPUTER_NAME = "TightVNC Server";

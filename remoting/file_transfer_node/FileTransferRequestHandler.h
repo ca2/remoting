@@ -123,7 +123,7 @@ namespace remoting
           * Inherited from RfbDispatcherListener.
           * Processes file transfer client messages.
           */
-         virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *backGate);
+         virtual void onRequest(::u32 reqCode, ::remoting::RfbInputGate *backGate);
 
       protected:
 

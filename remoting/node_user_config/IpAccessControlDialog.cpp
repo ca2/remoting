@@ -63,7 +63,7 @@ namespace remoting_node
       return true;
    }
 
-   bool IpAccessControlDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool IpAccessControlDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       if (notificationID == ::user::e_notification_button_clicked) {
          switch (controlID) {
@@ -108,7 +108,7 @@ namespace remoting_node
       return true;
    }
    //
-   // bool IpAccessControlDialog::onNotify(unsigned int controlID, ::lparam data)
+   // bool IpAccessControlDialog::onNotify(::u32 controlID, ::lparam data)
    // {
    //    if (controlID == IDC_IP_ACCESS_CONTROL_LIST) {
    //       NMHDR* pnmh = (NMHDR*)data;
@@ -150,7 +150,7 @@ namespace remoting_node
          return false;
         }
 
-      unsigned int queryTimeout;
+      ::u32 queryTimeout;
 
       UIDataAccess::queryValueAsUInt(&m_queryTimeout, &queryTimeout);
 
@@ -419,7 +419,7 @@ namespace remoting_node
       //
 
       //::string ansiIpStorage(&ipStorage);
-      unsigned int addr = MainSubsystem().internet_address4(ipStorage);
+      ::u32 addr = MainSubsystem().internet_address4(ipStorage);
 
       IpAccessRule::ActionType action = IpAccessRule::ACTION_TYPE_ALLOW;
       int rulesCount = 0;

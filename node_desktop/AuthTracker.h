@@ -37,12 +37,12 @@ namespace remoting_node_desktop
    virtual public ::particle
    {
    public:
-      AuthTracker(const class ::time & timeFailureInterval, unsigned int failureMaxCount);
+      AuthTracker(const class ::time & timeFailureInterval, ::u32 failureMaxCount);
       virtual ~AuthTracker();
 
    protected:
       // Return ban time if new connection banned and zero if it's not banned.
-      unsigned long long checkBan();
+      ::u64 checkBan();
       // If authentication failed this function must be called to increase an
       // internal failure count.
       void notifyAbAuthFailed();
@@ -54,8 +54,8 @@ namespace remoting_node_desktop
       class ::time m_timeFailureInterval;
 
       class ::time m_timeFirstFailure;
-      unsigned int m_uFailureCount;
-      unsigned int m_uFailureMaxCount;
+      ::u32 m_uFailureCount;
+      ::u32 m_uFailureMaxCount;
       lockable_critical_section m_criticalsectionCount;
    };
 

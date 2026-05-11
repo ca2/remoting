@@ -75,7 +75,7 @@ namespace remoting_client
       }
    }
 
-   bool ConnectingDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool ConnectingDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       if (controlID == ::innate_subsystem::e_control_id_ok) {
          closeDialog(1);
@@ -189,7 +189,7 @@ namespace remoting_client
    }
 
 
-   bool ConnectingDialog::dialog_procedure(iptr & iptrResult, unsigned int message, ::wparam wparam, ::lparam lparam)
+   bool ConnectingDialog::dialog_procedure(iptr & iptrResult, ::u32 message, ::wparam wparam, ::lparam lparam)
    {
 
       if (message == WM_USER + 328)

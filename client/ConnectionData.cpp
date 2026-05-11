@@ -91,7 +91,7 @@ namespace remoting_client
       m_isSetPassword = false;
    }
 
-   unsigned int ConnectionData::getDispatchId() const
+   ::u32 ConnectionData::getDispatchId() const
    {
       return (m_isSetDispatchId ? m_dispatchId : 0);
    }
@@ -101,7 +101,7 @@ namespace remoting_client
       return m_isSetDispatchId;
    }
 
-   void ConnectionData::setDispatchId(unsigned int id)
+   void ConnectionData::setDispatchId(::u32 id)
    {
       m_dispatchId = id;
       m_isSetDispatchId = true;

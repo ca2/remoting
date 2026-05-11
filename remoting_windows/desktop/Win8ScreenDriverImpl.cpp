@@ -157,7 +157,7 @@ namespace remoting_windows
       m_plogwriter->debug("Try to enumerate dxgi outputs");
       ::pointer_array<WinDxgiOutput> dxgiOutputArray;
       ::int_rectangle_array_base deskCoordArray;
-      unsigned int iOutput = 0;
+      ::u32 iOutput = 0;
       try
       {
          for (iOutput = 0; iOutput < 65535; iOutput++)

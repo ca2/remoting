@@ -105,7 +105,7 @@ namespace remoting_client
             // Prepare size string
             //
 
-            unsigned long long fileSize = fileInfo->getSize();
+            ::u64 fileSize = fileInfo->getSize();
 
             if (fileSize <= 1024) {
                 sizeString.format("{} B", fileSize);
@@ -219,7 +219,7 @@ namespace remoting_client
         });
     }
 
-    int FileInfoListView::compareUInt64(unsigned long long first, unsigned long long second)
+    int FileInfoListView::compareUInt64(::u64 first, ::u64 second)
     {
         if (first < second) {
             return -1;
@@ -328,7 +328,7 @@ namespace remoting_client
         }
     }
 
-    bool FileInfoListView::window_procedure(::lresult & lresult, unsigned int uMsg, ::wparam wparam, ::lparam lparam)
+    bool FileInfoListView::window_procedure(::lresult & lresult, ::u32 uMsg, ::wparam wparam, ::lparam lparam)
     {
         //FileInfoListView *_this = reinterpret_cast<FileInfoListView *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 

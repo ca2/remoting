@@ -69,7 +69,7 @@ namespace remoting_node
       return true;
    }
 
-   bool AdministrationConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
+   bool AdministrationConfigDialog::onCommand(::u32 controlID, ::u32 notificationID)
    {
       if (notificationID == ::user::e_notification_button_clicked) {
          if (controlID == IDC_SHARED_RADIO1) {
@@ -118,7 +118,7 @@ namespace remoting_node
          return false;
         }
 
-      unsigned int logLevel;
+      ::u32 logLevel;
 
       UIDataAccess::queryValueAsUInt(&m_logLevel, &logLevel);
 

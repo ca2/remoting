@@ -70,7 +70,7 @@ public:
    * Inherited from RfbDispatcherListener.
    * Processes file transfer client messages.
    */
-  virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *pblockinggate);
+  virtual void onRequest(::u32 reqCode, ::remoting::RfbInputGate *pblockinggate);
 
 protected:
 
@@ -118,7 +118,7 @@ protected:
   // Helper methods
   //
 
-  bool getDirectorySize(const ::scoped_string & scopedstrPathname, unsigned long long *dirSize);
+  bool getDirectorySize(const ::scoped_string & scopedstrPathname, ::u64 *dirSize);
 
 protected:
   /**

@@ -75,7 +75,7 @@ int KeySymTest::run()
         getWord(&line, &linePos, &word2)) {
       if (word1.isEqualTo("kbdlayout")) {
         // Try parse word2 as a hexadecimal value
-        unsigned int hkbdLayout = 0;
+        ::u32 hkbdLayout = 0;
         if (!MainSubsystem().StringParser().parseHex(word2, &hkbdLayout)) {
           ::string errMess;
           errMess.format("Wrong \"kbdlayout\" argument at %u line ({})",
@@ -86,14 +86,14 @@ int KeySymTest::run()
         changeKbdLayout((HKL)hkbdLayout);
         Sleep(500);
       } else {
-        unsigned int virtKeyInt, downInt;
+        ::u32 virtKeyInt, downInt;
         bool validWord = MainSubsystem().StringParser().parseUInt(word1, &virtKeyInt);
         validWord = validWord &&
                     MainSubsystem().StringParser().parseUInt(word2, &downInt);
         if (validWord && (downInt == 0 || downInt == 1)) {
           unsigned char virtKey = virtKeyInt & 255;
           bool down = downInt != 0;
-          unsigned int addKeyData = 0;
+          ::u32 addKeyData = 0;
           addKeyData = down ? 0 : 0x80000000;
           m_rfbKeySym->processKeyEvent(virtKey, addKeyData);
         } else {
@@ -168,12 +168,12 @@ bool KeySymTest::getWord(const ::scoped_string & line,
   return true;
 }
 
-void KeySymTest::onRfbKeySymEvent(unsigned int rfbKeySym, bool down)
+void KeySymTest::onRfbKeySymEvent(::u32 rfbKeySym, bool down)
 {
   // Separating next event from previous by new line.
   if (m_isNextEventInSeries) {
     _ftprintf(m_fTo, "\n");
   }
-  _ftprintf(m_fTo, "{} %#4.4x           ", int(down), (unsigned int)rfbKeySym);
+  _ftprintf(m_fTo, "{} %#4.4x           ", int(down), (::u32)rfbKeySym);
   m_isNextEventInSeries = true;
 }

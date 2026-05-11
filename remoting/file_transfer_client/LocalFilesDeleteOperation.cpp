@@ -37,7 +37,7 @@ namespace remoting
       : FileTransferOperation(plogwriter)
       {
          // m_fileinfoaDelete.set(filesCount);
-         // for (unsigned int i = 0; i < filesCount; i++) {
+         // for (::u32 i = 0; i < filesCount; i++) {
          //   m_fileinfoaDelete[i] = filesToDelete[i];
          // }
          m_pathToTargetRoot= pathToTargetRoot;
@@ -69,7 +69,7 @@ namespace remoting
 
       void LocalFilesDeleteOperation::do_file_transfer_operation()
       {
-         for (unsigned int i = 0; i < m_fileinfoaDelete.size(); i++) {
+         for (::u32 i = 0; i < m_fileinfoaDelete.size(); i++) {
             // Create path to pfileitem from root folder and filename
             ::file::path pathToTargetFile(m_pathToTargetRoot);
             // if (!pathToTargetFile.ends(_T('\\'))) {
@@ -113,14 +113,14 @@ namespace remoting
          // Remove files in directory first
          if (pfileitem->is_folder()) {
             throw todo;
-            // unsigned int filesCount;
+            // ::u32 filesCount;
             // ::string & files = NULL;
             //
             // if (pfileitem->list(NULL, &filesCount)) {
             //    files = new ::string[filesCount];
             //    pfileitem->list(files, NULL);
             //
-            //    for (unsigned int i = 0; i < filesCount; i++) {
+            //    for (::u32 i = 0; i < filesCount; i++) {
             //
             //       if (Thread::isTerminating()) {
             //          return false;

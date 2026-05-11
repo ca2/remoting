@@ -32,7 +32,7 @@
 LRESULT CALLBACK callWndRetProc(int nCode, ::wparam wParam, ::lparam lParam);
 LRESULT CALLBACK getMsgProc(int code, ::wparam wParam, ::lparam lParam);
 LRESULT CALLBACK sysMsgProc(int code, ::wparam wParam, ::lparam lParam);
-void processMessage(HWND hwnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
+void processMessage(HWND hwnd, ::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam);
 void sendRect(const ::int_rectangle &  rectangle);
 void sendClientRect(HWND hwnd);
 void sendNClientRegion(HWND hwnd);
@@ -122,7 +122,7 @@ LRESULT CALLBACK sysMsgProc(int code, ::wparam wParam, ::lparam lParam)
   return CallNextHookEx(g_sysMessageH, code, wParam, lParam);
 }
 
-void processMessage(HWND hwnd, unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
+void processMessage(HWND hwnd, ::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
   switch (scopedstrMessage) {
   case WM_PAINT:

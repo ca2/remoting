@@ -36,8 +36,8 @@ namespace remoting
       {
       public:
          OperationSupport();
-         OperationSupport(const ::array_base<unsigned int> &clientCodes,
-                          const ::array_base<unsigned int> &serverCodes);
+         OperationSupport(const ::array_base<::u32> &clientCodes,
+                          const ::array_base<::u32> &serverCodes);
          virtual ~OperationSupport();
 
          bool isFileListSupported() const;
@@ -51,7 +51,7 @@ namespace remoting
          bool isDirSizeSupported() const;
 
       protected:
-         static bool isSupport(const ::array_base<unsigned int> &codes, unsigned int code);
+         static bool isSupport(const ::array_base<::u32> &codes, ::u32 code);
 
          bool m_isFileListSupported;
          bool m_isUploadSupported;

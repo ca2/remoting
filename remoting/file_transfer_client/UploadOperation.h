@@ -105,8 +105,8 @@ namespace remoting
 
       //private:
 
-         unsigned long long getInputFilesSize();
-         unsigned long long getFileSize(const ::file::path & pathToFile);
+         ::u64 getInputFilesSize();
+         ::u64 getFileSize(const ::file::path & pathToFile);
 
       //protected:
 
@@ -191,7 +191,7 @@ namespace remoting
          // ::file::item ::list_base of remote directory where we uploading
          // current file now
          //FileInfo *m_remoteFilesInfo;
-         //unsigned int m_remoteFilesCount;
+         //::u32 m_remoteFilesCount;
 
          ::pointer_array< ::remoting::file_transfer::FileInfo>m_fileinfoaRemote;
 

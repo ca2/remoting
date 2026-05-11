@@ -30,7 +30,7 @@ namespace remoting_node_desktop
 
 
    OutgoingRfbConnectionThread::OutgoingRfbConnectionThread(const ::scoped_string &scopedstrConnectHost,
-                                                            unsigned int connectPort, bool viewOnly,
+                                                            ::u32 connectPort, bool viewOnly,
                                                             RfbClientManager *clientManager,
                                                             ::subsystem::LogWriter * plogwriter) :
        m_connectHost(scopedstrConnectHost), m_connectPort(connectPort), m_viewOnly(viewOnly),

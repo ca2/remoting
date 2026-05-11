@@ -54,8 +54,8 @@ namespace remoting
       void sear();
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void execute() override;
+      void onTerminate() override;
 
       ::happening m_updateWaiter;
       ::happening m_happeningTimer;

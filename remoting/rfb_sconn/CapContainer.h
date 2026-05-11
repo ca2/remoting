@@ -35,7 +35,7 @@ namespace remoting
    // FIXME: The same structure is used in the viewer named RfbCapabilityInfo.
    struct Cap
    {
-      unsigned int code;
+      ::u32 code;
       char vendorSignature[4];
       char nameSignature[8];
    };
@@ -49,12 +49,12 @@ namespace remoting
       CapContainer();
       virtual ~CapContainer();
 
-      void addCap(unsigned int code, const char *vendorSignature, const char *nameSignature);
+      void addCap(::u32 code, const char *vendorSignature, const char *nameSignature);
 
-      unsigned int getCapCount() const;
+      ::u32 getCapCount() const;
       void sendCaps(DataOutputStream * pdataoutputstream) const;
 
-      bool includes(unsigned int code) const;
+      bool includes(::u32 code) const;
 
    private:
       CapVector m_caps;

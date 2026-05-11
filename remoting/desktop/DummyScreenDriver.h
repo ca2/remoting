@@ -39,13 +39,13 @@ namespace remoting
    {
    public:
       //DummyScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
-        //                unsigned int interval, ::subsystem::LogWriter * plogwriter);
+        //                ::u32 interval, ::subsystem::LogWriter * plogwriter);
 
       DummyScreenDriver();
       virtual ~DummyScreenDriver();
 
       virtual void initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
-                        unsigned int interval, ::subsystem::LogWriter * plogwriter);
+                        ::u32 interval, ::subsystem::LogWriter * plogwriter);
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
 
@@ -75,7 +75,7 @@ namespace remoting
       ::pointer < UpdateKeeper  > m_pupdatekeeper;
       ::pointer < UpdateListener  > m_pupdatelistener;
       ::happening m_happeningSleeper;
-      unsigned int m_interval;
+      ::u32 m_interval;
       bool m_detectionEnabled;
    };
 

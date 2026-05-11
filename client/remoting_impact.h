@@ -109,7 +109,7 @@ namespace remoting_client
 
       // Inherited from WindowsApplication
       //void registerWindowClass(WNDCLASS *wndClass);
-      //static LRESULT CALLBACK wndProc(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
+      //static LRESULT CALLBACK wndProc(HWND hWnd, ::u32 msg, ::wparam wparam, ::lparam lparam);
       //virtual void createWindow(const ::scoped_string & scopedstrClassName);
       virtual void createApplicationMainTask() override;
       //int processMessages();
@@ -146,10 +146,10 @@ void defer_check_dead_instance();
 
       //void postStartDialog(int iStartDialogMessage);
       //void startDialog(int iStartDialogMessage);
-      void onMainThreadMessage(unsigned int message, ::wparam wparam, ::lparam lparam) override;
+      void onMainThreadMessage(::u32 message, ::wparam wparam, ::lparam lparam) override;
       //void registerViewerWindowClass();
       //void unregisterViewerWindowClass();
-      //static LRESULT CALLBACK wndProcViewer(HWND hWnd, unsigned int msg, ::wparam wparam, ::lparam lparam);
+      //static LRESULT CALLBACK wndProcViewer(HWND hWnd, ::u32 msg, ::wparam wparam, ::lparam lparam);
 
       void runInstance(ConnectionData * pconnectiondata, ::remoting::ConnectionConfig * pconnectionconfig);
       void runInstance(const ::scoped_string & hostName, ::remoting::ConnectionConfig * pconnectionconfig);

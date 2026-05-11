@@ -111,7 +111,7 @@ namespace remoting
          registrator->addClToSrvCap(FTMessage::RENAME_REQUEST, VendorDefs::TIGHTVNC, FTMessage::RENAME_REQUEST_SIG);
          registrator->addClToSrvCap(FTMessage::DIRSIZE_REQUEST, VendorDefs::TIGHTVNC, FTMessage::DIRSIZE_REQUEST_SIG);
 
-         unsigned int rfbMessagesToProcess[] = {
+         ::u32 rfbMessagesToProcess[] = {
             FTMessage::COMPRESSION_SUPPORT_REQUEST,
             FTMessage::FILE_LIST_REQUEST,
             FTMessage::MD5_REQUEST,
@@ -126,7 +126,7 @@ namespace remoting
             FTMessage::DIRSIZE_REQUEST
           };
 
-         for (size_t i = 0; i < sizeof(rfbMessagesToProcess) / sizeof(unsigned int); i++) {
+         for (size_t i = 0; i < sizeof(rfbMessagesToProcess) / sizeof(::u32); i++) {
             registrator->regCode(rfbMessagesToProcess[i], this);
          }
 
@@ -159,7 +159,7 @@ namespace remoting
          m_plogwriter->debug("File transfer request handler deleted");
       }
 
-      void FileTransferRequestHandler::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *backGate)
+      void FileTransferRequestHandler::onRequest(::u32 reqCode, ::remoting::RfbInputGate *backGate)
       {
          m_pfiletransfersecurity->beginMessageProcessing();
 
@@ -263,10 +263,10 @@ namespace remoting
          checkAccess();
 
          unsigned char compressionLevel = requestedCompressionLevel;
-         unsigned int compressedSize = 0;
-         unsigned int uncompressedSize = 0;
-         unsigned int filesCount = 0;
-         unsigned int filesInfoDataSize = 0;
+         ::u32 compressedSize = 0;
+         ::u32 uncompressedSize = 0;
+         ::u32 filesCount = 0;
+         ::u32 filesInfoDataSize = 0;
          //const ::remoting::file_transfer::FileInfo *files = NULL;
 
          //

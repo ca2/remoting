@@ -253,7 +253,7 @@ namespace remoting_node_desktop
    void ServiceControlApplication::reportError(const ServiceControlCommandLine *cmdLine,
                                                const ::scoped_string & scopedstrErrorMessage)
    {
-      unsigned int stringId = 0;
+      ::u32 stringId = 0;
 
       if (cmdLine->installationRequested()) {
          stringId = IDS_FAILED_TO_INSTALL_SERVICE_FORMAT;
@@ -281,7 +281,7 @@ namespace remoting_node_desktop
 
    void ServiceControlApplication::reportSuccess(const ServiceControlCommandLine *cmdLine)
    {
-      unsigned int stringId = 0;
+      ::u32 stringId = 0;
 
       if (cmdLine->installationRequested()) {
          stringId = IDS_SERVICE_INSTALLED;

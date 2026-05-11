@@ -54,7 +54,7 @@ namespace remoting
       } else if (bpp == 16) {
          hextileFunction<unsigned short>(rectangle, pframebuffer);
       } else if (bpp == 32) {
-         hextileFunction<unsigned int>(rectangle, pframebuffer);
+         hextileFunction<::u32>(rectangle, pframebuffer);
       } else {
          ASSERT(0);
       }

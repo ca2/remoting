@@ -36,7 +36,7 @@ namespace remoting_client
    {
    }
 
-   void CapsContainer::add(unsigned int code, const char *vendor, const char *name,
+   void CapsContainer::add(::u32 code, const char *vendor, const char *name,
                            const ::string desc)
    {
       // Fill in an RfbCapabilityInfo structure and pass it to the overloaded
@@ -58,14 +58,14 @@ namespace remoting_client
       descMap[capinfo->code] = desc;
    }
 
-   bool CapsContainer::isAdded(unsigned int code) const
+   bool CapsContainer::isAdded(::u32 code) const
    {
       critical_section_lock al(&m_mapLock);
 
       return isKnown(code);
    }
 
-   bool CapsContainer::getInfo(unsigned int code, RfbCapabilityInfo *capinfo)
+   bool CapsContainer::getInfo(::u32 code, RfbCapabilityInfo *capinfo)
    {
       critical_section_lock al(&m_mapLock);
       if (isKnown(code)) {
@@ -76,7 +76,7 @@ namespace remoting_client
       return false;
    }
 
-   ::string CapsContainer::getDescription(unsigned int code) const
+   ::string CapsContainer::getDescription(::u32 code) const
    {
       critical_section_lock al(&m_mapLock);
       return (isKnown(code)) ? descMap.find(code)->element2() : ::string();
@@ -100,7 +100,7 @@ namespace remoting_client
       return true;
    }
 
-   bool CapsContainer::isEnabled(unsigned int code) const
+   bool CapsContainer::isEnabled(::u32 code) const
    {
       critical_section_lock al(&m_mapLock);
       return (isKnown(code)) ? enableMap.find(code)->element2() : false;
@@ -112,19 +112,19 @@ namespace remoting_client
       return m_plist.size();
    }
 
-   unsigned int CapsContainer::getByOrder(size_t idx)
+   ::u32 CapsContainer::getByOrder(size_t idx)
    {
       critical_section_lock al(&m_mapLock);
       return (idx < m_plist.size()) ? m_plist[idx] : 0;
    }
 
-   void CapsContainer::getEnabledCapabilities(::array_base<unsigned int> &codes) const
+   void CapsContainer::getEnabledCapabilities(::array_base<::u32> &codes) const
    {
       critical_section_lock al(&m_mapLock);
       codes = m_plist;
    }
 
-   bool CapsContainer::isKnown(unsigned int code) const
+   bool CapsContainer::isKnown(::u32 code) const
    {
       return (descMap.find(code) != descMap.end());
    }
