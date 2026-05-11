@@ -33,7 +33,7 @@
 #include "ScaleManager.h"
 #include "ViewerMenu.h"
 #include "innate_subsystem/gui/Control.h"
-#include "innate_subsystem/gui/ToolBar.h"
+#include "innate_subsystem/gui/Toolbar.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting/viewer_core/FileTransferCapability.h"
 #include "remoting/remoting/viewer_core/RemoteViewerCore.h"

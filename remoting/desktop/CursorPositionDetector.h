@@ -50,8 +50,8 @@ namespace remoting
       ::i32_point getCursorPos();
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void execute() override;
+      void onTerminate() override;
 
    //private:
       ::subsystem::Cursor m_cursor;
