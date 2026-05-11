@@ -31,7 +31,7 @@
 
 namespace remoting
 {
-   void RectSerializer::toString(const ::int_rectangle &  rectangle, ::string & strOut)
+   void RectSerializer::toString(const ::i32_rectangle &  rectangle, ::string & strOut)
    {
       strOut.format("{}x{}+{}+{}", rectangle.width(),
                                         rectangle.height(),
@@ -39,7 +39,7 @@ namespace remoting
                                         rectangle.top);
    }
 
-   ::int_rectangle RectSerializer::toRect(const ::scoped_string & strIn)
+   ::i32_rectangle RectSerializer::toRect(const ::scoped_string & strIn)
    {
       int width, height, x, y;
       char c;
@@ -51,6 +51,6 @@ namespace remoting
                         " ({}).", strIn);
          throw ::subsystem::Exception(errMess);
           }
-      return ::int_rectangle(x, y, x + width, y + height);
+      return ::i32_rectangle(x, y, x + width, y + height);
    }
 } // namespace remoting

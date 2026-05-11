@@ -153,7 +153,7 @@ namespace remoting_control_desktop
       msg->send();
    }
 
-   void ControlProxy::shareRect(const ::int_rectangle &  shareRect)
+   void ControlProxy::shareRect(const ::i32_rectangle &  shareRect)
    {
       critical_section_lock l(m_pcontrolgate);
       ControlMessage *msg = createMessage(ControlProto::SHARE_RECT_MSG_ID);

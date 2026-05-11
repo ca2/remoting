@@ -542,7 +542,7 @@ namespace remoting_node_desktop
 
    void ControlClient::shareRectIdMsgRcvd()
    {
-      ::int_rectangle shareRect;
+      ::i32_rectangle shareRect;
       shareRect.left = m_pcontrolgate->readInt32();
       shareRect.top = m_pcontrolgate->readInt32();
       shareRect.right = m_pcontrolgate->readInt32();

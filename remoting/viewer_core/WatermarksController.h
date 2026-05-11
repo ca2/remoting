@@ -42,8 +42,8 @@ namespace remoting_client
 
       ::pointer < ::innate_subsystem::Framebuffer>m_pframebuffer;
       ::pointer < ::innate_subsystem::Framebuffer> m_pframebufferOverlay;
-      ::int_rectangle m_currentRect;
-      ::int_rectangle m_currentFramebufferRect;
+      ::i32_rectangle m_currentRect;
+      ::i32_rectangle m_currentFramebufferRect;
 
 
       int m_height;
@@ -51,7 +51,7 @@ namespace remoting_client
 
       WatermarksController(void);
 
-      void setNewFbProperties(const ::int_rectangle &  rectangle, const ::innate_subsystem::PixelFormat & pixelformat);
+      void setNewFbProperties(const ::i32_rectangle &  rectangle, const ::innate_subsystem::PixelFormat & pixelformat);
 
 
       void showWaterMarks(::innate_subsystem::Framebuffer *pframebuffer,
@@ -60,12 +60,12 @@ namespace remoting_client
       void hideWatermarks(::innate_subsystem::Framebuffer *pframebuffer,
          lockable_critical_section *pcriticalsectionFramebuffer);
 
-      const ::int_rectangle CurrentRect();
+      const ::i32_rectangle CurrentRect();
 
    //private:
       void setNewPixelFormat(const ::innate_subsystem::PixelFormat & pixelformat);
 
-      void setNewFbSize(const ::int_rectangle &  rectangle);
+      void setNewFbSize(const ::i32_rectangle &  rectangle);
 
 
       ::innate_subsystem::Framebuffer * framebuffer(bool fromFile = false);

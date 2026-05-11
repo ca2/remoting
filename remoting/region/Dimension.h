@@ -25,33 +25,33 @@
 //#pragma once
 //_
 //
-//#include "::int_rectangle.h"
+//#include "::i32_rectangle.h"
 //
-//class ::int_size
+//class ::i32_size
 //{
 //public:
-//  ::int_size(void) : width(0), height(0) {}
-//  ::int_size(const int w, const int h) { set(w, h); }
-//  ::int_size(const ::int_rectangle &  r) { width = r.width(); height = r.height(); }
-//  ::int_size(const ::int_size &other): width(other.cx), height(other.cy) {}
+//  ::i32_size(void) : width(0), height(0) {}
+//  ::i32_size(const int w, const int h) { set(w, h); }
+//  ::i32_size(const ::i32_rectangle &  r) { width = r.width(); height = r.height(); }
+//  ::i32_size(const ::i32_size &other): width(other.cx), height(other.cy) {}
 //
-//  const ::int_size &operator=(const ::int_size &other) { width = other.cx;
+//  const ::i32_size &operator=(const ::i32_size &other) { width = other.cx;
 //                                                       height = other.cy;
 //                                                       return *this; }
-//  bool operator==(const ::int_size &other) const { return isEqualTo(other); }
-//  bool operator!=(const ::int_size &other)const { return !isEqualTo(other); }
+//  bool operator==(const ::i32_size &other) const { return isEqualTo(other); }
+//  bool operator!=(const ::i32_size &other)const { return !isEqualTo(other); }
 //
-//  virtual ~::int_size(void) {}
+//  virtual ~::i32_size(void) {}
 //
-//  ::int_rectangle getRect() const
+//  ::i32_rectangle getRect() const
 //  { 
-//    ::int_rectangle r(width, height);
+//    ::i32_rectangle r(width, height);
 //    return r;
 //  }
 //
-//  ::int_size getTransposition() const
+//  ::i32_size getTransposition() const
 //  { 
-//    ::int_size r(height, width);
+//    ::i32_size r(height, width);
 //    return r;
 //  }
 //
@@ -64,14 +64,14 @@
 //  }
 //
 //  inline void set(const int w, const int h) { width = w; height = h; }
-//  inline void set(const ::int_rectangle &  rectangle) { width = rectangle.width();
+//  inline void set(const ::i32_rectangle &  rectangle) { width = rectangle.width();
 //                                         height = rectangle.height(); }
 //
-//  inline bool cmpDim(const ::int_size & size) const { return size.cx == width &&
+//  inline bool cmpDim(const ::i32_size & size) const { return size.cx == width &&
 //                                                          size.cy == height; }
 //
 //  inline bool is_empty() const { return width <= 0 || height <= 0; }
-//  inline bool isEqualTo(const ::int_size & other) const
+//  inline bool isEqualTo(const ::i32_size & other) const
 //  {
 //    return (width == other.cx)&& (height == other.cy);
 //  }
@@ -79,9 +79,9 @@
 //
 //  inline void clear() { width = height = 0; }
 //
-//  inline ::int_size intersection(const ::int_size & other) const
+//  inline ::i32_size intersection(const ::i32_size & other) const
 //  {
-//    return ::int_size(width < other.cx ? width : other.cx,
+//    return ::i32_size(width < other.cx ? width : other.cx,
 //                     height < other.cy ? height : other.cy);
 //  }
 //

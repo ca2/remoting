@@ -60,8 +60,8 @@ namespace remoting
       virtual void initialize_desktop_server_watcher(::remoting_node::Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter);
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void execute() override;
+      void onTerminate() override;
 
       // Runs desktop server with XP trick if it's needed.
       void start();

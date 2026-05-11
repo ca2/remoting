@@ -66,7 +66,7 @@ namespace remoting
       }
    }
 
-   bool CursorShape::setDimension(const ::int_size & sizeNew)
+   bool CursorShape::setDimension(const ::i32_size & sizeNew)
    {
       bool result = m_pixels.setDimension(sizeNew);
       return result && resizeBuffer();
@@ -78,7 +78,7 @@ namespace remoting
       return result && resizeBuffer();
    }
 
-   bool CursorShape::setProperties(const ::int_size & sizeNew,
+   bool CursorShape::setProperties(const ::i32_size & sizeNew,
                                    const ::innate_subsystem::PixelFormat & pixelFormat)
    {
       bool result = m_pixels.setDimension(sizeNew) &&
@@ -88,7 +88,7 @@ namespace remoting
 
    void CursorShape::resetToEmpty()
    {
-      setDimension(::int_size(0, 0));
+      setDimension(::i32_size(0, 0));
       setHotSpot(0, 0);
    }
 

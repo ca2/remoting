@@ -30,7 +30,7 @@
 
 //#include "subsystem/platform/inttypes.h"
 #include "subsystem/platform/ListenerContainer.h"
-#include "subsystem/platform/ZlibException.h"
+#include "subsystem/platform/ZLibException.h"
 
 #include "remoting/remoting/file_transfer_common/OperationNotSupportedException.h"
 

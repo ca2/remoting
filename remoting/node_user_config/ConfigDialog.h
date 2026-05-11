@@ -66,10 +66,10 @@ namespace remoting_node
       void initControls();
       void loadSettings();
       // Init dialog handler
-      virtual bool onInitDialog();
-      virtual bool onCommand(::u32 controlID, ::u32 notificationID) override;
+      bool onInitDialog() override;
+      bool onCommand(::u32 controlID, ::u32 notificationID) override;
       //virtual bool onNotify(::u32 controlID, ::lparam data);
-      virtual bool onDestroy();
+      bool onDestroy() override;
       // Button handlers
       void onCancelButtonClick();
       void onOKButtonClick();

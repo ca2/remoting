@@ -34,7 +34,7 @@ namespace remoting_node
    {
    public:
 
-      ::int_rectangle m_rectangle;
+      ::i32_rectangle m_rectangle;
 
 
       PortMappingRect(int left, int right, int top, int bottom);

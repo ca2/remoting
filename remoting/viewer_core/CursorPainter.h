@@ -38,19 +38,19 @@ namespace remoting_client
       virtual ~CursorPainter();
 
       // this functions is thread-safe for private data of cursor, but need external lock of frame buffer
-      ::int_rectangle hideCursor();
-      ::int_rectangle showCursor();
+      ::i32_rectangle hideCursor();
+      ::i32_rectangle showCursor();
 
       // this functions is thread-safe
       void setIgnoreShapeUpdates(bool ignore);
-      void updatePointerPos(const ::int_point &pointPosition);
-      void setNewCursor(const ::int_point &pointHotspot,
+      void updatePointerPos(const ::i32_point &pointPosition);
+      void setNewCursor(const ::i32_point &pointHotspot,
                         unsigned short width, unsigned short height,
                         const ::array_base<unsigned char> *cursor,
                         const ::array_base<unsigned char> *bitmask);
       //private:
       // This function is thread-save.
-      ::int_point getUpperLeftPoint(const ::int_point &pointPosition) const;
+      ::i32_point getUpperLeftPoint(const ::i32_point &pointPosition) const;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
@@ -60,10 +60,10 @@ namespace remoting_client
       ::remoting::CursorShape m_cursor;
 
       // Actual pointPosition of pointer
-      ::int_point m_pointerPosition;
+      ::i32_point m_pointerPosition;
 
       // Last painted pointPosition of pointer
-      ::int_point m_pointLastPosition;
+      ::i32_point m_pointLastPosition;
       // Copy of rectangle frame buffer under cursor
       ::innate_subsystem::Framebuffer m_cursorOverlay;
 

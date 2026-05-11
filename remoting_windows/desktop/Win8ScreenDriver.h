@@ -69,8 +69,8 @@ namespace remoting_windows
       // Stops screen update detection.
       virtual void terminateDetection();
 
-      virtual ::int_size getScreenDimension();
-      virtual bool grabFb(const ::int_rectangle & rectangle = {});
+      virtual ::i32_size getScreenDimension();
+      virtual bool grabFb(const ::i32_rectangle & rectangle = {});
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
       virtual bool getScreenPropertiesChanged();
       virtual bool getScreenSizeChanged();
@@ -78,9 +78,9 @@ namespace remoting_windows
 
       virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat);
       virtual const ::remoting::CursorShape *getCursorShape();
-      virtual ::int_point getCursorPosition();
+      virtual ::i32_point getCursorPosition();
 
-      virtual void getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource);
+      virtual void getCopiedRegion(::i32_rectangle &rectangleCopy, ::i32_point & pointSource);
 
    private:
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

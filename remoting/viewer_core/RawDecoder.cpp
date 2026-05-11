@@ -42,7 +42,7 @@ namespace remoting_client
    void RawDecoder::process(::remoting::RfbInputGate *input,
                             ::innate_subsystem::Framebuffer *pframebuffer,
                             ::innate_subsystem::Framebuffer *secondFramebuffer,
-                            const ::int_rectangle &  rectangle,
+                            const ::i32_rectangle &  rectangle,
                             lockable_critical_section *pcriticalsectionFramebuffer,
                             FbUpdateNotifier *fbNotifier)
    {
@@ -57,7 +57,7 @@ namespace remoting_client
       // Division with round to up.
       int deltaHeight = (AREA_OF_ONE_PART + width - 1) / width;
 
-      ::int_rectangle deltaRect(0, 0, width, deltaHeight);
+      ::i32_rectangle deltaRect(0, 0, width, deltaHeight);
       deltaRect.set_top_left(rectangle.left, rectangle.top);
 
       // Process all rectangle without last part of rectangle or
@@ -81,12 +81,12 @@ namespace remoting_client
 
    void RawDecoder::decode(::remoting::RfbInputGate *pinput,
                         ::innate_subsystem::Framebuffer *pframebuffer,
-                        const ::int_rectangle &  rectangle)
+                        const ::i32_rectangle &  rectangle)
    {
       size_t bytesPerPixel = pframebuffer->getPixelFormat().bitsPerPixel / 8;
       size_t bytesPerLine = bytesPerPixel * rectangle.width();
 
-      if (::int_rectangle(pframebuffer->getDimension()).intersection(rectangle) != rectangle)
+      if (::i32_rectangle(pframebuffer->getDimension()).intersection(rectangle) != rectangle)
          throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle");
       for (int y = rectangle.top; y < rectangle.bottom; y++)
          pinput->readFully(pframebuffer->getBufferPtr(rectangle.left, y), bytesPerLine);

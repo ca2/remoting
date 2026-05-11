@@ -63,7 +63,7 @@ namespace remoting_windows
 
 
    // FIXME: refactor this horror.
-   void WindowsUserInput::setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)
+   void WindowsUserInput::setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag)
    {
       m_plogwriter->debug("setMouseEvent ({},{}):{}", pointNewPosition.x, pointNewPosition.x, keyFlag);
       if (GetSystemMetrics(SM_SWAPBUTTON))
@@ -214,7 +214,7 @@ namespace remoting_windows
       }
    }
 
-   void WindowsUserInput::getPrimaryDisplayCoords(::int_rectangle & rectangle)
+   void WindowsUserInput::getPrimaryDisplayCoords(::i32_rectangle & rectangle)
    {
       rectangle.left = 0;
       rectangle.top = 0;
@@ -223,21 +223,21 @@ namespace remoting_windows
       rectangle.offset(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
    }
 
-   void WindowsUserInput::getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber)
+   void WindowsUserInput::getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber)
    {
       m_winDisplays.getDisplayCoordinates(dispNumber, rectangle);
    }
 
    ::int_rectangle_array_base WindowsUserInput::getDisplaysCoords() { return m_winDisplays.getDisplaysCoords(); }
 
-   void WindowsUserInput::getNormalizedRect(::int_rectangle & rectangle) { toFbCoordinates(rectangle); }
+   void WindowsUserInput::getNormalizedRect(::i32_rectangle & rectangle) { toFbCoordinates(rectangle); }
 
-   void WindowsUserInput::toFbCoordinates(::int_rectangle & rectangle)
+   void WindowsUserInput::toFbCoordinates(::i32_rectangle & rectangle)
    {
       rectangle.offset(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
    }
 
-   void WindowsUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)
+   void WindowsUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)
    {
       rectangle.clear();
       //RECT rectangle;
@@ -265,7 +265,7 @@ namespace remoting_windows
       auto operatingsystemwindowForeground = ::windows::get_window(::windows::get_foreground_window(), WIN32_GW_HWNDLAST);
 
       //RECT rectangle;
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       while (operatingsystemwindowForeground.is_set())
       {
          ::windows::get_window_rect(operatingsystemwindowForeground, rectangle);

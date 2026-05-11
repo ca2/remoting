@@ -28,7 +28,7 @@
 namespace remoting_control_desktop
 {
    ShareRectCommand::ShareRectCommand(ControlProxy *serverControl,
-                                      const ::int_rectangle &  shareRect)
+                                      const ::i32_rectangle &  shareRect)
    : m_pcontrolproxy(serverControl),
      m_shareRect(shareRect)
    {

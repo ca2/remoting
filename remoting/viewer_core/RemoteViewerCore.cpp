@@ -389,7 +389,7 @@ defer_construct_newø(m_pframebuffer);
       if (isRefresh || isUpdateFbProperties || m_pupdaterequestsenderProperty->getTimeout() <= 0)
       {
          bool isIncremental = incremental && !isRefresh && !isUpdateFbProperties;
-         ::int_rectangle updateRect;
+         ::i32_rectangle updateRect;
          {
             critical_section_lock al(&m_criticalsectionFramebuffer);
             updateRect = m_pframebuffer->getDimension();
@@ -428,7 +428,7 @@ defer_construct_newø(m_pframebuffer);
    }
 
    void RemoteViewerCore::sendPointerEvent(unsigned char buttonMask,
-                                           const ::int_point &pointPosition)
+                                           const ::i32_point &pointPosition)
    {
       // If core isn't connected, then m_output may be isn't initialized.
       // Exit from function, if it is.
@@ -849,7 +849,7 @@ defer_construct_newø(m_pframebuffer);
       return typeSelected;
    }
 
-   void RemoteViewerCore::setFbProperties(const ::int_size & sizeFramebuffer,
+   void RemoteViewerCore::setFbProperties(const ::i32_size & sizeFramebuffer,
                                           const ::innate_subsystem::PixelFormat & pixelformatFramebuffer)
    {
 #ifdef _DEMO_VERSION_
@@ -878,7 +878,7 @@ defer_construct_newø(m_pframebuffer);
           !m_pframebufferRectangle->setProperties(sizeFramebuffer, pixelformatFramebuffer)) {
          ::string error;
          error.format("Failed to set property frame buffer. "
-                      "::int_size: ({}, {}), Pixel format: {}",
+                      "::i32_size: ({}, {}), Pixel format: {}",
                       sizeFramebuffer.cx, sizeFramebuffer.cy,
                       pxString);
          throw ::subsystem::Exception(error);
@@ -1098,7 +1098,7 @@ defer_construct_newø(m_pframebuffer);
 
    bool RemoteViewerCore::receiveFbUpdateRectangle()
    {
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       rectangle.left = m_input->readUInt16();
       rectangle.top = m_input->readUInt16();
       rectangle.set_width(m_input->readUInt16());
@@ -1112,7 +1112,7 @@ defer_construct_newø(m_pframebuffer);
       if (encodingType == ::remoting::PseudoEncDefs::LAST_RECT)
          return true;
       if (!Decoder::isPseudo(encodingType)) {
-         if (::int_rectangle(m_pframebuffer->getDimension()).intersection(rectangle) != rectangle) {
+         if (::i32_rectangle(m_pframebuffer->getDimension()).intersection(rectangle) != rectangle) {
             throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle");
          }
 
@@ -1139,7 +1139,7 @@ defer_construct_newø(m_pframebuffer);
       return false;
    }
 
-   void RemoteViewerCore::processPseudoEncoding(const ::int_rectangle &  rectangle,
+   void RemoteViewerCore::processPseudoEncoding(const ::i32_rectangle &  rectangle,
                                                 int encodingType)
    {
       switch (encodingType) {
@@ -1171,7 +1171,7 @@ defer_construct_newø(m_pframebuffer);
                bitmask.resize(bitmaskLen);
                m_input->readFully(bitmask.data(), bitmaskLen);
             }
-            ::int_point pointHotspot(rectangle.left, rectangle.top);
+            ::i32_point pointHotspot(rectangle.left, rectangle.top);
 
             m_plogwriter->debug("Setting new rich cursor...");
             m_pfbupdatenotifier->setNewCursor(pointHotspot, width, height,
@@ -1182,7 +1182,7 @@ defer_construct_newø(m_pframebuffer);
          case ::remoting::PseudoEncDefs::POINTER_POS:
          {
             m_plogwriter->debug("Updating pointer pointPosition: [{}, {}]", rectangle.left, rectangle.top);
-            ::int_point pointPosition(rectangle.left, rectangle.top);
+            ::i32_point pointPosition(rectangle.left, rectangle.top);
             m_pfbupdatenotifier->updatePointerPos(pointPosition);
          }
             break;
@@ -1366,7 +1366,7 @@ defer_construct_newø(m_pframebuffer);
 
       unsigned short width = m_input->readUInt16();
       unsigned short height = m_input->readUInt16();
-      ::int_size screenDimension(width, height);
+      ::i32_size screenDimension(width, height);
       ::innate_subsystem::PixelFormat serverPixelFormat = readPixelFormat();
 
       {
@@ -1548,7 +1548,7 @@ defer_construct_newø(m_pframebuffer);
       return m_desktops;
    }
 
-   ::int_size RemoteViewerCore::getDesktopSize()
+   ::i32_size RemoteViewerCore::getDesktopSize()
    {
       return m_desktopSize;
    }

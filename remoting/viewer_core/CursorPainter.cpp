@@ -41,7 +41,7 @@ namespace remoting_client
    {
    }
 
-   void CursorPainter::updatePointerPos(const ::int_point &pointPosition)
+   void CursorPainter::updatePointerPos(const ::i32_point &pointPosition)
    {
       critical_section_lock al(&m_lock);
       m_pointerPosition = pointPosition;
@@ -50,7 +50,7 @@ namespace remoting_client
       // Now, cursor is ready for painting.
    }
 
-   void CursorPainter::setNewCursor(const ::int_point &pointHotspot,
+   void CursorPainter::setNewCursor(const ::i32_point &pointHotspot,
                                     unsigned short width, unsigned short height,
                                     const ::array_base<unsigned char> *cursor,
                                     const ::array_base<unsigned char> *bitmask)
@@ -60,7 +60,7 @@ namespace remoting_client
       m_cursor.setHotSpot(pointHotspot.x, pointHotspot.y);
 
       m_plogwriter->information("setNewCursor Cursor size is ({}, {})", width, height);
-      ::int_size cursorDimension(width, height);
+      ::i32_size cursorDimension(width, height);
       ::innate_subsystem::PixelFormat pixelFormat = m_fb->getPixelFormat();
 
       m_cursor.setProperties(cursorDimension, pixelFormat);
@@ -88,25 +88,25 @@ namespace remoting_client
       m_ignoreShapeUpdates = ignore;
    }
 
-   ::int_rectangle CursorPainter::hideCursor()
+   ::i32_rectangle CursorPainter::hideCursor()
    {
       critical_section_lock al(&m_lock);
 
       if (!m_isExist) {
-         return ::int_rectangle();
+         return ::i32_rectangle();
       }
 
       m_isExist = false;
 
-      ::int_rectangle erase(m_cursorOverlay.getDimension());
-      ::int_point corner = getUpperLeftPoint(m_pointLastPosition);
+      ::i32_rectangle erase(m_cursorOverlay.getDimension());
+      ::i32_point corner = getUpperLeftPoint(m_pointLastPosition);
 
       erase.offset(corner.x, corner.y);
 
       m_plogwriter->debug("Cursor rectangle: ({}, {}), ({}, {})", erase.left, erase.top, erase.right, erase.bottom);
 
       if (erase.area() == 0) {
-         return ::int_rectangle();
+         return ::i32_rectangle();
       }
 
       m_plogwriter->debug("Erasing cursor...");
@@ -115,7 +115,7 @@ namespace remoting_client
       return erase;
    }
 
-   ::int_rectangle CursorPainter::showCursor()
+   ::i32_rectangle CursorPainter::showCursor()
    {
       critical_section_lock al(&m_lock);
 
@@ -130,11 +130,11 @@ namespace remoting_client
 
          m_plogwriter->debug("Painting cursor...");
 
-         ::int_point corner = getUpperLeftPoint(m_pointLastPosition);
+         ::i32_point corner = getUpperLeftPoint(m_pointLastPosition);
 
          m_cursorOverlay.copyFrom(m_fb, corner.x, corner.y);
 
-         ::int_rectangle overlayRect(m_cursor.getDimension());
+         ::i32_rectangle overlayRect(m_cursor.getDimension());
          overlayRect.offset(corner.x, corner.y);
          //overlayRect /= m_fb->m_iDivisor;
 
@@ -143,12 +143,12 @@ namespace remoting_client
          m_isExist = true;
          return overlayRect;
       }
-      return ::int_rectangle();
+      return ::i32_rectangle();
    }
 
-   ::int_point CursorPainter::getUpperLeftPoint(const ::int_point &pointPosition) const
+   ::i32_point CursorPainter::getUpperLeftPoint(const ::i32_point &pointPosition) const
    {
-      ::int_point upperLeftPoint = pointPosition;
+      ::i32_point upperLeftPoint = pointPosition;
       upperLeftPoint-= m_cursor.getHotSpot();
       return upperLeftPoint;
    }

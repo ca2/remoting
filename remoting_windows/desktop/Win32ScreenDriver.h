@@ -62,8 +62,8 @@ namespace remoting_windows
       // Stops screen update detection.
       virtual void terminateDetection();
 
-      virtual ::int_size getScreenDimension();
-      virtual bool grabFb(const ::int_rectangle & rectangle = {});
+      virtual ::i32_size getScreenDimension();
+      virtual bool grabFb(const ::i32_rectangle & rectangle = {});
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
       virtual bool getScreenPropertiesChanged();
       virtual bool getScreenSizeChanged();

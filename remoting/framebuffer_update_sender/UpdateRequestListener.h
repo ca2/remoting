@@ -34,7 +34,7 @@ namespace remoting
    public:
       //virtual ~UpdateRequestListener() {}
       // Interface function
-      virtual void onUpdateRequest(const ::int_rectangle &rectRequested, bool incremental) = 0;
+      virtual void onUpdateRequest(const ::i32_rectangle &rectRequested, bool incremental) = 0;
    };
 
 

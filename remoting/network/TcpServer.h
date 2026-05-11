@@ -88,7 +88,7 @@ namespace remoting
        * Inherited from Thread class.
        * Listening for incoming tcp connections.
        */
-      virtual void execute();
+      void execute() override;
 
    private:
       /**

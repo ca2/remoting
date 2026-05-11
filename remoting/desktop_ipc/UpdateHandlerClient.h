@@ -50,17 +50,17 @@ namespace remoting
                           UpdateListener *pupdatelistenerExternal, ::subsystem::LogWriter * plogwriter);
 
 
-      virtual UpdateContainer extract();
-      virtual void setFullUpdateRequested(const Region & region);
-      virtual void setExcludedRegion(const Region & regionExcluded);
-      virtual bool checkForUpdates(Region & region);
+      UpdateContainer extract() override;
+      void setFullUpdateRequested(const Region & region) override;
+      void setExcludedRegion(const Region & regionExcluded) override;
+      bool checkForUpdates(Region & region) override;
 
    //protected:
-      virtual void getScreenProperties(::innate_subsystem::PixelFormat & pixelformat, ::int_size & size);
-      virtual void sendInit(BlockingGate *pblockinggate);
+      virtual void getScreenProperties(::innate_subsystem::PixelFormat & pixelformat, ::i32_size & size);
+      void sendInit(BlockingGate *pblockinggate) override;
 
       // To catch update event
-      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
+      void onRequest(unsigned char reqCode, BlockingGate *pblockinggate) override;
 
       ::pointer < UpdateListener > m_pupdatelistenerExternal;
 

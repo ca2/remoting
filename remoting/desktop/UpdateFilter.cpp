@@ -132,7 +132,7 @@ if (defer_construct_newø(m_pgraboptimizator))
       // Filtering
       processortimes1 = ProfileLogger().checkPoint("filtering changed");
       updatecontainer.m_regionChanged.clear();
-      //::int_rectangle rectangle;
+      //::i32_rectangle rectangle;
       for (auto rectangle : rectanglea)
       {
          //rectangle = &(*iRect);
@@ -157,7 +157,7 @@ if (defer_construct_newø(m_pgraboptimizator))
                           processortimes2.m_kernel, dt);
    }
 
-   void UpdateFilter::getChangedRegion(Region & region, const ::int_rectangle & rectangle)
+   void UpdateFilter::getChangedRegion(Region & region, const ::i32_rectangle & rectangle)
    {
 
       const ::u32 bytesPerPixel = m_pframebuffer->getBytesPerPixel();
@@ -168,7 +168,7 @@ if (defer_construct_newø(m_pgraboptimizator))
       unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
       unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
 
-      ::int_rectangle new_rect = rectangle;
+      ::i32_rectangle new_rect = rectangle;
 
       // Fast processing for small rectangles
       if (rectangle.right - rectangle.left <= BLOCK_SIZE && rectangle.bottom - rectangle.top <= BLOCK_SIZE)
@@ -222,7 +222,7 @@ if (defer_construct_newø(m_pgraboptimizator))
       }
    }
 
-   void UpdateFilter::updateChangedRect(Region & region, const ::int_rectangle & rectangle)
+   void UpdateFilter::updateChangedRect(Region & region, const ::i32_rectangle & rectangle)
    {
       // Pass small rectangles directly to updateChangedSubRect
       if (rectangle.right - rectangle.left <= BLOCK_SIZE && rectangle.bottom - rectangle.top <= BLOCK_SIZE)
@@ -233,7 +233,7 @@ if (defer_construct_newø(m_pgraboptimizator))
 
       const ::u32 bytesPerPixel = m_pframebuffer->getBytesPerPixel();
 
-      ::int_rectangle new_rect;
+      ::i32_rectangle new_rect;
       int x, y, ay;
 
       // Scan down the rectangle
@@ -308,7 +308,7 @@ if (defer_construct_newø(m_pgraboptimizator))
       }
    }
 
-   void UpdateFilter::updateChangedSubRect(Region & region, const ::int_rectangle & rectangle)
+   void UpdateFilter::updateChangedSubRect(Region & region, const ::i32_rectangle & rectangle)
    {
       const ::u32 bytesPerPixel = m_pframebuffer->getBytesPerPixel();
       int bytes_in_row = (rectangle.right - rectangle.left) * bytesPerPixel;
@@ -319,7 +319,7 @@ if (defer_construct_newø(m_pgraboptimizator))
       int offset = (rectangle.bottom - 1) * bytesPerRow + rectangle.left * bytesPerPixel;
       unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
       unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
-      ::int_rectangle rectangleFinal = rectangle;
+      ::i32_rectangle rectangleFinal = rectangle;
       rectangleFinal.bottom = rectangle.top + 1;
       for (y = rectangle.bottom - 1; y > rectangle.top; y--)
       {

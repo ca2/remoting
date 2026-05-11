@@ -38,13 +38,13 @@ namespace remoting
    class CLASS_DECL_REMOTING DummyScreenDriver : public ScreenDriver, ::subsystem::Thread
    {
    public:
-      //DummyScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+      //DummyScreenDriver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::i32_size & size,
         //                ::u32 interval, ::subsystem::LogWriter * plogwriter);
 
       DummyScreenDriver();
       virtual ~DummyScreenDriver();
 
-      virtual void initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::int_size & size,
+      virtual void initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::i32_size & size,
                         ::u32 interval, ::subsystem::LogWriter * plogwriter);
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
@@ -52,17 +52,17 @@ namespace remoting
       // Stops screen update detection.
       virtual void terminateDetection();
 
-      virtual ::int_size getScreenDimension();
-      virtual bool grabFb(const ::int_rectangle & rectangle = {});
+      virtual ::i32_size getScreenDimension();
+      virtual bool grabFb(const ::i32_rectangle & rectangle = {});
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
       virtual bool getScreenPropertiesChanged();
       virtual bool getScreenSizeChanged();
       virtual bool applyNewScreenProperties();
       bool grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat) { return true; };
       const CursorShape *getCursorShape() { return &m_cursorshape; };
-      ::int_point getCursorPosition() { return ::int_point(); };
+      ::i32_point getCursorPosition() { return ::i32_point(); };
 
-      void getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource) { return; };
+      void getCopiedRegion(::i32_rectangle &rectangleCopy, ::i32_point & pointSource) { return; };
       Region getVideoRegion() { return Region(); };
 
    protected:

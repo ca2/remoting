@@ -51,7 +51,7 @@ namespace remoting
       // After calling this function the update() function will set the view
       // port rectangle to the *rectangle rectangle constrained by the sizeFramebuffer
       // update() function argument.
-      void setArbitraryRect(const ::int_rectangle & rectangle);
+      void setArbitraryRect(const ::i32_rectangle & rectangle);
 
       // After calling this function the update() function will set the view
       // port rectangle by the primary display coordinates.
@@ -87,7 +87,7 @@ namespace remoting
       static const int APPLICATION = 5;
 
       int m_mode;
-      ::int_rectangle m_arbitraryRect;
+      ::i32_rectangle m_arbitraryRect;
       ::operating_system::window m_operatingsystemwindow;
       ::string m_windowName;
       bool m_windowIsResolved;

@@ -51,10 +51,10 @@ namespace remoting_node
       // BaseDialog overrided methods
       //
 
-      virtual bool onInitDialog();
+      virtual bool onInitDialog() override;
       virtual bool onCommand(::u32 controlID, ::u32 notificationID) override;
       //virtual bool onNotify(::u32 controlID, ::lparam data);
-      virtual bool onDestroy() { return true; }
+      virtual bool onDestroy() override { return true; }
 
 
       bool _002OnSelectionChange(int iControl) override;

@@ -70,9 +70,9 @@ namespace remoting
 
       SenderControlInformationInterface *m_senderControlInformation;
 
-      ::int_rectangle m_rectangleViewport;
-      ::int_size m_sizeClient;
-      ::int_size m_sizeLastViewport;
+      ::i32_rectangle m_rectangleViewport;
+      ::i32_size m_sizeClient;
+      ::i32_size m_sizeLastViewport;
       bool m_shareOnlyApp;
       ::remoting::Region m_regionApp;
       ::remoting::Region m_regionAppOld;
@@ -152,7 +152,7 @@ namespace remoting
 
       // The sendServerInit() function sends first rfb init scopedstrMessage to a client
       // FIXME: The comment does not seem to be relevant.
-      void init(const ::int_size &viewPortDimension, const ::innate_subsystem::PixelFormat & pixelformat);
+      void init(const ::i32_size &viewPortDimension, const ::innate_subsystem::PixelFormat & pixelformat);
 
       // The triggerUpdate() function adds updatecontainer to the UpdateKeeper,
       // gives new frame buffer properties if needed.
@@ -166,7 +166,7 @@ namespace remoting
       void blockCursorPosSending();
 
       // Returns a rectangle for current Viewport
-      ::int_rectangle getViewPort();
+      ::i32_rectangle getViewPort();
 
       // Check requsted regions to determine if the client is ready.
       // Return true if the client is ready, false otherwise.
@@ -195,7 +195,7 @@ namespace remoting
 
       // Check cursor pointPosition for changing and store it to the m_cursorPos.
       // Return true value if cursor pointPosition has been changed.
-      void checkCursorPos(UpdateContainer & updatecontainer, const ::int_rectangle &rectangleViewport);
+      void checkCursorPos(UpdateContainer & updatecontainer, const ::i32_rectangle &rectangleViewport);
 
       // Thread safed get and set of the m_videFrozen flag.
       void setVideoFrozen(bool value);
@@ -222,7 +222,7 @@ namespace remoting
                              const ::remoting::Region & regionShareApp);
       // Updates internal view port rectangle.
       // Returns true if view port has been changed during the operation.
-      bool updateViewPort(::int_rectangle &rectangleOutNewViewport, bool *shareApp, ::remoting::Region & regionOldShareApp,
+      bool updateViewPort(::i32_rectangle &rectangleOutNewViewport, bool *shareApp, ::remoting::Region & regionOldShareApp,
                           ::remoting::Region & regionNewShareApp);
 
       // The sendPalette() function sends pallete after a set color ::map request
@@ -233,15 +233,15 @@ namespace remoting
       // New pixel format will take effect on sending next frame buffer update.
       void setClientPixelFormat(const ::innate_subsystem::PixelFormat & pixelformat, bool clrMapEntries);
 
-      void sendRectHeader(const ::int_rectangle & rectangle, int encodingType);
+      void sendRectHeader(const ::i32_rectangle & rectangle, int encodingType);
       void sendRectHeader(unsigned short x, unsigned short y, unsigned short w, unsigned short h, int encodingType);
-      void sendNewFBSize(::int_size & size, bool extended);
+      void sendNewFBSize(::i32_size & size, bool extended);
       void sendFbInClientDim(const EncodeOptions *encodeOptions, const ::innate_subsystem::Framebuffer *pframebuffer,
-                             const ::int_size &size, const ::innate_subsystem::PixelFormat & pixelformat);
+                             const ::i32_size &size, const ::innate_subsystem::PixelFormat & pixelformat);
       void sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat &fmt,
                                  const ::remoting::CursorShape *cursorShape);
       void sendCursorPosUpdate();
-      void sendCopyRect(const ::int_rectangle_array_base & rectanglea, const ::int_point & pointSource);
+      void sendCopyRect(const ::int_rectangle_array_base & rectanglea, const ::i32_point & pointSource);
 
       // Encode and send a ::list_base of rectangles via the specified encoder.
       void sendRectangles(Encoder *encoder, const ::int_rectangle_array_base & rectanglea,

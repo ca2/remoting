@@ -42,7 +42,7 @@ namespace remoting
       ::pointer < UpdateFilter > m_pupdatefilter;
       ::pointer < UpdateListener > m_pupdatelistenerExternal;
 
-      ::int_rectangle m_rectangleAbsolute;
+      ::i32_rectangle m_rectangleAbsolute;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 

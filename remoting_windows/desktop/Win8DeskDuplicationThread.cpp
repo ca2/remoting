@@ -164,17 +164,17 @@ namespace remoting_windows
       m_duplListener->onRecoverableError(scopedstrReason);
    }
 
-   ::int_size Win8DeskDuplication::getStageDimension(size_t out) const
+   ::i32_size Win8DeskDuplication::getStageDimension(size_t out) const
    {
-      return ::int_size(m_stageTextures2D[out]->getDesc()->Width, m_stageTextures2D[out]->getDesc()->Height);
+      return ::i32_size(m_stageTextures2D[out]->getDesc()->Width, m_stageTextures2D[out]->getDesc()->Height);
    }
 
    void Win8DeskDuplication::processMoveRects(size_t moveCount, size_t out)
    {
       ASSERT(moveCount <= m_moveRects.size());
-      ::int_rectangle destinationRect;
-      ::int_rectangle sourceRect;
-      ::int_rectangle targetRect = m_targetRects[out];
+      ::i32_rectangle destinationRect;
+      ::i32_rectangle sourceRect;
+      ::i32_rectangle targetRect = m_targetRects[out];
       DXGI_MODE_ROTATION rotation = m_rotations[out];
 
       for (size_t iRect = 0; iRect < moveCount; iRect++)
@@ -202,9 +202,9 @@ namespace remoting_windows
 
       ::remoting::Region m_regionChanged;
 
-      ::int_rectangle dirtyRect;
-      ::int_size sizeStage = getStageDimension(out);
-      ::int_rectangle stageRect = sizeStage;
+      ::i32_rectangle dirtyRect;
+      ::i32_size sizeStage = getStageDimension(out);
+      ::i32_rectangle stageRect = sizeStage;
 
       DXGI_MODE_ROTATION rotation = m_rotations[out];
 
@@ -232,7 +232,7 @@ namespace remoting_windows
          WinDxgiSurface surface(texture);
          WinAutoMapDxgiSurface autoMapSurface(&surface, DXGI_MAP_READ);
 
-         ::int_rectangle rectangleTarget(dirtyRect);
+         ::i32_rectangle rectangleTarget(dirtyRect);
          rotateRectInsideStage(rectangleTarget, sizeStage, rotation);
          // Translate the rectangle to the frame buffer coordinates.
          rectangleTarget.offset(m_targetRects[out].left, m_targetRects[out].top);
@@ -277,7 +277,7 @@ namespace remoting_windows
    }
 
 
-   void Win8DeskDuplication::rotateRectInsideStage(::int_rectangle &rectangleToTranspose, const ::int_size &sizeStage,
+   void Win8DeskDuplication::rotateRectInsideStage(::i32_rectangle &rectangleToTranspose, const ::i32_size &sizeStage,
                                                    DXGI_MODE_ROTATION rotation)
    {
       int left = rectangleToTranspose.left;
@@ -342,8 +342,8 @@ namespace remoting_windows
          if (pointerPos.Visible)
          {
             m_plogwriter->debug("Cursor pointPosition chagned");
-            ::int_point hotPoint = m_targetCurShape->getCursorShape()->getHotSpot();
-            ::int_rectangle targetRect = m_targetRects[out];
+            ::i32_point hotPoint = m_targetCurShape->getCursorShape()->getHotSpot();
+            ::i32_rectangle targetRect = m_targetRects[out];
             m_duplListener->onCursorPositionChanged(pointerPos.Position.x + targetRect.left + hotPoint.x,
                                                     pointerPos.Position.y + targetRect.top + hotPoint.y);
          }

@@ -69,13 +69,13 @@ namespace remoting_node
       /**
        * Unsets password and updates dependent controls state.
        * @param promtUser determinates if need to promt user.
-       * @param parentWindow hwnd of window to dialog scopedstrMessage box (promt).
+       * @param operatingsystemwindowParent hwnd of window to dialog scopedstrMessage box (promt).
        */
       void unsetPassword(bool promtUser, const ::operating_system::window & operatingsystemwindowParent);
 
       /**
       Updates password value inside this control and updates dependent controls state.
-      @param plainText plain text password.
+      @param scopedstrPlainText plain text password.
       */
       void setPassword(const ::scoped_string & scopedstrPlainText);
 
@@ -95,10 +95,10 @@ namespace remoting_node
 
       /**
       Shows change password modal dialog and stores result to this password control object.
-      @param parent control of parent dialog (optional, can be null).
+      @param pwindowParent control of parent dialog (optional, can be null).
       @return false if user cancels dialog, true otherwise.
       */
-      bool showChangePasswordModalDialog(::innate_subsystem::WindowInterface * pwindow);
+      bool showChangePasswordModalDialog(::innate_subsystem::WindowInterface * pwindowParent);
 
    private:
       void updateControlsState();

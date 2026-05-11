@@ -63,9 +63,9 @@ namespace remoting_windows
 
       virtual bool grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat);
       virtual const ::remoting::CursorShape *getCursorShape();
-      virtual ::int_point getCursorPosition();
+      virtual ::i32_point getCursorPosition();
 
-      virtual void getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource);
+      virtual void getCopiedRegion(::i32_rectangle &rectangleCopy, ::i32_point & pointSource);
 
    protected:
       lockable_critical_section *framebuffer_critical_section();

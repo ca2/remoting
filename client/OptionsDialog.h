@@ -34,7 +34,7 @@
 #include "innate_subsystem/gui/TextBox.h"
 #include "innate_subsystem/gui/CheckBox.h"
 #include "innate_subsystem/gui/ComboBox.h"
-#include "innate_subsystem/gui/TrackBar.h"
+#include "innate_subsystem/gui/Trackbar.h"
 #include "resource.h"
 
 

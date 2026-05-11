@@ -41,12 +41,12 @@ namespace remoting
 
       virtual int getCode() const;
 
-      virtual void sendRectangle(const ::int_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,
+      virtual void sendRectangle(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,
                                  const EncodeOptions *options);
 
       // private:
       template<class PIXEL_T>
-      void hextileFunction(const ::int_rectangle &r, const ::innate_subsystem::Framebuffer *pframebuffer);
+      void hextileFunction(const ::i32_rectangle &r, const ::innate_subsystem::Framebuffer *pframebuffer);
    };
 
 

@@ -39,7 +39,7 @@ namespace remoting_client
 
    void CopyRectDecoder::decode(::remoting::RfbInputGate *pinput,
                                 ::innate_subsystem::Framebuffer *pframebuffer,
-                                const ::int_rectangle &  rectangleTarget)
+                                const ::i32_rectangle &  rectangleTarget)
    {
       m_sourcePosition.x = pinput->readInt16();
       m_sourcePosition.y = pinput->readInt16();
@@ -47,7 +47,7 @@ namespace remoting_client
 
    void CopyRectDecoder::copy(::innate_subsystem::Framebuffer *dstFramebuffer,
                               const ::innate_subsystem::Framebuffer *pframebufferSource,
-                              const ::int_rectangle &  rectangle,
+                              const ::i32_rectangle &  rectangle,
                               lockable_critical_section *pcriticalsectionFramebuffer)
    {
       critical_section_lock al(pcriticalsectionFramebuffer);

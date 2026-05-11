@@ -41,14 +41,14 @@ namespace remoting_client
       virtual void process(::remoting::RfbInputGate *input,
                            ::innate_subsystem::Framebuffer *pframebuffer,
                            ::innate_subsystem::Framebuffer *secondFramebuffer,
-                           const ::int_rectangle &  rectangle,
+                           const ::i32_rectangle &  rectangle,
                            lockable_critical_section *pcriticalsectionFramebuffer,
                            FbUpdateNotifier *fbNotifier);
 
    protected:
       virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
-                          const ::int_rectangle &  rectangle);
+                          const ::i32_rectangle &  rectangle);
 
    private:
       static const size_t AREA_OF_ONE_PART = 1024 * 64;

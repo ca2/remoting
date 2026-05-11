@@ -64,9 +64,9 @@ namespace remoting_windows
       void processDirtyRects(size_t dirtyCount, WinD3D11Texture2D *acquiredDesktopImage, size_t out);
       void processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, size_t out);
 
-      ::int_size getStageDimension(size_t out) const;
+      ::i32_size getStageDimension(size_t out) const;
 
-      void rotateRectInsideStage(::int_rectangle &rectangleToTranspose, const ::int_size &sizeStage, DXGI_MODE_ROTATION rotation);
+      void rotateRectInsideStage(::i32_rectangle &rectangleToTranspose, const ::i32_size &sizeStage, DXGI_MODE_ROTATION rotation);
 
       ::innate_subsystem::Framebuffer *m_targetFb;
 

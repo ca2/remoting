@@ -41,11 +41,11 @@ namespace remoting
    public:
 
       // Current state
-      ::int_point m_cursorPos;
+      ::i32_point m_cursorPos;
       class ::time m_blockCurPosTime;
       ::remoting::CursorShape m_cursorshape;
       ::innate_subsystem::Framebuffer m_shapeBackground;
-      ::int_point m_pointBackground;
+      ::i32_point m_pointBackground;
       lockable_critical_section m_criticalsectionCurPosLoc;
       // Uses when the rich enabled but pointer pos disabled to determine
       // the last send method: by a cursor shape update or drawing on the
@@ -69,15 +69,15 @@ namespace remoting
       // actual cursor shape to the cursorShape argument (Only when after call
       // the updatecontainer.m_bCursorShapeChanged flag is raised).
       void update(const EncodeOptions *encodeOptions, UpdateContainer & updatecontainer, bool fullRegReq,
-                  const ::int_rectangle &rectangleViewport, bool shareOnlyApp, const ::remoting::Region & regionShareApp,
+                  const ::i32_rectangle &rectangleViewport, bool shareOnlyApp, const ::remoting::Region & regionShareApp,
                   ::innate_subsystem::Framebuffer *pframebuffer, ::remoting::CursorShape *cursorShape);
       void restoreFramebuffer(::innate_subsystem::Framebuffer *pframebuffer);
 
       // Returns current cursor pointPosition. Beetween
-      ::int_point getCurPos();
+      ::i32_point getCurPos();
 
       // Returns background rectangle.
-      ::int_rectangle getBackgroundRect();
+      ::i32_rectangle getBackgroundRect();
 
       // Block cursor pos sending by this
       // connection to a client. Unblocking will
@@ -93,7 +93,7 @@ namespace remoting
 
       // Check cursor pointPosition for changing and store it to the m_cursorPos.
       // Return true value if cursor pointPosition has been changed.
-      bool checkCursorPos(UpdateContainer & updatecontainer, const ::int_rectangle &rectangleViewport, bool curPosBlockingIsIgnored);
+      bool checkCursorPos(UpdateContainer & updatecontainer, const ::i32_rectangle &rectangleViewport, bool curPosBlockingIsIgnored);
 
       // Shortcut function to draw cursor on the frame buffer directly.
       void drawCursor(UpdateContainer & updatecontainer, ::innate_subsystem::Framebuffer *pframebuffer);

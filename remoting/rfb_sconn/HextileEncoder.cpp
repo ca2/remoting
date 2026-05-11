@@ -42,7 +42,7 @@ namespace remoting
       return EncodingDefs::HEXTILE;
    }
 
-   void HextileEncoder::sendRectangle(const ::int_rectangle &  rectangle,
+   void HextileEncoder::sendRectangle(const ::i32_rectangle &  rectangle,
                                       const ::innate_subsystem::Framebuffer *serverFb,
                                       const EncodeOptions *options)
    {
@@ -61,10 +61,10 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void HextileEncoder::hextileFunction(const ::int_rectangle &r,
+   void HextileEncoder::hextileFunction(const ::i32_rectangle &r,
                                         const ::innate_subsystem::Framebuffer *pframebufferSource)
    {
-      ::int_rectangle t;
+      ::i32_rectangle t;
       PIXEL_T *buf;
       auto pframebuffer = createø<::innate_subsystem::Framebuffer>();
       PIXEL_T oldBg = 0, oldFg = 0;

@@ -38,7 +38,7 @@ namespace remoting_client
    protected:
       virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
-                          const ::int_rectangle &  rectangleTarget);
+                          const ::i32_rectangle &  rectangleTarget);
    private:
       static const int TILE_SIZE = 16;
    };

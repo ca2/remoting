@@ -43,7 +43,7 @@ namespace remoting
    // ...
    // ...
    // m_rectangleViewport.update(&pframebuffer->getDimension());
-   // ::int_rectangle rectangleViewport = m_rectangleViewport.getViewport();
+   // ::i32_rectangle rectangleViewport = m_rectangleViewport.getViewport();
    class CLASS_DECL_REMOTING  Viewport :
    virtual public ::particle
    {
@@ -55,7 +55,7 @@ namespace remoting
       ::pointer < Desktop > m_pdesktop;
 
       ViewPortState m_viewportstate;
-      ::int_rectangle m_rectangle;
+      ::i32_rectangle m_rectangle;
       ::remoting::Region m_regionApp;
       lockable_critical_section m_stateMutex;
 
@@ -78,10 +78,10 @@ namespace remoting
 
       // This function updates view port rectangle. The new view port rectangle
       // will be constrained by sizeFramebuffer.
-      void update(const ::int_size &sizeFramebuffer);
+      void update(const ::i32_size &sizeFramebuffer);
 
       // This function returns the view port rectangle.
-      ::int_rectangle getViewport();
+      ::i32_rectangle getViewport();
 
       // Returns true if checked share only application.
       bool getOnlyApplication();

@@ -27,7 +27,7 @@
 
 //#include "log_writer/LogWriter.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-////#include "remoting/remoting/region/::int_point.h"
+////#include "remoting/remoting/region/::i32_point.h"
 
 #include "remoting/remoting/region/Region.h"
 //#include "subsystem/thread/lockable_critical_section.h"
@@ -51,11 +51,11 @@ namespace remoting_client
 
       void setAdapter(CoreEventsAdapter *adapter);
 
-      void onUpdate(const ::int_rectangle &  rectangle);
+      void onUpdate(const ::i32_rectangle &  rectangle);
       void onPropertiesFb();
 
-      void updatePointerPos(const ::int_point &pointPosition);
-      void setNewCursor(const ::int_point &pointHotspot,
+      void updatePointerPos(const ::i32_point &pointPosition);
+      void setNewCursor(const ::i32_point &pointHotspot,
                         unsigned short width, unsigned short height,
                         const ::array_base<unsigned char> *cursor,
                         const ::array_base<unsigned char> *bitmask);
@@ -88,7 +88,7 @@ namespace remoting_client
       ::remoting::Region m_regionUpdate;
 
       // This rectangle save pointPosition of cursor.
-      ::int_rectangle m_rectangleOldPosition;
+      ::i32_rectangle m_rectangleOldPosition;
 
       // This flag is true after call onPropertiesFb().
       bool m_bNewSize;

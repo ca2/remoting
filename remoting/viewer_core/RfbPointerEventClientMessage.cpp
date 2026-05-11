@@ -27,7 +27,7 @@
 namespace remoting_client
 {
    RfbPointerEventClientMessage::RfbPointerEventClientMessage(const unsigned char buttonMask,
-                                                              const ::int_point &pointPosition)
+                                                              const ::i32_point &pointPosition)
    : m_buttonMask(buttonMask)
    {
       m_xPos = static_cast<unsigned short>(pointPosition.x);

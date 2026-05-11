@@ -114,7 +114,7 @@ namespace remoting_client
     // void DesktopWindow::onPaint()
     // {
     //
-    //     ::int_rectangle paintRect(m_paintStruct.rcPaint);
+    //     ::i32_rectangle paintRect(m_paintStruct.rcPaint);
     //
     //
     //     // 5️⃣ Blit to screen (alpha ignored in normal window)
@@ -309,7 +309,7 @@ namespace remoting_client
     }
 
     bool DesktopWindow::onMouseEx(::u32 uMessage, int iButtonMask, unsigned short wheelSpeed,
-                                  const ::int_point &point, bool &bDoDefaultProcessing)
+                                  const ::i32_point &point, bool &bDoDefaultProcessing)
     {
 
         RECT rcClient;
@@ -409,7 +409,7 @@ namespace remoting_client
         return false;
     }
 
-    bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, const ::int_point & pointPosition)
+    bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, const ::i32_point & pointPosition)
     {
         if (m_pviewerwindow->isMinimized())
         {
@@ -460,7 +460,7 @@ namespace remoting_client
 
         // Translate coordinates from the Viewer Window to Desktop Window.
         auto mousePos = getViewerCoord(p.x, p.y);
-        ::int_point pos;
+        ::i32_point pos;
         pos.x = mousePos.x;
         pos.y = mousePos.y;
 
@@ -582,7 +582,7 @@ namespace remoting_client
 
 
     //void DesktopWindow::onPaint(::innate_subsystem::DeviceContextInterface* pdevicecontext,
-    //    const ::int_rectangle& rectangle)
+    //    const ::i32_rectangle& rectangle)
     //{
 
     //    innate_subsystem::Graphics g;
@@ -593,8 +593,8 @@ namespace remoting_client
 
     //}
 
-    //void DesktopWindow::doDraw(HDC hdc, const ::int_rectangle & rectangle)
-   void DesktopWindow::onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
+    //void DesktopWindow::doDraw(HDC hdc, const ::i32_rectangle & rectangle)
+   void DesktopWindow::onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle)
     {
         critical_section_lock al(&m_criticalsectionBuffer);
         int fbWidth = m_framebuffer.getDimension().cx;
@@ -635,7 +635,7 @@ namespace remoting_client
 
         m_scManager.setStartPoint(iHorzPos, iVertPos);
 
-        ::int_rectangle src, dst;
+        ::i32_rectangle src, dst;
         m_scManager.getSourceRect(src);
         m_scManager.getDestinationRect(dst);
 
@@ -679,7 +679,7 @@ namespace remoting_client
 
         if (isChanged)
         {
-            m_scManager.setWindow(::int_rectangle(0, 0, wndWidth, wndHeight));
+            m_scManager.setWindow(::i32_rectangle(0, 0, wndWidth, wndHeight));
             if (m_showVert)
             {
                 m_sbar.setVertRange(0, m_scManager.getVertPoints(), wndHeight);
@@ -763,7 +763,7 @@ namespace remoting_client
         calculateWndSize(bChanged);
     }
 
-    void DesktopWindow::drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage)
+    void DesktopWindow::drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rcMain, const ::i32_rectangle & rcImage)
     {
         //::remoting::Graphics graphics(hdc);
 
@@ -789,14 +789,14 @@ namespace remoting_client
         }
     }
 
-    void DesktopWindow::drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangleSource, const ::int_rectangle & rectangleTarget)
+    void DesktopWindow::drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangleSource, const ::i32_rectangle & rectangleTarget)
     {
-        ::int_rectangle rc_src = rectangleSource;
-        ::int_rectangle rc_dest = rectangleTarget;
+        ::i32_rectangle rc_src = rectangleSource;
+        ::i32_rectangle rc_dest = rectangleTarget;
 
         critical_section_lock al(&m_criticalsectionBuffer);
         m_framebuffer.setTargetDeviceContext(pgraphics->device_context());
-        ::int_rectangle rSource = rectangleSource;
+        ::i32_rectangle rSource = rectangleSource;
 
         //int iDivisor = m_iDivisor;
 
@@ -828,7 +828,7 @@ namespace remoting_client
 
     bool DesktopWindow::onDestroy() { return true; }
 
-    void DesktopWindow::updateFramebuffer(const ::innate_subsystem::Framebuffer *pframebuffer, const ::int_rectangle &rectangleTarget)
+    void DesktopWindow::updateFramebuffer(const ::innate_subsystem::Framebuffer *pframebuffer, const ::i32_rectangle &rectangleTarget)
     {
         // This code doesn't require blocking of m_framebuffer.
         //
@@ -849,8 +849,8 @@ namespace remoting_client
 
     void DesktopWindow::setNewFramebuffer(const ::innate_subsystem::Framebuffer *pframebuffer)
     {
-        ::int_size dimension = pframebuffer->getDimension();
-        ::int_size olddimension = m_framebuffer.getDimension();
+        ::i32_size dimension = pframebuffer->getDimension();
+        ::i32_size olddimension = m_framebuffer.getDimension();
 
         bool isBackgroundDirty = dimension.cx < olddimension.cx || dimension.cy < olddimension.cy;
 
@@ -892,13 +892,13 @@ namespace remoting_client
         }
     }
 
-    void DesktopWindow::repaint(const ::int_rectangle &repaintRectParameter)
+    void DesktopWindow::repaint(const ::i32_rectangle &repaintRectParameter)
     {
         auto repaintRect = repaintRectParameter;
         //repaintRect /= m_iDivisor;
-        ::int_rectangle rectangle;
+        ::i32_rectangle rectangle;
         m_scManager.getSourceRect(rectangle);
-        ::int_rectangle paint = repaintRect;
+        ::i32_rectangle paint = repaintRect;
         paint.intersection(rectangle);
 
         // checks what we getted a valid rectangle
@@ -908,7 +908,7 @@ namespace remoting_client
             redraw();
             return;
         }
-        ::int_rectangle wnd;
+        ::i32_rectangle wnd;
         m_scManager.getWndFromScreen(paint, wnd);
         m_scManager.getDestinationRect(rectangle);
         if (wnd.left)
@@ -943,14 +943,14 @@ namespace remoting_client
         }
     }
 
-    ::int_point DesktopWindow::getViewerCoord(long xPos, long yPos)
+    ::i32_point DesktopWindow::getViewerCoord(long xPos, long yPos)
     {
-        ::int_rectangle rectangle;
-        ::int_point p;
+        ::i32_rectangle rectangle;
+        ::i32_point p;
 
         m_scManager.getDestinationRect(rectangle);
         // it checks this point in the rectangle
-        if (!rectangle.contains(::int_point(xPos, yPos)))
+        if (!rectangle.contains(::i32_point(xPos, yPos)))
         {
             p.x = -1;
             p.y = -1;
@@ -960,9 +960,9 @@ namespace remoting_client
         return p;
     }
 
-    ::int_rectangle DesktopWindow::getViewerGeometry()
+    ::i32_rectangle DesktopWindow::getViewerGeometry()
     {
-        ::int_rectangle viewerRect;
+        ::i32_rectangle viewerRect;
         viewerRect.set_height(m_scManager.getVertPoints());
         viewerRect.set_width(m_scManager.getHorzPoints());
         if (viewerRect.area() == 0)
@@ -973,13 +973,13 @@ namespace remoting_client
         return viewerRect;
     }
 
-    ::int_rectangle DesktopWindow::getFramebufferGeometry()
+    ::i32_rectangle DesktopWindow::getFramebufferGeometry()
     {
         critical_section_lock al(&m_criticalsectionBuffer);
         return m_framebuffer.getDimension();
     }
 
-    void DesktopWindow::getServerGeometry(::int_rectangle * prectangle, int *piPixelsize)
+    void DesktopWindow::getServerGeometry(::i32_rectangle * prectangle, int *piPixelsize)
     {
         critical_section_lock al(&m_criticalsectionBuffer);
         if (prectangle)
@@ -1033,7 +1033,7 @@ namespace remoting_client
         }
     }
 
-    void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const ::int_point &pointPosition)
+    void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const ::i32_point &pointPosition)
     {
         if (m_pconnectionconfig->isViewOnly())
         {

@@ -43,7 +43,7 @@ namespace remoting_client
 
        virtual bool we_want_WM_KEYDOWN_when_enter_is_pressed() const override;
 
-        virtual void subclassWindow(const ::operating_system::window & operatingsystemwindow);
+        void subclassWindow(const ::operating_system::window & operatingsystemwindow) override;
 
         //
         // Adds new item to FileInfoListView

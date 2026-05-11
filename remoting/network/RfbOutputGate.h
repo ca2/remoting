@@ -47,11 +47,11 @@ namespace remoting
       virtual public lockable_critical_section
    {
    public:
+      RfbOutputGate();
       /**
        * Creates new rfb output pblockinggate.
-       * @param stream real output stream.
+       * @param poutputstream real output stream.
        */
-      RfbOutputGate();
       RfbOutputGate(::OutputStream *poutputstream);
 
       /**

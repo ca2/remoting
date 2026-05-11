@@ -59,9 +59,9 @@ namespace remoting
       void filter(UpdateContainer & updatecontainer);
 
    //private:
-      void getChangedRegion(::remoting::Region & rgn, const ::int_rectangle & rectangle);
-      void updateChangedRect(::remoting::Region & rgn, const ::int_rectangle & rectangle);
-      void updateChangedSubRect(::remoting::Region & rgn, const ::int_rectangle & rectangle);
+      void getChangedRegion(::remoting::Region & rgn, const ::i32_rectangle & rectangle);
+      void updateChangedRect(::remoting::Region & rgn, const ::i32_rectangle & rectangle);
+      void updateChangedSubRect(::remoting::Region & rgn, const ::i32_rectangle & rectangle);
 
       // This function update the screen grabber frame buffer.
       // If success the function returns the true.

@@ -37,7 +37,7 @@
 #include "innate_subsystem/gui/CheckBox.h"
 #include "innate_subsystem/gui/SpinControl.h"
 #include "innate_subsystem/gui/ComboBox.h"
-#include "innate_subsystem/gui/TrackBar.h"
+#include "innate_subsystem/gui/Trackbar.h"
 #include "resource.h"
 
 //#include "remoting/remoting/win_system/WindowsApplication.h"

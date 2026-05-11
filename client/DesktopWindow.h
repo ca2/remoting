@@ -64,7 +64,7 @@ namespace remoting_client
         //virtual void _defer_update_double_buffering();
         void setClipboardData(const ::scoped_string & strText);
         void updateFramebuffer(const ::innate_subsystem::Framebuffer * pframebuffer,
-                               const ::int_rectangle &  rectangleTarget);
+                               const ::i32_rectangle &  rectangleTarget);
         // this function must be called if size of image was changed
         // or the number of bits per pixel
         void setNewFramebuffer(const ::innate_subsystem::Framebuffer * pframebuffer);
@@ -72,11 +72,11 @@ namespace remoting_client
         // set scale of image, can -1 = Auto, in percent
         void setScale(int scale);
         // it returns the image width and height considering scale
-        ::int_rectangle getViewerGeometry();
+        ::i32_rectangle getViewerGeometry();
         // it returns the image width and height.
-        ::int_rectangle getFramebufferGeometry();
+        ::i32_rectangle getFramebufferGeometry();
         // it return size of server frame buffer and pixelsize.
-        void getServerGeometry(::int_rectangle * prectangle, int * piPixelsize);
+        void getServerGeometry(::i32_rectangle * prectangle, int * piPixelsize);
 
         void setConnected();
         void setViewerCore(::remoting_client::RemoteViewerCore *viewerCore);
@@ -122,14 +122,14 @@ namespace remoting_client
         bool onVScroll(::wparam wParam, ::lparam lParam);
         bool onKey(::wparam wParam, ::lparam lParam);
         bool onChar(::wparam wParam, ::lparam lParam);
-        bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, const ::int_point & pointPosition) override;
-        bool onMouseEx(::u32 message, int iButtonMask, unsigned short wspeed, const ::int_point &pointPosition,
+        bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, const ::i32_point & pointPosition) override;
+        bool onMouseEx(::u32 message, int iButtonMask, unsigned short wspeed, const ::i32_point &pointPosition,
                        bool &bDoDefaultProcessing) override;
         //bool onSize(::wparam wParam, ::lparam lParam);
         void onSize() override;
         bool onDestroy();
 
-        ::int_point getViewerCoord(long xPos, long yPos);
+        ::i32_point getViewerCoord(long xPos, long yPos);
         void calculateWndSize(bool isChanged);
         void applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight);
 
@@ -137,7 +137,7 @@ namespace remoting_client
         // If into viewer core throwing exception ::subsystem::Exception, then it catching
         // in this function and logged.
         void sendKeyboardEvent(bool downFlag, ::u32 key);
-        void sendPointerEvent(unsigned char buttonMask, const ::int_point &pointPosition);
+        void sendPointerEvent(unsigned char buttonMask, const ::i32_point &pointPosition);
         void sendCutTextEvent(const ::scoped_string & cutText);
 
         ::pointer < ::subsystem::LogWriter > m_plogwriter;
@@ -150,7 +150,7 @@ namespace remoting_client
 
         // This variable contained previously state of mouse-button and pointPosition of cursor.
         unsigned char m_previousMouseState;
-        ::int_point m_previousMousePos;
+        ::i32_point m_previousMousePos;
 
         // scroll bars: vertical and horizontal
         ::innate_subsystem::ScrollBar m_sbar;
@@ -162,7 +162,7 @@ namespace remoting_client
 
         // for scaling
         ScaleManager m_scManager;
-        ::int_rectangle m_clientArea;
+        ::i32_rectangle m_clientArea;
         int m_fbWidth;
         int m_fbHeight;
         ::innate_subsystem::SolidBrush m_brush;
@@ -171,8 +171,8 @@ namespace remoting_client
         lockable_critical_section m_criticalsectionBuffer;
         ::innate_subsystem::DibFramebuffer m_framebuffer;
         // This variable save server dimension.
-        // ::int_size of m_framebuffer can be large m_serverDimension.
-        ::int_size m_serverDimension;
+        // ::i32_size of m_framebuffer can be large m_serverDimension.
+        ::i32_size m_serverDimension;
 
         // clipboard
         ::subsystem::Clipboard m_clipboard;
@@ -187,12 +187,12 @@ namespace remoting_client
 
     public:
         //void doDraw(DeviceContext *dc);
-        void onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle) override;
-       //void onPaint(::innate_subsystem::DeviceContextInterface *pgraphics, const ::int_rectangle & rectangle) override;
+        void onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle) override;
+       //void onPaint(::innate_subsystem::DeviceContextInterface *pgraphics, const ::i32_rectangle & rectangle) override;
         void scrollProcessing(int fbWidth, int fbHeight);
-        void drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rcMain, const ::int_rectangle & rcImage);
-        void drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & src, const ::int_rectangle & dst);
-        void repaint(const ::int_rectangle &  repaintRect);
+        void drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rcMain, const ::i32_rectangle & rcImage);
+        void drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & src, const ::i32_rectangle & dst);
+        void repaint(const ::i32_rectangle &  repaintRect);
         void calcClientArea();
     };
 } // namespace remoting_client

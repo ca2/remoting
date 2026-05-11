@@ -66,7 +66,7 @@ namespace remoting_client
         setWindow(m_rcWindow);
     }
 
-    void ScaleManager::keepAspectRatio(::int_rectangle &rectangle) const
+    void ScaleManager::keepAspectRatio(::i32_rectangle &rectangle) const
     {
         int iHeight = rectangle.height() / m_scrHScale;
         int iWidth = rectangle.width() / m_scrWScale;
@@ -81,7 +81,7 @@ namespace remoting_client
         setStartPoint(m_xStart, m_yStart);
     }
 
-    void ScaleManager::setWindow(const ::int_rectangle & rectangleWnd)
+    void ScaleManager::setWindow(const ::i32_rectangle & rectangleWnd)
     {
         m_rcWindow = rectangleWnd;
         setStartPoint(m_xStart, m_yStart);
@@ -94,9 +94,9 @@ namespace remoting_client
 
     }
 
-    ::int_rectangle ScaleManager::calcScaled(const ::int_rectangle &  rcViewed, bool bCent)
+    ::i32_rectangle ScaleManager::calcScaled(const ::i32_rectangle &  rcViewed, bool bCent)
     {
-        ::int_rectangle rcScaled;
+        ::i32_rectangle rcScaled;
         // calculate scaled window from viewed
         rcScaled = rcViewed;
         int scale = m_scale;
@@ -211,54 +211,54 @@ namespace remoting_client
                 m_rcViewed.top = 0;
             }
         }
-        ::int_rectangle rcScaled = calcScaled(m_rcViewed, true);
+        ::i32_rectangle rcScaled = calcScaled(m_rcViewed, true);
     }
 
-    void ScaleManager::getViewedRect(::int_rectangle & rectangleViewed) const
+    void ScaleManager::getViewedRect(::i32_rectangle & rectangleViewed) const
     {
-        ::int_rectangle rectangle(m_rcViewed);
+        ::i32_rectangle rectangle(m_rcViewed);
         rectangle.set_top_left(m_iCentX, m_iCentY);
 
         rectangleViewed = rectangle;
     }
 
-    ::int_rectangle ScaleManager::getViewedRect() const
+    ::i32_rectangle ScaleManager::getViewedRect() const
     {
 
-        int_rectangle r;
+        i32_rectangle r;
         getViewedRect(r);
         return r;
 
     }
 
-    ::int_rectangle ScaleManager::getScaledRect()
+    ::i32_rectangle ScaleManager::getScaledRect()
     {
         return calcScaled(m_rcViewed, true);
     }
 
-    void ScaleManager::getDestinationRect(::int_rectangle & rectangleDestination)
+    void ScaleManager::getDestinationRect(::i32_rectangle & rectangleDestination)
     {
-        ::int_rectangle rcScaled = calcScaled(m_rcViewed, true);
+        ::i32_rectangle rcScaled = calcScaled(m_rcViewed, true);
         rcScaled.set_top_left(m_iCentX, m_iCentY);
 
         rectangleDestination = rcScaled;
     }
 
-    void ScaleManager::getSourceRect(::int_rectangle & rectangleSource) const
+    void ScaleManager::getSourceRect(::i32_rectangle & rectangleSource) const
     {
         rectangleSource = m_rcViewed;
     }
 
-    void ScaleManager::getWndFromScreen(const ::int_rectangle &  screen, ::int_rectangle &rectangleWnd)
+    void ScaleManager::getWndFromScreen(const ::i32_rectangle &  screen, ::i32_rectangle &rectangleWnd)
     {
-        ::int_rectangle scr = screen;
+        ::i32_rectangle scr = screen;
         scr.offset(-m_rcViewed.left, -m_rcViewed.top);
-        ::int_rectangle rcScaled = calcScaled(scr, false);
+        ::i32_rectangle rcScaled = calcScaled(scr, false);
         rectangleWnd = rcScaled;
         rectangleWnd.offset(m_iCentX, m_iCentY);
     }
 
-    ::int_point ScaleManager::transformDispToScr(int xPoint, int yPoint) const
+    ::i32_point ScaleManager::transformDispToScr(int xPoint, int yPoint) const
     {
         xPoint -= m_iCentX;
         yPoint -= m_iCentY;
@@ -278,7 +278,7 @@ namespace remoting_client
         xPoint = xPoint * denomeratorScale / scale;
         yPoint = yPoint * denomeratorScale / scale;
 
-        ::int_point point;
+        ::i32_point point;
         point.x = static_cast<short>(xPoint + m_rcViewed.left);
         point.y = static_cast<short>(yPoint + m_rcViewed.top);
 

@@ -48,7 +48,7 @@ namespace remoting
       return EncodingDefs::ZRLE;
    }
 
-   void ZrleEncoder::splitRectangle(const ::int_rectangle &  rectangle,
+   void ZrleEncoder::splitRectangle(const ::i32_rectangle &  rectangle,
                                     ::int_rectangle_array_base & rectanglea,
                                     const ::innate_subsystem::Framebuffer *serverFb,
                                     const EncodeOptions *options)
@@ -56,7 +56,7 @@ namespace remoting
       rectanglea.add(rectangle);
    }
 
-   void ZrleEncoder::sendRectangle(const ::int_rectangle &  rectangle,
+   void ZrleEncoder::sendRectangle(const ::i32_rectangle &  rectangle,
                                    const ::innate_subsystem::Framebuffer *serverFb,
                                    const EncodeOptions *options)
    {
@@ -116,7 +116,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void ZrleEncoder::sendRect(const ::int_rectangle &  rectangle,
+   void ZrleEncoder::sendRect(const ::i32_rectangle &  rectangle,
                               const ::innate_subsystem::Framebuffer *serverFb,
                               const ::innate_subsystem::Framebuffer *clientFb,
                               const EncodeOptions *options)
@@ -124,7 +124,7 @@ namespace remoting
       m_rgbData.resize(0);
       const PIXEL_T *buffer = static_cast<const PIXEL_T *>(clientFb->getBuffer());
 
-      ::int_rectangle tileRect;
+      ::i32_rectangle tileRect;
       for (tileRect.top = rectangle.top; tileRect.top < rectangle.bottom; tileRect.top += TILE_SIZE) {
 
          tileRect.bottom = minimum(rectangle.bottom, tileRect.top + TILE_SIZE);
@@ -217,7 +217,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void ZrleEncoder::writeRawTile(const ::int_rectangle &  tileRect,
+   void ZrleEncoder::writeRawTile(const ::i32_rectangle &  tileRect,
                                   const ::innate_subsystem::Framebuffer *pframebuffer)
    {
       m_oldSize = m_rgbData.size();
@@ -240,7 +240,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void ZrleEncoder::writePackedPaletteTile(const ::int_rectangle &  tileRect,
+   void ZrleEncoder::writePackedPaletteTile(const ::i32_rectangle &  tileRect,
                                             const ::innate_subsystem::Framebuffer *pframebuffer)
    {
       int numColors = m_pal.getNumColors();
@@ -275,7 +275,7 @@ namespace remoting
       int indexOfM = 0;
       int offset = 8;
 
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       for (rectangle.top = tileRect.top; rectangle.top < tileRect.bottom; rectangle.top++) {
          for (rectangle.left = tileRect.left; rectangle.left < tileRect.right; rectangle.left++) {
             PIXEL_T px = buffer[rectangle.top * m_fbWidth + rectangle.left];
@@ -323,7 +323,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void ZrleEncoder::writePaletteRleTile(const ::int_rectangle &  tileRect,
+   void ZrleEncoder::writePaletteRleTile(const ::i32_rectangle &  tileRect,
                                          const ::innate_subsystem::Framebuffer *pframebuffer)
    {
       int numColors = m_pal.getNumColors();
@@ -409,7 +409,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void ZrleEncoder::fillPalette(const ::int_rectangle &  tileRect,
+   void ZrleEncoder::fillPalette(const ::i32_rectangle &  tileRect,
                                  const ::innate_subsystem::Framebuffer *pframebuffer)
    {
       // Clear the palette.
@@ -481,7 +481,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void ZrleEncoder::copyPixels(const ::int_rectangle &  rectangle,
+   void ZrleEncoder::copyPixels(const ::i32_rectangle &  rectangle,
                                 const ::innate_subsystem::Framebuffer *pframebuffer,
                                 unsigned char *dst)
    {
@@ -498,7 +498,7 @@ namespace remoting
       }
    }
 
-   void ZrleEncoder::copyCPixels(const ::int_rectangle &  rectangle,
+   void ZrleEncoder::copyCPixels(const ::i32_rectangle &  rectangle,
                                  const ::innate_subsystem::Framebuffer *pframebuffer,
                                  unsigned char *dst)
    {

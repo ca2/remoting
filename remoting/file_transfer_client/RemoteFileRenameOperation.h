@@ -53,8 +53,8 @@ namespace remoting
          void do_file_transfer_operation() override;
 
          //protected:
-         virtual void onMvReply(DataInputStream * pinput);
-         virtual void onLastRequestFailedReply(DataInputStream * pinput);
+         void onMvReply(DataInputStream * pinput) override;
+         void onLastRequestFailedReply(DataInputStream * pinput) override;
 
 
          ::file::path m_pathToSourceFile;

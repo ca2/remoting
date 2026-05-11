@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-//#include "::int_rectangle.h"
+//#include "::i32_rectangle.h"
 
 namespace remoting
 {
@@ -34,9 +34,9 @@ namespace remoting
    {
    public:
       // Converts to string value.
-      static void toString(const ::int_rectangle &  rectangle, ::string & strOut);
+      static void toString(const ::i32_rectangle &  rectangle, ::string & strOut);
 
-      // Converts to ::int_rectangle value.
-      static ::int_rectangle toRect(const ::scoped_string & strIn);
+      // Converts to ::i32_rectangle value.
+      static ::i32_rectangle toRect(const ::scoped_string & strIn);
    };
 } // namespace remoting

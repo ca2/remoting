@@ -42,7 +42,7 @@ namespace remoting
       return EncodingDefs::RAW;
    }
 
-   void Encoder::splitRectangle(const ::int_rectangle &  rectangle,
+   void Encoder::splitRectangle(const ::i32_rectangle &  rectangle,
                                 ::int_rectangle_array_base & rectanglea,
                                 const ::innate_subsystem::Framebuffer *serverFb,
                                 const EncodeOptions *options)
@@ -50,7 +50,7 @@ namespace remoting
       rectanglea.add(rectangle);
    }
 
-   void Encoder::sendRectangle(const ::int_rectangle &  rectangle,
+   void Encoder::sendRectangle(const ::i32_rectangle &  rectangle,
                                const ::innate_subsystem::Framebuffer *serverFb,
                                const EncodeOptions *options)
    {

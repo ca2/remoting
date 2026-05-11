@@ -25,7 +25,7 @@
 #include "ScreenHooks.h"
 #include "subsystem/_common_header.h"
 #include "remoting/node_desktop/NamingDefs.h"
-//#include "remoting/remoting/region/::int_point.h"
+//#include "remoting/remoting/region/::i32_point.h"
 #include "remoting/remoting/region/Region.h"
 
 // Pre-definition:
@@ -33,11 +33,11 @@ LRESULT CALLBACK callWndRetProc(int nCode, ::wparam wParam, ::lparam lParam);
 LRESULT CALLBACK getMsgProc(int code, ::wparam wParam, ::lparam lParam);
 LRESULT CALLBACK sysMsgProc(int code, ::wparam wParam, ::lparam lParam);
 void processMessage(HWND hwnd, ::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam);
-void sendRect(const ::int_rectangle &  rectangle);
+void sendRect(const ::i32_rectangle &  rectangle);
 void sendClientRect(HWND hwnd);
 void sendNClientRegion(HWND hwnd);
-::int_rectangle getWindowRect(HWND hwnd);
-::int_rectangle getClientRect(HWND hwnd);
+::i32_rectangle getWindowRect(HWND hwnd);
+::i32_rectangle getClientRect(HWND hwnd);
 
 // Per-instance variables:
 HMODULE g_hModule = 0;
@@ -155,7 +155,7 @@ void processMessage(HWND hwnd, ::u32 scopedstrMessage, ::wparam wParam, ::lparam
   }
 }
 
-void sendRect(const ::int_rectangle &  rectangle)
+void sendRect(const ::i32_rectangle &  rectangle)
 {
   short left   = (short)rectangle.left;
   short top    = (short)rectangle.top;
@@ -168,7 +168,7 @@ void sendRect(const ::int_rectangle &  rectangle)
 
 void sendClientRect(HWND hwnd)
 {
-  ::int_rectangle clientRect = getClientRect(hwnd);
+  ::i32_rectangle clientRect = getClientRect(hwnd);
   sendRect(clientRect);
 }
 
@@ -187,14 +187,14 @@ void sendNClientRegion(HWND hwnd)
   }
 }
 
-::int_rectangle getWindowRect(HWND hwnd)
+::i32_rectangle getWindowRect(HWND hwnd)
 {
-  ::int_point offset;
+  ::i32_point offset;
   offset.x = GetSystemMetrics(SM_XVIRTUALSCREEN);
   offset.y = GetSystemMetrics(SM_YVIRTUALSCREEN);
 
   RECT clientRect;
-  ::int_rectangle rectangleResult;
+  ::i32_rectangle rectangleResult;
   if (GetWindowRect(hwnd, clientRect) != 0) {
     rectangleResult.fromWindowsRect(clientRect);
     rectangleResult.move(offset.x, offset.y);
@@ -202,9 +202,9 @@ void sendNClientRegion(HWND hwnd)
   return rectangleResult;
 }
 
-::int_rectangle getClientRect(HWND hwnd)
+::i32_rectangle getClientRect(HWND hwnd)
 {
-  ::int_rectangle rectangleResult;
+  ::i32_rectangle rectangleResult;
   RECT clientRect;
   if (GetClientRect(hwnd, clientRect) != 0) {
     POINT offset;

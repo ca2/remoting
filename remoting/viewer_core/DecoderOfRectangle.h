@@ -51,7 +51,7 @@ namespace remoting_client
       virtual void process(::remoting::RfbInputGate *input,
                            ::innate_subsystem::Framebuffer *pframebuffer,
                            ::innate_subsystem::Framebuffer *secondFramebuffer,
-                           const ::int_rectangle &  rectangle,
+                           const ::i32_rectangle &  rectangle,
                            lockable_critical_section *pcriticalsectionFramebuffer,
                            FbUpdateNotifier *fbNotifier);
 
@@ -66,7 +66,7 @@ namespace remoting_client
       //
       virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
-                          const ::int_rectangle &  rectangle) = 0;
+                          const ::i32_rectangle &  rectangle) = 0;
 
       //
       // This method copy rectangle from pframebufferSource to dstFramebuffer.
@@ -74,14 +74,14 @@ namespace remoting_client
       //
       virtual void copy(::innate_subsystem::Framebuffer *dstFramebuffer,
                         const ::innate_subsystem::Framebuffer *pframebufferSource,
-                        const ::int_rectangle &  rectangle,
+                        const ::i32_rectangle &  rectangle,
                         lockable_critical_section *pcriticalsectionFramebuffer);
 
       //
       // This method notify fbNotifier about update of rectangle.
       //
       virtual void notify(FbUpdateNotifier *fbNotifier,
-                          const ::int_rectangle &  rectangle);
+                          const ::i32_rectangle &  rectangle);
    };
 } // namespace remoting_client
 

@@ -27,7 +27,7 @@
 namespace remoting_client
 {
    RfbFramebufferUpdateRequestClientMessage::RfbFramebufferUpdateRequestClientMessage
-     (bool incremental, ::int_rectangle updateRect)
+     (bool incremental, ::i32_rectangle updateRect)
    : m_incremental(incremental),
      m_rect(updateRect)
    {

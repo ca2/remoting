@@ -45,8 +45,8 @@ namespace remoting
                     lockable_critical_section *mouseGrabLocMut, ::subsystem::LogWriter * plogwriter);
 
    ///protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void execute() override;
+      void onTerminate() override;
 
       ::pointer < CursorShapeGrabber > m_pcursorshapegrabber;
       lockable_critical_section *m_pcriticalsectionMouseGrabLoc;

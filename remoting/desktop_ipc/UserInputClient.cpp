@@ -93,7 +93,7 @@ void UserInputClient::sendInit(BlockingGate *pblockinggate)
   pblockinggate->writeUInt8(m_sendMouseFlags);
 }
 
-void UserInputClient::setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)
+void UserInputClient::setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag)
 {
   critical_section_lock al(m_pcontrolgate);
   try {
@@ -139,7 +139,7 @@ void UserInputClient::getCurrentUserInfo(::string & desktopName,
   }
 }
 
-void UserInputClient::getPrimaryDisplayCoords(::int_rectangle & rectangle)
+void UserInputClient::getPrimaryDisplayCoords(::i32_rectangle & rectangle)
 {
   critical_section_lock al(m_pcontrolgate);
   bool success = false;
@@ -154,7 +154,7 @@ void UserInputClient::getPrimaryDisplayCoords(::int_rectangle & rectangle)
   } while (!success);
 }
 
-void UserInputClient::getDisplayNumberCoords(::int_rectangle & rectangle,
+void UserInputClient::getDisplayNumberCoords(::i32_rectangle & rectangle,
                                              unsigned char dispNumber)
 {
   critical_section_lock al(m_pcontrolgate);
@@ -184,7 +184,7 @@ void UserInputClient::getDisplayNumberCoords(::int_rectangle & rectangle,
       m_pcontrolgate->writeUInt8(DISPLAYS_COORDS_REQ);
       number = m_pcontrolgate->readUInt8();
       for (size_t i = 0; i < number; i++) {
-        ::int_rectangle rectangle = readRect(m_pcontrolgate);
+        ::i32_rectangle rectangle = readRect(m_pcontrolgate);
         res.add(rectangle);
       }
       success = true;
@@ -195,7 +195,7 @@ void UserInputClient::getDisplayNumberCoords(::int_rectangle & rectangle,
   return res;
 }
 
-void UserInputClient::getNormalizedRect(::int_rectangle & rectangle)
+void UserInputClient::getNormalizedRect(::i32_rectangle & rectangle)
 {
   critical_section_lock al(m_pcontrolgate);
   bool success = false;
@@ -211,7 +211,7 @@ void UserInputClient::getNormalizedRect(::int_rectangle & rectangle)
   } while (!success);
 }
 
-void UserInputClient::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)
+void UserInputClient::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)
 {
   critical_section_lock al(m_pcontrolgate);
   bool success = false;

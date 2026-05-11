@@ -25,15 +25,15 @@
 #pragma once
 
 //
-// struct ::int_point
+// struct ::i32_point
 // {
-//   ::int_point() : x(0), y(0) {}
-//   ::int_point(int x_, int y_) : x(x_), y(y_) {}
+//   ::i32_point() : x(0), y(0) {}
+//   ::i32_point(int x_, int y_) : x(x_), y(y_) {}
 //
 //   inline void clear() { x = 0; y = 0; }
 //   inline void setPoint(int x_, int y_) { x = x_; y = y_; }
 //   inline void move(int deltaX, int deltaY) { x += deltaX; y += deltaY; }
-//   bool isEqualTo(const ::int_point &other) const { return x == other->x &&
+//   bool isEqualTo(const ::i32_point &other) const { return x == other->x &&
 //                                                     y == other->y; }
 //
 //   int x;

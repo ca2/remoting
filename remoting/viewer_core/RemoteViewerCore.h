@@ -32,7 +32,7 @@
 //#include "remoting/remoting/network/socket/SocketIPv4.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 
-////#include "remoting/remoting/region/::int_point.h"
+////#include "remoting/remoting/region/::i32_point.h"
 #include "subsystem/thread/Thread.h"
 
 #include "CapsContainer.h"
@@ -355,7 +355,7 @@ namespace remoting_client
       // Send a pointer (mouse) event. Arguments specify the event as defined in
       // the RFB v.3 protocol specification.
       //
-      void sendPointerEvent(unsigned char buttonMask, const ::int_point &pointPosition);
+      void sendPointerEvent(unsigned char buttonMask, const ::i32_point &pointPosition);
 
       //
       // Send cut text (clipboard) to the server.
@@ -445,12 +445,12 @@ namespace remoting_client
                                           const char *nameSignature,
                                           const ::string description = "")override;
 
-      virtual void addEncodingCapability(Decoder *decoder,
+      void addEncodingCapability(Decoder *decoder,
                                          int priorityEncoding,
                                          ::u32 code,
                                          const char *vendorSignature,
                                          const char *nameSignature,
-                                         const ::string description = "");
+                                         const ::string description = "") override;
 
       void getEnabledClientMsgCapabilities(::array_base<::u32> *codes) const override;
       void getEnabledServerMsgCapabilities(::array_base<::u32> *codes) const override;
@@ -458,7 +458,7 @@ namespace remoting_client
 
       // returns ::list_base of server displays offsets and dimensions
       ::int_rectangle_array_base getDesktops();
-      ::int_size getDesktopSize();
+      ::i32_size getDesktopSize();
 
       //private:
       //
@@ -512,7 +512,7 @@ namespace remoting_client
       //
       // Process a fake rectangle which represents a pseudo-encoding.
       //
-      void processPseudoEncoding(const ::int_rectangle &  rectangle, int encType);
+      void processPseudoEncoding(const ::i32_rectangle &  rectangle, int encType);
 
       //
       // Send FramebufferUpdateRequest client scopedstrMessage (code 3).
@@ -564,9 +564,9 @@ namespace remoting_client
       bool wasConnected() const;
 
       //
-      // Update properties (::int_size and PixelfFormat) of m_pframebuffer->
+      // Update properties (::i32_size and PixelfFormat) of m_pframebuffer->
       //
-      void setFbProperties(const ::int_size & sizeFramebuffer,
+      void setFbProperties(const ::i32_size & sizeFramebuffer,
                            const ::innate_subsystem::PixelFormat & pixelformatFramebuffer);
 
       //
@@ -649,7 +649,7 @@ namespace remoting_client
 
       // ::list_base of server dispalys
       ::int_rectangle_array_base m_desktops;
-      ::int_size m_desktopSize;
+      ::i32_size m_desktopSize;
 
       // Decoder work with this pframebuffer-> It is not actual frame buffer,
       // it only easy buffer, common to all decoders. In future this frame buffer

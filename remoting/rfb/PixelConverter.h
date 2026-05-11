@@ -26,7 +26,7 @@
 
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-////#include "remoting/remoting/region/::int_point.h"
+////#include "remoting/remoting/region/::i32_point.h"
 //#include aaa_<vector>
 
 namespace remoting
@@ -43,7 +43,7 @@ namespace remoting
       // set by the most recent setPixelFormats() call. The source and destination
       // framebuffers must be of the same size. The entire rectangle referenced by
       // `rectangle' must be within the frame buffer boundaries.
-      virtual void convert(const ::int_rectangle &  rectangle, ::innate_subsystem::Framebuffer *pframebufferTarget,
+      virtual void convert(const ::i32_rectangle &  rectangle, ::innate_subsystem::Framebuffer *pframebufferTarget,
                            const ::innate_subsystem::Framebuffer *pframebufferSource) const;
 
       // Convert pixels for the specified `rectangle' from `pframebufferSource' to the internal
@@ -57,7 +57,7 @@ namespace remoting
       // not vary from call to call. It checks if the frame buffer size has
       // changed since the previous call and reallocates the frame buffer if
       // necessary.
-      virtual const ::innate_subsystem::Framebuffer *convert(const ::int_rectangle &  rectangle,
+      virtual const ::innate_subsystem::Framebuffer *convert(const ::i32_rectangle &  rectangle,
                                          const ::innate_subsystem::Framebuffer *pframebufferSource);
 
       // FIXME: Review the argument order for each function of PixelConverter.

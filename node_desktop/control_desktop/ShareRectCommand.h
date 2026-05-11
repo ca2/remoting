@@ -35,13 +35,13 @@ namespace remoting_control_desktop
    {
    public:
       ShareRectCommand(ControlProxy *serverControl,
-                       const ::int_rectangle &  shareRect);
+                       const ::i32_rectangle &  shareRect);
       virtual ~ShareRectCommand();
 
       virtual void execute();
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
-      const ::int_rectangle m_shareRect;
+      const ::i32_rectangle m_shareRect;
    };
 } // namespace remoting_control_desktop
 

@@ -52,7 +52,7 @@ namespace remoting_client
 
    void TightDecoder::decode(::remoting::RfbInputGate *pinput,
                              ::innate_subsystem::Framebuffer *pframebuffer,
-                             const ::int_rectangle &  rectangleTarget)
+                             const ::i32_rectangle &  rectangleTarget)
    {
       // The width of any Tight-encoded rectangle cannot exceed 2048
       // pixels. If a rectangle is wider, it must be split into several rectangles
@@ -74,7 +74,7 @@ namespace remoting_client
       if (compressionType > MAX_SUBENCODING) {
          throw ::subsystem::Exception("Sub-encoding in Tight-encoder are not valid");
       }
-      if (::int_rectangle(pframebuffer->getDimension()).intersection(rectangleTarget)!= rectangleTarget)
+      if (::i32_rectangle(pframebuffer->getDimension()).intersection(rectangleTarget)!= rectangleTarget)
          throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle (tight-decoder)");
 
       if (compressionType == FILL_TYPE) {
@@ -157,7 +157,7 @@ namespace remoting_client
 
    void TightDecoder::processJpeg(::remoting::RfbInputGate *pinput,
                                   ::innate_subsystem::Framebuffer *pframebuffer,
-                                  const ::int_rectangle &  rectangleTarget)
+                                  const ::i32_rectangle &  rectangleTarget)
    {
       ::u32 jpegBufLen = readCompactSize(pinput);
       if (jpegBufLen == 0)
@@ -189,7 +189,7 @@ namespace remoting_client
 
    void TightDecoder::processBasicTypes(::remoting::RfbInputGate *pinput,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
-                                        const ::int_rectangle &  rectangleTarget,
+                                        const ::i32_rectangle &  rectangleTarget,
                                         unsigned char compressionControl)
    {
       int decoderId = (compressionControl & STREAM_ID_MASK) >> 4;
@@ -298,7 +298,7 @@ namespace remoting_client
    void TightDecoder::drawPalette(::innate_subsystem::Framebuffer *pframebuffer,
                                   const ::array_base<::u32> &palette,
                                   const ::array_base<unsigned char> &pixels,
-                                  const ::int_rectangle &  rectangleTarget)
+                                  const ::i32_rectangle &  rectangleTarget)
    {
       // TODO: removed duplicate code (draw Tight bytes)
       int width = rectangleTarget.width();
@@ -338,7 +338,7 @@ namespace remoting_client
 
    void TightDecoder::drawTightBytes(::innate_subsystem::Framebuffer *pframebuffer,
                                      const ::array_base<unsigned char> *pixels,
-                                     const ::int_rectangle &  rectangleTarget)
+                                     const ::i32_rectangle &  rectangleTarget)
    {
       // TODO: removed duplicate code (zrle)
       int width = rectangleTarget.width();
@@ -358,7 +358,7 @@ namespace remoting_client
 
    void TightDecoder::drawJpegBytes(::innate_subsystem::Framebuffer *pframebuffer,
                                     const ::array_base<unsigned char> *pixels,
-                                    const ::int_rectangle &  rectangleTarget)
+                                    const ::i32_rectangle &  rectangleTarget)
    {
       // TODO: removed duplicate code (draw tight bytes)
       int width = rectangleTarget.width();
@@ -403,7 +403,7 @@ namespace remoting_client
 
    void TightDecoder::drawGradient(::innate_subsystem::Framebuffer *pframebuffer,
                                    const ::array_base<unsigned char> &pixels,
-                                   const ::int_rectangle &  rectangleTarget)
+                                   const ::i32_rectangle &  rectangleTarget)
    {
       typedef ::array_base<unsigned short> RowType;
       size_t opRowLength = rectangleTarget.width() * 3 + 3;

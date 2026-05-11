@@ -74,7 +74,7 @@ namespace remoting_windows
 
    bool WinDxgiOutput::isAttachedtoDesktop() { return m_description.AttachedToDesktop != false; }
 
-   ::int_rectangle WinDxgiOutput::getDesktopCoordinates() { return m_description.DesktopCoordinates; }
+   ::i32_rectangle WinDxgiOutput::getDesktopCoordinates() { return m_description.DesktopCoordinates; }
 
    void WinDxgiOutput::getDeviceName(::string &out)
    {

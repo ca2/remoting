@@ -50,7 +50,7 @@ namespace remoting
       return EncodingDefs::TIGHT;
    }
 
-   void TightEncoder::splitRectangle(const ::int_rectangle &  rectangle,
+   void TightEncoder::splitRectangle(const ::i32_rectangle &  rectangle,
                                      ::int_rectangle_array_base & rectanglea,
                                      const ::innate_subsystem::Framebuffer *serverFb,
                                      const EncodeOptions *options)
@@ -76,12 +76,12 @@ namespace remoting
          int y1 = minimum(y0 + maxHeight, rectangle.bottom);
          for (int x0 = rectangle.left; x0 < rectangle.right; x0 += maxWidth) {
             int x1 = minimum(x0 + maxWidth, rectangle.right);
-            rectanglea.add(::int_rectangle(x0, y0, x1, y1));
+            rectanglea.add(::i32_rectangle(x0, y0, x1, y1));
          }
       }
    }
 
-   void TightEncoder::sendRectangle(const ::int_rectangle &  rectangle,
+   void TightEncoder::sendRectangle(const ::i32_rectangle &  rectangle,
                                     const ::innate_subsystem::Framebuffer *serverFb,
                                     const EncodeOptions *options)
    {
@@ -110,7 +110,7 @@ namespace remoting
    // FIXME: Is it really necessary to pass both frame buffers in arguments?
    // FIXME: Make a special version for the case when PIXEL_T is unsigned char.
    template <class PIXEL_T>
-   void TightEncoder::sendAnyRect(const ::int_rectangle &  rectangle,
+   void TightEncoder::sendAnyRect(const ::i32_rectangle &  rectangle,
                                   const ::innate_subsystem::Framebuffer *serverFb,
                                   const ::innate_subsystem::Framebuffer *clientFb,
                                   const EncodeOptions *options)
@@ -149,7 +149,7 @@ namespace remoting
                  }
    }
 
-   void TightEncoder::sendSolidRect(const ::int_rectangle &  r, const ::innate_subsystem::Framebuffer *pframebuffer)
+   void TightEncoder::sendSolidRect(const ::i32_rectangle &  r, const ::innate_subsystem::Framebuffer *pframebuffer)
    {
       ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
       size_t pixelSize = pixelformat.bitsPerPixel / 8;
@@ -168,7 +168,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void TightEncoder::sendMonoRect(const ::int_rectangle &  rectangle,
+   void TightEncoder::sendMonoRect(const ::i32_rectangle &  rectangle,
                                    const ::innate_subsystem::Framebuffer *pframebuffer,
                                    const EncodeOptions *options)
    {
@@ -210,7 +210,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void TightEncoder::sendIndexedRect(const ::int_rectangle &  rectangle,
+   void TightEncoder::sendIndexedRect(const ::i32_rectangle &  rectangle,
                                       const ::innate_subsystem::Framebuffer *pframebuffer,
                                       const EncodeOptions *options)
    {
@@ -252,7 +252,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void TightEncoder::sendFullColorRect(const ::int_rectangle &  rectangle,
+   void TightEncoder::sendFullColorRect(const ::i32_rectangle &  rectangle,
                                         const ::innate_subsystem::Framebuffer *pframebuffer,
                                         const EncodeOptions *options)
    {
@@ -283,7 +283,7 @@ namespace remoting
                      zlibStreamId, zlibLevel);
    }
 
-   void TightEncoder::sendJpegRect(const ::int_rectangle &  rectangle,
+   void TightEncoder::sendJpegRect(const ::i32_rectangle &  rectangle,
                                    const ::innate_subsystem::Framebuffer *serverFb,
                                    const EncodeOptions *options)
    {
@@ -348,7 +348,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void TightEncoder::fillPalette(const ::int_rectangle &  r, const ::innate_subsystem::Framebuffer *pframebuffer, int maxColors)
+   void TightEncoder::fillPalette(const ::i32_rectangle &  r, const ::innate_subsystem::Framebuffer *pframebuffer, int maxColors)
    {
       // Clear the palette.
       m_pal.reset();
@@ -382,7 +382,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void TightEncoder::copyPixels(const ::int_rectangle &  rectangle, const ::innate_subsystem::Framebuffer *pframebuffer,
+   void TightEncoder::copyPixels(const ::i32_rectangle &  rectangle, const ::innate_subsystem::Framebuffer *pframebuffer,
                                  unsigned char *dst)
    {
       const int rectWidth = rectangle.width();
@@ -400,7 +400,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void TightEncoder::encodeMonoRect(const ::int_rectangle &  rectangle, const ::innate_subsystem::Framebuffer *pframebuffer,
+   void TightEncoder::encodeMonoRect(const ::i32_rectangle &  rectangle, const ::innate_subsystem::Framebuffer *pframebuffer,
                                      DataOutputStream *out)
    {
       const PIXEL_T *src = (const PIXEL_T *)pframebuffer->getBufferPtr(rectangle.left, rectangle.top);
@@ -449,7 +449,7 @@ namespace remoting
    }
 
    template <class PIXEL_T>
-   void TightEncoder::encodeIndexedRect(const ::int_rectangle &  rectangle, const ::innate_subsystem::Framebuffer *pframebuffer,
+   void TightEncoder::encodeIndexedRect(const ::i32_rectangle &  rectangle, const ::innate_subsystem::Framebuffer *pframebuffer,
                                         DataOutputStream *out)
    {
       const PIXEL_T *src = (const PIXEL_T *)pframebuffer->getBufferPtr(rectangle.left, rectangle.top);

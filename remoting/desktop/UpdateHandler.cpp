@@ -39,7 +39,7 @@ namespace remoting
    }
 
    bool UpdateHandler::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & pregion,
-                                                 const ::int_rectangle &rectangleViewport)
+                                                 const ::i32_rectangle &rectangleViewport)
    {
       critical_section_lock al(&m_criticalsectionFramebuffer);
       return updateExternalFramebuffer(pframebuffer, m_pframebufferBackup, pregion, rectangleViewport);
@@ -47,13 +47,13 @@ namespace remoting
 
    bool UpdateHandler::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebufferTarget,
                                                  ::innate_subsystem::Framebuffer *pframebufferSource, const Region & region,
-                                                 const ::int_rectangle &rectangleViewport)
+                                                 const ::i32_rectangle &rectangleViewport)
    {
       ::innate_subsystem::PixelFormat pixelformatTarget = pframebufferTarget->getPixelFormat();
       ::innate_subsystem::PixelFormat pixelformatSource = pframebufferSource->getPixelFormat();
-      ::int_size sizeTargetFramebuffer = pframebufferTarget->getDimension();
-      ::int_rectangle rectangleSourceFramebuffer = pframebufferSource->getDimension();
-      ::int_rectangle rectangleResultViewport = rectangleSourceFramebuffer.intersection(rectangleViewport);
+      ::i32_size sizeTargetFramebuffer = pframebufferTarget->getDimension();
+      ::i32_rectangle rectangleSourceFramebuffer = pframebufferSource->getDimension();
+      ::i32_rectangle rectangleResultViewport = rectangleSourceFramebuffer.intersection(rectangleViewport);
 
       if (pixelformatTarget != pixelformatSource || sizeTargetFramebuffer != rectangleResultViewport.size() ||
           rectangleResultViewport!= rectangleViewport)

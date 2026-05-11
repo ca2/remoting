@@ -165,9 +165,9 @@ namespace remoting
 
       void setClientState(ClientState newState);
 
-      ::int_rectangle getViewport(const ::int_size & sizeFramebuffer);
-      virtual void onGetViewPort(::int_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp);
-      void getViewPortInfo(const ::int_size & sizeFramebuffer, ::int_rectangle &rectangleResult,
+      ::i32_rectangle getViewport(const ::i32_size & sizeFramebuffer);
+      virtual void onGetViewPort(::i32_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp);
+      void getViewPortInfo(const ::i32_size & sizeFramebuffer, ::i32_rectangle &rectangleResult,
                            bool *shareApp, ::remoting::Region & regionShareApp);
 
    };

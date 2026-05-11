@@ -42,7 +42,7 @@ namespace remoting
       return true;
    }
 
-   void ScreenGrabber::setWorkRect(::int_rectangle &rectangleWork)
+   void ScreenGrabber::setWorkRect(::i32_rectangle &rectangleWork)
    {
       m_pointFramebufferOffset = rectangleWork.top_left();
       //m_pointFramebufferOffset.y = rectangleWork->top;

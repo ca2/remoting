@@ -66,7 +66,7 @@ namespace remoting
       }
    }
 
-   void DesktopServerProto::checkRectangle(const ::int_rectangle & rectangle)
+   void DesktopServerProto::checkRectangle(const ::i32_rectangle & rectangle)
    {
       ::string errMess;
       if (abs(rectangle.left) > 32000 || abs(rectangle.top) > 32000 || abs(rectangle.right) > 32000 || abs(rectangle.bottom) > 32000 ||
@@ -77,7 +77,7 @@ namespace remoting
       }
    }
 
-   void DesktopServerProto::checkDimension(const ::int_size &size)
+   void DesktopServerProto::checkDimension(const ::i32_size &size)
    {
       ::string errMess;
       if (abs(size.cx) > 64000 || abs(size.cy) > 64000)
@@ -112,38 +112,38 @@ namespace remoting
       pblockinggate->writeUInt16(pixelformat.blueShift);
    }
 
-   ::int_size DesktopServerProto::readDimension(BlockingGate *pblockinggate)
+   ::i32_size DesktopServerProto::readDimension(BlockingGate *pblockinggate)
    {
-      ::int_size size;
+      ::i32_size size;
       size.cx = pblockinggate->readInt32();
       size.cy = pblockinggate->readInt32();
       checkDimension(size);
       return size;
    }
 
-   void DesktopServerProto::sendDimension(const ::int_size &size, BlockingGate *pblockinggate)
+   void DesktopServerProto::sendDimension(const ::i32_size &size, BlockingGate *pblockinggate)
    {
       pblockinggate->writeInt32(size.cx);
       pblockinggate->writeInt32(size.cy);
    }
 
-   ::int_point DesktopServerProto::readPoint(BlockingGate *pblockinggate)
+   ::i32_point DesktopServerProto::readPoint(BlockingGate *pblockinggate)
    {
-      ::int_point point;
+      ::i32_point point;
       point.x = pblockinggate->readInt32();
       point.y = pblockinggate->readInt32();
       return point;
    }
 
-   void DesktopServerProto::sendPoint(const ::int_point &point, BlockingGate *pblockinggate)
+   void DesktopServerProto::sendPoint(const ::i32_point &point, BlockingGate *pblockinggate)
    {
       pblockinggate->writeInt32(point.x);
       pblockinggate->writeInt32(point.y);
    }
 
-   ::int_rectangle DesktopServerProto::readRect(BlockingGate *pblockinggate)
+   ::i32_rectangle DesktopServerProto::readRect(BlockingGate *pblockinggate)
    {
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       rectangle.left = pblockinggate->readInt32();
       rectangle.top = pblockinggate->readInt32();
       rectangle.set_width(pblockinggate->readInt32());
@@ -153,7 +153,7 @@ namespace remoting
       return rectangle;
    }
 
-   void DesktopServerProto::sendRect(const ::int_rectangle & rectangle, BlockingGate *pblockinggate)
+   void DesktopServerProto::sendRect(const ::i32_rectangle & rectangle, BlockingGate *pblockinggate)
    {
       pblockinggate->writeInt32(rectangle.left);
       pblockinggate->writeInt32(rectangle.top);
@@ -184,7 +184,7 @@ namespace remoting
       ::u32 rectCount = pblockinggate->readUInt32();
       for (::u32 i = 0; i < rectCount; i++)
       {
-         ::int_rectangle r = readRect(pblockinggate);
+         ::i32_rectangle r = readRect(pblockinggate);
          if (r.is_ok())
          {
             region.addRect(r);
@@ -193,7 +193,7 @@ namespace remoting
    }
 
    void DesktopServerProto::sendFramebuffer(const ::innate_subsystem::Framebuffer *pframebufferSource,
-                                            const ::int_rectangle &rectangleSource, BlockingGate *pblockinggate)
+                                            const ::i32_rectangle &rectangleSource, BlockingGate *pblockinggate)
    {
       // FIXME: Additional ::innate_subsystem::Framebuffer will be used temporarily.
       // This is easy way to send all pixels.
@@ -206,7 +206,7 @@ namespace remoting
       pblockinggate->write(pframebuffer->getBuffer(), pframebuffer->getBufferSize());
    }
 
-   void DesktopServerProto::readFramebuffer(::innate_subsystem::Framebuffer *pframebufferTarget, const ::int_rectangle &rectangleTarget,
+   void DesktopServerProto::readFramebuffer(::innate_subsystem::Framebuffer *pframebufferTarget, const ::i32_rectangle &rectangleTarget,
                                             BlockingGate *pblockinggate)
    {
       // FIXME: ::innate_subsystem::Framebuffer will be used temporarily.
@@ -229,7 +229,7 @@ namespace remoting
       newClipboard = pblockinggate->readUtf8();
    }
 
-   void DesktopServerProto::sendNewPointerPos(const ::int_point pointNewPosition, unsigned char keyFlag, BlockingGate *pblockinggate)
+   void DesktopServerProto::sendNewPointerPos(const ::i32_point pointNewPosition, unsigned char keyFlag, BlockingGate *pblockinggate)
    {
       // Send pointer pointPosition
       pblockinggate->writeUInt16(pointNewPosition.x);
@@ -238,7 +238,7 @@ namespace remoting
       pblockinggate->writeUInt8(keyFlag);
    }
 
-   void DesktopServerProto::readNewPointerPos(::int_point *pointNewPosition, unsigned char *keyFlag, BlockingGate *pblockinggate)
+   void DesktopServerProto::readNewPointerPos(::i32_point *pointNewPosition, unsigned char *keyFlag, BlockingGate *pblockinggate)
    {
       // Read pointer pointPosition
       pointNewPosition->x = pblockinggate->readUInt16();

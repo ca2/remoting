@@ -26,18 +26,23 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/platform/Exception.h"
 #include "remoting/remoting/node_config/Configurator.h"
+#include "acme/operating_system/shared_memory.h"
+#include "subsystem/node/File.h"
+#include "subsystem/node/OperatingSystem.h"
+#include "subsystem/platform/subsystem.h"
+#include "subsystem/node/AnonymousPipeFactory.h"
+#include "subsystem/node/CurrentConsoleProcess.h"
+#ifdef WINDOWS
 #include "subsystem_windows/node/CurrentConsoleProcess.h"
 #include "subsystem_windows/node/AnonymousPipeFactory.h"
 #include "subsystem_windows/node/EmulatedAnonymousPipeFactory.h"
-#include "subsystem_windows/node/SharedMemory.h"
+//#include "subsystem_windows/node/SharedMemory.h"
 #include "subsystem_windows/node/WTS.h"
 #include "subsystem_windows/platform/subsystem.h"
-#include "subsystem/node/File.h"
-#include "subsystem/node/OperatingSystem.h"
 #include "subsystem_windows/node/WinStaLibrary.h"
 #include "subsystem_windows/node/WinHandles.h"
 #include "subsystem_windows/node/SharedMemory.h"
-#include "subsystem/platform/subsystem.h"
+#endif
 //#include aaa_<time.h>
 
 namespace remoting
@@ -130,8 +135,9 @@ namespace remoting
             {
                shMemName+=(char)('a' + rand() % ('z' - 'a'));
             }
-            ::subsystem_windows::SharedMemory sharedMemory(shMemName, 72);
-            ::u64 *mem = (::u64 *)sharedMemory.getMemPointer();
+            ::shared_memory sharedmemory;
+            sharedmemory.Create(shMemName, 72);
+            ::u64 *mem = (::u64 *)sharedmemory.Data();
 
             // Sets memory ready flag to false.
             mem[0] = 0;
@@ -198,7 +204,7 @@ namespace remoting
             if (otherSidePipeChanFrom)
                delete otherSidePipeChanFrom;
             m_plogwriter->error("DesktopServerWatcher has failed with error: {}", e.get_message());
-            Sleep(1000);
+            preempt(1_s);
          }
       }
    }
@@ -241,7 +247,7 @@ namespace remoting
                throw;
             }
          }
-         Sleep(3000);
+         preempt(3_s);
       } // for
    }
 

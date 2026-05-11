@@ -43,7 +43,7 @@ namespace remoting_client
 
    void ZrleDecoder::decode(::remoting::RfbInputGate *pinput,
                             ::innate_subsystem::Framebuffer *pframebuffer,
-                            const ::int_rectangle &  rectangleTarget)
+                            const ::i32_rectangle &  rectangleTarget)
    {
       size_t maxUnpackedSize = getMaxSizeOfRectangle(rectangleTarget);
       readAndInflate(pinput, maxUnpackedSize);
@@ -92,7 +92,7 @@ namespace remoting_client
 
       for (int y = rectangleTarget.top; y < rectangleTarget.bottom; y += TILE_SIZE) {
          for (int x = rectangleTarget.left; x < rectangleTarget.right; x += TILE_SIZE) {
-            ::int_rectangle tileRect(x, y,
+            ::i32_rectangle tileRect(x, y,
                           ::minimum(x + TILE_SIZE, rectangleTarget.right),
                           ::minimum(y + TILE_SIZE, rectangleTarget.bottom));
 
@@ -101,7 +101,7 @@ namespace remoting_client
             //        or in other decoders. Also, placing this check in the tile loop is not necessary,
             //        it was enough to check once in the beginning of the function. I do not change that
             //        just to make sure I do not break anything. (-- const)
-            if (::int_rectangle(pframebuffer->getDimension()).intersection(tileRect) != tileRect) {
+            if (::i32_rectangle(pframebuffer->getDimension()).intersection(tileRect) != tileRect) {
                throw ::subsystem::Exception("Incorrect size of ZRLE tile.");
             }
             size_t tileLength = tileRect.area();
@@ -156,7 +156,7 @@ namespace remoting_client
       m_inflater.inflate();
    }
 
-   size_t ZrleDecoder::getMaxSizeOfRectangle(const ::int_rectangle &  rectangleTarget)
+   size_t ZrleDecoder::getMaxSizeOfRectangle(const ::i32_rectangle &  rectangleTarget)
    {
       size_t widthCount = (rectangleTarget.width() + TILE_SIZE - 1) / TILE_SIZE;
       size_t heightCount = (rectangleTarget.height() + TILE_SIZE - 1) / TILE_SIZE;
@@ -194,7 +194,7 @@ namespace remoting_client
 
    void ZrleDecoder::readRawTile(::DataInputStream * pinput,
                                  ::array_base<char> &pixels,
-                                 const ::int_rectangle &  tileRect)
+                                 const ::i32_rectangle &  tileRect)
    {
       size_t tileBytesLength = tileRect.area() * m_bytesPerPixel;
       pinput->readFully(pixels.data(), tileBytesLength);
@@ -202,7 +202,7 @@ namespace remoting_client
 
    void ZrleDecoder::readSolidTile(::DataInputStream * pinput,
                                    ::array_base<char> &pixels,
-                                   const ::int_rectangle &  tileRect)
+                                   const ::i32_rectangle &  tileRect)
    {
       size_t tileLength = tileRect.area();
       char solid[4] = {0, 0, 0, 0};
@@ -219,7 +219,7 @@ namespace remoting_client
 
    void ZrleDecoder::readPackedPaletteTile(::DataInputStream * pinput,
                                            ::array_base<char> &pixels,
-                                           const ::int_rectangle &  tileRect,
+                                           const ::i32_rectangle &  tileRect,
                                            const int type)
    {
       int width = tileRect.width();
@@ -273,7 +273,7 @@ namespace remoting_client
 
    void ZrleDecoder::readPlainRleTile(::DataInputStream * pinput,
                                       ::array_base<char> &pixels,
-                                      const ::int_rectangle &  tileRect)
+                                      const ::i32_rectangle &  tileRect)
    {
       size_t tileLength = tileRect.area();
       for (size_t indexByte = 0; indexByte < tileLength * m_bytesPerPixel;) {
@@ -294,7 +294,7 @@ namespace remoting_client
 
    void ZrleDecoder::readPaletteRleTile(::DataInputStream * pinput,
                                         ::array_base<char> &pixels,
-                                        const ::int_rectangle &  tileRect,
+                                        const ::i32_rectangle &  tileRect,
                                         const int type)
    {
       size_t tileLength = tileRect.area();

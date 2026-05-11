@@ -93,7 +93,7 @@ namespace remoting_client
       if(output == 0)
          return;
 
-      ::int_rectangle updateRect;
+      ::i32_rectangle updateRect;
       {
          AutoLock al(m_criticalsectionFramebuffer);
          updateRect = m_pframebuffer->getDimension();

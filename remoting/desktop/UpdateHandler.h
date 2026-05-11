@@ -87,20 +87,20 @@ namespace remoting
       const ::remoting::CursorShape *getCursorShape() const { return &m_cursorshape; }
       // This function for asynchronous access to frame buffer properties
       // (dimension and pixel format)
-      void getFramebufferProp(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat)
+      void getFramebufferProp(::i32_size & size, ::innate_subsystem::PixelFormat & pixelformat)
       {
          critical_section_lock al(&m_criticalsectionFramebuffer);
          size = m_pframebufferBackup->getDimension();
          pixelformat = m_pframebufferBackup->getPixelFormat();
       }
 
-      ::int_size getFramebufferDimension()
+      ::i32_size getFramebufferDimension()
       {
          critical_section_lock al(&m_criticalsectionFramebuffer);
          return m_pframebufferBackup->getDimension();
       }
 
-      ::innate_subsystem::PixelFormat getFramebufferPixelFormat(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat)
+      ::innate_subsystem::PixelFormat getFramebufferPixelFormat(::i32_size & size, ::innate_subsystem::PixelFormat & pixelformat)
       {
          critical_section_lock al(&m_criticalsectionFramebuffer);
          return m_pframebufferBackup->getPixelFormat();
@@ -109,7 +109,7 @@ namespace remoting
       void initFramebuffer(const ::innate_subsystem::Framebuffer *newFb);
 
       virtual bool updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const ::remoting::Region & region,
-                                             const ::int_rectangle &rectangleViewport);
+                                             const ::i32_rectangle &rectangleViewport);
 
       // FIXME: It's no good idea to place this function to here.
       // Because it uses only for the UpdateHandlerClient class.
@@ -118,7 +118,7 @@ namespace remoting
    protected:
       virtual bool updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebufferTarget,
                                              ::innate_subsystem::Framebuffer *pframebufferSource, const ::remoting::Region & region,
-                                             const ::int_rectangle &rectangleViewport);
+                                             const ::i32_rectangle &rectangleViewport);
 
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferBackup;
       lockable_critical_section m_criticalsectionFramebuffer;

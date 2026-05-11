@@ -41,7 +41,7 @@ namespace remoting_client
 
    void HexTileDecoder::decode(::remoting::RfbInputGate *pinput,
                                ::innate_subsystem::Framebuffer *pframebuffer,
-                               const ::int_rectangle &  rectangleTarget)
+                               const ::i32_rectangle &  rectangleTarget)
    {
       // shorcut
       const int bytesPerPixel = pframebuffer->getBytesPerPixel();
@@ -53,12 +53,12 @@ namespace remoting_client
 
       for (int y = rectangleTarget.top; y < rectangleTarget.bottom; y += TILE_SIZE) {
          for (int x = rectangleTarget.left; x < rectangleTarget.right; x += TILE_SIZE) {
-            ::int_rectangle tileRect(x,
+            ::i32_rectangle tileRect(x,
                           y,
                           ::minimum(x + TILE_SIZE, rectangleTarget.right),
                           ::minimum(y + TILE_SIZE, rectangleTarget.bottom));
 
-            if (::int_rectangle(pframebuffer->getDimension()).intersection(tileRect) != tileRect)
+            if (::i32_rectangle(pframebuffer->getDimension()).intersection(tileRect) != tileRect)
                throw ::subsystem::Exception("Error in protocol: incorrect size of tile in hextile-decoder");
 
             unsigned char flags = pinput->readUInt8();
@@ -93,7 +93,7 @@ namespace remoting_client
                      int y = xy & 0xF;
                      int w = ((wh >> 4) & 0xF) + 1;
                      int h = (wh & 0xF) + 1;
-                     ::int_rectangle subRect(x, y, x + w, y + h);
+                     ::i32_rectangle subRect(x, y, x + w, y + h);
 
                      subRect.offset(tileRect.left, tileRect.top);
                      pframebuffer->fillRect(subRect, foreground);

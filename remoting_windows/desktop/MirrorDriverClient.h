@@ -53,7 +53,7 @@ namespace remoting_windows
          virtual ~MirrorDriverClient();
 
       ::innate_subsystem::PixelFormat getPixelFormat() const;
-      ::int_size getDimension() const;
+      ::i32_size getDimension() const;
 
       void *getBuffer();
       //CHANGES_BUF *getChangesBuf() const;
@@ -118,8 +118,8 @@ namespace remoting_windows
       ::subsystem_windows::MessageWindow m_messagewindowPropertyChangeListener;
 
       ::innate_subsystem::PixelFormat m_pixelformat;
-      ::int_size m_size;
-      ::int_point m_pointTopLeftCorner;
+      ::i32_size m_size;
+      ::i32_point m_pointTopLeftCorner;
       ::subsystem::Screen m_screen;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

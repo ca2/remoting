@@ -106,7 +106,7 @@ namespace remoting
       // guaranteed that the state of m_ppixelconverter will not be changed between
       // splitRectangle() and sendRectangle() calls. splitRectangles() may change
       // the state of PixelConverter that's why it cannot be declared const.
-      virtual void splitRectangle(const ::int_rectangle & rectangle, ::int_rectangle_array_base & rectanglea,
+      virtual void splitRectangle(const ::i32_rectangle & rectangle, ::int_rectangle_array_base & rectanglea,
                                   const ::innate_subsystem::Framebuffer *serverFb, const EncodeOptions *options);
 
       // Encode and send the rectangle. The `serverFb' argument points to a frame
@@ -114,7 +114,7 @@ namespace remoting
       // server. To get relevant pixels in the destination format (client format),
       // encoders must convert the data from *serverFb explicitly, e.g. by calling
       // m_ppixelconverter->convert().
-      virtual void sendRectangle(const ::int_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,
+      virtual void sendRectangle(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,
                                  const EncodeOptions *options);
 
    };

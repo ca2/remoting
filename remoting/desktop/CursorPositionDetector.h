@@ -47,7 +47,7 @@ namespace remoting
       virtual void initialize_cursor_position_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
 
       // Returns current pointPosition of a windows cursor.
-      ::int_point getCursorPos();
+      ::i32_point getCursorPos();
 
    //protected:
       virtual void execute();
@@ -56,7 +56,7 @@ namespace remoting
    //private:
       ::subsystem::Cursor m_cursor;
       ::happening m_sleepTimer;
-      ::int_point m_lastCursorPos;
+      ::i32_point m_lastCursorPos;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 

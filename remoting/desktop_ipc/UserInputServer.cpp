@@ -146,7 +146,7 @@ namespace remoting
 
    void UserInputServer::applyNewPointerPos(BlockingGate *pblockinggate)
    {
-      ::int_point newPointerPos;
+      ::i32_point newPointerPos;
       unsigned char keyFlags;
       readNewPointerPos(&newPointerPos, &keyFlags, pblockinggate);
       m_puserinput->setMouseEvent(newPointerPos, keyFlags);
@@ -177,14 +177,14 @@ namespace remoting
 
    void UserInputServer::ansDesktopCoords(BlockingGate *pblockinggate)
    {
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       m_puserinput->getPrimaryDisplayCoords(rectangle);
       sendRect(rectangle, pblockinggate);
    }
 
    void UserInputServer::ansWindowCoords(BlockingGate *pblockinggate)
    {
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       ::operating_system::window operatingsystemwindow = ::as_operating_system_window((::uptr)pblockinggate->readUInt64());
       try
       {
@@ -211,7 +211,7 @@ namespace remoting
    void UserInputServer::ansDisplayNumberCoords(BlockingGate *pblockinggate)
    {
       unsigned char dispNumber = pblockinggate->readUInt8();
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       m_puserinput->getDisplayNumberCoords(rectangle, dispNumber);
       sendRect(rectangle, pblockinggate);
    }
@@ -227,14 +227,14 @@ namespace remoting
       pblockinggate->writeUInt8((unsigned char)number);
       for (size_t i = 0; i < number; i++)
       {
-         ::int_rectangle rectangle = rectanglea[i];
+         ::i32_rectangle rectangle = rectanglea[i];
          sendRect(rectangle, pblockinggate);
       }
    }
 
    void UserInputServer::ansNormalizeRect(BlockingGate *pblockinggate)
    {
-      ::int_rectangle rectangle = readRect(pblockinggate);
+      ::i32_rectangle rectangle = readRect(pblockinggate);
       m_puserinput->getNormalizedRect(rectangle);
       sendRect(rectangle, pblockinggate);
    }

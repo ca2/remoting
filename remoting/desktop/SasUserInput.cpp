@@ -61,7 +61,7 @@ namespace remoting
 
    void SasUserInput::sendInit(BlockingGate *pblockinggate) { m_client->sendInit(pblockinggate); }
 
-   void SasUserInput::setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)
+   void SasUserInput::setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag)
    {
       m_client->setMouseEvent(pointNewPosition, keyFlag);
    }
@@ -108,18 +108,18 @@ namespace remoting
       m_client->getCurrentUserInfo(desktopName, userName);
    }
 
-   void SasUserInput::getPrimaryDisplayCoords(::int_rectangle & rectangle) { m_client->getPrimaryDisplayCoords(rectangle); }
+   void SasUserInput::getPrimaryDisplayCoords(::i32_rectangle & rectangle) { m_client->getPrimaryDisplayCoords(rectangle); }
 
    ::int_rectangle_array_base SasUserInput::getDisplaysCoords() { return m_client->getDisplaysCoords(); }
 
-   void SasUserInput::getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber)
+   void SasUserInput::getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber)
    {
       m_client->getDisplayNumberCoords(rectangle, dispNumber);
    }
 
-   void SasUserInput::getNormalizedRect(::int_rectangle & rectangle) { m_client->getNormalizedRect(rectangle); }
+   void SasUserInput::getNormalizedRect(::i32_rectangle & rectangle) { m_client->getNormalizedRect(rectangle); }
 
-   void SasUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle) { m_client->getWindowCoords(operatingsystemwindow, rectangle); }
+   void SasUserInput::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle) { m_client->getWindowCoords(operatingsystemwindow, rectangle); }
 
    ::operating_system::window SasUserInput::getWindowHandleByName(const ::scoped_string &windowName)
    {

@@ -236,7 +236,7 @@ namespace remoting_control_desktop
             cmdLineParser.getShareWindowName(shareWindowName);
             pcommand = new ShareWindowCommand(m_pcontrolproxy, shareWindowName);
          } else if (cmdLineParser.hasShareRect()) {
-            ::int_rectangle shareRect = cmdLineParser.getShareRect();
+            ::i32_rectangle shareRect = cmdLineParser.getShareRect();
             pcommand = new ShareRectCommand(m_pcontrolproxy, shareRect);
          } else if (cmdLineParser.hasShareFull()) {
             pcommand = new ShareFullCommand(m_pcontrolproxy);

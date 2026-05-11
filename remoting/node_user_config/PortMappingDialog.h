@@ -47,10 +47,10 @@ namespace remoting_node
       // Inherited from BaseDialog.
       //
 
-      virtual bool onInitDialog();
-      virtual bool onCommand(::u32 controlID, ::u32 notificationID) override;
-      virtual bool onNotify(::u32 controlID, ::lparam data) { return true; }
-      virtual bool onDestroy() { return true; }
+      bool onInitDialog() override;
+      bool onCommand(::u32 controlID, ::u32 notificationID) override;
+      bool onNotify(::u32 controlID, ::lparam data) { return true; }
+      bool onDestroy() override { return true; }
 
       //
       // Controls event handlers.

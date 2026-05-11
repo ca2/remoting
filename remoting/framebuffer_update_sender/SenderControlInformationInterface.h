@@ -32,7 +32,7 @@ namespace remoting
    virtual public ::particle
    {
    public:
-      virtual void onGetViewPort(::int_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp) = 0;
+      virtual void onGetViewPort(::i32_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp) = 0;
    };
 
 

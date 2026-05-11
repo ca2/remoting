@@ -95,13 +95,13 @@ namespace remoting_windows
 
    const ::remoting::CursorShape *Win32ScreenDriverBaseImpl::getCursorShape() { return m_pcursorshapegrabber->getCursorShape(); }
 
-   ::int_point Win32ScreenDriverBaseImpl::getCursorPosition()
+   ::i32_point Win32ScreenDriverBaseImpl::getCursorPosition()
    {
       critical_section_lock al(m_pcriticalsectionFramebuffer);
       return m_pcursorpositiondetector->getCursorPos();
    }
 
-   void Win32ScreenDriverBaseImpl::getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource)
+   void Win32ScreenDriverBaseImpl::getCopiedRegion(::i32_rectangle &rectangleCopy, ::i32_point & pointSource)
    {
       critical_section_lock al(m_pcriticalsectionFramebuffer);
       m_pcopyrectdetector->detectWindowMovements(rectangleCopy, pointSource);

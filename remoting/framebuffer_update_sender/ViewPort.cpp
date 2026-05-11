@@ -66,11 +66,11 @@ namespace remoting
       m_viewportstate = *newState;
    }
 
-   void Viewport::update(const ::int_size &sizeFramebuffer)
+   void Viewport::update(const ::i32_size &sizeFramebuffer)
    {
       critical_section_lock al(&m_stateMutex);
 
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       switch (m_viewportstate.m_mode)
       {
          case ViewPortState::APPLICATION:
@@ -117,7 +117,7 @@ namespace remoting
       }
       m_plogwriter->debug("View port coordinates: ({}, {} %dx{})", rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
       // Constrain and save
-      m_rectangle = rectangle.intersection(::int_rectangle(sizeFramebuffer));
+      m_rectangle = rectangle.intersection(::i32_rectangle(sizeFramebuffer));
       if (m_rectangle.width() < 0 || m_rectangle.height() < 0)
       {
          m_rectangle.clear();
@@ -127,7 +127,7 @@ namespace remoting
          rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
    }
 
-   ::int_rectangle Viewport::getViewport()
+   ::i32_rectangle Viewport::getViewport()
    {
       critical_section_lock al(&m_stateMutex);
       return m_rectangle;

@@ -71,7 +71,7 @@ namespace remoting_client
    void JpegDecompressor::decompress(::array_base<unsigned char> &buffer,
                                      size_t jpegBufLen,
                                      ::array_base<unsigned char> &pixels,
-                                     const ::int_rectangle &  rectangleTarget)
+                                     const ::i32_rectangle &  rectangleTarget)
    {
       if (rectangleTarget.is_empty())
          throw ::subsystem::Exception("invalid destination rectangle in jpeg-decompressor");

@@ -86,7 +86,7 @@ namespace remoting_client
        // It's size of work-area in windowed mode. It is necessary for restore size of window.
        // WINDOWPLACEMENT m_workArea;
        // It's size of optimal size of work-area in windowed mode.
-       //::int_rectangle m_rcNormal;
+       //::i32_rectangle m_rcNormal;
 
 
        // Flag is set after recv first scopedstrMessage WM_SIZING.
@@ -150,7 +150,7 @@ namespace remoting_client
         static const int TIMER_DESKTOP_STATE = 1;
         static const int TIMER_DESKTOP_STATE_DELAY = 50;
 
-        bool onMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam);
+        bool onMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam) override;
         //bool onEraseBackground(HDC hdc);
 
         bool onDisconnect();
@@ -164,7 +164,7 @@ namespace remoting_client
        bool onCreate(void *pCreateStruct) override;
         bool onCommand(::u32 controlID, ::u32 notificationID) override;
         //bool onNotify(int idCtrl, LPNMHDR pnmh);
-        bool onSysCommand(::wparam wParam, ::lparam lParam);
+        bool onSysCommand(::wparam wParam, ::lparam lParam) override;
         bool onClose();
         bool onDestroy();
         bool onFocus(::wparam wParam);
@@ -195,7 +195,7 @@ namespace remoting_client
         void onDisconnect(const ::scoped_string & scopedstrMessage) override;
         void onAuthError(const ::remoting_client::AuthException *exception) override;
         void onError(const ::subsystem::Exception *exception) override;
-        void onFramebufferUpdate(const ::innate_subsystem::Framebuffer *pframebuffer, const ::int_rectangle &  rectangle) override;
+        void onFramebufferUpdate(const ::innate_subsystem::Framebuffer *pframebuffer, const ::i32_rectangle &  rectangle) override;
         void onFramebufferPropChange(const ::innate_subsystem::Framebuffer *pframebuffer) override;
         void onCutText(const ::scoped_string & cutText) override;
 
@@ -207,11 +207,11 @@ namespace remoting_client
         // function return default rectangle of viewer window:
         // if size of remote screen is more local desktop, then return rectangle of desktop
         // else return rectangle of remote screen + border
-        bool onCalculateDefaultSize(::int_rectangle & rectangleDefaultSize) override;
+        bool onCalculateDefaultSize(::i32_rectangle & rectangleDefaultSize) override;
 
         void changeCursor(int type);
         void applySettings();
-        //::int_rectangle getFullScreenRect();
+        //::i32_rectangle getFullScreenRect();
 
        void onBeforeFullScreen(bool bRestore) override;
        void onAfterFullScreen(bool bRestore) override;
@@ -243,7 +243,7 @@ namespace remoting_client
 
        //bool on_keyboard_message()
 
-       virtual bool operating_system_hook_on_keyboard_message(::lresult & lresult, ::user::enum_message emessage, int iVkCode, ::lparam lparam);
+        bool operating_system_hook_on_keyboard_message(::lresult & lresult, ::user::enum_message emessage, int iVkCode, ::lparam lparam) override;
 
 
 

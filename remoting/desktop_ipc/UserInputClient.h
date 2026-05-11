@@ -50,14 +50,14 @@ namespace remoting
 
       virtual void sendInit(BlockingGate *pblockinggate)  override;
       virtual void setNewClipboard(const ::scoped_string &newClipboard)  override;
-      virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)  override;
+      virtual void setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag)  override;
       virtual void setKeyboardEvent(::u32 keySym, bool down)  override;
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName)  override;
-      virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle)  override;
-      virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber)  override;
+      virtual void getPrimaryDisplayCoords(::i32_rectangle & rectangle)  override;
+      virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber)  override;
       virtual ::int_rectangle_array_base getDisplaysCoords()  override;
-      virtual void getNormalizedRect(::int_rectangle & rectangle)  override;
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)  override;
+      virtual void getNormalizedRect(::i32_rectangle & rectangle)  override;
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)  override;
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName)  override;
       virtual void getApplicationRegion(const ::process_identifier & processidentifier, Region & region)  override;
       virtual bool isApplicationInFocus(const ::process_identifier & processidentifier)  override;

@@ -40,7 +40,7 @@ namespace remoting
    //
    //    // m_pframebufferBackup building
    //    ::innate_subsystem::PixelFormat pixelformatTerm;
-   //    ::int_size sizeTerm;
+   //    ::i32_size sizeTerm;
    //    getScreenProperties(&pixelformatTerm, &sizeTerm);
    //
    //    m_pframebufferBackup->setProperties(&sizeTerm, &pixelformatTerm);
@@ -80,7 +80,7 @@ namespace remoting
 
          // m_pframebufferBackup building
          ::innate_subsystem::PixelFormat pixelformatTerm;
-         ::int_size sizeTerm;
+         ::i32_size sizeTerm;
          getScreenProperties(pixelformatTerm, sizeTerm);
 
          m_pframebufferBackup->setProperties(sizeTerm, pixelformatTerm);
@@ -130,11 +130,11 @@ namespace remoting
             m_plogwriter->information("UpdateHandlerClient: screen size changed");
             // Store old screen properties
             ::innate_subsystem::PixelFormat pixelformatOld = m_pframebufferBackup->getPixelFormat();
-            ::int_size oldDim = m_pframebufferBackup->getDimension();
+            ::i32_size oldDim = m_pframebufferBackup->getDimension();
             // Get new screen properties
             ::innate_subsystem::PixelFormat pixelformatNew;
             readPixelFormat(pixelformatNew, m_pcontrolgate);
-            ::int_size sizeNew = readDimension(m_pcontrolgate);
+            ::i32_size sizeNew = readDimension(m_pcontrolgate);
             ;
             if (pixelformatNew!= pixelformatOld || sizeNew!=oldDim)
             {
@@ -148,7 +148,7 @@ namespace remoting
                m_pframebufferBackup->setProperties(sizeNew, pixelformatNew);
             }
             // Equalizing this frame buffer by other side frame buffer.
-            ::int_rectangle rectangleFramebuffer = m_pframebufferBackup->getDimension();
+            ::i32_rectangle rectangleFramebuffer = m_pframebufferBackup->getDimension();
             readFramebuffer(m_pframebufferBackup,rectangleFramebuffer, m_pcontrolgate);
          }
 
@@ -160,7 +160,7 @@ namespace remoting
          m_plogwriter->information("UpdateHandlerClient: count changed rectangles = %u", countChangedRect);
          for (::u32 i = 0; i < countChangedRect; i++)
          {
-            ::int_rectangle r = readRect(m_pcontrolgate);
+            ::i32_rectangle r = readRect(m_pcontrolgate);
             updatecontainer.m_regionChanged.addRect(r);
             readFramebuffer(m_pframebufferBackup, r, m_pcontrolgate);
          }
@@ -171,7 +171,7 @@ namespace remoting
          {
             m_plogwriter->information("UpdateHandlerClient: has \"CopyRect\"");
             updatecontainer.m_pointCopySource = readPoint(m_pcontrolgate);
-            ::int_rectangle r = readRect(m_pcontrolgate);
+            ::i32_rectangle r = readRect(m_pcontrolgate);
             updatecontainer.m_regionCopied.addRect(r);
             readFramebuffer(m_pframebufferBackup, r, m_pcontrolgate);
          }
@@ -190,8 +190,8 @@ namespace remoting
          {
             m_plogwriter->information("UpdateHandlerClient: cursor shape changed");
             ::innate_subsystem::PixelFormat pixelformatNew = m_pframebufferBackup->getPixelFormat();
-            ::int_size sizeNew = readDimension(m_pcontrolgate);
-            ::int_point newHotSpot = readPoint(m_pcontrolgate);
+            ::i32_size sizeNew = readDimension(m_pcontrolgate);
+            ::i32_point newHotSpot = readPoint(m_pcontrolgate);
 
             m_cursorshape.setProperties(sizeNew, pixelformatNew);
             m_cursorshape.setHotSpot(newHotSpot.x, newHotSpot.y);
@@ -244,7 +244,7 @@ namespace remoting
 
    bool UpdateHandlerClient::checkForUpdates(Region & region) { return false; }
 
-   void UpdateHandlerClient::getScreenProperties(::innate_subsystem::PixelFormat & pixelformat, ::int_size & size)
+   void UpdateHandlerClient::getScreenProperties(::innate_subsystem::PixelFormat & pixelformat, ::i32_size & size)
    {
       critical_section_lock al(m_pcontrolgate);
 
@@ -259,7 +259,7 @@ namespace remoting
       pblockinggate->writeUInt8(FRAME_BUFFER_INIT);
 
       sendPixelFormat(m_pframebufferBackup->getPixelFormat(), pblockinggate);
-      ::int_size size = m_pframebufferBackup->getDimension();
+      ::i32_size size = m_pframebufferBackup->getDimension();
       sendDimension(size, pblockinggate);
       sendFramebuffer(m_pframebufferBackup, size, pblockinggate);
    }

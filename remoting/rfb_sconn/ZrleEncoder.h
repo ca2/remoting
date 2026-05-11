@@ -41,32 +41,32 @@ namespace remoting
       // Follow methods were inherited from the Encoder.
       virtual int getCode() const;
 
-      virtual void splitRectangle(const ::int_rectangle & rectangle, ::int_rectangle_array_base & rectanglea,
+      virtual void splitRectangle(const ::i32_rectangle & rectangle, ::int_rectangle_array_base & rectanglea,
                                   const ::innate_subsystem::Framebuffer *serverFb, const EncodeOptions *options);
 
-      virtual void sendRectangle(const ::int_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,
+      virtual void sendRectangle(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,
                                  const EncodeOptions *options);
 
    private:
       // Determine the class of rectangle and call necessary function for this type.
       template<class PIXEL_T>
-      void sendRect(const ::int_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,
+      void sendRect(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,
                     const ::innate_subsystem::Framebuffer *clientFb, const EncodeOptions *options);
 
       // Send raw tile.
       template<class PIXEL_T>
-      void writeRawTile(const ::int_rectangle &tileRect, const ::innate_subsystem::Framebuffer *pframebuffer);
+      void writeRawTile(const ::i32_rectangle &tileRect, const ::innate_subsystem::Framebuffer *pframebuffer);
 
       // Send a solid-color tile.
       void writeSolidTile();
 
       // Send packed palette tile.
       template<class PIXEL_T>
-      void writePackedPaletteTile(const ::int_rectangle &tileRect, const ::innate_subsystem::Framebuffer *pframebuffer);
+      void writePackedPaletteTile(const ::i32_rectangle &tileRect, const ::innate_subsystem::Framebuffer *pframebuffer);
 
       // Send palette RLE tile.
       template<class PIXEL_T>
-      void writePaletteRleTile(const ::int_rectangle &tileRect, const ::innate_subsystem::Framebuffer *pframebuffer);
+      void writePaletteRleTile(const ::i32_rectangle &tileRect, const ::innate_subsystem::Framebuffer *pframebuffer);
 
       // Write data from runLength (used in plain Rle encoding).
       void pushRunLengthRle(int runLength);
@@ -80,14 +80,14 @@ namespace remoting
 
       // Fill palette (m_pal), create m_plainRleTile ::array_base and calculate size of data in palette RLE tile.
       template<class PIXEL_T>
-      void fillPalette(const ::int_rectangle &tileRect, const ::innate_subsystem::Framebuffer *pframebuffer);
+      void fillPalette(const ::i32_rectangle &tileRect, const ::innate_subsystem::Framebuffer *pframebuffer);
 
       // Copy ordinary PIXELs.
       template<class PIXEL_T>
-      void copyPixels(const ::int_rectangle & rectangle, const ::innate_subsystem::Framebuffer *pframebuffer, unsigned char *dst);
+      void copyPixels(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *pframebuffer, unsigned char *dst);
 
       // Copy CPIXELs.
-      void copyCPixels(const ::int_rectangle & rectangle, const ::innate_subsystem::Framebuffer *pframebuffer, unsigned char *dst);
+      void copyCPixels(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *pframebuffer, unsigned char *dst);
 
       // Vector for storing all tiles for the future zlib compression.
       ::array_base<unsigned char> m_rgbData;

@@ -32,7 +32,7 @@
 namespace remoting_client
 {
    void ZrleDecoder::drawTile(::innate_subsystem::Framebuffer* pframebuffer,
-       const ::int_rectangle& tileRect,
+       const ::i32_rectangle& tileRect,
        const ::array_base<char>* pixels)
    {
       int width = tileRect.width();

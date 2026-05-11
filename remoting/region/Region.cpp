@@ -33,8 +33,8 @@ namespace remoting
       miRegionInit(&m_reg, NullBox, 0);
    }
 
-   // FIXME: Make BoxRec and ::int_rectangle identical to get rid of conversions.
-   Region::Region(const ::int_rectangle & rectangle)
+   // FIXME: Make BoxRec and ::i32_rectangle identical to get rid of conversions.
+   Region::Region(const ::i32_rectangle & rectangle)
    {
       if (!rectangle.is_empty()) {
          BoxRec box;
@@ -94,7 +94,7 @@ namespace remoting
       return *this;
    }
 
-   void Region::addRect(const ::int_rectangle &  rectangle)
+   void Region::addRect(const ::i32_rectangle &  rectangle)
    {
       if (!rectangle.is_empty()) {
          Region temp(rectangle);
@@ -127,7 +127,7 @@ namespace remoting
       miIntersect(&m_reg, &m_reg, (RegionPtr)&other.m_reg);
    }
 
-   void Region::crop(const ::int_rectangle &  rectangle)
+   void Region::crop(const ::i32_rectangle &  rectangle)
    {
       Region temp(rectangle);
       intersect(temp);
@@ -156,7 +156,7 @@ namespace remoting
                              (RegionPtr)&other.m_reg) == true);
    }
 
-   // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
+   // FIXME: Optimize, make BoxRec and ::i32_rectangle identical to get rid of conversions.
    void Region::_getRects(::int_rectangle_array_base & rectanglea) const
    {
 
@@ -172,7 +172,7 @@ namespace remoting
 
    }
 
-   // FIXME: Optimize, make BoxRec and ::int_rectangle identical to get rid of conversions.
+   // FIXME: Optimize, make BoxRec and ::i32_rectangle identical to get rid of conversions.
    ::int_rectangle_array_base Region::getRects() const
    {
 
@@ -182,7 +182,7 @@ namespace remoting
       const BoxRec *boxPtr = REGION_RECTS(&m_reg);
       long numRects = REGION_NUM_RECTS(&m_reg);
       for (long i = 0; i < numRects; i++) {
-         ::int_rectangle rectangle(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
+         ::i32_rectangle rectangle(boxPtr[i].x1, boxPtr[i].y1, boxPtr[i].x2, boxPtr[i].y2);
          recta.add(rectangle);
       }
       return recta;
@@ -193,9 +193,9 @@ namespace remoting
       return REGION_NUM_RECTS(&m_reg);
    }
 
-   ::int_rectangle Region::getBounds() const
+   ::i32_rectangle Region::getBounds() const
    {
       const BoxRec *boxPtr = REGION_EXTENTS(&m_reg);
-      return ::int_rectangle(boxPtr->x1, boxPtr->y1, boxPtr->x2, boxPtr->y2);
+      return ::i32_rectangle(boxPtr->x1, boxPtr->y1, boxPtr->x2, boxPtr->y2);
    }
 } // namespace remoting

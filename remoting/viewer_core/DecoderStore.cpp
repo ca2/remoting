@@ -136,9 +136,9 @@ namespace remoting_client
    void DecoderStore::allowCopyRect(bool allow)
    {
       if (allow) {
-         m_plogwriter->debug("Decoder store: enable Copy ::int_rectangle");
+         m_plogwriter->debug("Decoder store: enable Copy ::i32_rectangle");
       } else {
-         m_plogwriter->debug("Decoder store: disable Copy ::int_rectangle");
+         m_plogwriter->debug("Decoder store: disable Copy ::i32_rectangle");
       }
       m_allowCopyRect = allow;
    }

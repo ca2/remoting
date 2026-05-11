@@ -73,7 +73,7 @@ namespace remoting_client
    }
 
    void CoreEventsAdapter::onFramebufferUpdate(const ::innate_subsystem::Framebuffer *pframebuffer,
-                                               const ::int_rectangle &  rectangle)
+                                               const ::i32_rectangle &  rectangle)
    {
    }
 

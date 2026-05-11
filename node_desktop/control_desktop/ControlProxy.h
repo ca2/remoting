@@ -132,7 +132,7 @@ namespace remoting_control_desktop
       void shareWindow(const ::scoped_string & shareWindowName);
 
       // Share only a rectangle.
-      void shareRect(const ::int_rectangle &  shareRect);
+      void shareRect(const ::i32_rectangle &  shareRect);
 
       // Share full desktop for all clients.
       void shareFull();

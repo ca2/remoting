@@ -72,17 +72,17 @@ namespace remoting_windows
 
    void MirrorScreenDriver::initFramebuffer()
    {
-      ::int_size size = m_pmirrordriverclient->getDimension();
+      ::i32_size size = m_pmirrordriverclient->getDimension();
       ::innate_subsystem::PixelFormat pixelformat = m_pmirrordriverclient->getPixelFormat();
 
       m_pframebuffer->setProperties(size, pixelformat);
    }
 
-   ::int_size MirrorScreenDriver::getScreenDimension() { return m_pframebuffer->getDimension(); }
+   ::i32_size MirrorScreenDriver::getScreenDimension() { return m_pframebuffer->getDimension(); }
 
    ::innate_subsystem::Framebuffer *MirrorScreenDriver::getScreenBuffer() { return m_pframebuffer; }
 
-   bool MirrorScreenDriver::grab(const ::int_rectangle & rectangle)
+   bool MirrorScreenDriver::grab(const ::i32_rectangle & rectangle)
    {
       critical_section_lock al(m_pcriticalsectionFramebuffer);
 
@@ -91,8 +91,8 @@ namespace remoting_windows
          throw ::subsystem::Exception("Mirror driver client didn't initilized.");
       }
 
-      ::int_rectangle rectangleFramebuffer = m_pframebuffer->getDimension();
-      ::int_rectangle croppedRect;
+      ::i32_rectangle rectangleFramebuffer = m_pframebuffer->getDimension();
+      ::i32_rectangle croppedRect;
       if (rectangle != 0)
       {
          croppedRect = rectangle.intersection(rectangleFramebuffer);
@@ -155,7 +155,7 @@ namespace remoting_windows
       m_pmirrordriverclient = 0;
       m_pmirrordriverclient = new MirrorDriverClient(m_plogwriter);
 
-      ::int_size sizeNew = m_pmirrordriverclient->getDimension();
+      ::i32_size sizeNew = m_pmirrordriverclient->getDimension();
       ::innate_subsystem::PixelFormat pixelformat = m_pmirrordriverclient->getPixelFormat();
       m_pframebuffer->setProperties(sizeNew, pixelformat);
       m_lastCounter = 0;
@@ -168,7 +168,7 @@ namespace remoting_windows
    void MirrorScreenDriver::execute()
    {
       ::remoting::Region m_regionChanged;
-      ::int_rectangle rectangleChanged;
+      ::i32_rectangle rectangleChanged;
       unsigned long currentCounter = 0;
 
       while (!isTerminating())

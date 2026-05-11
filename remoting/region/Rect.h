@@ -29,17 +29,17 @@
 //
 // namespace remoting
 // {
-//    class ::int_rectangle
+//    class ::i32_rectangle
 //    {
 //       public:
-//       ::int_rectangle(void) : left(0), top(0), right(0), bottom(0) {}
-//       //::int_rectangle(const ::int_rectangle &  rectangle) { setRect(rectangle); }
-//       ::int_rectangle(const ::int_rectangle & rectangle) { setRect(rectangle); }
-//       ::int_rectangle(int lt, int tp, int rt, int bm) { setRect(lt, tp, rt, bm); }
-//       ::int_rectangle(const ::int_size & size) { setRect(0, 0, width, height); }
-//       ::int_rectangle(const RECT *rectangle) {fromWindowsRect(rectangle);}
+//       ::i32_rectangle(void) : left(0), top(0), right(0), bottom(0) {}
+//       //::i32_rectangle(const ::i32_rectangle &  rectangle) { setRect(rectangle); }
+//       ::i32_rectangle(const ::i32_rectangle & rectangle) { setRect(rectangle); }
+//       ::i32_rectangle(int lt, int tp, int rt, int bm) { setRect(lt, tp, rt, bm); }
+//       ::i32_rectangle(const ::i32_size & size) { setRect(0, 0, width, height); }
+//       ::i32_rectangle(const RECT *rectangle) {fromWindowsRect(rectangle);}
 //
-//       virtual ~::int_rectangle(void) {}
+//       virtual ~::i32_rectangle(void) {}
 //
 //       int left;
 //       int top;
@@ -54,7 +54,7 @@
 //          bottom = bm;
 //       }
 //
-//       inline void setRect(const ::int_rectangle &  rectangle)
+//       inline void setRect(const ::i32_rectangle &  rectangle)
 //       {
 //          left    = rectangle.left;
 //          top     = rectangle.top;
@@ -62,7 +62,7 @@
 //          bottom  = rectangle.bottom;
 //       }
 //
-//       inline ::int_rectangle & operator=(const ::int_rectangle & rectangle)
+//       inline ::i32_rectangle & operator=(const ::i32_rectangle & rectangle)
 //       {
 //          setRect(rectangle);
 //          return *this;
@@ -86,8 +86,8 @@
 //          return true;
 //       }
 //
-//       // Return true this ::int_rectangle fully contain the inner ::int_rectangle, otherwise return false.
-//       inline bool isFullyContainRect(const ::int_rectangle &  inner) {
+//       // Return true this ::i32_rectangle fully contain the inner ::i32_rectangle, otherwise return false.
+//       inline bool isFullyContainRect(const ::i32_rectangle &  inner) {
 //          if (inner.left < left || inner.top < top ||
 //              inner.right > right || inner.bottom > bottom) {
 //             return false;
@@ -132,7 +132,7 @@
 //          bottom  += offsetY;
 //       }
 //
-//       inline bool isEqualTo(const ::int_rectangle &  rectangle)  const { return  rectangle.left == left &&
+//       inline bool isEqualTo(const ::i32_rectangle &  rectangle)  const { return  rectangle.left == left &&
 //                                                         rectangle.top == top &&
 //                                                         rectangle.right == right &&
 //                                                         rectangle.bottom == bottom; }
@@ -145,7 +145,7 @@
 //
 //       void rotateOn90InsideDimension(int dimHeight)
 //       {
-//          ::int_rectangle localCopy(this);
+//          ::i32_rectangle localCopy(this);
 //          set_width(localCopy.height());
 //          set_height(localCopy.width());
 //          int newLeft = dimHeight - localCopy.top - localCopy.height();
@@ -162,7 +162,7 @@
 //
 //       void rotateOn270InsideDimension(int dimWidth)
 //       {
-//          ::int_rectangle localCopy(this);
+//          ::i32_rectangle localCopy(this);
 //          set_width(localCopy.height());
 //          set_height(localCopy.width());
 //          int newLeft = localCopy.top;
@@ -182,8 +182,8 @@
 //
 //       inline void clear() { left = top = right = bottom = 0; }
 //
-//       ::int_rectangle intersection(const ::int_rectangle &  other) const {
-//          ::int_rectangle result;
+//       ::i32_rectangle intersection(const ::i32_rectangle &  other) const {
+//          ::i32_rectangle result;
 //          result.setRect((left > other.left) ? left : other.left,
 //                         (top > other.top) ? top : other.top,
 //                         (right < other.right) ? right : other.right,

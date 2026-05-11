@@ -25,7 +25,7 @@
 #pragma once
 
 
-////#include "remoting/remoting/region/::int_point.h"
+////#include "remoting/remoting/region/::i32_point.h"
 
 #include "RfbClientToServerMessage.h"
 
@@ -34,7 +34,7 @@ namespace remoting_client
    class CLASS_DECL_REMOTING RfbPointerEventClientMessage : public RfbClientToServerMessage
    {
    public:
-      RfbPointerEventClientMessage(const unsigned char buttonMask, const ::int_point &pointPosition);
+      RfbPointerEventClientMessage(const unsigned char buttonMask, const ::i32_point &pointPosition);
       ~RfbPointerEventClientMessage();
 
       void send(::remoting::RfbOutputGate *output);

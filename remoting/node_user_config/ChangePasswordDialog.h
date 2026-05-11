@@ -38,7 +38,7 @@ namespace remoting_node
    public:
       /**
       Creates new modal dialog for changing password.
-      @param parent - parent dialog, optional (can be null).
+      @param pwindowParent - parent dialog, optional (can be null).
       @param isNewPassword - flag determinates caption of dialog.
       */
       ChangePasswordDialog(::innate_subsystem::WindowInterface * pwindowParent, bool isNewPassword);
@@ -55,10 +55,10 @@ namespace remoting_node
       // BaseDialog overrided methods
       //
 
-      virtual bool onInitDialog();
+      bool onInitDialog() override;
       virtual bool onCommand(::u32 controlID, ::u32 notificationID) override;
       virtual bool onNotify(::u32 controlID, ::lparam data) { return true; }
-      virtual bool onDestroy() { return true; }
+      bool onDestroy() override { return true; }
 
       //
       // Controls event handlers

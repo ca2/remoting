@@ -52,7 +52,7 @@ namespace remoting
 
    void ViewPortState::setFullDesktop() { m_mode = FULL_DESKTOP; }
 
-   void ViewPortState::setArbitraryRect(const ::int_rectangle & rectangle)
+   void ViewPortState::setArbitraryRect(const ::i32_rectangle & rectangle)
    {
       m_mode = ARBITRARY_RECT;
       m_arbitraryRect = rectangle;

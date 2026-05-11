@@ -93,7 +93,7 @@ namespace remoting_windows
       }
 
       ::innate_subsystem::PixelFormat pixelFormat = m_pframebufferWork->getPixelFormat();
-      ::int_size workDim = m_pframebufferWork->getDimension();
+      ::i32_size workDim = m_pframebufferWork->getDimension();
 
       bmi.bmiHeader.biBitCount = pixelFormat.bitsPerPixel;
       bmi.bmiHeader.biWidth = workDim.cx;
@@ -170,7 +170,7 @@ namespace remoting_windows
    {
       m_screen.update();
 
-      ::int_rectangle screenRect = m_screen.getDesktopRect();
+      ::i32_rectangle screenRect = m_screen.getDesktopRect();
       int width = screenRect.width();
       int height = screenRect.height();
 
@@ -209,15 +209,15 @@ namespace remoting_windows
       return true;
    }
 
-   bool WindowsScreenGrabber::grab(const ::int_rectangle & rectangle)
+   bool WindowsScreenGrabber::grab(const ::i32_rectangle & rectangle)
    {
       if (rectangle.is_set())
       {
          return grabByDIBSection(rectangle);
       }
 
-      ::int_rectangle rectangleGrab;
-      ::int_size workDim = m_pframebufferWork->getDimension();
+      ::i32_rectangle rectangleGrab;
+      ::i32_size workDim = m_pframebufferWork->getDimension();
       // Set relative co-ordinates
       rectangleGrab.left = 0;
       rectangleGrab.top = 0;
@@ -227,9 +227,9 @@ namespace remoting_windows
       return grabByDIBSection(rectangleGrab);
    }
 
-   bool WindowsScreenGrabber::grabByDIBSection(const ::int_rectangle & rectangle)
+   bool WindowsScreenGrabber::grabByDIBSection(const ::i32_rectangle & rectangle)
    {
-      ::int_size workDim = m_pframebufferWork->getDimension();
+      ::i32_size workDim = m_pframebufferWork->getDimension();
       if (workDim.cx != m_dibSectionDim.cx || workDim.cy != m_dibSectionDim.cy)
       {
          if (!openDIBSection())

@@ -34,7 +34,7 @@ namespace remoting_client
    }
 
 
-   void add_repaint(const ::int_rectangle & rectangle);
+   void add_repaint(const ::i32_rectangle & rectangle);
 
    toolbar::toolbar()
    {
@@ -60,13 +60,13 @@ namespace remoting_client
    }
 
 
-   ::int_rectangle control::get_client_rectangle()
+   ::i32_rectangle control::get_client_rectangle()
    {
 
       return m_rectangle.size();
    }
 
-   void control::_add_repaint(const ::int_rectangle & rectangle)
+   void control::_add_repaint(const ::i32_rectangle & rectangle)
    {
 
       if (get_paint_window() != this)
@@ -96,7 +96,7 @@ namespace remoting_client
    }
 
    /// rectangle should in desktop window root coordinates
-   void control::add_repaint(const int_rectangle & rectangle)
+   void control::add_repaint(const i32_rectangle & rectangle)
    {
 
       auto pwindowPaint = get_paint_window();
@@ -159,7 +159,7 @@ namespace remoting_client
    }
 
 
-   ::int_rectangle control::get_window_rectangle()
+   ::i32_rectangle control::get_window_rectangle()
    {
 
       if (::is_null(m_pcontrolParent))
@@ -181,7 +181,7 @@ namespace remoting_client
 
 
 
-   ::int_rectangle control::get_paint_rectangle()
+   ::i32_rectangle control::get_paint_rectangle()
    {
 
       if (::is_null(m_pcontrolParent))
@@ -201,8 +201,8 @@ namespace remoting_client
 
    }
 
-   bool control::_001OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &pointRoot,
-                               const ::int_point &pointClient, bool &bDoDefaultProcessing)
+   bool control::_001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+                               const ::i32_point &pointClient, bool &bDoDefaultProcessing)
    {
 
       auto rectangleClient = get_client_rectangle();
@@ -248,12 +248,12 @@ namespace remoting_client
 
    }
 
-   //bool control::_001OnMouseEx(::u32 uMessage, const ::int_point& pointRoot, const ::int_point& pointClient)
+   //bool control::_001OnMouseEx(::u32 uMessage, const ::i32_point& pointRoot, const ::i32_point& pointClient)
    //{
 
    //    auto rectangleClient = get_client_rectangle();
 
-   //    auto bHoverNew = rectangleClient.contains(::int_point{ pointClient.x, pointClient.y });
+   //    auto bHoverNew = rectangleClient.contains(::i32_point{ pointClient.x, pointClient.y });
 
    //    if (is_different(bHoverNew, m_bHover))
    //    {
@@ -294,7 +294,7 @@ namespace remoting_client
    //}
 
 
-   bool control::on_left_down(const ::int_point& pointPosition)
+   bool control::on_left_down(const ::i32_point& pointPosition)
    {
 
        return false;
@@ -302,15 +302,15 @@ namespace remoting_client
    }
 
 
-   bool control::on_left_up(const ::int_point& pointPosition)
+   bool control::on_left_up(const ::i32_point& pointPosition)
    {
 
       return false;
    }
 
 
-   bool control::_000OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &pointRoot,
-                               const ::int_point &pointClientParam, bool &bDoDefaultProcessing)
+   bool control::_000OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+                               const ::i32_point &pointClientParam, bool &bDoDefaultProcessing)
    {
 
       auto pointClient = pointClientParam;
@@ -405,7 +405,7 @@ namespace remoting_client
 
    }
 
-   //bool control::_000OnMouseEx(::u32 uMessage, const ::int_point& pointRoot, const ::int_point& pointClientParam)
+   //bool control::_000OnMouseEx(::u32 uMessage, const ::i32_point& pointRoot, const ::i32_point& pointClientParam)
    //{
 
    //    auto pointClient = pointClientParam;
@@ -444,7 +444,7 @@ namespace remoting_client
    }
 
 
-   bool toolbar_button::on_left_down(const ::int_point& pointPosition)
+   bool toolbar_button::on_left_down(const ::i32_point& pointPosition)
    {
 
        m_bPressed = true;
@@ -452,7 +452,7 @@ namespace remoting_client
        return true;
 
    }
-   bool toolbar_button::on_left_up(const ::int_point& pointPosition)
+   bool toolbar_button::on_left_up(const ::i32_point& pointPosition)
    {
 
        if (m_bPressed && m_timePressed.elapsed() < 5_s)
@@ -468,7 +468,7 @@ namespace remoting_client
    }
 
 
-   // bool toolbar_button::on_mouse(bool bPress, const ::int_point& pointPosition)
+   // bool toolbar_button::on_mouse(bool bPress, const ::i32_point& pointPosition)
    //{
 
 
@@ -597,10 +597,10 @@ namespace remoting_client
 
    }
 
-   // bool toolbar::on_mouse(bool bPress, const ::int_point& pointPosition)
+   // bool toolbar::on_mouse(bool bPress, const ::i32_point& pointPosition)
    // {
    //
-   //    auto bHoverNew= m_rectangle.contains(::int_point{pointPosition.x, pointPosition.y});
+   //    auto bHoverNew= m_rectangle.contains(::i32_point{pointPosition.x, pointPosition.y});
    //    if (is_different(bHoverNew, m_bHover))
    //    {
    //
@@ -670,7 +670,7 @@ namespace remoting_client
    }
 
 
-   void control::__000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
+   void control::__000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle)
    {
       if (!rectangle.intersects(get_window_rectangle()))
       {
@@ -687,7 +687,7 @@ namespace remoting_client
    }
 
 
-   bool toolbar::_001OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point& pointRoot, const ::int_point& pointClient, bool & bDoDefaultProcessing)
+   bool toolbar::_001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point& pointRoot, const ::i32_point& pointClient, bool & bDoDefaultProcessing)
    {
 
       //auto pointClient = pointClientParameter * m_pdesktopwindow->m_scManager.getScale();
@@ -788,7 +788,7 @@ namespace remoting_client
    }
 
 
-   void control::__000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
+   void control::__000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle)
    {
 
       auto rIntersect = rectangle.intersection(m_rectangle);
@@ -860,10 +860,10 @@ namespace remoting_client
       //    rIntersect.height(),
       //    Gdiplus::UnitPixel);
       pgraphics->drawBitmap(m_pbitmapBuffer,rIntersect.top_left(),
-         { (::int_point) (rIntersect.origin()-m_rectangle.origin()),  rIntersect.size()});
+         { (::i32_point) (rIntersect.origin()-m_rectangle.origin()),  rIntersect.size()});
    }
 
-   void control::__001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
+   void control::__001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle)
    {
       ::color::color colorPaint;
 
@@ -940,7 +940,7 @@ namespace remoting_client
 
          auto r = get_paint_rectangle();
 
-         ::int_rectangle rDash;
+         ::i32_rectangle rDash;
 
          rDash.left = r.left + 7;
          rDash.right = r.right - 7;
@@ -956,14 +956,14 @@ namespace remoting_client
 
          auto r = get_paint_rectangle();
 
-         ::int_rectangle rDeflate = r;
+         ::i32_rectangle rDeflate = r;
 
          rDeflate.deflate(7, 5, 7, 9);
 
-         pgraphics->fillRect(::int_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2), colorPaint);
-         pgraphics->fillRect(::int_rectangle(rDeflate.right - 2, rDeflate.top, rDeflate.right, rDeflate.bottom), colorPaint);
-         pgraphics->fillRect(::int_rectangle(rDeflate.left, rDeflate.bottom-2, rDeflate.right, rDeflate.bottom), colorPaint);
-         pgraphics->fillRect(::int_rectangle(rDeflate.left, rDeflate.top, rDeflate.left+2, rDeflate.bottom), colorPaint);
+         pgraphics->fillRect(::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2), colorPaint);
+         pgraphics->fillRect(::i32_rectangle(rDeflate.right - 2, rDeflate.top, rDeflate.right, rDeflate.bottom), colorPaint);
+         pgraphics->fillRect(::i32_rectangle(rDeflate.left, rDeflate.bottom-2, rDeflate.right, rDeflate.bottom), colorPaint);
+         pgraphics->fillRect(::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.left+2, rDeflate.bottom), colorPaint);
 
       }
       else if (m_eid == id_close)
@@ -972,7 +972,7 @@ namespace remoting_client
 
          auto r = get_paint_rectangle();
 
-         ::int_rectangle rDeflate = r;
+         ::i32_rectangle rDeflate = r;
 
          rDeflate.deflate(7, 5, 7, 9);
 
@@ -993,7 +993,7 @@ namespace remoting_client
       }
    }
 
-   void toolbar::__001OnDraw(innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle)
+   void toolbar::__001OnDraw(innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle)
    {
 
       pgraphics->setBlendModeOn(true);

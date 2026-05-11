@@ -277,7 +277,7 @@ namespace remoting_control_desktop
       out = m_windowHeaderName;
    }
 
-   ::int_rectangle ControlCommandLine::getShareRect()
+   ::i32_rectangle ControlCommandLine::getShareRect()
    {
       return m_shareRect;
    }

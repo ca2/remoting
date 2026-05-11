@@ -33,83 +33,83 @@ namespace remoting
 
    CopyRectDetector::~CopyRectDetector() {}
 
-
-   // Callback routine used internally to catch window movement...
-   static bool CALLBACK enumWindowsFnCopyRect(HWND hwnd, LPARAM lparam)
-   {
-      auto _this = (CopyRectDetector *) lparam;
-      return _this->checkWindowMovements(::as_operating_system_window(hwnd));
-   }
-
-
-   void CopyRectDetector::detectWindowMovements(::int_rectangle &rectangleCopy, ::int_point & pointSource)
-   {
-      m_rectangleCopy.clear();
-      m_pointSource.clear();
-
-      EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)(void *) this);
-      m_lastWinProps = m_newWinProps;
-      m_newWinProps.clear();
-      rectangleCopy = m_rectangleCopy;
-      pointSource = m_pointSource;
-   }
-
-
-   bool CopyRectDetector::checkWindowMovements(const ::operating_system::window & operatingsystemwindow)
-   {
-      ::int_rectangle rectangleCurrent;
-      //auto hwnd = ::as_HWND(operatingsystemwindow);
-      if (IsWindowVisible(::as_HWND(operatingsystemwindow)) && getWinRect(operatingsystemwindow, rectangleCurrent))
-      {
-         // Store window properties in the new ::list_base
-         WinProp newWinProp(operatingsystemwindow, rectangleCurrent);
-         m_newWinProps.add(newWinProp);
-
-         ::int_rectangle rectangleOld;
-         if (findPrevWinProps(operatingsystemwindow, rectangleOld))
-         {
-            if (rectangleOld.top_left() != rectangleCurrent.top_left() && rectangleCurrent.area() > m_rectangleCopy.area())
-            {
-
-               m_rectangleCopy = rectangleCurrent;
-
-               m_pointSource = rectangleOld.top_left();
-
-               // Adjust
-               int_size sizeDesktop(GetSystemMetrics(SM_XVIRTUALSCREEN),GetSystemMetrics(SM_YVIRTUALSCREEN));
-
-               m_rectangleCopy -= sizeDesktop;
-
-               m_pointSource -= sizeDesktop;
-
-            }
-         }
-      }
-      return true;
-   }
-
-   bool CopyRectDetector::getWinRect(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)
-   {
-      return ::windows::get_window_rect(operatingsystemwindow, rectangle);
-   }
-
-   bool CopyRectDetector::findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)
-   {
-      //::list_base<WinProp>::iterator winPropsIter;
-      //WinProp *winProp;
-      for (auto winprop:m_lastWinProps)
-      {
-        // winProp = &(*winPropsIter);
-         if (winprop.m_operatingsystemwindow == operatingsystemwindow)
-         {
-            rectangle = winprop.m_rectangleOld;
-            return true;
-         }
-      }
-
-      return false;
-   }
-
+//
+//   // Callback routine used internally to catch window movement...
+//   static bool CALLBACK enumWindowsFnCopyRect(HWND hwnd, LPARAM lparam)
+//   {
+//      auto _this = (CopyRectDetector *) lparam;
+//      return _this->checkWindowMovements(::as_operating_system_window(hwnd));
+//   }
+//
+//
+//   void CopyRectDetector::detectWindowMovements(::i32_rectangle &rectangleCopy, ::i32_point & pointSource)
+//   {
+//      m_rectangleCopy.clear();
+//      m_pointSource.clear();
+//
+//      EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)(void *) this);
+//      m_lastWinProps = m_newWinProps;
+//      m_newWinProps.clear();
+//      rectangleCopy = m_rectangleCopy;
+//      pointSource = m_pointSource;
+//   }
+//
+//
+//   bool CopyRectDetector::checkWindowMovements(const ::operating_system::window & operatingsystemwindow)
+//   {
+//      ::i32_rectangle rectangleCurrent;
+//      //auto hwnd = ::as_HWND(operatingsystemwindow);
+//      if (IsWindowVisible(::as_HWND(operatingsystemwindow)) && getWinRect(operatingsystemwindow, rectangleCurrent))
+//      {
+//         // Store window properties in the new ::list_base
+//         WinProp newWinProp(operatingsystemwindow, rectangleCurrent);
+//         m_newWinProps.add(newWinProp);
+//
+//         ::i32_rectangle rectangleOld;
+//         if (findPrevWinProps(operatingsystemwindow, rectangleOld))
+//         {
+//            if (rectangleOld.top_left() != rectangleCurrent.top_left() && rectangleCurrent.area() > m_rectangleCopy.area())
+//            {
+//
+//               m_rectangleCopy = rectangleCurrent;
+//
+//               m_pointSource = rectangleOld.top_left();
+//
+//               // Adjust
+//               i32_size sizeDesktop(GetSystemMetrics(SM_XVIRTUALSCREEN),GetSystemMetrics(SM_YVIRTUALSCREEN));
+//
+//               m_rectangleCopy -= sizeDesktop;
+//
+//               m_pointSource -= sizeDesktop;
+//
+//            }
+//         }
+//      }
+//      return true;
+//   }
+//
+//   bool CopyRectDetector::getWinRect(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)
+//   {
+//      return ::windows::get_window_rect(operatingsystemwindow, rectangle);
+//   }
+//
+//   bool CopyRectDetector::findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)
+//   {
+//      //::list_base<WinProp>::iterator winPropsIter;
+//      //WinProp *winProp;
+//      for (auto winprop:m_lastWinProps)
+//      {
+//        // winProp = &(*winPropsIter);
+//         if (winprop.m_operatingsystemwindow == operatingsystemwindow)
+//         {
+//            rectangle = winprop.m_rectangleOld;
+//            return true;
+//         }
+//      }
+//
+//      return false;
+//   }
+//
 
 } // namespace remoting
 

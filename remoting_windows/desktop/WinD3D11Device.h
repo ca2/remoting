@@ -58,7 +58,7 @@ namespace remoting_windows
 
       // A wrap for the ID3D11DeviceContext::CopySubresourceRegion() function.
       void copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY, ID3D11Texture2D *srcTexture2D,
-                                 const ::int_rectangle &rectangleSource, ::u32 front, ::u32 back);
+                                 const ::i32_rectangle &rectangleSource, ::u32 front, ::u32 back);
    //private:
       void copy(const WinD3D11Device &src);
 

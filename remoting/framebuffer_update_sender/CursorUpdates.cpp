@@ -46,7 +46,7 @@ namespace remoting
 
 
    void CursorUpdates::update(const EncodeOptions *encodeOptions, UpdateContainer & updatecontainer, bool fullRegReq,
-                              const ::int_rectangle &rectangleViewport, bool shareOnlyApp, const Region & regionShareApp,
+                              const ::i32_rectangle &rectangleViewport, bool shareOnlyApp, const Region & regionShareApp,
                               ::innate_subsystem::Framebuffer *pframebuffer, CursorShape *cursorShape)
    {
       // Check cursor events. If they are outside of shared region then ignore they.
@@ -104,7 +104,7 @@ namespace remoting
                // Restore background under the cursor shape
                m_plogwriter->debug("Restore background under the cursor shape");
                restoreFramebuffer(pframebuffer);
-               ::int_rectangle backgroundRect = getBackgroundRect();
+               ::i32_rectangle backgroundRect = getBackgroundRect();
                updatecontainer.m_regionChanged.addRect(backgroundRect);
             }
          }
@@ -157,21 +157,21 @@ namespace remoting
    void CursorUpdates::restoreFramebuffer(::innate_subsystem::Framebuffer *pframebuffer)
    {
       critical_section_lock al(&m_criticalsectionCurPosLoc);
-      ::int_rectangle rectangleTarget = m_shapeBackground.getDimension();
+      ::i32_rectangle rectangleTarget = m_shapeBackground.getDimension();
       rectangleTarget.set_top_left(m_pointBackground.x, m_pointBackground.y);
       pframebuffer->copyFrom(rectangleTarget, &m_shapeBackground, 0, 0);
-      // m_shapeBackground.setDimension(&::int_size(0, 0));
+      // m_shapeBackground.setDimension(&::i32_size(0, 0));
    }
 
    void CursorUpdates::drawCursor(UpdateContainer & updatecontainer, ::innate_subsystem::Framebuffer *pframebuffer)
    {
       critical_section_lock al(&m_criticalsectionCurPosLoc);
       // Add previous background rectangle to the changed region.
-      ::int_rectangle rectangle(m_shapeBackground.getDimension());
+      ::i32_rectangle rectangle(m_shapeBackground.getDimension());
       rectangle.set_top_left(m_pointBackground.x, m_pointBackground.y);
       updatecontainer.m_regionChanged.addRect(rectangle);
       // Keep the current background rectangle.
-      ::int_point pointHotspot = m_cursorshape.getHotSpot();
+      ::i32_point pointHotspot = m_cursorshape.getHotSpot();
       m_pointBackground.set(m_cursorPos.x - pointHotspot.x, m_cursorPos.y - pointHotspot.y);
       m_shapeBackground.setProperties(m_cursorshape.getDimension(), m_cursorshape.getPixelFormat());
       // Keep background under cursor shape to can reconstruct full image.
@@ -183,7 +183,7 @@ namespace remoting
       pframebuffer->overlay(rectangle, m_cursorshape.getPixels(), 0, 0, m_cursorshape.getMask());
    }
 
-   bool CursorUpdates::checkCursorPos(UpdateContainer & updatecontainer, const ::int_rectangle &rectangleViewport,
+   bool CursorUpdates::checkCursorPos(UpdateContainer & updatecontainer, const ::i32_rectangle &rectangleViewport,
                                       bool curPosBlockingIsIgnored)
    {
       critical_section_lock al(&m_criticalsectionCurPosLoc);
@@ -242,16 +242,16 @@ namespace remoting
       }
    }
 
-   ::int_point CursorUpdates::getCurPos()
+   ::i32_point CursorUpdates::getCurPos()
    {
       critical_section_lock al(&m_criticalsectionCurPosLoc);
       return m_cursorPos;
    }
 
-   ::int_rectangle CursorUpdates::getBackgroundRect()
+   ::i32_rectangle CursorUpdates::getBackgroundRect()
    {
       critical_section_lock al(&m_criticalsectionCurPosLoc);
-      ::int_rectangle rectangle(m_shapeBackground.getDimension());
+      ::i32_rectangle rectangle(m_shapeBackground.getDimension());
       rectangle.set_top_left(m_pointBackground.x, m_pointBackground.y);
       return rectangle;
    }

@@ -38,6 +38,6 @@ namespace remoting_client
    protected:
       virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
-                          const ::int_rectangle &  rectangleTarget);
+                          const ::i32_rectangle &  rectangleTarget);
    };
 } // namespace remoting_client

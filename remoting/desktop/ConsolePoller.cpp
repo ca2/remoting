@@ -26,6 +26,15 @@
 #include "remoting/remoting/node_config/Configurator.h"
 #include "acme/_operating_system.h"
 
+
+namespace operating_system
+{
+
+CLASS_DECL_ACME ::i32_rectangle get_console_rect();
+
+} // namespace operating_system
+
+
 namespace remoting
 {
 
@@ -69,11 +78,11 @@ namespace remoting
    {
       m_plogwriter->information("console poller thread id = {}", (::iptr) getThreadId());
 
-      ::int_rectangle scanRect;
+      ::i32_rectangle scanRect;
       Region region;
       while (!isTerminating())
       {
-         ::int_rectangle conRect = getConsoleRect();
+         ::i32_rectangle conRect = getConsoleRect();
          if (!conRect.is_empty())
          {
             int pollHeight = m_rectanglePolling.height();
@@ -81,7 +90,7 @@ namespace remoting
 
             {
                critical_section_lock al(m_pcriticalsectionFramebuffer);
-               ::int_rectangle offsetFb = m_pscreengrabber->getScreenRect();
+               ::i32_rectangle offsetFb = m_pscreengrabber->getScreenRect();
                conRect.offset(-offsetFb.left, -offsetFb.top);
                ::innate_subsystem::Framebuffer *pframebufferScreen = m_pscreengrabber->getScreenBuffer();
                if (pframebufferScreen->isEqualTo(m_pframebufferBackup))
@@ -114,22 +123,12 @@ namespace remoting
       }
    }
 
-   ::int_rectangle ConsolePoller::getConsoleRect()
+   ::i32_rectangle ConsolePoller::getConsoleRect()
    {
-      ::int_rectangle rectangle;
-      auto hwnd = ::GetForegroundWindow();
-
-      const WCHAR consoleClassName[] = L"ConsoleWindowClass";
-
-      const character_count nameLength = sizeof(consoleClassName) / sizeof(WCHAR) + 1;
-      WCHAR className[nameLength];
-      GetClassNameW(hwnd, className, nameLength);
-      if (wcscmp(consoleClassName, className) == 0)
-      {
-         RECT rectangle;
-         GetWindowRect(hwnd, &rectangle);
-         rectangle = rectangle;
-      }
+      ::i32_rectangle rectangle;
+      
+      rectangle = ::operating_system::get_console_rect();
+      
       return rectangle;
    }
 

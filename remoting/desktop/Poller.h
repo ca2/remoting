@@ -46,7 +46,7 @@ namespace remoting
       ::pointer < ScreenGrabber  > m_pscreengrabber;
       ::innate_subsystem::Framebuffer *m_pframebufferBackup;
       lockable_critical_section *m_pcriticalsectionFramebuffer;
-      ::int_rectangle m_rectanglePolling;
+      ::i32_rectangle m_rectanglePolling;
       ::happening m_intervalWaiter;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::pointer < ::remoting_node::Configurator > m_pconfigurator;
@@ -62,8 +62,8 @@ namespace remoting
        ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
        ::subsystem::LogWriter * plogwriter);
 
-      virtual void execute();
-      virtual void onTerminate();
+      void execute() override;
+      void onTerminate() override;
 
    };
 

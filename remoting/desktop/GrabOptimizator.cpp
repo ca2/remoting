@@ -25,6 +25,7 @@
 #include "GrabOptimizator.h"
 #include "subsystem/platform/Exception.h"
 #include "acme/_operating_system.h"
+#include "acme/operating_system/performance_counter.h"
 
 
 namespace remoting
@@ -52,7 +53,7 @@ namespace remoting
       // g - overhead time costs adding on each grabbed rectangle.
       //::int_rectangle_array_base rectanglea;
       auto rectanglea = regionGrab.getRects();
-      ::int_rectangle rectangleBounds = regionGrab.getBounds();
+      ::i32_rectangle rectangleBounds = regionGrab.getBounds();
       int boundsRectS = rectangleBounds.area();
       size_t n = rectanglea.size();
 
@@ -189,7 +190,7 @@ namespace remoting
       return m_wholeS / area <= 9; // area >= 10%
    }
 
-   bool GrabOptimizator::isEnoughForWholeStats(const ::int_rectangle & rectangle)
+   bool GrabOptimizator::isEnoughForWholeStats(const ::i32_rectangle & rectangle)
    {
       int area = rectangle.area();
       if (area < 1)
@@ -204,19 +205,19 @@ namespace remoting
    ::i64 GrabOptimizator::grabWhole(ScreenDriver *grabber)
    {
       // FIXME: WARNING!!! The microsoft API usage!!!
-      LARGE_INTEGER timeBegin, timeEnd;
-      bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;
+      ::u64 timeBegin, timeEnd;
+      timeBegin = performance_counter();
 
       if (!grabber->grabFb())
       {
          throw ::subsystem::Exception("Grabber failed. Is it not ready?");
       }
 
-      bool timerResult2 = QueryPerformanceCounter(&timeEnd) != 0;
+      timeEnd = performance_counter();
 
-      if (timerResult1 && timerResult2)
+      if (timeBegin && timeEnd)
       {
-         return timeEnd.QuadPart - timeBegin.QuadPart;
+         return timeEnd - timeBegin;
       }
       else
       {
@@ -224,24 +225,24 @@ namespace remoting
       }
    }
 
-   ::i64 GrabOptimizator::grabOneRect(const ::int_rectangle & rectangle, ScreenDriver *grabber)
+   ::i64 GrabOptimizator::grabOneRect(const ::i32_rectangle & rectangle, ScreenDriver *grabber)
    {
       int rectS = rectangle.area();
       ASSERT(rectS != 0);
       // FIXME: WARNING!!! The microsoft API usage!!!
-      LARGE_INTEGER timeBegin, timeEnd;
-      bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;
+      ::u64 timeBegin, timeEnd;
+      timeBegin = performance_counter();
 
       if (!grabber->grabFb(rectangle))
       {
          throw ::subsystem::Exception("Grabber failed. Is it not ready?");
       }
 
-      bool timerResult2 = QueryPerformanceCounter(&timeEnd) != 0;
+      timeEnd = performance_counter();
 
-      if (timerResult1 && timerResult2)
+      if (timeBegin && timeEnd)
       {
-         ::i64 realOneRectTime = timeEnd.QuadPart - timeBegin.QuadPart;
+         ::i64 realOneRectTime = timeEnd - timeBegin;
          if (isEnoughForWholeStats(rectangle))
          {
             // Scale the time as the whole grabbing.
@@ -286,8 +287,7 @@ namespace remoting
    ::i64 GrabOptimizator::grabFragments(const ::int_rectangle_array_base & rectanglea, ScreenDriver *grabber)
    {
       // FIXME: WARNING!!! The microsoft API usage!!!
-      LARGE_INTEGER timeBegin, timeEnd;
-      bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;
+      auto timeBegin = performance_counter();
 
       ::int_rectangle_array_base::const_iterator iRect;
       for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
@@ -298,11 +298,11 @@ namespace remoting
          }
       }
 
-      bool timerResult2 = QueryPerformanceCounter(&timeEnd) != 0;
+      auto timeEnd = performance_counter();
 
-      if (timerResult1 && timerResult2)
+      if (timeBegin && timeEnd)
       {
-         ::i64 fragT = timeEnd.QuadPart - timeBegin.QuadPart;
+         ::i64 fragT = timeEnd - timeBegin;
 
          // To update the statistic wholeT must be calculated at least once.
          if (isAlikeToFragments(rectanglea) && m_wholeTElements.size() > 0)

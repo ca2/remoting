@@ -41,7 +41,7 @@ namespace remoting_client
         // set the scale of image, for example, 10 - it means 10% from original
         void setScale(int scale);
         // set the rectangle of window
-        void setWindow(const ::int_rectangle & rectangleWnd);
+        void setWindow(const ::i32_rectangle & rectangleWnd);
         float getScale() const;
         // need to know for scrolling
         // false -> single page
@@ -58,23 +58,23 @@ namespace remoting_client
         void setStartPoint(int x, int y);
 
         // get viewed rectangle
-        void getViewedRect(::int_rectangle & prectangleViewed) const;
-        ::int_rectangle getViewedRect() const;
+        void getViewedRect(::i32_rectangle & prectangleViewed) const;
+        ::i32_rectangle getViewedRect() const;
 
         // get scaled rectangle
-        ::int_rectangle getScaledRect();
+        ::i32_rectangle getScaledRect();
 
         // get source rectangle
-        void getSourceRect(::int_rectangle & prectangleSource) const;
+        void getSourceRect(::i32_rectangle & prectangleSource) const;
 
         // get destination rectangle
-        void getDestinationRect(::int_rectangle & prectangleDestination);
+        void getDestinationRect(::i32_rectangle & prectangleDestination);
 
         // get window rectangle from screen
-        void getWndFromScreen(const ::int_rectangle &  screen, ::int_rectangle &wnd);
+        void getWndFromScreen(const ::i32_rectangle &  screen, ::i32_rectangle &wnd);
 
         // transform display coordinate to screen
-        ::int_point transformDispToScr(int xPoint, int yPoint) const;
+        ::i32_point transformDispToScr(int xPoint, int yPoint) const;
 
         static const int DEFAULT_SCALE_DENOMERATOR = 100;
     //protected:
@@ -82,9 +82,9 @@ namespace remoting_client
         int sDiv(int x, int y) const;
 
         // size of window with frame buffer
-        ::int_rectangle m_rcWindow;
+        ::i32_rectangle m_rcWindow;
         // size of visible part of the frame buffer considering scale
-        ::int_rectangle m_rcViewed;
+        ::i32_rectangle m_rcViewed;
 
         // pointPosition of m_rcViewer
         int m_iCentX;
@@ -103,8 +103,8 @@ namespace remoting_client
         int m_scale;
 
     private:
-        ::int_rectangle calcScaled(const ::int_rectangle &  rcViewed, bool bCent);
-        void keepAspectRatio(::int_rectangle &prectangle) const;
+        ::i32_rectangle calcScaled(const ::i32_rectangle &  rcViewed, bool bCent);
+        void keepAspectRatio(::i32_rectangle &prectangle) const;
 
     };
 } // namespace remoting_client

@@ -55,7 +55,7 @@ namespace remoting_client
       control * m_pcontrolParent = nullptr;
       ::pointer < style > m_pstyle;
       ::pointer < ::innate_subsystem::PenInterface> m_ppen001;
-      ::int_rectangle m_rectangle;
+      ::i32_rectangle m_rectangle;
       bool m_bHover = false;
       bool m_bLButtonDown = false;
       //bool m_bPressed = false;
@@ -71,7 +71,7 @@ namespace remoting_client
       ::pointer < ::innate_subsystem::GraphicsInterface > m_pgraphicsBuffer;
 
       bool m_bNewRepaintRectangle;
-      ::int_rectangle m_rectangleRepaint;
+      ::i32_rectangle m_rectangleRepaint;
 
       ::pointer_array < control > m_controlaChildren;
 
@@ -79,27 +79,27 @@ namespace remoting_client
       ~control();
 
       control * get_paint_window();
-      void add_repaint(const ::int_rectangle & rectangle);
-      void _add_repaint(const ::int_rectangle & rectangle);
+      void add_repaint(const ::i32_rectangle & rectangle);
+      void _add_repaint(const ::i32_rectangle & rectangle);
 void defer_repaint();
 virtual void on_hover_off();
 virtual void on_hover();
-virtual bool _000OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &pointRoot,
-                           const ::int_point &pointClient, bool &bDoDefaultProcessing);
-virtual bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &pointRoot,
-                           const ::int_point &pointClient, bool &bDoDefaultProcessing);
-      //virtual bool _000OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
-      //virtual bool _001OnMouse(bool bPress, const ::int_point& pointRoot, const ::int_point& pointClient);
-      virtual bool on_left_down(const ::int_point& pointPosition);
-      virtual bool on_left_up(const ::int_point& pointPosition);
-      virtual void __000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
-      virtual void __000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
-      virtual void __001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::int_rectangle & rectangle);
+virtual bool _000OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+                           const ::i32_point &pointClient, bool &bDoDefaultProcessing);
+virtual bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+                           const ::i32_point &pointClient, bool &bDoDefaultProcessing);
+      //virtual bool _000OnMouse(bool bPress, const ::i32_point& pointRoot, const ::i32_point& pointClient);
+      //virtual bool _001OnMouse(bool bPress, const ::i32_point& pointRoot, const ::i32_point& pointClient);
+      virtual bool on_left_down(const ::i32_point& pointPosition);
+      virtual bool on_left_up(const ::i32_point& pointPosition);
+      virtual void __000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle);
+      virtual void __000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle);
+      virtual void __001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle);
       virtual bool on_button_click(enum_id eid);
 
-      virtual ::int_rectangle get_client_rectangle();
-      virtual ::int_rectangle get_window_rectangle();
-      virtual ::int_rectangle get_paint_rectangle();
+      virtual ::i32_rectangle get_client_rectangle();
+      virtual ::i32_rectangle get_window_rectangle();
+      virtual ::i32_rectangle get_paint_rectangle();
 
    };
 
@@ -120,11 +120,11 @@ virtual bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &p
       // };
 
       //enum_button m_ebutton;
-      //::int_rectangle      m_rectangle;
+      //::i32_rectangle      m_rectangle;
 
-      //::int_rectangle m_rectangleMinimizeDash;
+      //::i32_rectangle m_rectangleMinimizeDash;
 
-      //bool on_mouse(bool bPress, const ::int_point& pointPosition);
+      //bool on_mouse(bool bPress, const ::i32_point& pointPosition);
       //void on_draw(DeviceContext *dc);
 
        bool m_bPressed;
@@ -136,8 +136,8 @@ virtual bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &p
 
      
 
-      bool on_left_down(const ::int_point& pointPosition) override;
-      bool on_left_up(const ::int_point& pointPosition) override;
+      bool on_left_down(const ::i32_point& pointPosition) override;
+      bool on_left_up(const ::i32_point& pointPosition) override;
 
    };
 
@@ -166,11 +166,11 @@ virtual bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &p
       virtual void on_size();
       void on_hover() override;
       void on_hover_off() override;
-      //bool on_mouse(bool bPress, const ::int_point& pointPosition);
-      void __001OnDraw(::innate_subsystem::GraphicsInterface *pgraphics, const ::int_rectangle & rectangle) override;
+      //bool on_mouse(bool bPress, const ::i32_point& pointPosition);
+      void __001OnDraw(::innate_subsystem::GraphicsInterface *pgraphics, const ::i32_rectangle & rectangle) override;
       bool on_button_click(enum_id eid) override;
-      bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::int_point &pointRoot,
-                         const ::int_point &pointClient, bool &bDoDefaultProcessing) override;
+      bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+                         const ::i32_point &pointClient, bool &bDoDefaultProcessing) override;
    };
 
 

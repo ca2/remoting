@@ -77,7 +77,7 @@ namespace remoting
       {
          critical_section_lock al(m_pcriticalsectionFramebuffer);
          pframebufferScreen = m_pscreengrabber->getScreenBuffer();
-         ::int_rectangle fullScreenRect(pframebufferScreen->getDimension());
+         ::i32_rectangle fullScreenRect(pframebufferScreen->getDimension());
          m_pupdatekeeper->addChangedRect(fullScreenRect);
       }
 
@@ -105,7 +105,7 @@ namespace remoting
                int screenWidth = pframebufferScreen->getDimension().cx;
                int screenHeight = pframebufferScreen->getDimension().cy;
 
-               ::int_rectangle scanRect;
+               ::i32_rectangle scanRect;
                for (int iRow = 0; iRow < screenHeight; iRow += pollingHeight)
                {
                   for (int iCol = 0; iCol < screenWidth; iCol += pollingWidth)

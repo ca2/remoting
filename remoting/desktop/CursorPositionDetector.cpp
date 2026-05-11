@@ -53,7 +53,7 @@ namespace remoting
 
    }
 
-   ::int_point CursorPositionDetector::getCursorPos() { return m_cursor.getCursorPos(); }
+   ::i32_point CursorPositionDetector::getCursorPos() { return m_cursor.getCursorPos(); }
 
    void CursorPositionDetector::onTerminate() { m_sleepTimer.set_happening(); }
 
@@ -61,7 +61,7 @@ namespace remoting
    {
       m_plogwriter->information("mouse detector thread id = {}", getThreadId());
 
-      ::int_point curPoint;
+      ::i32_point curPoint;
 
       while (!isTerminating())
       {

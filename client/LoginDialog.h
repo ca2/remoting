@@ -34,7 +34,7 @@
 #include "innate_subsystem/gui/TextBox.h"
 #include "innate_subsystem/gui/CheckBox.h"
 #include "innate_subsystem/gui/ComboBox.h"
-#include "innate_subsystem/gui/TrackBar.h"
+#include "innate_subsystem/gui/Trackbar.h"
 
 #include "remoting_impact.h"
 #include "resource.h"
@@ -70,7 +70,7 @@ namespace remoting_client
 
     protected:
         bool onInitDialog() override;
-        bool onCommand(::u32 controlID, ::u32 notificationID);
+        bool onCommand(::u32 controlID, ::u32 notificationID) override;
         bool m_isListening;
 
         ::innate_subsystem::Control m_listening;

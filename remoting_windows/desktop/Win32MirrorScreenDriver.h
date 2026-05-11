@@ -56,8 +56,8 @@ namespace remoting_windows
       // Note: This class  is a wrapper for the MirrorScreenDriver class CLASS_DECL_REMOTING_WINDOWS and then
       // only MirrorScreenDriver can provide appropriate thread safety for the ::remoting::ScreenDriver functions.
 
-      virtual ::int_size getScreenDimension();
-      virtual bool grabFb(const ::int_rectangle & rectangle = {});
+      virtual ::i32_size getScreenDimension();
+      virtual bool grabFb(const ::i32_rectangle & rectangle = {});
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
       virtual bool getScreenPropertiesChanged();
       virtual bool getScreenSizeChanged();

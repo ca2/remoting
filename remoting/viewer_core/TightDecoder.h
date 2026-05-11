@@ -43,7 +43,7 @@ namespace remoting_client
    protected:
       virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
-                          const ::int_rectangle &  rectangleTarget);
+                          const ::i32_rectangle &  rectangleTarget);
 
    private:
       void reset();
@@ -55,10 +55,10 @@ namespace remoting_client
                               int bytesPerCPixel);
       void processJpeg(::remoting::RfbInputGate *input,
                        ::innate_subsystem::Framebuffer *pframebuffer,
-                       const ::int_rectangle &  rectangleTarget);
+                       const ::i32_rectangle &  rectangleTarget);
       void processBasicTypes(::remoting::RfbInputGate *input,
                              ::innate_subsystem::Framebuffer *pframebuffer,
-                             const ::int_rectangle &  rectangleTarget,
+                             const ::i32_rectangle &  rectangleTarget,
                              unsigned char compControl);
       void readTightData(::remoting::RfbInputGate *input,
                          ::array_base<unsigned char> &buffer,
@@ -71,16 +71,16 @@ namespace remoting_client
       void drawPalette(::innate_subsystem::Framebuffer *pframebuffer,
                        const ::array_base<::u32> &palette,
                        const ::array_base<unsigned char> &pixels,
-                       const ::int_rectangle &  rectangleTarget);
+                       const ::i32_rectangle &  rectangleTarget);
       void drawGradient(::innate_subsystem::Framebuffer *pframebuffer,
                         const ::array_base<unsigned char> &pixels,
-                        const ::int_rectangle &  rectangleTarget);
+                        const ::i32_rectangle &  rectangleTarget);
       void drawTightBytes(::innate_subsystem::Framebuffer *pframebuffer,
                          const ::array_base<unsigned char> *pixels,
-                         const ::int_rectangle &  rectangleTarget);
+                         const ::i32_rectangle &  rectangleTarget);
       void drawJpegBytes(::innate_subsystem::Framebuffer *pframebuffer,
                          const ::array_base<unsigned char> *pixels,
-                         const ::int_rectangle &  rectangleTarget);
+                         const ::i32_rectangle &  rectangleTarget);
 
       ::u32 getRawTightColor(const ::innate_subsystem::PixelFormat & pixelformat,
                               const ::array_base<unsigned char> &pixels,

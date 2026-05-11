@@ -26,7 +26,7 @@
 
 
 #include "subsystem/_common_header.h"
-//#include "remoting/remoting/region/::int_point.h"
+//#include "remoting/remoting/region/::i32_point.h"
 #include "remoting/remoting/desktop_ipc/BlockingGate.h"
 
 #include "remoting/remoting/region/Region.h"
@@ -57,16 +57,16 @@ namespace remoting
       virtual void setNewClipboard(const ::scoped_string &newClipboard) = 0;
       // By the keyFlag argument will be set the mouse button state as described in
       // the rfb protocol.
-      virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag) = 0;
+      virtual void setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag) = 0;
       virtual void setKeyboardEvent(::u32 keySym, bool down) = 0;
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;
 
-      virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle) = 0;
-      virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber) = 0;
+      virtual void getPrimaryDisplayCoords(::i32_rectangle & rectangle) = 0;
+      virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber) = 0;
       virtual ::int_rectangle_array_base getDisplaysCoords() = 0;
-      virtual void getNormalizedRect(::int_rectangle & rectangle) = 0;
+      virtual void getNormalizedRect(::i32_rectangle & rectangle) = 0;
 
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle) = 0;
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle) = 0;
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) = 0;
 
       virtual void getApplicationRegion(const ::process_identifier & processidentifier, ::remoting::Region & region) = 0;

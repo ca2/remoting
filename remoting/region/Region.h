@@ -26,7 +26,7 @@
 //#include aaa_<vector>
 //#include aaa_<list>
 
-//#include "::int_rectangle.h"
+//#include "::i32_rectangle.h"
 
 
 
@@ -55,7 +55,7 @@ namespace remoting
        * Creates a region from the given rectangle.
        * @param rectangle a pointer to the source rectangle.
        */
-      Region(const ::int_rectangle & rectangle);
+      Region(const ::i32_rectangle & rectangle);
       /**
        * Creates a copy of another region.
        * @param src a reference to the source region.
@@ -88,7 +88,7 @@ namespace remoting
        * Adds a rectangle to this region.
        * @param rectangle rectangle to add.
        */
-      void addRect(const ::int_rectangle &  rectangle);
+      void addRect(const ::i32_rectangle &  rectangle);
       /**
        * Adds offset to all rectangles in region.
        * @param dx horizontal offset to add.
@@ -119,7 +119,7 @@ namespace remoting
        * rectangle.
        * @param rectangle rectangle to intersect with.
        */
-      void crop(const ::int_rectangle &  rectangle);
+      void crop(const ::i32_rectangle &  rectangle);
 
       /**
        * Checks if this region is empty.
@@ -158,7 +158,7 @@ namespace remoting
       // Returns count of rectangles in the region.
       size_t getCount() const;
 
-      ::int_rectangle getBounds() const;
+      ::i32_rectangle getBounds() const;
 
    private:
       /**

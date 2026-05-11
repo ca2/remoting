@@ -62,15 +62,15 @@ namespace remoting_windows
                  ::subsystem::LogWriter * plogwriter) override;
 
       virtual void setNewClipboard(const ::scoped_string &newClipboard);
-      virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag);
+      virtual void setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag);
       virtual void setKeyboardEvent(::u32 keySym, bool down);
 
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
-      virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber);
+      virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber);
       virtual ::int_rectangle_array_base WindowsUserInput::getDisplaysCoords();
-      virtual void getNormalizedRect(::int_rectangle & rectangle);
-      virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle);
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle);
+      virtual void getNormalizedRect(::i32_rectangle & rectangle);
+      virtual void getPrimaryDisplayCoords(::i32_rectangle & rectangle);
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle);
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(const ::process_identifier & processidentifier, ::remoting::Region & region);
       virtual bool isApplicationInFocus(const ::process_identifier & processidentifier);
@@ -78,7 +78,7 @@ namespace remoting_windows
       void initKeyFlag(unsigned char initValue) override { m_prevKeyFlag = initValue; }
 
    //protected:
-      void toFbCoordinates(::int_rectangle & rectangle);
+      void toFbCoordinates(::i32_rectangle & rectangle);
 
    };
 

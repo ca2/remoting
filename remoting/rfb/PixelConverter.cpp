@@ -39,7 +39,7 @@ namespace remoting
       reset();
    }
 
-   void PixelConverter::convert(const ::int_rectangle &  rectangle, ::innate_subsystem::Framebuffer *pframebufferTarget,
+   void PixelConverter::convert(const ::i32_rectangle &  rectangle, ::innate_subsystem::Framebuffer *pframebufferTarget,
                                 const ::innate_subsystem::Framebuffer *pframebufferSource) const
    {
       if (m_convertMode == NO_CONVERT) {
@@ -117,13 +117,13 @@ namespace remoting
    }
 
    const ::innate_subsystem::Framebuffer *
-   PixelConverter::convert(const ::int_rectangle &  rectangle, const ::innate_subsystem::Framebuffer *pframebufferSource)
+   PixelConverter::convert(const ::i32_rectangle &  rectangle, const ::innate_subsystem::Framebuffer *pframebufferSource)
    {
       if (m_convertMode == NO_CONVERT) {
          return pframebufferSource;
       }
 
-      const ::int_size fbSize = pframebufferSource->getDimension();
+      const ::i32_size fbSize = pframebufferSource->getDimension();
       if (m_dstFramebuffer == 0) {
          // No frame buffer allocated - construct new one from the scratch.
          m_dstFramebuffer = new ::innate_subsystem::Framebuffer;

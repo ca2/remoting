@@ -41,7 +41,7 @@ namespace remoting
       return m_tightEncoder->getCode();
    }
 
-   void JpegEncoder::splitRectangle(const ::int_rectangle &  rectangle,
+   void JpegEncoder::splitRectangle(const ::i32_rectangle &  rectangle,
                                     ::int_rectangle_array_base & rectanglea,
                                     const ::innate_subsystem::Framebuffer *serverFb,
                                     const EncodeOptions *options)
@@ -49,11 +49,11 @@ namespace remoting
       int maxWidth = 2048;
       for (int x0 = rectangle.left; x0 < rectangle.right; x0 += maxWidth) {
          int x1 = (x0 + maxWidth <= rectangle.right) ? x0 + maxWidth : rectangle.right;
-         rectanglea.add(::int_rectangle(x0, rectangle.top, x1, rectangle.bottom));
+         rectanglea.add(::i32_rectangle(x0, rectangle.top, x1, rectangle.bottom));
       }
    }
 
-   void JpegEncoder::sendRectangle(const ::int_rectangle &  rectangle,
+   void JpegEncoder::sendRectangle(const ::i32_rectangle &  rectangle,
                                    const ::innate_subsystem::Framebuffer *serverFb,
                                    const EncodeOptions *options)
    {

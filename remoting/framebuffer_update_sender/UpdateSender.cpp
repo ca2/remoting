@@ -47,7 +47,7 @@ namespace remoting
    //     m_pcursorupdates(plogwriter)
    // {
    //    // FIXME: argument must be defined
-   //    m_pupdatekeeper = new UpdateKeeper(::int_rectangle());
+   //    m_pupdatekeeper = new UpdateKeeper(::i32_rectangle());
    //
    //    // Capabilities
    //    m_prfbcoderegistrator->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
@@ -110,7 +110,7 @@ UpdateSender::UpdateSender() :
           m_plogwriter = plogwriter;
           construct_newø(m_pcursorupdates);
    m_pcursorupdates->initialize_cursor_updates(plogwriter);
-      m_pupdatekeeper = new UpdateKeeper(::int_rectangle());
+      m_pupdatekeeper = new UpdateKeeper(::i32_rectangle());
 
       // Capabilities
       m_prfbcoderegistrator->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
@@ -163,7 +163,7 @@ UpdateSender::UpdateSender() :
       }
    }
 
-   void UpdateSender::init(const ::int_size &viewPortDimension, const ::innate_subsystem::PixelFormat & pixelformat)
+   void UpdateSender::init(const ::i32_size &viewPortDimension, const ::innate_subsystem::PixelFormat & pixelformat)
    {
       setClientPixelFormat(pixelformat, false);
       {
@@ -192,7 +192,7 @@ UpdateSender::UpdateSender() :
    {
       UpdateContainer updatecontainerNew = updatecontainer;
 
-      ::int_rectangle rectangleViewport = getViewPort();
+      ::i32_rectangle rectangleViewport = getViewPort();
 
       updatecontainerNew.m_regionVideo-= rectangleViewport.top_left();
       updatecontainerNew.m_regionChanged-= rectangleViewport.top_left();
@@ -204,7 +204,7 @@ UpdateSender::UpdateSender() :
 
    void UpdateSender::blockCursorPosSending() { m_pcursorupdates->blockCursorPosSending(); }
 
-   ::int_rectangle UpdateSender::getViewPort()
+   ::i32_rectangle UpdateSender::getViewPort()
    {
       critical_section_lock al(&m_criticalsectionViewport);
       return m_rectangleViewport;
@@ -216,7 +216,7 @@ UpdateSender::UpdateSender() :
       return (m_incrUpdIsReq || m_fullUpdIsReq) && !m_busy;
    }
 
-   void UpdateSender::sendRectHeader(const ::int_rectangle & rectangle, int encodingType)
+   void UpdateSender::sendRectHeader(const ::i32_rectangle & rectangle, int encodingType)
    {
       // FIXME: Why no warnings on passing bigger integer types?
       m_prfboutputgate->writeUInt16(rectangle.left);
@@ -236,14 +236,14 @@ UpdateSender::UpdateSender() :
       m_prfboutputgate->writeInt32(encodingType);
    }
 
-   void UpdateSender::sendNewFBSize(::int_size & size, bool extended)
+   void UpdateSender::sendNewFBSize(::i32_size & size, bool extended)
    {
       // Header
       m_prfboutputgate->writeUInt8(ServerMsgDefs::FB_UPDATE); // scopedstrMessage type
       m_prfboutputgate->writeUInt8(0); // padding
       m_prfboutputgate->writeUInt16(1); // one rectangle
 
-      ::int_rectangle r(size);
+      ::i32_rectangle r(size);
       if (!extended)
       {
          sendRectHeader(r, PseudoEncDefs::DESKTOP_SIZE);
@@ -263,7 +263,7 @@ UpdateSender::UpdateSender() :
 
          for (size_t i = 0; i < screens.size(); i++)
          {
-            ::int_rectangle rectangle = screens[i];
+            ::i32_rectangle rectangle = screens[i];
             m_prfboutputgate->writeUInt16(rectangle.left);
             m_prfboutputgate->writeUInt16(rectangle.top);
             m_prfboutputgate->writeUInt16(rectangle.width());
@@ -273,7 +273,7 @@ UpdateSender::UpdateSender() :
    }
 
    void UpdateSender::sendFbInClientDim(const EncodeOptions *encodeOptions, const ::innate_subsystem::Framebuffer *pframebuffer,
-                                        const ::int_size &size, const ::innate_subsystem::PixelFormat & pixelformat)
+                                        const ::i32_size &size, const ::innate_subsystem::PixelFormat & pixelformat)
    {
       // On the black frame buffer will be overlayed the current pframebuffer->
       // This is needed to combine the server frame buffer with a client frame
@@ -283,7 +283,7 @@ UpdateSender::UpdateSender() :
       blankFramebuffer.setColor(0, 0, 0);
       blankFramebuffer.copyFrom(pframebuffer, 0, 0);
 
-      ::int_rectangle rectangleForRegion(size);
+      ::i32_rectangle rectangleForRegion(size);
       Region region(rectangleForRegion);
       ::int_rectangle_array_base rectanglea;
       splitRegion(m_pencoderstore->getEncoder(), region, rectanglea, &blankFramebuffer, encodeOptions);
@@ -300,13 +300,13 @@ UpdateSender::UpdateSender() :
    void UpdateSender::sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat &fmt, const CursorShape *cursorShape)
    {
       // Send pseudo-rectangle.
-      ::int_point pointHotspot = cursorShape->getHotSpot();
-      ::int_size size = cursorShape->getDimension();
+      ::i32_point pointHotspot = cursorShape->getHotSpot();
+      ::i32_size size = cursorShape->getDimension();
       sendRectHeader(pointHotspot.x, pointHotspot.y, size.cx, size.cy, PseudoEncDefs::RICH_CURSOR);
 
       ::innate_subsystem::Framebuffer fbConverted;
       fbConverted.setProperties(size, fmt);
-      ::int_rectangle rectangleFromDimension(size);
+      ::i32_rectangle rectangleFromDimension(size);
       m_ppixelconverter->convert(rectangleFromDimension, &fbConverted, cursorShape->getPixels());
 
       if (fbConverted.getBufferSize())
@@ -321,13 +321,13 @@ UpdateSender::UpdateSender() :
 
    void UpdateSender::sendCursorPosUpdate()
    {
-      ::int_point pos = m_pcursorupdates->getCurPos();
+      ::i32_point pos = m_pcursorupdates->getCurPos();
       m_plogwriter->debug("Sending cursor pointPosition update: ({},{})", pos.x, pos.y);
       sendRectHeader(pos.x, pos.y, 0, 0, PseudoEncDefs::POINTER_POS);
    }
 
 
-   void UpdateSender::sendCopyRect(const ::int_rectangle_array_base & rectanglea, const ::int_point & pointSource)
+   void UpdateSender::sendCopyRect(const ::int_rectangle_array_base & rectanglea, const ::i32_point & pointSource)
    {
 
       for (auto rectangle : rectanglea)
@@ -395,7 +395,7 @@ UpdateSender::UpdateSender() :
       }
 
       // Viewport calculating
-      ::int_rectangle rectangleViewport;
+      ::i32_rectangle rectangleViewport;
       bool shareOnlyApp;
       Region regionOldShareApp;
       Region regionShareApp;
@@ -406,7 +406,7 @@ UpdateSender::UpdateSender() :
 
       critical_section_lock l(m_prfboutputgate);
 
-      ::int_size sizeClient, sizeLastViewport;
+      ::i32_size sizeClient, sizeLastViewport;
       {
          critical_section_lock al(&m_criticalsectionViewport);
          sizeClient = m_sizeClient;
@@ -417,7 +417,7 @@ UpdateSender::UpdateSender() :
       // must be no more than client dimension.
       if (!encodeOptions.desktopSizeEnabled() && !encodeOptions.desktopConfigurationEnabled())
       {
-         ::int_rectangle clientRect = sizeClient;
+         ::i32_rectangle clientRect = sizeClient;
          clientRect.set_top_left(rectangleViewport.left, rectangleViewport.top);
          rectangleViewport = rectangleViewport.intersection(clientRect);
       }
@@ -513,7 +513,7 @@ UpdateSender::UpdateSender() :
          updatecontainer.m_regionChanged.add(regionRequestedFull);
 
          // FIXME: Are these two lines really needed? Check that carefully.
-         ::int_rectangle framebufferRect = pframebuffer->getDimension();
+         ::i32_rectangle framebufferRect = pframebuffer->getDimension();
          updatecontainer.m_regionVideo.crop(framebufferRect);
          updatecontainer.m_regionChanged.crop(framebufferRect);
          regionShareApp.crop(framebufferRect);
@@ -767,7 +767,7 @@ UpdateSender::UpdateSender() :
    {
       // Read the rest of the scopedstrMessage:
       bool incremental = io->readUInt8() != 0;
-      ::int_rectangle reqRect;
+      ::i32_rectangle reqRect;
       reqRect.left = io->readUInt16();
       reqRect.top = io->readUInt16();
       reqRect.set_width(io->readUInt16());
@@ -959,7 +959,7 @@ UpdateSender::UpdateSender() :
          {
             // Then see the same at source coordinates.
             Region m_regionCopied = updatecontainer.m_regionCopied;
-            ::int_rectangle dstBounds = m_regionCopied.getBounds();
+            ::i32_rectangle dstBounds = m_regionCopied.getBounds();
             int dx = updatecontainer.m_pointCopySource.x - dstBounds.left;
             int dy = updatecontainer.m_pointCopySource.y - dstBounds.top;
             m_regionCopied.translate(dx, dy);
@@ -991,7 +991,7 @@ UpdateSender::UpdateSender() :
    void UpdateSender::updateFramebuffer(UpdateContainer & updatecontainer, bool shareOnlyApp, const Region & prevSharedRegion,
                                         const Region & regionShareApp)
    {
-      ::int_rectangle rectangleViewport = getViewPort();
+      ::i32_rectangle rectangleViewport = getViewPort();
 
       Region newOpeningPixels;
       if (shareOnlyApp)
@@ -1024,10 +1024,10 @@ defer_construct_newø(m_pframebuffer);
          updatecontainer.m_bScreenSizeChanged;
    }
 
-   bool UpdateSender::updateViewPort(::int_rectangle &rectangleOutNewViewport, bool *shareApp, Region & regionOldShareApp,
+   bool UpdateSender::updateViewPort(::i32_rectangle &rectangleOutNewViewport, bool *shareApp, Region & regionOldShareApp,
                                      Region & regionNewShareApp)
    {
-      ::int_rectangle rectangleNewViewport;
+      ::i32_rectangle rectangleNewViewport;
       m_senderControlInformation->onGetViewPort(rectangleNewViewport, shareApp, regionNewShareApp);
 
       critical_section_lock al(&m_criticalsectionViewport);
@@ -1055,7 +1055,7 @@ defer_construct_newø(m_pframebuffer);
       // process region rectanglea form last one, I hope it can reduce allocation number for region structure
       for (int i = rectanglea.size() - 1; i >= 0 && area > 0; i--)
       {
-         ::int_rectangle r = rectanglea[i];
+         ::i32_rectangle r = rectanglea[i];
          int a = r.area();
          if (a > area)
          {

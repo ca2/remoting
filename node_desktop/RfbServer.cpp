@@ -35,7 +35,7 @@ namespace remoting_node_desktop
       ::remoting_node::Configurator *pconfigurator,
                         unsigned short bindPort,
                         RfbClientManager *clientManager, bool lockAddr, ::subsystem::LogWriter * plogwriter,
-                        const ::int_rectangle &rectangleViewport) :
+                        const ::i32_rectangle &rectangleViewport) :
        TcpServer(scopedstrBindHost, bindPort, false, lockAddr), m_pconfigurator(pconfigurator),
       m_clientManager(clientManager), m_plogwriter(plogwriter)
 

@@ -26,7 +26,7 @@
 
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-////#include "remoting/remoting/region/::int_point.h"
+////#include "remoting/remoting/region/::i32_point.h"
 
 namespace remoting
 {
@@ -40,14 +40,14 @@ namespace remoting
 
       bool clone(const CursorShape *srcCursorShape);
 
-      bool setDimension(const ::int_size & sizeNew);
-      ::int_size getDimension() const { return m_pixels.getDimension(); }
+      bool setDimension(const ::i32_size & sizeNew);
+      ::i32_size getDimension() const { return m_pixels.getDimension(); }
 
       bool setPixelFormat(const ::innate_subsystem::PixelFormat & pixelFormat);
       ::innate_subsystem::PixelFormat getPixelFormat() const { return m_pixels.getPixelFormat(); }
 
-      // This function set both ::innate_subsystem::PixelFormat and ::int_size
-      bool setProperties(const ::int_size & sizeNew, const ::innate_subsystem::PixelFormat & pixelFormat);
+      // This function set both ::innate_subsystem::PixelFormat and ::i32_size
+      bool setProperties(const ::i32_size & sizeNew, const ::innate_subsystem::PixelFormat & pixelFormat);
 
       const ::innate_subsystem::Framebuffer *getPixels() const { return &m_pixels; }
       int getPixelsSize() const { return m_pixels.getBufferSize(); }
@@ -58,7 +58,7 @@ namespace remoting
       int getMaskWidthInBytes() const;
 
       void setHotSpot(int x, int y) { m_hotSpot.x = x; m_hotSpot.y = y; }
-      ::int_point getHotSpot() const { return m_hotSpot; }
+      ::i32_point getHotSpot() const { return m_hotSpot; }
 
       // Resets the cursor shape to empty state (zero dimension and hot spot
       // and empty masks). But the pixel format saves the same.
@@ -69,7 +69,7 @@ namespace remoting
 
       ::innate_subsystem::Framebuffer m_pixels;
       ::array_base<char> m_mask;
-      ::int_point m_hotSpot;
+      ::i32_point m_hotSpot;
    };
 
    //// __CURSORSHAPE_H__

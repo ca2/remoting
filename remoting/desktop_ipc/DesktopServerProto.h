@@ -29,7 +29,7 @@
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 #include "remoting/remoting/region/Region.h"
 
-//#include "remoting/remoting/region/::int_point.h"
+//#include "remoting/remoting/region/::i32_point.h"
 //#include "subsystem/platform/class CLASS_DECL_REMOTING  ::time.h"
 
 #include "BlockingGate.h"
@@ -54,23 +54,23 @@ namespace remoting
 
       virtual void readPixelFormat(::innate_subsystem::PixelFormat & pixelformat, BlockingGate *pblockinggate);
       virtual void sendPixelFormat(const ::innate_subsystem::PixelFormat &pixelformat, BlockingGate *pblockinggate);
-      virtual ::int_size readDimension(BlockingGate *pblockinggate);
-      virtual void sendDimension(const ::int_size &size, BlockingGate *pblockinggate);
-      virtual ::int_point readPoint(BlockingGate *pblockinggate);
-      virtual void sendPoint(const ::int_point &point, BlockingGate *pblockinggate);
-      virtual ::int_rectangle readRect(BlockingGate *pblockinggate);
-      virtual void sendRect(const ::int_rectangle & rectangle, BlockingGate *pblockinggate);
+      virtual ::i32_size readDimension(BlockingGate *pblockinggate);
+      virtual void sendDimension(const ::i32_size &size, BlockingGate *pblockinggate);
+      virtual ::i32_point readPoint(BlockingGate *pblockinggate);
+      virtual void sendPoint(const ::i32_point &point, BlockingGate *pblockinggate);
+      virtual ::i32_rectangle readRect(BlockingGate *pblockinggate);
+      virtual void sendRect(const ::i32_rectangle & rectangle, BlockingGate *pblockinggate);
       virtual void sendRegion(const ::remoting::Region & region, BlockingGate *pblockinggate);
       virtual void readRegion(::remoting::Region & region, BlockingGate *pblockinggate);
 
-      void sendFramebuffer(const ::innate_subsystem::Framebuffer *pframebufferSource, const ::int_rectangle &rectangleSource,
+      void sendFramebuffer(const ::innate_subsystem::Framebuffer *pframebufferSource, const ::i32_rectangle &rectangleSource,
                            BlockingGate *pblockinggate);
-      void readFramebuffer(::innate_subsystem::Framebuffer *pframebufferTarget, const ::int_rectangle &rectangleTarget, BlockingGate *pblockinggate);
+      void readFramebuffer(::innate_subsystem::Framebuffer *pframebufferTarget, const ::i32_rectangle &rectangleTarget, BlockingGate *pblockinggate);
 
       virtual void sendNewClipboard(const ::scoped_string &newClipboard, BlockingGate *pblockinggate);
       virtual void readNewClipboard(::string &newClipboard, BlockingGate *pblockinggate);
-      virtual void sendNewPointerPos(const ::int_point pointNewPosition, unsigned char keyFlag, BlockingGate *pblockinggate);
-      virtual void readNewPointerPos(::int_point *pointNewPosition, unsigned char *keyFlag, BlockingGate *pblockinggate);
+      virtual void sendNewPointerPos(const ::i32_point pointNewPosition, unsigned char keyFlag, BlockingGate *pblockinggate);
+      virtual void readNewPointerPos(::i32_point *pointNewPosition, unsigned char *keyFlag, BlockingGate *pblockinggate);
       virtual void sendKeyEvent(::u32 keySym, bool down, BlockingGate *pblockinggate);
       virtual void readKeyEvent(::u32 *keySym, bool *down, BlockingGate *pblockinggate);
       virtual void sendUserInfo(const ::scoped_string &desktopName, const ::scoped_string &userName,
@@ -106,8 +106,8 @@ namespace remoting
 
    //private:
       void checkPixelFormat(const ::innate_subsystem::PixelFormat &pixelformat);
-      void checkRectangle(const ::int_rectangle & rectangle);
-      void checkDimension(const ::int_size &size);
+      void checkRectangle(const ::i32_rectangle & rectangle);
+      void checkDimension(const ::i32_size &size);
    };
 
 

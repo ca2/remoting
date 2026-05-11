@@ -134,12 +134,12 @@ namespace remoting_client
             noUpdates = false;
 
             critical_section_lock al(m_pcriticalsectionFramebuffer);
-            ::int_rectangle cursor = m_cursorpainter.showCursor();
+            ::i32_rectangle cursor = m_cursorpainter.showCursor();
             update.addRect(cursor);
             update.addRect(m_rectangleOldPosition);
 
 #ifdef _DEMO_VERSION_
-            ::int_rectangle curWmRect = m_pwatermarkscontroller->CurrentRect();
+            ::i32_rectangle curWmRect = m_pwatermarkscontroller->CurrentRect();
             Region region(curWmRect);
             region.intersect(&update);
             bool isIntersect = !region.is_empty();
@@ -184,7 +184,7 @@ namespace remoting_client
       m_happeningUpdate.set_happening();
    }
 
-   void FbUpdateNotifier::onUpdate(const ::int_rectangle &  update)
+   void FbUpdateNotifier::onUpdate(const ::i32_rectangle &  update)
    {
       {
          critical_section_lock al(&m_criticalsectionUpdate);
@@ -205,7 +205,7 @@ namespace remoting_client
       m_plogwriter->debug("FbUpdateNotifier: new size of frame buffer");
    }
 
-   void FbUpdateNotifier::updatePointerPos(const ::int_point &pointPosition)
+   void FbUpdateNotifier::updatePointerPos(const ::i32_point &pointPosition)
    {
       m_cursorpainter.updatePointerPos(pointPosition);
 
@@ -214,7 +214,7 @@ namespace remoting_client
       m_happeningUpdate.set_happening();
    }
 
-   void FbUpdateNotifier::setNewCursor(const ::int_point &pointHotspot,
+   void FbUpdateNotifier::setNewCursor(const ::i32_point &pointHotspot,
                                        unsigned short width, unsigned short height,
                                        const ::array_base<unsigned char> *cursor,
                                        const ::array_base<unsigned char> *bitmask)

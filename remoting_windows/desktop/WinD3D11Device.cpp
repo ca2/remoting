@@ -133,7 +133,7 @@ namespace remoting_windows
    ID3D11DeviceContext *WinD3D11Device::getContext() { return m_context; }
 
    void WinD3D11Device::copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY,
-                                              ID3D11Texture2D *srcTexture2D, const ::int_rectangle &rectangleSource,
+                                              ID3D11Texture2D *srcTexture2D, const ::i32_rectangle &rectangleSource,
                                               ::u32 front, ::u32 back)
    {
       D3D11_BOX box;

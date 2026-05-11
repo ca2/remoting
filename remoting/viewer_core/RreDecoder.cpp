@@ -39,7 +39,7 @@ namespace remoting_client
 
    void RreDecoder::decode(::remoting::RfbInputGate *pinput,
                            ::innate_subsystem::Framebuffer *pframebuffer,
-                           const ::int_rectangle &  rectangleTarget)
+                           const ::i32_rectangle &  rectangleTarget)
    {
       ::u32 numberRectangle = pinput->readUInt32();
       size_t bytesPerPixel = pframebuffer->getBytesPerPixel();
@@ -56,7 +56,7 @@ namespace remoting_client
          ::u32 w = pinput->readUInt16();
          ::u32 h = pinput->readUInt16();
 
-         ::int_rectangle rectangle(x, y, x + w, y + h);
+         ::i32_rectangle rectangle(x, y, x + w, y + h);
          rectangle.offset(rectangleTarget.left, rectangleTarget.top);
          pframebuffer->fillRect(rectangle, color);
       }

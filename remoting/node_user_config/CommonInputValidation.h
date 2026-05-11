@@ -47,7 +47,7 @@ namespace remoting_node
       /**
        * Validates unsigned integer value.
        * @param textBox text box text of that need to validate.
-       * @param messageText text to show on validation fail.
+       * @param scopedstrMessageText text to show on validation fail.
        * @return true if validation ok, false if validation failed.
        * @note that if validation fails, then it shows error notification
        * using notifyValidationError() method.
@@ -57,7 +57,7 @@ namespace remoting_node
        * Shows validation error scopedstrMessage (scopedstrMessage box or balloon tip, depends on realization)
        * and sets focus to control.
        * @param textBox text box in that validation failed.
-       * @param messageText scopedstrMessage describing error reason.
+       * @param scopedstrMessageText scopedstrMessage describing error reason.
        * @remark current realization supports only scopedstrMessage boxes through
        * BaloonTip interface.
        * @fixme don't use BaloonTip in this case, use direct scopedstrMessage box.

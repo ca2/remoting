@@ -26,7 +26,7 @@
 
 
 
-//#include "remoting/remoting/region/::int_point.h"
+//#include "remoting/remoting/region/::i32_point.h"
 #include "subsystem/_common_header.h"
 //#include aaa_<list>
 #include "acme/prototype/geometry2d/rectangle.h"
@@ -34,16 +34,16 @@
 namespace remoting
 {
 
-   struct WinProp
-   {
-      WinProp(const ::operating_system::window & operatingsystemwindow, const ::int_rectangle &rectangleOld)
-      {
-         m_operatingsystemwindow = operatingsystemwindow;
-         m_rectangleOld = rectangleOld;
-      }
-      ::operating_system::window m_operatingsystemwindow;
-      ::int_rectangle m_rectangleOld;
-   };
+//   struct WinProp
+//   {
+//      WinProp(const ::operating_system::window & operatingsystemwindow, const ::i32_rectangle &rectangleOld)
+//      {
+//         m_operatingsystemwindow = operatingsystemwindow;
+//         m_rectangleOld = rectangleOld;
+//      }
+//      ::operating_system::window m_operatingsystemwindow;
+//      ::i32_rectangle m_rectangleOld;
+//   };
 
    class CLASS_DECL_REMOTING CopyRectDetector :
       virtual public ::particle
@@ -52,22 +52,22 @@ namespace remoting
       CopyRectDetector();
       virtual ~CopyRectDetector();
 
-      void detectWindowMovements(::int_rectangle &rectangleCopy, ::int_point & pointSource);
+      virtual void detectWindowMovements(::i32_rectangle &rectangleCopy, ::i32_point & pointSource) = 0;
 
-   //protected:
-      bool checkWindowMovements(const ::operating_system::window & operatingsystemwindow);
-
-      bool getWinRect(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle);
-
-      // If window properties successfully was found then function returns
-      // true. Else this function returns false.
-      bool findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle);
-
-      ::int_rectangle m_rectangleCopy;
-      ::int_point m_pointSource;
-
-      ::list_base<WinProp> m_lastWinProps;
-      ::list_base<WinProp> m_newWinProps;
+//   //protected:
+//      bool checkWindowMovements(const ::operating_system::window & operatingsystemwindow);
+//
+//      bool getWinRect(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle);
+//
+//      // If window properties successfully was found then function returns
+//      // true. Else this function returns false.
+//      bool findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle);
+//
+//      ::i32_rectangle m_rectangleCopy;
+//      ::i32_point m_pointSource;
+//
+//      ::list_base<WinProp> m_lastWinProps;
+//      ::list_base<WinProp> m_newWinProps;
    };
 
    

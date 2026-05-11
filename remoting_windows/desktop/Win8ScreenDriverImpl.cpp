@@ -58,9 +58,9 @@ namespace remoting_windows
    //
    //
    //    // Checking that builded dimension is equal to virtual desktop dimension.
-   //    ::int_size sizeBuilt = getScreenBuffer()->getDimension();
+   //    ::i32_size sizeBuilt = getScreenBuffer()->getDimension();
    //    Screen screen;
-   //    ::int_size virtDimension = screen.getDesktopDimension();
+   //    ::i32_size virtDimension = screen.getDesktopDimension();
    //    if (!sizeBuilt.isEqualTo(&virtDimension))
    //    {
    //       terminate();
@@ -117,9 +117,9 @@ namespace remoting_windows
 
 
        // Checking that builded dimension is equal to virtual desktop dimension.
-       ::int_size sizeBuilt = getScreenBuffer()->getDimension();
+       ::i32_size sizeBuilt = getScreenBuffer()->getDimension();
        ::subsystem::Screen screen;
-       ::int_size virtDimension = screen.getDesktopDimension();
+       ::i32_size virtDimension = screen.getDesktopDimension();
        if (sizeBuilt != virtDimension)
        {
           terminate();
@@ -166,7 +166,7 @@ namespace remoting_windows
             if (pdxgiOutput->isAttachedtoDesktop())
             {
                dxgiOutputArray.add(pdxgiOutput);
-               ::int_rectangle deskCoord = pdxgiOutput->getDesktopCoordinates();
+               ::i32_rectangle deskCoord = pdxgiOutput->getDesktopCoordinates();
                deskCoordArray.add(deskCoord);
                virtDeskRegion.addRect(deskCoord);
             }
@@ -193,7 +193,7 @@ namespace remoting_windows
 
 
       ::innate_subsystem::PixelFormat pixelformat = getDxPixelFormat();
-      ::int_rectangle rectangleVirtDeskBound = virtDeskRegion.getBounds();
+      ::i32_rectangle rectangleVirtDeskBound = virtDeskRegion.getBounds();
       m_pframebufferProperty->setProperties(rectangleVirtDeskBound, pixelformat);
       m_pframebufferProperty->setColor(0, 0, 0);
 
@@ -267,11 +267,11 @@ namespace remoting_windows
       }
    }
 
-   void Win8ScreenDriverImpl::onCopyRect(const ::int_rectangle &rectangleTarget, int srcX, int srcY)
+   void Win8ScreenDriverImpl::onCopyRect(const ::i32_rectangle &rectangleTarget, int srcX, int srcY)
    {
       if (m_detectionEnabled)
       {
-         ::int_point pointSource(srcX, srcY);
+         ::i32_point pointSource(srcX, srcY);
          m_pupdatekeeper->addCopyRect(rectangleTarget, pointSource);
          m_pupdatelistener->onUpdate();
       }
@@ -280,7 +280,7 @@ namespace remoting_windows
    void Win8ScreenDriverImpl::onCursorPositionChanged(int x, int y)
    {
       critical_section_lock al(&m_cursorMutex);
-      ::int_point pointNewPosition(x, y);
+      ::i32_point pointNewPosition(x, y);
       if (m_latestCursorPos != pointNewPosition)
       {
          m_latestCursorPos = pointNewPosition;
@@ -309,7 +309,7 @@ namespace remoting_windows
       m_happeningError.set_happening();
    }
 
-   bool Win8ScreenDriverImpl::grabFb(const ::int_rectangle & rectangle) { return isValid(); }
+   bool Win8ScreenDriverImpl::grabFb(const ::i32_rectangle & rectangle) { return isValid(); }
 
    bool Win8ScreenDriverImpl::isValid() { return !m_hasRecoverableError && !m_hasCriticalError; }
 
@@ -324,7 +324,7 @@ namespace remoting_windows
       pcursorshapeTarget->clone(m_win8CursorShape.getCursorShape());
    }
 
-   ::int_point Win8ScreenDriverImpl::getCursorPosition()
+   ::i32_point Win8ScreenDriverImpl::getCursorPosition()
    {
       critical_section_lock al(&m_cursorMutex);
       return m_latestCursorPos;

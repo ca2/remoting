@@ -167,8 +167,8 @@ namespace remoting
          // Send new screen properties
          m_plogwriter->debug("UpdateHandlerServer: Send new screen properties");
          sendPixelFormat(pixelformatNew, pblockinggate);
-         ::int_size sizeFramebuffer = pframebuffer->getDimension();
-         ::int_rectangle rectangleFramebuffer = sizeFramebuffer;
+         ::i32_size sizeFramebuffer = pframebuffer->getDimension();
+         ::i32_rectangle rectangleFramebuffer = sizeFramebuffer;
          sendDimension(sizeFramebuffer, pblockinggate);
          sendFramebuffer(pframebuffer, rectangleFramebuffer, pblockinggate);
       }
@@ -187,7 +187,7 @@ namespace remoting
 
       for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
       {
-         ::int_rectangle rectangle =(*iRect);
+         ::i32_rectangle rectangle =(*iRect);
          sendRect(rectangle, pblockinggate);
          sendFramebuffer(pframebuffer, rectangle, pblockinggate);
       }
@@ -257,7 +257,7 @@ namespace remoting
       // because this method use a lot of memory.
       auto pframebuffer = createø<::innate_subsystem::Framebuffer>();
       readPixelFormat(m_pixelformatOld, pblockinggate);
-      ::int_size size = readDimension(pblockinggate);
+      ::i32_size size = readDimension(pblockinggate);
       pframebuffer->setProperties(size, m_pixelformatOld);
 
       readFramebuffer(pframebuffer, size, pblockinggate);

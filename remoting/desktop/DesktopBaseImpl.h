@@ -85,33 +85,33 @@ namespace remoting
 
       // Puts a current desktop name from working session to the
       // desktopName argument and an user name to userMame.
-      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
+      void getCurrentUserInfo(::string &desktopName, ::string &userName) override;
       // Puts the current frame buffer dimension and pixel format to
       // the size and pixelformat function arguments.
-      virtual void getFramebufferProperties(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat);
-      virtual void getPrimaryDesktopCoords(::int_rectangle rectangle);
-      virtual void getDisplayNumberCoords(::int_rectangle rectangle, unsigned char dispNumber);
-      virtual ::int_rectangle_array_base getDisplaysCoords();
-      virtual void getNormalizedRect(::int_rectangle rectangle);
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle rectangle);
-      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
-      virtual void getApplicationRegion(::u32 procId, Region & region);
-      virtual bool isApplicationInFocus(::u32 procId);
+      void getFramebufferProperties(::i32_size & size, ::innate_subsystem::PixelFormat & pixelformat) override;
+      void getPrimaryDesktopCoords(::i32_rectangle rectangle) override;
+      void getDisplayNumberCoords(::i32_rectangle rectangle, unsigned char dispNumber) override;
+      ::int_rectangle_array_base getDisplaysCoords() override;
+      void getNormalizedRect(::i32_rectangle rectangle) override;
+      void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle rectangle) override;
+      ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) override;
+      void getApplicationRegion(::u32 procId, Region & region) override;
+      bool isApplicationInFocus(::u32 procId) override;
 
-      virtual void setKeyboardEvent(::u32 keySym, bool down);
-      virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask);
-      virtual void setNewClipText(const ::scoped_string &newClipboard);
+      void setKeyboardEvent(::u32 keySym, bool down) override;
+      void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) override;
+      void setNewClipText(const ::scoped_string &newClipboard) override;
 
    //protected:
       // Calling when at least one update has been detected.
-      virtual void onUpdate();
+      void onUpdate() override;
       // Implementation of the UpdateRequestListener interface.
-      virtual void onUpdateRequest(const ::int_rectangle &rectRequested, bool incremental);
+      void onUpdateRequest(const ::i32_rectangle &rectRequested, bool incremental) override;
       // Calling when a clipbard change detected.
-      virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
+      void onClipboardUpdate(const ::scoped_string &newClipboard) override;
       // Calling when a configuration has been reloaded.
       // Uses to update internal settings.
-      virtual void onConfigReload(::remoting_node::ServerConfig *serverConfig);
+      void onConfigReload(::remoting_node::ServerConfig *serverConfig) override;
       virtual void applyNewConfiguration() = 0;
 
       // Returns true when a remote input allowed.
@@ -119,8 +119,8 @@ namespace remoting
       // This is an auxiliary function which determines that
       virtual bool isRemoteInputTempBlocked() = 0;
 
-      virtual bool updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & region,
-                                             const ::int_rectangle &rectangleViewport);
+      bool updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & region,
+                                             const ::i32_rectangle &rectangleViewport) override;
 
       void sendUpdate();
 

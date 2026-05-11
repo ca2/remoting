@@ -130,7 +130,7 @@ namespace remoting_node
          AutoLock al(m_pserverconfig);
          textAreaData= "";
          for (size_t i = 0; i < rectangleaVideo->size(); i++) {
-            ::int_rectangle r = rectangleaVideo->at(i);
+            ::i32_rectangle r = rectangleaVideo->at(i);
             ::string s;
             ::remoting::RectSerializer::toString(r, s);
             textAreaData+= s;

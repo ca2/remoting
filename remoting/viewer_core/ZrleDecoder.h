@@ -55,7 +55,7 @@ namespace remoting_client
    //protected:
       virtual void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
-                          const ::int_rectangle &  rectangleTarget);
+                          const ::i32_rectangle &  rectangleTarget);
 
 
       void readAndInflate(::remoting::RfbInputGate *input, size_t maximalUnpackedSize);
@@ -70,29 +70,29 @@ namespace remoting_client
 
       void readRawTile(::DataInputStream * pinput,
                        ::array_base<char> &pixels,
-                       const ::int_rectangle &  tileRect);
+                       const ::i32_rectangle &  tileRect);
 
       void readSolidTile(::DataInputStream * pinput,
                          ::array_base<char> &pixels,
-                         const ::int_rectangle &  tileRect);
+                         const ::i32_rectangle &  tileRect);
 
       void readPackedPaletteTile(::DataInputStream * pinput,
                                  ::array_base<char> &pixels,
-                                 const ::int_rectangle &  tileRect,
+                                 const ::i32_rectangle &  tileRect,
                                  const int type);
 
       void readPlainRleTile(::DataInputStream * pinput,
                             ::array_base<char> &pixels,
-                            const ::int_rectangle &  tileRect);
+                            const ::i32_rectangle &  tileRect);
 
       void readPaletteRleTile(::DataInputStream * pinput,
                               ::array_base<char> &pixels,
-                              const ::int_rectangle &  tileRect,
+                              const ::i32_rectangle &  tileRect,
                               const int type);
 
 
       void drawTile(::innate_subsystem::Framebuffer *pframebuffer,
-                    const ::int_rectangle &  tileRect,
+                    const ::i32_rectangle &  tileRect,
                     const ::array_base<char> *pixels);
 
 
@@ -113,6 +113,6 @@ namespace remoting_client
       static const size_t MAXIMAL_TILE_SIZE = 20481;
       static const size_t TILE_LENGTH_SIZE = sizeof(::u32);
 
-      static size_t getMaxSizeOfRectangle(const ::int_rectangle &  rectangleTarget);
+      static size_t getMaxSizeOfRectangle(const ::i32_rectangle &  rectangleTarget);
    };
 } //namespace remoting_client

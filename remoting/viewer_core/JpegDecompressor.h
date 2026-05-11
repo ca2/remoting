@@ -66,7 +66,7 @@ namespace remoting_client
       void decompress(::array_base<unsigned char> &buffer,
                       size_t jpegBufLen,
                       ::array_base<unsigned char> &pixels,
-                      const ::int_rectangle &  rectangleTarget);
+                      const ::i32_rectangle &  rectangleTarget);
 
    private:
       /*

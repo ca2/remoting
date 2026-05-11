@@ -45,7 +45,7 @@ namespace remoting_client
       ~ViewerVncAuthHandler() override;
 
       
-      virtual ::string getPassword();
+      ::string getPassword() override;
 
    
    };

@@ -40,7 +40,7 @@ namespace remoting_client
    void DecoderOfRectangle::process(::remoting::RfbInputGate *input,
                         ::innate_subsystem::Framebuffer *pframebuffer,
                         ::innate_subsystem::Framebuffer *secondFramebuffer,
-                        const ::int_rectangle &  rectangle,
+                        const ::i32_rectangle &  rectangle,
                         lockable_critical_section *pcriticalsectionFramebuffer,
                         FbUpdateNotifier *fbNotifier)
    {
@@ -51,7 +51,7 @@ namespace remoting_client
 
    void DecoderOfRectangle::copy(::innate_subsystem::Framebuffer *dstFramebuffer,
                       const ::innate_subsystem::Framebuffer *pframebufferSource,
-                      const ::int_rectangle &  rectangle,
+                      const ::i32_rectangle &  rectangle,
                       lockable_critical_section *pcriticalsectionFramebuffer)
    {
       critical_section_lock al(pcriticalsectionFramebuffer);
@@ -59,7 +59,7 @@ namespace remoting_client
    }
 
    void DecoderOfRectangle::notify(FbUpdateNotifier *fbNotifier,
-                        const ::int_rectangle &  rectangle)
+                        const ::i32_rectangle &  rectangle)
    {
       fbNotifier->onUpdate(rectangle);
    }

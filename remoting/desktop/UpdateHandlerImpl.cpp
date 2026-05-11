@@ -64,14 +64,14 @@ namespace remoting
 
    UpdateContainer UpdateHandlerImpl::extract()
    {
-      ::int_rectangle rectangleCopy;
-      ::int_point m_pointCopySource;
+      ::i32_rectangle rectangleCopy;
+      ::i32_point m_pointCopySource;
       m_plogwriter->debug("UpdateHandlerImpl: getCopiedRegion");
       m_pscreendriver->getCopiedRegion(rectangleCopy, m_pointCopySource);
       //{
          AutoLock al1(m_pupdatekeeperProperty); // The following operations should be atomic
          m_pupdatekeeperProperty->addCopyRect(rectangleCopy, m_pointCopySource);
-         m_plogwriter->debug("UpdateHandlerImpl: extract Copy ::int_rectangle");
+         m_plogwriter->debug("UpdateHandlerImpl: extract Copy ::i32_rectangle");
          auto updatecontainer = m_pupdatekeeperProperty->extract();
       al1.unlock();
       //}
@@ -101,8 +101,8 @@ namespace remoting
       if (m_pscreendriver->getScreenPropertiesChanged() ||
           !m_pframebufferBackup->isEqualTo(m_pscreendriver->getScreenBuffer()))
       {
-         ::int_size sizeCurrent = m_pframebufferBackup->getDimension();
-         ::int_size sizeNew = m_pscreendriver->getScreenDimension();
+         ::i32_size sizeCurrent = m_pframebufferBackup->getDimension();
+         ::i32_size sizeNew = m_pscreendriver->getScreenDimension();
          if (m_pscreendriver->getScreenSizeChanged() || sizeCurrent != sizeNew)
          {
             updatecontainer.m_bScreenSizeChanged = true;
