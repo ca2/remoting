@@ -270,7 +270,7 @@ namespace remoting
          else
          {
 
-            long long len = pfileitem->size();
+            ::i64 len = pfileitem->size();
 
             if (len == -1)
             {

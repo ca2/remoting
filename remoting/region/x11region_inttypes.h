@@ -29,13 +29,13 @@
 // Defines unsigned types
 typedef unsigned char X11REGION_UINT8;
 typedef unsigned short X11REGION_UINT16;
-typedef ::u32 X11REGION_UINT32;
-typedef ::u64 X11REGION_UINT64;
+typedef unsigned int X11REGION_UINT32;
+typedef unsigned ::i64 X11REGION_UINT64;
 
 // Defines signed types
 typedef signed char X11REGION_INT8;
 typedef signed short X11REGION_INT16;
 typedef signed int X11REGION_INT32;
-typedef signed long long X11REGION_INT64;
+typedef signed ::i64 X11REGION_INT64;
 
 #endif // __X11REGION_INTTYPES_H__

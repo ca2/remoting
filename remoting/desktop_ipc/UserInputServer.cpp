@@ -205,7 +205,7 @@ namespace remoting
       ::string windowName;
       windowName = pblockinggate->readUtf8();
       auto operatingsystemwindow = m_puserinput->getWindowHandleByName(windowName);
-      pblockinggate->writeUInt64(::operating_system_window_as_uptr(operatingsystemwindow));
+      pblockinggate->writeUInt64(::as_u64(operatingsystemwindow));
    }
 
    void UserInputServer::ansDisplayNumberCoords(BlockingGate *pblockinggate)

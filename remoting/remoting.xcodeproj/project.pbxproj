@@ -215,7 +215,6 @@
 		9A1905A32FB25E4B00A3C985 /* UpdateHandlerServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1905782FB25E4B00A3C985 /* UpdateHandlerServer.h */; };
 		9A1905A42FB25E4B00A3C985 /* HookUpdateTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19053A2FB25E4B00A3C985 /* HookUpdateTimer.h */; };
 		9A1905A52FB25E4B00A3C985 /* GrabOptimizator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1905342FB25E4B00A3C985 /* GrabOptimizator.h */; };
-		9A1905A62FB25E4B00A3C985 /* HookInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1905362FB25E4B00A3C985 /* HookInstaller.h */; };
 		9A1905A72FB25E4B00A3C985 /* GateKickHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19056F2FB25E4B00A3C985 /* GateKickHandler.h */; };
 		9A1905A82FB25E4B00A3C985 /* DesktopConfigLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19052B2FB25E4B00A3C985 /* DesktopConfigLocal.h */; };
 		9A1905A92FB25E4B00A3C985 /* CursorShapeGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1905262FB25E4B00A3C985 /* CursorShapeGrabber.h */; };
@@ -254,7 +253,6 @@
 		9A1905CA2FB25E4B00A3C985 /* DesktopFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A19052E2FB25E4B00A3C985 /* DesktopFactory.cpp */; };
 		9A1905CB2FB25E4B00A3C985 /* ScreenDriverFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1905442FB25E4B00A3C985 /* ScreenDriverFactory.cpp */; };
 		9A1905CC2FB25E4B00A3C985 /* DesktopConfigClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1905682FB25E4B00A3C985 /* DesktopConfigClient.cpp */; };
-		9A1905CD2FB25E4B00A3C985 /* HookInstaller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1905372FB25E4B00A3C985 /* HookInstaller.cpp */; };
 		9A1905CE2FB25E4B00A3C985 /* DummyScreenDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1905332FB25E4B00A3C985 /* DummyScreenDriver.cpp */; };
 		9A1905CF2FB25E4B00A3C985 /* ConfigServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1905662FB25E4B00A3C985 /* ConfigServer.cpp */; };
 		9A1905D02FB25E4B00A3C985 /* UpdateHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A19054E2FB25E4B00A3C985 /* UpdateHandler.cpp */; };
@@ -570,8 +568,6 @@
 		9A1905332FB25E4B00A3C985 /* DummyScreenDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DummyScreenDriver.cpp; sourceTree = "<group>"; };
 		9A1905342FB25E4B00A3C985 /* GrabOptimizator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GrabOptimizator.h; sourceTree = "<group>"; };
 		9A1905352FB25E4B00A3C985 /* GrabOptimizator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GrabOptimizator.cpp; sourceTree = "<group>"; };
-		9A1905362FB25E4B00A3C985 /* HookInstaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HookInstaller.h; sourceTree = "<group>"; };
-		9A1905372FB25E4B00A3C985 /* HookInstaller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HookInstaller.cpp; sourceTree = "<group>"; };
 		9A1905382FB25E4B00A3C985 /* HooksUpdateDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HooksUpdateDetector.h; sourceTree = "<group>"; };
 		9A1905392FB25E4B00A3C985 /* HooksUpdateDetector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HooksUpdateDetector.cpp; sourceTree = "<group>"; };
 		9A19053A2FB25E4B00A3C985 /* HookUpdateTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HookUpdateTimer.h; sourceTree = "<group>"; };
@@ -1065,8 +1061,6 @@
 				9A1905332FB25E4B00A3C985 /* DummyScreenDriver.cpp */,
 				9A1905342FB25E4B00A3C985 /* GrabOptimizator.h */,
 				9A1905352FB25E4B00A3C985 /* GrabOptimizator.cpp */,
-				9A1905362FB25E4B00A3C985 /* HookInstaller.h */,
-				9A1905372FB25E4B00A3C985 /* HookInstaller.cpp */,
 				9A1905382FB25E4B00A3C985 /* HooksUpdateDetector.h */,
 				9A1905392FB25E4B00A3C985 /* HooksUpdateDetector.cpp */,
 				9A19053A2FB25E4B00A3C985 /* HookUpdateTimer.h */,
@@ -1523,7 +1517,6 @@
 				9A1905A32FB25E4B00A3C985 /* UpdateHandlerServer.h in Headers */,
 				9A1905A42FB25E4B00A3C985 /* HookUpdateTimer.h in Headers */,
 				9A1905A52FB25E4B00A3C985 /* GrabOptimizator.h in Headers */,
-				9A1905A62FB25E4B00A3C985 /* HookInstaller.h in Headers */,
 				9A1905A72FB25E4B00A3C985 /* GateKickHandler.h in Headers */,
 				9A1905A82FB25E4B00A3C985 /* DesktopConfigLocal.h in Headers */,
 				9A1905A92FB25E4B00A3C985 /* CursorShapeGrabber.h in Headers */,
@@ -1770,7 +1763,6 @@
 				9A1905CA2FB25E4B00A3C985 /* DesktopFactory.cpp in Sources */,
 				9A1905CB2FB25E4B00A3C985 /* ScreenDriverFactory.cpp in Sources */,
 				9A1905CC2FB25E4B00A3C985 /* DesktopConfigClient.cpp in Sources */,
-				9A1905CD2FB25E4B00A3C985 /* HookInstaller.cpp in Sources */,
 				9A1905CE2FB25E4B00A3C985 /* DummyScreenDriver.cpp in Sources */,
 				9A1905CF2FB25E4B00A3C985 /* ConfigServer.cpp in Sources */,
 				9A1905D02FB25E4B00A3C985 /* UpdateHandler.cpp in Sources */,

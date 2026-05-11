@@ -219,7 +219,7 @@ void UserInputClient::getWindowCoords(const ::operating_system::window & operati
     try {
       // Send request
       m_pcontrolgate->writeUInt8(WINDOW_COORDS_REQ);
-      m_pcontrolgate->writeUInt64((::u64)::as_uptr(operatingsystemwindow));
+      m_pcontrolgate->writeUInt64((::u64)::as_u64(operatingsystemwindow));
       bool isBrokenWindow = m_pcontrolgate->readUInt8() != 0;
       if (!isBrokenWindow)
       {
@@ -249,7 +249,7 @@ void UserInputClient::getWindowCoords(const ::operating_system::window & operati
       // Send request
       m_pcontrolgate->writeUInt8(WINDOW_HANDLE_REQ);
       m_pcontrolgate->writeUTF8(windowName);
-      operatingsystemwindow = ::as_operating_system_window((HWND)m_pcontrolgate->readUInt64());
+      operatingsystemwindow = ::as_operating_system_window(m_pcontrolgate->readUInt64());
       success = true;
     } catch (ReconnectException &) {
     }

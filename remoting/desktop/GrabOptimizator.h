@@ -96,9 +96,9 @@ namespace remoting
       void logStatistic();
 
 
-      long long grabWhole(ScreenDriver *grabber);
-      long long grabOneRect(const ::int_rectangle & rectangle, ScreenDriver *grabber);
-      long long grabFragments(const ::int_rectangle_array_base & rectanglea, ScreenDriver *grabber);
+      ::i64 grabWhole(ScreenDriver *grabber);
+      ::i64 grabOneRect(const ::int_rectangle & rectangle, ScreenDriver *grabber);
+      ::i64 grabFragments(const ::int_rectangle_array_base & rectanglea, ScreenDriver *grabber);
 
       void addWholeTElement(double wholeT);
       void removeObsoleteWholeTElements();

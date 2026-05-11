@@ -45,9 +45,9 @@ namespace remoting
    public:
       /**
        * Creates new TcpServer that listens for incoming connection after creation.
-       * @param bindHost host to bind.
+       * @param scopedstrBindHost host to bind.
        * @param bindPort port to bind.
-       * @param bool autoStart if true, then server starts listening for incoming connections
+       * @param autoStart if true, then server starts listening for incoming connections
        * in it's own thread, if false, then you must call protected start() method later from subclass.
        * @param lockAddr determinates if need to lock adress to other processes cannot reuse it.
        * @throws ::subsystem::Exception if fail to create tcp server.
@@ -60,7 +60,7 @@ namespace remoting
        * Closes listening socket, terminates tcp server thread and
        * deletes tcp server object.
        */
-      virtual ~TcpServer();
+      ~TcpServer() override;
 
       /**
        * Returns bind host.

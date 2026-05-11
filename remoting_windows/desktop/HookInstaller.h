@@ -48,9 +48,11 @@ namespace remoting
 
    //private:
       static ::string_literal LIBRARY_NAME;
+      
+#ifdef WINDOWS
       static ::string_literal SET_HOOK_FUNCTION_NAME;
       static ::string_literal UNSET_HOOK_FUNCTION_NAME;
-
+#endif
       ::subsystem::DynamicLibrary m_library;
       void * m_pSetHook;
       void * m_pUnSetHook;

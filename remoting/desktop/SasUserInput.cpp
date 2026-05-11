@@ -88,7 +88,7 @@ namespace remoting
                delPressed = down;
          }
       }
-
+#ifdef WINDOWS
       if (m_ctrlPressed && m_altPressed && delPressed && m_underVista)
       {
          DWORD sessionId = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);
@@ -99,6 +99,7 @@ namespace remoting
             return;
          }
       }
+#endif
       m_client->setKeyboardEvent(keySym, down);
    }
 

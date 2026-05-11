@@ -89,8 +89,8 @@ namespace remoting_client
       auto ini = file()->get_ini(path);
 
       ::string strHost = ini["host"];
-      int iNumerator = ini["numerator"].as_int();
-      int iDenominator = ini["denominator"].as_int();
+      int iNumerator = ini["numerator"].as_i32();
+      int iDenominator = ini["denominator"].as_i32();
       m_pconnectionconfig->enableFullscreen(true);
       m_pconnectionconfig->requestShapeUpdates(true);
       m_pconnectionconfig->ignoreShapeUpdates(false);

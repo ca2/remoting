@@ -189,15 +189,15 @@ namespace remoting_client
         //
         // It is implementation of CoreEventsAdapter functions.
         //
-        void onBell();
+        void onBell() override;
         void onConnecting(int iPhase) override;
         void onConnected(::remoting::RfbOutputGate *output) override;
-        void onDisconnect(const ::scoped_string & scopedstrMessage);
-        void onAuthError(const ::remoting_client::AuthException *exception);
-        void onError(const ::subsystem::Exception *exception);
-        void onFramebufferUpdate(const ::innate_subsystem::Framebuffer *pframebuffer, const ::int_rectangle &  rectangle);
-        void onFramebufferPropChange(const ::innate_subsystem::Framebuffer *pframebuffer);
-        void onCutText(const ::scoped_string & cutText);
+        void onDisconnect(const ::scoped_string & scopedstrMessage) override;
+        void onAuthError(const ::remoting_client::AuthException *exception) override;
+        void onError(const ::subsystem::Exception *exception) override;
+        void onFramebufferUpdate(const ::innate_subsystem::Framebuffer *pframebuffer, const ::int_rectangle &  rectangle) override;
+        void onFramebufferPropChange(const ::innate_subsystem::Framebuffer *pframebuffer) override;
+        void onCutText(const ::scoped_string & cutText) override;
 
         int translateAccelToTB(int val);
         //void applyScreenChanges(bool isFullScreen);

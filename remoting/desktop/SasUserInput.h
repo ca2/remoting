@@ -43,19 +43,19 @@ namespace remoting
 
       virtual void initialize_sas_user_input(UserInputClient *client, ::subsystem::LogWriter * plogwriter);
 
-      virtual void sendInit(BlockingGate *pblockinggate);
-      virtual void setNewClipboard(const ::scoped_string &newClipboard);
-      virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag);
-      virtual void setKeyboardEvent(::u32 keySym, bool down);
-      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
-      virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle);
-      virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber);
-      virtual ::int_rectangle_array_base getDisplaysCoords();
-      virtual void getNormalizedRect(::int_rectangle & rectangle);
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle);
-      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
-      virtual void getApplicationRegion(const ::process_identifier & processidentifier, Region & region);
-      virtual bool isApplicationInFocus(const ::process_identifier & processidentifier);
+      void sendInit(BlockingGate *pblockinggate) override;
+      void setNewClipboard(const ::scoped_string &newClipboard) override;
+      void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag) override;
+      void setKeyboardEvent(::u32 keySym, bool down) override;
+      void getCurrentUserInfo(::string &desktopName, ::string &userName) override;
+      void getPrimaryDisplayCoords(::int_rectangle & rectangle) override;
+      void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber) override;
+      ::int_rectangle_array_base getDisplaysCoords() override;
+      void getNormalizedRect(::int_rectangle & rectangle) override;
+      void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle) override;
+      ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) override;
+      void getApplicationRegion(const ::process_identifier & processidentifier, Region & region) override;
+      bool isApplicationInFocus(const ::process_identifier & processidentifier) override;
 
    private:
       UserInputClient *m_client;

@@ -27,10 +27,12 @@
 #include "HooksUpdateDetector.h"
 
 #include "acme/operating_system/windows/_.h"
+#ifdef WINDOWS
 #include "subsystem_windows/node/MessageWindow.h"
 #include "subsystem_windows/node/UipiControl.h"
-#include "subsystem/node/OperatingSystem.h"
 #include "subsystem_windows/node/UipiControl.h"
+#endif
+#include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/OperatingSystem.h"
 
 namespace remoting
@@ -60,8 +62,12 @@ namespace remoting
 //       m_pmessagewindowTarget = new MessageWindow(hinst, "HookTargetWinClassName");
 //    }
 
-   HooksUpdateDetector::HooksUpdateDetector():
-   m_pmessagewindowTarget(0),m_hookInstaller(0)
+   HooksUpdateDetector::HooksUpdateDetector()//:
+//#ifdef WINDOWS
+//   m_pmessagewindowTarget(0),
+//m_pparthookInstaller(0)
+//#endif
+
    {
    }
 
@@ -70,14 +76,18 @@ namespace remoting
       terminate();
       wait();
 
-      if (m_hookInstaller != 0)
-      {
-         delete m_hookInstaller;
-      }
-      if (m_pmessagewindowTarget != 0)
-      {
-         delete m_pmessagewindowTarget;
-      }
+#ifdef WINDOWS
+//      if (m_hookInstaller != 0)
+//      {
+//         delete m_hookInstaller;
+//      }
+      m_pparticleHookInstalled.release();
+      //if (m_pmessagewindowTarget != 0)
+      //{
+        // delete m_pmessagewindowTarget;
+      //}
+      m_pmessagewindowTarget.release();
+#endif
    }
 
 
@@ -94,9 +104,11 @@ namespace remoting
 #else
       m_plogwriter->debug("Loading the screenhook library for 64bit system");
 #endif
+#ifdef WINDOWS
+
       try
       {
-         m_hookInstaller = new HookInstaller();
+            m_pparticleHookInstalled = createø("::remoting::HookInstaller");
       }
       catch (::exception &e)
       {
@@ -108,14 +120,17 @@ namespace remoting
       //m_pmessagewindowTarget = new MessageWindow(hinst, "HookTargetWinClassName");
       construct_newø(m_pmessagewindowTarget);
       m_pmessagewindowTarget->createMessageWindow("HookTargetWinClassName");
+#endif
    }
 
    void HooksUpdateDetector::onTerminate()
    {
+#ifdef WINDOWS
       if (m_pmessagewindowTarget != 0)
       {
          PostMessage((HWND)m_pmessagewindowTarget->_HWND(), WM_QUIT, 0, 0);
       }
+#endif
       m_initWaiter.set_happening();
    }
 
@@ -156,24 +171,29 @@ namespace remoting
 
    void HooksUpdateDetector::broadcastMessage(::u32 scopedstrMessage)
    {
+      
+#ifdef WINDOWS
       HWND hwndFound = FindWindowEx(HWND_MESSAGE, 0, 0, 0);
       while (hwndFound)
       {
          PostMessage(hwndFound, scopedstrMessage, 0, 0);
          hwndFound = GetNextWindow(hwndFound, GW_HWNDNEXT);
       }
+#endif
    }
 
    void HooksUpdateDetector::execute()
    {
       m_plogwriter->information("Hooks update detector thread id = {}", getThreadId());
-
+#ifdef WINDOWS
       if (!isTerminating() && m_pmessagewindowTarget != 0)
       {
          m_pmessagewindowTarget->createMessageWindow();
          m_plogwriter->information("Hooks target window has been created (hwnd = {})", (::iptr)m_pmessagewindowTarget->_HWND());
       }
-
+#endif
+      
+#ifdef WINDOWS
       try
       {
          ::subsystem_windows::UipiControl uipiControl(m_plogwriter);
@@ -207,14 +227,14 @@ namespace remoting
             }
          }
       }
-
+#endif
       start32Loader();
 
       if (!isTerminating())
       {
          m_plogwriter->information("Hooks update detector has been successfully initialized");
       }
-
+#ifdef WINDOWS
       HWND hwndMessageWindowTarget = (HWND) m_pmessagewindowTarget->_HWND();
 
       UINT message_SPEC_IPC_CODE = MainSubsystem().get_SPEC_IPC_CODE();
@@ -264,6 +284,7 @@ namespace remoting
          m_plogwriter->error("{}", e.get_message());
       }
       m_plogwriter->information("Hooks update detector has been terminated.");
+#endif
    }
 
 

@@ -80,7 +80,7 @@ namespace remoting
 
          if (boundsRectT <= estimatedFragTime)
          {
-            __int64 realBoundsRectTime = grabOneRect(rectangleBounds, grabber);
+            ::i64 realBoundsRectTime = grabOneRect(rectangleBounds, grabber);
             m_plogwriter->debug("Bounds rectangle grab has been preferred:"
                                 " bounds rectangle time = {},"
                                 " estimated fragment time = {},"
@@ -92,7 +92,7 @@ namespace remoting
          }
          else
          {
-            __int64 realFragTime = grabFragments(rectanglea, grabber);
+            ::i64 realFragTime = grabFragments(rectanglea, grabber);
             m_plogwriter->debug("Fragment grab has been preferred:"
                                 " fragment time = {}, estimated fragment time = {},"
                                 " estimated bounds rectangle time = {}",
@@ -201,7 +201,7 @@ namespace remoting
 
    bool GrabOptimizator::isAlikeToFragments(const ::int_rectangle_array_base & rectanglea) { return rectanglea.size() >= 10; }
 
-   __int64 GrabOptimizator::grabWhole(ScreenDriver *grabber)
+   ::i64 GrabOptimizator::grabWhole(ScreenDriver *grabber)
    {
       // FIXME: WARNING!!! The microsoft API usage!!!
       LARGE_INTEGER timeBegin, timeEnd;
@@ -224,7 +224,7 @@ namespace remoting
       }
    }
 
-   __int64 GrabOptimizator::grabOneRect(const ::int_rectangle & rectangle, ScreenDriver *grabber)
+   ::i64 GrabOptimizator::grabOneRect(const ::int_rectangle & rectangle, ScreenDriver *grabber)
    {
       int rectS = rectangle.area();
       ASSERT(rectS != 0);
@@ -241,7 +241,7 @@ namespace remoting
 
       if (timerResult1 && timerResult2)
       {
-         __int64 realOneRectTime = timeEnd.QuadPart - timeBegin.QuadPart;
+         ::i64 realOneRectTime = timeEnd.QuadPart - timeBegin.QuadPart;
          if (isEnoughForWholeStats(rectangle))
          {
             // Scale the time as the whole grabbing.
@@ -283,7 +283,7 @@ namespace remoting
       m_wholeTElements.erase(iter);
    }
 
-   __int64 GrabOptimizator::grabFragments(const ::int_rectangle_array_base & rectanglea, ScreenDriver *grabber)
+   ::i64 GrabOptimizator::grabFragments(const ::int_rectangle_array_base & rectanglea, ScreenDriver *grabber)
    {
       // FIXME: WARNING!!! The microsoft API usage!!!
       LARGE_INTEGER timeBegin, timeEnd;
@@ -302,7 +302,7 @@ namespace remoting
 
       if (timerResult1 && timerResult2)
       {
-         __int64 fragT = timeEnd.QuadPart - timeBegin.QuadPart;
+         ::i64 fragT = timeEnd.QuadPart - timeBegin.QuadPart;
 
          // To update the statistic wholeT must be calculated at least once.
          if (isAlikeToFragments(rectanglea) && m_wholeTElements.size() > 0)
