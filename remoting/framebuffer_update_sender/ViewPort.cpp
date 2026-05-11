@@ -74,22 +74,22 @@ namespace remoting
       switch (m_viewportstate.m_mode)
       {
          case ViewPortState::APPLICATION:
-            _ASSERT(m_pdesktop != 0);
+            ASSERT(m_pdesktop != 0);
             m_pdesktop->getApplicationRegion(m_viewportstate.m_processId, m_regionApp);
             // Also, the view port rectangle will be FULL_DESKTOP.
          case ViewPortState::FULL_DESKTOP:
             rectangle = sizeFramebuffer;
             break;
          case ViewPortState::PRIMARY_DISPLAY:
-            _ASSERT(m_pdesktop != 0);
+            ASSERT(m_pdesktop != 0);
             m_pdesktop->getPrimaryDesktopCoords(rectangle);
             break;
          case ViewPortState::DISPLAY_NUMBER:
-            _ASSERT(m_pdesktop != 0);
+            ASSERT(m_pdesktop != 0);
             m_pdesktop->getDisplayNumberCoords(rectangle, m_viewportstate.m_displayNumber);
             break;
          case ViewPortState::WINDOW_RECT:
-            _ASSERT(m_pdesktop != 0);
+            ASSERT(m_pdesktop != 0);
             if (!m_viewportstate.m_windowIsResolved)
             {
                // Try resolve a window name to a hwnd.
@@ -111,7 +111,7 @@ namespace remoting
             break;
          case ViewPortState::ARBITRARY_RECT:
             rectangle = m_viewportstate.m_arbitraryRect;
-            _ASSERT(m_pdesktop != 0);
+            ASSERT(m_pdesktop != 0);
             m_pdesktop->getNormalizedRect(rectangle);
             break;
       }

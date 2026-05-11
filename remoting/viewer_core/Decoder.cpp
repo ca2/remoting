@@ -86,7 +86,7 @@ namespace remoting_client
             return true;
          default:
             // if the encoding type is unknown, then generate assertions.
-            _ASSERT(true);
+            ASSERT(true);
             return true;
       }
    }

@@ -124,7 +124,7 @@ void WinEventLog::reportEvent(unsigned int messageId,
 
   // Format the original string.
   int count = _vsctprintf(fmt, argList);
-  _ASSERT(count >= 0);
+  ASSERT(count >= 0);
   ::array_base<TCHAR> formattedStringBuff(count + 1);
   TCHAR *formattedString = &formattedStringBuff.front();
   _vstprintf(formattedString, fmt, argList);

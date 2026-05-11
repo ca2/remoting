@@ -23,6 +23,7 @@
 //
 #include "framework.h"
 #include "RfbKeySym.h"
+#include "acme/constant/user_key.h"
 #include "subsystem/_common_header.h"
 #include "innate_subsystem/platform/subsystem.h"
 #include "innate_subsystem/gui/KeyboardLayout.h"
@@ -45,23 +46,23 @@ namespace remoting
    {
    }
 
-   void RfbKeySym::sendModifier(unsigned char virtKey, bool down)
+   void RfbKeySym::sendModifier(::user::enum_key ekeyModifier, bool down)
    {
       unsigned int rfbSym;
-      bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, virtKey);
+      bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, ekeyModifier);
       ASSERT(success);
       sendKeySymEvent(rfbSym, down);
 
-      m_keyboardstate.m_viewerKeyState[virtKey] = down ? 128 : 0;
-      virtKey = distinguishLeftRightModifier(virtKey, false);
-      m_keyboardstate.m_serverKeyState[virtKey] = down ? 128 : 0;
+      m_keyboardstate.m_viewerKeyState[ekeyModifier] = down ? 128 : 0;
+      ekeyModifier = distinguishLeftRightModifier(ekeyModifier, false);
+      m_keyboardstate.m_serverKeyState[ekeyModifier] = down ? 128 : 0;
    }
 
-   void RfbKeySym::processKeyEvent(unsigned short virtKey,
+   void RfbKeySym::processKeyEvent(::user::enum_key ekey,
                                    unsigned int addKeyData)
    {
       m_plogwriter->debug("processKeyEvent() function called: virtKey = %#4.4x, addKeyData"
-                 " = %#x", (unsigned int)virtKey, addKeyData);
+                 " = %#x", (unsigned int)ekey, addKeyData);
 
 #ifdef WINDOWS
        // Ignoring win key (when fullscreen mode is off).
@@ -77,13 +78,20 @@ namespace remoting
       m_plogwriter->debug("down = %u", (unsigned int)down);
 
 
-      bool ctrlPressed = m_keyboardstate.isPressed(VK_LCONTROL) ||
-                         m_keyboardstate.isPressed(VK_RCONTROL);
+//      bool ctrlPressed = m_keyboardstate.isPressed(VK_LCONTROL) ||
+  //                       m_keyboardstate.isPressed(VK_RCONTROL);
+      bool ctrlPressed = m_keyboardstate.isPressed(::user::e_key_left_control) ||
+                         m_keyboardstate.isPressed(::user::e_key_right_control);
+      //bool altPressed =
+        // m_keyboardstate.isPressed(VK_LMENU) || m_keyboardstate.isPressed(VK_RMENU);
       bool altPressed =
-         m_keyboardstate.isPressed(VK_LMENU) || m_keyboardstate.isPressed(VK_RMENU);
+         m_keyboardstate.isPressed(::user::e_key_left_alt) || m_keyboardstate.isPressed(::user::e_key_right_alt);
+//      bool shiftPressed =
+  //       m_keyboardstate.isPressed(VK_LSHIFT) || m_keyboardstate.isPressed(VK_RSHIFT);
       bool shiftPressed =
-         m_keyboardstate.isPressed(VK_LSHIFT) || m_keyboardstate.isPressed(VK_RSHIFT);
-      bool capsToggled = m_keyboardstate.isPressed(VK_CAPITAL);
+      m_keyboardstate.isPressed(::user::e_key_left_shift) || m_keyboardstate.isPressed(::user::e_key_right_shift);
+      //bool capsToggled = m_keyboardstate.isPressed(VK_CAPITAL);
+      bool capsToggled = m_keyboardstate.isPressed(::user::e_key_capslock);
       m_plogwriter->debug("ctrl = %u, alt = %u, shift = %u, caps toggled = %u",
         (unsigned int)ctrlPressed,
         (unsigned int)altPressed,
@@ -91,16 +99,16 @@ namespace remoting
         (unsigned int)capsToggled);
 
       // Without distinguishing between left and right modifiers.
-      m_keyboardstate.m_viewerKeyState[virtKey & 255] = down ? 128 : 0;
-      m_keyboardstate.m_viewerKeyState[VK_CAPITAL & 255] = capsToggled ? 1 : 0;
+      m_keyboardstate.m_viewerKeyState[constrain(ekey, ::user::e_key_none, ::user::e_key_count)] = down ? 128 : 0;
+      m_keyboardstate.m_viewerKeyState[::user::e_key_capslock] = capsToggled ? 1 : 0;
 
       bool extended = (addKeyData & 0x1000000) != 0; // 24 bit
-      virtKey = distinguishLeftRightModifier((unsigned char)virtKey, extended);
+      ekey = distinguishLeftRightModifier(ekey, extended);
 
       // With distinguishing between left and right modifiers.
-      m_keyboardstate.m_serverKeyState[virtKey & 255] = down ? 128 : 0;
+      m_keyboardstate.m_serverKeyState[constrain(ekey, ::user::e_key_none, ::user::e_key_count)] = down ? 128 : 0;
       unsigned int rfbSym;
-      if (m_keyMap.virtualCodeToKeySym(&rfbSym, virtKey & 255)) {
+      if (m_keyMap.virtualCodeToKeySym(&rfbSym, constrain(ekey, ::user::e_key_none, ::user::e_key_count))) {
          // Special case for VK_RETURN that have no self numpad code.
          // FIXME: May be replace this code to the virtualCodeToKeySym() function?
          if (rfbSym == XK_Return && extended) {
@@ -112,7 +120,7 @@ namespace remoting
          sendKeySymEvent(rfbSym, down);
       } else {
          ::wstring chars;
-         bool needReleaseModifiers = vkCodeToString(virtKey, down, &chars);
+         bool needReleaseModifiers = vkCodeToString(ekey, down, &chars);
          if (ctrlPressed && altPressed && needReleaseModifiers) {
             m_plogwriter->debug("Release the ctrl and alt"
               " modifiers before send the key event(s)");
@@ -191,12 +199,12 @@ namespace remoting
    //    return false;
    // }
 
-   bool RfbKeySym::vkCodeToString(unsigned short virtKey, bool down, ::wstring *res)
+   bool RfbKeySym::vkCodeToString(::user::enum_key ekey, bool down, ::wstring *res)
    {
 
       auto pkeyboardlayout = InnateSubsystem().keyboard_layout();
 
-      return pkeyboardlayout->vkCodeToString(virtKey, down, res, &m_keyboardstate);
+      return pkeyboardlayout->vkCodeToString(ekey, down, res, &m_keyboardstate);
 
       // HKL currentLayout = GetKeyboardLayout(0);
       //
@@ -282,8 +290,8 @@ namespace remoting
          if (m_keyboardstate.m_allowProcessDoubleChar)
          {
             m_keyboardstate.m_allowProcessDoubleChar = false;
-            bool ctrlPressed = m_keyboardstate.isPressed(VK_LCONTROL) || m_keyboardstate.isPressed(VK_RCONTROL);
-            bool altPressed = m_keyboardstate.isPressed(VK_LMENU) || m_keyboardstate.isPressed(VK_RMENU);
+            bool ctrlPressed = m_keyboardstate.isPressed(::user::e_key_left_control) || m_keyboardstate.isPressed(::user::e_key_right_control);
+            bool altPressed = m_keyboardstate.isPressed(::user::e_key_left_alt) || m_keyboardstate.isPressed(::user::e_key_right_alt);
             if (ctrlPressed && altPressed) {
                m_plogwriter->debug("Release the ctrl and alt"
                  " modifiers before send dead combination");
@@ -324,27 +332,26 @@ namespace remoting
       m_plogwriter->information("Process focus loss in the RfbKeySym class");
 
       // Send a modifier key up only if the key is down.
-      checkAndSendDiff(VK_CONTROL, 0);
-      checkAndSendDiff(VK_RCONTROL, 0);
-      checkAndSendDiff(VK_LCONTROL, 0);
-      checkAndSendDiff(VK_MENU, 0);
-      checkAndSendDiff(VK_LMENU, 0);
-      checkAndSendDiff(VK_RMENU, 0);
-      checkAndSendDiff(VK_SHIFT, 0);
-      checkAndSendDiff(VK_RSHIFT, 0);
-      checkAndSendDiff(VK_LSHIFT, 0);
-      checkAndSendDiff(VK_LWIN, 0);
-      checkAndSendDiff(VK_RWIN, 0);
-
+      checkAndSendDiff(::user::e_key_control, 0);
+      checkAndSendDiff(::user::e_key_right_control, 0);
+      checkAndSendDiff(::user::e_key_left_control, 0);
+      checkAndSendDiff(::user::e_key_alt, 0);
+      checkAndSendDiff(::user::e_key_left_alt, 0);
+      checkAndSendDiff(::user::e_key_right_alt, 0);
+      checkAndSendDiff(::user::e_key_shift, 0);
+      checkAndSendDiff(::user::e_key_left_shift, 0);
+      checkAndSendDiff(::user::e_key_right_shift, 0);
+      checkAndSendDiff(::user::e_key_left_command, 0);
+      checkAndSendDiff(::user::e_key_right_command, 0);
 
    }
 
    void RfbKeySym::sendCtrlAltDel()
    {
-      releaseModifier(VK_RWIN);
-      releaseModifier(VK_LWIN);
-      releaseModifier(VK_LSHIFT);
-      releaseModifier(VK_RSHIFT);
+      releaseModifier(::user::e_key_right_command);
+      releaseModifier(::user::e_key_left_command);
+      releaseModifier(::user::e_key_left_shift);
+      releaseModifier(::user::e_key_right_shift);
       releaseMeta();
 
       sendVerbatimKeySymEvent(XK_Control_L, true);
@@ -355,10 +362,10 @@ namespace remoting
       sendVerbatimKeySymEvent(XK_Control_L, false);
 
       restoreMeta();
-      restoreModifier(VK_RSHIFT);
-      restoreModifier(VK_LSHIFT);
-      restoreModifier(VK_LWIN);
-      restoreModifier(VK_RWIN);
+      restoreModifier(::user::e_key_right_shift);
+      restoreModifier(::user::e_key_left_shift);
+      restoreModifier(::user::e_key_left_command);
+      restoreModifier(::user::e_key_right_command);
    }
 
    void RfbKeySym::setWinKeyIgnore(bool winKeyIgnore)
@@ -368,26 +375,26 @@ namespace remoting
 
    void RfbKeySym::releaseModifiers()
    {
-      releaseModifier(VK_LCONTROL);
-      releaseModifier(VK_RCONTROL);
-      releaseModifier(VK_LMENU);
-      releaseModifier(VK_RMENU);
+      releaseModifier(::user::e_key_left_control);
+      releaseModifier(::user::e_key_right_control);
+      releaseModifier(::user::e_key_left_alt);
+      releaseModifier(::user::e_key_right_alt);
    }
 
    void RfbKeySym::restoreModifiers()
    {
-      restoreModifier(VK_LCONTROL);
-      restoreModifier(VK_RCONTROL);
-      restoreModifier(VK_LMENU);
-      restoreModifier(VK_RMENU);
+      restoreModifier(::user::e_key_left_control);
+      restoreModifier(::user::e_key_right_control);
+      restoreModifier(::user::e_key_left_alt);
+      restoreModifier(::user::e_key_right_alt);
    }
 
-   void RfbKeySym::releaseModifier(unsigned char modifier)
+   void RfbKeySym::releaseModifier(::user::enum_key ekeyModifier)
    {
       unsigned int rfbSym;
-      if (m_keyboardstate.isPressed(modifier)) {
-         bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, modifier);
-         _ASSERT(success);
+      if (m_keyboardstate.isPressed(ekeyModifier)) {
+         bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, ekeyModifier);
+         ASSERT(success);
          sendKeySymEvent(rfbSym, false);
       }
    }
@@ -416,30 +423,30 @@ namespace remoting
       }
    }
 
-   void RfbKeySym::restoreModifier(unsigned char modifier)
+   void RfbKeySym::restoreModifier(::user::enum_key ekeyModifier)
    {
       unsigned int rfbSym;
-      if (m_keyboardstate.isPressed(modifier))
+      if (m_keyboardstate.isPressed(ekeyModifier))
       {
-         bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, modifier);
-         _ASSERT(success);
+         bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, ekeyModifier);
+         ASSERT(success);
          sendKeySymEvent(rfbSym, true);
       }
    }
 
-   void RfbKeySym::checkAndSendDiff(unsigned char virtKey, unsigned char state)
+   void RfbKeySym::checkAndSendDiff(::user::enum_key ekey, unsigned char state)
    {
       bool testedState = (state & 128) != 0;
-      m_keyboardstate.m_viewerKeyState[virtKey] = testedState ? 128 : 0;
-      virtKey = distinguishLeftRightModifier(virtKey, false);
+      m_keyboardstate.m_viewerKeyState[ekey] = testedState ? 128 : 0;
+      ekey = distinguishLeftRightModifier(ekey, false);
 
-      bool srvState = (m_keyboardstate.m_serverKeyState[virtKey] & 128) != 0;
-      m_keyboardstate.m_serverKeyState[virtKey] = testedState ? 128 : 0;
+      bool srvState = (m_keyboardstate.m_serverKeyState[ekey] & 128) != 0;
+      m_keyboardstate.m_serverKeyState[ekey] = testedState ? 128 : 0;
 
       if (testedState != srvState) {
          unsigned int rfbSym;
-         bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, virtKey);
-         _ASSERT(success);
+         bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, ekey);
+         ASSERT(success);
          sendKeySymEvent(rfbSym, testedState);
       }
    }
@@ -470,18 +477,19 @@ namespace remoting
       m_extKeySymListener->onRfbKeySymEvent(rfbKeySym, down);
    }
 
-   unsigned char RfbKeySym::distinguishLeftRightModifier(unsigned char virtKey,
+::user::enum_key RfbKeySym::distinguishLeftRightModifier(::user::enum_key ekeyModifier,
                                                          bool isRightHint)
    {
-      if (virtKey == VK_CONTROL) {
-         virtKey = isRightHint ? VK_RCONTROL : VK_LCONTROL;
+      ::user::enum_key ekey = ekeyModifier;
+      if (ekeyModifier == ::user::e_key_control) {
+         ekey = isRightHint ? ::user::e_key_right_control : ::user::e_key_left_control;
       }
-      if (virtKey == VK_MENU) {
-         virtKey = isRightHint ? VK_RMENU : VK_LMENU;
+      if (ekeyModifier == ::user::e_key_alt) {
+         ekey = isRightHint ? ::user::e_key_right_alt : ::user::e_key_left_alt;
       }
-      if (virtKey == VK_SHIFT) {
-         virtKey = isRightHint ? VK_RSHIFT : VK_LSHIFT;
+      if (ekeyModifier == ::user::e_key_shift) {
+         ekey = isRightHint ? ::user::e_key_right_shift : ::user::e_key_left_shift;
       }
-      return virtKey;
+      return ekey;
    }
 } // namespace remoting

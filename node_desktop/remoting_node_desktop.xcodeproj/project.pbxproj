@@ -6,9 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		9AD3F18F2FB1924800CB9A78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AD3F1832FB191C200CB9A78 /* remoting.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A373EFD2F81647000E892B1;
+			remoteInfo = remoting;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		9A3743E32F816D0900E892B1 /* remoting_common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_common.xcodeproj; path = ../remoting_common/remoting_common.xcodeproj; sourceTree = SOURCE_ROOT; };
-		9A6BC8B62F8161D4000A4200 /* libremoting_node.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_node.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A6BC8B62F8161D4000A4200 /* libremoting_node_desktop.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_node_desktop.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AD3F1832FB191C200CB9A78 /* remoting.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting.xcodeproj; path = /Volumes/hapid/remoting/main/source/remoting/remoting/remoting.xcodeproj; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -22,17 +32,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9A26B2242F816E0A0047ECA2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		9A6BC8AD2F8161D4000A4200 = {
 			isa = PBXGroup;
 			children = (
-				9A3743E32F816D0900E892B1 /* remoting_common.xcodeproj */,
+				9AD3F1832FB191C200CB9A78 /* remoting.xcodeproj */,
 				9A6BC8B72F8161D4000A4200 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,7 +43,14 @@
 		9A6BC8B72F8161D4000A4200 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A6BC8B62F8161D4000A4200 /* libremoting_node.dylib */,
+				9A6BC8B62F8161D4000A4200 /* libremoting_node_desktop.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9AD3F1842FB191C200CB9A78 /* Products */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -58,9 +68,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		9A6BC8B52F8161D4000A4200 /* remoting_node */ = {
+		9A6BC8B52F8161D4000A4200 /* remoting_node_desktop */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_node" */;
+			buildConfigurationList = 9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_node_desktop" */;
 			buildPhases = (
 				9A6BC8B22F8161D4000A4200 /* Headers */,
 				9A6BC8B32F8161D4000A4200 /* Sources */,
@@ -69,12 +79,13 @@
 			buildRules = (
 			);
 			dependencies = (
+				9AD3F1902FB1924800CB9A78 /* PBXTargetDependency */,
 			);
-			name = remoting_node;
+			name = remoting_node_desktop;
 			packageProductDependencies = (
 			);
 			productName = remoting_node;
-			productReference = 9A6BC8B62F8161D4000A4200 /* libremoting_node.dylib */;
+			productReference = 9A6BC8B62F8161D4000A4200 /* libremoting_node_desktop.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -91,7 +102,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_node" */;
+			buildConfigurationList = 9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_node_desktop" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -105,13 +116,13 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 9A26B2242F816E0A0047ECA2 /* Products */;
-					ProjectRef = 9A3743E32F816D0900E892B1 /* remoting_common.xcodeproj */;
+					ProductGroup = 9AD3F1842FB191C200CB9A78 /* Products */;
+					ProjectRef = 9AD3F1832FB191C200CB9A78 /* remoting.xcodeproj */;
 				},
 			);
 			projectRoot = "";
 			targets = (
-				9A6BC8B52F8161D4000A4200 /* remoting_node */,
+				9A6BC8B52F8161D4000A4200 /* remoting_node_desktop */,
 			);
 		};
 /* End PBXProject section */
@@ -125,6 +136,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9AD3F1902FB1924800CB9A78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = remoting;
+			targetProxy = 9AD3F18F2FB1924800CB9A78 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9A6BC8B82F8161D4000A4200 /* Debug */ = {
@@ -273,7 +292,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_node" */ = {
+		9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_node_desktop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A6BC8B82F8161D4000A4200 /* Debug */,
@@ -282,7 +301,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_node" */ = {
+		9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_node_desktop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A6BC8BB2F8161D4000A4200 /* Debug */,

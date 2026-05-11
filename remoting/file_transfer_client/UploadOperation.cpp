@@ -397,7 +397,7 @@ namespace remoting
                         terminate();
                      } // if not terminating
                      return ;
-                  default: _ASSERT(false);
+                  default: ASSERT(false);
                } // switch (action)
             } // if file already exists
          } // for all files in remote files
@@ -425,7 +425,7 @@ namespace remoting
 
       void UploadOperation::sendFileDataChunk()
       {
-         _ASSERT(m_preadable != NULL);
+         ASSERT(m_preadable != NULL);
 
          if (m_timeLastRequest.elapsed() > 300_s) {
             m_bufferSize /= 2;
@@ -445,7 +445,7 @@ namespace remoting
          unsigned int read = 0;
          try {
             size_t portion = m_preadable->read(buffer.data(), m_bufferSize);
-            _ASSERT((unsigned int)portion == portion);
+            ASSERT((unsigned int)portion == portion);
             read = (unsigned int)portion;
          } catch (EOFException) {
 

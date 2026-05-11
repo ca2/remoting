@@ -313,7 +313,7 @@ bool ::file::item::renameTo(const ::file::path & pathTarget, const ::file::path 
 
 bool ::file::item::setLastModified(long long time)
 {
-  _ASSERT(time >= 0);
+  ASSERT(time >= 0);
 
   HANDLE hfile = CreateFile(m_path.windows_path(),
                             GENERIC_READ | GENERIC_WRITE,

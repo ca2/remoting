@@ -171,7 +171,7 @@ namespace remoting_windows
 
    void Win8DeskDuplication::processMoveRects(size_t moveCount, size_t out)
    {
-      _ASSERT(moveCount <= m_moveRects.size());
+      ASSERT(moveCount <= m_moveRects.size());
       ::int_rectangle destinationRect;
       ::int_rectangle sourceRect;
       ::int_rectangle targetRect = m_targetRects[out];
@@ -198,7 +198,7 @@ namespace remoting_windows
 
    void Win8DeskDuplication::processDirtyRects(size_t dirtyCount, WinD3D11Texture2D *acquiredDesktopImage, size_t out)
    {
-      _ASSERT(dirtyCount <= m_dirtyRects.size());
+      ASSERT(dirtyCount <= m_dirtyRects.size());
 
       ::remoting::Region m_regionChanged;
 

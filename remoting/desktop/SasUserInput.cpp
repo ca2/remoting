@@ -24,16 +24,19 @@
 #include "framework.h"
 #include "SasUserInput.h"
 #include "subsystem/node/OperatingSystem.h"
+#ifdef WINDOWS
 #include "subsystem_windows/node/WTS.h"
 #include "subsystem_windows/platform/subsystem.h"
+#endif
 
 #include "subsystem/platform/subsystem.h"
 #include "subsystem/node/OperatingSystem.h"
 #define XK_MISCELLANY
 #include "remoting/remoting/rfb/keysymdef.h"
+#ifdef WINDOWS
 #include "subsystem_windows/node/WTS.h"
 #include "subsystem_windows/platform/subsystem.h"
-
+#endif
 
 namespace remoting
 {

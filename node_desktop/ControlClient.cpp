@@ -309,7 +309,7 @@ namespace remoting_node_desktop
       m_prfbclientmanager->getClientsInfo(&clients);
 
       m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
-      _ASSERT(clients.size() == (unsigned int)clients.size());
+      ASSERT(clients.size() == (unsigned int)clients.size());
       m_pcontrolgate->writeUInt32((unsigned int)clients.size());
 
       for (auto it = clients.begin(); it != clients.end(); it++)

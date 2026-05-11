@@ -56,7 +56,7 @@ namespace remoting
       } else if (bpp == 32) {
          hextileFunction<unsigned int>(rectangle, pframebuffer);
       } else {
-         _ASSERT(0);
+         ASSERT(0);
       }
    }
 

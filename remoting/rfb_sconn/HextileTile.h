@@ -141,7 +141,7 @@ namespace remoting
    template<class PIXEL_T>
    void HextileTile<PIXEL_T>::analyze()
    {
-      _ASSERT(m_tile && m_width && m_height);
+      ASSERT(m_tile && m_width && m_height);
 
       const PIXEL_T *ptr = m_tile;
       const PIXEL_T *end = &m_tile[m_width * m_height];
@@ -238,7 +238,7 @@ namespace remoting
 
       // Save number of colors in this tile (should be no less than 2)
       int numColors = m_pal.getNumColors();
-      _ASSERT(numColors >= 2);
+      ASSERT(numColors >= 2);
 
       m_background = (PIXEL_T)m_pal.getEntry(0);
       m_flags = e_hextile_any_subrects;
@@ -261,7 +261,7 @@ namespace remoting
    template<class PIXEL_T>
    void HextileTile<PIXEL_T>::encode(unsigned char *dst) const
    {
-      _ASSERT(m_numSubrects && (m_flags & e_hextile_any_subrects));
+      ASSERT(m_numSubrects && (m_flags & e_hextile_any_subrects));
 
       // Zero subrects counter
       unsigned char *numSubrectsPtr = dst;
@@ -284,7 +284,7 @@ namespace remoting
          (*numSubrectsPtr)++;
       }
 
-      _ASSERT(dst - numSubrectsPtr == m_size);
+      ASSERT(dst - numSubrectsPtr == m_size);
    }
 
    

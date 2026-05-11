@@ -26,6 +26,9 @@
 #include "EditPortMappingDialog.h"
 #include "ConfigDialog.h"
 #include "remoting/node_desktop/resource.h"
+#include "acme/constant/user_notification.h"
+
+
 namespace remoting_node
 {
    PortMappingDialog::PortMappingDialog(::remoting_node::Configurator * pconfigurator)
@@ -66,10 +69,10 @@ namespace remoting_node
             break;
          case IDC_MAPPINGS:
             switch (notificationID) {
-            case LBN_SELCHANGE:
+               case ::user::e_notification_list_box_selection_change:
                   onExPortsListBoxSelChange();
                   break;
-            case LBN_DBLCLK:
+               case ::user::e_notification_list_box_double_click:
                   onExPortsListBoxDoubleClick();
                   break;
             }
@@ -92,7 +95,7 @@ namespace remoting_node
 
       for (size_t i = 0; i < m_extraPorts->count(); i++) {
          mappingString = m_extraPorts->at(i)->toString();
-         _ASSERT((int)i == i);
+         ASSERT((int)i == i);
          m_exPortsListBox.insertString((int)i, mappingString);
       }
 

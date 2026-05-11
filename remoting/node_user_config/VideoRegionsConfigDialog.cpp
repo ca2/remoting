@@ -29,6 +29,7 @@
 #include "CommonInputValidation.h"
 #include "remoting/remoting/region/RectSerializer.h"
 #include "subsystem/platform/StringParser.h"
+#include "acme/constant/user_notification.h"
 
 namespace remoting_node
 {
@@ -86,7 +87,7 @@ namespace remoting_node
 
    bool VideoRegionsConfigDialog::onCommand(unsigned int controlID, unsigned int notificationID)
    {
-      if (notificationID == EN_UPDATE) {
+      if (notificationID == ::user::e_notification_edit_update) {
          if (controlID == IDC_VIDEO_CLASS_NAMES || controlID == IDC_VIDEO_RECTS) {
             onVideoRegionsUpdate();
          } else if (controlID == IDC_VIDEO_RECOGNITION_INTERVAL) {
@@ -120,7 +121,7 @@ namespace remoting_node
             textAreaData+=endLine;
          }
          char buffer[32];
-         _itoa(m_pserverconfig->getVideoRecognitionInterval(), buffer, 10);
+         snprintf(buffer, sizeof(buffer), "%d", m_pserverconfig->getVideoRecognitionInterval());
          m_videoRecognitionInterval.setText(buffer);
       }
       m_videoClasses.setText(textAreaData);

@@ -143,7 +143,7 @@ namespace remoting_node
                onConnectToRdpCheckBoxClick();
                break;
          }
-      } else if (notificationID == EN_UPDATE) {
+      } else if (notificationID == ::user::e_notification_edit_update) {
          switch (controlID) {
             case IDC_RFB_PORT:
                onRfbPortUpdate();
@@ -223,7 +223,7 @@ namespace remoting_node
          MainSubsystem().message_box(operating_system_window(),
                     MainSubsystem().StringTable().getString(IDS_SET_PASSWORD_NOTIFICATION),
                     MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT),
-                    MB_ICONSTOP | ::user::e_message_box_ok);
+                                     ::user::e_message_box_icon_stop | ::user::e_message_box_ok);
          return false;
           }
 

@@ -74,14 +74,14 @@ namespace remoting_node
 
       /**
        * Serializes port all mappings in container as byte stream.
-       * @param output output stream for serializing.
+       * @param pdataoutputstream output stream for serializing.
        * @throws ::subsystem::Exception on error.
        */
       void serialize(DataOutputStream * pdataoutputstream) const;
 
       /**
        * Deserializes port mapping container from input stream.
-       * @param input source input stream.
+       * @param pinput source input stream.
        * @throws ::subsystem::Exception on error.
        */
       void deserialize(DataInputStream * pinput);

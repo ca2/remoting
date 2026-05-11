@@ -53,7 +53,7 @@ namespace remoting_client
    {
       auto ecommand = prequest->m_ecommand;
 
-      if (ecommand == e_command_application_start)
+      if (ecommand == e_command_default_start)
       {
 
          MainSubsystem().Sockets().startSockets();
@@ -85,7 +85,7 @@ namespace remoting_client
          //});
 
       }
-      else if (ecommand == e_command_application_started)
+      else if (ecommand == e_command_default_start)
       {
 
          if (!m_bOpenFile)

@@ -110,7 +110,7 @@ namespace remoting_node_desktop
          } catch (::subsystem::SystemException &servEx) {
             reportError(&cmdLine, &servEx);
          } catch (::subsystem::Exception &ex) {
-            _ASSERT(false);
+            ASSERT(false);
             reportError(&cmdLine, ex.get_message());
          }
       }
@@ -266,7 +266,7 @@ namespace remoting_node_desktop
       } else if (cmdLine->stopRequested()) {
          stringId = IDS_FAILED_TO_STOP_SERVICE_FORMAT;
       } else {
-         _ASSERT(false);
+         ASSERT(false);
          return;
       }
 
@@ -275,7 +275,7 @@ namespace remoting_node_desktop
          auto strCaption = MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER);
          ::string text;
          text.formatf(MainSubsystem().StringTable().getString(stringId), scopedstrErrorMessage);
-         MainSubsystem().message_box({}, text, strCaption, ::user::e_message_box_ok | MB_ICONERROR);
+         MainSubsystem().message_box({}, text, strCaption, ::user::e_message_box_ok | ::user::e_message_box_icon_error);
       }
    }
 
@@ -290,14 +290,14 @@ namespace remoting_node_desktop
       } else if (cmdLine->reinstallRequested()) {
          stringId = IDS_SERVICE_REINSTALLED;
       } else {
-         _ASSERT(false);
+         ASSERT(false);
          return;
       }
 
       if (!cmdLine->beSilent()) {
          auto strCaption = MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER);
          auto strText = MainSubsystem().StringTable().getString(stringId);
-         MainSubsystem().message_box({}, strText, strCaption, ::user::e_message_box_ok | MB_ICONINFORMATION);
+         MainSubsystem().message_box({}, strText, strCaption, ::user::e_message_box_ok | ::user::e_message_box_icon_information);
       }
    }
 } // namespace remoting_node_desktop

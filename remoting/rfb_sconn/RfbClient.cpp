@@ -121,7 +121,7 @@ namespace remoting
       else
       {
          // FIXME: This may occur if the close() function has been called.
-         _ASSERT(false);
+         ASSERT(false);
 
          host = "(unknown)";
 
@@ -140,7 +140,7 @@ namespace remoting
          address = paddrLocal->toString();
       } else {
          // FIXME: This may occur if the close() function has been called.
-         _ASSERT(false);
+         ASSERT(false);
 
          address = "(unknown)";
       }
@@ -297,7 +297,7 @@ namespace remoting
             m_plogwriter->error("Error during RFB initialization: {}", e.get_message());
             throw;
          }
-         _ASSERT(m_pdesktop != 0);
+         ASSERT(m_pdesktop != 0);
 
          m_pviewportConst->initDesktopInterface(m_pdesktop);
          m_pviewportDynamic->initDesktopInterface(m_pdesktop);

@@ -76,7 +76,7 @@ namespace remoting_node
    // Configurator *Configurator::getInstance()
    // {
    //    critical_section_lock al(&m_instanceMutex);
-   //    _ASSERT(s_instance != NULL);
+   //    ASSERT(s_instance != NULL);
    //    return s_instance;
    // }
    //

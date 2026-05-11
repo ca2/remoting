@@ -418,7 +418,7 @@ namespace remoting_client
             int preferredEncoding = reinterpret_cast<int>(m_comboboxUseEnc.getItemData(pesii));
             m_pconnectionconfig->setPreferredEncoding(preferredEncoding);
         } else {
-            _ASSERT(pesii >= 0);
+            ASSERT(pesii >= 0);
             m_pconnectionconfig->setPreferredEncoding(::remoting::EncodingDefs::TIGHT);
         }
 

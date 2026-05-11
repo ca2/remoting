@@ -106,16 +106,16 @@ namespace remoting_client
         //
         // Overrides RfbKeySymListener::onRfbKeySymEvent().
         //
-        void onRfbKeySymEvent(unsigned int rfbKeySym, bool down);
+        void onRfbKeySymEvent(unsigned int rfbKeySym, bool down) override;
 
         //
         // Inherited from BaseWindow.
         //
-        bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
+        bool onMessage(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam) override;
         //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
         void onPaint();
-        bool onCreate(void * pCreateStruct);
-        bool onDrawClipboard();
+        bool onCreate(void * pCreateStruct) override;
+        bool onDrawClipboard() override;
         //bool onEraseBackground(HDC hdc); xxx
         bool onDeadChar(::wparam wParam, ::lparam lParam);
         bool onHScroll(::wparam wParam, ::lparam lParam);

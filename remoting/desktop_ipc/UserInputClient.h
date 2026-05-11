@@ -48,22 +48,22 @@ namespace remoting
 
       virtual void initialize_user_input_client(::remoting_node::Configurator * pconfigurator, BlockingGate *pblockinggate, DesktopSrvDispatcher * pdispatcher, ::subsystem::ClipboardListener *pclipboardlistener);
 
-      virtual void sendInit(BlockingGate *pblockinggate);
-      virtual void setNewClipboard(const ::scoped_string &newClipboard);
-      virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag);
-      virtual void setKeyboardEvent(unsigned int keySym, bool down);
-      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
-      virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle);
-      virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber);
-      virtual ::int_rectangle_array_base getDisplaysCoords();
-      virtual void getNormalizedRect(::int_rectangle & rectangle);
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle);
-      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
-      virtual void getApplicationRegion(const ::process_identifier & processidentifier, Region & region);
-      virtual bool isApplicationInFocus(const ::process_identifier & processidentifier);
+      virtual void sendInit(BlockingGate *pblockinggate)  override;
+      virtual void setNewClipboard(const ::scoped_string &newClipboard)  override;
+      virtual void setMouseEvent(const ::int_point pointNewPosition, unsigned char keyFlag)  override;
+      virtual void setKeyboardEvent(unsigned int keySym, bool down)  override;
+      virtual void getCurrentUserInfo(::string &desktopName, ::string &userName)  override;
+      virtual void getPrimaryDisplayCoords(::int_rectangle & rectangle)  override;
+      virtual void getDisplayNumberCoords(::int_rectangle & rectangle, unsigned char dispNumber)  override;
+      virtual ::int_rectangle_array_base getDisplaysCoords()  override;
+      virtual void getNormalizedRect(::int_rectangle & rectangle)  override;
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)  override;
+      virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName)  override;
+      virtual void getApplicationRegion(const ::process_identifier & processidentifier, Region & region)  override;
+      virtual bool isApplicationInFocus(const ::process_identifier & processidentifier)  override;
 
       // To catch a new clipboard
-      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
+      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate)  override;
 
    ///protected:
 

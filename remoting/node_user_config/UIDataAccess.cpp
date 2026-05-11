@@ -34,7 +34,7 @@ namespace remoting_node
 
    bool UIDataAccess::queryValueAsInt(::innate_subsystem::TextBox *textBox, int *value)
    {
-      _ASSERT(textBox != 0);
+      ASSERT(textBox != 0);
 
       ::string textBoxText;
 
@@ -45,7 +45,7 @@ namespace remoting_node
 
    bool UIDataAccess::queryValueAsUInt(::innate_subsystem::TextBox *textBox, unsigned int *value)
    {
-      _ASSERT(textBox != 0);
+      ASSERT(textBox != 0);
 
       ::string textBoxText;
 

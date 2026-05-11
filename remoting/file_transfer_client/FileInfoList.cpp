@@ -191,9 +191,11 @@ namespace remoting
 
          ::pointer < FileInfoList >pcurrent;
          ::pointer < FileInfoList > pprev;
+         
+         REFDBG_THIS(pparticle);
 
          for (unsigned int i = 0; i < fileinfoa.size(); i++) {
-            pcurrent = allocateø FileInfoList(pparticle, *fileinfoa[i]);
+            pcurrent = allocateø ::remoting::file_transfer::FileInfoList (pparticle, *fileinfoa[i]);
             pcurrent->setPrev(pprev);
             if (pprev) {
                pprev->setNext(pcurrent);

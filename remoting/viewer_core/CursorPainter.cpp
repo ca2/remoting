@@ -123,7 +123,7 @@ namespace remoting_client
 
       if (m_isExist) {
          m_plogwriter->error("Error in CursorPainter: painting double copy of cursor.");
-         _ASSERT(true);
+         ASSERT(true);
       }
 
       if (!m_bHideCursor && !m_ignoreShapeUpdates && m_cursorIsMoveable && m_cursor.getDimension().area() != 0) {

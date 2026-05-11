@@ -73,12 +73,12 @@ namespace remoting
          // Inherited from FileTransferEventHandler
          //
 
-         virtual void onFileListReply(DataInputStream * pinput);
-         virtual void onDownloadReply(DataInputStream * pinput);
-         virtual void onDownloadDataReply(DataInputStream * pinput);
-         virtual void onDownloadEndReply(DataInputStream * pinput);
-         virtual void onLastRequestFailedReply(DataInputStream * pinput);
-         virtual void onDirSizeReply(DataInputStream * pinput);
+         virtual void onFileListReply(DataInputStream * pinput) override;
+         virtual void onDownloadReply(DataInputStream * pinput) override;
+         virtual void onDownloadDataReply(DataInputStream * pinput) override;
+         virtual void onDownloadEndReply(DataInputStream * pinput) override;
+         virtual void onLastRequestFailedReply(DataInputStream * pinput) override;
+         virtual void onDirSizeReply(DataInputStream * pinput) override;
 
       //private:
 

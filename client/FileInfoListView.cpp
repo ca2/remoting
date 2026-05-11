@@ -190,17 +190,17 @@ namespace remoting_client
         auto presourceloader = InnateSubsystem().ResourceLoader();
 
         auto picon = presourceloader->loadIconByIntResource(IDI_FILEUP);
-        _ASSERT(picon != NULL);
+        ASSERT(picon != NULL);
         m_pimagelistSmall->addIcon(picon);
         //DestroyIcon(icon);
 
         picon = presourceloader->loadIconByIntResource(IDI_FOLDER_ICON);
-        _ASSERT(picon != NULL);
+        ASSERT(picon != NULL);
         m_pimagelistSmall->addIcon( picon);
         //DestroyIcon(icon);
 
         picon = presourceloader->loadIconByIntResource(IDI_FILE_ICON);
-        _ASSERT(picon != NULL);
+        ASSERT(picon != NULL);
         m_pimagelistSmall->addIcon(picon);
 //        DestroyIcon(icon);
     }
@@ -323,7 +323,7 @@ namespace remoting_client
             }
                 // It's unknown column.
             default:
-                _ASSERT(false);
+                ASSERT(false);
                 return 0;
         }
     }

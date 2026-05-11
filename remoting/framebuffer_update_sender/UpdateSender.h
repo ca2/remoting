@@ -176,7 +176,7 @@ namespace remoting
       // Listener function which implements RfbDispatcherListener. It will be
       // called on receiving client messages if we registered as a handler for
       // corresponding RFB scopedstrMessage types.
-      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input);
+      virtual void onRequest(unsigned int reqCode, ::remoting::RfbInputGate *input) override;
 
       // Handlers for individual RFB client messages. Called by onRequest().
       void readUpdateRequest(::remoting::RfbInputGate *io);
@@ -190,8 +190,8 @@ namespace remoting
       void addUpdateContainer(const UpdateContainer & updatecontainer);
 
       // The sender thread.
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void execute() override;
+      virtual void onTerminate() override;
 
       // Check cursor pointPosition for changing and store it to the m_cursorPos.
       // Return true value if cursor pointPosition has been changed.

@@ -374,9 +374,9 @@
 !define MB_ICONASTERISK             0x00000040
 !define MB_USERICON                 0x00000080
 !define MB_ICONWARNING              ${::user::e_message_box_icon_exclamation}
-!define MB_ICONERROR                ${MB_ICONHAND}
+!define ::user::e_message_box_icon_error                ${MB_ICONHAND}
 
-!define MB_ICONINFORMATION          ${MB_ICONASTERISK}
+!define ::user::e_message_box_icon_information          ${MB_ICONASTERISK}
 !define ::user::e_message_box_icon_stop                 ${MB_ICONHAND}
 
 !define MB_DEFBUTTON1               0x00000000

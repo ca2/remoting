@@ -292,7 +292,7 @@ UpdateSender::UpdateSender() :
       m_prfboutputgate->writeUInt8(0); // scopedstrMessage type
       m_prfboutputgate->writeUInt8(0); // padding
       unsigned short numRects = (unsigned short)rectanglea.size();
-      _ASSERT(numRects == rectanglea.size());
+      ASSERT(numRects == rectanglea.size());
       m_prfboutputgate->writeUInt16(numRects);
       sendRectangles(m_pencoderstore->getEncoder(), rectanglea, &blankFramebuffer, encodeOptions);
    }
@@ -626,7 +626,7 @@ UpdateSender::UpdateSender() :
          m_plogwriter->debug("Total number of rectangles and pseudo-rectangles: {}", numTotalRects);
 
          // FIXME: Handle this better, e.g. send first 65534 rectangles.
-         _ASSERT(numTotalRects <= 65534);
+         ASSERT(numTotalRects <= 65534);
 
          if (numTotalRects != 0)
          {
@@ -795,7 +795,7 @@ UpdateSender::UpdateSender() :
                                 " by client (client #{})",
                                 reqRect.left, reqRect.top, reqRect.width(), reqRect.height(), (int)incremental, m_id);
 
-      _ASSERT(m_pupdaterequestlistener != 0);
+      ASSERT(m_pupdaterequestlistener != 0);
 
       bool alreadyHasUpdates = m_pupdatekeeper->checkForUpdates(regionCombinedReq);
       if (alreadyHasUpdates)

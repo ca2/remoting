@@ -65,8 +65,8 @@ namespace remoting_windows
 
       if (getOptimizationAvailable(grabber))
       {
-         _ASSERT(m_wholeTElements.size() != 0);
-         _ASSERT(m_gElements.size() != 0);
+         ASSERT(m_wholeTElements.size() != 0);
+         ASSERT(m_gElements.size() != 0);
 
          // Get estimated time for grab by each rectangle.
          int fragS = getArea(rectanglea);
@@ -227,7 +227,7 @@ namespace remoting_windows
    __int64 GrabOptimizator::grabOneRect(const ::int_rectangle & rectangle, ::remoting::ScreenDriver *grabber)
    {
       int rectS = rectangle.area();
-      _ASSERT(rectS != 0);
+      ASSERT(rectS != 0);
       // FIXME: WARNING!!! The microsoft API usage!!!
       LARGE_INTEGER timeBegin, timeEnd;
       bool timerResult1 = QueryPerformanceCounter(&timeBegin) != 0;

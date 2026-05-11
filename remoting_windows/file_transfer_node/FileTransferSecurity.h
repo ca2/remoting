@@ -28,7 +28,7 @@
 //#include "util/Singleton.h"
 //#include "log-writer/LogWriter.h"
 
-//#include "subsystem_windows/node/Impersonator.h"
+#include "subsystem_windows/node/Impersonator.h"
 
 #include "desktop/Desktop.h"
 
@@ -39,8 +39,7 @@ namespace remoting
    namespace file_transfer
    {
       class CLASS_DECL_REMOTING FileTransferSecurity :
-       //virtual public ::subsystem_windows::Impersonator
-   virtual public ::particle
+       virtual public ::subsystem_windows::Impersonator
       {
       public:
 
@@ -53,23 +52,19 @@ namespace remoting
          ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
 
-         //FileTransferSecurity(::remoting_node::Configurator * pconfigurator, ::remoting::Desktop *desktop, ::subsystem::LogWriter *log);
-         
-         FileTransferSecurity();
-         ~FileTransferSecurity() override;
-
-         virtual void initialize_file_transfer_security(::remoting_node::Configurator * pconfigurator, ::remoting::Desktop *desktop, ::subsystem::LogWriter *log);
+         FileTransferSecurity(::remoting_node::Configurator * pconfigurator, ::remoting::Desktop *desktop, ::subsystem::LogWriter *log);
+         virtual ~FileTransferSecurity();
 
          // Sets access rights for calling process for execution
          // file transfer request handler code.
-         virtual void beginMessageProcessing();
+         void beginMessageProcessing();
          // Checks result and throws exception if caller
          // must not execute file transfer code and return error
          // to client.
-         virtual void throwIfAccessDenied(); //throw(Exception);
+         void throwIfAccessDenied(); //throw(Exception);
          // Sets previous (before startMessageProcessing call) access rights
          // for calling process.
-         virtual void endMessageProcessing();
+         void endMessageProcessing();
 
       protected:
          // bool m_hasAccess;

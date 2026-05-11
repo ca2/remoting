@@ -273,7 +273,7 @@ namespace remoting_client
             break;
 
          default:
-            _ASSERT(true);
+            ASSERT(true);
             return false;
       }
       return true;

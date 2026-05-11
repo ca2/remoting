@@ -296,7 +296,7 @@ namespace  remoting
 
          m_inflater.inflate();
 
-         _ASSERT(m_inflater.getOutputSize() == uncoSize);
+         ASSERT(m_inflater.getOutputSize() == uncoSize);
 
          if (uncoSize != 0) {
             memcpy(uncoBuffer.data(), m_inflater.getOutput(), uncoSize);

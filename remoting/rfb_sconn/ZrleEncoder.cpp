@@ -111,7 +111,7 @@ namespace remoting
       } else if (bpp == 32) {
          sendRect<unsigned int>(rectangle, serverFb, clientFb, options);
       } else {
-         _ASSERT(0);
+         ASSERT(0);
       }
    }
 

@@ -45,7 +45,7 @@ namespace remoting_node
 
    void ControlCommand::execute()
    {
-      _ASSERT(m_pcommand != 0);
+      ASSERT(m_pcommand != 0);
 
       m_successfull = true;
 
@@ -69,7 +69,7 @@ namespace remoting_node
                }
                throw;
             } catch (::subsystem::Exception &) {
-               _ASSERT(false);
+               ASSERT(false);
                throw;
             }
          } catch (...) {

@@ -28,7 +28,7 @@ namespace remoting_node
 {
    void IpAccessControl::serialize(DataOutputStream * pdataoutputstream)
    {
-      _ASSERT((unsigned int)size() == size());
+      ASSERT((unsigned int)size() == size());
       unsigned int count = (unsigned int)size();
       pdataoutputstream->writeUInt32(count);
 

@@ -67,7 +67,7 @@ void WinFile::open(const ::file::path & path,
     desiredAccess = GENERIC_WRITE | GENERIC_READ;
     break;
   default:
-    _ASSERT(0);
+    ASSERT(0);
   }
 
   DWORD creationDisposition;
@@ -92,7 +92,7 @@ void WinFile::open(const ::file::path & path,
     creationDisposition = TRUNCATE_EXISTING;
     break;
   default:
-    _ASSERT(0);
+    ASSERT(0);
   }
 
   DWORD shareMode = 0;
@@ -166,7 +166,7 @@ void WinFile::flush()
 size_t WinFile::read(void *buff, size_t count)
 {
   DWORD count32 = (DWORD)count;
-  _ASSERT(count == count32);
+  ASSERT(count == count32);
   if (count != count32) {
     throw ::io_exception(error_io, "Requested size to read is too big");
   }
@@ -190,7 +190,7 @@ size_t WinFile::read(void *buff, size_t count)
 size_t WinFile::write(const void *buff, size_t count)
 {
   DWORD count32 = (DWORD)count;
-  _ASSERT(count == count32);
+  ASSERT(count == count32);
   if (count != count32) {
     throw ::io_exception(error_io, "Requested size to write is too big");
   }

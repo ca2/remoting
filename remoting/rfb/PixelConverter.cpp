@@ -111,7 +111,7 @@ namespace remoting
                                               }
                  }
          } else {
-            _ASSERT(0);
+            ASSERT(0);
          }
       }
    }

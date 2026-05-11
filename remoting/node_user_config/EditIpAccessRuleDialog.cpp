@@ -203,8 +203,8 @@ namespace remoting_node
       ::string firstIpAnsi(&firstIp);
       ::string lastIpAnsi(&lastIp);
 
-      unsigned long firstIpAddr = inet_addr(firstIpAnsi);
-      unsigned long lastIpAddr = inet_addr(lastIpAnsi);
+      unsigned long firstIpAddr = MainSubsystem().internet_address4(firstIpAnsi);
+      unsigned long lastIpAddr = MainSubsystem().internet_address4(lastIpAnsi);
 
       if (IpAccessRule::compareIp(firstIpAddr, lastIpAddr) == 1) {
          m_lastIp.setFocus();

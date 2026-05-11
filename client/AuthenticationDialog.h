@@ -49,7 +49,7 @@ namespace remoting_client
 
         //protected:
         bool onCommand(unsigned int controlID, unsigned int notificationID) override;
-        bool onInitDialog();
+        bool onInitDialog() override;
 
         ::innate_subsystem::TextBox m_textboxPassword;
         ::innate_subsystem::TextBox m_textboxHostname;

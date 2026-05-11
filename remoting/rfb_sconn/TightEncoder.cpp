@@ -101,7 +101,7 @@ namespace remoting
             sendAnyRect<unsigned int>(rectangle, serverFb, clientFb, options);
             break;
          default:
-            _ASSERT(0);
+            ASSERT(0);
       }
    }
 
@@ -202,7 +202,7 @@ namespace remoting
 
       // Convert image to indexed colors.
       encodeMonoRect<PIXEL_T>(rectangle, pframebuffer, &encodedData);
-      _ASSERT(encoded.size() == dataLen);
+      ASSERT(encoded.size() == dataLen);
 
       // Compress and send.
       int zlibLevel = getConf(options).monoZlibLevel;
@@ -244,7 +244,7 @@ namespace remoting
 
       // Convert image to indexed colors.
       encodeIndexedRect<PIXEL_T>(rectangle, pframebuffer, &encodedData);
-      _ASSERT(encoded.size() == dataLen);
+      ASSERT(encoded.size() == dataLen);
 
       // Compress and send.
       int zlibLevel = getConf(options).idxZlibLevel;
@@ -267,7 +267,7 @@ namespace remoting
 
       // Get pixels from the frame buffer.
       copyPixels<PIXEL_T>(rectangle, pframebuffer, rgbData.data());
-      _ASSERT(rgbData.size() == dataLen);
+      ASSERT(rgbData.size() == dataLen);
 
       // Pack pixels into 24-bit samples if necessary.
       ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
@@ -287,7 +287,7 @@ namespace remoting
                                    const ::innate_subsystem::Framebuffer *serverFb,
                                    const EncodeOptions *options)
    {
-      _ASSERT(options->jpegEnabled());
+      ASSERT(options->jpegEnabled());
 
       // Set proper JPEG quality level in the compressor. The default value 6
       // below does not mean anything, it will not be used because we assume
@@ -505,8 +505,8 @@ namespace remoting
       charBuff.set_size(compressedBufferSize);
       char *compressedData = charBuff.data();
 
-      _ASSERT((unsigned int)dataLen == dataLen);
-      _ASSERT((unsigned int)compressedBufferSize == compressedBufferSize);
+      ASSERT((unsigned int)dataLen == dataLen);
+      ASSERT((unsigned int)compressedBufferSize == compressedBufferSize);
       pz->next_in = (Bytef *)data;
       pz->avail_in = (unsigned int)dataLen;
       pz->next_out = (Bytef *)compressedData;
@@ -538,7 +538,7 @@ namespace remoting
 
    void TightEncoder::sendCompactLength(size_t dataLen)
    {
-      _ASSERT(dataLen <= 0x3FFFFF);
+      ASSERT(dataLen <= 0x3FFFFF);
 
       unsigned char buffer[4];
       size_t numBytes = 0;
@@ -578,7 +578,7 @@ namespace remoting
    TightEncoder::getConf(const EncodeOptions *options)
    {
       int level = options->getCompressionLevel(DEFAULT_COMPRESSION_LEVEL);
-      _ASSERT(level >= 0 && level <= 9);
+      ASSERT(level >= 0 && level <= 9);
       return m_conf[level];
    }
 } // namespace remoting

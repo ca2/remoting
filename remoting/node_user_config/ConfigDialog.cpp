@@ -259,14 +259,14 @@ namespace remoting_node
          MainSubsystem().message_box(operating_system_window(),
                     MainSubsystem().StringTable().getString(IDS_CANNOT_SAVE_CONFIG),
                     MainSubsystem().StringTable().getString(IDS_MBC_ERROR),
-                    ::user::e_message_box_ok | MB_ICONERROR);
+                    ::user::e_message_box_ok | ::user::e_message_box_icon_error);
          return;
       }
       m_ctrlApplyButton.enableWindow(false);
       MainSubsystem().message_box(operating_system_window(),
         MainSubsystem().StringTable().getString(IDS_OFFLINE_CONFIG_SAVE_NOTIFICATION),
         MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-        ::user::e_message_box_ok | MB_ICONINFORMATION);
+        ::user::e_message_box_ok | ::user::e_message_box_icon_information);
    }
 
    bool ConfigDialog::_002OnTabChanged(int iControl)

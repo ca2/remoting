@@ -47,7 +47,7 @@ namespace remoting_control_desktop
    Channel* SocketIPv4Transport::getIOStream()
    {
       if (m_psocket->isBound()) {
-         _ASSERT(false);
+         ASSERT(false);
 
          return 0;
       }
@@ -58,7 +58,7 @@ namespace remoting_control_desktop
    Transport *SocketIPv4Transport::accept()
    {
       if (!m_psocket->isBound()) {
-         _ASSERT(false);
+         ASSERT(false);
 
          return 0;
       }

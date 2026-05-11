@@ -6,8 +6,15 @@
 
 #include "acme/_start.h"
 
+#ifdef __cplusplus
 
 #include "_.h"
+
+#else
+
+#include "acme/_.h"
+
+#endif
 
 
 //#include "aura/_defer.h"

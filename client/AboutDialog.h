@@ -67,7 +67,7 @@ namespace remoting_client
          * Inherited from BaseDialog.
          * Does nothing.
          */
-        virtual bool onInitDialog();
+        bool onInitDialog() override;
         /**
          * Inherited from BaseDialog.
          * Does nothing.
@@ -77,12 +77,12 @@ namespace remoting_client
          * Inherited from BaseDialog.
          * Handles buttons events.
          */
-        virtual bool onCommand(unsigned int controlID, unsigned int notificationID);
+        bool onCommand(unsigned int controlID, unsigned int notificationID) override;
         /**
          * Inherited from BaseDialog.
          * Does nothing.
          */
-        virtual bool onDestroy();
+        bool onDestroy()  override;
     };
 
 } // namespace remoting_client

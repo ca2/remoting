@@ -31,8 +31,8 @@
 AppletParameter::AppletParameter(const char *name, const char *value)
 : m_isValid(false)
 {
-  _ASSERT(name != NULL);
-  _ASSERT(value != NULL);
+  ASSERT(name != NULL);
+  ASSERT(value != NULL);
 
   m_isValid = isStringValid(name) && isStringValid(value);
 

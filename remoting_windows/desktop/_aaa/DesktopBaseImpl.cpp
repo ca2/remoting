@@ -57,8 +57,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::getCurrentUserInfo(::string &desktopName, ::string &userName)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->information("get current user information");
       try
       {
@@ -73,8 +73,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::getFramebufferProperties(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat)
    {
-      _ASSERT(m_pupdatehandler != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_pupdatehandler != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->debug("get frame buffer properties");
       try
       {
@@ -90,8 +90,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::getPrimaryDesktopCoords(::int_rectangle rectangle)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->information("get primary desktop coordinates");
       try
       {
@@ -106,8 +106,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::getDisplayNumberCoords(::int_rectangle rectangle, unsigned char dispNumber)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->information("get the %u display coordinates", (unsigned int)dispNumber);
       try
       {
@@ -122,8 +122,8 @@ namespace remoting_windows
 
    ::int_rectangle_array_base DesktopBaseImpl::getDisplaysCoords()
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->information("get the displays coordinates");
       try
       {
@@ -140,8 +140,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::getNormalizedRect(::int_rectangle rectangle)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->information("normilize a rectangle to frame buffer coordinates");
       try
       {
@@ -156,8 +156,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle rectangle)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->information("get window coordinates");
       try
       {
@@ -176,8 +176,8 @@ namespace remoting_windows
 
    ::operating_system::window DesktopBaseImpl::getWindowHandleByName(const ::scoped_string &windowName)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->information("get a window handle by a window name");
       try
       {
@@ -193,8 +193,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::getApplicationRegion(unsigned int procId, Region & region)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->information("get application region");
       try
       {
@@ -209,8 +209,8 @@ namespace remoting_windows
 
    bool DesktopBaseImpl::isApplicationInFocus(unsigned int procId)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
       m_plogwriter->information("checking if application is in focus");
       try
       {
@@ -235,8 +235,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::setKeyboardEvent(unsigned int keySym, bool down)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
 
       m_plogwriter->information("set keyboard event (keySym = %u, down = {})", keySym, (int)down);
       try
@@ -255,8 +255,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
 
       m_plogwriter->information("set mouse event (x = %u, y = %u, mask = %u)", (unsigned int)x, (unsigned int)y,
                                 (unsigned int)buttonMask);
@@ -277,8 +277,8 @@ namespace remoting_windows
 
    void DesktopBaseImpl::setNewClipText(const ::scoped_string &newClipboard)
    {
-      _ASSERT(m_puserinput != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_puserinput != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
 
       m_plogwriter->debug("set new clipboard text, length: {}", newClipboard->length());
 
@@ -299,9 +299,9 @@ namespace remoting_windows
 
    void DesktopBaseImpl::sendUpdate()
    {
-      _ASSERT(m_pupdatehandler != 0);
-      _ASSERT(m_pdesktermlistenerExternal != 0);
-      _ASSERT(m_pupdatesendinglistenerExternal != 0);
+      ASSERT(m_pupdatehandler != 0);
+      ASSERT(m_pdesktermlistenerExternal != 0);
+      ASSERT(m_pupdatesendinglistenerExternal != 0);
 
       if (!m_pupdatesendinglistenerExternal->isReadyToSend())
       {
@@ -360,7 +360,7 @@ namespace remoting_windows
 
    void DesktopBaseImpl::onClipboardUpdate(const ::scoped_string &newClipboard)
    {
-      _ASSERT(m_pclipboardlistenerExternal != 0);
+      ASSERT(m_pclipboardlistenerExternal != 0);
 
       m_plogwriter->debug("clipboard update detected, length: {}", newClipboard->length());
       bool isEqual;

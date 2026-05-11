@@ -289,7 +289,7 @@ namespace remoting_client
          buffer.resize(size);
          buffer.assign((unsigned char *) output, size);
       } else {
-         _ASSERT(rawDataLength != 0);
+         ASSERT(rawDataLength != 0);
          m_plogwriter->debug("Tight decoder: Length of Raw compressed data is 0");
          buffer.resize(0);
       }

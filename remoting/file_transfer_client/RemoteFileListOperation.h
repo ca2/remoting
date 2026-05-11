@@ -52,8 +52,8 @@ namespace remoting
          // ::file::item transfer scopedstrMessage handlers
          //
 
-         virtual void onFileListReply(::DataInputStream * pinput);
-         virtual void onLastRequestFailedReply(::DataInputStream * pinput);
+         virtual void onFileListReply(::DataInputStream * pinput) override;
+         virtual void onLastRequestFailedReply(::DataInputStream * pinput) override;
 
          //
          // Returns true if operation is finished and was no error,

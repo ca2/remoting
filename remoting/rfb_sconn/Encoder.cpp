@@ -56,7 +56,7 @@ namespace remoting
    {
       const ::innate_subsystem::Framebuffer *pframebuffer = m_ppixelconverter->convert(rectangle, serverFb);
       int pixelSize = (int)pframebuffer->getBytesPerPixel();
-      _ASSERT(pixelSize == pframebuffer->getBytesPerPixel());
+      ASSERT(pixelSize == pframebuffer->getBytesPerPixel());
 
       unsigned char *buffer = (unsigned char *)pframebuffer->getBuffer();
       int lineWidth = rectangle.width();

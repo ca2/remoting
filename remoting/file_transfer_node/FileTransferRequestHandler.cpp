@@ -63,8 +63,8 @@ namespace remoting
       FileTransferRequestHandler::FileTransferRequestHandler(::remoting_node::Configurator * pconfigurator,
          RfbCodeRegistrator *registrator,
                                                              RfbOutputGate *prfboutputgate,
-                                                             Desktop *desktop,
-                                                             ::subsystem::LogWriter *log,
+                                                             Desktop *pdesktop,
+                                                             ::subsystem::LogWriter *plogwriter,
                                                              bool enabled)
       :
       m_pconfigurator(pconfigurator),
@@ -72,9 +72,12 @@ namespace remoting
         //m_pfileUpload(NULL), m_pfileOutputStream(NULL),
         m_prfboutputgate(prfboutputgate),
         //m_enabled(enabled),
-        m_plogwriter(log)
+        m_plogwriter(plogwriter)
       {
-         m_pfiletransfersecurity = allocateø FileTransferSecurity(m_pconfigurator, desktop, m_plogwriter);
+         m_pfiletransfersecurity = createø <FileTransferSecurity>();
+         
+         m_pfiletransfersecurity->initialize_file_transfer_security(pconfigurator, pdesktop, plogwriter);
+         
 
          if (!FileTransferRequestHandler::isFileTransferEnabled()) {
             return ;
@@ -108,7 +111,7 @@ namespace remoting
          registrator->addClToSrvCap(FTMessage::RENAME_REQUEST, VendorDefs::TIGHTVNC, FTMessage::RENAME_REQUEST_SIG);
          registrator->addClToSrvCap(FTMessage::DIRSIZE_REQUEST, VendorDefs::TIGHTVNC, FTMessage::DIRSIZE_REQUEST_SIG);
 
-         UINT32 rfbMessagesToProcess[] = {
+         unsigned int rfbMessagesToProcess[] = {
             FTMessage::COMPRESSION_SUPPORT_REQUEST,
             FTMessage::FILE_LIST_REQUEST,
             FTMessage::MD5_REQUEST,
@@ -123,7 +126,7 @@ namespace remoting
             FTMessage::DIRSIZE_REQUEST
           };
 
-         for (size_t i = 0; i < sizeof(rfbMessagesToProcess) / sizeof(UINT32); i++) {
+         for (size_t i = 0; i < sizeof(rfbMessagesToProcess) / sizeof(unsigned int); i++) {
             registrator->regCode(rfbMessagesToProcess[i], this);
          }
 
@@ -156,7 +159,7 @@ namespace remoting
          m_plogwriter->debug("File transfer request handler deleted");
       }
 
-      void FileTransferRequestHandler::onRequest(UINT32 reqCode, ::remoting::RfbInputGate *backGate)
+      void FileTransferRequestHandler::onRequest(unsigned int reqCode, ::remoting::RfbInputGate *backGate)
       {
          m_pfiletransfersecurity->beginMessageProcessing();
 
@@ -224,7 +227,7 @@ namespace remoting
          //     or 1 - compression is supported by server
          //
 
-         UINT8 compressionSupport = 1;
+         unsigned char compressionSupport = 1;
 
          m_plogwriter->debug("sending compression support reply: {}", (compressionSupport == 1) ? "supported" : "not supported");
 
@@ -240,7 +243,7 @@ namespace remoting
 
       void FileTransferRequestHandler::fileListRequested()
       {
-         UINT8 requestedCompressionLevel;
+         unsigned char requestedCompressionLevel;
          //::string fullPathName;
          ::string strFullPathName;
 
@@ -259,11 +262,11 @@ namespace remoting
 
          checkAccess();
 
-         UINT8 compressionLevel = requestedCompressionLevel;
-         UINT32 compressedSize = 0;
-         UINT32 uncompressedSize = 0;
-         UINT32 filesCount = 0;
-         UINT32 filesInfoDataSize = 0;
+         unsigned char compressionLevel = requestedCompressionLevel;
+         unsigned int compressedSize = 0;
+         unsigned int uncompressedSize = 0;
+         unsigned int filesCount = 0;
+         unsigned int filesInfoDataSize = 0;
          //const ::remoting::file_transfer::FileInfo *files = NULL;
 
          //
@@ -294,8 +297,8 @@ namespace remoting
             outMemStream.writeUTF8(pfile->getFileName());
          } // for
 
-         _ASSERT((UINT32)memStream.size() == memStream.size());
-         uncompressedSize = (UINT32)memStream.size();
+         ASSERT((::u32)memStream.size() == memStream.size());
+         uncompressedSize = (::u32)memStream.size();
 
          //
          // Buffer for data in "CompressedData" block
@@ -306,8 +309,8 @@ namespace remoting
          if (compressionLevel != 0) {
             m_deflater.setInput(memStream.toByteArray(), memStream.size());
             m_deflater.deflate();
-            _ASSERT((UINT32)m_deflater.getOutputSize() == m_deflater.getOutputSize());
-            compressedSize = (UINT32)m_deflater.getOutputSize();
+            ASSERT((::u32)m_deflater.getOutputSize() == m_deflater.getOutputSize());
+            compressedSize = (::u32)m_deflater.getOutputSize();
          }
 
          //
@@ -453,7 +456,7 @@ namespace remoting
          checkAccess();
 
          throw "todo";
-         UINT64 directorySize = 0;
+         ::u64 directorySize = 0;
          //
          // if (!getDirectorySize(fullPathName, &directorySize)) {
          //    throw SystemException();
@@ -473,8 +476,8 @@ namespace remoting
       {
          ::string fullPathName;
 
-         UINT64 offset;
-         UINT64 dataLen;
+         ::u64 offset;
+         ::u64 dataLen;
 
          {
             fullPathName = m_prfbinputgate->readUtf8();
@@ -506,26 +509,26 @@ namespace remoting
          // //
          //
          // DWORD bytesToRead = 1024 * 1024;
-         // UINT64 bytesToReadTotal = dataLen;
+         // ::u64 bytesToReadTotal = dataLen;
          // size_t bytesRead = 0;
-         // UINT64 bytesReadTotal = 0;
+         // ::u64 bytesReadTotal = 0;
          //
-         // if (dataLen < (UINT64)bytesToRead) {
+         // if (dataLen < (::u64)bytesToRead) {
          //    bytesToRead = (DWORD)dataLen;
          // }
          //
-         // std::vector<UINT8> buffer(bytesToRead);
+         // std::vector<::u8> buffer(bytesToRead);
          //
          // while (bytesToReadTotal > 0) {
          //    bytesRead = fileInputStream.read(&buffer.front(), bytesToRead);
          //    bytesReadTotal += bytesRead;
          //    bytesToReadTotal -= bytesRead;
          //
-         //    if (bytesToReadTotal < (UINT64)bytesToRead) {
+         //    if (bytesToReadTotal < (::u64)bytesToRead) {
          //       bytesToRead = (DWORD)bytesToReadTotal;
          //    }
          //
-         //    md5calculator.update(&buffer.front(), (UINT32)bytesRead);
+         //    md5calculator.update(&buffer.front(), (::u32)bytesRead);
          // } // while
          //
          // md5calculator.finalize();
@@ -547,8 +550,8 @@ namespace remoting
          //
 
          ::string fullPathName;
-         UINT8 uploadFlags;
-         UINT64 initialOffset;
+         ::u8 uploadFlags;
+         ::u64 initialOffset;
 
          {
             fullPathName = m_prfbinputgate->readUtf8();
@@ -616,9 +619,9 @@ namespace remoting
          // Request input variables.
          //
 
-         UINT8 compressionLevel;
-         UINT32 compressedSize;
-         UINT32 uncompressedSize;
+         ::u8 compressionLevel;
+         ::u32 compressedSize;
+         ::u32 uncompressedSize;
 
          compressionLevel = m_prfbinputgate->readUInt8();
          compressedSize = m_prfbinputgate->readUInt32();
@@ -666,8 +669,8 @@ namespace remoting
 
       void FileTransferRequestHandler::uploadEndRequested()
       {
-         UINT16 fileFlags;
-         UINT64 modificationTime;
+         ::u16 fileFlags;
+         ::u64 modificationTime;
 
          {
             fileFlags = m_prfbinputgate->readUInt16();
@@ -735,7 +738,7 @@ namespace remoting
       void FileTransferRequestHandler::downloadStartRequested()
       {
          ::string fullPathName;
-         UINT64 initialOffset;
+         ::u64 initialOffset;
 
          //
          // Reading command arguments
@@ -795,8 +798,8 @@ namespace remoting
          // Request input variables.
          //
 
-         UINT8 requestedCompressionLevel;
-         UINT32 dataSize;
+         ::u8 requestedCompressionLevel;
+         ::u32 dataSize;
 
          {
             requestedCompressionLevel = m_prfbinputgate->readUInt8();
@@ -811,9 +814,9 @@ namespace remoting
          // Data download reply variables.
          //
 
-         UINT8 compressionLevel = requestedCompressionLevel;
-         UINT32 compressedSize = 0;
-         UINT32 uncompressedSize = 0;
+         ::u8 compressionLevel = requestedCompressionLevel;
+         ::u32 compressedSize = 0;
+         ::u32 uncompressedSize = 0;
 
          throw todo;
          //
@@ -836,7 +839,7 @@ namespace remoting
          //    if (dataSize != 0) {
          //       size_t portion = m_pfileInputStream->read(&buffer.front(), dataSize);
          //       read = (DWORD)portion;
-         //       _ASSERT(read == portion);
+         //       ASSERT(read == portion);
          //    }
          // } catch (EOFException) {
          //
@@ -846,7 +849,7 @@ namespace remoting
          //
          //    try { m_pfileInputStream->close(); } catch (...) { }
          //
-         //    UINT8 fileFlags = 0;
+         //    ::u8 fileFlags = 0;
          //
          //    {
          //       AutoLock l(m_prfboutputgate);
@@ -879,8 +882,8 @@ namespace remoting
          //    if (dataSize != 0) {
          //       m_deflater.setInput(&buffer.front(), uncompressedSize);
          //       m_deflater.deflate();
-         //       _ASSERT((UINT32)m_deflater.getOutputSize() == m_deflater.getOutputSize());
-         //       compressedSize = (UINT32)m_deflater.getOutputSize();
+         //       ASSERT((::u32)m_deflater.getOutputSize() == m_deflater.getOutputSize());
+         //       compressedSize = (::u32)m_deflater.getOutputSize();
          //    }
          // }
          //
@@ -929,9 +932,9 @@ namespace remoting
       {
          throw "todo";
 
-         // UINT64 currentDirSize = 0;
-         // UINT32 filesCount = 0;
-         // UINT32 dataSize = 0;
+         // ::u64 currentDirSize = 0;
+         // ::u32 filesCount = 0;
+         // ::u32 dataSize = 0;
          //
          // File folder(pathname);
          //
@@ -952,11 +955,11 @@ namespace remoting
          //
          //    folder.list(&fileNames.front(), NULL);
          //
-         //    for (UINT32 i = 0; i < filesCount; i++) {
+         //    for (::u32 i = 0; i < filesCount; i++) {
          //       File subfile(pathname, fileNames[i]);
          //       if (subfile.isDirectory()) {
          //
-         //          UINT64 subDirSize = 0;
+         //          ::u64 subDirSize = 0;
          //          StringStorage subDirPath;
          //
          //          subfile.getPath(&subDirPath);

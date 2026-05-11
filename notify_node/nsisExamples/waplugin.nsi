@@ -194,7 +194,7 @@ Function ConnectInternet
     noie3:
   
     ; IE3 not installed
-    MessageBox ::user::e_message_box_ok|MB_ICONINFORMATION "Please connect to the internet now."
+    MessageBox ::user::e_message_box_ok|::user::e_message_box_icon_information "Please connect to the internet now."
     
     connected:
   

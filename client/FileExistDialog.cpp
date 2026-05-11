@@ -64,8 +64,8 @@ namespace remoting_client
 
         m_pathToFileCaption= scopedstrPathToFileCaption;
 
-        _ASSERT(m_newFileInfo != NULL);
-        _ASSERT(m_existingFileInfo != NULL);
+        ASSERT(m_newFileInfo != NULL);
+        ASSERT(m_existingFileInfo != NULL);
 
         m_canAppend = (m_existingFileInfo->getSize() < m_newFileInfo->getSize());
 
@@ -86,8 +86,8 @@ namespace remoting_client
     {
         initControls();
 
-        _ASSERT(m_newFileInfo != NULL);
-        _ASSERT(m_existingFileInfo != NULL);
+        ASSERT(m_newFileInfo != NULL);
+        ASSERT(m_existingFileInfo != NULL);
 
         updateGui(m_newFileInfo, m_pcontrolNewSizeLabel, m_pcontrolNewModTimeLabel);
         updateGui(m_existingFileInfo, m_pcontrolExistingSizeLabel, m_pcontrolExistingModTimeLabel);

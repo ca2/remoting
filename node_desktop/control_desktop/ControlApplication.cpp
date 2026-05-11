@@ -201,7 +201,7 @@ namespace remoting_control_desktop
          if (!cmdLineParser.isSlave() && !cmdLineParser.hasCheckServicePasswords()) {
             const ::scoped_string & scopedstrMsg = MainSubsystem().StringTable().getString(IDS_FAILED_TO_CONNECT_TO_CONTROL_SERVER);
             const ::scoped_string & scopedstrCaption = MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL);
-            MainSubsystem().message_box({}, scopedstrMsg, scopedstrCaption, ::user::e_message_box_ok | MB_ICONERROR);
+            MainSubsystem().message_box({}, scopedstrMsg, scopedstrCaption, ::user::e_message_box_ok | ::user::e_message_box_icon_error);
          }
          setExitCode(1);
          return;
@@ -270,7 +270,7 @@ namespace remoting_control_desktop
                setExitCode(1);
                return;
             } catch (::subsystem::Exception &) {
-               _ASSERT(false);
+               ASSERT(false);
             }
          }
 
@@ -394,7 +394,7 @@ return;
             MainSubsystem().message_box({},
               MainSubsystem().StringTable().getString(IDS_ADMIN_RIGHTS_NEEDED),
               MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-              ::user::e_message_box_ok | MB_ICONERROR);
+              ::user::e_message_box_ok | ::user::e_message_box_icon_error);
             return 0;
          }
          // Path to remoting_node binary.
@@ -415,7 +415,7 @@ return;
                MainSubsystem().message_box({},
                  sysEx.get_message(),
                  MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-                 ::user::e_message_box_ok | MB_ICONERROR);
+                 ::user::e_message_box_ok | ::user::e_message_box_icon_error);
             }
             return 1;
          } // try / catch.
@@ -461,7 +461,7 @@ return;
             MainSubsystem().message_box({},
               MainSubsystem().StringTable().getString(IDS_ADMIN_RIGHTS_NEEDED),
               MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-              ::user::e_message_box_ok | MB_ICONERROR);
+              ::user::e_message_box_ok | ::user::e_message_box_icon_error);
             return 1;
          }
          // Path to remoting_node binary.
@@ -483,7 +483,7 @@ return;
                MainSubsystem().message_box({},
                  sysEx.get_message(),
                  MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-                 ::user::e_message_box_ok | MB_ICONERROR);
+                 ::user::e_message_box_ok | ::user::e_message_box_icon_error);
             }
             return 1;
          } // try / catch.
@@ -551,7 +551,7 @@ return;
          MainSubsystem().message_box({},
            errMess,
            MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-           ::user::e_message_box_ok | MB_ICONERROR);
+           ::user::e_message_box_ok | ::user::e_message_box_icon_error);
       }
    }
 } // namespace remoting_control_desktop

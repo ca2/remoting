@@ -25,8 +25,8 @@
 #include "FileTransferSecurity.h"
 
 #include "remoting/remoting/node_config/Configurator.h"
-//#include "subsystem_windows/node/WTS.h"
-//#include "subsystem_windows/platform/subsystem.h"
+#include "subsystem_windows/node/WTS.h"
+#include "subsystem_windows/platform/subsystem.h"
 
 
 namespace remoting
@@ -35,36 +35,20 @@ namespace remoting
 
    namespace file_transfer
    {
-//      FileTransferSecurity::FileTransferSecurity(::remoting_node::Configurator * pconfigurator, Desktop *desktop, ::subsystem::LogWriter *plogwriter)
-//      :
-//      //Impersonator(plogwriter),
-//        m_hasAccess(false),
-//        m_pdesktop(desktop),
-//        m_plogwriter(plogwriter),
-//      m_pconfigurator(pconfigurator)
-//      {
-//         m_pdesktop = desktop;
-//      }
+      FileTransferSecurity::FileTransferSecurity(::remoting_node::Configurator * pconfigurator, Desktop *desktop, ::subsystem::LogWriter *plogwriter)
+      :
+      //Impersonator(plogwriter),
+        m_hasAccess(false),
+        m_pdesktop(desktop),
+        m_plogwriter(plogwriter),
+      m_pconfigurator(pconfigurator)
+      {
+         m_pdesktop = desktop;
+      }
 
-   FileTransferSecurity::FileTransferSecurity()
-   :
-   //Impersonator(plogwriter),
-     m_hasAccess(false),
-     m_pdesktop(nullptr)
-     
-   {
-      
-   }
       FileTransferSecurity::~FileTransferSecurity()
       {
       }
-
-   void FileTransferSecurity::initialize_file_transfer_security(::remoting_node::Configurator * pconfigurator, Desktop *desktop, ::subsystem::LogWriter *plogwriter)
-   {
-      m_plogwriter = plogwriter;
-      m_pconfigurator = pconfigurator;
-      m_pdesktop = desktop;
-   }
 
       void FileTransferSecurity::beginMessageProcessing()
       {
@@ -90,17 +74,17 @@ namespace remoting
                throw ::subsystem::Exception("Desktop is not default desktop.");
             }
 
-//            if (sessionIsLocked(rdpEnabled)) {
-//               throw ::subsystem::Exception("Desktop is locked.");
-//            }
-//
-//            if (rdpEnabled && (WindowsSubsystem().WTS().getRdpSessionId(m_plogwriter) != 0)) {
-//               HANDLE token = WindowsSubsystem().WTS().duplicateCurrentProcessUserToken(rdpEnabled, m_plogwriter);
-//               impersonateAsUser(token);
-//            }
-//            else {
-//               impersonateAsLoggedUser();
-//            }
+            if (sessionIsLocked(rdpEnabled)) {
+               throw ::subsystem::Exception("Desktop is locked.");
+            }
+
+            if (rdpEnabled && (WindowsSubsystem().WTS().getRdpSessionId(m_plogwriter) != 0)) {
+               HANDLE token = WindowsSubsystem().WTS().duplicateCurrentProcessUserToken(rdpEnabled, m_plogwriter);
+               impersonateAsUser(token);
+            }
+            else {
+               impersonateAsLoggedUser();
+            }
 
 
             m_hasAccess = true;
@@ -124,7 +108,7 @@ namespace remoting
       {
          if (m_pconfigurator->getServiceFlag() && m_hasAccess) {
             try {
-               //revertToSelf();
+               revertToSelf();
             } catch (...) {
             } // try / catch.
          } // if run as service.

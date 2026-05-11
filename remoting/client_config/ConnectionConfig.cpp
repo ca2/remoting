@@ -374,7 +374,7 @@ namespace remoting
             break;
          default:
             cursorShape = DOT_CURSOR;
-            _ASSERT(false);
+            ASSERT(false);
       } // switch
 
       {

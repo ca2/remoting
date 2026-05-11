@@ -102,7 +102,7 @@ namespace remoting_node
             onUnsetControlPasswordClick();
          }
 
-      } else if (notificationID == EN_UPDATE) {
+      } else if (notificationID == ::user::e_notification_edit_update) {
          if (controlID == IDC_LOG_LEVEL) {
             onLogLevelUpdate();
          }
@@ -136,7 +136,7 @@ namespace remoting_node
       if (!passwordSpecified && m_useControlAuth.isChecked()) {
          MainSubsystem().message_box(operating_system_window(),
                     MainSubsystem().StringTable().getString(IDS_SET_CONTROL_PASSWORD_NOTIFICATION),
-                    MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT), MB_ICONSTOP | ::user::e_message_box_ok);
+                    MainSubsystem().StringTable().getString(IDS_CAPTION_BAD_INPUT), ::user::e_message_box_icon_stop | ::user::e_message_box_ok);
          return false;
       }
 

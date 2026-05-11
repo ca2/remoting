@@ -58,7 +58,9 @@ namespace remoting
       ::happening m_initWaiter;
 
       HookInstaller *m_hookInstaller;
+#ifdef WINDOWS
       ::pointer < ::subsystem_windows::MessageWindow  > m_pmessagewindowTarget;
+#endif
       ::pointer < HookUpdateTimer > m_phookupdatetimer;
       ::subsystem::Process m_hookLoader32;
 

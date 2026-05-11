@@ -129,7 +129,7 @@ namespace remoting_node
 
       pdataoutputstream->writeInt8(m_allowLoopbackConnections ? 1 : 0);
 
-      _ASSERT((unsigned int)m_videoClassNames.size() == m_videoClassNames.size());
+      ASSERT((unsigned int)m_videoClassNames.size() == m_videoClassNames.size());
 
       pdataoutputstream->writeUInt32((unsigned int)m_videoClassNames.size());
       for (size_t i = 0; i < m_videoClassNames.size(); i++) {
@@ -139,7 +139,7 @@ namespace remoting_node
       pdataoutputstream->writeUInt32(m_videoRecognitionInterval);
 
       pdataoutputstream->writeUInt32(m_idleTimeout);
-      _ASSERT((unsigned int)m_videoRects.size() == m_videoRects.size());
+      ASSERT((unsigned int)m_videoRects.size() == m_videoRects.size());
       pdataoutputstream->writeUInt32((unsigned int)m_videoRects.size());
       for (size_t i = 0; i < m_videoRects.size(); i++) {
          ::string s;

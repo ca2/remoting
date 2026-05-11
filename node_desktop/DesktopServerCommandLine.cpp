@@ -58,7 +58,7 @@ namespace remoting_node_desktop
    {
       if (!optionSpecified(LOG_DIR_KEY, &logDir))
       {
-         _ASSERT(false);
+         ASSERT(false);
 
          logDir.clear();
       }
@@ -70,14 +70,14 @@ namespace remoting_node_desktop
 
       if (!optionSpecified(LOG_LEVEL_KEY, &logLevelKeyArg))
       {
-         _ASSERT(false);
+         ASSERT(false);
       }
 
       int ret;
 
       if (!MainSubsystem().StringParser().parseInt(logLevelKeyArg, &ret))
       {
-         _ASSERT(false);
+         ASSERT(false);
       }
 
       return ret;
@@ -86,7 +86,7 @@ namespace remoting_node_desktop
    {
       if (!optionSpecified(SHARED_MEMORY_NAME_KEY, &shMemName))
       {
-         _ASSERT(false);
+         ASSERT(false);
 
          shMemName.clear();
       }

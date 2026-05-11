@@ -466,7 +466,7 @@ namespace remoting_node_desktop
          m_plogwriter->error("Can't set socket timeout, error: {}", WSAGetLastError());
       }
 
-      _ASSERT(constViewPort != 0);
+      ASSERT(constViewPort != 0);
 
       m_plogwriter->error("Client #{} connected", m_nextClientId);
       m_plogwriter->debug("new client, process memory usage: {} ", MainSubsystem().getCurrentMemoryUsage());

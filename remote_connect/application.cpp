@@ -131,7 +131,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
         if (g_instance && g_instance->input)
         {
-            UINT16 flags = 0;
+            ::u16 flags = 0;
 
             switch (msg)
             {
@@ -154,7 +154,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         if (g_instance && g_instance->input)
         {
             short delta = GET_WHEEL_DELTA_WPARAM(wParam);
-            UINT16 flags = PTR_FLAGS_WHEEL | (delta < 0 ? PTR_FLAGS_WHEEL_NEGATIVE : 0);
+            ::u16 flags = PTR_FLAGS_WHEEL | (delta < 0 ? PTR_FLAGS_WHEEL_NEGATIVE : 0);
             flags |= (abs(delta) & 0xFF);
 
             freerdp_input_send_mouse_event(g_instance->input, flags, 0, 0);
@@ -170,7 +170,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             UINT scancode = (lParam >> 16) & 0xFF;
             BOOL ext = (lParam >> 24) & 1;
 
-            UINT16 flags = ext ? KBD_FLAGS_EXTENDED : 0;
+            ::u16 flags = ext ? KBD_FLAGS_EXTENDED : 0;
             if (msg == WM_KEYUP)
                 flags |= KBD_FLAGS_RELEASE;
 

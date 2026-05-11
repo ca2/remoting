@@ -102,14 +102,14 @@ namespace remoting
    // FIXME: Stub
    bool IniFileSettingsManager::getLong(const ::scoped_string &scopedstrName, long *value)
    {
-      _ASSERT(false);
+      ASSERT(false);
       return false;
    }
 
    // FIXME: Stub
    bool IniFileSettingsManager::setLong(const ::scoped_string &scopedstrName, long value)
    {
-      _ASSERT(false);
+      ASSERT(false);
       return false;
    }
 
@@ -181,14 +181,14 @@ namespace remoting
    // FIXME: Stub
    bool IniFileSettingsManager::getBinaryData(const ::scoped_string &scopedstrName, void *value, memsize *size)
    {
-      _ASSERT(false);
+      ASSERT(false);
       return false;
    }
 
    // FIXME: Stub
    bool IniFileSettingsManager::setBinaryData(const ::scoped_string &scopedstrName, const void *value, memsize size)
    {
-      _ASSERT(false);
+      ASSERT(false);
       return false;
    }
 

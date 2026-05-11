@@ -320,7 +320,7 @@ namespace remoting
                   } // if not terminating
                   return ;
                default:
-                  _ASSERT(false);
+                  ASSERT(false);
             } // switch
          } // if target file exists
 

@@ -71,9 +71,9 @@
 //  m_serviceOwner = SecurityIdentifier::createSidFromString("S-1-5-18");
 //  m_applicationOwner = SecurityIdentifier::getProcessOwner(GetCurrentProcess());
 //
-//  _ASSERT(m_admins->isValid());
-//  _ASSERT(m_serviceOwner->isValid());
-//  _ASSERT(m_applicationOwner->isValid());
+//  ASSERT(m_admins->isValid());
+//  ASSERT(m_serviceOwner->isValid());
+//  ASSERT(m_applicationOwner->isValid());
 //
 //  // All access for service.
 //  fillExplicitAccess(&serviceRules[0], m_admins);

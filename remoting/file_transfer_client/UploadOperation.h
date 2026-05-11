@@ -96,12 +96,12 @@ namespace remoting
          // Event handlers to process file transfer messages
          //
 
-         virtual void onUploadReply(DataInputStream * pinput);
-         virtual void onUploadDataReply(DataInputStream * pinput);
-         virtual void onUploadEndReply(DataInputStream * pinput);
-         virtual void onMkdirReply(DataInputStream * pinput);
-         virtual void onLastRequestFailedReply(DataInputStream * pinput);
-         virtual void onFileListReply(DataInputStream * pinput);
+         virtual void onUploadReply(DataInputStream * pinput) override;
+         virtual void onUploadDataReply(DataInputStream * pinput) override;
+         virtual void onUploadEndReply(DataInputStream * pinput) override;
+         virtual void onMkdirReply(DataInputStream * pinput) override;
+         virtual void onLastRequestFailedReply(DataInputStream * pinput) override;
+         virtual void onFileListReply(DataInputStream * pinput) override;
 
       //private:
 

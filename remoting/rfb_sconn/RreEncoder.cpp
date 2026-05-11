@@ -70,7 +70,7 @@ namespace remoting
       } else if (bpp == 32) {
          rreEncode<unsigned int>(rectangle, pframebuffer);
       } else {
-         _ASSERT(0);
+         ASSERT(0);
       }
    }
 

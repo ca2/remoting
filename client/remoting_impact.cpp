@@ -138,7 +138,7 @@ namespace remoting_client
    void remoting_impact::startListening(const int listeningPort)
    {
       if (m_isListening) {
-         _ASSERT(true);
+         ASSERT(true);
          return;
       }
       m_isListening = true;
@@ -425,7 +425,7 @@ namespace remoting_client
    //              }
    //          return true;
    //       default:
-   //          _ASSERT(false);
+   //          ASSERT(false);
    //          return false;
    //    }
    // }

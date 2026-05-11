@@ -160,7 +160,7 @@ namespace remoting_client
         onCloseListeningDaemon();
         break;
     default:
-        _ASSERT(true);
+        ASSERT(true);
 }
        });
 
@@ -194,7 +194,7 @@ namespace remoting_client
         // //         onCloseListeningDaemon();
         // //         break;
         // //     default:
-        // //         _ASSERT(true);
+        // //         ASSERT(true);
         // // }
     }
 

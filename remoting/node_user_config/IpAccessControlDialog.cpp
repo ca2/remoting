@@ -95,7 +95,7 @@ namespace remoting_node
                onAllowOnlyLoopbackConnectionsClick();
                break;
          }
-      } else if (notificationID == EN_UPDATE) {
+      } else if (notificationID == ::user::e_notification_edit_update) {
          switch (controlID) {
             case IDC_IP_FOR_CHECK_EDIT:
                onIpCheckUpdate();
@@ -170,7 +170,7 @@ namespace remoting_node
       for (size_t i = 0; i < m_pipaccesscontrol->size(); i++) {
          IpAccessRule *ip = m_pipaccesscontrol->at(i);
          m_list.addItem(m_list.getCount(), "", (::lparam)ip);
-         _ASSERT((int)i == i);
+         ASSERT((int)i == i);
          setListViewItemText((int)i, ip);
       }
 
@@ -418,8 +418,8 @@ namespace remoting_node
       // Convert ip to ansi string
       //
 
-      ::string ansiIpStorage(&ipStorage);
-      unsigned int addr = inet_addr(ansiIpStorage);
+      //::string ansiIpStorage(&ipStorage);
+      unsigned int addr = MainSubsystem().internet_address4(ipStorage);
 
       IpAccessRule::ActionType action = IpAccessRule::ACTION_TYPE_ALLOW;
       int rulesCount = 0;

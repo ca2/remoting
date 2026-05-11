@@ -72,7 +72,7 @@ namespace remoting_control_desktop
    void ControlMessage::sendData()
    {
       m_pcontrolgate->writeUInt32(m_messageId);
-      _ASSERT((unsigned int)m_tunnel->size() == m_tunnel->size());
+      ASSERT((unsigned int)m_tunnel->size() == m_tunnel->size());
       m_pcontrolgate->writeUInt32((unsigned int)m_tunnel->size());
       m_pcontrolgate->write(m_tunnel->toByteArray(), m_tunnel->size());
    }
@@ -111,7 +111,7 @@ namespace remoting_control_desktop
          case ControlProto::REPLY_OK:
             break;
          default:
-            _ASSERT(false);
+            ASSERT(false);
             throw ::remoting_node::RemoteException("Unknown ret code.");
       }
    }

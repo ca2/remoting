@@ -58,7 +58,7 @@ namespace remoting
       Region(const ::int_rectangle & rectangle);
       /**
        * Creates a copy of another region.
-       * @param rectangle a reference to the source region.
+       * @param src a reference to the source region.
        */
       Region(const Region &src);
       Region(Region &&src);
@@ -145,14 +145,13 @@ namespace remoting
 
       /**
        * Get the ::array_base of rectangles that constitute this region.
-       * @param dst pointer to an ::array_base where the ::list_base of rectangles will be
+       * @param rectanglea pointer to an array the list of rectangles will be
        *            saved to. The previous contents of the ::array_base will be cleared.
        */
       void _getRects(::int_rectangle_array_base & rectanglea) const;
       /**
        * Get the ::list_base of rectangles that constitute this region.
-       * @param dst pointer to an ::list_base where the ::list_base of rectangles will be
-       *            saved to. The previous contents of the ::list_base will be cleared.
+       * @return an list of rectangles.
        */
       ::int_rectangle_array_base getRects() const;
 

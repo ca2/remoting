@@ -88,7 +88,7 @@ namespace remoting
 
       /**
        * Adds host to connection history.
-       * @param host host to add to history.
+       * @param scopedstrHost host to add to history.
        * @remark: if host is already in connection history,
          then it's just moves it up to first pointPosition.
        */

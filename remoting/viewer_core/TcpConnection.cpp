@@ -216,7 +216,7 @@ m_RfbGatesOwner(false)
          //m_poutput->initialize_rfb_output_gate(m_psocketstream);
          m_RfbGatesOwner = true;
       } else {
-         _ASSERT(m_pinput && m_poutput);
+         ASSERT(m_pinput && m_poutput);
       }
       {
          critical_section_lock al(&m_connectLock);

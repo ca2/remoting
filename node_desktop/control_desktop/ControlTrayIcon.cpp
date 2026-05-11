@@ -370,7 +370,7 @@ initialize(::system());
       } catch (::io_exception &) {
          setNotConnectedState();
       } catch (::subsystem::Exception &) {
-         _ASSERT(false);
+         ASSERT(false);
       } // try / catch.
    }
 

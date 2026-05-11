@@ -92,7 +92,7 @@ bool HttpRequest::parseHeader()
     delete m_argList;
     m_argList = NULL;
   }
-  _ASSERT(strnlen(m_request, 2048) < 2048); // 2048 is m_filename size
+  ASSERT(strnlen(m_request, 2048) < 2048); // 2048 is m_filename size
   // Try to extract filename from request.
   if (sscanf(m_request, "GET %2000s HTTP/", m_filename) != 1) {
     return false;

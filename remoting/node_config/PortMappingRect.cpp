@@ -43,7 +43,7 @@ namespace remoting_node
 
    void PortMappingRect::toString(::string & string) const
    {
-      string.format("%dx{}+{}+{}", m_rectangle.width(), m_rectangle.height(), m_rectangle.left, m_rectangle.top);
+      string.formatf("%dx%d+%d+%d", m_rectangle.width(), m_rectangle.height(), m_rectangle.left, m_rectangle.top);
    }
 
    bool PortMappingRect::parse(const ::scoped_string & scopedstr, PortMappingRect * pportmappingrectOut)
@@ -52,7 +52,7 @@ namespace remoting_node
       ::string str(scopedstr);
       int width, height, x, y;
       char c;
-      if (sscanf(str.c_str(), "%dx{}+{}+{}%c", &width, &height, &x, &y, &c) != 4) {
+      if (sscanf(str.c_str(), "%dx%d+%d+%d%c", &width, &height, &x, &y, &c) != 4) {
          return false;
       }
       if (width < 0 || height < 0) {

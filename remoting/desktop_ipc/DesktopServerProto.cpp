@@ -168,7 +168,7 @@ namespace remoting
       auto rectanglea = region.getRects();
 
       unsigned int numRects = (unsigned int)rectanglea.size();
-      _ASSERT(numRects == rectanglea.size());
+      ASSERT(numRects == rectanglea.size());
       pblockinggate->writeUInt32(numRects);
 
       for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)

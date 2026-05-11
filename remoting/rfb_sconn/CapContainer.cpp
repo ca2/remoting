@@ -38,8 +38,8 @@ namespace remoting
    void CapContainer::addCap(unsigned int code, const char *vendorSignature,
                              const char *nameSignature)
    {
-      _ASSERT(strlen(vendorSignature) == 4);
-      _ASSERT(strlen(nameSignature) == 8);
+      ASSERT(strlen(vendorSignature) == 4);
+      ASSERT(strlen(nameSignature) == 8);
       Cap cap;
       cap.code = code;
       memcpy(cap.vendorSignature, vendorSignature, 4);
@@ -50,7 +50,7 @@ namespace remoting
    unsigned int CapContainer::getCapCount() const
    {
       unsigned int capsSize = (unsigned int)m_caps.size();
-      _ASSERT(capsSize == m_caps.size());
+      ASSERT(capsSize == m_caps.size());
       return capsSize;
    }
 

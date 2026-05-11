@@ -267,7 +267,7 @@ void FileTransferRequestHandler::fileListRequested()
     outMemStream.writeUTF8(files[i].getFileName());
   } // for
 
-  _ASSERT((unsigned int)memStream.size() == memStream.size());
+  ASSERT((unsigned int)memStream.size() == memStream.size());
   uncompressedSize = (unsigned int)memStream.size();
 
   //
@@ -279,7 +279,7 @@ void FileTransferRequestHandler::fileListRequested()
   if (compressionLevel != 0) {
     m_deflater.setInput(memStream.toByteArray(), memStream.size());
     m_deflater.deflate();
-    _ASSERT((unsigned int)m_deflater.getOutputSize() == m_deflater.getOutputSize());
+    ASSERT((unsigned int)m_deflater.getOutputSize() == m_deflater.getOutputSize());
     compressedSize = (unsigned int)m_deflater.getOutputSize();
   }
 
@@ -785,7 +785,7 @@ void FileTransferRequestHandler::downloadDataRequested()
     if (dataSize != 0) {
       size_t portion = m_fileInputStream->read(&buffer.front(), dataSize);
       read = (DWORD)portion;
-      _ASSERT(read == portion);
+      ASSERT(read == portion);
     }
   } catch (EOFException) {
 
@@ -828,7 +828,7 @@ void FileTransferRequestHandler::downloadDataRequested()
     if (dataSize != 0) {
       m_deflater.setInput(&buffer.front(), uncompressedSize);
       m_deflater.deflate();
-      _ASSERT((unsigned int)m_deflater.getOutputSize() == m_deflater.getOutputSize());
+      ASSERT((unsigned int)m_deflater.getOutputSize() == m_deflater.getOutputSize());
       compressedSize = (unsigned int)m_deflater.getOutputSize();
     }
   }

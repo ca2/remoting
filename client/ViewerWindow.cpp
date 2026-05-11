@@ -436,7 +436,7 @@ namespace remoting_client
     //             desktopStateUpdate();
     //             return true;
     //         default:
-    //             _ASSERT(false);
+    //             ASSERT(false);
     //             return false;
     //     }
     // }
@@ -490,7 +490,7 @@ namespace remoting_client
         MainSubsystem().message_box(operating_system_window(),
                    str,
                    MainSubsystem().StringTable().getString(IDS_CONNECTION_INFO_CAPTION),
-                   ::user::e_message_box_ok | MB_ICONINFORMATION);
+                   ::user::e_message_box_ok | ::user::e_message_box_icon_information);
     }
 
     void ViewerWindow::switchFullScreenMode()
@@ -697,7 +697,7 @@ namespace remoting_client
         }
 
         if (m_standardScale.empty()) {
-            _ASSERT(false);
+            ASSERT(false);
             return;
         }
 
@@ -722,7 +722,7 @@ namespace remoting_client
         }
 
         if (m_standardScale.empty()) {
-            _ASSERT(false);
+            ASSERT(false);
             return;
         }
 
@@ -885,14 +885,14 @@ namespace remoting_client
             // FIXME: FT check it
             if (m_ftDialog != 0) {
                 if (!m_ftDialog->isCreated()) {
-                    _ASSERT(m_fileTransfer != 0);
+                    ASSERT(m_fileTransfer != 0);
                     m_fileTransfer->setInterface(0);
                     delete m_ftDialog;
                     m_ftDialog = 0;
                 }
             }
             if (m_ftDialog == 0) {
-                _ASSERT(m_fileTransfer != 0);
+                ASSERT(m_fileTransfer != 0);
                 m_ftDialog = new FileTransferMainDialog(m_fileTransfer->getCore());
                 m_fileTransfer->setInterface(m_ftDialog);
             }
@@ -1290,7 +1290,7 @@ namespace remoting_client
             int result = MainSubsystem().message_box({},
                                     error,
                                     formatWindowName(),
-                                    MB_RETRYCANCEL | MB_ICONERROR);
+                                    MB_RETRYCANCEL | ::user::e_message_box_icon_error);
             if (result == IDRETRY) {
                 if (!m_pconnectiondata->isIncoming()) {
                     // Retry connect to remote host.
@@ -1317,7 +1317,7 @@ namespace remoting_client
         MainSubsystem().message_box(operating_system_window(),
                    error,
                    formatWindowName(),
-                   ::user::e_message_box_ok | MB_ICONERROR);
+                   ::user::e_message_box_ok | ::user::e_message_box_icon_error);
 
         m_pdesktopwindow->destroyWindow();
         destroyWindow();

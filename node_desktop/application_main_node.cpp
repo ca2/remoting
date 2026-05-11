@@ -301,7 +301,7 @@ namespace remoting_node_desktop
 //       MessageBox(0,
 //         fatalException.get_message(),
 //         MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
-//         ::user::e_message_box_ok | MB_ICONERROR);
+//         ::user::e_message_box_ok | ::user::e_message_box_icon_error);
 //       return 1;
 //     }
 //   } else if (firstKey.isEqualTo(AdditionalActionApplication::LOCK_WORKSTATION_KEY) ||

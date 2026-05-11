@@ -128,7 +128,7 @@ namespace remoting
          }
          ::string reason(e.get_message());
          unsigned int reasonLen = (unsigned int)reason.length();
-         _ASSERT(reasonLen == reason.length());
+         ASSERT(reasonLen == reason.length());
 
          m_pdataoutputstream->writeUInt32(reasonLen);
          m_pdataoutputstream->write(reason, reasonLen);
@@ -288,7 +288,7 @@ namespace remoting
          if (m_minorVerNum >= 8) {
             ::string reason(e.get_message());
             unsigned int reasonLen = (unsigned int)reason.length();
-            _ASSERT(reasonLen == reason.length());
+            ASSERT(reasonLen == reason.length());
 
             m_pdataoutputstream->writeUInt32(1); // FIXME: Use a named constant instead of 1.
             m_pdataoutputstream->writeUInt32(reasonLen);
@@ -339,7 +339,7 @@ namespace remoting
 
       //::string ansiName(&deskName);
       unsigned int dnLen = (unsigned int)deskName.length();
-      //_ASSERT(dnLen == ansiName.length());
+      //ASSERT(dnLen == ansiName.length());
 
       m_pdataoutputstream->writeUInt32(dnLen);
       m_pdataoutputstream->write(deskName.c_str(), dnLen);

@@ -144,7 +144,7 @@ int application::remoting_impact_main( const ::file::path & path)
    //   MainSubsystem().message_box({},
    //     strError,
    //     ProductNames::VIEWER_PRODUCT_NAME,
-   //     ::user::e_message_box_ok | MB_ICONERROR);
+   //     ::user::e_message_box_ok | ::user::e_message_box_icon_error);
    //   return 0;
    // }
    // catch (const CommandLineFormatHelp &) {

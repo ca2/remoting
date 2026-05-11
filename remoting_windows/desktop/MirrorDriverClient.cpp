@@ -133,7 +133,7 @@ namespace remoting_windows
 
    void MirrorDriverClient::open()
    {
-      _ASSERT(!m_isDriverOpened);
+      ASSERT(!m_isDriverOpened);
 
       extractDeviceInfo("Mirage Driver");
       openDeviceRegKey("dfmirage");
@@ -205,7 +205,7 @@ namespace remoting_windows
 
    void MirrorDriverClient::load()
    {
-      _ASSERT(m_isDriverOpened);
+      ASSERT(m_isDriverOpened);
       if (!m_isDriverLoaded)
       {
          m_plogwriter->information("Loading mirror driver...");
