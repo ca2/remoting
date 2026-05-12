@@ -31,19 +31,19 @@ namespace remoting
    class CLASS_DECL_REMOTING SecurityDefs
    {
    public:
-      static const ::u32 INVALID = 0;
-      static const ::u32 NONE = 1;
-      static const ::u32 VNC = 2;
-      static const ::u32 TIGHT = 16;
+      static constexpr ::u32 INVALID = 0;
+      static constexpr ::u32 NONE = 1;
+      static constexpr ::u32 VNC = 2;
+      static constexpr ::u32 TIGHT = 16;
       static ::u32 convertFromAuthType(::u32 authType);
    };
 
    class CLASS_DECL_REMOTING AuthDefs
    {
    public:
-      static const ::u32 NONE = 1;
-      static const ::u32 VNC = 2;
-      static const ::u32 EXTERNAL = 130;
+      inline static const ::u32 NONE = 1;
+      inline static const ::u32 VNC = 2;
+      inline static const ::u32 EXTERNAL = 130;
 
       static const char *const SIG_NONE;
       static const char *const SIG_VNC;

@@ -31,6 +31,7 @@ namespace remoting
    const char *const AuthDefs::SIG_VNC = "VNCAUTH_";
    const char *const AuthDefs::SIG_EXTERNAL = "XTRNAUTH";
 
+
    ::u32 SecurityDefs::convertFromAuthType(::u32 authType)
    {
       switch (authType) {
