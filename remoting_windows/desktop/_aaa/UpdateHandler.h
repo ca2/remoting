@@ -38,7 +38,7 @@
 #include "remoting/remoting/desktop_ipc/BlockingGate.h"
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    class CLASS_DECL_REMOTING UpdateHandler :
@@ -128,7 +128,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

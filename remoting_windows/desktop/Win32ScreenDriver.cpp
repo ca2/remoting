@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/Win32ScreenDriver.h"
+#include "remoting/remoting_macos/desktop/Win32ScreenDriver.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -120,6 +120,6 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 

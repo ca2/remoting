@@ -33,11 +33,11 @@
 #include "remoting/remoting/desktop/ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_windows
+namespace remoting_macos
 
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS DesktopWinImpl :
+   class CLASS_DECL_REMOTING_MACOS DesktopWinImpl :
    virtual public ::subsystem::GuiThread,
    virtual public ::remoting::DesktopBaseImpl
    {
@@ -77,7 +77,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

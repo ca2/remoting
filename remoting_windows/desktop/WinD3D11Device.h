@@ -25,19 +25,19 @@
 #pragma once
 
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_macos/_common_header.h"
 #include "subsystem/node/DynamicLibrary.h"
 #include <d3d11.h>
 #include <DXGI1_2.h>
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    // #include "log_writer/LogWriter.h"
 
 
-   class CLASS_DECL_REMOTING_WINDOWS WinD3D11Device
+   class CLASS_DECL_REMOTING_MACOS WinD3D11Device
    {
    public:
       // Creates new device and context of first found.
@@ -72,7 +72,7 @@ namespace remoting_windows
    //// __WIND3D11DEVICE_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

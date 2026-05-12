@@ -45,7 +45,7 @@ namespace remoting
    SasUserInput::SasUserInput() :
         m_ctrlPressed(false), m_altPressed(false), m_underVista(false)
    {
-      m_underVista = MainSubsystem().OperatingSystem().isVistaOrLater();
+      //m_underVista = MainSubsystem().OperatingSystem().isVistaOrLater();
    }
 
    SasUserInput::~SasUserInput() {}

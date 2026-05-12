@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::remoting::UpdateListener.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -33,5 +33,5 @@ namespace remoting_windows
    ::remoting::UpdateListener::~::remoting::UpdateListener(void) {}
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  

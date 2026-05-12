@@ -26,7 +26,7 @@
 #include "remoting/remoting/node_config/Configurator.h"
 #include "acme/_operating_system.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    // ConsolePoller::ConsolePoller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
@@ -134,7 +134,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

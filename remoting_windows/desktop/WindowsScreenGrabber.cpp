@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WindowsScreenGrabber.h"
+#include "remoting/remoting_macos/desktop/WindowsScreenGrabber.h"
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -267,5 +267,5 @@ namespace remoting_windows
    void WindowsScreenGrabber::onTerminate() { m_threadStopper.set_happening(); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  

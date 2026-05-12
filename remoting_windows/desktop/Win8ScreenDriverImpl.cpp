@@ -24,17 +24,17 @@
 #include "framework.h"
 #include "subsystem/platform/Exception.h"
 #include "subsystem/framebuffer/StandardPixelFormatFactory.h"
-#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_macos/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_macos/desktop/WinDxRecoverableException.h"
 //#include aaa_<crtdbg.h>
 #include "subsystem/node/Screen.h"
 
-#include "remoting/remoting_windows/desktop/WinDxgiOutput.h"
+#include "remoting/remoting_macos/desktop/WinDxgiOutput.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
+#include "remoting/remoting_macos/desktop/Win8ScreenDriverImpl.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    //
@@ -331,4 +331,4 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos

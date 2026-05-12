@@ -26,10 +26,10 @@
 #include "subsystem/platform/Exception.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/platform/Registry.h"
-// FIXME: Why the class CLASS_DECL_REMOTING_WINDOWS should depence from the remoting_node_desktop project?
+// FIXME: Why the class CLASS_DECL_REMOTING_MACOS should depence from the remoting_node_desktop project?
 //#include "remoting/node_desktop/NamingDefs.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    ::string_literal MirrorDriverClient::MINIPORT_REGISTRY_PATH = "SYSTEM\\CurrentControlSet\\Hardware Profiles\\"
@@ -457,6 +457,6 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  
 

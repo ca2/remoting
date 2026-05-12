@@ -25,7 +25,7 @@
 #include "ApplicationDesktopFactory.h"
 #include "DesktopWinImpl.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    ApplicationDesktopFactory::ApplicationDesktopFactory() {}
@@ -45,7 +45,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

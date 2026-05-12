@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WindowsUserInput.h"
+#include "remoting/remoting_macos/desktop/WindowsUserInput.h"
 #include "subsystem/thread/DesktopSelector.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/Keyboard.h"
@@ -30,7 +30,7 @@
 #include "subsystem/node/Clipboard2.h"
 #include "subsystem/platform/BrokenHandleException.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -303,4 +303,4 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos

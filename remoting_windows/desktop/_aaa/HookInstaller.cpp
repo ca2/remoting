@@ -25,7 +25,7 @@
 #include "HookInstaller.h"
 #include "acme/_operating_system.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 #ifndef _WIN64
@@ -82,4 +82,4 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos

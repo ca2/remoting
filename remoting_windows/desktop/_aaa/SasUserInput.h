@@ -29,7 +29,7 @@
 #include "remoting/remoting/desktop_ipc/UserInputClient.h"
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    // This class  delegates all inputs but the "ctrl+alt+del" under Vista or later
@@ -67,7 +67,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

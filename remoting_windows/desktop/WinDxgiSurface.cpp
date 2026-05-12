@@ -25,9 +25,9 @@
 #include "subsystem/platform/Exception.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/WinDxgiSurface.h"
+#include "remoting/remoting_macos/desktop/WinDxgiSurface.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -54,4 +54,4 @@ namespace remoting_windows
    IDXGISurface *WinDxgiSurface::getSurface() const { return m_dxgiSurface; }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos

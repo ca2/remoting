@@ -24,14 +24,14 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/MirrorScreenDriver.h"
-#include "remoting/remoting_windows/desktop/Win32ScreenDriverBaseImpl.h"
+#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_macos/desktop/MirrorScreenDriver.h"
+#include "remoting/remoting_macos/desktop/Win32ScreenDriverBaseImpl.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
+   class CLASS_DECL_REMOTING_MACOS Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
       //Win32MirrorScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
@@ -53,7 +53,7 @@ namespace remoting_windows
       // Stops screen update detection.
       virtual void terminateDetection();
 
-      // Note: This class  is a wrapper for the MirrorScreenDriver class CLASS_DECL_REMOTING_WINDOWS and then
+      // Note: This class  is a wrapper for the MirrorScreenDriver class CLASS_DECL_REMOTING_MACOS and then
       // only MirrorScreenDriver can provide appropriate thread safety for the ::remoting::ScreenDriver functions.
 
       virtual ::i32_size getScreenDimension();
@@ -70,7 +70,7 @@ namespace remoting_windows
    //// __WIN32MIRRORSCREENDRIVER_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

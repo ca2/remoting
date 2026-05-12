@@ -33,7 +33,7 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting/win_system/WindowsDisplays.h"
 
-namespace remoting_windows
+namespace remoting_macos
 
 {
 
@@ -148,7 +148,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  
 
 

@@ -24,14 +24,14 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
+#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_macos/desktop/WinD3D11Texture2D.h"
 
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -39,7 +39,7 @@ namespace remoting_windows
    // This class  is a part of Win8DeskDuplication. This means that WinCustomD3D11Texture2D
    // is not an independed unit and it is designed to use only in Win8DeskDuplication.
    // This is a Win8DeskDuplication helper to custom appropriate textures.
-   class CLASS_DECL_REMOTING_WINDOWS WinCustomD3D11Texture2D :
+   class CLASS_DECL_REMOTING_MACOS WinCustomD3D11Texture2D :
    virtual public ::particle
    {
    public:
@@ -58,7 +58,7 @@ namespace remoting_windows
 
 
    private:
-      class CLASS_DECL_REMOTING_WINDOWS Texture2DDescInitializer
+      class CLASS_DECL_REMOTING_MACOS Texture2DDescInitializer
       {
       public:
          Texture2DDescInitializer(::u32 width, ::u32 height, DXGI_MODE_ROTATION rotation);
@@ -74,4 +74,4 @@ namespace remoting_windows
 
    //// __WINCUSTOMD3D11TEXTURE2D_H__
 
-} // namespace remoting_windows
+} // namespace remoting_macos

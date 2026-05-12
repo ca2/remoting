@@ -25,9 +25,9 @@
 #include "subsystem/platform/Exception.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/WinDxgiDevice.h"
+#include "remoting/remoting_macos/desktop/WinDxgiDevice.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -55,7 +55,7 @@ namespace remoting_windows
    HRESULT WinDxgiDevice::getParent(REFIID riid, void **ppvObject) { return m_dxgiDevice->GetParent(riid, ppvObject); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  
 
 

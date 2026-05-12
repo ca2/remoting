@@ -25,17 +25,17 @@
 #pragma once
 
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_macos/_common_header.h"
 #include "remoting/remoting/desktop/CursorShapeGrabber.h"
 #include "subsystem/_common_header.h"
 #include "subsystem_windows/node/Screen.h"
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WindowsCursorShapeGrabber :
+   class CLASS_DECL_REMOTING_MACOS WindowsCursorShapeGrabber :
    virtual public ::remoting::CursorShapeGrabber
    {
    public:
@@ -56,7 +56,7 @@ namespace remoting_windows
    };
 
 
-} //  namespace remoting_windows
+} //  namespace remoting_macos
 
 
 

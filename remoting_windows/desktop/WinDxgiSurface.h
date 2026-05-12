@@ -24,14 +24,14 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_macos/_common_header.h"
 #include <d3d11.h>
 #include <DXGI1_2.h>
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiSurface
+   class CLASS_DECL_REMOTING_MACOS WinDxgiSurface
    {
    public:
       // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.
@@ -46,7 +46,7 @@ namespace remoting_windows
 
    //// __WINDXGISURFACE_H__
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_macos/_common_header.h"
 #include "subsystem/thread/GuiThread.h"
 //#include "thread/LocalMutex.h"
 //#include "win-system/WinTimeMillis.h"
@@ -34,9 +34,9 @@
 
 // Only one instance of this class may be created.
 
-namespace remoting_windows
+namespace remoting_macos
 {
-   class CLASS_DECL_REMOTING_WINDOWS WindowsInputBlocker :
+   class CLASS_DECL_REMOTING_MACOS WindowsInputBlocker :
       virtual public ::remoting::InputBlocker,
    virtual public ::subsystem::GuiThread
    {
@@ -51,21 +51,21 @@ namespace remoting_windows
       virtual void initialize_windows_input_blocker(::subsystem::LogWriter *log);
 
       // This functions set/unset blocks on a local keyboard and mouse.
-      virtual void setKeyboardBlocking(bool block);
-      virtual void setMouseBlocking(bool block);
+      void setKeyboardBlocking(bool block) override;
+      void setMouseBlocking(bool block) override;
       // This functions set/unset blocks on a local keyboard and mouse on the
       // timeInterval interval from a last software event generation.
-      virtual void setSoftKeyboardBlocking(bool block, ::u32 timeInterval);
-      virtual void setSoftMouseBlocking(bool block, ::u32 timeInterval);
+      void setSoftKeyboardBlocking(bool block, ::u32 timeInterval) override;
+      void setSoftMouseBlocking(bool block, ::u32 timeInterval) override;
 
-      virtual class ::time getLastInputTime() const;
-      virtual void correctLastTime(const class ::time & time);
+      class ::time getLastInputTime() const override;
+      void correctLastTime(const class ::time & time) override;
 
-      virtual bool isRemoteInputAllowed();
+      bool isRemoteInputAllowed() override;
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void execute() override;
+      void onTerminate() override;
 
       bool setKeyboardFilterHook(bool block);
       bool setSoftKeyboardFilterHook(bool block);
@@ -105,7 +105,7 @@ namespace remoting_windows
 
       ::subsystem::LogWriter *m_plogwriter;
    };
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

@@ -3,7 +3,7 @@
 
 
 /// remoting/remoting/desktop
-namespace remoting_windows
+namespace remoting_macos
 {
 
 

@@ -24,9 +24,9 @@
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinCustomD3D11Texture2D.h"
+#include "remoting/remoting_macos/desktop/WinCustomD3D11Texture2D.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -80,4 +80,4 @@ namespace remoting_windows
    const D3D11_TEXTURE2D_DESC *WinCustomD3D11Texture2D::getDesc() const { return m_textDescInitializer.getDesc(); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos

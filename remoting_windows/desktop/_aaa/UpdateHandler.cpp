@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UpdateHandler.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -75,4 +75,4 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos

@@ -26,26 +26,26 @@
 
 
 // FIXME: Remove this detectors when will be ready win8 detectors.
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_macos/_common_header.h"
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_macos/_common_header.h"
 #include "remoting/remoting/desktop/CursorPositionDetector.h"
 
 #include "remoting/remoting/desktop/CursorShapeDetector.h"
-#include "remoting/remoting_windows/desktop/WindowsCursorShapeGrabber.h"
+#include "remoting/remoting_macos/desktop/WindowsCursorShapeGrabber.h"
 
 #include "remoting/remoting/desktop/ScreenDriver.h"
-#include "remoting/remoting_windows/desktop/WinVideoRegionUpdaterImpl.h"
+#include "remoting/remoting_macos/desktop/WinVideoRegionUpdaterImpl.h"
 #include "remoting/remoting/desktop/UpdateKeeper.h"
 #include "remoting/remoting/desktop/UpdateListener.h"
 //#include "log_writer/LogWriter.h"
-#include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
+#include "remoting/remoting_macos/desktop/Win8ScreenDriverImpl.h"
 #include "remoting/remoting/desktop/CopyRectDetector.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriver :
+   class CLASS_DECL_REMOTING_MACOS Win8ScreenDriver :
    virtual public WinVideoRegionUpdaterImpl
    {
    public:
@@ -100,7 +100,7 @@ namespace remoting_windows
 
    //// __WIN8SCREENDRIVER_H__
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

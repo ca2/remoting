@@ -140,7 +140,7 @@ bool CopyRectDetector::checkWindowMovements(
     }
 
     // Save current properties
-    m_newWinProps.emplace_back(windowId, currentRect);
+   m_newWinProps.add({(::u32)windowId, currentRect});
 
     CGRect oldRect;
 

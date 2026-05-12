@@ -388,6 +388,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A0B94A22FB2CDAC00EEAAE1 /* subsystem_bsd_sockets.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = subsystem_bsd_sockets.xcodeproj; path = /Volumes/hapid/remoting/main/source/app/subsystem_bsd_sockets/subsystem_bsd_sockets.xcodeproj; sourceTree = "<absolute>"; };
 		9A1903B02FB242B200A3C985 /* libsubsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libsubsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1903B22FB242D900A3C985 /* _.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _.h; sourceTree = "<group>"; };
 		9A1903B32FB242D900A3C985 /* CopyFileEventListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyFileEventListener.h; sourceTree = "<group>"; };
@@ -831,6 +832,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A0B95072FB2CDEF00EEAAE1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		9A1903DC2FB242D900A3C985 /* file_transfer_client */ = {
 			isa = PBXGroup;
 			children = (
@@ -1193,6 +1201,7 @@
 		9A373EF52F81647000E892B1 = {
 			isa = PBXGroup;
 			children = (
+				9A0B94A22FB2CDAC00EEAAE1 /* subsystem_bsd_sockets.xcodeproj */,
 				9AD3F4532FB2092900CB9A78 /* innate_subsystem.xcodeproj */,
 				9A1904B12FB253B000A3C985 /* port_jpeg.xcodeproj */,
 				9A373F162F8164F200E892B1 /* remoting */,
@@ -1658,6 +1667,10 @@
 				{
 					ProductGroup = 9A1904B52FB253B100A3C985 /* Products */;
 					ProjectRef = 9A1904B12FB253B000A3C985 /* port_jpeg.xcodeproj */;
+				},
+				{
+					ProductGroup = 9A0B95072FB2CDEF00EEAAE1 /* Products */;
+					ProjectRef = 9A0B94A22FB2CDAC00EEAAE1 /* subsystem_bsd_sockets.xcodeproj */;
 				},
 			);
 			projectRoot = "";

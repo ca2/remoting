@@ -33,7 +33,7 @@
 #include "GrabOptimizator.h"
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    class CLASS_DECL_REMOTING UpdateFilter
@@ -71,5 +71,5 @@ namespace remoting_windows
    //// __UPDATEFILTER_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  

@@ -22,17 +22,17 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
-#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_macos/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_macos/desktop/WinDxCriticalException.h"
 //#include "subsystem/thread/lockable_critical_section.h"
-#include "remoting/remoting_windows/desktop/WinDxgiAcquiredFrame.h"
-#include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
-#include "remoting/remoting_windows/desktop/WinAutoMapDxgiSurface.h"
-#include "remoting/remoting_windows/desktop/Win8DeskDuplicationThread.h"
-#include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
+#include "remoting/remoting_macos/desktop/WinDxgiAcquiredFrame.h"
+#include "remoting/remoting_macos/desktop/WinD3D11Texture2D.h"
+#include "remoting/remoting_macos/desktop/WinAutoMapDxgiSurface.h"
+#include "remoting/remoting_macos/desktop/Win8DeskDuplicationThread.h"
+#include "remoting/remoting_macos/desktop/WinDxgiOutput1.h"
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -351,5 +351,5 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  

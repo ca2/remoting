@@ -25,17 +25,17 @@
 #pragma once
 
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinD3D11Device.h"
+#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_macos/desktop/WinD3D11Device.h"
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiDevice
+   class CLASS_DECL_REMOTING_MACOS WinDxgiDevice
    {
    public:
       // Uses WinD3D11Device to create internal handle
@@ -49,7 +49,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

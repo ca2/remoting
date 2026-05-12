@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "HookUpdateTimer.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    //HookUpdateTimer::HookUpdateTimer(::remoting::UpdateListener *pupdatelistener) : m_pupdatelistener = pupdatelistener; { resume(); }
@@ -69,7 +69,7 @@ namespace remoting_windows
    void HookUpdateTimer::sear() { m_updateWaiter.set_happening(); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

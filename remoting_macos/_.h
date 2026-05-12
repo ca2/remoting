@@ -11,10 +11,10 @@
 
 
 
-#if defined(_remoting_windows_project)
-#define CLASS_DECL_REMOTING_WINDOWS CLASS_DECL_EXPORT
+#if defined(_remoting_macos_project)
+#define CLASS_DECL_REMOTING_MACOS CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_REMOTING_WINDOWS CLASS_DECL_IMPORT
+#define CLASS_DECL_REMOTING_MACOS CLASS_DECL_IMPORT
 #endif
 
 

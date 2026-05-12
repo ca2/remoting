@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_macos/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_macos/desktop/WinDxRecoverableException.h"
 #include "subsystem/framebuffer/StandardPixelFormatFactory.h"
-#include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
+#include "remoting/remoting_macos/desktop/WinCursorShapeUtils.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
+#include "remoting/remoting_macos/desktop/WinDxgiOutputDuplication.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -244,5 +244,5 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  

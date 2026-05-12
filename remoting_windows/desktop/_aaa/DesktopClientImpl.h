@@ -40,7 +40,7 @@
 #include "remoting/remoting/desktop_ipc/ReconnectionListener.h"
 #include "::remoting::UpdateListener.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    //class CLASS_DECL_REMOTING DesktopClientImpl : public AnEventListener, public ReconnectionListener, public Thread, public DesktopBaseImpl
@@ -87,7 +87,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

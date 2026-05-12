@@ -25,7 +25,7 @@
 #include "CursorPositionDetector.h"
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    const int MOUSE_SLEEP_TIME = 10;
@@ -77,7 +77,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

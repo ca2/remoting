@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DummyScreenDriver.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    //
@@ -135,7 +135,7 @@ namespace remoting_windows
    bool DummyScreenDriver::applyNewScreenProperties() { return true; }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  
 
 

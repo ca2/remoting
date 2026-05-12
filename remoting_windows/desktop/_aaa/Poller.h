@@ -35,7 +35,7 @@
 #define DEFAULT_SLEEP_TIME 1000
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    class CLASS_DECL_REMOTING Poller :
@@ -68,7 +68,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

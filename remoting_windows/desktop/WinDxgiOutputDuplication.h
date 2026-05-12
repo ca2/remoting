@@ -24,19 +24,19 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
+#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_macos/desktop/WinDxgiOutput1.h"
 #include "remoting/remoting/rfb/CursorShape.h"
 
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    // This class  is a wrapper for the IDXGIOutputDuplication interface.
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutputDuplication :
+   class CLASS_DECL_REMOTING_MACOS WinDxgiOutputDuplication :
    virtual public ::particle
    {
    public:
@@ -74,7 +74,7 @@ namespace remoting_windows
    //// __WINDXGIOUTPUTDUPLICATION_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 

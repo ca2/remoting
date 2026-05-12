@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
+#include "remoting/remoting_macos/desktop/WinCursorShapeUtils.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -297,4 +297,4 @@ namespace remoting_windows
       return shapeInfo.Height;
    }
 
-} // namespace remoting_windows
+} // namespace remoting_macos

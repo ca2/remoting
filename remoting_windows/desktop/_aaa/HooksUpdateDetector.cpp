@@ -33,7 +33,7 @@
 #include "subsystem_windows/node/UipiControl.h"
 #include "subsystem/node/OperatingSystem.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 //    HooksUpdateDetector::HooksUpdateDetector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
@@ -263,5 +263,5 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
  

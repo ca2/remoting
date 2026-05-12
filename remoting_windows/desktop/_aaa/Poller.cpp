@@ -27,7 +27,7 @@
 #include "remoting/remoting/region/Region.h"
 #include "remoting/remoting/node_config/Configurator.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
    //
@@ -135,6 +135,6 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 

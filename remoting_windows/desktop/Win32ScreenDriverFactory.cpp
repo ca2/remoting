@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/Win32ScreenDriverFactory.h"
-#include "remoting/remoting_windows/desktop/Win32MirrorScreenDriver.h"
-#include "remoting/remoting_windows/desktop/Win32ScreenDriver.h"
-#include "remoting/remoting_windows/desktop/Win8ScreenDriver.h"
+#include "remoting/remoting_macos/desktop/Win32ScreenDriverFactory.h"
+#include "remoting/remoting_macos/desktop/Win32MirrorScreenDriver.h"
+#include "remoting/remoting_macos/desktop/Win32ScreenDriver.h"
+#include "remoting/remoting_macos/desktop/Win8ScreenDriver.h"
 
-namespace remoting_windows
+namespace remoting_macos
 {
 
 
@@ -135,7 +135,7 @@ namespace remoting_windows
    bool Win32ScreenDriverFactory::isMirrorDriverAllowed() { return m_pserverconfig->getMirrorIsAllowed(); }
 
    bool Win32ScreenDriverFactory::isD3DAllowed() { return m_pserverconfig->getD3DIsAllowed(); }
-} // namespace remoting_windows
+} // namespace remoting_macos
 
 
 
