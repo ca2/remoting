@@ -28,51 +28,63 @@
 
 //#include "remoting/remoting/region/::i32_point.h"
 #include "subsystem/_common_header.h"
-//#include aaa_<list>
+#include "remoting/remoting/desktop/CopyRectDetector.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-namespace remoting
+#include <CoreGraphics/CoreGraphics.h>
+
+
+namespace remoting_macos
 {
 
-   struct WinProp
-   {
-      WinProp(const ::operating_system::window & operatingsystemwindow, const ::i32_rectangle &rectangleOld)
-      {
-         m_operatingsystemwindow = operatingsystemwindow;
-         m_rectangleOld = rectangleOld;
-      }
-      ::operating_system::window m_operatingsystemwindow;
-      ::i32_rectangle m_rectangleOld;
-   };
+struct WinProp
+{
+    ::u32        windowId;
+    CGRect          rect;
 
-   class CLASS_DECL_REMOTING CopyRectDetector :
-      virtual public ::particle
-   {
-   public:
-      CopyRectDetector();
-      virtual ~CopyRectDetector();
+    WinProp()
+        : windowId(0)
+    {
+    }
 
-      void detectWindowMovements(::i32_rectangle &rectangleCopy, ::i32_point & pointSource);
+    WinProp(uint32_t id, const CGRect& r)
+        : windowId(id),
+          rect(r)
+    {
+    }
+};
 
-   //protected:
-      bool checkWindowMovements(const ::operating_system::window & operatingsystemwindow);
-
-      bool getWinRect(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle);
-
-      // If window properties successfully was found then function returns
-      // true. Else this function returns false.
-      bool findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle);
-
-      ::i32_rectangle m_rectangleCopy;
-      ::i32_point m_pointSource;
-
-      ::list_base<WinProp> m_lastWinProps;
-      ::list_base<WinProp> m_newWinProps;
-   };
-
+class CopyRectDetector :
+virtual public ::remoting::CopyRectDetector
+{
+public:
    
+//private:
+    ::array_base<WinProp> m_lastWinProps;
+    ::array_base<WinProp> m_newWinProps;
 
-} // namespace remoting
+    CGRect  m_rectCopy;
+    CGPoint m_pointSource;
+   
+    CopyRectDetector();
+    ~CopyRectDetector();
+
+   void detectWindowMovements(::i32_rectangle &rectangleCopy, ::i32_point & pointSource) override;
+
+    void _detectWindowMovements(CGRect& rectCopy,
+                               CGPoint& pointSource);
+
+//private:
+    bool checkWindowMovements(CFDictionaryRef windowInfo);
+
+    bool findPrevWinProps(uint32_t windowId,
+                          CGRect& rect);
+
+
+};
+
+
+} // namespace remoting_macos
  
 
 

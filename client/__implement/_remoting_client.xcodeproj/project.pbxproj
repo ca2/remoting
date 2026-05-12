@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A19068D2FB2974900A3C985 /* libremoting_macos.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A19067B2FB2965500A3C985 /* libremoting_macos.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A1CC41D2CF2E999004A00CB /* liboperating_ambient_macos.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A1CC41B2CF2E999004A00CB /* liboperating_ambient_macos.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A1CF4FD276161C900802DB8 /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1CF4F9276161C900802DB8 /* libacme.dylib */; };
 		9A1CF4FE276161C900802DB8 /* libacme.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A1CF4F9276161C900802DB8 /* libacme.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -32,6 +33,7 @@
 		9A4E9699278532DD00B74C76 /* libwindowing_macos.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A4E9679278532DC00B74C76 /* libwindowing_macos.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A4E96BA27853AB400B74C76 /* libfolder_zip.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A4E96B827853AB400B74C76 /* libfolder_zip.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A52435D2CD4B109006ED868 /* libnano_graphics_quartz2d.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A52435B2CD4B109006ED868 /* libnano_graphics_quartz2d.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		9A6EE2062FB29DF5004F9C3A /* libinnate_subsystem_macos.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A612CE22FB29CEB0025E0AA /* libinnate_subsystem_macos.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A8B170529A10A9C00D14979 /* libacme_darwin.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A8B170329A10A9C00D14979 /* libacme_darwin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A8B170829A10AAE00D14979 /* libapex_darwin.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A8B170629A10AAE00D14979 /* libapex_darwin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9A8B170C29A10B0600D14979 /* libaura_darwin.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 9A8B170A29A10B0600D14979 /* libaura_darwin.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -54,6 +56,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 070B8EE91B6E53F900D26137;
 			remoteInfo = "Hello Multiverse!!";
+		};
+		9A19067A2FB2965500A3C985 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A1906742FB2965400A3C985 /* remoting_macos.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A1906442FB278ED00A3C985;
+			remoteInfo = remoting_macos;
+		};
+		9A19067C2FB2966800A3C985 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A1906742FB2965400A3C985 /* remoting_macos.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A1906432FB278ED00A3C985;
+			remoteInfo = remoting_macos;
+		};
+		9A612CE12FB29CEB0025E0AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A19092F2FB29C7500A3C985 /* innate_subsystem_macos.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A1906A72FB29AF200A3C985;
+			remoteInfo = innate_subsystem_macos;
+		};
+		9A612CEC2FB29D000025E0AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A19092F2FB29C7500A3C985 /* innate_subsystem_macos.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A1906A62FB29AF200A3C985;
+			remoteInfo = innate_subsystem_macos;
 		};
 		9AD3F1612FB1909900CB9A78 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -78,6 +108,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				9A6EE2062FB29DF5004F9C3A /* libinnate_subsystem_macos.dylib in Embed Libraries */,
+				9A19068D2FB2974900A3C985 /* libremoting_macos.dylib in Embed Libraries */,
 				9A4E96BA27853AB400B74C76 /* libfolder_zip.dylib in Embed Libraries */,
 				9A1CC41D2CF2E999004A00CB /* liboperating_ambient_macos.dylib in Embed Libraries */,
 				9A4E9683278532DD00B74C76 /* libapex_apple.dylib in Embed Libraries */,
@@ -116,6 +148,8 @@
 /* Begin PBXFileReference section */
 		070B8EEA1B6E53F900D26137 /* _remoting_client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = _remoting_client.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		070B8EFD1B6E53FA00D26137 /* _remoting_remoting_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = _remoting_remoting_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A1906742FB2965400A3C985 /* remoting_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_macos.xcodeproj; path = /Volumes/hapid/remoting/main/source/remoting/remoting_macos/remoting_macos.xcodeproj; sourceTree = "<absolute>"; };
+		9A19092F2FB29C7500A3C985 /* innate_subsystem_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = innate_subsystem_macos.xcodeproj; path = "../../../../operating_system/operating_system-macos/innate_subsystem_macos/innate_subsystem_macos.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		9A1CC41B2CF2E999004A00CB /* liboperating_ambient_macos.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = liboperating_ambient_macos.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1CF4F9276161C900802DB8 /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1CF4FA276161C900802DB8 /* libapex.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libapex.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,7 +235,9 @@
 		070B8EE11B6E53F900D26137 = {
 			isa = PBXGroup;
 			children = (
+				9A19092F2FB29C7500A3C985 /* innate_subsystem_macos.xcodeproj */,
 				9AD3F15A2FB1909800CB9A78 /* remoting_client.xcodeproj */,
+				9A1906742FB2965400A3C985 /* remoting_macos.xcodeproj */,
 				9AEA19E527602557006437A3 /* __implement */,
 				070B8EEB1B6E53F900D26137 /* Products */,
 				9ADF1D2922C16DBB00456537 /* Frameworks */,
@@ -219,11 +255,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9A1906772FB2965400A3C985 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A19067B2FB2965500A3C985 /* libremoting_macos.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		9A3E0BA12309FBD400B5459B /* Library */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Library;
+			sourceTree = "<group>";
+		};
+		9A612CDA2FB29CEA0025E0AA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A612CE22FB29CEB0025E0AA /* libinnate_subsystem_macos.dylib */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		9AADA8E429D0A8DD0004D7ED /* en.lproj */ = {
@@ -237,7 +289,7 @@
 		9AD3F15E2FB1909800CB9A78 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9AD3F1622FB1909900CB9A78 /* libremoting.dylib */,
+				9AD3F1622FB1909900CB9A78 /* libremoting_client.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -344,6 +396,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A612CED2FB29D000025E0AA /* PBXTargetDependency */,
+				9A19067D2FB2966800A3C985 /* PBXTargetDependency */,
 				9AD3F18A2FB191EB00CB9A78 /* PBXTargetDependency */,
 			);
 			name = _remoting_client;
@@ -402,8 +456,16 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 9A612CDA2FB29CEA0025E0AA /* Products */;
+					ProjectRef = 9A19092F2FB29C7500A3C985 /* innate_subsystem_macos.xcodeproj */;
+				},
+				{
 					ProductGroup = 9AD3F15E2FB1909800CB9A78 /* Products */;
 					ProjectRef = 9AD3F15A2FB1909800CB9A78 /* remoting_client.xcodeproj */;
+				},
+				{
+					ProductGroup = 9A1906772FB2965400A3C985 /* Products */;
+					ProjectRef = 9A1906742FB2965400A3C985 /* remoting_macos.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -415,10 +477,24 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		9AD3F1622FB1909900CB9A78 /* libremoting.dylib */ = {
+		9A19067B2FB2965500A3C985 /* libremoting_macos.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libremoting.dylib;
+			path = libremoting_macos.dylib;
+			remoteRef = 9A19067A2FB2965500A3C985 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9A612CE22FB29CEB0025E0AA /* libinnate_subsystem_macos.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libinnate_subsystem_macos.dylib;
+			remoteRef = 9A612CE12FB29CEB0025E0AA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9AD3F1622FB1909900CB9A78 /* libremoting_client.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libremoting_client.dylib;
 			remoteRef = 9AD3F1612FB1909900CB9A78 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -517,6 +593,16 @@
 			isa = PBXTargetDependency;
 			target = 070B8EE91B6E53F900D26137 /* _remoting_client */;
 			targetProxy = 070B8EFE1B6E53FA00D26137 /* PBXContainerItemProxy */;
+		};
+		9A19067D2FB2966800A3C985 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = remoting_macos;
+			targetProxy = 9A19067C2FB2966800A3C985 /* PBXContainerItemProxy */;
+		};
+		9A612CED2FB29D000025E0AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = innate_subsystem_macos;
+			targetProxy = 9A612CEC2FB29D000025E0AA /* PBXContainerItemProxy */;
 		};
 		9AD3F18A2FB191EB00CB9A78 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

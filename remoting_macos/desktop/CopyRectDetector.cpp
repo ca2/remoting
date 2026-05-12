@@ -25,93 +25,174 @@
 #include "CopyRectDetector.h"
 #include "subsystem/_common_header.h"
 #include "acme/_operating_system.h"
+#include "acme/operating_system/apple/_apple.h"
 
-namespace remoting
+
+
+namespace remoting_macos
 {
 
-   CopyRectDetector::CopyRectDetector() {}
+CopyRectDetector::CopyRectDetector()
+{
+    m_rectCopy = CGRectZero;
+    m_pointSource = CGPointZero;
+}
 
-   CopyRectDetector::~CopyRectDetector() {}
-
-
-   // Callback routine used internally to catch window movement...
-   static bool CALLBACK enumWindowsFnCopyRect(HWND hwnd, LPARAM lparam)
-   {
-      auto _this = (CopyRectDetector *) lparam;
-      return _this->checkWindowMovements(::as_operating_system_window(hwnd));
-   }
+CopyRectDetector::~CopyRectDetector()
+{
+}
 
 
-   void CopyRectDetector::detectWindowMovements(::i32_rectangle &rectangleCopy, ::i32_point & pointSource)
-   {
-      m_rectangleCopy.clear();
-      m_pointSource.clear();
+void CopyRectDetector::detectWindowMovements(::i32_rectangle &rectangleCopy, ::i32_point & pointSource)
+{
+   
+   CGRect cgrectCopy{};
+   
+   CGPoint cgpointSource{};
+   
+   _detectWindowMovements(cgrectCopy , cgpointSource);
+   
+   
+   screen_coordinates_aware_copy(rectangleCopy, cgrectCopy);
+   
+   screen_coordinates_aware_copy(pointSource, cgpointSource);
+   
+   
+}
 
-      EnumWindows((WNDENUMPROC)enumWindowsFnCopyRect, (::lparam)(void *) this);
-      m_lastWinProps = m_newWinProps;
-      m_newWinProps.clear();
-      rectangleCopy = m_rectangleCopy;
-      pointSource = m_pointSource;
-   }
 
+void CopyRectDetector::_detectWindowMovements(
+    CGRect& rectCopy,
+    CGPoint& pointSource)
+{
+    m_rectCopy = CGRectZero;
+    m_pointSource = CGPointZero;
 
-   bool CopyRectDetector::checkWindowMovements(const ::operating_system::window & operatingsystemwindow)
-   {
-      ::i32_rectangle rectangleCurrent;
-      //auto hwnd = ::as_HWND(operatingsystemwindow);
-      if (IsWindowVisible(::as_HWND(operatingsystemwindow)) && getWinRect(operatingsystemwindow, rectangleCurrent))
-      {
-         // Store window properties in the new ::list_base
-         WinProp newWinProp(operatingsystemwindow, rectangleCurrent);
-         m_newWinProps.add(newWinProp);
+    CFArrayRef windowList =
+        CGWindowListCopyWindowInfo(
+            kCGWindowListOptionOnScreenOnly,
+            kCGNullWindowID);
 
-         ::i32_rectangle rectangleOld;
-         if (findPrevWinProps(operatingsystemwindow, rectangleOld))
-         {
-            if (rectangleOld.top_left() != rectangleCurrent.top_left() && rectangleCurrent.area() > m_rectangleCopy.area())
-            {
+    if (windowList)
+    {
+        CFIndex count = CFArrayGetCount(windowList);
 
-               m_rectangleCopy = rectangleCurrent;
+        for (CFIndex i = 0; i < count; ++i)
+        {
+            CFDictionaryRef windowInfo =
+                (CFDictionaryRef)CFArrayGetValueAtIndex(windowList, i);
 
-               m_pointSource = rectangleOld.top_left();
+            checkWindowMovements(windowInfo);
+        }
 
-               // Adjust
-               i32_size sizeDesktop(GetSystemMetrics(SM_XVIRTUALSCREEN),GetSystemMetrics(SM_YVIRTUALSCREEN));
+        CFRelease(windowList);
+    }
 
-               m_rectangleCopy -= sizeDesktop;
+    m_lastWinProps = m_newWinProps;
+    m_newWinProps.clear();
 
-               m_pointSource -= sizeDesktop;
+    rectCopy = m_rectCopy;
+    pointSource = m_pointSource;
+}
 
-            }
-         }
-      }
-      return true;
-   }
+bool CopyRectDetector::checkWindowMovements(
+    CFDictionaryRef windowInfo)
+{
+    // Window ID
+    CFNumberRef windowIdNumber =
+        (CFNumberRef)CFDictionaryGetValue(
+            windowInfo,
+            kCGWindowNumber);
 
-   bool CopyRectDetector::getWinRect(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)
-   {
-      return ::windows::get_window_rect(operatingsystemwindow, rectangle);
-   }
+    if (!windowIdNumber)
+        return true;
 
-   bool CopyRectDetector::findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)
-   {
-      //::list_base<WinProp>::iterator winPropsIter;
-      //WinProp *winProp;
-      for (auto winprop:m_lastWinProps)
-      {
-        // winProp = &(*winPropsIter);
-         if (winprop.m_operatingsystemwindow == operatingsystemwindow)
-         {
-            rectangle = winprop.m_rectangleOld;
+    int windowId = 0;
+
+    CFNumberGetValue(
+        windowIdNumber,
+        kCFNumberIntType,
+        &windowId);
+
+    // Bounds
+    CFDictionaryRef boundsDict =
+        (CFDictionaryRef)CFDictionaryGetValue(
+            windowInfo,
+            kCGWindowBounds);
+
+    if (!boundsDict)
+        return true;
+
+    CGRect currentRect;
+
+    if (!CGRectMakeWithDictionaryRepresentation(
+            boundsDict,
+            &currentRect))
+    {
+        return true;
+    }
+
+    // Ignore tiny windows
+    if (currentRect.size.width <= 1 ||
+        currentRect.size.height <= 1)
+    {
+        return true;
+    }
+
+    // Save current properties
+    m_newWinProps.emplace_back(windowId, currentRect);
+
+    CGRect oldRect;
+
+    if (findPrevWinProps(windowId, oldRect))
+    {
+        CGPoint oldPos = oldRect.origin;
+        CGPoint newPos = currentRect.origin;
+
+        bool moved =
+            oldPos.x != newPos.x ||
+            oldPos.y != newPos.y;
+
+        double oldArea =
+            oldRect.size.width *
+            oldRect.size.height;
+
+        double newArea =
+            currentRect.size.width *
+            currentRect.size.height;
+
+        double currentBestArea =
+            m_rectCopy.size.width *
+            m_rectCopy.size.height;
+
+        if (moved && newArea > currentBestArea)
+        {
+            m_rectCopy = currentRect;
+            m_pointSource = oldPos;
+        }
+    }
+
+    return true;
+}
+
+bool CopyRectDetector::findPrevWinProps(
+    uint32_t windowId,
+    CGRect& rect)
+{
+    for (const auto& prop : m_lastWinProps)
+    {
+        if (prop.windowId == windowId)
+        {
+            rect = prop.rect;
             return true;
-         }
-      }
+        }
+    }
 
-      return false;
-   }
+    return false;
+}
 
 
-} // namespace remoting
+} // namespace remoting_macos
 
 
 
