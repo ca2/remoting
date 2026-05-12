@@ -72,23 +72,23 @@ namespace remoting_macos
       bool setMouseFilterHook(bool block);
       bool setSoftMouseFilterHook(bool block);
 
-      static LRESULT CALLBACK lowLevelKeyboardFilterProc(int nCode,
-                                                         WPARAM wParam,
-                                                         LPARAM lParam);
-      static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(int nCode,
-                                                             WPARAM wParam,
-                                                             LPARAM lParam);
-      static LRESULT CALLBACK lowLevelMouseFilterProc(int nCode,
-                                                      WPARAM wParam,
-                                                      LPARAM lParam);
-      static LRESULT CALLBACK lowLevelSoftMouseFilterProc(int nCode,
-                                                          WPARAM wParam,
-                                                          LPARAM lParam);
+      static ::lresult lowLevelKeyboardFilterProc(int nCode,
+                                                         ::wparam wParam,
+                                                         ::lparam lParam);
+      static  ::lresult lowLevelSoftKeyboardFilterProc(int nCode,
+                                                             ::wparam wParam,
+                                                             ::lparam lParam);
+      static  ::lresult lowLevelMouseFilterProc(int nCode,
+                                                      ::wparam wParam,
+                                                      ::lparam lParam);
+      static  ::lresult lowLevelSoftMouseFilterProc(int nCode,
+                                                          ::wparam wParam,
+                                                          ::lparam lParam);
 
-      static HHOOK m_hKeyboardHook;
-      static HHOOK m_hSoftKeyboardHook;
-      static HHOOK m_hMouseHook;
-      static HHOOK m_hSoftMouseHook;
+//      static HHOOK m_hKeyboardHook;
+//      static HHOOK m_hSoftKeyboardHook;
+//      static HHOOK m_hMouseHook;
+//      static HHOOK m_hSoftMouseHook;
 
       static WindowsInputBlocker *m_instance;
       static lockable_critical_section m_instanceMutex;

@@ -36,9 +36,11 @@ namespace remoting
    {
       auto paddressBind = MainSubsystem().resolve_ip4_address(scopedstrBindHost, bindPort);
 
+#ifdef WINDOWS
       if (lockAddr) {
          m_listenSocket.setExclusiveAddrUse();
       }
+#endif
 
       m_listenSocket.bind(paddressBind);
       m_listenSocket.listen(10);

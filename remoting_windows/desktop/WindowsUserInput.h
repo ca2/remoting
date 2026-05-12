@@ -67,7 +67,7 @@ namespace remoting_macos
 
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
       virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber);
-      virtual ::int_rectangle_array_base WindowsUserInput::getDisplaysCoords();
+      virtual ::int_rectangle_array_base getDisplaysCoords();
       virtual void getNormalizedRect(::i32_rectangle & rectangle);
       virtual void getPrimaryDisplayCoords(::i32_rectangle & rectangle);
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle);
