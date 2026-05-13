@@ -295,7 +295,7 @@ namespace remoting_client
         switch (lParamSort) {
             // It's column "FileName".
             case 0:
-                return _wcsicmp(::wstring(firstItem->getFileName()), wstring(secondItem->getFileName()));
+                return firstItem->getFileName().case_insensitive_compare(secondItem->getFileName());
 
                 // It's column "FileSize".
             case 1:

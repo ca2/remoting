@@ -23,13 +23,14 @@
 //
 #include "framework.h"
 #include "DesktopWindow.h"
-#include "acme/operating_system/windows/geometry2d.h"
+//#include "acme/operating_system/windows/geometry2d.h"
 #include "impact_toolbar.h"
 #include "ViewerWindow.h"
+#include "innate_subsystem/platform/subsystem.h"
 // #include aaa_<dwmapi.h>
 
 
-#pragma comment(lib, "dwmapi.lib")
+//#pragma comment(lib, "dwmapi.lib")
 
 namespace remoting_client
 {
@@ -164,15 +165,15 @@ namespace remoting_client
     {
         switch (scopedstrMessage)
         {
-            case WM_HSCROLL:
+           case ::user::e_message_scroll_x:
                 return onHScroll(wParam, lParam);
-            case WM_VSCROLL:
+           case ::user::e_message_scroll_y:
                 return onVScroll(wParam, lParam);
-            case WM_ERASEBKGND:
+           case ::user::e_message_erase_background:
               return true;
                 //return onEraseBackground(reinterpret_cast<HDC>(wParam));
-            case WM_DEADCHAR:
-            case WM_SYSDEADCHAR:
+           case ::user::e_message_dead_char:
+           case ::user::e_message_sys_dead_char:
                 return onDeadChar(wParam, lParam);
             // case WM_CHANGECBCHAIN:
             //     if ((HWND)wParam == (HWND) _HWND()NextViewer)
@@ -190,22 +191,22 @@ namespace remoting_client
             //     SendMessage((HWND) _HWND()NextViewer, scopedstrMessage, wParam, lParam);
             //     return ok;
             // }
-            case WM_CREATE:
+           case ::user::e_message_create:
                 //return onCreate(reinterpret_cast<LPCREATESTRUCT>(lParam));
               return false;
             //case WM_SIZE:
             //   onSize();
                //return true;
                 //return onSize(wParam, lParam);
-            case WM_DESTROY:
+           case ::user::e_message_destroy:
                 return onDestroy();
-            case WM_CHAR:
-            case WM_SYSCHAR:
+           case ::user::e_message_char:
+           case ::user::e_message_sys_char:
                 return onChar(wParam, lParam);
-            case WM_KEYDOWN:
-            case WM_KEYUP:
-            case WM_SYSKEYDOWN:
-            case WM_SYSKEYUP:
+           case ::user::e_message_key_down:
+           case ::user::e_message_key_up:
+           case ::user::e_message_sys_key_down:
+           case ::user::e_message_sys_key_up:
             {
 
                 return onKey(wParam, lParam);
@@ -220,7 +221,7 @@ namespace remoting_client
             //         ::SetCursor(nullptr);
             //     }
             //     return true;
-            case WM_SETFOCUS:
+           case ::user::e_message_set_focus:
             {
 
                 //       // Unregistration of keyboard hook.
@@ -232,7 +233,7 @@ namespace remoting_client
 
             }
                 return true;
-            case WM_KILLFOCUS:
+           case ::user::e_message_kill_focus:
             {
                 m_ctrlDown = false;
                 m_altDown = false;
@@ -252,26 +253,26 @@ namespace remoting_client
 
     bool DesktopWindow::onHScroll(::wparam wParam, ::lparam lParam)
     {
-        switch (LOWORD(wParam))
+        switch (wParam.loword())
         {
-            case SB_THUMBTRACK:
-            case SB_THUMBPOSITION:
-                m_sbar.setHorzPos(HIWORD(wParam));
+            case WIN32_SB_THUMBTRACK:
+            case WIN32_SB_THUMBPOSITION:
+                m_sbar.setHorzPos(wParam.hiword());
                 redraw();
                 break;
-            case SB_LINELEFT:
+            case WIN32_SB_LINELEFT:
                 m_sbar.moveLeftHorz(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
-            case SB_PAGELEFT:
+            case WIN32_SB_PAGELEFT:
                 m_sbar.moveLeftHorz();
                 redraw();
                 break;
-            case SB_LINERIGHT:
+            case WIN32_SB_LINERIGHT:
                 m_sbar.moveRightHorz(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
-            case SB_PAGERIGHT:
+            case WIN32_SB_PAGERIGHT:
                 m_sbar.moveRightHorz();
                 redraw();
                 break;
@@ -281,26 +282,26 @@ namespace remoting_client
 
     bool DesktopWindow::onVScroll(::wparam wParam, ::lparam lParam)
     {
-        switch (LOWORD(wParam))
+        switch (wParam.loword())
         {
-            case SB_THUMBTRACK:
-            case SB_THUMBPOSITION:
-                m_sbar.setVertPos(HIWORD(wParam));
+            case WIN32_SB_THUMBTRACK:
+            case WIN32_SB_THUMBPOSITION:
+                m_sbar.setVertPos(wParam.hiword());
                 redraw();
                 break;
-            case SB_LINEUP:
+            case WIN32_SB_LINEUP:
                 m_sbar.moveDownVert(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
-            case SB_PAGEUP:
+            case WIN32_SB_PAGEUP:
                 m_sbar.moveDownVert();
                 redraw();
                 break;
-            case SB_LINEDOWN:
+            case WIN32_SB_LINEDOWN:
                 m_sbar.moveUpVert(::innate_subsystem::SCROLL_STEP);
                 redraw();
                 break;
-            case SB_PAGEDOWN:
+            case WIN32_SB_PAGEDOWN:
                 m_sbar.moveUpVert();
                 redraw();
                 break;
@@ -311,12 +312,15 @@ namespace remoting_client
     bool DesktopWindow::onMouseEx(::u32 uMessage, int iButtonMask, unsigned short wheelSpeed,
                                   const ::i32_point &point, bool &bDoDefaultProcessing)
     {
+       
+       auto rectClient = getClientRect();
 
-        RECT rcClient;
-        if (::GetClientRect((HWND) _HWND(), &rcClient))
+        //RECT rcClient;
+        //if (::GetClientRect((HWND) _HWND(), &rcClient))
+       if(rectClient.is_set())
         {
 
-            if (point.x < -1 || point.y < -1 || point.x >width(rcClient) || point.y> height(rcClient))
+            if (point.x < -1 || point.y < -1 || point.x >rectClient.width() || point.y> rectClient.width())
             {
 
                 m_bShowCursor = true;
@@ -324,7 +328,9 @@ namespace remoting_client
                 m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = true;
 
 
-                ::ReleaseCapture();
+               
+               InnateSubsystem().releaseMouseCapture();
+//                ::ReleaseCapture();
 
                 //       // Unregistration of keyboard hook.
                 //       m_pviewerwindow->m_winHooks.unregisterKeyboardHook(m_pviewerwindow);
@@ -336,12 +342,16 @@ namespace remoting_client
             {
 
 
-                auto hwndCapture = ::GetCapture();
+                //auto hwndCapture = ::GetCapture();
+               
+               auto operatingsystemwindowCapture = InnateSubsystem().getMouseCapture();
+               auto operatingsystemwindowThis = this->operating_system_window();
 
-                if (hwndCapture != (HWND) _HWND())
+                if (operatingsystemwindowCapture != operatingsystemwindowThis)
                 {
 
-                    ::SetCapture((HWND) _HWND());
+                    //::SetCapture((HWND) _HWND());
+                   InnateSubsystem().setMouseCapture(operatingsystemwindowThis);
 
                     m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;
                     m_bShowCursor = false;
@@ -507,33 +517,37 @@ namespace remoting_client
        }
         if (!m_pconnectionconfig->isViewOnly())
         {
-            unsigned short virtualKey = static_cast<unsigned short>(wParam);
-            ::u32 additionalInfo = static_cast<::u32>(lParam);
-            static const ::u32 DOWN_FLAG = 0x80000000;
-            bool isDown = (additionalInfo & DOWN_FLAG) == 0;
-
-            if (virtualKey == VK_PROCESSKEY)
-            {
-                bool extended = HIWORD(lParam) & KF_EXTENDED;
-                ::u32 scancode = HIWORD(lParam) & 0xFF;
-                if (extended)
-                {
-                    scancode += 0xE000;
-                }
-                virtualKey = MapVirtualKey(scancode, MAPVK_VSC_TO_VK_EX);
-            }
-
-            if (virtualKey == VK_CONTROL)
-            {
-                m_ctrlDown = isDown;
-            }
-
-            if (virtualKey == VK_MENU)
-            {
-                m_altDown = isDown;
-            }
-
-            m_rfbKeySym->processKeyEvent(virtualKey, additionalInfo);
+           
+           auto keyhappening = InnateSubsystem().keyHappeningFromKeyMessage(wParam, lParam);
+           
+//            unsigned short virtualKey = static_cast<unsigned short>(wParam);
+//            ::u32 additionalInfo = static_cast<::u32>(lParam);
+//            static const ::u32 DOWN_FLAG = 0x80000000;
+//            bool isDown = (additionalInfo & DOWN_FLAG) == 0;
+//
+//            if (virtualKey == VK_PROCESSKEY)
+//            {
+//                bool extended = HIWORD(lParam) & KF_EXTENDED;
+//                ::u32 scancode = HIWORD(lParam) & 0xFF;
+//                if (extended)
+//                {
+//                    scancode += 0xE000;
+//                }
+//                virtualKey = MapVirtualKey(scancode, MAPVK_VSC_TO_VK_EX);
+//            }
+//
+//            if (virtualKey == VK_CONTROL)
+//            {
+//                m_ctrlDown = isDown;
+//            }
+//
+//            if (virtualKey == VK_MENU)
+//            {
+//                m_altDown = isDown;
+//            }
+//
+//            m_rfbKeySym->processKeyEvent(virtualKey, additionalInfo);
+           m_rfbKeySym->processKeyHappening(keyhappening);
         }
         return true;
     }
@@ -542,7 +556,7 @@ namespace remoting_client
     {
         if (!m_pconnectionconfig->isViewOnly())
         {
-            m_rfbKeySym->processCharEvent(static_cast<WCHAR>(wParam), static_cast<::u32>(lParam));
+            m_rfbKeySym->processCharEvent((::i32)(wParam.m_wparam), (::u32)(lParam.m_lparam));
         }
         return true;
     }
@@ -644,10 +658,10 @@ namespace remoting_client
 
         if (iWidth || iHeight)
         {
-            drawBackground(pgraphics, ::windows::as_RECT(m_clientArea), ::windows::as_RECT(::windows::as_RECT(dst)));
+            drawBackground(pgraphics, m_clientArea, dst);
         }
 
-        drawImage(pgraphics, ::windows::as_RECT(src), ::windows::as_RECT(dst));
+        drawImage(pgraphics, src, dst);
 
         if (m_premotingtoolbar)
         {
@@ -928,7 +942,7 @@ namespace remoting_client
             ++wnd.bottom;
         }
         wnd.intersection(rectangle);
-        redraw(::windows::as_RECT(wnd));
+        redraw(wnd);
     }
 
     void DesktopWindow::setScale(int scale)
@@ -937,7 +951,7 @@ namespace remoting_client
         m_scManager.setScale(scale);
         m_winResize = true;
         // Invalidate all area of desktop window.
-        if ((HWND) _HWND() != 0)
+        if (isWindow())
         {
             redraw();
         }
@@ -1004,7 +1018,7 @@ namespace remoting_client
 
     void DesktopWindow::sendKey(int key, bool pressed)
     {
-        m_rfbKeySym->sendModifier(static_cast<unsigned char>(key), pressed);
+        m_rfbKeySym->sendModifier((::user::enum_key)(::u8)(key), pressed);
     }
 
     void DesktopWindow::sendCtrlAltDel() { m_rfbKeySym->sendCtrlAltDel(); }

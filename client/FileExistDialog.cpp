@@ -176,7 +176,7 @@ namespace remoting_client
         #ifdef WINDOWS
         sprintf_s(&buffer[0], 255, "%lld bytes", fileInfo->getSize());
         #else
-        sprintfs(&buffer[0], "%lld bytes", fileInfo->getSize());
+        sprintf(&buffer[0], "%lld bytes", fileInfo->getSize());
         #endif
         sizeLabel->setText(&buffer[0]);
 

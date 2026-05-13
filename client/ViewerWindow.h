@@ -164,7 +164,8 @@ namespace remoting_client
        bool onCreate(void *pCreateStruct) override;
         bool onCommand(::u32 controlID, ::u32 notificationID) override;
         //bool onNotify(int idCtrl, LPNMHDR pnmh);
-        bool onSysCommand(::wparam wParam, ::lparam lParam) override;
+        //bool onSysCommand(::wparam wParam, ::lparam lParam) override;
+      bool on_user_system_command(::user::enum_system_command esystemcommand) override;
         bool onClose();
         bool onDestroy();
         bool onFocus(::wparam wParam);

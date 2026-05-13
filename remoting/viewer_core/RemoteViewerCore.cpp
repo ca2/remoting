@@ -150,17 +150,17 @@ defer_construct_newø(m_pframebuffer);
 
    void RemoteViewerCore::init()
    {
-      m_decoderStore.addDecoder(new RawDecoder(m_plogwriter), 0);
-      m_decoderStore.addDecoder(new CopyRectDecoder(m_plogwriter), 10);
-      m_decoderStore.addDecoder(new RreDecoder(m_plogwriter), 1);
-      m_decoderStore.addDecoder(new HexTileDecoder(m_plogwriter), 4);
-      m_decoderStore.addDecoder(new TightDecoder(m_plogwriter), 9);
-      m_decoderStore.addDecoder(new ZrleDecoder(m_plogwriter), 9);
+      m_decoderStore.addDecoder(allocateø RawDecoder(m_plogwriter), 0);
+      m_decoderStore.addDecoder(allocateø CopyRectDecoder(m_plogwriter), 10);
+      m_decoderStore.addDecoder(allocateø RreDecoder(m_plogwriter), 1);
+      m_decoderStore.addDecoder(allocateø HexTileDecoder(m_plogwriter), 4);
+      m_decoderStore.addDecoder(allocateø TightDecoder(m_plogwriter), 9);
+      m_decoderStore.addDecoder(allocateø ZrleDecoder(m_plogwriter), 9);
 
-      m_decoderStore.addDecoder(new DesktopSizeDecoder(m_plogwriter), -1);
-      m_decoderStore.addDecoder(new LastRectDecoder(m_plogwriter), -1);
-      m_decoderStore.addDecoder(new PointerPosDecoder(m_plogwriter), -1);
-      m_decoderStore.addDecoder(new RichCursorDecoder(m_plogwriter), -1);
+      m_decoderStore.addDecoder(allocateø DesktopSizeDecoder(m_plogwriter), -1);
+      m_decoderStore.addDecoder(allocateø LastRectDecoder(m_plogwriter), -1);
+      m_decoderStore.addDecoder(allocateø PointerPosDecoder(m_plogwriter), -1);
+      m_decoderStore.addDecoder(allocateø RichCursorDecoder(m_plogwriter), -1);
       m_input = 0;
       m_output = 0;
 
@@ -512,7 +512,7 @@ defer_construct_newø(m_pframebuffer);
           newLevel > CompressionLevel::COMPRESSION_LEVEL_MAX)
          return;
 
-      needUpdate |= m_decoderStore.addDecoder(new CompressionLevel(m_plogwriter, newLevel), -1);
+      needUpdate |= m_decoderStore.addDecoder(allocateø CompressionLevel(m_plogwriter, newLevel), -1);
       if (needUpdate) {
          sendEncodings();
       }
@@ -532,7 +532,7 @@ defer_construct_newø(m_pframebuffer);
           newLevel > JpegQualityLevel::JPEG_QUALITY_LEVEL_MAX)
          return;
 
-      needUpdate |= m_decoderStore.addDecoder(new JpegQualityLevel(m_plogwriter, newLevel), -1);
+      needUpdate |= m_decoderStore.addDecoder(allocateø JpegQualityLevel(m_plogwriter, newLevel), -1);
       if (needUpdate) {
          sendEncodings();
       }
@@ -542,8 +542,8 @@ defer_construct_newø(m_pframebuffer);
    {
       bool needUpdate = false;
       if (enabled) {
-         needUpdate |= m_decoderStore.addDecoder(new RichCursorDecoder(m_plogwriter), -1);
-         needUpdate |= m_decoderStore.addDecoder(new PointerPosDecoder(m_plogwriter), -1);
+         needUpdate |= m_decoderStore.addDecoder(allocateø RichCursorDecoder(m_plogwriter), -1);
+         needUpdate |= m_decoderStore.addDecoder(allocateø PointerPosDecoder(m_plogwriter), -1);
       } else {
          needUpdate |= m_decoderStore.removeDecoder(::remoting::PseudoEncDefs::RICH_CURSOR);
          needUpdate |= m_decoderStore.removeDecoder(::remoting::PseudoEncDefs::POINTER_POS);

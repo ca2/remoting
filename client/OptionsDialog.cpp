@@ -149,7 +149,7 @@ namespace remoting_client
     {
         // Preferred encoding
         for (int i = 0; i < m_comboboxUseEnc.getItemsCount(); i++) {
-            int enc = reinterpret_cast<int>(m_comboboxUseEnc.getItemData(i));
+            int enc = (int)(::iptr)m_comboboxUseEnc.getItemData(i);
             if (enc == m_pconnectionconfig->getPreferredEncoding()) {
                 m_comboboxUseEnc.setSelectedItem(i);
                 break;
@@ -301,7 +301,7 @@ namespace remoting_client
         if (index < 0) {
             return ;
         }
-        int encoding = reinterpret_cast<int>(m_comboboxUseEnc.getItemData(index));
+        int encoding = (int)(::iptr)m_comboboxUseEnc.getItemData(index);
         switch (encoding) {
             case ::remoting::EncodingDefs::TIGHT:
                 enableCustomCompression(m_checkboxCompressionLevel.isChecked());
@@ -415,7 +415,7 @@ namespace remoting_client
         // Preferred encoding
         int pesii = m_comboboxUseEnc.getSelectedItemIndex();
         if (pesii >= 0) {
-            int preferredEncoding = reinterpret_cast<int>(m_comboboxUseEnc.getItemData(pesii));
+            int preferredEncoding = (int)(::iptr)m_comboboxUseEnc.getItemData(pesii);
             m_pconnectionconfig->setPreferredEncoding(preferredEncoding);
         } else {
             ASSERT(pesii >= 0);

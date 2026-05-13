@@ -9,6 +9,7 @@
 #include "remoting/client/remoting.h"
 #include "remoting/remoting/platform/remoting.h"
 #include "subsystem/socket/Sockets.h"
+#include "resource.h"
 //#include "acme/_operating_system.h"
 //#include "main_window.h"
 
@@ -49,6 +50,19 @@ namespace remoting_client
    }
 
 
+void application::init_instance()
+{
+   
+   ::apex::application::init_instance();
+   
+   setResourceName(IDD_LOGINDIALOG, "IDD_LOGINDIALOG");
+   setResourceName(IDC_CSERVER, "IDC_CSERVER");
+   
+   
+}
+
+
+
    void application::on_request(::request * prequest)
    {
       auto ecommand = prequest->m_ecommand;
@@ -67,6 +81,14 @@ namespace remoting_client
          defer_construct_newø(m_premoting);
 
          m_premoting->on_start();
+         
+         if (!m_bOpenFile)
+         {
+
+            m_premoting->open_file({});
+
+         }
+
 
       }
       else if (ecommand == e_command_file_open)
@@ -88,12 +110,6 @@ namespace remoting_client
       else if (ecommand == e_command_default_start)
       {
 
-         if (!m_bOpenFile)
-         {
-
-            m_premoting->open_file({});
-
-         }
 
       }
    }

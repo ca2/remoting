@@ -36,18 +36,18 @@ namespace remoting_client
 
       m_inflater.resize(DECODERS_NUM);
       for (int i = 0; i < DECODERS_NUM; i++)
-         m_inflater[i] = new ::subsystem::Inflater;
+         m_inflater[i] = allocateø ::subsystem::Inflater;
       reset();
    }
 
    TightDecoder::~TightDecoder()
    {
-      for (int i = 0; i < DECODERS_NUM; i++) {
-         try {
-            delete m_inflater[i];
-         } catch (...) {
-         }
-      }
+//      for (int i = 0; i < DECODERS_NUM; i++) {
+//         try {
+//            delete m_inflater[i];
+//         } catch (...) {
+//         }
+//      }
    }
 
    void TightDecoder::decode(::remoting::RfbInputGate *pinput,
@@ -127,8 +127,8 @@ namespace remoting_client
    void TightDecoder::reset()
    {
       for (int i = 0; i < DECODERS_NUM; i++) {
-         delete m_inflater[i];
-         m_inflater[i] = new ::subsystem::Inflater;
+         //delete m_inflater[i];
+         m_inflater[i] = allocateø ::subsystem::Inflater;
       }
    }
 
@@ -136,8 +136,8 @@ namespace remoting_client
    {
       for (int i = 0; i < DECODERS_NUM; i++)
          if (compressionControl & (0x01 << i)) {
-            delete m_inflater[i];
-            m_inflater[i] = new ::subsystem::Inflater;
+            //delete m_inflater[i];
+            m_inflater[i] = allocateø ::subsystem::Inflater;
          }
    }
 

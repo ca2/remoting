@@ -1,21 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17150" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17150"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="PEd-7d-5j0">
             <objects>
-                <viewController id="bU7-R8-ocO" sceneMemberID="viewController">
-                    <view key="view" id="tOy-S4-hL0">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
+                <viewController storyboardIdentifier="IDD_LOGINDIALOG3" id="bU7-R8-ocO" sceneMemberID="viewController"/>
                 <customObject id="9uD-mB-xHs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="228" y="131"/>
+        </scene>
+        <!--IDD_LOGINDIALOG-->
+        <scene sceneID="fgx-I2-Inf">
+            <objects>
+                <windowController storyboardIdentifier="IDD_LOGINDIALOG" id="eUa-Wc-Z7P" userLabel="IDD_LOGINDIALOG" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="uQ4-vO-oKc">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <rect key="contentRect" x="849" y="529" width="556" height="234"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1410"/>
+                        <view key="contentView" id="wcY-vf-TDI">
+                            <rect key="frame" x="0.0" y="0.0" width="556" height="234"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="eUa-Wc-Z7P" id="2pO-Z9-Hh6"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="nfB-CR-ibX" kind="relationship" relationship="window.shadowedContentViewController" id="nhn-6O-tmc"/>
+                    </connections>
+                </windowController>
+                <customObject id="t3Q-0x-Odo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-148" y="-303"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="zTT-oX-I4x">
+            <objects>
+                <viewController id="nfB-CR-ibX" sceneMemberID="viewController">
+                    <view key="view" identifier="IDD_LOGINDIALOG1" wantsLayer="YES" alphaValue="0.90000000000000002" id="tOy-S4-hL0" userLabel="New Remoting Connection">
+                        <rect key="frame" x="0.0" y="0.0" width="560" height="147"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fKC-oT-XSb" userLabel="RemoteHostLabel">
+                                <rect key="frame" x="18" y="56" width="87" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Remote Host:" id="Rj6-eT-X9c">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <comboBox focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" tag="1048" translatesAutoresizingMaskIntoConstraints="NO" id="1Cr-MO-GzP" userLabel="IDC_CSERVER">
+                                <rect key="frame" x="125" y="75" width="229" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" tag="1048" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="3jV-IV-gBQ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <objectValues>
+                                        <string>Item 1</string>
+                                        <string>Item 2</string>
+                                        <string>Item 3</string>
+                                    </objectValues>
+                                </comboBoxCell>
+                            </comboBox>
+                            <button tag="1" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7zX-Ky-NZH">
+                                <rect key="frame" x="395" y="79" width="83" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iLh-U7-x7c">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UGn-c3-4nO">
+                                <rect key="frame" x="18" y="122" width="166" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="New Remoting Connection" id="2FN-Iz-oFT">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="X31-zx-qMd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="501" y="-361.5"/>
         </scene>
     </scenes>
 </document>

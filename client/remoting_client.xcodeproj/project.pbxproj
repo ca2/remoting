@@ -17,9 +17,78 @@
 		9A26B2872F816F280047ECA2 /* ConnectionData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B24B2F816ED30047ECA2 /* ConnectionData.cpp */; };
 		9A26B2882F816F280047ECA2 /* ConnectionListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B24D2F816ED30047ECA2 /* ConnectionListener.cpp */; };
 		9A26B2892F816F280047ECA2 /* AuthenticationDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2432F816ED30047ECA2 /* AuthenticationDialog.cpp */; };
+		9A9A1F9A2FB3E54C002D39AB /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F992FB3E54C002D39AB /* libacme.dylib */; };
+		9A9A1F9E2FB3E55C002D39AB /* libapex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F9D2FB3E55C002D39AB /* libapex.dylib */; };
+		9A9A1FA02FB3E56E002D39AB /* libsubsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F9F2FB3E56E002D39AB /* libsubsystem.dylib */; };
+		9A9A1FA22FB3E59D002D39AB /* libinnate_subsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1FA12FB3E59D002D39AB /* libinnate_subsystem.dylib */; };
+		9A9A1FA32FB3E5D1002D39AB /* libremoting.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F9C2FB3E54E002D39AB /* libremoting.dylib */; };
+		9A9A1FA42FB3E5ED002D39AB /* ResourceStrings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2722F816EF70047ECA2 /* ResourceStrings.cpp */; };
+		9A9A1FA52FB3E603002D39AB /* remoting_impact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B26D2F816ED30047ECA2 /* remoting_impact.cpp */; };
+		9A9A1FA62FB3E618002D39AB /* ViewerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B27F2F816EF70047ECA2 /* ViewerWindow.h */; };
+		9A9A1FA72FB3E618002D39AB /* impact_toolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2602F816ED30047ECA2 /* impact_toolbar.h */; };
+		9A9A1FA82FB3E618002D39AB /* keyboard_layout_change.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2622F816ED30047ECA2 /* keyboard_layout_change.h */; };
+		9A9A1FA92FB3E618002D39AB /* FileExistDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2522F816ED30047ECA2 /* FileExistDialog.h */; };
+		9A9A1FAA2FB3E618002D39AB /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B25A2F816ED30047ECA2 /* framework.h */; };
+		9A9A1FAB2FB3E618002D39AB /* ViewerCmdLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2752F816EF70047ECA2 /* ViewerCmdLine.h */; };
+		9A9A1FAC2FB3E618002D39AB /* ScaleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2732F816EF70047ECA2 /* ScaleManager.h */; };
+		9A9A1FAD2FB3E618002D39AB /* DesktopWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2502F816ED30047ECA2 /* DesktopWindow.h */; };
+		9A9A1FAE2FB3E618002D39AB /* AuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2422F816ED30047ECA2 /* AuthenticationDialog.h */; };
+		9A9A1FAF2FB3E618002D39AB /* ViewerMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B27B2F816EF70047ECA2 /* ViewerMenu.h */; };
+		9A9A1FB02FB3E618002D39AB /* ResourceStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2712F816EF70047ECA2 /* ResourceStrings.h */; };
+		9A9A1FB12FB3E618002D39AB /* ConfigurationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2462F816ED30047ECA2 /* ConfigurationDialog.h */; };
+		9A9A1FB22FB3E618002D39AB /* ViewerCollector.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2772F816EF70047ECA2 /* ViewerCollector.h */; };
+		9A9A1FB32FB3E618002D39AB /* OptionsDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B26A2F816ED30047ECA2 /* OptionsDialog.h */; };
+		9A9A1FB42FB3E618002D39AB /* HelpDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B25E2F816ED30047ECA2 /* HelpDialog.h */; };
+		9A9A1FB52FB3E618002D39AB /* ConnectionData.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B24A2F816ED30047ECA2 /* ConnectionData.h */; };
+		9A9A1FB62FB3E618002D39AB /* ViewerInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2792F816EF70047ECA2 /* ViewerInstance.h */; };
+		9A9A1FB72FB3E618002D39AB /* application.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2402F816ED30047ECA2 /* application.h */; };
+		9A9A1FB82FB3E618002D39AB /* BuildTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2442F816ED30047ECA2 /* BuildTime.h */; };
+		9A9A1FB92FB3E618002D39AB /* NewFolderDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2682F816ED30047ECA2 /* NewFolderDialog.h */; };
+		9A9A1FBA2FB3E618002D39AB /* FileTransferMainDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2582F816ED30047ECA2 /* FileTransferMainDialog.h */; };
+		9A9A1FBB2FB3E618002D39AB /* _.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B23A2F816ED30047ECA2 /* _.h */; };
+		9A9A1FBC2FB3E618002D39AB /* FileRenameDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2562F816ED30047ECA2 /* FileRenameDialog.h */; };
+		9A9A1FBD2FB3E618002D39AB /* ViewerVncAuthHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B27D2F816EF70047ECA2 /* ViewerVncAuthHandler.h */; };
+		9A9A1FBE2FB3E618002D39AB /* ConnectionListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B24C2F816ED30047ECA2 /* ConnectionListener.h */; };
+		9A9A1FBF2FB3E618002D39AB /* AboutDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B23E2F816ED30047ECA2 /* AboutDialog.h */; };
+		9A9A1FC02FB3E618002D39AB /* ControlTrayIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B24E2F816ED30047ECA2 /* ControlTrayIcon.h */; };
+		9A9A1FC12FB3E618002D39AB /* LoginDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2642F816ED30047ECA2 /* LoginDialog.h */; };
+		9A9A1FC22FB3E618002D39AB /* FullscreenWarningDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B25C2F816ED30047ECA2 /* FullscreenWarningDialog.h */; };
+		9A9A1FC32FB3E618002D39AB /* ConnectingDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2482F816ED30047ECA2 /* ConnectingDialog.h */; };
+		9A9A1FC42FB3E618002D39AB /* FileInfoListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2542F816ED30047ECA2 /* FileInfoListView.h */; };
+		9A9A1FC52FB3E618002D39AB /* remoting_impact.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B26C2F816ED30047ECA2 /* remoting_impact.h */; };
+		9A9A1FC62FB3E618002D39AB /* ViewerWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2802F816EF70047ECA2 /* ViewerWindow.cpp */; };
+		9A9A1FC72FB3E618002D39AB /* ViewerMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B27C2F816EF70047ECA2 /* ViewerMenu.cpp */; };
+		9A9A1FC82FB3E618002D39AB /* impact_toolbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2612F816ED30047ECA2 /* impact_toolbar.cpp */; };
+		9A9A1FC92FB3E618002D39AB /* DesktopWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2512F816ED30047ECA2 /* DesktopWindow.cpp */; };
+		9A9A1FCA2FB3E618002D39AB /* keyboard_layout_change.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2632F816ED30047ECA2 /* keyboard_layout_change.cpp */; };
+		9A9A1FCB2FB3E618002D39AB /* ViewerVncAuthHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B27E2F816EF70047ECA2 /* ViewerVncAuthHandler.cpp */; };
+		9A9A1FCC2FB3E618002D39AB /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B25B2F816ED30047ECA2 /* framework.cpp */; };
+		9A9A1FCD2FB3E618002D39AB /* FileExistDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2532F816ED30047ECA2 /* FileExistDialog.cpp */; };
+		9A9A1FCE2FB3E618002D39AB /* _.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B23B2F816ED30047ECA2 /* _.cpp */; };
+		9A9A1FCF2FB3E618002D39AB /* FileInfoListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2552F816ED30047ECA2 /* FileInfoListView.cpp */; };
+		9A9A1FD02FB3E618002D39AB /* FileTransferMainDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2592F816ED30047ECA2 /* FileTransferMainDialog.cpp */; };
+		9A9A1FD12FB3E618002D39AB /* FileRenameDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2572F816ED30047ECA2 /* FileRenameDialog.cpp */; };
+		9A9A1FD22FB3E618002D39AB /* ViewerCmdLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2762F816EF70047ECA2 /* ViewerCmdLine.cpp */; };
+		9A9A1FD32FB3E618002D39AB /* OptionsDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B26B2F816ED30047ECA2 /* OptionsDialog.cpp */; };
+		9A9A1FD42FB3E618002D39AB /* HelpDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B25F2F816ED30047ECA2 /* HelpDialog.cpp */; };
+		9A9A1FD52FB3E618002D39AB /* ScaleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2742F816EF70047ECA2 /* ScaleManager.cpp */; };
+		9A9A1FD62FB3E618002D39AB /* ViewerCollector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2782F816EF70047ECA2 /* ViewerCollector.cpp */; };
+		9A9A1FD72FB3E618002D39AB /* LoginDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2652F816ED30047ECA2 /* LoginDialog.cpp */; };
+		9A9A1FD82FB3E618002D39AB /* FullscreenWarningDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B25D2F816ED30047ECA2 /* FullscreenWarningDialog.cpp */; };
+		9A9A1FD92FB3E618002D39AB /* ViewerInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B27A2F816EF70047ECA2 /* ViewerInstance.cpp */; };
+		9A9A1FDA2FB3E618002D39AB /* NewFolderDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2692F816ED30047ECA2 /* NewFolderDialog.cpp */; };
+		9A9A1FEF2FB4033F002D39AB /* remoting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A1FEE2FB4033F002D39AB /* remoting.cpp */; };
+		9A9A1FF02FB4033F002D39AB /* remoting.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9A1FED2FB4033F002D39AB /* remoting.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9A9A1F9B2FB3E54E002D39AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AD3F1632FB190DB00CB9A78 /* remoting.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A373EFE2F81647000E892B1;
+			remoteInfo = remoting;
+		};
 		9AD3F18B2FB1920C00CB9A78 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9AD3F1632FB190DB00CB9A78 /* remoting.xcodeproj */;
@@ -75,8 +144,6 @@
 		9A26B2632F816ED30047ECA2 /* keyboard_layout_change.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = keyboard_layout_change.cpp; sourceTree = "<group>"; };
 		9A26B2642F816ED30047ECA2 /* LoginDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginDialog.h; sourceTree = "<group>"; };
 		9A26B2652F816ED30047ECA2 /* LoginDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LoginDialog.cpp; sourceTree = "<group>"; };
-		9A26B2662F816ED30047ECA2 /* NamingDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamingDefs.h; sourceTree = "<group>"; };
-		9A26B2672F816ED30047ECA2 /* NamingDefs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamingDefs.cpp; sourceTree = "<group>"; };
 		9A26B2682F816ED30047ECA2 /* NewFolderDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewFolderDialog.h; sourceTree = "<group>"; };
 		9A26B2692F816ED30047ECA2 /* NewFolderDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NewFolderDialog.cpp; sourceTree = "<group>"; };
 		9A26B26A2F816ED30047ECA2 /* OptionsDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionsDialog.h; sourceTree = "<group>"; };
@@ -100,6 +167,12 @@
 		9A26B27F2F816EF70047ECA2 /* ViewerWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewerWindow.h; sourceTree = "<group>"; };
 		9A26B2802F816EF70047ECA2 /* ViewerWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewerWindow.cpp; sourceTree = "<group>"; };
 		9A373EE12F8162F100E892B1 /* libremoting_client.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_client.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A9A1F992FB3E54C002D39AB /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A9A1F9D2FB3E55C002D39AB /* libapex.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libapex.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A9A1F9F2FB3E56E002D39AB /* libsubsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libsubsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A9A1FA12FB3E59D002D39AB /* libinnate_subsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libinnate_subsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A9A1FED2FB4033F002D39AB /* remoting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = remoting.h; sourceTree = "<group>"; };
+		9A9A1FEE2FB4033F002D39AB /* remoting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = remoting.cpp; sourceTree = "<group>"; };
 		9AD3F1632FB190DB00CB9A78 /* remoting.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting.xcodeproj; path = ../remoting/remoting.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -108,6 +181,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A9A1FA32FB3E5D1002D39AB /* libremoting.dylib in Frameworks */,
+				9A9A1FA22FB3E59D002D39AB /* libinnate_subsystem.dylib in Frameworks */,
+				9A9A1FA02FB3E56E002D39AB /* libsubsystem.dylib in Frameworks */,
+				9A9A1F9E2FB3E55C002D39AB /* libapex.dylib in Frameworks */,
+				9A9A1F9A2FB3E54C002D39AB /* libacme.dylib in Frameworks */,
 				9A0B949D2FB2CB1900EEAAE1 /* libsubsystem_bsd_sockets.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +196,10 @@
 		9A0B949B2FB2CB1900EEAAE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A9A1FA12FB3E59D002D39AB /* libinnate_subsystem.dylib */,
+				9A9A1F9F2FB3E56E002D39AB /* libsubsystem.dylib */,
+				9A9A1F9D2FB3E55C002D39AB /* libapex.dylib */,
+				9A9A1F992FB3E54C002D39AB /* libacme.dylib */,
 				9A0B949C2FB2CB1900EEAAE1 /* libsubsystem_bsd_sockets.dylib */,
 			);
 			name = Frameworks;
@@ -146,8 +228,6 @@
 			children = (
 				9A26B23A2F816ED30047ECA2 /* _.h */,
 				9A26B23B2F816ED30047ECA2 /* _.cpp */,
-				9A26B23C2F816ED30047ECA2 /* _____debug.xcconfig */,
-				9A26B23D2F816ED30047ECA2 /* _____release.xcconfig */,
 				9A26B23E2F816ED30047ECA2 /* AboutDialog.h */,
 				9A26B2402F816ED30047ECA2 /* application.h */,
 				9A26B2422F816ED30047ECA2 /* AuthenticationDialog.h */,
@@ -188,12 +268,12 @@
 				9A26B2632F816ED30047ECA2 /* keyboard_layout_change.cpp */,
 				9A26B2642F816ED30047ECA2 /* LoginDialog.h */,
 				9A26B2652F816ED30047ECA2 /* LoginDialog.cpp */,
-				9A26B2662F816ED30047ECA2 /* NamingDefs.h */,
-				9A26B2672F816ED30047ECA2 /* NamingDefs.cpp */,
 				9A26B2682F816ED30047ECA2 /* NewFolderDialog.h */,
 				9A26B2692F816ED30047ECA2 /* NewFolderDialog.cpp */,
 				9A26B26A2F816ED30047ECA2 /* OptionsDialog.h */,
 				9A26B26B2F816ED30047ECA2 /* OptionsDialog.cpp */,
+				9A9A1FED2FB4033F002D39AB /* remoting.h */,
+				9A9A1FEE2FB4033F002D39AB /* remoting.cpp */,
 				9A26B26C2F816ED30047ECA2 /* remoting_impact.h */,
 				9A26B26D2F816ED30047ECA2 /* remoting_impact.cpp */,
 				9A26B2712F816EF70047ECA2 /* ResourceStrings.h */,
@@ -212,6 +292,8 @@
 				9A26B27E2F816EF70047ECA2 /* ViewerVncAuthHandler.cpp */,
 				9A26B27F2F816EF70047ECA2 /* ViewerWindow.h */,
 				9A26B2802F816EF70047ECA2 /* ViewerWindow.cpp */,
+				9A26B23C2F816ED30047ECA2 /* _____debug.xcconfig */,
+				9A26B23D2F816ED30047ECA2 /* _____release.xcconfig */,
 			);
 			name = client;
 			sourceTree = "<group>";
@@ -219,6 +301,7 @@
 		9AD3F1672FB190DB00CB9A78 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				9A9A1F9C2FB3E54E002D39AB /* libremoting.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -230,6 +313,39 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A9A1FA62FB3E618002D39AB /* ViewerWindow.h in Headers */,
+				9A9A1FA72FB3E618002D39AB /* impact_toolbar.h in Headers */,
+				9A9A1FA82FB3E618002D39AB /* keyboard_layout_change.h in Headers */,
+				9A9A1FA92FB3E618002D39AB /* FileExistDialog.h in Headers */,
+				9A9A1FAA2FB3E618002D39AB /* framework.h in Headers */,
+				9A9A1FAB2FB3E618002D39AB /* ViewerCmdLine.h in Headers */,
+				9A9A1FAC2FB3E618002D39AB /* ScaleManager.h in Headers */,
+				9A9A1FAD2FB3E618002D39AB /* DesktopWindow.h in Headers */,
+				9A9A1FAE2FB3E618002D39AB /* AuthenticationDialog.h in Headers */,
+				9A9A1FAF2FB3E618002D39AB /* ViewerMenu.h in Headers */,
+				9A9A1FB02FB3E618002D39AB /* ResourceStrings.h in Headers */,
+				9A9A1FB12FB3E618002D39AB /* ConfigurationDialog.h in Headers */,
+				9A9A1FB22FB3E618002D39AB /* ViewerCollector.h in Headers */,
+				9A9A1FB32FB3E618002D39AB /* OptionsDialog.h in Headers */,
+				9A9A1FB42FB3E618002D39AB /* HelpDialog.h in Headers */,
+				9A9A1FB52FB3E618002D39AB /* ConnectionData.h in Headers */,
+				9A9A1FB62FB3E618002D39AB /* ViewerInstance.h in Headers */,
+				9A9A1FB72FB3E618002D39AB /* application.h in Headers */,
+				9A9A1FB82FB3E618002D39AB /* BuildTime.h in Headers */,
+				9A9A1FB92FB3E618002D39AB /* NewFolderDialog.h in Headers */,
+				9A9A1FBA2FB3E618002D39AB /* FileTransferMainDialog.h in Headers */,
+				9A9A1FBB2FB3E618002D39AB /* _.h in Headers */,
+				9A9A1FBC2FB3E618002D39AB /* FileRenameDialog.h in Headers */,
+				9A9A1FBD2FB3E618002D39AB /* ViewerVncAuthHandler.h in Headers */,
+				9A9A1FBE2FB3E618002D39AB /* ConnectionListener.h in Headers */,
+				9A9A1FBF2FB3E618002D39AB /* AboutDialog.h in Headers */,
+				9A9A1FC02FB3E618002D39AB /* ControlTrayIcon.h in Headers */,
+				9A9A1FC12FB3E618002D39AB /* LoginDialog.h in Headers */,
+				9A9A1FC22FB3E618002D39AB /* FullscreenWarningDialog.h in Headers */,
+				9A9A1FF02FB4033F002D39AB /* remoting.h in Headers */,
+				9A9A1FC32FB3E618002D39AB /* ConnectingDialog.h in Headers */,
+				9A9A1FC42FB3E618002D39AB /* FileInfoListView.h in Headers */,
+				9A9A1FC52FB3E618002D39AB /* remoting_impact.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +412,16 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		9A9A1F9C2FB3E54E002D39AB /* libremoting.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libremoting.dylib;
+			remoteRef = 9A9A1F9B2FB3E54E002D39AB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXShellScriptBuildPhase section */
 		9A26B2902F817AA30047ECA2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -329,9 +455,33 @@
 				9A26B2832F816F280047ECA2 /* AboutDialog.cpp in Sources */,
 				9A26B2842F816F280047ECA2 /* BuildTime.cpp in Sources */,
 				9A26B2852F816F280047ECA2 /* ConnectingDialog.cpp in Sources */,
+				9A9A1FC62FB3E618002D39AB /* ViewerWindow.cpp in Sources */,
+				9A9A1FEF2FB4033F002D39AB /* remoting.cpp in Sources */,
+				9A9A1FC72FB3E618002D39AB /* ViewerMenu.cpp in Sources */,
+				9A9A1FC82FB3E618002D39AB /* impact_toolbar.cpp in Sources */,
+				9A9A1FC92FB3E618002D39AB /* DesktopWindow.cpp in Sources */,
+				9A9A1FCA2FB3E618002D39AB /* keyboard_layout_change.cpp in Sources */,
+				9A9A1FCB2FB3E618002D39AB /* ViewerVncAuthHandler.cpp in Sources */,
+				9A9A1FCC2FB3E618002D39AB /* framework.cpp in Sources */,
+				9A9A1FCD2FB3E618002D39AB /* FileExistDialog.cpp in Sources */,
+				9A9A1FCE2FB3E618002D39AB /* _.cpp in Sources */,
+				9A9A1FCF2FB3E618002D39AB /* FileInfoListView.cpp in Sources */,
+				9A9A1FD02FB3E618002D39AB /* FileTransferMainDialog.cpp in Sources */,
+				9A9A1FD12FB3E618002D39AB /* FileRenameDialog.cpp in Sources */,
+				9A9A1FD22FB3E618002D39AB /* ViewerCmdLine.cpp in Sources */,
+				9A9A1FD32FB3E618002D39AB /* OptionsDialog.cpp in Sources */,
+				9A9A1FD42FB3E618002D39AB /* HelpDialog.cpp in Sources */,
+				9A9A1FD52FB3E618002D39AB /* ScaleManager.cpp in Sources */,
+				9A9A1FD62FB3E618002D39AB /* ViewerCollector.cpp in Sources */,
+				9A9A1FD72FB3E618002D39AB /* LoginDialog.cpp in Sources */,
+				9A9A1FD82FB3E618002D39AB /* FullscreenWarningDialog.cpp in Sources */,
+				9A9A1FD92FB3E618002D39AB /* ViewerInstance.cpp in Sources */,
+				9A9A1FDA2FB3E618002D39AB /* NewFolderDialog.cpp in Sources */,
+				9A9A1FA52FB3E603002D39AB /* remoting_impact.cpp in Sources */,
 				9A26B2862F816F280047ECA2 /* ConfigurationDialog.cpp in Sources */,
 				9A26B2872F816F280047ECA2 /* ConnectionData.cpp in Sources */,
 				9A26B2882F816F280047ECA2 /* ConnectionListener.cpp in Sources */,
+				9A9A1FA42FB3E5ED002D39AB /* ResourceStrings.cpp in Sources */,
 				9A26B2892F816F280047ECA2 /* AuthenticationDialog.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,6 +499,7 @@
 /* Begin XCBuildConfiguration section */
 		9A373EE32F8162F100E892B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A26B23C2F816ED30047ECA2 /* _____debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
@@ -392,6 +543,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
+				DEVELOPMENT_TEAM = HS8735NRM5;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -472,6 +624,7 @@
 		};
 		9A373EE42F8162F100E892B1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A26B23D2F816ED30047ECA2 /* _____release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
@@ -515,6 +668,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
+				DEVELOPMENT_TEAM = HS8735NRM5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

@@ -30,6 +30,8 @@ namespace remoting_client
       application();
       ~application() override;
 
+      void init_instance() override;
+      
       void on_request(::request * prequest) override;
 
 

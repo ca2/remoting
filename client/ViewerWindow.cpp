@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/operating_system/message_box.h"
 #include "acme/parallelization/manual_reset_happening.h"
 #include "remoting/remoting/config/IniFileSettingsManager.h"
 #include "subsystem/platform/Exception.h"
@@ -95,7 +96,11 @@ namespace remoting_client
 
         //setClass(windowClass);
         setClass(::innate_subsystem::e_window_class_viewer);
+#ifdef WINDOWS
         createWindow(titleName, WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
+#else
+       createWindow(titleName, 0);
+#endif
 
        m_pdesktopwindow->setClipboardViewerInterest();
         m_pdesktopwindow->setDoubleBuffering(true);
@@ -103,9 +108,15 @@ namespace remoting_client
         //m_pdesktopwindow->setClass(windowClass);
        m_pdesktopwindow->setClass(::innate_subsystem::e_window_class_viewer);
         m_pdesktopwindow->m_pviewerwindow = this;
+#ifdef WINDOWS
         m_pdesktopwindow->createWindow(subTitleName,
                                WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CHILD,
                                operating_system_window());
+#else
+       m_pdesktopwindow->createWindow(subTitleName,
+                              0,
+                              operating_system_window());
+#endif
 
         ///SetTimer(m_hwnd, TIMER_DESKTOP_STATE, TIMER_DESKTOP_STATE_DELAY, (TIMERPROC)NULL);
         m_papplication->fork([this]()
@@ -311,10 +322,10 @@ namespace remoting_client
         setClassCursor(pcursor);
     }
 
-    bool ViewerWindow::onSysCommand(::wparam wParam, ::lparam lParam)
-    {
+bool ViewerWindow::on_user_system_command(::user::enum_system_command esystemcommand)
+{
 
-        if ((wParam & 0xfff0) == SC_RESTORE)
+        if (esystemcommand == ::user::e_system_command_restore)
         {
 
            restoreWindow();
@@ -328,22 +339,23 @@ namespace remoting_client
     bool ViewerWindow::onMessage(::u32 message, ::wparam wParam, ::lparam lParam)
     {
         switch (message) {
-            case WM_NCDESTROY:
+           case ::user::e_message_non_client_destroy:
                 m_stopped = true;
                 return true;
             case WM_USER_STOP:
-                SendMessage((HWND) _HWND(), WM_DESTROY, 0, 0);
+                //SendMessage((HWND) _HWND(), WM_DESTROY, 0, 0);
+              postMessage(::user::e_message_destroy);
                 return true;
             case WM_USER_FS_WARNING:
                 return onFsWarning();
             case WM_USER_SWITCH_FULL_SCREEN_MODE:
                 switchFullScreenMode();
                 return true;
-            case WM_CLOSE:
+           case ::user::e_message_close:
                 return onClose();
-            case WM_DESTROY:
+           case ::user::e_message_destroy:
                 return onDestroy();
-            case WM_CREATE:;
+           case ::user::e_message_create:
                return true;
                /*           ;
                return onCreate((void *)lParam);*/
@@ -357,7 +369,7 @@ namespace remoting_client
                 return onError();
             case WM_USER_DISCONNECT:
                 return onDisconnect();
-            case WM_SYSCOMMAND:
+           case ::user::e_message_system_command:
             {
 
                 //if ((wParam & 0xfff0) == SC_RESTORE)
@@ -375,11 +387,11 @@ namespace remoting_client
             }
 
                 return false;
-            case WM_ACTIVATE:
+           case ::user::e_message_activate:
                 if (!isFullScreen()) {
                     return true;
                 }
-                if (LOWORD(wParam) == WA_ACTIVE || LOWORD(wParam) == WA_CLICKACTIVE) {
+                if (wParam.loword() == WIN32_WA_ACTIVE || wParam.loword() == WIN32_WA_CLICKACTIVE) {
                     // full screen viewer can be minimized from other screen
                     if (isIconic()) {
                         return true;
@@ -392,23 +404,23 @@ namespace remoting_client
                     } catch (::exception &e) {
                         m_plogwriter->error("{}", e.get_message());
                     }
-                } else if (LOWORD(wParam) == WA_INACTIVE) {
+                } else if (wParam.loword() == WIN32_WA_INACTIVE) {
                     // Unregistration of keyboard hook.
                     m_operatingsystemhook.unregisterKeyboardHook(this);
                     //// Switching on ignoring win key.
                     m_pdesktopwindow->setWinKeyIgnore(true);
                 }
                 return true;
-            case WM_SETFOCUS:
+           case ::user::e_message_set_focus:
                 return onFocus(wParam);
-            case WM_ERASEBKGND:
+           case ::user::e_message_erase_background:
                 //return onEraseBackground((HDC)wParam);
               return true;
-            case WM_KILLFOCUS:
+           case ::user::e_message_kill_focus:
                 return onKillFocus(wParam);
             // case WM_TIMER:
             //     return onTimer(wParam);
-            case WM_DISPLAYCHANGE:
+           case ::user::e_message_display_change:
                 adjustWindowSize();
 
         }
@@ -464,16 +476,7 @@ namespace remoting_client
         
       ::string host = m_pconnectiondata->getHost();
 
-      wstring kbdName;
-      auto pwsz= kbdName.get_buffer(KL_NAMELENGTH);
-      //memset(&kbdName[0], 0, sizeof(TCHAR) * KL_NAMELENGTH);
-      if (!GetKeyboardLayoutNameW( pwsz ))
-      {
-         pwsz[0] = '?';
-         pwsz[1] = '?';
-         pwsz[2] = '?';
-      }
-       kbdName.release_buffer();
+      ::string kbdName = InnateSubsystem().getKeyboardLayoutName();
 
         ::i32_rectangle geometry;
         int pixelSize = 0;
@@ -530,7 +533,7 @@ namespace remoting_client
 
     void ViewerWindow::commandCtrlAltDel()
     {
-        LRESULT iState = m_toolbar.getState(IDS_TB_CTRLALTDEL);
+        auto iState = m_toolbar.getState(IDS_TB_CTRLALTDEL);
         if (iState) {
             m_pdesktopwindow->sendCtrlAltDel();
         }
@@ -538,54 +541,54 @@ namespace remoting_client
 
     void ViewerWindow::commandCtrlEsc()
     {
-        LRESULT iState = m_toolbar.getState(IDS_TB_CTRLESC);
+auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
         if (iState) {
-            m_pdesktopwindow->sendKey(VK_LCONTROL, true);
-            m_pdesktopwindow->sendKey(VK_ESCAPE,   true);
-            m_pdesktopwindow->sendKey(VK_ESCAPE,   false);
-            m_pdesktopwindow->sendKey(VK_LCONTROL, false);
+            m_pdesktopwindow->sendKey(::user::e_key_left_control, true);
+            m_pdesktopwindow->sendKey(::user::e_key_escape,   true);
+            m_pdesktopwindow->sendKey(::user::e_key_escape,   false);
+            m_pdesktopwindow->sendKey(::user::e_key_left_control, false);
         }
     }
 
     void ViewerWindow::commandCtrl()
     {
-        LRESULT iState = m_toolbar.getState(IDS_TB_CTRL);
+        auto iState = m_toolbar.getState(IDS_TB_CTRL);
         if (iState) {
             if (iState & ::innate_subsystem::e_toolbar_item_state_enabled) {
                 m_menu.checkedMenuItem(IDS_TB_CTRL, true);
                 m_toolbar.checkButton(IDS_TB_CTRL,  true);
                 m_pdesktopwindow->setCtrlState(true);
-                m_pdesktopwindow->sendKey(VK_LCONTROL,      true);
+                m_pdesktopwindow->sendKey(::user::e_key_left_control,      true);
             } else {
                 m_menu.checkedMenuItem(IDS_TB_CTRL, false);
                 m_toolbar.checkButton(IDS_TB_CTRL,  false);
                 m_pdesktopwindow->setCtrlState(false);
-                m_pdesktopwindow->sendKey(VK_LCONTROL,      false);
+                m_pdesktopwindow->sendKey(::user::e_key_left_control,      false);
             }
         }
     }
 
     void ViewerWindow::commandAlt()
     {
-        LRESULT iState = m_toolbar.getState(IDS_TB_ALT);
+        auto iState = m_toolbar.getState(IDS_TB_ALT);
         if (iState) {
             if (iState & ::innate_subsystem::e_toolbar_item_state_enabled) {
                 m_menu.checkedMenuItem(IDS_TB_ALT, true);
                 m_toolbar.checkButton(IDS_TB_ALT,  true);
                 m_pdesktopwindow->setAltState(true);
-                m_pdesktopwindow->sendKey(VK_LMENU,        true);
+                m_pdesktopwindow->sendKey(::user::e_key_left_alt,        true);
             } else {
                 m_menu.checkedMenuItem(IDS_TB_ALT, false);
                 m_toolbar.checkButton(IDS_TB_ALT,  false);
                 m_pdesktopwindow->setAltState(false);
-                m_pdesktopwindow->sendKey(VK_LMENU,        false);
+                m_pdesktopwindow->sendKey(::user::e_key_left_alt,        false);
             }
         }
     }
 
     void ViewerWindow::commandPause()
     {
-        LRESULT iState = m_toolbar.getState(IDS_TB_PAUSE);
+        auto iState = m_toolbar.getState(IDS_TB_PAUSE);
         if (iState) {
             if (iState & ::innate_subsystem::e_toolbar_item_state_enabled) {
                 m_toolbar.checkButton(IDS_TB_PAUSE, true);
@@ -621,7 +624,7 @@ namespace remoting_client
 
     void ViewerWindow::commandSaveSession()
     {
-        WCHAR fileName[MAX_PATH] = L"";
+        wchar_t fileName[MAX_PATH] = L"";
 
         ::wstring filterVncFiles(MainSubsystem().StringTable().getString(IDS_SAVE_SESSION_FILTER_VNC_FILES));
         ::wstring filterAllFiles(MainSubsystem().StringTable().getString(IDS_SAVE_SESSION_FILTER_ALL_FILES));
@@ -752,7 +755,7 @@ namespace remoting_client
 
     void ViewerWindow::commandScaleAuto()
     {
-        LRESULT iState = m_toolbar.getState(IDS_TB_SCALEAUTO);
+        auto iState = m_toolbar.getState(IDS_TB_SCALEAUTO);
         if (iState) {
             if (iState & ::innate_subsystem::e_toolbar_item_state_enabled) {
                 m_toolbar.checkButton(IDS_TB_SCALEAUTO, true);
@@ -880,7 +883,7 @@ namespace remoting_client
 
     void ViewerWindow::showFileTransferDialog()
     {
-        LRESULT iState = m_toolbar.getState(IDS_TB_TRANSFER);
+        auto iState = m_toolbar.getState(IDS_TB_TRANSFER);
         if (iState) {
             // FIXME: FT check it
             if (m_ftDialog != 0) {
@@ -1227,7 +1230,7 @@ namespace remoting_client
 
     void ViewerWindow::doSize()
     {
-        postMessage(WM_SIZE);
+        postMessage(::user::e_message_size);
     }
 
     void ViewerWindow::onSize()
@@ -1290,8 +1293,8 @@ namespace remoting_client
             int result = MainSubsystem().message_box({},
                                     error,
                                     formatWindowName(),
-                                    MB_RETRYCANCEL | ::user::e_message_box_icon_error);
-            if (result == IDRETRY) {
+                                    ::user::e_message_box_retry_cancel | ::user::e_message_box_icon_error);
+            if (result == ::e_dialog_result_retry) {
                 if (!m_pconnectiondata->isIncoming()) {
                     // Retry connect to remote host.
                     m_requiresReconnect = true;
@@ -1345,7 +1348,7 @@ namespace remoting_client
            show();
             setForegroundWindow();
         }
-        MessageBeep(MB_ICONASTERISK);
+        ::operating_system::message_beep(::user::e_message_box_icon_asterisk);
     }
 
 
@@ -1492,7 +1495,7 @@ namespace remoting_client
 
     void ViewerWindow::doCommand(int iCommand)
     {
-        postMessage(WM_COMMAND, iCommand);
+        postMessage(::user::e_message_command, iCommand);
     }
 
     bool ViewerWindow::requiresReconnect() const
@@ -1539,12 +1542,12 @@ namespace remoting_client
 
     void ViewerWindow::updateKeyState()
     {
-        LRESULT ctrlState = m_toolbar.getState(IDS_TB_CTRL);
+        auto ctrlState = m_toolbar.getState(IDS_TB_CTRL);
         if (ctrlState != 0) {
             m_toolbar.checkButton(IDS_TB_CTRL, m_pdesktopwindow->getCtrlState());
         }
 
-        LRESULT altState = m_toolbar.getState(IDS_TB_ALT);
+        auto altState = m_toolbar.getState(IDS_TB_ALT);
         if (altState != 0) {
             m_toolbar.checkButton(IDS_TB_ALT, m_pdesktopwindow->getAltState());
         }
@@ -1570,10 +1573,10 @@ namespace remoting_client
 
        //KBDLLHOOKSTRUCT *str = (KBDLLHOOKSTRUCT*) lParam;
        // Ignoring of CapsLock, NumLock, ScrollLock, ::innate_subsystem::Control (Ctrl key), Menu (Alt key), Shift (shift key).
-       if (iVkCode != VK_CAPITAL && iVkCode != VK_NUMLOCK && iVkCode != VK_SCROLL &&
-           iVkCode != VK_LCONTROL && iVkCode != VK_RCONTROL &&
-           iVkCode != VK_LMENU && iVkCode != VK_RMENU &&
-           iVkCode != VK_LSHIFT && iVkCode != VK_RSHIFT)
+       if (iVkCode != ::user::e_key_capslock && iVkCode != ::user::e_key_numlock && iVkCode != ::user::e_key_scroll_lock &&
+           iVkCode != ::user::e_key_left_control && iVkCode != ::user::e_key_right_control &&
+           iVkCode != ::user::e_key_left_alt && iVkCode != ::user::e_key_right_alt &&
+           iVkCode != ::user::e_key_left_shift && iVkCode != ::user::e_key_right_shift)
        {
           // // Set the repeat count for the current scopedstrMessage bits.
           // ::lparam newLParam = 1;

@@ -39,18 +39,19 @@ namespace remoting_client
 
    DecoderStore::~DecoderStore()
    {
-      try {
-         for (::map<int, ::pair<int, Decoder *> >::iterator i = m_decoders.begin();
-              i != m_decoders.end();
-              i++) {
-            m_plogwriter->debug("Decoder '{}' destroyed", i->m_element2.m_element2->getCode());
-            try {
-               delete i->m_element2.m_element2;
-            } catch (...) {
-            }
-              }
-      } catch (...) {
-      }
+//      try {
+//         for (::map<int, ::pair<int, Decoder *> >::iterator i = m_decoders.begin();
+//              i != m_decoders.end();
+//              i++) {
+//            m_plogwriter->debug("Decoder '{}' destroyed", i->m_element2.m_element2->getCode());
+//            try {
+//               //delete i->m_element2.m_element2;
+//               i->m_element2.release()
+//            } catch (...) {
+//            }
+//              }
+//      } catch (...) {
+//      }
    }
 
    Decoder *DecoderStore::getDecoder(int decoderId)
@@ -111,7 +112,7 @@ namespace remoting_client
          m_decoders[decoder->getCode()] = {priority, decoder};
          return true;
       }
-      delete decoder;
+      //delete decoder;
       return false;
    }
 
@@ -120,7 +121,7 @@ namespace remoting_client
       if (m_decoders.count(decoderId)) {
          m_plogwriter->debug("Decoder '{}' destroyed (removed from ::list_base)",
                              m_decoders[decoderId].m_element2->getCode());
-         delete m_decoders[decoderId].m_element2;
+         //delete m_decoders[decoderId].m_element2;
          m_decoders.erase(decoderId);
          return true;
       }

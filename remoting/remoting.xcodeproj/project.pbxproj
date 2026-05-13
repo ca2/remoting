@@ -353,6 +353,8 @@
 		9A3743F22F816DA300E892B1 /* _.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3743E62F816DA300E892B1 /* _.h */; };
 		9A3743F62F816DA300E892B1 /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3743ED2F816DA300E892B1 /* framework.cpp */; };
 		9A3743F72F816DA300E892B1 /* _.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3743E72F816DA300E892B1 /* _.cpp */; };
+		9A9A1FE22FB402F3002D39AB /* NamingDefs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A1FE02FB402F3002D39AB /* NamingDefs.cpp */; };
+		9A9A1FE32FB402F3002D39AB /* NamingDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9A1FDF2FB402F3002D39AB /* NamingDefs.h */; };
 		9AD3F23D2FB2058D00CB9A78 /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD3F23C2FB2058D00CB9A78 /* libacme.dylib */; };
 /* End PBXBuildFile section */
 
@@ -812,6 +814,8 @@
 		9A3743E92F816DA300E892B1 /* _____release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "_____release.xcconfig"; sourceTree = "<group>"; };
 		9A3743EC2F816DA300E892B1 /* framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		9A3743ED2F816DA300E892B1 /* framework.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
+		9A9A1FDF2FB402F3002D39AB /* NamingDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamingDefs.h; sourceTree = "<group>"; };
+		9A9A1FE02FB402F3002D39AB /* NamingDefs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamingDefs.cpp; sourceTree = "<group>"; };
 		9AD3F23C2FB2058D00CB9A78 /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AD3F4532FB2092900CB9A78 /* innate_subsystem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = innate_subsystem.xcodeproj; path = ../../app/innate_subsystem/innate_subsystem.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -1221,6 +1225,7 @@
 		9A373F162F8164F200E892B1 /* remoting */ = {
 			isa = PBXGroup;
 			children = (
+				9A9A1FE12FB402F3002D39AB /* client */,
 				9A373F2C2F81656200E892B1 /* client_config */,
 				9A373F492F81656200E892B1 /* config */,
 				9A19055B2FB25E4B00A3C985 /* desktop */,
@@ -1429,6 +1434,15 @@
 			path = viewer_core;
 			sourceTree = "<group>";
 		};
+		9A9A1FE12FB402F3002D39AB /* client */ = {
+			isa = PBXGroup;
+			children = (
+				9A9A1FDF2FB402F3002D39AB /* NamingDefs.h */,
+				9A9A1FE02FB402F3002D39AB /* NamingDefs.cpp */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
 		9AD3F23B2FB2058D00CB9A78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1524,6 +1538,7 @@
 				9A19051B2FB2547700A3C985 /* TightPalette.h in Headers */,
 				9A19048A2FB24E7E00A3C985 /* ControlAuthException.h in Headers */,
 				9A19048B2FB24E7E00A3C985 /* ServerConfig.h in Headers */,
+				9A9A1FE32FB402F3002D39AB /* NamingDefs.h in Headers */,
 				9A19048C2FB24E7E00A3C985 /* PortMappingContainer.h in Headers */,
 				9A19048D2FB24E7E00A3C985 /* IpAccessControlDialog.h in Headers */,
 				9A19048E2FB24E7E00A3C985 /* UIDataAccess.h in Headers */,
@@ -1816,6 +1831,7 @@
 				9A3742B92F816B3000E892B1 /* FbUpdateNotifier.cpp in Sources */,
 				9A1905B32FB25E4B00A3C985 /* ScreenGrabber.cpp in Sources */,
 				9A1905B42FB25E4B00A3C985 /* UserInput.cpp in Sources */,
+				9A9A1FE22FB402F3002D39AB /* NamingDefs.cpp in Sources */,
 				9A1905B52FB25E4B00A3C985 /* Poller.cpp in Sources */,
 				9A1905B62FB25E4B00A3C985 /* UpdateHandlerClient.cpp in Sources */,
 				9A1905B72FB25E4B00A3C985 /* ReconnectingChannel.cpp in Sources */,

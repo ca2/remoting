@@ -73,10 +73,10 @@ namespace remoting_client
       #endif
       //m_hAccelTable = (HACCEL) presourceloader->loadAccelerator(IDR_ACCEL_APP_KEYS);
 
-      m_pcontroltrayicon = new ControlTrayIcon(this);
+      m_pcontroltrayicon = allocateø ControlTrayIcon(this);
 
-      auto plogindialog = new LoginDialog(this, m_premoting);
-
+      auto plogindialog = allocateø LoginDialog(this, m_premoting);
+      plogindialog->m_pconnectionconfig = m_premoting->m_pconnectionconfig;
       m_plogindialog = plogindialog;
    }
 

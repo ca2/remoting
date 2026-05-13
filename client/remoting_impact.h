@@ -64,7 +64,7 @@ namespace remoting_client
       OptionsDialog m_optionsDialog;
 
       ::pointer < LoginDialog > m_plogindialog;
-      ControlTrayIcon *m_pcontroltrayicon;
+      ::pointer < ControlTrayIcon > m_pcontroltrayicon;
       ::pointer < ConnectionListener > m_pconnectionlistener;
 
       // WNDCLASS m_viewerWndClass;

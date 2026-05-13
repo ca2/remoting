@@ -43,9 +43,9 @@ namespace remoting
 
    RegistrySettingsManager::~RegistrySettingsManager()
    {
-      if (m_key != NULL) {
-         delete m_key;
-      }
+//      if (m_key != NULL) {
+//         delete m_key;
+//      }
    }
 
    //

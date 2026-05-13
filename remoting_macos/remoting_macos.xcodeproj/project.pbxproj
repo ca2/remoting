@@ -15,6 +15,8 @@
 		9A19068C2FB296C900A3C985 /* _factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1906882FB296C900A3C985 /* _factory.cpp */; };
 		9A282EAB2FB31B3C00B79BB5 /* libinnate_subsystem_macos.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A282EA82FB31B2C00B79BB5 /* libinnate_subsystem_macos.dylib */; };
 		9A282EAD2FB31BA200B79BB5 /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A282EAC2FB31BA200B79BB5 /* libacme.dylib */; };
+		9A6A2C282FB3E4E4004C0ACF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */; };
+		9A9A1F982FB3E53B002D39AB /* libremoting.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F952FB3E526002D39AB /* libremoting.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +34,20 @@
 			remoteGlobalIDString = 9A1906A62FB29AF200A3C985;
 			remoteInfo = innate_subsystem_macos;
 		};
+		9A9A1F942FB3E526002D39AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A373EFE2F81647000E892B1;
+			remoteInfo = remoting;
+		};
+		9A9A1F962FB3E52F002D39AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A373EFD2F81647000E892B1;
+			remoteInfo = remoting;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +63,8 @@
 		9A1906872FB296C900A3C985 /* _common_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _common_header.h; sourceTree = "<group>"; };
 		9A1906882FB296C900A3C985 /* _factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _factory.cpp; sourceTree = "<group>"; };
 		9A282EAC2FB31BA200B79BB5 /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting.xcodeproj; path = ../remoting/remoting.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A9A1F982FB3E53B002D39AB /* libremoting.dylib in Frameworks */,
+				9A6A2C282FB3E4E4004C0ACF /* CoreGraphics.framework in Frameworks */,
 				9A282EAD2FB31BA200B79BB5 /* libacme.dylib in Frameworks */,
 				9A282EAB2FB31B3C00B79BB5 /* libinnate_subsystem_macos.dylib in Frameworks */,
 				9A0B95902FB31B1700EEAAE1 /* CoreFoundation.framework in Frameworks */,
@@ -66,6 +86,7 @@
 		9A0B958D2FB31B0100EEAAE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */,
 				9A282EAC2FB31BA200B79BB5 /* libacme.dylib */,
 				9A0B958F2FB31B1700EEAAE1 /* CoreFoundation.framework */,
 			);
@@ -76,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				9A0B95822FB31ADC00EEAAE1 /* innate_subsystem_macos.xcodeproj */,
+				9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */,
 				9A19067E2FB2967A00A3C985 /* remoting_macos */,
 				9A1906452FB278ED00A3C985 /* Products */,
 				9A0B958D2FB31B0100EEAAE1 /* Frameworks */,
@@ -121,6 +143,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9A9A1F912FB3E525002D39AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A9A1F952FB3E526002D39AB /* libremoting.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -147,6 +177,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A9A1F972FB3E52F002D39AB /* PBXTargetDependency */,
 				9A282EAA2FB31B3500B79BB5 /* PBXTargetDependency */,
 			);
 			name = remoting_macos;
@@ -187,6 +218,10 @@
 					ProductGroup = 9A282EA42FB31B2A00B79BB5 /* Products */;
 					ProjectRef = 9A0B95822FB31ADC00EEAAE1 /* innate_subsystem_macos.xcodeproj */;
 				},
+				{
+					ProductGroup = 9A9A1F912FB3E525002D39AB /* Products */;
+					ProjectRef = 9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -201,6 +236,13 @@
 			fileType = "compiled.mach-o.dylib";
 			path = libinnate_subsystem_macos.dylib;
 			remoteRef = 9A282EA72FB31B2C00B79BB5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9A9A1F952FB3E526002D39AB /* libremoting.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libremoting.dylib;
+			remoteRef = 9A9A1F942FB3E526002D39AB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -223,6 +265,11 @@
 			isa = PBXTargetDependency;
 			name = innate_subsystem_macos;
 			targetProxy = 9A282EA92FB31B3500B79BB5 /* PBXContainerItemProxy */;
+		};
+		9A9A1F972FB3E52F002D39AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = remoting;
+			targetProxy = 9A9A1F962FB3E52F002D39AB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

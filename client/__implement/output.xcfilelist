@@ -11,5 +11,5 @@ time-macos/libacme_windowing_appkit.dylib
 time-macos/libacme_windowing_kit.dylib
 time-macos/libdarwin.dylib
 time-macos/libnano_graphics_quartz2d.dylib
-time-macos/libremoting_common.dylib
+time-macos/libremoting.dylib
 time-macos/libfolder_zip.dylib

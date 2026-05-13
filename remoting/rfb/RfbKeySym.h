@@ -28,6 +28,7 @@
 #include "RfbKeySymListener.h"
 #include "subsystem/platform/Keymap.h"
 #include "innate_subsystem/gui/KeyboardLayout.h"
+#include "apex/user/user/key_happening.h"
 //#include "log_writer/LogWriter.h"
 
 namespace remoting
@@ -43,7 +44,8 @@ namespace remoting
       // This function doesn't distinguish between left and right modifiers.
       void sendModifier(::user::enum_key ekeyModifier, bool down);
 
-      void processKeyEvent(::user::enum_key ekey, ::u32 addKeyData);
+      //void processKeyEvent(::user::enum_key ekey, ::u32 addKeyData);
+      void processKeyHappening(::user::key_happening ekeyhappening);
       bool vkCodeToString(::user::enum_key ekey, bool isKeyDown, ::wstring *res);
       void processCharEvent(int charCode, ::u32 addKeyData);
       // Checks a new modifiers state after focus restoration and sends difference

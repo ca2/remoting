@@ -58,12 +58,13 @@ namespace remoting
       m_keyboardstate.m_serverKeyState[ekeyModifier] = down ? 128 : 0;
    }
 
-   void RfbKeySym::processKeyEvent(::user::enum_key ekey,
-                                   ::u32 addKeyData)
+   void RfbKeySym::processKeyHappening(::user::key_happening keyhappening)
    {
-      m_plogwriter->debug("processKeyEvent() function called: virtKey = %#4.4x, addKeyData"
-                 " = %#x", (::u32)ekey, addKeyData);
+      m_plogwriter->debug("processKeyEvent() function called: virtKey = %#4.4x, bDown"
+                 " = %#x, bExtended = %#", (::u32)keyhappening.m_euserkey, keyhappening.m_bDown,
+                          keyhappening.m_bExtendedKey);
 
+      auto ekey = keyhappening.m_euserkey;
 #ifdef WINDOWS
        // Ignoring win key (when fullscreen mode is off).
        if (m_winKeyIgnore) {
@@ -74,7 +75,8 @@ namespace remoting
        }
 #endif
 
-      bool down = (addKeyData & 0x80000000) == 0;
+      //bool down = (addKeyData & 0x80000000) == 0;
+      bool down = keyhappening.m_bDown;
       m_plogwriter->debug("down = %u", (::u32)down);
 
 
@@ -102,7 +104,8 @@ namespace remoting
       m_keyboardstate.m_viewerKeyState[constrain(ekey, ::user::e_key_none, ::user::e_key_count)] = down ? 128 : 0;
       m_keyboardstate.m_viewerKeyState[::user::e_key_capslock] = capsToggled ? 1 : 0;
 
-      bool extended = (addKeyData & 0x1000000) != 0; // 24 bit
+      //bool extended = (addKeyData & 0x1000000) != 0; // 24 bit
+      bool extended = keyhappening.m_bExtendedKey;
       ekey = distinguishLeftRightModifier(ekey, extended);
 
       // With distinguishing between left and right modifiers.

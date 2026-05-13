@@ -68,7 +68,7 @@ namespace remoting_client
         // this constant will be returned if user have pressed 'Listening' button
         static const int LISTENING_MODE = 2;
 
-    protected:
+    public:
         bool onInitDialog() override;
         bool onCommand(::u32 controlID, ::u32 notificationID) override;
         bool m_isListening;
