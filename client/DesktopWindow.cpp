@@ -890,6 +890,9 @@ namespace remoting_client
     {
         calcClientArea();
         m_winResize = true;
+       
+       m_premotingtoolbar->on_size();
+
         //return true;
     }
 
@@ -993,7 +996,13 @@ namespace remoting_client
                 dimension.cy = alignHeight * 4;
                 m_framebuffer.setProperties(dimension, pframebuffer->getPixelFormat(), operating_system_window());
                 m_framebuffer.setColor(0, 0, 0);
-                m_scManager.setScreenResolution(dimension.cx, dimension.cy);
+               
+               auto width = dimension.cx;
+               
+               auto height = dimension.cy;
+               
+               m_scManager.setScreenResolution(width, height);
+               
             }
             else
             {
