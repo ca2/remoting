@@ -57,7 +57,9 @@ void application::init_instance()
    
    setResourceName(IDD_LOGINDIALOG, "IDD_LOGINDIALOG");
    setResourceName(IDC_CSERVER, "IDC_CSERVER");
-   
+   setResourceName(IDD_DAUTH, "IDD_DAUTH");
+   setResourceName(IDC_EHOST, "IDC_EHOST");
+   setResourceName(IDC_EPASSW, "IDC_EPASSW");
    
 }
 

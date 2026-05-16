@@ -40,17 +40,17 @@ namespace remoting_client
       //
       // This method inherited by DecoderOfRectangle.
       //
-      virtual void decode(::remoting::RfbInputGate *input,
+      void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
-                          const ::i32_rectangle &  rectangleTarget);
+                          const ::i32_rectangle &  rectangleTarget) override;
 
       //
       // This method inherited by DecoderOfRectangle.
       //
-      virtual void copy(::innate_subsystem::Framebuffer *dstFramebuffer,
+      void copy(::innate_subsystem::Framebuffer *dstFramebuffer,
                         const ::innate_subsystem::Framebuffer *pframebufferSource,
                         const ::i32_rectangle &  rectangle,
-                        lockable_critical_section *pcriticalsectionFramebuffer);
+                        lockable_critical_section *pcriticalsectionFramebuffer) override;
 
    private:
       // This ::i32_point save left-top corner of copy-rectangle.

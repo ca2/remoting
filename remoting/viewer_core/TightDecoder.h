@@ -41,9 +41,9 @@ namespace remoting_client
       virtual ~TightDecoder();
 
    protected:
-      virtual void decode(::remoting::RfbInputGate *input,
+      void decode(::remoting::RfbInputGate *input,
                           ::innate_subsystem::Framebuffer *pframebuffer,
-                          const ::i32_rectangle &  rectangleTarget);
+                          const ::i32_rectangle &  rectangleTarget) override;
 
    private:
       void reset();

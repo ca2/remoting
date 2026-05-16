@@ -3,6 +3,7 @@
 #include "remoting.h"
 #include "remoting/remoting/platform/remoting.h"
 #include "acme/filesystem/filesystem/file_context.h"
+#include "acme/windowing/windowing.h"
 #include "innate_subsystem/platform/ResourceLoader.h"
 #include "innate_subsystem/platform/subsystem.h"
 #include "remoting_impact.h"
@@ -177,8 +178,13 @@ namespace remoting_client
          }
          else
          {
+            
+            ::system()->acme_windowing()->post([this]()
+                                               {
+               
+               m_premotingimpact->showLoginDialog();
 
-            m_premotingimpact->showLoginDialog();
+            });
 
          }
          //tvnViewer.run();

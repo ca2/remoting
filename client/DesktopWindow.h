@@ -111,7 +111,7 @@ namespace remoting_client
         //
         // Inherited from BaseWindow.
         //
-        bool onMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam) override;
+        bool onMessage(::user::enum_message emessage, ::wparam wParam, ::lparam lParam) override;
         //void onPaint(DeviceContext *dc, PAINTSTRUCT *paintStruct);
         void onPaint();
         bool onCreate(void * pCreateStruct) override;
@@ -120,7 +120,8 @@ namespace remoting_client
         bool onDeadChar(::wparam wParam, ::lparam lParam);
         bool onHScroll(::wparam wParam, ::lparam lParam);
         bool onVScroll(::wparam wParam, ::lparam lParam);
-        bool onKey(::wparam wParam, ::lparam lParam);
+        //bool onKey(::user::enum_message emessage, ::wparam wParam, ::lparam lParam);
+       bool onKey(::user::enum_message eusermessage, ::user::enum_key euserkey) override;
         bool onChar(::wparam wParam, ::lparam lParam);
         bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, const ::i32_point & pointPosition) override;
         bool onMouseEx(::u32 message, int iButtonMask, unsigned short wspeed, const ::i32_point &pointPosition,
@@ -128,6 +129,8 @@ namespace remoting_client
         //bool onSize(::wparam wParam, ::lparam lParam);
         void onSize() override;
         bool onDestroy();
+       
+       //void on_set_cursor_rectangles() override;
 
         ::i32_point getViewerCoord(long xPos, long yPos);
         void calculateWndSize(bool isChanged);
@@ -181,7 +184,7 @@ namespace remoting_client
 
         bool m_ctrlDown;
         bool m_altDown;
-        ::pointer < ::remoting_client::RemoteViewerCore > m_pviewercore;
+        ::pointer < ::remoting_client::RemoteViewerCore > m_premoteviewercore;
         ::pointer < ::remoting::ConnectionConfig > m_pconnectionconfig;
         bool m_isBackgroundDirty;
 

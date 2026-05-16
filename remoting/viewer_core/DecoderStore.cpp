@@ -68,7 +68,7 @@ namespace remoting_client
       // in first pointPosition is preffered encoding.
       ::array_base<::pair<int, int> > decoders;
 
-      for (::map<int, ::pair <int, Decoder *> >::iterator i = m_decoders.begin();
+      for (auto i = m_decoders.begin();
            i != m_decoders.end();
            i++) {
          // preferred encoding is skipping

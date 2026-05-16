@@ -818,7 +818,7 @@ namespace remoting_client
 
          constructø(m_pbitmapBuffer);
 
-         m_pbitmapBuffer->initialize_bitmap(size);
+         m_pbitmapBuffer->initialize_bitmap(size, false);
 
          // if (::is_set(m_pgraphicsBuffer))
          // {
@@ -831,6 +831,18 @@ namespace remoting_client
 
          m_pgraphicsBuffer->initialize_graphics(m_pbitmapBuffer);
       }
+      
+      m_pgraphicsBuffer->setBlendModeOn(false);
+      m_pgraphicsBuffer->setAntiAliasOn(false);
+      
+      ::i32_rectangle rectangleClearBuffer(size);
+      
+      m_pgraphicsBuffer->fillRect(rectangleClearBuffer, ::color::transparent);
+      
+      m_pgraphicsBuffer->setBlendModeOn(true);
+      m_pgraphicsBuffer->setAntiAliasOn(true);
+
+      
       // 2. Create graphics from bitmap
       //Gdiplus::Graphics gBuffer(&buffer);
       // Optional: high quality
@@ -859,9 +871,12 @@ namespace remoting_client
       //    rIntersect.width(),
       //    rIntersect.height(),
       //    Gdiplus::UnitPixel);
+      
+      pgraphics->setBlendModeOn(true);
       pgraphics->drawBitmap(m_pbitmapBuffer,rIntersect.top_left(),
          { (::i32_point) (rIntersect.origin()-m_rectangle.origin()),  rIntersect.size()});
    }
+
 
    void control::__001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle)
    {
@@ -944,7 +959,7 @@ namespace remoting_client
 
          rDash.left = r.left + 7;
          rDash.right = r.right - 7;
-         rDash.top = r.top + 13;
+         rDash.top = r.top + 5;
          rDash.bottom = rDash.top + 2;
 
          pgraphics->fillRect(rDash, colorPaint);
@@ -993,10 +1008,11 @@ namespace remoting_client
       }
    }
 
+
    void toolbar::__001OnDraw(innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle)
    {
 
-      pgraphics->setBlendModeOn(true);
+      pgraphics->setBlendModeOn(false);
       pgraphics->setAntiAliasOn(false);
 
 
@@ -1005,7 +1021,7 @@ namespace remoting_client
       if (m_bHover)
       {
 
-         iAlpha = 255;
+         iAlpha = 222;
 
       }
 
@@ -1023,15 +1039,25 @@ namespace remoting_client
       ::color::color color;
 
       float fOpacity = 1.0f;
+      
       for (int i = 0; i < 10; i++)
       {
+         
          color=colorDark;
+         
          color.blend(colorLite, fOpacity);
+         
          pgraphics->fillRect(::int_rectangle_dimension(x, y, w, h), color);
 
          y+= h;
+         
          fOpacity -= 0.1f;
+         
       }
+      
+      pgraphics->setBlendModeOn(true);
+      pgraphics->setAntiAliasOn(true);
+
 
       if (!m_pfont001)
       {
@@ -1109,7 +1135,6 @@ namespace remoting_client
       pgraphics->setFont(m_pfont001);
 
       pgraphics->drawText(m_pdesktopwindow->m_strHost,
-         m_pdesktopwindow->m_strHost.length(),
          r, 0, e_align_center);
       //pgraphics->m_pgraphics->DrawString(wstr, wstr.size(),)
       // color=colorDark;

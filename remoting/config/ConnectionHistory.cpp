@@ -145,8 +145,13 @@ namespace remoting
 
    void ConnectionHistory::addHost(const ::scoped_string & scopedstrHost)
    {
-
-      m_hosts.add_unique(scopedstrHost);
+if(scopedstrHost.is_empty())
+{
+   
+   return;
+}
+      m_hosts.erase(scopedstrHost);
+      m_hosts.insert_at(0, scopedstrHost);
       // ::string hostS(host);
       //
       // for (::string_array::iterator it = m_hosts.begin(); it != m_hosts.end(); it++) {

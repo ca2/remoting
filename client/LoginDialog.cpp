@@ -30,6 +30,7 @@
 #include "remoting/remoting/platform/remoting.h"
 #include "subsystem/node/Shell.h"
 #include "subsystem/node/SystemException.h"
+#include "acme/constant/lightui.h"
 
 
 namespace remoting_client
@@ -75,18 +76,35 @@ namespace remoting_client
 
    void LoginDialog::updateHistory()
    {
-      ::remoting::ConnectionHistory *conHistory;
+      //::remoting::ConnectionHistory *conHistory;
 
       ::string currentServer;
+      
       currentServer = m_server.getText();
+      
       m_server.removeAllItems();
-      conHistory = m_premoting->m_pviewerconfig->getConnectionHistory();
-      conHistory->load();
-      for (size_t i = 0; i < conHistory->getHostCount(); i++)
+      
+      auto pconnectionhistory = m_premoting->m_pviewerconfig->getConnectionHistory();
+      
+      pconnectionhistory->load();
+      
+      m_server.removeAllItems();
+      
+      for (::collection::index i = 0; i < pconnectionhistory->getHostCount(); i++)
       {
-         m_server.insertItem(static_cast<int>(i), conHistory->getHost(i));
+         
+         auto iIndex =(::i32) i;
+         
+         auto strHost = pconnectionhistory->getHost(i);
+         
+         auto pszDebug = strHost.c_str();
+         
+         m_server.insertItem(iIndex, strHost);
+         
       }
+      
       m_server.setText(currentServer);
+      
       if (m_server.getItemsCount())
       {
 
@@ -217,26 +235,26 @@ namespace remoting_client
       switch (controlID)
       {
          case IDC_CSERVER:
-            // switch (notificationID) {
-            // case CBN_DROPDOWN:
-            //         updateHistory();
-            //         break;
+             switch (notificationID) {
+                case ::lightui::CBN_DROPDOWN:
+                     updateHistory();
+                     break;
 
-            //        // select item in ComboBox with ::list_base of history
-            // case CBN_SELENDOK:
-            //{
-            //    int selectedItemIndex = m_server.getSelectedItemIndex();
-            //    if (selectedItemIndex < 0) {
-            //        return false;
-            //    }
-            //    //::string server;
-            //    auto server = m_server.getItemText(selectedItemIndex);
-            //    ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
-            //                            server);
-            //    m_pconnectionconfig.loadFromStorage(&ccsm);
-            //    break;
-            //}
-            //}
+                    // select item in ComboBox with ::list_base of history
+                case ::lightui::CBN_SELENDOK:
+            {
+                int selectedItemIndex = m_server.getSelectedItemIndex();
+                if (selectedItemIndex < 0) {
+                    return false;
+                }
+                //::string server;
+                auto server = m_server.getItemText(selectedItemIndex);
+                ::remoting::ConnectionConfigSM ccsm(RegistryPaths::VIEWER_PATH,
+                                        server);
+                m_pconnectionconfig->loadFromStorage(&ccsm);
+                break;
+            }
+            }
 
             enableConnect();
             break;

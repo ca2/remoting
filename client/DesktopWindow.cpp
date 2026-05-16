@@ -38,7 +38,7 @@ namespace remoting_client
         m_plogwriter(plogwriter),m_pviewerwindow(pviewerwindow), m_showVert(false), m_showHorz(false), m_fbWidth(1), m_fbHeight(1),
         m_winResize(false), m_pconnectionconfig(pconnectionconfig),
 
-        m_pviewercore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
+        m_premoteviewercore(0), m_ctrlDown(false), m_altDown(false), m_previousMousePos(-1, -1), m_previousMouseState(0),
         m_isBackgroundDirty(false)
     {
        m_clipboard.initialize_clipboard({});
@@ -53,7 +53,7 @@ namespace remoting_client
 
     void DesktopWindow::setConnected() { m_isConnected = true; }
 
-    void DesktopWindow::setViewerCore(::remoting_client::RemoteViewerCore *viewerCore) { m_pviewercore = viewerCore; }
+    void DesktopWindow::setViewerCore(::remoting_client::RemoteViewerCore *viewerCore) { m_premoteviewercore = viewerCore; }
 
     bool DesktopWindow::onCreate(void * pCreateStruct)
     {
@@ -161,9 +161,9 @@ namespace remoting_client
     // }
     //
 
-    bool DesktopWindow::onMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam)
+    bool DesktopWindow::onMessage(::user::enum_message emessage, ::wparam wParam, ::lparam lParam)
     {
-        switch (scopedstrMessage)
+        switch (emessage)
         {
            case ::user::e_message_scroll_x:
                 return onHScroll(wParam, lParam);
@@ -208,8 +208,9 @@ namespace remoting_client
            case ::user::e_message_sys_key_down:
            case ::user::e_message_sys_key_up:
             {
-
-                return onKey(wParam, lParam);
+               throw "todo";
+                //return onKey(emessage, wParam, lParam);
+               return false;
             }
             // case WM_SETCURSOR:
             //     if (m_bShowCursor || m_timeStartDesktopWindow.elapsed() < 8_s)
@@ -309,52 +310,56 @@ namespace remoting_client
         return true;
     }
 
-    bool DesktopWindow::onMouseEx(::u32 uMessage, int iButtonMask, unsigned short wheelSpeed,
+
+   bool DesktopWindow::onMouseEx(::u32 uMessage, int iButtonMask, unsigned short wheelSpeed,
                                   const ::i32_point &point, bool &bDoDefaultProcessing)
-    {
+   {
        
-       auto rectClient = getClientRect();
+      auto rectClient = getClientRect();
 
-        //RECT rcClient;
-        //if (::GetClientRect((HWND) _HWND(), &rcClient))
-       if(rectClient.is_set())
-        {
+      //RECT rcClient;
+      //if (::GetClientRect((HWND) _HWND(), &rcClient))
+      if(rectClient.is_set())
+      {
 
-            if (point.x < -1 || point.y < -1 || point.x >rectClient.width() || point.y> rectClient.width())
+         if (point.x < -1 || point.y < -1 || point.x >rectClient.width() || point.y> rectClient.width())
+         {
+
+            m_bShowCursor = true;
+
+            m_premoteviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = true;
+            
+            setMouseCursor(::e_cursor_arrow);
+
+            InnateSubsystem().releaseMouseCapture();
+            //       ::ReleaseCapture();
+
+            //       // Unregistration of keyboard hook.
+            //       m_pviewerwindow->m_winHooks.unregisterKeyboardHook(m_pviewerwindow);
+            ////// Switching on ignoring win key.
+            //setWinKeyIgnore(true);
+
+         }
+         else
+         {
+            
+            setMouseCursor(::e_cursor_none);
+
+            //auto hwndCapture = ::GetCapture();
+               
+            auto operatingsystemwindowCapture = InnateSubsystem().getMouseCapture();
+            
+            auto operatingsystemwindowThis = this->operating_system_window();
+
+            if (operatingsystemwindowCapture != operatingsystemwindowThis)
             {
 
-                m_bShowCursor = true;
-
-                m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = true;
-
-
+               //::SetCapture((HWND) _HWND());
+               InnateSubsystem().setMouseCapture(operatingsystemwindowThis);
                
-               InnateSubsystem().releaseMouseCapture();
-//                ::ReleaseCapture();
-
-                //       // Unregistration of keyboard hook.
-                //       m_pviewerwindow->m_winHooks.unregisterKeyboardHook(m_pviewerwindow);
-                ////// Switching on ignoring win key.
-                //setWinKeyIgnore(true);
-
-            }
-            else
-            {
-
-
-                //auto hwndCapture = ::GetCapture();
+               m_premoteviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;
                
-               auto operatingsystemwindowCapture = InnateSubsystem().getMouseCapture();
-               auto operatingsystemwindowThis = this->operating_system_window();
-
-                if (operatingsystemwindowCapture != operatingsystemwindowThis)
-                {
-
-                    //::SetCapture((HWND) _HWND());
-                   InnateSubsystem().setMouseCapture(operatingsystemwindowThis);
-
-                    m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;
-                    m_bShowCursor = false;
+               m_bShowCursor = false;
 
                     //                try {
                     //  // Registration of keyboard hook.
@@ -372,55 +377,47 @@ namespace remoting_client
 
         }
 
+      if (m_premotingtoolbar)
+      {
 
+         bool bRet = m_premotingtoolbar->_000OnMouseEx(uMessage, iButtonMask, { point.x, point.y }, { point.x, point.y }, bDoDefaultProcessing);
 
+         if (m_premotingtoolbar->m_bLButtonDown || m_premotingtoolbar->m_bHover)
+         {
+            
+            setMouseCursor(::e_cursor_arrow);
 
-        if (m_premotingtoolbar)
-        {
-            if (m_premotingtoolbar->_000OnMouseEx(uMessage, iButtonMask, { point.x, point.y }, { point.x, point.y }, bDoDefaultProcessing))
-            {
+            m_bShowCursor = true;
+            
+            m_premoteviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = true;
 
-                if (m_premotingtoolbar->m_bLButtonDown || m_premotingtoolbar->m_bHover)
-                {
+         }
+         else
+         {
 
-                    m_bShowCursor = true;
-                    m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = true;
+            m_bShowCursor = false;
+            m_premoteviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;
 
-                }
-                else
-                {
+         }
 
-                    m_bShowCursor = false;
-                    m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;
+         m_premotingtoolbar->defer_repaint();
+         
+         if(bRet)
+         {
+            
+            return true;
+            
+         }
+      
+      }
 
-                }
+      return false;
+       
+   }
 
-                m_premotingtoolbar->defer_repaint();
-
-                return true;
-            }
-            if (m_premotingtoolbar->m_bLButtonDown || m_premotingtoolbar->m_bHover)
-            {
-
-                m_bShowCursor = true;
-                m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = true;
-
-            }
-            else
-            {
-
-                m_bShowCursor = false;
-                m_pviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;
-
-            }
-            m_premotingtoolbar->defer_repaint();
-        }
-
-        return false;
-    }
-
-    bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, const ::i32_point & pointPosition)
-    {
+   
+   bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, const ::i32_point & pointPosition)
+   {
         if (m_pviewerwindow->isMinimized())
         {
 
@@ -507,7 +504,7 @@ namespace remoting_client
         return true;
     }
 
-    bool DesktopWindow::onKey(::wparam wParam, ::lparam lParam)
+    bool DesktopWindow::onKey(::user::enum_message emessage, ::user::enum_key euserkey)
     {
        if (m_pviewerwindow->isIconic())
        {
@@ -518,7 +515,14 @@ namespace remoting_client
         if (!m_pconnectionconfig->isViewOnly())
         {
            
-           auto keyhappening = InnateSubsystem().keyHappeningFromKeyMessage(wParam, lParam);
+//           auto keyhappening = InnateSubsystem().keyHappeningFromKeyMessage(emessage, wParam, lParam);
+           
+           ::user::key_happening keyhappening;
+           
+           keyhappening.m_emessage = emessage;
+           keyhappening.m_euserkey = euserkey;
+           keyhappening.m_bDown = emessage == ::user::e_message_key_down
+           || emessage == ::user::e_message_sys_key_down;
            
 //            unsigned short virtualKey = static_cast<unsigned short>(wParam);
 //            ::u32 additionalInfo = static_cast<::u32>(lParam);
@@ -551,6 +555,51 @@ namespace remoting_client
         }
         return true;
     }
+
+//bool DesktopWindow::onKey(::user::enum_message emessage, ::wparam wParam, ::lparam lParam)
+//{
+//   if (m_pviewerwindow->isIconic())
+//   {
+//
+//      return false;
+//
+//   }
+//    if (!m_pconnectionconfig->isViewOnly())
+//    {
+//       
+//       auto keyhappening = InnateSubsystem().keyHappeningFromKeyMessage(emessage, wParam, lParam);
+//       
+////            unsigned short virtualKey = static_cast<unsigned short>(wParam);
+////            ::u32 additionalInfo = static_cast<::u32>(lParam);
+////            static const ::u32 DOWN_FLAG = 0x80000000;
+////            bool isDown = (additionalInfo & DOWN_FLAG) == 0;
+////
+////            if (virtualKey == VK_PROCESSKEY)
+////            {
+////                bool extended = HIWORD(lParam) & KF_EXTENDED;
+////                ::u32 scancode = HIWORD(lParam) & 0xFF;
+////                if (extended)
+////                {
+////                    scancode += 0xE000;
+////                }
+////                virtualKey = MapVirtualKey(scancode, MAPVK_VSC_TO_VK_EX);
+////            }
+////
+////            if (virtualKey == VK_CONTROL)
+////            {
+////                m_ctrlDown = isDown;
+////            }
+////
+////            if (virtualKey == VK_MENU)
+////            {
+////                m_altDown = isDown;
+////            }
+////
+////            m_rfbKeySym->processKeyEvent(virtualKey, additionalInfo);
+//       m_rfbKeySym->processKeyHappening(keyhappening);
+//    }
+//    return true;
+//}
 
     bool DesktopWindow::onChar(::wparam wParam, ::lparam lParam)
     {
@@ -670,9 +719,13 @@ namespace remoting_client
             //m_premotingtoolbar->__000OnTopDraw(&graphics);
             m_premotingtoolbar->__000OnTopDraw(pgraphics, rectangle);
         }
+      
+      pgraphics->setBlendModeOn(true);
 
-
-        //pgraphics->fillRect({100, 100, 500, 500}, argb(160, 100, 160, 200));
+      pgraphics->fillRect({100, 100, 500, 250}, argb(120, 100, 160, 255));
+      //pgraphics->setBlendModeOn(true);
+      //pgraphics->fillRect({0, 0, 1024, 768}, argb(160, 100, 160, 255));
+      
     }
 
     void DesktopWindow::applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight)
@@ -842,6 +895,57 @@ namespace remoting_client
 
     bool DesktopWindow::onDestroy() { return true; }
 
+//   void DesktopWindow::on_set_cursor_rectangles()
+//   {
+//      
+//      //discard_all_cursor_rectangles();
+//      
+//      auto r = getClientRect();
+//      
+//      if(r.is_set())
+//      {
+//         
+//         auto rToolbar = m_premotingtoolbar->m_rectangle;
+//         
+//         if(rToolbar.is_set())
+//         {
+//            
+//            add_cursor_rectangle(rToolbar, e_cursor_arrow);
+//            
+//         }
+//         
+//         r.top = rToolbar.bottom;
+//         
+//         add_cursor_rectangle(r, e_cursor_none);
+//         
+//         auto rLeft = rToolbar;
+//         
+//         rLeft.left = r.left;
+//         rLeft.right = rToolbar.left;
+//         
+//         if(rLeft.is_set())
+//         {
+//            
+//            add_cursor_rectangle(rLeft, e_cursor_none);
+//            
+//         }
+//         
+//         auto rRight = rToolbar;
+//         
+//         rRight.left = rToolbar.right;
+//         rRight.right = r.right;
+//         
+//         if(rRight.is_set())
+//         {
+//            
+//            add_cursor_rectangle(rRight, e_cursor_none);
+//            
+//         }
+//         
+//      }
+//      
+//   }
+
     void DesktopWindow::updateFramebuffer(const ::innate_subsystem::Framebuffer *pframebuffer, const ::i32_rectangle &rectangleTarget)
     {
         // This code doesn't require blocking of m_framebuffer.
@@ -870,7 +974,9 @@ namespace remoting_client
 
         //m_premotingtoolbar->set_size(dimension.width(), m_iDivisor);
 
-        //m_premotingtoolbar->on_size();
+        m_premotingtoolbar->on_size();
+       
+       //invalidate_cursor_rectangles();
 
         m_plogwriter->debug("Desktop size: {}, {}", dimension.cx, dimension.cy);
         {
@@ -1031,7 +1137,7 @@ namespace remoting_client
         }
 
         // If pointer to viewer core is 0, then exit.
-        if (m_pviewercore == 0)
+        if (m_premoteviewercore == 0)
         {
             return;
         }
@@ -1039,7 +1145,7 @@ namespace remoting_client
         // Trying send keyboard event...
         try
         {
-            m_pviewercore->sendKeyboardEvent(downFlag, key);
+            m_premoteviewercore->sendKeyboardEvent(downFlag, key);
         }
         catch (const ::subsystem::Exception &exception)
         {
@@ -1055,7 +1161,7 @@ namespace remoting_client
         }
 
         // If pointer to viewer core is 0, then exit.
-        if (m_pviewercore == 0)
+        if (m_premoteviewercore == 0)
         {
             return;
         }
@@ -1063,7 +1169,7 @@ namespace remoting_client
         // Trying send pointer event...
         try
         {
-            m_pviewercore->sendPointerEvent(buttonMask, pointPosition);
+            m_premoteviewercore->sendPointerEvent(buttonMask, pointPosition);
         }
         catch (const ::subsystem::Exception &exception)
         {
@@ -1079,7 +1185,7 @@ namespace remoting_client
         }
 
         // If pointer to viewer core is 0, then exit.
-        if (m_pviewercore == 0)
+        if (m_premoteviewercore == 0)
         {
             return;
         }
@@ -1087,7 +1193,7 @@ namespace remoting_client
         // Trying send cut-text event...
         try
         {
-            m_pviewercore->sendCutTextEvent(cutText);
+            m_premoteviewercore->sendCutTextEvent(cutText);
         }
         catch (const ::subsystem::Exception &exception)
         {

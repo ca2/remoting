@@ -150,7 +150,7 @@ namespace remoting_client
         static const int TIMER_DESKTOP_STATE = 1;
         static const int TIMER_DESKTOP_STATE_DELAY = 50;
 
-        bool onMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam) override;
+        bool onMessage(::user::enum_message emessage, ::wparam wParam, ::lparam lParam) override;
         //bool onEraseBackground(HDC hdc);
 
         bool onDisconnect();

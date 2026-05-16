@@ -102,7 +102,8 @@ namespace remoting_client
          result[ri] = buffer[bi + 2];
          result[ri + 1] = buffer[bi + 1];
          result[ri + 2] = buffer[bi];
-         result[ri + 3] = 0;
+         //result[ri + 3] = 0;
+         result[ri + 3] = 255;
       }
       return result;
    }
@@ -118,7 +119,8 @@ namespace remoting_client
          unsigned char t = buffer[2];
          buffer[2] = buffer[0];
          buffer[0] = t;
-         buffer[3] = 0;
+         //buffer[3] = 0;
+         buffer[3] = 255;
       }
       memcpy(&color, buffer, bytesPerCPixel);
       return color;
@@ -208,7 +210,12 @@ namespace remoting_client
 
       switch (filterId) {
          case COPY_FILTER:
+            information("COPY_FILTER");
             readTightData(pinput, buffer, lengthCurrentBpp, decoderId);
+            informationf(
+                "decoded bytes=%zu expected=%zu",
+                buffer.size(),
+                lengthCurrentBpp);
             if (m_isCPixel) {
                buffer = transformArray(buffer);
             }
@@ -219,6 +226,7 @@ namespace remoting_client
             // when bits-per-pixel value is either 16 or 32, not 8.
          case PALETTE_FILTER:
          {
+            information("PALETTE_FILTER");
             int paletteSize = pinput->readUInt8() + 1;
             ::array_base<::u32> palette = readPalette(pinput, paletteSize, bytesPerCPixel);
             size_t dataLength = rectangleTarget.area();
@@ -231,6 +239,7 @@ namespace remoting_client
             break;
 
          case GRADIENT_FILTER:
+            information("GRADIENT_FILTER");
             readTightData(pinput, buffer, lengthCurrentBpp, decoderId);
             drawGradient(pframebuffer, buffer, rectangleTarget);
             break;
@@ -283,10 +292,12 @@ namespace remoting_client
          decoder->setInput(compressed.data(), rawDataLength);
          decoder->setUnpackedSize(expectedLength);
          decoder->inflate();
+         
+         
 
          size_t size = decoder->getOutputSize();
          const char *output = decoder->getOutput();
-         buffer.resize(size);
+         //buffer.resize(size);
          buffer.assign((unsigned char *) output, size);
       } else {
          ASSERT(rawDataLength != 0);
@@ -350,9 +361,78 @@ namespace remoting_client
 
       int x = rectangleTarget.left;
       int y = rectangleTarget.top;
+      int iBlackArea = 0;
+      int iBlackArea1 = 0;
       for (int i = 0; i < dstLength; i++) {
-         void *pixelPtr = pframebuffer->getBufferPtr(x + i % width, y + i / width);
-         memcpy(pixelPtr, &pixels->operator [](i * bytesPerPixel), bytesPerPixel);
+         auto pixelPtr = (::u8*) pframebuffer->getBufferPtr(x + i % width, y + i / width);
+         auto pixelSrc = (::u8*) (pixels->data() + (i * bytesPerPixel));
+         auto r = pixelPtr[0];
+         auto g = pixelPtr[1];
+         auto b = pixelPtr[2];
+         auto a = pixelPtr[3];
+         auto r1 = pixelSrc[0];
+         auto g1 = pixelSrc[1];
+         auto b1 = pixelSrc[2];
+         auto a1 = pixelSrc[3];
+         if(r1 == 0 && g1 == 0 && b1 == 0)
+         {
+            
+            iBlackArea1++;
+            
+         }
+         else{
+            
+            if(iBlackArea1 > 0)
+            {
+               
+               information("src black area = {} pixels", iBlackArea1);
+               iBlackArea1 = 0;
+            }
+            
+            
+         }
+
+         memcpy(pixelPtr, pixelSrc, bytesPerPixel);
+         auto r2 = pixelPtr[0];
+         auto g2 = pixelPtr[1];
+         auto b2 = pixelPtr[2];
+         auto a2 = pixelPtr[3];
+         
+         if(r2 == 0 && g2 == 0 && b2 == 0)
+         {
+            
+            iBlackArea++;
+            
+         }
+         else{
+            
+            if(iBlackArea > 0)
+            {
+               
+               //information("black area = {} pixels", iBlackArea);
+               iBlackArea = 0;
+            }
+            
+            
+         }
+         if(a2 != 255)
+         {
+            
+            information("a2 != 255");
+            
+         }
+      }
+      if(iBlackArea1 > 0)
+      {
+         
+         information("src black area = {} pixels", iBlackArea1);
+         iBlackArea1 = 0;
+      }
+      if(iBlackArea > 0)
+      {
+         
+         information("dst black area = {} pixels", iBlackArea);
+         iBlackArea = 0;
       }
    }
 
@@ -374,7 +454,7 @@ namespace remoting_client
       int y = rectangleTarget.top;
       for (int i = 0; i < dstLength; i++) {
          unsigned char color[4] = {0, 0, 0, 0};
-         memcpy(&color, &pixels->operator [](i * bytesPerCPixel), bytesPerCPixel);
+         memcpy(color, &pixels->operator [](i * bytesPerCPixel), bytesPerCPixel);
          ::u32 pixel = (((::u32)color[0] * pixelformat.redMax + 127) / 255 << pixelformat.redShift |
                         ((::u32)color[1] * pixelformat.greenMax + 127) / 255 << pixelformat.greenShift |
                         ((::u32)color[2] * pixelformat.blueMax + 127) / 255 << pixelformat.blueShift);

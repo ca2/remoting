@@ -56,7 +56,7 @@ namespace remoting_client
    private:
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
-      ::map<int, ::pair<int, Decoder*> > m_decoders;
+      ::map<int, ::pair<int, ::pointer < Decoder >> > m_decoders;
       int m_preferredEncoding;
       bool m_allowCopyRect;
    };

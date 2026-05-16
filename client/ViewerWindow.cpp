@@ -336,19 +336,19 @@ bool ViewerWindow::on_user_system_command(::user::enum_system_command esystemcom
 
     }
 
-    bool ViewerWindow::onMessage(::u32 message, ::wparam wParam, ::lparam lParam)
+    bool ViewerWindow::onMessage(::user::enum_message emessage, ::wparam wParam, ::lparam lParam)
     {
-        switch (message) {
+        switch (emessage) {
            case ::user::e_message_non_client_destroy:
                 m_stopped = true;
                 return true;
-            case WM_USER_STOP:
+            case (::user::enum_message) WM_USER_STOP:
                 //SendMessage((HWND) _HWND(), WM_DESTROY, 0, 0);
               postMessage(::user::e_message_destroy);
                 return true;
-            case WM_USER_FS_WARNING:
+            case (::user::enum_message) WM_USER_FS_WARNING:
                 return onFsWarning();
-            case WM_USER_SWITCH_FULL_SCREEN_MODE:
+            case (::user::enum_message) WM_USER_SWITCH_FULL_SCREEN_MODE:
                 switchFullScreenMode();
                 return true;
            case ::user::e_message_close:
@@ -363,11 +363,11 @@ bool ViewerWindow::on_user_system_command(::user::enum_system_command esystemcom
             //   ;
             //   onSize(wParam, lParam);
 
-            case WM_USER_AUTH_ERROR:
+            case (::user::enum_message) WM_USER_AUTH_ERROR:
                 return onAuthError(wParam);
-            case WM_USER_ERROR:
+            case (::user::enum_message) WM_USER_ERROR:
                 return onError();
-            case WM_USER_DISCONNECT:
+            case (::user::enum_message) WM_USER_DISCONNECT:
                 return onDisconnect();
            case ::user::e_message_system_command:
             {

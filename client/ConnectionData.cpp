@@ -156,7 +156,7 @@ namespace remoting_client
       unsigned char plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
       ::subsystem::VncPassCrypt::getPlainPass(plainPassword, encPassword);
 
-      ::string ansiPlainPassword(reinterpret_cast<char *>(plainPassword));
+      ::string ansiPlainPassword((const char * )plainPassword, sizeof(plainPassword));
       ::string password;
       password = ansiPlainPassword;
       return password;

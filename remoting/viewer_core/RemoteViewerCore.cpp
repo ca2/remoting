@@ -893,7 +893,7 @@ defer_construct_newø(m_pframebuffer);
    ::string RemoteViewerCore::getProtocolString() const
    {
       ::string protocolString;
-      protocolString.format("RFB %03d.%03d\n", m_major, m_minor);
+      protocolString.formatf("RFB %03d.%03d\n", m_major, m_minor);
       return protocolString;
    }
 
@@ -1149,7 +1149,7 @@ defer_construct_newø(m_pframebuffer);
             critical_section_lock al(&m_criticalsectionFramebuffer);
             setFbProperties(rectangle.size(), m_pframebuffer->getPixelFormat());
          }
-            break;
+            break;	
 
          case ::remoting::PseudoEncDefs::RICH_CURSOR:
          {
