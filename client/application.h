@@ -33,6 +33,9 @@ namespace remoting_client
       void init_instance() override;
       
       void on_request(::request * prequest) override;
+      
+      
+      ::remoting_client::remoting * remoting();
 
 
       ::lresult handle_direct_id(const ::enum_id eid, ::wparam wparam, ::lparam lparam) override;

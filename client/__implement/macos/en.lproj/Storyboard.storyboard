@@ -171,5 +171,80 @@
             </objects>
             <point key="canvasLocation" x="88.5" y="-1052.5"/>
         </scene>
+        <!--IDD_CONNECTING-->
+        <scene sceneID="n10-qg-Pdv">
+            <objects>
+                <windowController storyboardIdentifier="IDD_CONNECTING" id="OTi-lq-dWX" userLabel="IDD_CONNECTING" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="XOD-7t-pUW">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <rect key="contentRect" x="849" y="529" width="360" height="158"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1410"/>
+                        <view key="contentView" id="jGq-sH-5bM">
+                            <rect key="frame" x="0.0" y="0.0" width="360" height="158"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="OTi-lq-dWX" id="0uF-w7-IW6"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="oqv-FF-iqS" kind="relationship" relationship="window.shadowedContentViewController" id="bbm-bx-Hgu"/>
+                    </connections>
+                </windowController>
+                <customObject id="iUo-ni-kN6" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-610" y="-645"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Xeu-fu-ciU">
+            <objects>
+                <viewController id="oqv-FF-iqS" sceneMemberID="viewController">
+                    <view key="view" identifier="IDD_CONNECTING1" wantsLayer="YES" alphaValue="0.90000000000000002" id="ezy-zq-7TE" userLabel="cOnnecting">
+                        <rect key="frame" x="0.0" y="0.0" width="347" height="187"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fgn-iQ-kce" userLabel="Auth Dlg">
+                                <rect key="frame" x="18" y="162" width="74" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Connecting" id="SIf-7E-WEK">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" tag="1094" translatesAutoresizingMaskIntoConstraints="NO" id="bp6-KS-iUu">
+                                <rect key="frame" x="20" y="115" width="307" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" tag="1044" drawsBackground="YES" id="jRt-4s-BBu">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" doubleValue="50" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="njb-U8-qAh">
+                                <rect key="frame" x="20" y="35" width="307" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="customTag">
+                                        <integer key="value" value="1093"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </progressIndicator>
+                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" tag="1096" translatesAutoresizingMaskIntoConstraints="NO" id="pfM-Fy-VMJ">
+                                <rect key="frame" x="20" y="73" width="307" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" tag="1044" drawsBackground="YES" id="bWN-K6-nkh">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="NY2-jK-pnL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-13.5" y="-642.5"/>
+        </scene>
     </scenes>
 </document>

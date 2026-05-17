@@ -53,7 +53,7 @@ namespace remoting_client
       m_textboxHost.setText(m_strHost);
       subclassControlById(m_textboxStatus, IDC_STATUS);
       m_textboxStatus.setFocus();
-      //ødefer_construct_new(m_panimation);
+      defer_construct_newø(m_panimation);
       subclassControlById(m_panimation->m_bar, IDC_PROGRESS1);
       m_panimation->m_bar.setRange(0, 8000);
       return false;

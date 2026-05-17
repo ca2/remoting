@@ -60,18 +60,20 @@ void application::init_instance()
    setResourceName(IDD_DAUTH, "IDD_DAUTH");
    setResourceName(IDC_EHOST, "IDC_EHOST");
    setResourceName(IDC_EPASSW, "IDC_EPASSW");
+   setResourceName(IDD_CONNECTING, "IDD_CONNECTING");
+   setResourceName(IDC_HOST, "IDC_HOST");
+   setResourceName(IDC_STATUS, "IDC_STATUS");
+   setResourceName(IDC_PROGRESS1, "IDC_PROGRESS1");
    
 }
 
 
-
-   void application::on_request(::request * prequest)
+   ::remoting_client::remoting * application::remoting()
    {
-      auto ecommand = prequest->m_ecommand;
-
-      if (ecommand == e_command_default_start)
+      
+      if(!m_premoting)
       {
-
+         
          MainSubsystem().Sockets().startSockets();
 
          ::remoting::defer_initialize_remoting();
@@ -83,14 +85,28 @@ void application::init_instance()
          defer_construct_newø(m_premoting);
 
          m_premoting->on_start();
+
+      }
+
+      return m_premoting;
+      
+   }
+
+
+   void application::on_request(::request * prequest)
+   {
+      
+      auto ecommand = prequest->m_ecommand;
+
+      if (ecommand == e_command_default_start)
+      {
          
          if (!m_bOpenFile)
          {
 
-            m_premoting->open_file({});
+            remoting()->open_file({});
 
          }
-
 
       }
       else if (ecommand == e_command_file_open)
@@ -99,8 +115,10 @@ void application::init_instance()
          auto path = prequest->m_payloadFile.as_file_path();
 
          m_bOpenFile = true;
+         
+         auto premoting = remoting();
 
-         m_premoting->open_file(path);
+         premoting->open_file(path);
 
          //fork([this, path]()
          //{
