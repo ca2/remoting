@@ -40,7 +40,7 @@ namespace remoting
     * in TcpServer constructor.
     */
    class CLASS_DECL_REMOTING TcpServer :
-   virtual public ::subsystem::Thread
+      virtual public ::subsystem::Thread
    {
    public:
       /**
@@ -88,7 +88,9 @@ namespace remoting
        * Inherited from Thread class.
        * Listening for incoming tcp connections.
        */
-      void execute() override;
+      void onThreadMain() override;
+      
+      void destroy() override;
 
    private:
       /**

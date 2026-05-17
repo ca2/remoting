@@ -50,24 +50,26 @@ namespace remoting_client
    }
 
 
-void application::init_instance()
-{
-   
-   ::apex::application::init_instance();
-   
-   setResourceName(IDD_LOGINDIALOG, "IDD_LOGINDIALOG");
-   setResourceName(IDC_CSERVER, "IDC_CSERVER");
-   setResourceName(IDD_DAUTH, "IDD_DAUTH");
-   setResourceName(IDC_EHOST, "IDC_EHOST");
-   setResourceName(IDC_EPASSW, "IDC_EPASSW");
-   setResourceName(IDD_CONNECTING, "IDD_CONNECTING");
-   setResourceName(IDC_HOST, "IDC_HOST");
-   setResourceName(IDC_STATUS, "IDC_STATUS");
-   setResourceName(IDC_PROGRESS1, "IDC_PROGRESS1");
-   
-}
+   void application::init_instance()
+   {
+      
+      ::apex::application::init_instance();
+      
+      setResourceName(IDD_LOGINDIALOG, "IDD_LOGINDIALOG");
+      setResourceName(IDC_CSERVER, "IDC_CSERVER");
+      setResourceName(IDD_DAUTH, "IDD_DAUTH");
+      setResourceName(IDC_EHOST, "IDC_EHOST");
+      setResourceName(IDC_EPASSW, "IDC_EPASSW");
+      setResourceName(IDD_CONNECTING, "IDD_CONNECTING");
+      setResourceName(IDC_HOST, "IDC_HOST");
+      setResourceName(IDC_STATUS, "IDC_STATUS");
+      setResourceName(IDC_PROGRESS1, "IDC_PROGRESS1");
+      setResourceName(IDD_FS_WARNING, "IDD_FS_WARNING");
+      setResourceName(IDC_CWARN_FS, "IDC_CWARN_FS");
+      
+   }
 
-
+   
    ::remoting_client::remoting * application::remoting()
    {
       

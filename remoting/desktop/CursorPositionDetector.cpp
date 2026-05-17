@@ -42,9 +42,18 @@ namespace remoting
 
    CursorPositionDetector::~CursorPositionDetector(void)
    {
-      terminate();
-      wait();
+//      terminate();
+//      wait();
    }
+
+void CursorPositionDetector::destroy()
+{
+   ::subsystem::Thread::destroy();
+//   terminate();
+//   wait();
+}
+
+
    void CursorPositionDetector::initialize_cursor_position_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                   ::subsystem::LogWriter * plogwriter)
    {
@@ -55,15 +64,15 @@ namespace remoting
 
    ::i32_point CursorPositionDetector::getCursorPos() { return m_cursor.getCursorPos(); }
 
-   void CursorPositionDetector::onTerminate() { m_sleepTimer.set_happening(); }
+   void CursorPositionDetector::onTermThread() { m_sleepTimer.set_happening(); }
 
-   void CursorPositionDetector::execute()
+   void CursorPositionDetector::onThreadMain()
    {
       m_plogwriter->information("mouse detector thread id = {}", getThreadId());
 
       ::i32_point curPoint;
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          curPoint = m_cursor.getCursorPos();
          if (m_lastCursorPos!= curPoint)

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "RemoteViewerCore.h"
-
+#include "subsystem/socket/SocketIPv4.h"
 #include "remoting/remoting/file_transfer_common/FTMessage.h"
 #include "remoting/remoting/rfb/AuthDefs.h"
 #include "remoting/remoting/rfb/TunnelDefs.h"
@@ -227,7 +227,7 @@ defer_construct_newø(m_pframebuffer);
       m_pfbupdatenotifier->setAdapter(adapter);
 
       // Start thread.
-      resume();
+      resumeThread();
       m_plogwriter->debug("Remote viewer core is started");
    }
 
@@ -276,11 +276,15 @@ defer_construct_newø(m_pframebuffer);
          m_dispatchDataProvider = 0;
       }
 
-      m_pupdaterequestsenderProperty->terminate();
+//      m_pupdaterequestsenderProperty->terminateThread();
+      
+      m_pupdaterequestsenderProperty->setThreadToFinish();
 
       m_tcpConnection.close();
-      m_pfbupdatenotifier->terminate();
-      terminate();
+      //m_pfbupdatenotifier->terminateThread();
+      m_pfbupdatenotifier->setThreadToFinish();
+      //terminateThread();
+      setThreadToFinish();
    }
 
    void RemoteViewerCore::waitTermination()
@@ -599,6 +603,7 @@ defer_construct_newø(m_pframebuffer);
    void RemoteViewerCore::connectToHost()
    {
       m_tcpConnection.connect();
+      m_tcpConnection.m_psocket->setRcvTimeO(1_s);
       m_input = m_tcpConnection.getInput();
       m_output = m_tcpConnection.getOutput();
 
@@ -902,7 +907,7 @@ defer_construct_newø(m_pframebuffer);
       return m_remoteDesktopName;
    }
 
-   void RemoteViewerCore::execute()
+   void RemoteViewerCore::onThreadMain()
    {
       try {
          // connect to host and create ::remoting::RfbInputGate/::remoting::RfbOutputGate
@@ -959,7 +964,11 @@ defer_construct_newø(m_pframebuffer);
          sendFbUpdateRequest(false);
 
          // received server messages
-         while (!isTerminating()) {
+         while (true)
+         {
+            task_iteration();
+            if(isThreadTerminating())
+               break;
             ::u32 msgType = receiveServerMessageType();
 
             switch (msgType) {
@@ -1003,12 +1012,25 @@ defer_construct_newø(m_pframebuffer);
             }
          }
          ::string scopedstrMessage("Remote viewer's core thread terminated");
-         try {
-            m_pcoreeventsadapter->onDisconnect(scopedstrMessage);
-         } catch (const ::subsystem::Exception &ex) {
-            m_plogwriter->error("Error in CoreEventsAdapter::onDisconnect(): {}", ex.get_message());
-         } catch (...) {
-            m_plogwriter->error("Unknown error in CoreEventsAdapter::onDisconnect()");
+         if(m_papplication->has_finishing_flag())
+         {
+            try {
+               m_pcoreeventsadapter->_disconnect();
+            } catch (const ::subsystem::Exception &ex) {
+               m_plogwriter->error("Error in CoreEventsAdapter::onDisconnect(): {}", ex.get_message());
+            } catch (...) {
+               m_plogwriter->error("Unknown error in CoreEventsAdapter::onDisconnect()");
+            }
+         }
+         else{
+            try {
+               m_pcoreeventsadapter->onDisconnect(scopedstrMessage);
+            } catch (const ::subsystem::Exception &ex) {
+               m_plogwriter->error("Error in CoreEventsAdapter::onDisconnect(): {}", ex.get_message());
+            } catch (...) {
+               m_plogwriter->error("Unknown error in CoreEventsAdapter::onDisconnect()");
+            }
+
          }
 
       } catch (const AuthException &ex) {
@@ -1036,6 +1058,23 @@ defer_construct_newø(m_pframebuffer);
          } catch (...) {
             m_plogwriter->error("Unknown error in CoreEventsAdapter::onError()");
          }
+      } catch (const ::exception &ex) {
+         if(ex.m_estatus == error_timeout && isThreadTerminating())
+         {
+         
+            m_plogwriter->information("RemoteViewerCore. clean exit");
+            
+         }
+         else
+         {
+            m_plogwriter->error("RemoteViewerCore. ::subsystem::Exception: {}", ex.get_message());
+            
+         }
+//         try {
+//            m_pcoreeventsadapter->onError(&ex);
+//         } catch (...) {
+//            m_plogwriter->error("Unknown error in CoreEventsAdapter::onError()");
+//         }
       } catch (...) {
          ::string error;
          error.format("RemoteViewerCore. Unknown exception");

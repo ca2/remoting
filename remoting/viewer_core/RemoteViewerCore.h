@@ -462,9 +462,9 @@ namespace remoting_client
 
       //private:
       //
-      // Overrides Thread::execute(). Implements the input thread.
+      // Overrides Thread::onThreadMain(). Implements the input thread.
       //
-      void execute() override;
+      void onThreadMain() override;
 
       //
       // This function includes common initialization code used by constructors.

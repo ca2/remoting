@@ -83,10 +83,18 @@ namespace remoting
 
    DesktopServerWatcher::~DesktopServerWatcher()
    {
-      terminate();
-      wait();
-      delete m_pprocess;
+      //terminate();
+      //wait();
+      //delete m_pprocess;
    }
+
+void DesktopServerWatcher::destroy()
+{
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
+   delete m_pprocess;
+}
 
 
    void DesktopServerWatcher::initialize_desktop_server_watcher(::remoting_node::Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter)
@@ -117,7 +125,7 @@ namespace remoting
       }
    }
 
-   void DesktopServerWatcher::execute()
+   void DesktopServerWatcher::onThreadMain()
    {
       ::subsystem::AnonymousPipeFactory pipeFactory;
 
@@ -125,7 +133,7 @@ namespace remoting
 
       ::pointer < ::subsystem::AnonymousPipeInterface > ownSidePipeChanTo, otherSidePipeChanTo, ownSidePipeChanFrom, otherSidePipeChanFrom;
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          try
          {
@@ -160,7 +168,7 @@ namespace remoting
             start();
 
             // Prepare other side pipe handles for other side
-            m_plogwriter->debug("DesktopServerWatcher::execute(): assigning handles");
+            m_plogwriter->debug("DesktopServerWatcher::onThreadMain(): assigning handles");
             otherSidePipeChanTo->assignHandlesFor(m_pprocess->getProcessHandle(), false);
             otherSidePipeChanFrom->assignHandlesFor(m_pprocess->getProcessHandle(), false);
 
@@ -180,13 +188,13 @@ namespace remoting
 
             // Destroying other side objects
             delete otherSidePipeChanTo;
-            m_plogwriter->debug("DesktopServerWatcher::execute(): Destroyed otherSidePipeChanTo");
+            m_plogwriter->debug("DesktopServerWatcher::onThreadMain(): Destroyed otherSidePipeChanTo");
             otherSidePipeChanTo = 0;
             delete otherSidePipeChanFrom;
-            m_plogwriter->debug("DesktopServerWatcher::execute(): Destroyed otherSidePipeChanFrom");
+            m_plogwriter->debug("DesktopServerWatcher::onThreadMain(): Destroyed otherSidePipeChanFrom");
             otherSidePipeChanFrom = 0;
 
-            m_plogwriter->debug("DesktopServerWatcher::execute(): Try to call onReconnect()");
+            m_plogwriter->debug("DesktopServerWatcher::onThreadMain(): Try to call onReconnect()");
             m_preconnectionlistener->onReconnect(ownSidePipeChanTo, ownSidePipeChanFrom);
 
             m_pprocess->waitForExit();
@@ -209,7 +217,7 @@ namespace remoting
       }
    }
 
-   void DesktopServerWatcher::onTerminate() { m_pprocess->stopWait(); }
+   void DesktopServerWatcher::onTermThread() { m_pprocess->stopWait(); }
 
    void DesktopServerWatcher::start()
    {

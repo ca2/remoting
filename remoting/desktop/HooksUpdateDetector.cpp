@@ -73,24 +73,44 @@ namespace remoting
 
    HooksUpdateDetector::~HooksUpdateDetector()
    {
-      terminate();
-      wait();
+//      terminate();
+//      wait();
+//
+//#ifdef WINDOWS
+////      if (m_hookInstaller != 0)
+////      {
+////         delete m_hookInstaller;
+////      }
+//      m_pparticleHookInstalled.release();
+//      //if (m_pmessagewindowTarget != 0)
+//      //{
+//        // delete m_pmessagewindowTarget;
+//      //}
+//      m_pmessagewindowTarget.release();
+//#endif
+   }
+
+
+void HooksUpdateDetector::destroy()
+{
+   
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
 
 #ifdef WINDOWS
 //      if (m_hookInstaller != 0)
 //      {
 //         delete m_hookInstaller;
 //      }
-      m_pparticleHookInstalled.release();
-      //if (m_pmessagewindowTarget != 0)
-      //{
-        // delete m_pmessagewindowTarget;
-      //}
-      m_pmessagewindowTarget.release();
+   m_pparticleHookInstalled.release();
+   //if (m_pmessagewindowTarget != 0)
+   //{
+     // delete m_pmessagewindowTarget;
+   //}
+   m_pmessagewindowTarget.release();
 #endif
-   }
-
-
+}
    void HooksUpdateDetector::initialize_hooks_update_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter)
    {
       initialize_update_detector(pupdatekeeper, pupdatelistener);
@@ -123,7 +143,7 @@ namespace remoting
 #endif
    }
 
-   void HooksUpdateDetector::onTerminate()
+   void HooksUpdateDetector::onTermThread()
    {
 #ifdef WINDOWS
       if (m_pmessagewindowTarget != 0)
@@ -182,7 +202,7 @@ namespace remoting
 #endif
    }
 
-   void HooksUpdateDetector::execute()
+   void HooksUpdateDetector::onThreadMain()
    {
       m_plogwriter->information("Hooks update detector thread id = {}", getThreadId());
 #ifdef WINDOWS
@@ -230,7 +250,7 @@ namespace remoting
 #endif
       start32Loader();
 
-      if (!isTerminating())
+      if (!isThreadTerminating())
       {
          m_plogwriter->information("Hooks update detector has been successfully initialized");
       }

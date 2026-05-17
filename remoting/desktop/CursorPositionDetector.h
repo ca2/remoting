@@ -43,6 +43,7 @@ namespace remoting
       CursorPositionDetector();
       ~CursorPositionDetector() override;
 
+      void destroy() override;
 
       virtual void initialize_cursor_position_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
 
@@ -50,8 +51,8 @@ namespace remoting
       ::i32_point getCursorPos();
 
    //protected:
-      void execute() override;
-      void onTerminate() override;
+      void onThreadMain() override;
+      void onTermThread() override;
 
    //private:
       ::subsystem::Cursor m_cursor;

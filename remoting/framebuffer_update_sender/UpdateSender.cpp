@@ -83,12 +83,21 @@ UpdateSender::UpdateSender() :
    }
    UpdateSender::~UpdateSender()
    {
-      terminate();
-      wait();
-      delete m_pupdatekeeper;
 
    }
 
+
+void UpdateSender::destroy()
+{
+   
+   ::subsystem::Thread::destroy();
+   
+   // terminateThread();
+   // wait();
+   delete m_pupdatekeeper;
+
+   
+}
 
     void  UpdateSender::initialize_update_sender(RfbCodeRegistrator *m_prfbcoderegistrator, UpdateRequestListener *updReqListener,
                               SenderControlInformationInterface *senderControlInformation, ::remoting::RfbOutputGate *prfboutputgate,
@@ -133,10 +142,10 @@ UpdateSender::UpdateSender() :
       m_prfbcoderegistrator->regCode(ClientMsgDefs::SET_PIXEL_FORMAT, this);
       m_prfbcoderegistrator->regCode(ClientMsgDefs::SET_ENCODINGS, this);
 
-      resume();
+      resumeThread();
    }
 
-   void UpdateSender::onTerminate() { m_newUpdatesEvent.set_happening(); }
+   void UpdateSender::onTermThread() { m_newUpdatesEvent.set_happening(); }
 
    void UpdateSender::onRequest(::u32 reqCode, ::remoting::RfbInputGate *input)
    {
@@ -728,11 +737,11 @@ UpdateSender::UpdateSender() :
       }
    }
 
-   void UpdateSender::execute()
+   void UpdateSender::onThreadMain()
    {
       m_plogwriter->information("Starting update sender thread for client #{}", m_id);
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_newUpdatesEvent.wait();
          {
@@ -740,7 +749,7 @@ UpdateSender::UpdateSender() :
             m_busy = true;
          }
          m_plogwriter->debug("Update sender thread of client #{} is awake", m_id);
-         if (!isTerminating())
+         if (!isThreadTerminating())
          {
             try
             {
@@ -757,7 +766,8 @@ UpdateSender::UpdateSender() :
                m_plogwriter->error("The update sender thread caught an error and will"
                                       " be terminated: {}",
                                       e.get_message());
-               Thread::terminate();
+               //Thread::terminateThread();
+               setThreadToFinish();
             }
          }
       }

@@ -57,11 +57,20 @@ namespace remoting
 
    DesktopSrvDispatcher::~DesktopSrvDispatcher()
    {
-      terminate();
-      wait();
+  //    terminate();
+//      wait();
    }
 
-   void DesktopSrvDispatcher::initialize_desktop_srv_dispatcher(BlockingGate *pblockinggate,
+void DesktopSrvDispatcher::destroy()
+{
+   
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
+}
+
+
+void DesktopSrvDispatcher::initialize_desktop_srv_dispatcher(BlockingGate *pblockinggate,
                      // AnEventListener *m_extTerminationListener,
                      const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter)
    {
@@ -73,7 +82,7 @@ namespace remoting
    }
 
 
-   void DesktopSrvDispatcher::onTerminate() {}
+   void DesktopSrvDispatcher::onTermThread() {}
 
    void DesktopSrvDispatcher::notifyOnError()
    {
@@ -89,9 +98,9 @@ namespace remoting
       }
    }
 
-   void DesktopSrvDispatcher::execute()
+   void DesktopSrvDispatcher::onThreadMain()
    {
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          try
          {
@@ -119,9 +128,10 @@ namespace remoting
                                 "failed with error: {}",
                                 e.get_message());
             notifyOnError();
-            terminate();
+            //terminateThread();
+            setThreadToFinish();
          }
-         Thread::yield();
+         Thread::threadYield();
       }
       m_plogwriter->debug("The DesktopServerApplication dispatcher has been stopped");
    }

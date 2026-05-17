@@ -245,7 +245,7 @@ namespace remoting_node
       // If reload command is specified then we're working in online mode
       // and we don't have to save configuration locally.
       if (m_pcontrolcommandReloadConfig != NULL) {
-         m_pcontrolcommandReloadConfig->execute();
+         m_pcontrolcommandReloadConfig->onRunCommand();
 
          if (m_pcontrolcommandReloadConfig->executionResultOk()) {
             m_administrationConfigDialog.updateUI();

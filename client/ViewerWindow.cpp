@@ -23,6 +23,7 @@
 //
 #include "framework.h"
 #include "acme/operating_system/message_box.h"
+#include "acme/windowing/windowing.h"
 #include "acme/parallelization/manual_reset_happening.h"
 #include "remoting/remoting/config/IniFileSettingsManager.h"
 #include "subsystem/platform/Exception.h"
@@ -119,21 +120,24 @@ namespace remoting_client
 #endif
 
         ///SetTimer(m_hwnd, TIMER_DESKTOP_STATE, TIMER_DESKTOP_STATE_DELAY, (TIMERPROC)NULL);
-        m_papplication->fork([this]()
+        fork([this]()
         {
-
 
            while (task_get_run())
            {
-
-              preempt(50_ms);
-
+              
               desktopStateUpdate();
 
+              task_run(50_ms);
+
            }
+           
+           information("Finished desktop update thread");
 
         });
+       
     }
+
 
     ViewerWindow::~ViewerWindow()
     {
@@ -369,6 +373,8 @@ bool ViewerWindow::on_user_system_command(::user::enum_system_command esystemcom
                 return onError();
             case (::user::enum_message) WM_USER_DISCONNECT:
                 return onDisconnect();
+           case (::user::enum_message) WM_USER_DISCONNECT_NO_CONFIRM:
+               return _disconnect();
            case ::user::e_message_system_command:
             {
 
@@ -1280,10 +1286,24 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
                    formatWindowName(),
                    ::user::e_message_box_ok);
 
-        m_pdesktopwindow->destroyWindow();
-        destroyWindow();
+       _disconnect();
         return true;
     }
+
+
+bool ViewerWindow::_disconnect()
+{
+system()->acme_windowing()->post([this]()
+                                 {
+   m_pdesktopwindow->destroyWindow();
+   destroyWindow();
+});
+   
+   system()->m_papplication->set_finish();
+
+    return true;
+}
+
 
     bool ViewerWindow::onAuthError(::wparam wParam)
     {
@@ -1329,9 +1349,15 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
 
     bool ViewerWindow::onFsWarning()
     {
-        FullscreenWarningDialog fsWarning(m_premoting);
-        fsWarning.setParent(this);
-        fsWarning.showModal();
+        auto pfullscreenwarningdialog = allocateø FullscreenWarningDialog(m_premoting);
+       pfullscreenwarningdialog->setParent(this);
+       pfullscreenwarningdialog->doAttachedModal([this](int iResult)
+                                 {
+          
+          information("got response from Fs Warning dialog {}", iResult);
+          
+       });
+       payload("fs_warning");
         return true;
     }
 

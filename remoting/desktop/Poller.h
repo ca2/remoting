@@ -56,14 +56,16 @@ namespace remoting
       //        ::subsystem::LogWriter * plogwriter);
       Poller();
       ~Poller() override;
+      
+      void destroy() override;
 
 
       virtual void initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
        ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
        ::subsystem::LogWriter * plogwriter);
 
-      void execute() override;
-      void onTerminate() override;
+      void onThreadMain() override;
+      void onTermThread() override;
 
    };
 

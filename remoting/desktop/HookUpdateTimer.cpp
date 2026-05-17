@@ -38,27 +38,34 @@ namespace remoting
 
    HookUpdateTimer::~HookUpdateTimer()
    {
-      terminate();
-      wait();
+      //terminate();
+      //wait();
    }
+
+void HookUpdateTimer::destroy()
+{
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
+}
 
    void HookUpdateTimer::initialize_hook_update_timer(UpdateListener *pupdatelistener)
    {
       m_pupdatelistener = pupdatelistener;
-         resume();
+         resumeThread();
 
     }
 
 
-   void HookUpdateTimer::onTerminate()
+   void HookUpdateTimer::onTermThread()
    {
       m_updateWaiter.set_happening();
       m_happeningTimer.set_happening();
    }
 
-   void HookUpdateTimer::execute()
+   void HookUpdateTimer::onThreadMain()
    {
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_updateWaiter.wait();
          m_happeningTimer.wait(100 * 1_ms);

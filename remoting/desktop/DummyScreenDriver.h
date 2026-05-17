@@ -42,32 +42,34 @@ namespace remoting
         //                ::u32 interval, ::subsystem::LogWriter * plogwriter);
 
       DummyScreenDriver();
-      virtual ~DummyScreenDriver();
+      ~DummyScreenDriver() override;
+      
+      void destroy() override;
 
       virtual void initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::i32_size & size,
                         ::u32 interval, ::subsystem::LogWriter * plogwriter);
       // Starts screen update detection if it not started yet.
-      virtual void executeDetection();
+      void executeDetection() override;
 
       // Stops screen update detection.
-      virtual void terminateDetection();
+      void terminateDetection() override;
 
-      virtual ::i32_size getScreenDimension();
-      virtual bool grabFb(const ::i32_rectangle & rectangle = {});
-      virtual ::innate_subsystem::Framebuffer *getScreenBuffer();
-      virtual bool getScreenPropertiesChanged();
-      virtual bool getScreenSizeChanged();
-      virtual bool applyNewScreenProperties();
-      bool grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat) { return true; };
-      const CursorShape *getCursorShape() { return &m_cursorshape; };
-      ::i32_point getCursorPosition() { return ::i32_point(); };
+      ::i32_size getScreenDimension() override;
+      bool grabFb(const ::i32_rectangle & rectangle = {}) override;
+      ::innate_subsystem::Framebuffer *getScreenBuffer() override;
+      bool getScreenPropertiesChanged() override;
+      bool getScreenSizeChanged() override;
+      bool applyNewScreenProperties() override;
+      bool grabCursorShape(const ::innate_subsystem::PixelFormat & pixelformat) override{ return true; };
+      const CursorShape *getCursorShape() override { return &m_cursorshape; };
+      ::i32_point getCursorPosition() override{ return ::i32_point(); };
 
-      void getCopiedRegion(::i32_rectangle &rectangleCopy, ::i32_point & pointSource) { return; };
-      Region getVideoRegion() { return Region(); };
+      void getCopiedRegion(::i32_rectangle &rectangleCopy, ::i32_point & pointSource) override { return; };
+      Region getVideoRegion() override { return Region(); };
 
    protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void onThreadMain() override;
+      void onTermThread() override;
 
    private:
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferWork;

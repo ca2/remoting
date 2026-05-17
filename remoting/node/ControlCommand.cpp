@@ -43,7 +43,7 @@ namespace remoting_node
    {
    }
 
-   void ControlCommand::execute()
+   void ControlCommand::onRunCommand()
    {
       ASSERT(m_pcommand != 0);
 
@@ -52,7 +52,7 @@ namespace remoting_node
       if (m_pcommand != NULL) {
          try {
             try {
-               m_pcommand->execute();
+               m_pcommand->onRunCommand();
             } catch (::io_exception &) {
                if (m_pnotificator != 0) {
                   m_pnotificator->notifyConnectionLost();

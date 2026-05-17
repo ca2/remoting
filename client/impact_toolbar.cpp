@@ -452,6 +452,8 @@ namespace remoting_client
        return true;
 
    }
+
+
    bool toolbar_button::on_left_up(const ::i32_point& pointPosition)
    {
 
@@ -643,7 +645,8 @@ namespace remoting_client
       if (eid==id_minimize)
       {
 
-         m_pdesktopwindow->m_pviewerwindow->minimizeWindow();
+         system()->m_papplication->HideApplication();
+         //m_pdesktopwindow->m_pviewerwindow->minimizeWindow();
 
          return true;
       }
@@ -660,8 +663,8 @@ namespace remoting_client
       {
          //m_pdesktopwindow->m_pviewercore->ge
 
-         m_pdesktopwindow->m_pviewerwindow->postMessage(ViewerWindow::WM_USER_DISCONNECT, 0, 0);
-         m_pdesktopwindow->m_pviewerwindow->postMessage(::user::e_message_close, 0, 0);
+         m_pdesktopwindow->m_pviewerwindow->postMessage(ViewerWindow::WM_USER_DISCONNECT_NO_CONFIRM, 0, 0);
+         //m_pdesktopwindow->m_pviewerwindow->postMessage(::user::e_message_close, 0, 0);
          return true;
       }
 

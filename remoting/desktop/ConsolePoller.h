@@ -39,16 +39,19 @@ namespace remoting
    public:
       ConsolePoller();
 
-      virtual ~ConsolePoller();
+      ~ConsolePoller() override;
+      
+      void destroy() override;
+      
       virtual void initialize_console_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
                     ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferMutex,
                     ::subsystem::LogWriter * plogwriter);
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
-
-   //private:
+      void onThreadMain() override;
+      void onTermThread() override;
+      
+      //private:
       ::i32_rectangle getConsoleRect();
 
       ::pointer < ScreenGrabber > m_pscreengrabber;

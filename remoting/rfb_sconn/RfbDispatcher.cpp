@@ -48,9 +48,18 @@ namespace remoting
 
    RfbDispatcher::~RfbDispatcher()
    {
-      terminate();
-      wait();
+      //terminate();
+      //wait();
    }
+
+void RfbDispatcher::destroy()
+{
+   
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
+}
+
 
    void RfbDispatcher::notifyAbTermination()
    {
@@ -67,10 +76,10 @@ namespace remoting
   //    }
    }
 
-   void RfbDispatcher::execute()
+   void RfbDispatcher::onThreadMain()
    {
       try {
-         while (!isTerminating()) {
+         while (!isThreadTerminating()) {
             ::u32 code = m_prfbinputgate->readUInt8();
             if (code == 0xfc) { // special TightVNC code
                code = code << 24;

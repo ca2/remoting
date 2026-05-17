@@ -40,13 +40,15 @@ namespace remoting
    public:
       CursorShapeDetector();
       ~CursorShapeDetector() override;
+      
+      void destroy() override;
 
       virtual void initialize_cursor_shape_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, CursorShapeGrabber *pcursorshapegrabber,
                     lockable_critical_section *mouseGrabLocMut, ::subsystem::LogWriter * plogwriter);
 
    ///protected:
-      void execute() override;
-      void onTerminate() override;
+      void onThreadMain() override;
+      void onTermThread() override;
 
       ::pointer < CursorShapeGrabber > m_pcursorshapegrabber;
       lockable_critical_section *m_pcriticalsectionMouseGrabLoc;

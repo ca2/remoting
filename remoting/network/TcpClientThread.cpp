@@ -39,7 +39,7 @@ namespace remoting
       //delete m_socket;
    }
 
-   void TcpClientThread::onTerminate()
+   void TcpClientThread::onTermThread()
    {
       try { m_psocket->shutdown(::subsystem::enum_socket_shutdown::e_socket_shutdown_both); } catch (...) { }
       try { m_psocket->close(); } catch (...) { }

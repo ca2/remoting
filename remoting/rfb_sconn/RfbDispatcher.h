@@ -43,12 +43,14 @@ namespace remoting
       // RfbDispatcher(::remoting::RfbInputGate *pblockinggate,
       //               ::happening *terminationEvent);
       RfbDispatcher(::remoting::RfbInputGate *prfbinputgate, const ::procedure &procedureTermination);
-      virtual ~RfbDispatcher();
+       ~RfbDispatcher() override;
+      
+      void destroy();
 
       void registerNewHandle(::u32 code, RfbDispatcherListener *listener);
 
    protected:
-      virtual void execute();
+      void onThreadMain() override;
       void notifyAbTermination();
 
       ::remoting::RfbInputGate *m_prfbinputgate;

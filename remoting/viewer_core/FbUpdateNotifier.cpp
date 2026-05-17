@@ -43,31 +43,41 @@ namespace remoting_client
    {
       m_rectangleOldPosition = m_cursorpainter.hideCursor();
 
-      resume();
+      resumeThread();
    }
 
    FbUpdateNotifier::~FbUpdateNotifier()
    {
-      try {
-         terminate();
-         wait();
-      } catch (...) {
-      }
+//      try {
+//         terminate();
+//         wait();
+//      } catch (...) {
+//      }
    }
 
-   void FbUpdateNotifier::setAdapter(CoreEventsAdapter *adapter)
+void FbUpdateNotifier::destroy()
+{
+   ::subsystem::Thread::destroy();
+//   try {
+//      terminateThread();
+//      wait();
+//   } catch (...) {
+//   }
+}
+
+void FbUpdateNotifier::setAdapter(CoreEventsAdapter *adapter)
    {
       critical_section_lock al(&m_criticalsectionUpdate);
       m_pcoreeventsadapter = adapter;
       m_happeningUpdate.set_happening();
    }
 
-   void FbUpdateNotifier::execute()
+   void FbUpdateNotifier::onThreadMain()
    {
       // Don't send any event to adapter, while adapter isn't set.
       {
          bool adapterIsNull = true;
-         while (!isTerminating() && adapterIsNull) {
+         while (!isThreadTerminating() && adapterIsNull) {
             // Wait event.
             m_happeningUpdate.wait();
 
@@ -80,7 +90,7 @@ namespace remoting_client
       }
 
       // Send event to adapter, while tread isn't terminated.
-      while (!isTerminating()) {
+      while (!isThreadTerminating()) {
          // If flag is set, then thread going to sleep (wait event).
          bool noUpdates = true;
 
@@ -179,7 +189,7 @@ namespace remoting_client
       }
    }
 
-   void FbUpdateNotifier::onTerminate()
+   void FbUpdateNotifier::onTermThread()
    {
       m_happeningUpdate.set_happening();
    }

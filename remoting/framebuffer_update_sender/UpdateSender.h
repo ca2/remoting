@@ -52,7 +52,7 @@ namespace remoting
    public:
 
 
-            ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
       // ::happening m_newUpdatesEvent;
 
@@ -145,6 +145,7 @@ namespace remoting
       UpdateSender();
        ~UpdateSender() override;
 
+      void destroy() override;
 
       virtual void initialize_update_sender(RfbCodeRegistrator *m_prfbcoderegistrator, UpdateRequestListener *updReqListener,
              SenderControlInformationInterface *senderControlInformation, ::remoting::RfbOutputGate *output,
@@ -190,8 +191,8 @@ namespace remoting
       void addUpdateContainer(const UpdateContainer & updatecontainer);
 
       // The sender thread.
-      virtual void execute() override;
-      virtual void onTerminate() override;
+      void onThreadMain() override;
+      void onTermThread() override;
 
       // Check cursor pointPosition for changing and store it to the m_cursorPos.
       // Return true value if cursor pointPosition has been changed.

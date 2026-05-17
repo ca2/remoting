@@ -46,12 +46,13 @@ namespace remoting
       HooksUpdateDetector();
       ~HooksUpdateDetector() override;
 
+      void destroy() override;
 
       virtual void initialize_hooks_update_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void onThreadMain() override;
+      void onTermThread() override;
 
       void start32Loader();
       void terminate32Loader();

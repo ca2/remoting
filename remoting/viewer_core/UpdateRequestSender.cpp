@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "UpdateRequestSender.h"
 // #include aaa_<thread/critical_section_lock.h>
 #include "RfbFramebufferUpdateRequestClientMessage.h"
@@ -7,7 +7,6 @@ namespace remoting_client
 {
    UpdateRequestSender::UpdateRequestSender(LockableBase* plockable, ::innate_subsystem::Framebuffer* pframebuffer, ::subsystem::LogWriter* plogwriter):
       m_bWasUpdateReceived(false),
-      m_iTimeout(0),
       m_bIncremental(true),
        m_criticalsectionFramebuffer(plockable),
        m_pframebuffer(pframebuffer),
@@ -19,16 +18,22 @@ namespace remoting_client
 
    UpdateRequestSender::~UpdateRequestSender()
    {
-      try
-      {
-         terminate();
-         wait();
-      }
-      catch (...)
-      {
-      }
    }
 
+void UpdateRequestSender::destroy()
+{
+   ::subsystem::Thread::destroy();
+//   try
+//   {
+//      terminateThread();
+//      wait();
+//   }
+//   catch (...)
+//   {
+//   }
+
+   
+}
    void UpdateRequestSender::setWasUpdated()
    {
       critical_section_lock al(&m_criticalsectionWasUpdated);
@@ -38,7 +43,7 @@ namespace remoting_client
    void UpdateRequestSender::setTimeout(int miliseconds)
    {
       critical_section_lock al(&m_criticalsectionTimeout);
-      m_iTimeout = miliseconds;
+      m_timeTimeout = miliseconds;
    }
 
    void UpdateRequestSender::setIsIncremental(bool isIncremental)
@@ -55,25 +60,25 @@ namespace remoting_client
       }
 
       // Start thread.
-      resume();
+      resumeThread();
       m_plogwriter->debug("UpdateRequestServer is started");
    }
 
-   void UpdateRequestSender::execute()
+   void UpdateRequestSender::onThreadMain()
    {
       try
       {
-         while(!isTerminating())
+         while(!isThreadTerminating())
          {
             if (isUpdated())
             {
                sendFbUpdateRequest();
             }
 
-            int timeout = getTimeout();
-            timeout = timeout > 0 ? timeout : 500;
+            auto timeout = getTimeout();
+            timeout = timeout.is_set() ? timeout : 500_ms;
             //todo: check if it is best approoach?
-            Thread::sleep(timeout);
+            task_run(timeout);
          }
       }
       catch(const ::exception &ex)
@@ -125,10 +130,10 @@ namespace remoting_client
       return result;
    }
 
-   int UpdateRequestSender::getTimeout()
+   class ::time UpdateRequestSender::getTimeout()
    {
       critical_section_lock al(&m_criticalsectionTimeout);
-      return m_iTimeout;
+      return m_timeTimeout;
    }
 
    bool UpdateRequestSender::isIncremental()
@@ -142,4 +147,9 @@ namespace remoting_client
       critical_section_lock al(&m_outputLock);
       return m_prfboutputgate;
    }
+
+
 } // namespace remoting_client
+
+
+

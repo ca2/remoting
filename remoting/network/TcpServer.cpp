@@ -52,14 +52,23 @@ namespace remoting
 
    TcpServer::~TcpServer()
    {
-      try { m_listenSocket.shutdown(::subsystem::e_socket_shutdown_both); } catch(...) { }
-      try { m_listenSocket.close(); } catch (...) { }
 
-      if (isActive()) {
-         Thread::terminate();
-         Thread::wait();
-      }
    }
+
+void TcpServer::destroy()
+{
+   
+   ::subsystem::Thread::destroy();
+   
+   try { m_listenSocket.shutdown(::subsystem::e_socket_shutdown_both); } catch(...) { }
+   try { m_listenSocket.close(); } catch (...) { }
+
+//   if (isThreadActive()) {
+//      Thread::terminateThread();
+//      Thread::wait();
+//   }
+   
+}
 
    ::string TcpServer::getBindHost() const
    {
@@ -73,12 +82,12 @@ namespace remoting
 
    void TcpServer::start()
    {
-      resume();
+      resumeThread();
    }
 
-   void TcpServer::execute()
+   void TcpServer::onThreadMain()
    {
-      while (!isTerminating()) {
+      while (!isThreadTerminating()) {
          ::pointer < ::subsystem::SocketIPv4Interface > clientSocket;
 
          try {

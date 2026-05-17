@@ -52,12 +52,12 @@ namespace remoting_node
       /**
        * Executes command.
        */
-      virtual void execute();
+      void onRunCommand() override;
 
       /**
-       * Checks result of last execute() method call.
-       * @note if called before execute() then it will return false.
-       * @return true if execute() doesn't real command (passed to constructor) don't raise any exceptions,
+       * Checks result of last onThreadMain() method call.
+       * @note if called before onThreadMain() then it will return false.
+       * @return true if onThreadMain() doesn't real command (passed to constructor) don't raise any exceptions,
        * false otherwise.
        */
       bool executionResultOk() const;

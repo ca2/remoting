@@ -56,12 +56,14 @@ namespace remoting
       //DesktopServerWatcher(ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter);
       DesktopServerWatcher();
       ~DesktopServerWatcher() override;
+      
+      void destroy() override;
 
       virtual void initialize_desktop_server_watcher(::remoting_node::Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter);
 
    //protected:
-      void execute() override;
-      void onTerminate() override;
+      void onThreadMain() override;
+      void onTermThread() override;
 
       // Runs desktop server with XP trick if it's needed.
       void start();

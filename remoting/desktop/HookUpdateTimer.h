@@ -46,6 +46,7 @@ namespace remoting
       HookUpdateTimer();
       ~HookUpdateTimer() override;
 
+      void destroy() override;
 
       virtual void initialize_hook_update_timer(UpdateListener *pupdatelistener);
 
@@ -54,8 +55,8 @@ namespace remoting
       void sear();
 
    //protected:
-      void execute() override;
-      void onTerminate() override;
+      void onThreadMain() override;
+      void onTermThread() override;
 
       ::happening m_updateWaiter;
       ::happening m_happeningTimer;

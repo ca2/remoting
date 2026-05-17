@@ -39,15 +39,18 @@ namespace remoting
    public:
       ClipboardExchange(RfbCodeRegistrator *m_prfbcoderegistrator, Desktop *desktop,
                         ::remoting::RfbOutputGate *output, bool viewOnly, ::subsystem::LogWriter * plogwriter);
-      virtual ~ClipboardExchange();
+      ~ClipboardExchange() override;
+      
+      
+      void destroy() override;
 
       void sendClipboard(const ::scoped_string & newClipboard);
 
    protected:
       // Listen function
-      virtual void onRequest(::u32 reqCode, ::remoting::RfbInputGate *input);
-      virtual void execute();
-      virtual void onTerminate();
+      void onRequest(::u32 reqCode, ::remoting::RfbInputGate *input) override;
+      void onThreadMain() override;
+      void onTermThread() override;
 
    private:
       void onRequestWorker(bool utf8data, ::remoting::RfbInputGate *input);

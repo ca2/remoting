@@ -53,14 +53,20 @@ namespace remoting
       m_prfbcoderegistrator->regCode(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8, this);
       m_prfbcoderegistrator->regCode(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8, this);
 
-      resume();
+      resumeThread();
    }
 
    ClipboardExchange::~ClipboardExchange()
    {
-      terminate();
-      wait();
+//      terminate();
+//      wait();
    }
+void ClipboardExchange::destroy()
+{
+   ::subsystem::Thread::destroy();
+//   terminate();
+//   wait();
+}
 
    void ClipboardExchange::onRequest(::u32 reqCode, ::remoting::RfbInputGate *prfbinputgate)
    {
@@ -121,17 +127,17 @@ namespace remoting
       m_happeningNewClip.set_happening();
    }
 
-   void ClipboardExchange::onTerminate()
+   void ClipboardExchange::onTermThread()
    {
       m_happeningNewClip.set_happening();
    }
 
-   void ClipboardExchange::execute()
+   void ClipboardExchange::onThreadMain()
    {
-      while (!isTerminating()) {
+      while (!isThreadTerminating()) {
          m_happeningNewClip.wait();
 
-         if (m_hasNewClip && !isTerminating() && !m_viewOnly) {
+         if (m_hasNewClip && !isThreadTerminating() && !m_viewOnly) {
 
             try {
                const char * data;
@@ -171,7 +177,8 @@ namespace remoting
             } catch (::exception &e) {
                m_plogwriter->error("The clipboard thread force to terminate because"
                           " it caught the error: {}", e.get_message());
-               terminate();
+               //terminate();
+               setThreadToFinish();
             }
          }
       }

@@ -33,11 +33,20 @@ namespace remoting
    {
    }
 
-   CursorShapeDetector::~CursorShapeDetector(void)
+   CursorShapeDetector::~CursorShapeDetector()
    {
-      terminate();
-      wait();
+//      terminate();
+//      wait();
    }
+
+
+void CursorShapeDetector::destroy()
+{
+   
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
+}
 
 
    void CursorShapeDetector::initialize_cursor_shape_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
@@ -52,13 +61,13 @@ namespace remoting
 
    }
 
-   void CursorShapeDetector::onTerminate() { m_sleepTimer.set_happening(); }
+   void CursorShapeDetector::onTermThread() { m_sleepTimer.set_happening(); }
 
-   void CursorShapeDetector::execute()
+   void CursorShapeDetector::onThreadMain()
    {
       m_plogwriter->information("mouse shape detector thread id = {}", (::iptr) getThreadId());
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          bool isCursorShapeChanged;
          {

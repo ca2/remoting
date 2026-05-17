@@ -57,7 +57,7 @@ namespace remoting_client
 
       ::remoting::RfbInputGate *getInput() const;
       ::remoting::RfbOutputGate *getOutput() const;
-   ;;private:
+   //;;private:
       ::string m_host;
       unsigned short m_port;
       ::pointer < ::subsystem::SocketIPv4Interface > m_psocket;

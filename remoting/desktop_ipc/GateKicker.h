@@ -37,14 +37,15 @@ namespace remoting
    public:
       //GateKicker(BlockingGate *pblockinggate);
       GateKicker();
-      virtual ~GateKicker();
+      ~GateKicker() override;
 
+      void destroy() override;
 
       virtual void initialize_gate_kicker(BlockingGate *pblockinggate);
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void onThreadMain() override;
+      void onTermThread() override;
    //private:
       BlockingGate *m_pcontrolgate;
       ::happening m_happeningSleeper;

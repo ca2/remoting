@@ -40,23 +40,31 @@ namespace remoting
 
    GateKicker::~GateKicker()
    {
-      terminate();
-      wait();
+      //terminate();
+      //wait();
    }
 
-   void GateKicker::initialize_gate_kicker(BlockingGate *pblockinggate)
+void GateKicker::destroy()
+{
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
+}
+
+
+void GateKicker::initialize_gate_kicker(BlockingGate *pblockinggate)
    {
       m_pcontrolgate = pblockinggate;
-      resume();
+      resumeThread();
    }
-   void GateKicker::onTerminate() { m_happeningSleeper.set_happening(); }
+   void GateKicker::onTermThread() { m_happeningSleeper.set_happening(); }
 
-   void GateKicker::execute()
+   void GateKicker::onThreadMain()
    {
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_happeningSleeper.wait(500 * 1_ms);
-         if (!isTerminating())
+         if (!isThreadTerminating())
          {
             try
             {

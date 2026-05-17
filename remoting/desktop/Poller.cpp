@@ -48,11 +48,19 @@ namespace remoting
 
    Poller::~Poller()
    {
-      terminate();
-      wait();
+     // terminate();
+      //wait();
    }
 
-   void Poller::initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+void Poller::destroy()
+{
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
+}
+
+
+void Poller::initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
                ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
                ::subsystem::LogWriter * plogwriter)
    {
@@ -66,9 +74,9 @@ namespace remoting
 
    }
 
-   void Poller::onTerminate() { m_intervalWaiter.set_happening(); }
+   void Poller::onTermThread() { m_intervalWaiter.set_happening(); }
 
-   void Poller::execute()
+   void Poller::onThreadMain()
    {
       m_plogwriter->information("poller thread id = {}", (::iptr) getThreadId());
 
@@ -81,7 +89,7 @@ namespace remoting
          m_pupdatekeeper->addChangedRect(fullScreenRect);
       }
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          Region region;
 

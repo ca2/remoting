@@ -89,6 +89,9 @@ namespace remoting_client
       // FIXME: now, onDisconnect not called after onError().
       // FIXME: change documentation or call onDisconnect() after onError().
       virtual void onDisconnect(const ::scoped_string & scopedstrMessage);
+      
+      // normal disconnect
+      virtual bool _disconnect();
 
       //
       // Authentication has been failed.

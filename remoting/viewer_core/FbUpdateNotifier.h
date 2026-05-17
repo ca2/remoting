@@ -47,7 +47,9 @@ namespace remoting_client
    {
    public:
       FbUpdateNotifier(::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter, WatermarksController* pwatermarkscontroller);
-      virtual ~FbUpdateNotifier();
+      ~FbUpdateNotifier() override;
+      
+      void destroy() override;
 
       void setAdapter(CoreEventsAdapter *adapter);
 
@@ -63,8 +65,8 @@ namespace remoting_client
       void setIgnoreShapeUpdates(bool ignore);
       //protected:
       // Inherited from Thread
-      void execute();
-      void onTerminate();
+      void onThreadMain() override;
+      void onTermThread() override;
 
       lockable_critical_section * m_pcriticalsectionFramebuffer;
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebuffer;

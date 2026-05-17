@@ -41,6 +41,7 @@ namespace remoting_client
        ::innate_subsystem::CheckBox m_checkboxFullScreenWarning;
 
         FullscreenWarningDialog(::remoting_client::remoting * premoting);
+       ~FullscreenWarningDialog() override;
         bool isFsWarning();
 
     ////protected:

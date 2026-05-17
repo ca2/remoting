@@ -55,12 +55,19 @@ namespace remoting
 
    DummyScreenDriver::~DummyScreenDriver()
    {
-      terminate();
-      wait();
+      //terminate();
+      //wait();
    }
 
 
-   void DummyScreenDriver::initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::i32_size & size,
+void DummyScreenDriver::destroy()
+{
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
+}
+
+void DummyScreenDriver::initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::i32_size & size,
                                      ::u32 interval, ::subsystem::LogWriter * plogwriter)
    {
       m_pupdatelistener = pupdatelistener;
@@ -77,17 +84,17 @@ namespace remoting
       pixelFormat.blueShift = 0;
       m_pframebufferWork->setProperties(size, pixelFormat);
       m_detectionEnabled = false;
-      resume();
+      resumeThread();
    }
 
-   void DummyScreenDriver::onTerminate() { m_happeningSleeper.set_happening(); }
+   void DummyScreenDriver::onTermThread() { m_happeningSleeper.set_happening(); }
 
-   void DummyScreenDriver::execute()
+   void DummyScreenDriver::onThreadMain()
    {
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_happeningSleeper.wait(m_interval * 1_ms);
-         if (!isTerminating())
+         if (!isThreadTerminating())
          {
             try
             {

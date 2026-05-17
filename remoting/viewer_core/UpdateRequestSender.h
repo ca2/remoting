@@ -23,15 +23,18 @@ namespace remoting_client
 
       ~UpdateRequestSender();
 
+      
+      void destroy() override;
+      
       void setWasUpdated();
       void setTimeout(int miliseconds);
       void setIsIncremental(bool isIncremental);
       void setOutput(::remoting::RfbOutputGate* output);
 
-      int getTimeout();
+      class ::time getTimeout();
 
    //protected:
-      virtual void execute() override;
+      void onThreadMain() override;
 
 
    //private:
@@ -44,7 +47,7 @@ namespace remoting_client
       bool m_bWasUpdateReceived;
       lockable_critical_section m_criticalsectionWasUpdated;
 
-      int m_iTimeout;
+      class ::time m_timeTimeout;
       lockable_critical_section m_criticalsectionTimeout;
 
       bool m_bIncremental;

@@ -56,9 +56,16 @@ namespace remoting
 
    ConsolePoller::~ConsolePoller()
    {
-      terminate();
-      wait();
+//      terminate();
+//      wait();
    }
+void ConsolePoller::destroy()
+{
+   
+   ::subsystem::Thread::destroy();
+//   terminate();
+//   wait();
+}
 
    void ConsolePoller::initialize_console_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                              ScreenGrabber *pscreengrabber, ::innate_subsystem::Framebuffer *pframebufferBackup,
@@ -72,15 +79,15 @@ namespace remoting
       m_rectanglePolling.set(0, 0, 16, 16);
    }
 
-   void ConsolePoller::onTerminate() { m_intervalWaiter.set_happening(); }
+   void ConsolePoller::onTermThread() { m_intervalWaiter.set_happening(); }
 
-   void ConsolePoller::execute()
+   void ConsolePoller::onThreadMain()
    {
       m_plogwriter->information("console poller thread id = {}", (::iptr) getThreadId());
 
       ::i32_rectangle scanRect;
       Region region;
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          ::i32_rectangle conRect = getConsoleRect();
          if (!conRect.is_empty())

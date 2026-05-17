@@ -117,7 +117,9 @@ namespace remoting
                 int idleTimeout,
                 ::subsystem::LogWriter * plogwriter);
 
-      virtual ~RfbClient();
+      ~RfbClient() override;
+      
+      void destroy() override;
 
       void disconnect();
 
@@ -146,8 +148,8 @@ namespace remoting
       void sendClipboard(const ::scoped_string & newClipboard);
 
    protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void onThreadMain() override;
+      void onTermThread() override;
 
    private:
       // Calling this function makes the client manager enter (and leave) the
@@ -160,13 +162,13 @@ namespace remoting
       void notifyAbStateChanging(ClientState state);
 
       // This class is layer between WinDesktop and ClientInputHandler.
-      virtual void onKeyboardEvent(::u32 keySym, bool down);
-      virtual void onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask);
+      void onKeyboardEvent(::u32 keySym, bool down) override;
+      void onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) override;
 
       void setClientState(ClientState newState);
 
       ::i32_rectangle getViewport(const ::i32_size & sizeFramebuffer);
-      virtual void onGetViewPort(::i32_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp);
+      void onGetViewPort(::i32_rectangle &viewRect, bool *shareApp, ::remoting::Region & regionShareApp) override;
       void getViewPortInfo(const ::i32_size & sizeFramebuffer, ::i32_rectangle &rectangleResult,
                            bool *shareApp, ::remoting::Region & regionShareApp);
 

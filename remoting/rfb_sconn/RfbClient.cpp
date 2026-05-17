@@ -78,16 +78,24 @@ namespace remoting
       construct_newø(m_pviewportDynamic);
       m_pviewportDynamic->initialize_viewport(viewportstateDynamic, plogwriter);
 
-      resume();
+      resumeThread();
    }
 
    RfbClient::~RfbClient()
    {
-      terminate();
-      wait();
+      //terminate();
+      //wait();
       //delete m_psocket;
    }
 
+
+void RfbClient::destroy()
+{
+   ::subsystem::Thread::destroy();
+   // terminateThread();
+   // wait();
+   //delete m_psocket;
+}
    void RfbClient::disconnect()
    {
       ::string peerStr;
@@ -188,7 +196,7 @@ namespace remoting
       m_pclientterminationlistener->onClientTerminate();
    }
 
-   void RfbClient::onTerminate()
+   void RfbClient::onTermThread()
    {
       disconnect();
    }
@@ -246,7 +254,7 @@ namespace remoting
 
    };
 
-   void RfbClient::execute()
+   void RfbClient::onThreadMain()
    {
       // Initialized by default scopedstrMessage that will be logged on normal way
       // of disconnection.
@@ -358,7 +366,7 @@ namespace remoting
          setClientState(IN_NORMAL_PHASE);
 
          m_plogwriter->information("Entering normal phase of the RFB protocol");
-         m_prun->m_prfbdispatcher->resume();
+         m_prun->m_prfbdispatcher->resumeThread();
 
          m_connClosingEvent.wait();
       } catch (::exception &e) {

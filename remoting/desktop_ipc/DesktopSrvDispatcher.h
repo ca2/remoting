@@ -46,7 +46,11 @@ namespace remoting
       DesktopSrvDispatcher(BlockingGate *pblockinggate,
        //AnEventListener *m_extTerminationListener,
                          const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter);
-      virtual ~DesktopSrvDispatcher();
+      ~DesktopSrvDispatcher() override;
+      
+      
+      void destroy() override;
+      
       virtual void initialize_desktop_srv_dispatcher(BlockingGate *pblockinggate,
                            // AnEventListener *m_extTerminationListener,
                            const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter);
@@ -54,8 +58,8 @@ namespace remoting
       void registerNewHandle(unsigned char code, ClientListener *listener);
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      void onThreadMain() override;
+      void onTermThread() override;
       void notifyOnError();
 
       BlockingGate *m_pcontrolgate;

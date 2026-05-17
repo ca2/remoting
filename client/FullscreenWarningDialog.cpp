@@ -35,6 +35,12 @@ namespace remoting_client
          initialize_dialog(IDD_FS_WARNING);
     }
 
+FullscreenWarningDialog::~FullscreenWarningDialog()
+{
+   
+   
+}
+
     bool FullscreenWarningDialog::onInitDialog()
     {
         dialog_item(m_checkboxFullScreenWarning, IDC_CWARN_FS);

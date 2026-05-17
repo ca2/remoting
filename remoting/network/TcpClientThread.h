@@ -34,7 +34,7 @@ namespace remoting
    /**
     * Thread owning incoming tcp connection.
     *
-    * Solves problem with code duplicates (see destructor and onTerminate() method)
+    * Solves problem with code duplicates (see destructor and onTermThread() method)
     * and some memory leaks.
     *
     * @remark it can be used as superclass in
@@ -58,7 +58,7 @@ namespace remoting
        * Inherited from Thread class.
        * Shutdowns and closes socket.
        */
-      virtual void onTerminate();
+      virtual void onTermThread();
 
    protected:
       /**

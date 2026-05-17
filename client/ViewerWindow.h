@@ -144,6 +144,7 @@ namespace remoting_client
         static const int WM_USER_DISCONNECT = WM_USER + 3;
         static const int WM_USER_AUTH_ERROR = WM_USER + 4;
         static const int WM_USER_FS_WARNING = WM_USER + 5;
+      static const int WM_USER_DISCONNECT_NO_CONFIRM = WM_USER + 6;
         static const int WM_USER_SWITCH_FULL_SCREEN_MODE = WM_USER + 1005;
         class ::time m_timeStart;
         //protected:
@@ -154,6 +155,7 @@ namespace remoting_client
         //bool onEraseBackground(HDC hdc);
 
         bool onDisconnect();
+      bool _disconnect();
         bool onAuthError(::wparam wParam);
         bool onError();
 
