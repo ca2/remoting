@@ -106,11 +106,11 @@ namespace remoting_control_desktop
       /**
        * ::innate_subsystem::Control pblockinggate.
        */
-      ControlGate *m_pcontrolgate;
+      ::pointer < ControlGate > m_pcontrolgate;
       /**
        * Tunnel.
        */
-      ByteArrayOutputStream *m_tunnel;
+      ::pointer < ByteArrayOutputStream > m_pbytearrayoutputstreamTunnel;
       /**
        * ::innate_subsystem::Control scopedstrMessage id.
        */

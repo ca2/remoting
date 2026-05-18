@@ -86,6 +86,10 @@ namespace remoting_control_desktop
       // continue. Don't use this function from thread which call the windowProc()
       // function.
       void waitForTermination();
+      
+      virtual void trackPopupMenu();
+      
+      void onAction(int action);
 
    protected:
       /**

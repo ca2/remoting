@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A4A00012FBB000100000001 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4A00002FBB000100000001 /* AppKit.framework */; };
 		9A0B95902FB31B1700EEAAE1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B958F2FB31B1700EEAAE1 /* CoreFoundation.framework */; };
 		9A1906822FB296A400A3C985 /* CopyRectDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1906802FB2969B00A3C985 /* CopyRectDetector.cpp */; };
 		9A1906892FB296C900A3C985 /* _.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1906832FB296C900A3C985 /* _.h */; };
@@ -15,6 +16,19 @@
 		9A19068C2FB296C900A3C985 /* _factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1906882FB296C900A3C985 /* _factory.cpp */; };
 		9A282EAB2FB31B3C00B79BB5 /* libinnate_subsystem_macos.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A282EA82FB31B2C00B79BB5 /* libinnate_subsystem_macos.dylib */; };
 		9A282EAD2FB31BA200B79BB5 /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A282EAC2FB31BA200B79BB5 /* libacme.dylib */; };
+		9A6552F92FBA8F120073C202 /* CopyRectDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6552F52FBA8F120073C202 /* CopyRectDetector.h */; };
+		9A6552FC2FBA8F680073C202 /* DesktopFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6552FB2FBA8F680073C202 /* DesktopFactory.cpp */; };
+		9A6552FD2FBA8F680073C202 /* DesktopFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6552FA2FBA8F680073C202 /* DesktopFactory.h */; };
+		9A6553002FBA8FBD0073C202 /* DesktopClientImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6552FF2FBA8FBD0073C202 /* DesktopClientImpl.cpp */; };
+		9A6553012FBA8FBD0073C202 /* DesktopClientImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6552FE2FBA8FBD0073C202 /* DesktopClientImpl.h */; };
+		9A6553042FBA90130073C202 /* DesktopWinImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6553032FBA90130073C202 /* DesktopWinImpl.cpp */; };
+		9A6553052FBA90130073C202 /* DesktopWinImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6553022FBA90130073C202 /* DesktopWinImpl.h */; };
+		9A6553082FBA91150073C202 /* MacosUserInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6553072FBA91150073C202 /* MacosUserInput.cpp */; };
+		9A6553092FBA91150073C202 /* MacosUserInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6553062FBA91150073C202 /* MacosUserInput.h */; };
+		9A65530C2FBA980A0073C202 /* WallpaperUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A65530B2FBA980A0073C202 /* WallpaperUtil.mm */; };
+		9A65530D2FBA980A0073C202 /* WallpaperUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A65530A2FBA980A0073C202 /* WallpaperUtil.h */; };
+		9A6553112FBA9B2A0073C202 /* libsubsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6553102FBA9B2A0073C202 /* libsubsystem.dylib */; };
+		9A6553132FBA9B460073C202 /* libappkit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6553122FBA9B460073C202 /* libappkit.dylib */; };
 		9A6A2C282FB3E4E4004C0ACF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */; };
 		9A9A1F982FB3E53B002D39AB /* libremoting.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F952FB3E526002D39AB /* libremoting.dylib */; };
 /* End PBXBuildFile section */
@@ -51,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A4A00002FBB000100000001 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9A0B95822FB31ADC00EEAAE1 /* innate_subsystem_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = innate_subsystem_macos.xcodeproj; path = "../../../operating_system/operating_system-macos/innate_subsystem_macos/innate_subsystem_macos.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		9A0B958F2FB31B1700EEAAE1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		9A1906442FB278ED00A3C985 /* libremoting_macos.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_macos.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +78,20 @@
 		9A1906872FB296C900A3C985 /* _common_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _common_header.h; sourceTree = "<group>"; };
 		9A1906882FB296C900A3C985 /* _factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _factory.cpp; sourceTree = "<group>"; };
 		9A282EAC2FB31BA200B79BB5 /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A6552F52FBA8F120073C202 /* CopyRectDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyRectDetector.h; sourceTree = "<group>"; };
+		9A6552F62FBA8F120073C202 /* CopyRectDetector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CopyRectDetector.cpp; sourceTree = "<group>"; };
+		9A6552FA2FBA8F680073C202 /* DesktopFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesktopFactory.h; sourceTree = "<group>"; };
+		9A6552FB2FBA8F680073C202 /* DesktopFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DesktopFactory.cpp; sourceTree = "<group>"; };
+		9A6552FE2FBA8FBD0073C202 /* DesktopClientImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesktopClientImpl.h; sourceTree = "<group>"; };
+		9A6552FF2FBA8FBD0073C202 /* DesktopClientImpl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DesktopClientImpl.cpp; sourceTree = "<group>"; };
+		9A6553022FBA90130073C202 /* DesktopWinImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesktopWinImpl.h; sourceTree = "<group>"; };
+		9A6553032FBA90130073C202 /* DesktopWinImpl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DesktopWinImpl.cpp; sourceTree = "<group>"; };
+		9A6553062FBA91150073C202 /* MacosUserInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacosUserInput.h; sourceTree = "<group>"; };
+		9A6553072FBA91150073C202 /* MacosUserInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacosUserInput.cpp; sourceTree = "<group>"; };
+		9A65530A2FBA980A0073C202 /* WallpaperUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WallpaperUtil.h; sourceTree = "<group>"; };
+		9A65530B2FBA980A0073C202 /* WallpaperUtil.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = WallpaperUtil.mm; sourceTree = "<group>"; };
+		9A6553102FBA9B2A0073C202 /* libsubsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libsubsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A6553122FBA9B460073C202 /* libappkit.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libappkit.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting.xcodeproj; path = ../remoting/remoting.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -72,6 +101,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A4A00012FBB000100000001 /* AppKit.framework in Frameworks */,
+				9A6553132FBA9B460073C202 /* libappkit.dylib in Frameworks */,
+				9A6553112FBA9B2A0073C202 /* libsubsystem.dylib in Frameworks */,
 				9A9A1F982FB3E53B002D39AB /* libremoting.dylib in Frameworks */,
 				9A6A2C282FB3E4E4004C0ACF /* CoreGraphics.framework in Frameworks */,
 				9A282EAD2FB31BA200B79BB5 /* libacme.dylib in Frameworks */,
@@ -86,6 +118,9 @@
 		9A0B958D2FB31B0100EEAAE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A4A00002FBB000100000001 /* AppKit.framework */,
+				9A6553122FBA9B460073C202 /* libappkit.dylib */,
+				9A6553102FBA9B2A0073C202 /* libsubsystem.dylib */,
 				9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */,
 				9A282EAC2FB31BA200B79BB5 /* libacme.dylib */,
 				9A0B958F2FB31B1700EEAAE1 /* CoreFoundation.framework */,
@@ -115,6 +150,7 @@
 		9A19067E2FB2967A00A3C985 /* remoting_macos */ = {
 			isa = PBXGroup;
 			children = (
+				9A6552F72FBA8F120073C202 /* desktop */,
 				9A1906832FB296C900A3C985 /* _.h */,
 				9A1906842FB296C900A3C985 /* _.cpp */,
 				9A1906852FB296C900A3C985 /* _____debug.xcconfig */,
@@ -143,6 +179,25 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9A6552F72FBA8F120073C202 /* desktop */ = {
+			isa = PBXGroup;
+			children = (
+				9A65530A2FBA980A0073C202 /* WallpaperUtil.h */,
+				9A65530B2FBA980A0073C202 /* WallpaperUtil.mm */,
+				9A6553062FBA91150073C202 /* MacosUserInput.h */,
+				9A6553072FBA91150073C202 /* MacosUserInput.cpp */,
+				9A6553022FBA90130073C202 /* DesktopWinImpl.h */,
+				9A6553032FBA90130073C202 /* DesktopWinImpl.cpp */,
+				9A6552FE2FBA8FBD0073C202 /* DesktopClientImpl.h */,
+				9A6552FF2FBA8FBD0073C202 /* DesktopClientImpl.cpp */,
+				9A6552FA2FBA8F680073C202 /* DesktopFactory.h */,
+				9A6552FB2FBA8F680073C202 /* DesktopFactory.cpp */,
+				9A6552F52FBA8F120073C202 /* CopyRectDetector.h */,
+				9A6552F62FBA8F120073C202 /* CopyRectDetector.cpp */,
+			);
+			path = desktop;
+			sourceTree = "<group>";
+		};
 		9A9A1F912FB3E525002D39AB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,8 +213,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A6552FD2FBA8F680073C202 /* DesktopFactory.h in Headers */,
+				9A6553012FBA8FBD0073C202 /* DesktopClientImpl.h in Headers */,
+				9A6553092FBA91150073C202 /* MacosUserInput.h in Headers */,
+				9A65530D2FBA980A0073C202 /* WallpaperUtil.h in Headers */,
 				9A1906892FB296C900A3C985 /* _.h in Headers */,
 				9A19068A2FB296C900A3C985 /* _common_header.h in Headers */,
+				9A6553052FBA90130073C202 /* DesktopWinImpl.h in Headers */,
+				9A6552F92FBA8F120073C202 /* CopyRectDetector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,8 +313,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A65530C2FBA980A0073C202 /* WallpaperUtil.mm in Sources */,
 				9A1906822FB296A400A3C985 /* CopyRectDetector.cpp in Sources */,
+				9A6552FC2FBA8F680073C202 /* DesktopFactory.cpp in Sources */,
+				9A6553002FBA8FBD0073C202 /* DesktopClientImpl.cpp in Sources */,
+				9A6553042FBA90130073C202 /* DesktopWinImpl.cpp in Sources */,
 				9A19068B2FB296C900A3C985 /* _.cpp in Sources */,
+				9A6553082FBA91150073C202 /* MacosUserInput.cpp in Sources */,
 				9A19068C2FB296C900A3C985 /* _factory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

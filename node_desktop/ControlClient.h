@@ -75,7 +75,9 @@ namespace remoting_node_desktop
       /**
        * Stops client thread and deletes control client.
        */
-      virtual ~ControlClient();
+      ~ControlClient() override;
+      
+      void destroy() override;
 
    protected:
       /**

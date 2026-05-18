@@ -52,8 +52,9 @@
 
 //#include aaa_<crtdbg.h>
 //#include aaa_<time.h>
+#ifdef WINDOWS
 #include "TimeAPI.h"
-
+#endif
 
 namespace remoting_node_desktop
 {
@@ -239,7 +240,7 @@ namespace remoting_node_desktop
       //    desktopFactory = &m_applicationdesktopfactory;
       // }
 
-      m_prfbclientmanager = new RfbClientManager(0, m_pconfigurator, newConnectionEvents, m_plogwriter, desktopFactory);
+      m_prfbclientmanager = allocateø RfbClientManager(0, m_pconfigurator, newConnectionEvents, m_plogwriter, desktopFactory);
 
       m_prfbclientmanager->addListener(this);
 
@@ -370,20 +371,22 @@ namespace remoting_node_desktop
 
    void Server::afterFirstClientConnect()
    {
+#ifdef WINDOWS
       if (timeBeginPeriod(m_contextSwitchResolution) == TIMERR_NOERROR) {
          m_plogwriter->debug("Set context switch resolution: {} ms", m_contextSwitchResolution);
       }
       else {
          m_plogwriter->debug("Can't change context switch resolution to: {} ms", m_contextSwitchResolution);
       }
-
+#endif
    }
 
    void Server::afterLastClientDisconnect()
    {
+#ifdef WINDOWS
       m_plogwriter->debug("Restore context switch resolution");
       timeEndPeriod(m_contextSwitchResolution);
-
+#endif
       ::remoting_node::ServerConfig::DisconnectAction action = m_pserverconfig->getDisconnectAction();
 
       // Disconnect action must be executed in process on interactive user session to take effect.
@@ -464,14 +467,18 @@ namespace remoting_node_desktop
          ::remoting_control_desktop::ControlPipeName::createPipeName(isRunningAsService(), pipeName, m_plogwriter);
 
          // FIXME: Memory leak
+#ifdef WINDOWS
          auto psecurityattributes = createø<::subsystem::SecurityAttributesInterface >();
          psecurityattributes->setInheritable();
          psecurityattributes->shareToAllUsers();
+#else
+         ::subsystem::SecurityAttributesInterface * psecurityattributes = nullptr;
+#endif
 
          const ::u32 maxControlServerPipeBufferSize = 0x10000;
          auto ppipeserver = createø< ::subsystem::PipeServer>();
          ppipeserver->initialize_pipe_server(pipeName, maxControlServerPipeBufferSize, psecurityattributes);
-         m_pcontrolserver = new ControlServer(m_pconfigurator,ppipeserver , m_prfbclientmanager, m_plogwriter);
+         m_pcontrolserver = allocateø ControlServer(m_pconfigurator,ppipeserver , m_prfbclientmanager, m_plogwriter);
       } catch (::subsystem::Exception &ex) {
          m_plogwriter->error("Failed to start control server: \"{}\"", ex.get_message());
       }
@@ -493,7 +500,7 @@ namespace remoting_node_desktop
       m_plogwriter->debug("Starting main RFB server");
 
       try {
-        m_prfbserver = new RfbServer(strBindHost, m_pconfigurator, bindPort, m_prfbclientmanager, m_bRunAsService, m_plogwriter);
+        m_prfbserver = allocateø RfbServer(strBindHost, m_pconfigurator, bindPort, m_prfbclientmanager, m_bRunAsService, m_plogwriter);
       } catch (::subsystem::Exception &ex) {
         m_plogwriter->error("Failed to start main RFB server: \"{}\"", ex.get_message());
       }

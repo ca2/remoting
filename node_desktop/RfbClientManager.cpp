@@ -177,7 +177,12 @@ namespace remoting_node_desktop
 
       if (!client->isOutgoing())
       {
+         
+#ifdef WINDOWS
          action = pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
+#else
+         action = pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.s_addr);
+#endif
       }
       else
       {
@@ -461,9 +466,10 @@ namespace remoting_node_desktop
          psocket->setRcvTimeO(timeTimeout);
          psocket->setSndTimeO(timeTimeout);
       }
-      catch (::subsystem::SocketException)
+      catch (const ::subsystem::SocketException & e)
       {
-         m_plogwriter->error("Can't set socket timeout, error: {}", WSAGetLastError());
+         //m_plogwriter->error("Can't set socket timeout, error: {}", WSAGetLastError());
+         m_plogwriter->error("Can't set socket timeout, error: {}", e.get_message());
       }
 
       ASSERT(constViewPort != 0);
@@ -471,7 +477,7 @@ namespace remoting_node_desktop
       m_plogwriter->error("Client #{} connected", m_nextClientId);
       m_plogwriter->debug("new client, process memory usage: {} ", MainSubsystem().getCurrentMemoryUsage());
 
-      m_nonAuthClientList.add(new ::remoting::RfbClient(m_pconfigurator, m_pnewconnectionevents, psocket, this, this, viewOnly, isOutgoing,
+      m_nonAuthClientList.add(allocateø ::remoting::RfbClient(m_pconfigurator, m_pnewconnectionevents, psocket, this, this, viewOnly, isOutgoing,
                                             m_nextClientId, *constViewPort, m_dynViewPort, timeout, m_plogwriter));
       m_nextClientId++;
    }

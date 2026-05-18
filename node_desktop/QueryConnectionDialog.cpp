@@ -86,7 +86,7 @@ namespace remoting_node_desktop
 
    void QueryConnectionDialog::onMessageReceived(::u32 uMsg, ::wparam wParam, ::lparam lParam)
    {
-      if (uMsg == WM_TIMER)
+      if (uMsg == ::user::e_message_timer)
       {
          onTimer();
       }

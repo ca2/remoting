@@ -79,8 +79,13 @@ namespace remoting_node_desktop
          // FIXME: Check loopback-related rules separately, report differently.
          // ::remoting_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
          auto pserverconfig = m_pconfigurator->getServerConfig();
+#ifdef WINDOWS
          ::remoting_node::IpAccessRule::ActionType action =
             pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
+#else
+         ::remoting_node::IpAccessRule::ActionType action =
+            pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.s_addr);
+#endif
 
          if (action == ::remoting_node::IpAccessRule::ACTION_TYPE_DENY)
          {

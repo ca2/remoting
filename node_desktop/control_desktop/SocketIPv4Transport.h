@@ -49,14 +49,14 @@ namespace remoting_control_desktop
       /**
        * Returns transport's IO Stream.
        */
-      virtual Channel *getIOStream();
+      virtual ::pointer < Channel > getIOStream();
 
       /**
        * Accepts new connection.
        * @return transport for accepted connection.
        * @throws SocketException on fail.
        */
-      virtual Transport *accept();
+      virtual ::pointer < Transport > accept();
 
       /**
        * Destroys transport(closes socket).

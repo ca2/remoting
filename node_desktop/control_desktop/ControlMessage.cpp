@@ -52,14 +52,14 @@ namespace remoting_control_desktop
      m_getPassFromConfigEnabled(getPassFromConfigEnabled),
      m_forService(forService)
    {
-      m_tunnel = new ByteArrayOutputStream(this,2048);
+      m_pbytearrayoutputstreamTunnel = allocateø ByteArrayOutputStream(this,2048);
 
-      m_poutputstream = m_tunnel;
+      m_poutputstream = m_pbytearrayoutputstreamTunnel;
    }
 
    ControlMessage::~ControlMessage()
    {
-      delete m_tunnel;
+      //delete m_tunnel;
    }
 
    void ControlMessage::send()
@@ -72,9 +72,9 @@ namespace remoting_control_desktop
    void ControlMessage::sendData()
    {
       m_pcontrolgate->writeUInt32(m_messageId);
-      ASSERT((::u32)m_tunnel->size() == m_tunnel->size());
-      m_pcontrolgate->writeUInt32((::u32)m_tunnel->size());
-      m_pcontrolgate->write(m_tunnel->toByteArray(), m_tunnel->size());
+      ASSERT((::u32)m_pbytearrayoutputstreamTunnel->size() == m_pbytearrayoutputstreamTunnel->size());
+      m_pcontrolgate->writeUInt32((::u32)m_pbytearrayoutputstreamTunnel->size());
+      m_pcontrolgate->write(m_pbytearrayoutputstreamTunnel->toByteArray(), m_pbytearrayoutputstreamTunnel->size());
    }
 
    void ControlMessage::checkRetCode()

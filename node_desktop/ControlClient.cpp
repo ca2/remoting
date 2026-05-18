@@ -81,12 +81,22 @@ namespace remoting_node_desktop
 
    ControlClient::~ControlClient()
    {
-      terminate();
-      wait();
+      //terminate();
+      //wait();
 
       //delete m_pcontrolgate;
       //delete m_ptransport;
    }
+
+void ControlClient::destroy()
+{
+   
+   ::subsystem::Thread::destroy();
+   
+   //setThreadToFinish();
+   //waitThreadToFinish();
+   
+}
 
    void ControlClient::execute()
    {
@@ -98,7 +108,7 @@ namespace remoting_node_desktop
       int i = 0;
       try
       {
-         while (!isTerminating())
+         while (!isThreadTerminating())
          {
             ::u32 messageId = m_pcontrolgate->readUInt32();
             ::u32 messageSize = m_pcontrolgate->readUInt32();
@@ -406,7 +416,7 @@ namespace remoting_node_desktop
       OutgoingRfbConnectionThread *newConnectionThread =
          new OutgoingRfbConnectionThread(host, hp.getVncPort(), viewOnly, m_prfbclientmanager, m_plogwriter);
 
-      newConnectionThread->resume();
+      newConnectionThread->resumeThread();
 
       //  ZombieKiller::getInstance()->addZombie(newConnectionThread);
       m_pthreadcollectorOutgoingConnection->addThread(newConnectionThread);

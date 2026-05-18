@@ -129,10 +129,14 @@ namespace remoting_node_desktop
     crashHook.setGuiEnabled();
     try {
        ::string strCommandLine =::system()->command_line();
-      ::remoting_control_desktop::ControlApplication tvnControl(::system()->m_hinstanceThis,
+      auto pcontrolapplication = allocateø ::remoting_control_desktop::ControlApplication(
+#ifdef WINDOWS
+                                                                ::system()->m_hinstanceThis,
         ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
+#endif
         strCommandLine);
-      return tvnControl.run();
+      return pcontrolapplication->run();
+       
     } catch (::subsystem::Exception &fatalException) {
       auto pmessagebox = message_box({},
         fatalException.get_message(),
@@ -152,7 +156,7 @@ namespace remoting_node_desktop
         actionApp.initialize_additional_action_application(::system()->command_line_text());
       return actionApp.run();
     } catch (::subsystem::SystemException &ex) {
-       m_iExitCode = ex.getErrorCode();
+       m_iExitCode = ex.getErrorCode().m_iOsError;
       return ;
     }
   } else if (firstKey == DesktopServerCommandLine::DESKTOP_SERVER_KEY) {
@@ -160,8 +164,11 @@ namespace remoting_node_desktop
       crashHook.setHklmRoot();
       //WinCommandLineArgs args(lpCmdLine);
        auto pcommandlinearguments = MainSubsystem().getCurrentProcessCommandLineArguments();
-      DesktopServerApplication desktopServerApp(::system()->m_hinstanceThis,
+      DesktopServerApplication desktopServerApp(
+#ifdef WINDOWS
+                                                ::system()->m_hinstanceThis,
         ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
+#endif
         pcommandlinearguments);
 
       desktopServerApp.run();
@@ -193,8 +200,11 @@ namespace remoting_node_desktop
              firstKey == ServiceControlCommandLine::START_SERVICE ||
              firstKey == ServiceControlCommandLine::STOP_SERVICE) {
     crashHook.setGuiEnabled();
-    ServiceControlApplication tvnsc(::system()->m_hinstanceThis,
+    ServiceControlApplication tvnsc(
+#ifdef WINDOWS
+                                    ::system()->m_hinstanceThis,
       ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
+#endif
       ::system()->command_line_text());
     return tvnsc.run();
   }
@@ -205,8 +215,11 @@ namespace remoting_node_desktop
 
       construct_newø(m_pserverapplication);
 
-      m_pserverapplication->initialize_server_application(::system()->m_hinstanceThis,
+      m_pserverapplication->initialize_server_application(
+#ifdef WINDOWS
+                                                          ::system()->m_hinstanceThis,
     ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
+#endif
     ::system()->command_line_text(), &winEventLogWriter);
 
       m_pserverapplication->m_plogwriter = plogwriterPre;

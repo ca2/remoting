@@ -72,8 +72,11 @@ namespace remoting_control_desktop
        * ControlApplication instance.
        * @throws ::subsystem::Exception if initialization of needed subsystems has failed.
        */
-      ControlApplication(::hinstance hinst,
+      ControlApplication(
+#ifdef WINDOWS
+                         ::hinstance hinst,
                          const ::scoped_string & scopedstrwindowClassName,
+#endif
                          const ::scoped_string & scopedstrCommandLine);
       /**
        * Destructor of control application.

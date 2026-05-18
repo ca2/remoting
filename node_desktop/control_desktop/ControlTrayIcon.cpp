@@ -164,52 +164,70 @@ initialize(::system());
       return false;
    }
 
+void ControlTrayIcon::trackPopupMenu()
+{
+   throw todo;
+   
+//   HMENU hRoot = LoadMenu(GetModuleHandle(0), MAKEINTRESOURCE(IDR_TRAYMENU));
+//   HMENU hMenu = GetSubMenu(hRoot, 0);
+//
+//   SetMenuDefaultItem(hMenu, ID_CONFIGURATION, false);
+//
+//   if (m_pcontrolapplication->m_slaveModeEnabled) {
+//      RemoveMenu(hMenu, ID_CLOSE_CONTROL_INTERFACE, MF_BYCOMMAND);
+//   }
+//
+//   POINT pos;
+//
+//   if (!GetCursorPos(&pos)) {
+//      pos.x = pos.y = 0;
+//   }
+//
+//   ///SetForegroundWindow(operating_system_window());
+//   ///
+//   setForegroundWindow();
+//
+//   int action = TrackPopupMenu(hMenu,
+//                               TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
+//                               pos.x, pos.y, 0, ::as_HWND(operating_system_window()), NULL);
+//
+   // onAction(action);
+   
+}
+
    void ControlTrayIcon::onNotifyIconRightButtonUp()
    {
-      HMENU hRoot = LoadMenu(GetModuleHandle(0), MAKEINTRESOURCE(IDR_TRAYMENU));
-      HMENU hMenu = GetSubMenu(hRoot, 0);
+      
+      trackPopupMenu();
 
-      SetMenuDefaultItem(hMenu, ID_CONFIGURATION, false);
-
-      if (m_pcontrolapplication->m_slaveModeEnabled) {
-         RemoveMenu(hMenu, ID_CLOSE_CONTROL_INTERFACE, MF_BYCOMMAND);
-      }
-
-      POINT pos;
-
-      if (!GetCursorPos(&pos)) {
-         pos.x = pos.y = 0;
-      }
-
-      ///SetForegroundWindow(operating_system_window());
-      ///
-      setForegroundWindow();
-
-      int action = TrackPopupMenu(hMenu,
-                                  TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
-                                  pos.x, pos.y, 0, ::as_HWND(operating_system_window()), NULL);
-
-      switch (action) {
-         case ID_KILLCLIENTS:
-            onDisconnectAllClientsMenuItemClick();
-            break;
-         case ID_SHUTDOWN_SERVICE:
-            onShutdownServerMenuItemClick();
-            break;
-         case ID_CONFIGURATION:
-            onConfigurationMenuItemClick();
-            break;
-         case ID_OUTGOING_CONN:
-            onOutgoingConnectionMenuItemClick();
-            break;
-         case ID_ABOUT_TIGHTVNC_MENUITEM:
-            onAboutMenuItemClick();
-            break;
-         case ID_CLOSE_CONTROL_INTERFACE:
-            onCloseControlInterfaceMenuItemClick();
-            break;
-      }
    }
+
+void ControlTrayIcon::onAction(int action)
+{
+   
+   switch (action) {
+      case ID_KILLCLIENTS:
+         onDisconnectAllClientsMenuItemClick();
+         break;
+      case ID_SHUTDOWN_SERVICE:
+         onShutdownServerMenuItemClick();
+         break;
+      case ID_CONFIGURATION:
+         onConfigurationMenuItemClick();
+         break;
+      case ID_OUTGOING_CONN:
+         onOutgoingConnectionMenuItemClick();
+         break;
+      case ID_ABOUT_TIGHTVNC_MENUITEM:
+         onAboutMenuItemClick();
+         break;
+      case ID_CLOSE_CONTROL_INTERFACE:
+         onCloseControlInterfaceMenuItemClick();
+         break;
+   }
+
+   
+}
 
    void ControlTrayIcon::onNotifyIconLeftButtonDown()
    {
@@ -239,7 +257,7 @@ initialize(::system());
 
          ::remoting_node::ControlCommand safeCommand(&updateLocalConfigCommand, m_pcontrolapplication);
 
-         safeCommand.execute();
+         safeCommand.onRunCommand();
 
          if (!safeCommand.executionResultOk()) {
             return;
@@ -263,7 +281,7 @@ initialize(::system());
 
       ::remoting_node::ControlCommand safeCommand(&unsafeCommand, m_pnotificator);
 
-      safeCommand.execute();
+      safeCommand.onRunCommand();
    }
 
    void ControlTrayIcon::onShutdownServerMenuItemClick()
@@ -305,7 +323,7 @@ initialize(::system());
 
       ::remoting_node::ControlCommand safeCommand(&unsafeCommand, m_pnotificator);
 
-      safeCommand.execute();
+      safeCommand.onRunCommand();
    }
 
    void ControlTrayIcon::onOutgoingConnectionMenuItemClick()
@@ -320,7 +338,7 @@ initialize(::system());
 
          ::remoting_node::ControlCommand safeCommand(&unsafeCommand, m_pnotificator);
 
-         safeCommand.execute();
+         safeCommand.onRunCommand();
       }
    }
 

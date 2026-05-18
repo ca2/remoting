@@ -59,7 +59,10 @@ namespace remoting_node_desktop
        * @throws ::subsystem::Exception (or SystemException) on fail.
        * @fixme make command line parsing in this class.
        */
-      DesktopServerApplication(::hinstance appInstance, const ::scoped_string &scopedstrwindowClassName,
+      DesktopServerApplication(
+#ifdef WINDOWS
+                               ::hinstance appInstance, const ::scoped_string &scopedstrwindowClassName,
+#endif
                                const ::subsystem::CommandLineArguments *cmdArgs);
 
       ~DesktopServerApplication() override;

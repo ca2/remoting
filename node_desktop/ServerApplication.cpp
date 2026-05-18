@@ -63,7 +63,10 @@ namespace remoting_node_desktop
    }
 
 
-      void ServerApplication::initialize_server_application(::hinstance hInstance, const ::scoped_string &scopedstrwindowClassName,
+      void ServerApplication::initialize_server_application(
+#ifdef WINDOWS
+                                                            ::hinstance hInstance, const ::scoped_string &scopedstrwindowClassName,
+#endif
                                         const ::scoped_string &scopedstrCommandLine,
                                         ::remoting_node::NewConnectionEvents *newConnectionEvents)
        //: WindowsApplication(hInstance, windowClassName),
@@ -105,13 +108,13 @@ namespace remoting_node_desktop
 
       // Reject 2 instances of TightVNC server application.
 
-      ::subsystem::GlobalMutex *appInstanceMutex;
+      //::subsystem::GlobalMutex *appInstanceMutex;
 
       try
       {
-         appInstanceMutex = new ::subsystem::GlobalMutex;
+         m_pglobalmutexAppInstance = createø <::subsystem::GlobalMutexInterface>();
 
-         appInstanceMutex->initialize_global_mutex(::remoting_node::ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME, false, true);
+         m_pglobalmutexAppInstance->initialize_global_mutex(::remoting_node::ServerApplicationNames::SERVER_INSTANCE_MUTEX_NAME, false, true);
       }
       catch (...)
       {
@@ -146,7 +149,7 @@ namespace remoting_node_desktop
          //m_tvnServer = new Server(false, m_newConnectionEvents, this, m_fileLogWriter);
          //m_tvnServer->addListener(this);
 
-         bool bRunControlClient = false;
+         bool bRunControlClient = true;
 
          if (bRunControlClient)
          {

@@ -25,36 +25,32 @@
 #pragma once
 
 
-#include "subsystem/thread/Thread.h"
-//#include "log_writer/LogWriter.h"
+#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting/desktop/WallpaperUtil.h"
 
-namespace remoting_node_desktop
+namespace remoting_macos
 {
 
-   // This class runs TvnControl in current session.
-   // This class only for application mode running.
-   class CLASS_DECL_REMOTING_NODE_DESKTOP WsConfigRunner : 
-      virtual public ::subsystem::Thread
+   class CLASS_DECL_REMOTING_MACOS WallpaperUtil :
+      virtual public ::remoting::WallpaperUtil
    {
    public:
 
 
-      WsConfigRunner();
-      ~WsConfigRunner() override;
+      WallpaperUtil();
+      ~WallpaperUtil();
 
-      
-      void destroy() override;
-      
+      void disableWallpaper() override;
+      void restoreWallpaper() override;
 
-      virtual void initialize_ws_config_runner(::subsystem::LogWriter *plogwriter, bool serviceMode = false);
-
-      void onThreadMain() override;
-
-      bool m_serviceMode;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
-
+      ::string_array_base m_straWallpaperUrl;
+      ::string m_strBlankWallpaperPath;
    };
 
+   //// __WALLPAPERUTIL_H__
 
-} // namespace remoting_node_desktop
+
+}// namespace remoting_macos
+
+
+

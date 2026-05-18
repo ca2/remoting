@@ -30,20 +30,23 @@
 #include "subsystem/node/OperatingSystem.h"
 //#include "subsystem/node/SharedMemory.h"
 #include "remoting/remoting/node/NamingDefs.h"
-#include "TimeAPI.h"
 #include "subsystem/platform/subsystem.h"
 //#include "subsystem_windows/node/WTS.h"
 //#include "subsystem_windows/platform/subsystem.h"
-#include "subsystem_windows/platform/subsystem.h"
+//#include "subsystem_windows/platform/subsystem.h"
 //#include "subsystem_windows/node/SharedMemory.h"
 #include "remoting/remoting/node_config/Configurator.h"
-
+#ifdef WINDOWS
+#include "TimeAPI.h"
+#endif
 
 namespace remoting_node_desktop
 {
 
    DesktopServerApplication::DesktopServerApplication(
+#ifdef WINDOWS
       ::hinstance appInstance, const ::scoped_string &scopedstrwindowClassName,
+#endif
       const ::subsystem::CommandLineArguments *cmdArgs) : // LocalWindowsApplication(appInstance, windowClassName),
        m_pchannelClientToServer(0), m_pchannelServerToClient(0), m_pgateClientToServer(0), m_pgateServerToClient(0), m_pdesktopsrvdispatcher(0), m_pupdatehandlerserver(0),
        m_puserinputserver(0), m_pconfigserver(0), m_pgatekickhandler(0), m_psessionchangeswatcher(0),// m_configurator(true),
@@ -80,15 +83,30 @@ namespace remoting_node_desktop
 
          auto mem= (::u64 *) memory.data();
 
+#ifdef WINDOWS
          HANDLE readPipeHandle, writePipeHandle;
+#else
+         int readPipeHandle, writePipeHandle;
+#endif
          ::u32 maxPortionSize;
 
+#ifdef WINDOWS
          readPipeHandle = (HANDLE)mem[1];
          writePipeHandle = (HANDLE)mem[2];
+#else
+         readPipeHandle = (int)mem[1];
+         writePipeHandle = (int)mem[2];
+#endif
          maxPortionSize = (::u32)mem[3];
          auto ppipeClient = create_newø<::subsystem::AnonymousPipe>();
+#ifdef WINDOWS
          auto pfileClientRead = MainSubsystem().fileFrom_HANDLE(readPipeHandle);
          auto pfileClientWrite = MainSubsystem().fileFrom_HANDLE(writePipeHandle);
+#else
+         auto pfileClientRead = MainSubsystem().fileFrom_fd(readPipeHandle);
+         auto pfileClientWrite = MainSubsystem().fileFrom_fd(writePipeHandle);
+
+#endif
          ppipeClient->initialize_anonymous_pipe(pfileClientRead, pfileClientWrite, maxPortionSize, m_plogwriter);
          // m_pchannelClientToServer = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
          // m_pchannelClientToServer = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
@@ -96,12 +114,27 @@ namespace remoting_node_desktop
          m_plogwriter->informationf("Client->server readPipeHandle = %p, writePipeHandle = %p", readPipeHandle,
                                     writePipeHandle);
 
+#ifdef WINDOWS
+
          readPipeHandle = (HANDLE)mem[4];
          writePipeHandle = (HANDLE)mem[5];
+#else
+
+         readPipeHandle = (int)mem[4];
+         writePipeHandle = (int)mem[5];
+
+#endif
          maxPortionSize = (::u32)mem[6];
          auto ppipeServer = create_newø<::subsystem::AnonymousPipe>();
+#ifdef WINDOWS
+
          auto pfileServerRead = MainSubsystem().fileFrom_HANDLE(readPipeHandle);
          auto pfileServerWrite = MainSubsystem().fileFrom_HANDLE(writePipeHandle);
+#else
+         auto pfileServerRead = MainSubsystem().fileFrom_fd(readPipeHandle);
+         auto pfileServerWrite = MainSubsystem().fileFrom_fd(writePipeHandle);
+
+#endif
          ppipeServer->initialize_anonymous_pipe(pfileServerRead, pfileServerWrite, maxPortionSize, m_plogwriter);
          // m_pchannelServerToClient = new AnonymousPipe(readPipeHandle, writePipeHandle, maxPortionSize, &m_plogwriter);
          m_pchannelServerToClient = ppipeServer;
@@ -126,7 +159,7 @@ namespace remoting_node_desktop
          m_pgatekickhandler->initialize_gate_kick_handler(m_pdesktopsrvdispatcher);
 
          // Start servers
-         m_pdesktopsrvdispatcher->resume();
+         m_pdesktopsrvdispatcher->resumeThread();
 
          // Spy for the session change.
          auto psessionchangeswatcher = createø<::subsystem::SessionChangesWatcher>();
@@ -209,8 +242,10 @@ namespace remoting_node_desktop
    {
       try
       {
-         ::remoting::WallpaperUtil wallpaperutil;
-         wallpaperutil.initialize_wallpaper_util(m_pconfigurator, m_plogwriter);
+         
+         auto pwallpaperutil = createø<::remoting::WallpaperUtil>();
+         
+         pwallpaperutil->initialize_wallpaper_util(m_pconfigurator, m_plogwriter);
 
          // int retCode = OperatingSystemApplication::run();
          OperatingSystemApplication::run();

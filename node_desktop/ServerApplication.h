@@ -52,7 +52,7 @@ namespace remoting_node_desktop
 
             // FileLogWriter m_fileLogWriter;
       //::subsystem::LogWriter * m_fileLogWriter;
-
+      ::pointer < ::subsystem::GlobalMutexInterface > m_pglobalmutexAppInstance;
       /**
        * Command line string.
        */
@@ -80,7 +80,10 @@ namespace remoting_node_desktop
       virtual ~ServerApplication();
 
 
-      virtual void initialize_server_application(::hinstance hInstance, const ::scoped_string &scopedstrwindowClassName,
+      virtual void initialize_server_application(
+#ifdef WINDOWS
+                                                 ::hinstance hInstance, const ::scoped_string &scopedstrwindowClassName,
+#endif
                                                  const ::scoped_string &scopedstrCommandLine,
                                                  ::remoting_node::NewConnectionEvents *newConnectionEvents);
 

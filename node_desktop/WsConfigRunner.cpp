@@ -37,8 +37,15 @@ namespace remoting_node_desktop
 
    WsConfigRunner::~WsConfigRunner()
    {
-      terminate();
-      wait();
+//      terminate();
+//      wait();
+   }
+
+
+   void WsConfigRunner::destroy()
+   {
+   //   terminate();
+   //   wait();
    }
 
 
@@ -48,10 +55,12 @@ namespace remoting_node_desktop
       m_serviceMode = serviceMode;
       m_plogwriter = plogwriter;
 
-      resume();
+      resumeThread();
+      
    }
 
-   void WsConfigRunner::execute()
+
+   void WsConfigRunner::onThreadMain()
    {
       ::pointer<::subsystem::ProcessInterface> process;
 

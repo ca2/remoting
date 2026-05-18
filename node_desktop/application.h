@@ -32,6 +32,9 @@ namespace remoting_node_desktop
 
       application();
       ~application() override;
+      
+      
+      void init_instance() override;
 
       void on_request(::request * prequest) override;
 

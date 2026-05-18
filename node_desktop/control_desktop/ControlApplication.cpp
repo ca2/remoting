@@ -77,15 +77,19 @@ namespace remoting_control_desktop
 {
 
 
-   ControlApplication::ControlApplication(::hinstance hinst,
+   ControlApplication::ControlApplication(
+#ifdef WINDOWS
+                                          ::hinstance hinst,
                                           const ::scoped_string & scopedstrwindowClassName,
+#endif
                                           const ::scoped_string & scopedstrCommandLine)
     : //WindowsApplication(hinst, windowClassName),
       //m_pcontrolproxy(0),
       m_pcontrolgate(0),
       m_ptransport(0),
       m_pcontroltrayicon(0),
-      m_slaveModeEnabled(false)
+      m_slaveModeEnabled(false),
+m_commandLine(scopedstrCommandLine)
    //,
       //m_configurator(false)//,
       //m_plogwriter(0)
@@ -94,7 +98,7 @@ namespace remoting_control_desktop
       m_pconfigurator->initialize_configurator(false);
 
       initialize_operating_system_application();;
-      m_commandLine= scopedstrCommandLine;
+      //m_commandLine= scopedstrCommandLine;
 
 
       InnateSubsystem().initializeInnateSubsystemControls();
@@ -116,15 +120,15 @@ namespace remoting_control_desktop
       //    WindowsSocket::cleanup();
       // } catch (...) { }
       //
-      if (m_pcontrolproxy != 0) {
+      //if (m_pcontrolproxy != 0) {
          //delete m_pcontrolproxy;
-      }
-      if (m_pcontrolgate != 0) {
-         delete m_pcontrolgate;
-      }
-      if (m_ptransport != 0) {
-         delete m_ptransport;
-      }
+      //}
+      //if (m_pcontrolgate != 0) {
+        // delete m_pcontrolgate;
+      //}
+      //if (m_ptransport != 0) {
+        // delete m_ptransport;
+      //}
    }
 
    void ControlApplication::run()
@@ -181,7 +185,7 @@ namespace remoting_control_desktop
       // If we are in the "-controlservice -slave" mode, make sure there are no
       // other "service slaves" in this session, exit if there is one already.
 
-      ::mutex *appGlobalMutex = 0;
+      ::pointer < ::mutex > appGlobalMutex;
 
       if (cmdLineParser.hasControlServiceFlag() && cmdLineParser.isSlave()) {
          try {
@@ -217,31 +221,31 @@ namespace remoting_control_desktop
                                                 cmdLineParser.hasControlServiceFlag());
 
          if (cmdLineParser.hasKillAllFlag()) {
-            pcommand = new DisconnectAllCommand(m_pcontrolproxy);
+            pcommand = allocateø DisconnectAllCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasReloadFlag()) {
-            pcommand = new ReloadConfigCommand(m_pcontrolproxy);
+            pcommand = allocateø ReloadConfigCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasConnectFlag()) {
             ::string hostName;
             cmdLineParser.getConnectHostName(hostName);
-            pcommand = new ConnectCommand(m_pcontrolproxy, hostName);
+            pcommand = allocateø ConnectCommand(m_pcontrolproxy, hostName);
          } else if (cmdLineParser.hasShutdownFlag()) {
-            pcommand = new ShutdownCommand(m_pcontrolproxy);
+            pcommand = allocateø ShutdownCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasSharePrimaryFlag()) {
-            pcommand = new SharePrimaryCommand(m_pcontrolproxy);
+            pcommand = allocateø SharePrimaryCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasShareDisplay()) {
             unsigned char displayNumber = cmdLineParser.getShareDisplayNumber();
-            pcommand = new ShareDisplayCommand(m_pcontrolproxy, displayNumber);
+            pcommand = allocateø ShareDisplayCommand(m_pcontrolproxy, displayNumber);
          } else if (cmdLineParser.hasShareWindow()) {
             ::string shareWindowName;
             cmdLineParser.getShareWindowName(shareWindowName);
-            pcommand = new ShareWindowCommand(m_pcontrolproxy, shareWindowName);
+            pcommand = allocateø ShareWindowCommand(m_pcontrolproxy, shareWindowName);
          } else if (cmdLineParser.hasShareRect()) {
             ::i32_rectangle shareRect = cmdLineParser.getShareRect();
-            pcommand = new ShareRectCommand(m_pcontrolproxy, shareRect);
+            pcommand = allocateø ShareRectCommand(m_pcontrolproxy, shareRect);
          } else if (cmdLineParser.hasShareFull()) {
-            pcommand = new ShareFullCommand(m_pcontrolproxy);
+            pcommand = allocateø ShareFullCommand(m_pcontrolproxy);
          } else if (cmdLineParser.hasShareApp()) {
-            pcommand = new ShareAppCommand(m_pcontrolproxy, cmdLineParser.getSharedAppProcessId());
+            pcommand = allocateø ShareAppCommand(m_pcontrolproxy, cmdLineParser.getSharedAppProcessId());
          }
 
          retCode = runControlCommand(pcommand);
@@ -261,7 +265,7 @@ namespace remoting_control_desktop
                   notifyServerSideException(remEx.get_message());
                }
                try {
-                  m_pcontrolproxy->updateTvnControlProcessId(GetCurrentProcessId());
+                  m_pcontrolproxy->updateTvnControlProcessId(node()->current_process_identifier());
                } catch (::remoting_node::RemoteException &remEx) {
                   notifyServerSideException(remEx.get_message());
                }
@@ -304,12 +308,12 @@ return;
                throw;
             }
          }
-         Sleep(msDelayBetweenTries);
+         preempt(msDelayBetweenTries * 1_ms);
       }
 
       // We can get here only on successful connection.
-      m_pcontrolgate = new ControlGate(m_ptransport->getIOStream());
-      m_pcontrolproxy = new ControlProxy(m_pcontrolgate);
+      m_pcontrolgate = allocateø ControlGate(m_ptransport->getIOStream());
+      m_pcontrolproxy = allocateø ControlProxy(m_pcontrolgate);
    }
 
    void ControlApplication::notifyServerSideException(const ::scoped_string & scopedstrReason)
@@ -332,7 +336,7 @@ return;
    void ControlApplication::execute()
    {
       try {
-         while (!isTerminating()) {
+         while (!isThreadTerminating()) {
             Thread::sleep(500);
             // If we need to show or hide icon.
             bool showIcon = m_pcontrolproxy->getShowTrayIconFlag() || !m_slaveModeEnabled;
@@ -361,12 +365,12 @@ return;
    {
       m_pcontroltrayicon = new ControlTrayIcon(m_pconfigurator,  m_pcontrolproxy, this, this, showIcon);
 
-      resume();
+      resumeThread();
 
       OperatingSystemApplication::run();
 
-      terminate();
-      wait();
+      //terminate();
+      //wait();
 
       delete m_pcontroltrayicon;
 
@@ -377,7 +381,7 @@ return;
    {
       ::remoting_node::ControlCommand ctrlCmd(command);
 
-      ctrlCmd.execute();
+      ctrlCmd.onRunCommand();
 
       int errorCode = ctrlCmd.executionResultOk() ? 0 : 1;
       return errorCode;
@@ -411,7 +415,7 @@ return;
          try {
             MainSubsystem().Shell().runAsAdmin(pathToBinary, childCommandLine);
          } catch (::subsystem::SystemException &sysEx) {
-            if (sysEx.getErrorCode() != ERROR_CANCELLED) {
+            if (sysEx.getErrorCode().as_status() != error_cancelled) { // ERROR_CANCELLED
                MainSubsystem().message_box({},
                  sysEx.get_message(),
                  MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),
@@ -479,7 +483,7 @@ return;
             MainSubsystem().Shell().runAsAdmin(pathToBinary, childCommandLine);
             return 0;
          } catch (::subsystem::SystemException &sysEx) {
-            if (sysEx.getErrorCode() != ERROR_CANCELLED) {
+            if (sysEx.getErrorCode().as_status() != error_cancelled) {
                MainSubsystem().message_box({},
                  sysEx.get_message(),
                  MainSubsystem().StringTable().getString(IDS_MBC_TVNCONTROL),

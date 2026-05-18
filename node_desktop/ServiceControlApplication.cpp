@@ -48,8 +48,11 @@ namespace remoting_node_desktop
 {
 
 
-   ServiceControlApplication::ServiceControlApplication(::hinstance hInstance,
+   ServiceControlApplication::ServiceControlApplication(
+#ifdef WINDOWS
+                                                        ::hinstance hInstance,
                                                         const ::scoped_string & scopedstrwindowClassName,
+#endif
                                                         const ::scoped_string & scopedstrCommandLine)
    //: WindowsApplication(hInstance, windowClassName),
    :  m_commandLine(scopedstrCommandLine)
@@ -96,9 +99,12 @@ namespace remoting_node_desktop
             runElevatedInstance();
             success = true;
          } catch (::subsystem::SystemException &sysEx) {
+            
+#ifdef WINDOWS
             if (sysEx.getErrorCode() != ERROR_CANCELLED) {
                reportError(&cmdLine, sysEx.get_message());
             }
+#endif
          }
       } else {
          // Do the work in current instance, do not request privilege elevation.
@@ -235,7 +241,7 @@ namespace remoting_node_desktop
                                                const ::subsystem::SystemException *ex)
    {
       ::string errorMessage;
-
+#ifdef WINDOWS
       switch (ex->getErrorCode()) {
          case ERROR_SERVICE_DOES_NOT_EXIST:
             errorMessage= MainSubsystem().StringTable().getString(IDS_1060_ERROR_DESCRIPTION);
@@ -246,7 +252,7 @@ namespace remoting_node_desktop
          default:
             errorMessage= ex->get_message();
       }
-
+#endif
       reportError(cmdLine, errorMessage);
    }
 
@@ -274,7 +280,7 @@ namespace remoting_node_desktop
 
          auto strCaption = MainSubsystem().StringTable().getString(IDS_MBC_TVNSERVER);
          ::string text;
-         text.formatf(MainSubsystem().StringTable().getString(stringId), scopedstrErrorMessage);
+         text.runtime_format(MainSubsystem().StringTable().getString(stringId), scopedstrErrorMessage);
          MainSubsystem().message_box({}, text, strCaption, ::user::e_message_box_ok | ::user::e_message_box_icon_error);
       }
    }

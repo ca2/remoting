@@ -40,15 +40,17 @@ namespace remoting_node_desktop
       m_pcontrolappauthenticator = allocateø ControlAppAuthenticator(30_s, 3);
       m_plogwriter->debug("{}"), "::innate_subsystem::Control server started";
 
-      resume();
+      resumeThread();
+      
    }
+
 
    ControlServer::~ControlServer()
    {
       m_plogwriter->debug("Destroying control server transport");
 
-      terminate();
-      wait();
+      //terminate();
+      //wait();
 
       try
       {
@@ -71,7 +73,7 @@ namespace remoting_node_desktop
    {
       try
       {
-         while (!isTerminating())
+         while (!isThreadTerminating())
          {
             auto ppipe = m_ppipeserver->accept();
             auto ptransport = allocateø ::remoting_control_desktop::NamedPipeTransport(ppipe);
@@ -79,7 +81,7 @@ namespace remoting_node_desktop
             ControlClient *clientThread =
                new ControlClient(m_pconfigurator, ptransport, m_prfbclientmanager, m_pcontrolappauthenticator, ppipe->getFile(), m_plogwriter);
 
-            clientThread->resume();
+            clientThread->resumeThread();
 
             m_pthreadCollector->addThread(clientThread);
          }

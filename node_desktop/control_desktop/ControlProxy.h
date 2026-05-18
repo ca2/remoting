@@ -175,7 +175,7 @@ namespace remoting_control_desktop
        * Returns control scopedstrMessage to write.
        * @param messageId control scopedstrMessage id.
        */
-      ControlMessage *createMessage(DWORD messageId);
+      ::pointer < ControlMessage >createMessage(DWORD messageId);
 
    protected:
       /**

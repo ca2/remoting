@@ -47,14 +47,14 @@ namespace remoting_control_desktop
       }
    }
 
-   Channel *NamedPipeTransport::getIOStream()
+   ::pointer < Channel > NamedPipeTransport::getIOStream()
    {
       ASSERT(m_pnamedpipeClient != 0);
 
       return m_pnamedpipeClient;
    }
 
-   Transport *NamedPipeTransport::accept()
+   ::pointer < Transport > NamedPipeTransport::accept()
    {
       ASSERT(m_ppipeserver != 0);
 

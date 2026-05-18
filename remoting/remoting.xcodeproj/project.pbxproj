@@ -285,6 +285,8 @@
 		9A19066A2FB2949300A3C985 /* _.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1906512FB2949300A3C985 /* _.h */; };
 		9A19066B2FB2949300A3C985 /* ViewPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A19065A2FB2949300A3C985 /* ViewPort.h */; };
 		9A1906732FB2954000A3C985 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1906722FB2952800A3C985 /* libz.tbd */; };
+		9A3615832FBA70E7005F1383 /* EventLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615802FBA70E7005F1383 /* EventLog.h */; };
+		9A3615842FBA70E7005F1383 /* EventLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615812FBA70E7005F1383 /* EventLog.cpp */; };
 		9A37420B2F8168EB00E892B1 /* ViewerSettingsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A373F2B2F81656200E892B1 /* ViewerSettingsManager.cpp */; };
 		9A37420C2F8168EB00E892B1 /* _.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A373F182F81656200E892B1 /* _.cpp */; };
 		9A37420D2F8168EB00E892B1 /* ConnectionConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A373F202F81656200E892B1 /* ConnectionConfig.cpp */; };
@@ -668,6 +670,8 @@
 		9A19065C2FB2949300A3C985 /* ViewPortState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewPortState.h; sourceTree = "<group>"; };
 		9A19065D2FB2949300A3C985 /* ViewPortState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewPortState.cpp; sourceTree = "<group>"; };
 		9A1906722FB2952800A3C985 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		9A3615802FBA70E7005F1383 /* EventLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventLog.h; sourceTree = "<group>"; };
+		9A3615812FBA70E7005F1383 /* EventLog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EventLog.cpp; sourceTree = "<group>"; };
 		9A373EFE2F81647000E892B1 /* libremoting.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A373F172F81656200E892B1 /* _.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _.h; sourceTree = "<group>"; };
 		9A373F182F81656200E892B1 /* _.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _.cpp; sourceTree = "<group>"; };
@@ -1202,6 +1206,15 @@
 			path = framebuffer_update_sender;
 			sourceTree = "<group>";
 		};
+		9A3615822FBA70E7005F1383 /* event_log */ = {
+			isa = PBXGroup;
+			children = (
+				9A3615802FBA70E7005F1383 /* EventLog.h */,
+				9A3615812FBA70E7005F1383 /* EventLog.cpp */,
+			);
+			path = event_log;
+			sourceTree = "<group>";
+		};
 		9A373EF52F81647000E892B1 = {
 			isa = PBXGroup;
 			children = (
@@ -1230,6 +1243,7 @@
 				9A373F492F81656200E892B1 /* config */,
 				9A19055B2FB25E4B00A3C985 /* desktop */,
 				9A19057E2FB25E4B00A3C985 /* desktop_ipc */,
+				9A3615822FBA70E7005F1383 /* event_log */,
 				9A1903DC2FB242D900A3C985 /* file_transfer_client */,
 				9A1903EA2FB242D900A3C985 /* file_transfer_common */,
 				9A1903F02FB242D900A3C985 /* file_transfer_node */,
@@ -1543,6 +1557,7 @@
 				9A19048D2FB24E7E00A3C985 /* IpAccessControlDialog.h in Headers */,
 				9A19048E2FB24E7E00A3C985 /* UIDataAccess.h in Headers */,
 				9A19048F2FB24E7E00A3C985 /* IpAccessRule.h in Headers */,
+				9A3615832FBA70E7005F1383 /* EventLog.h in Headers */,
 				9A1904002FB242D900A3C985 /* FileInfo.h in Headers */,
 				9A1906642FB2949300A3C985 /* UpdSenderMsgDefs.h in Headers */,
 				9A1906652FB2949300A3C985 /* SenderControlInformationInterface.h in Headers */,
@@ -1833,6 +1848,7 @@
 				9A1905B42FB25E4B00A3C985 /* UserInput.cpp in Sources */,
 				9A9A1FE22FB402F3002D39AB /* NamingDefs.cpp in Sources */,
 				9A1905B52FB25E4B00A3C985 /* Poller.cpp in Sources */,
+				9A3615842FBA70E7005F1383 /* EventLog.cpp in Sources */,
 				9A1905B62FB25E4B00A3C985 /* UpdateHandlerClient.cpp in Sources */,
 				9A1905B72FB25E4B00A3C985 /* ReconnectingChannel.cpp in Sources */,
 				9A1905B82FB25E4B00A3C985 /* UserInputClient.cpp in Sources */,

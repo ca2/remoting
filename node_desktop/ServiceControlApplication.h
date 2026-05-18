@@ -45,8 +45,11 @@ namespace remoting_node_desktop
       /**
        * Creates new service control application.
        */
-      ServiceControlApplication(::hinstance hInstance,
+      ServiceControlApplication(
+#ifdef WINDOWS
+                                ::hinstance hInstance,
                                 const ::scoped_string & scopedstrwindowClassName,
+#endif
                                 const ::scoped_string & scopedstrCommandLine);
       /**
        * Destructor.

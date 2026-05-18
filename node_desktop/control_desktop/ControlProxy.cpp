@@ -113,7 +113,7 @@ namespace remoting_control_desktop
    {
       critical_section_lock l(m_pcontrolgate);
 
-      ControlMessage *msg = createMessage(ControlProto::ADD_CLIENT_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::ADD_CLIENT_MSG_ID);
 
       msg->writeUTF8(scopedstrConnectString);
       msg->writeUInt8(viewOnly);
@@ -128,7 +128,7 @@ namespace remoting_control_desktop
    {
       critical_section_lock l(m_pcontrolgate);
 
-      ControlMessage *msg = createMessage(ControlProto::CONNECT_TO_TCPDISP_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::CONNECT_TO_TCPDISP_MSG_ID);
 
       msg->writeUTF8(scopedstrConnectString);
       msg->writeUTF8(scopedstrDispatcherName);
@@ -141,14 +141,14 @@ namespace remoting_control_desktop
    void ControlProxy::sharePrimary()
    {
       critical_section_lock l(m_pcontrolgate);
-      ControlMessage *msg = createMessage(ControlProto::SHARE_PRIMARY_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::SHARE_PRIMARY_MSG_ID);
       msg->send();
    }
 
    void ControlProxy::shareDisplay(unsigned char displayNumber)
    {
       critical_section_lock l(m_pcontrolgate);
-      ControlMessage *msg = createMessage(ControlProto::SHARE_DISPLAY_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::SHARE_DISPLAY_MSG_ID);
       msg->writeUInt8(displayNumber);
       msg->send();
    }
@@ -156,7 +156,7 @@ namespace remoting_control_desktop
    void ControlProxy::shareRect(const ::i32_rectangle &  shareRect)
    {
       critical_section_lock l(m_pcontrolgate);
-      ControlMessage *msg = createMessage(ControlProto::SHARE_RECT_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::SHARE_RECT_MSG_ID);
 
       msg->writeInt32(shareRect.left);
       msg->writeInt32(shareRect.top);
@@ -169,7 +169,7 @@ namespace remoting_control_desktop
    void ControlProxy::shareWindow(const ::scoped_string & scopedstrShareWindowName)
    {
       critical_section_lock l(m_pcontrolgate);
-      ControlMessage *msg = createMessage(ControlProto::SHARE_WINDOW_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::SHARE_WINDOW_MSG_ID);
       msg->writeUTF8(scopedstrShareWindowName);
       msg->send();
    }
@@ -177,14 +177,14 @@ namespace remoting_control_desktop
    void ControlProxy::shareFull()
    {
       critical_section_lock l(m_pcontrolgate);
-      ControlMessage *msg = createMessage(ControlProto::SHARE_FULL_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::SHARE_FULL_MSG_ID);
       msg->send();
    }
 
    void ControlProxy::shareApp(::u32 procId)
    {
       critical_section_lock l(m_pcontrolgate);
-      ControlMessage *msg = createMessage(ControlProto::SHARE_APP_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::SHARE_APP_MSG_ID);
       msg->writeUInt32(procId);
       msg->send();
    }
@@ -193,7 +193,7 @@ namespace remoting_control_desktop
    {
       critical_section_lock l(m_pcontrolgate);
 
-      ControlMessage *msg = createMessage(ControlProto::SET_CONFIG_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::SET_CONFIG_MSG_ID);
 
       pserverconfig->serialize(msg);
 
@@ -213,7 +213,8 @@ namespace remoting_control_desktop
    {
       critical_section_lock l(m_pcontrolgate);
 
-      createMessage(ControlProto::GET_SHOW_TRAY_ICON_FLAG)->send();
+      auto pmessage = createMessage(ControlProto::GET_SHOW_TRAY_ICON_FLAG);
+      pmessage->send();
 
       return m_pcontrolgate->readUInt8() == 1;
    }
@@ -222,18 +223,18 @@ namespace remoting_control_desktop
    {
       critical_section_lock l(m_pcontrolgate);
 
-      ControlMessage *msg = createMessage(ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID);
+      ::pointer < ControlMessage > msg = createMessage(ControlProto::UPDATE_TVNCONTROL_PROCESS_ID_MSG_ID);
 
       msg->writeUInt32(processId);
 
       msg->send();
    }
 
-   ControlMessage *ControlProxy::createMessage(DWORD messageId)
+   ::pointer < ControlMessage > ControlProxy::createMessage(DWORD messageId)
    {
       releaseMessage();
 
-      m_pcontrolmessage = new ControlMessage(messageId, m_pcontrolgate, m_passwordFile,
+      m_pcontrolmessage = allocateø ControlMessage(messageId, m_pcontrolgate, m_passwordFile,
                                      m_getPassFromConfigEnabled, m_forService);
 
       return m_pcontrolmessage;
@@ -241,11 +242,12 @@ namespace remoting_control_desktop
 
    void ControlProxy::releaseMessage()
    {
-      if (m_pcontrolmessage != 0) {
-         delete m_pcontrolmessage;
-
-         m_pcontrolmessage = 0;
-      }
+      m_pcontrolmessage.release();
+//      if (m_pcontrolmessage != 0) {
+//         delete m_pcontrolmessage;
+//
+//         m_pcontrolmessage = 0;
+//      }
    }
 } // namespace remoting_control_desktop
 

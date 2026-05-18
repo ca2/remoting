@@ -53,14 +53,14 @@ namespace remoting_control_desktop
        * Returns transport's IO stream for client transport or 0 for
        * server transport.
        */
-      virtual Channel *getIOStream() = 0;
+      virtual ::pointer < Channel > getIOStream() = 0;
 
       /**
        * Accepts new connection using underlying transport.
        * @return accepted transport or 0 if this transport is client.
        * @throw ::subsystem::Exception on fail.
        */
-      virtual Transport *accept() = 0;
+      virtual ::pointer < Transport > accept() = 0;
 
       /**
        * Closes transport.

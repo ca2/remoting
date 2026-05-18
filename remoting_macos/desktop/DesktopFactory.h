@@ -1,4 +1,4 @@
-// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// Copyright (C) 2012 GlavSoft LLC.
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
@@ -24,37 +24,35 @@
 
 #pragma once
 
+#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting/desktop/DesktopFactory.h"
 
-#include "subsystem/thread/Thread.h"
-//#include "log_writer/LogWriter.h"
-
-namespace remoting_node_desktop
+namespace remoting_macos
 {
 
-   // This class runs TvnControl in current session.
-   // This class only for application mode running.
-   class CLASS_DECL_REMOTING_NODE_DESKTOP WsConfigRunner : 
-      virtual public ::subsystem::Thread
+
+   class CLASS_DECL_REMOTING_MACOS DesktopFactory :
+      virtual public ::remoting::DesktopFactory
    {
    public:
 
 
-      WsConfigRunner();
-      ~WsConfigRunner() override;
+      DesktopFactory();
+      ~DesktopFactory();
 
-      
-      void destroy() override;
-      
-
-      virtual void initialize_ws_config_runner(::subsystem::LogWriter *plogwriter, bool serviceMode = false);
-
-      void onThreadMain() override;
-
-      bool m_serviceMode;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+      ::pointer < ::remoting::Desktop > createDesktop(
+         ::remoting_node::Configurator * pconfigurator,
+         ::subsystem::ClipboardListener *pclipboardlistenerExternal,
+         ::remoting::UpdateSendingListener *pupdatesendinglistenerExternal,
+         ::remoting::AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter) override;
 
    };
 
 
-} // namespace remoting_node_desktop
+} // namespace remoting_macos
+
+
+
+
+
+

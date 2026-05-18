@@ -92,6 +92,13 @@ namespace remoting_control_desktop
          { SLAVE_MODE, ::subsystem::NO_ARG },
          { DONT_ELEVATE, ::subsystem::NO_ARG }
       };
+      
+      for(int i = 0; i < cmdArgs->m_args.size(); i++)
+      {
+         
+         auto psz = cmdArgs->m_args[i].c_str();
+         ::print_line(psz);
+      }
 
       if (!CommandLine::parse(fmt, sizeof(fmt) / sizeof(::subsystem::CommandLineFormat), cmdArgs)) {
          throw CommandLineFormatException();

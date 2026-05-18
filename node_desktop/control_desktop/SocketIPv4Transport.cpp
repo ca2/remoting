@@ -44,7 +44,7 @@ namespace remoting_control_desktop
       //delete m_socket;
    }
 
-   Channel* SocketIPv4Transport::getIOStream()
+   ::pointer < Channel > SocketIPv4Transport::getIOStream()
    {
       if (m_psocket->isBound()) {
          ASSERT(false);
@@ -55,7 +55,7 @@ namespace remoting_control_desktop
       return m_pchannel;
    }
 
-   Transport *SocketIPv4Transport::accept()
+   ::pointer < Transport > SocketIPv4Transport::accept()
    {
       if (!m_psocket->isBound()) {
          ASSERT(false);
@@ -63,7 +63,7 @@ namespace remoting_control_desktop
          return 0;
       }
 
-      return new SocketIPv4Transport(m_psocket->accept());
+      return allocateø SocketIPv4Transport(m_psocket->accept());
    }
 
    void SocketIPv4Transport::close()

@@ -55,24 +55,38 @@ namespace remoting_node_desktop
    }
 
 
+   void application::init_instance()
+   {
+   
+      ::apex::application::init_instance();
+      
+      auto pfactory = system()->factory("remoting", OPERATING_SYSTEM_NAME);
+
+      pfactory->merge_to_global_factory();
+      
+   }
+
+
    void application::on_request(::request * prequest)
    {
 
       auto ecommand = prequest->m_ecommand;
 
-      if (ecommand == e_command_application_start)
-      {
-
-
-         auto pfactory = system()->factory("remoting", "windows");
-
-         pfactory->merge_to_global_factory();
-         //defer_construct_newø(m_pserverapplication);///
-
-         //m_pserverapplication->on_start();
-
-      }
-      else if (ecommand == e_command_file_open)
+//      if (ecommand == e_command_application_start)
+//      {
+//
+//
+//         auto pfactory = system()->factory("remoting", "windows");
+//
+//         pfactory->merge_to_global_factory();
+//         //defer_construct_newø(m_pserverapplication);///
+//
+//         //m_pserverapplication->on_start();
+//
+//      }
+//      else
+      
+      if (ecommand == e_command_file_open)
       {
 
          auto path = prequest->m_payloadFile.as_file_path();
@@ -88,7 +102,7 @@ namespace remoting_node_desktop
          //});
 
       }
-      else if (ecommand == e_command_application_started)
+      else if (ecommand == e_command_default_start)
       {
 
          if (!m_bOpenFile)
@@ -99,6 +113,7 @@ namespace remoting_node_desktop
          }
 
       }
+      
    }
 
 
