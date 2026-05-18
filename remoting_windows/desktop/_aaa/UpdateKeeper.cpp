@@ -30,7 +30,7 @@ namespace remoting_macos
 
    ::remoting::UpdateKeeper::::remoting::UpdateKeeper() {}
 
-   ::remoting::UpdateKeeper::::remoting::UpdateKeeper(const ::int_rectangle &borderRect) { m_rectangleBorder.set(borderRect); }
+   ::remoting::UpdateKeeper::::remoting::UpdateKeeper(const ::i32_rectangle &borderRect) { m_rectangleBorder.set(borderRect); }
 
    ::remoting::UpdateKeeper::~::remoting::UpdateKeeper(void) {}
 
@@ -45,13 +45,13 @@ namespace remoting_macos
       m_updatecontainer.m_regionChanged.crop(m_rectangleBorder);
    }
 
-   void ::remoting::UpdateKeeper::addChangedRect(const ::int_rectangle &rectangleChanged)
+   void ::remoting::UpdateKeeper::addChangedRect(const ::i32_rectangle &rectangleChanged)
    {
       Region region(rectangleChanged);
       addChangedRegion(region);
    }
 
-   void ::remoting::UpdateKeeper::addCopyRect(const ::int_rectangle &rectangleCopy, const ::int_point &pointSource)
+   void ::remoting::UpdateKeeper::addCopyRect(const ::i32_rectangle &rectangleCopy, const ::i32_point &pointSource)
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
 
@@ -62,11 +62,11 @@ namespace remoting_macos
 
       Region & regionChanged = m_updatecontainer.m_regionChanged;
       Region & regionCopied = m_updatecontainer.m_regionCopied;
-      ::int_point & pointCopySource = m_updatecontainer.m_pointCopySource;
-      ::int_rectangle rectangleTargetCopy(rectangleCopy);
+      ::i32_point & pointCopySource = m_updatecontainer.m_pointCopySource;
+      ::i32_rectangle rectangleTargetCopy(rectangleCopy);
 
       // Create copy of rectangleCopy in the source coordinates.
-      ::int_rectangle rectangleSourceCopy(rectangleCopy);
+      ::i32_rectangle rectangleSourceCopy(rectangleCopy);
       rectangleSourceCopy.set_top_left(pointSource.x, pointSource.y);
 
       // Clipping rectangleTargetCopy
@@ -77,7 +77,7 @@ namespace remoting_macos
       rectangleSourceCopy.right += rectangleTargetCopy.right - rectangleCopy.right;
       rectangleSourceCopy.bottom += rectangleTargetCopy.bottom - rectangleCopy.bottom;
       // Clipping rectangleSourceCopy
-      ::int_rectangle rectangleDummySourceCopy(rectangleSourceCopy);
+      ::i32_rectangle rectangleDummySourceCopy(rectangleSourceCopy);
       rectangleSourceCopy = rectangleSourceCopy.intersection(m_rectangleBorder);
       // Correcting destination coordinates
       rectangleTargetCopy.left += rectangleSourceCopy.left - rectangleDummySourceCopy.left;
@@ -129,7 +129,7 @@ namespace remoting_macos
       m_updatecontainer.m_regionCopied.crop(m_rectangleBorder);
    }
 
-   void ::remoting::UpdateKeeper::setBorderRect(const ::int_rectangle &borderRect)
+   void ::remoting::UpdateKeeper::setBorderRect(const ::i32_rectangle &borderRect)
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
       m_rectangleBorder = borderRect;
@@ -147,7 +147,7 @@ namespace remoting_macos
       m_updatecontainer.m_bCursorPosChanged = true;
    }
 
-   void ::remoting::UpdateKeeper::setCursorPos(const ::int_point &curPos)
+   void ::remoting::UpdateKeeper::setCursorPos(const ::i32_point &curPos)
    {
       critical_section_lock al(&m_criticalsectionUpdateContainer);
       m_updatecontainer.m_bCursorPosChanged = true;

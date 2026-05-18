@@ -42,7 +42,7 @@ namespace remoting_macos
    }
 
 
-   void CopyRectDetector::detectWindowMovements(::int_rectangle &rectangleCopy, ::int_point & pointSource)
+   void CopyRectDetector::detectWindowMovements(::i32_rectangle &rectangleCopy, ::i32_point & pointSource)
    {
       m_rectangleCopy.Null();
       m_pointSource.Null();
@@ -57,7 +57,7 @@ namespace remoting_macos
 
    bool CopyRectDetector::checkWindowMovements(const ::operating_system::window & operatingsystemwindow)
    {
-      ::int_rectangle rectangleCurrent;
+      ::i32_rectangle rectangleCurrent;
       //auto hwnd = ::as_HWND(operatingsystemwindow);
       if (IsWindowVisible(::as_HWND(operatingsystemwindow)) && getWinRect(operatingsystemwindow, rectangleCurrent))
       {
@@ -65,7 +65,7 @@ namespace remoting_macos
          WinProp newWinProp(operatingsystemwindow, rectangleCurrent);
          m_newWinProps.add(newWinProp);
 
-         ::int_rectangle rectangleOld;
+         ::i32_rectangle rectangleOld;
          if (findPrevWinProps(operatingsystemwindow, rectangleOld))
          {
             if (rectangleOld.top_left() != rectangleCurrent.top_left() && rectangleCurrent.area() > m_rectangleCopy.area())
@@ -76,7 +76,7 @@ namespace remoting_macos
                m_pointSource = rectangleOld.top_left();
 
                // Adjust
-               int_size sizeDesktop(GetSystemMetrics(SM_XVIRTUALSCREEN),GetSystemMetrics(SM_YVIRTUALSCREEN));
+               i32_size sizeDesktop(GetSystemMetrics(SM_XVIRTUALSCREEN),GetSystemMetrics(SM_YVIRTUALSCREEN));
 
                m_rectangleCopy -= sizeDesktop;
 
@@ -88,12 +88,12 @@ namespace remoting_macos
       return true;
    }
 
-   bool CopyRectDetector::getWinRect(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)
+   bool CopyRectDetector::getWinRect(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)
    {
       return ::windows::get_window_rect(operatingsystemwindow, rectangle);
    }
 
-   bool CopyRectDetector::findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::int_rectangle & rectangle)
+   bool CopyRectDetector::findPrevWinProps(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)
    {
       ::list_base<WinProp>::iterator winPropsIter;
       WinProp *winProp;

@@ -71,7 +71,7 @@ namespace remoting_macos
       }
    }
 
-   void DesktopBaseImpl::getFramebufferProperties(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat)
+   void DesktopBaseImpl::getFramebufferProperties(::i32_size & size, ::innate_subsystem::PixelFormat & pixelformat)
    {
       ASSERT(m_pupdatehandler != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -88,7 +88,7 @@ namespace remoting_macos
       }
    }
 
-   void DesktopBaseImpl::getPrimaryDesktopCoords(::int_rectangle rectangle)
+   void DesktopBaseImpl::getPrimaryDesktopCoords(::i32_rectangle rectangle)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -104,7 +104,7 @@ namespace remoting_macos
       }
    }
 
-   void DesktopBaseImpl::getDisplayNumberCoords(::int_rectangle rectangle, unsigned char dispNumber)
+   void DesktopBaseImpl::getDisplayNumberCoords(::i32_rectangle rectangle, unsigned char dispNumber)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -138,7 +138,7 @@ namespace remoting_macos
    }
 
 
-   void DesktopBaseImpl::getNormalizedRect(::int_rectangle rectangle)
+   void DesktopBaseImpl::getNormalizedRect(::i32_rectangle rectangle)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -154,7 +154,7 @@ namespace remoting_macos
       }
    }
 
-   void DesktopBaseImpl::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle rectangle)
+   void DesktopBaseImpl::getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle rectangle)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -260,7 +260,7 @@ namespace remoting_macos
 
       m_plogwriter->information("set mouse event (x = %u, y = %u, mask = %u)", (unsigned int)x, (unsigned int)y,
                                 (unsigned int)buttonMask);
-      ::int_point point(x, y);
+      ::i32_point point(x, y);
       try
       {
          if (isRemoteInputAllowed())
@@ -346,7 +346,7 @@ namespace remoting_macos
       m_happeningNewUpdate.set_happening();
    }
 
-   void DesktopBaseImpl::onUpdateRequest(const ::int_rectangle &rectRequested, bool incremental)
+   void DesktopBaseImpl::onUpdateRequest(const ::i32_rectangle &rectRequested, bool incremental)
    {
       m_plogwriter->debug("DesktopBaseImpl::onUpdateRequest: update requested");
 
@@ -387,7 +387,7 @@ namespace remoting_macos
    void DesktopBaseImpl::onConfigReload(::remoting_node::ServerConfig *serverConfig) { applyNewConfiguration(); }
 
    bool DesktopBaseImpl::updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & region,
-                                                   const ::int_rectangle &rectangleViewport)
+                                                   const ::i32_rectangle &rectangleViewport)
    {
       return m_pupdatehandler->updateExternalFramebuffer(pframebuffer, region, rectangleViewport);
    }

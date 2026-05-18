@@ -26,7 +26,7 @@
 
 
 #include "remoting/remoting/region/Region.h"
-//#include "remoting/remoting/region/::int_point.h"
+//#include "remoting/remoting/region/::i32_point.h"
 
 
 namespace remoting_macos
@@ -47,10 +47,10 @@ namespace remoting_macos
       bool m_bScreenSizeChanged;
       bool m_bCursorPosChanged;
       bool m_bCursorShapeChanged;
-      //::int_point m_pointCopySource;
-      //::int_point m_pointCursorPos;
-      ::int_point m_pointCopySource;
-      ::int_point m_pointCursorPos;
+      //::i32_point m_pointCopySource;
+      //::i32_point m_pointCursorPos;
+      ::i32_point m_pointCopySource;
+      ::i32_point m_pointCursorPos;
 
       void clear();
       bool is_empty() const;

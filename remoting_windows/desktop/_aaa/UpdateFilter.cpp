@@ -64,7 +64,7 @@ namespace remoting_macos
       // Reproduce CopyRect operations in m_pframebuffer->
       m_plogwriter->debug("UpdateFilter::filter : Reproduce CopyRect operations in m_pframebuffer");
       updatecontainer.m_regionCopied.getRects(&rectanglea);
-      ::int_point *src = &updatecontainer.m_pointCopySource;
+      ::i32_point *src = &updatecontainer.m_pointCopySource;
       for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
       {
          m_pframebuffer->move(&(*iRect), src->x, src->y);
@@ -106,7 +106,7 @@ namespace remoting_macos
       // Filtering
       pt1 = m_plogwriter->checkPoint("filtering changed");
       updatecontainer.m_regionChanged.clear();
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
       {
          rectangle = &(*iRect);
@@ -131,7 +131,7 @@ namespace remoting_macos
                           pt2.kernel, dt);
    }
 
-   void UpdateFilter::getChangedRegion(Region & rgn, const ::int_rectangle & rectangle)
+   void UpdateFilter::getChangedRegion(Region & rgn, const ::i32_rectangle & rectangle)
    {
 
       const unsigned int bytesPerPixel = m_pframebuffer->getBytesPerPixel();
@@ -142,7 +142,7 @@ namespace remoting_macos
       unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
       unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
 
-      ::int_rectangle new_rect = rectangle;
+      ::i32_rectangle new_rect = rectangle;
 
       // Fast processing for small rectangles
       if (rectangle.right - rectangle.left <= BLOCK_SIZE && rectangle.bottom - rectangle.top <= BLOCK_SIZE)
@@ -196,7 +196,7 @@ namespace remoting_macos
       }
    }
 
-   void UpdateFilter::updateChangedRect(Region & rgn, const ::int_rectangle & rectangle)
+   void UpdateFilter::updateChangedRect(Region & rgn, const ::i32_rectangle & rectangle)
    {
       // Pass small rectangles directly to updateChangedSubRect
       if (rectangle.right - rectangle.left <= BLOCK_SIZE && rectangle.bottom - rectangle.top <= BLOCK_SIZE)
@@ -207,7 +207,7 @@ namespace remoting_macos
 
       const unsigned int bytesPerPixel = m_pframebuffer->getBytesPerPixel();
 
-      ::int_rectangle new_rect;
+      ::i32_rectangle new_rect;
       int x, y, ay;
 
       // Scan down the rectangle
@@ -282,7 +282,7 @@ namespace remoting_macos
       }
    }
 
-   void UpdateFilter::updateChangedSubRect(Region & rgn, const ::int_rectangle & rectangle)
+   void UpdateFilter::updateChangedSubRect(Region & rgn, const ::i32_rectangle & rectangle)
    {
       const unsigned int bytesPerPixel = m_pframebuffer->getBytesPerPixel();
       int bytes_in_row = (rectangle.right - rectangle.left) * bytesPerPixel;
@@ -293,7 +293,7 @@ namespace remoting_macos
       int offset = (rectangle.bottom - 1) * bytesPerRow + rectangle.left * bytesPerPixel;
       unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
       unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
-      ::int_rectangle rectangleFinal = rectangle;
+      ::i32_rectangle rectangleFinal = rectangle;
       rectangleFinal.bottom = rectangle.top + 1;
       for (y = rectangle.bottom - 1; y > rectangle.top; y--)
       {

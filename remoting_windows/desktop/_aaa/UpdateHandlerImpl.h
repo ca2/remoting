@@ -43,7 +43,7 @@ namespace remoting_macos
       ::pointer < UpdateFilter > m_pupdatefilter;
       ::pointer < ::remoting::UpdateListener > m_pupdatelistenerExternal;
 
-      ::int_rectangle m_rectangleAbsolute;
+      ::i32_rectangle m_rectangleAbsolute;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 

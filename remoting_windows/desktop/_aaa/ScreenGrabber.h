@@ -27,7 +27,7 @@
 
 
 
-//#include "remoting/remoting/region/::int_point.h"
+//#include "remoting/remoting/region/::i32_point.h"
 #include "subsystem/framebuffer/PixelFormat.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 
@@ -45,7 +45,7 @@
   // Initialisation
   pframebuffer = new WindowsScreenGrabber;
 
-  ::int_rectangle rectangleGrab, workRect;
+  ::i32_rectangle rectangleGrab, workRect;
   workRect.setRect(100, 100, 500, 500);
   rectangleGrab.setRect(20, 20, 120, 120); // Relative to the workRect
   pframebuffer->setWorkRect(&workRect);
@@ -79,21 +79,21 @@ namespace remoting_macos
       ~ScreenGrabber(void) override;
 
       /* Provides grabbing.
-      Parameters:     *rectangle - Pointer to a ::int_rectangle object with relative workRect coordinates.
+      Parameters:     *rectangle - Pointer to a ::i32_rectangle object with relative workRect coordinates.
       Return value:   true if success.
       */
-      virtual bool grab(const ::int_rectangle & rectangle = {}) = 0;
+      virtual bool grab(const ::i32_rectangle & rectangle = {}) = 0;
 
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer() { return m_pframebufferWork; }
-      virtual void setWorkRect(::int_rectangle &workRect);
-      virtual ::int_rectangle getWorkRect() const
+      virtual void setWorkRect(::i32_rectangle &workRect);
+      virtual ::i32_rectangle getWorkRect() const
       {
-         return ::int_rectangle(m_pointFramebufferOffset.x, m_pointFramebufferOffset.y,
+         return ::i32_rectangle(m_pointFramebufferOffset.x, m_pointFramebufferOffset.y,
                                 m_pframebufferWork->getDimension().cx + m_pointFramebufferOffset.x,
                                 m_pframebufferWork->getDimension().cy + m_pointFramebufferOffset.y);
       }
       /* Provides read access to rectangular coordinates of the screen (desktop).*/
-      virtual ::int_rectangle getScreenRect() { return m_rectangleFullScreen; }
+      virtual ::i32_rectangle getScreenRect() { return m_rectangleFullScreen; }
 
       // Checks screen(desktop) properties on changes
       inline virtual bool getPropertiesChanged() = 0;
@@ -111,8 +111,8 @@ namespace remoting_macos
 
       virtual bool setWorkRectDefault();
 
-      ::int_rectangle m_rectangleFullScreen;
-      ::int_point m_pointFramebufferOffset;
+      ::i32_rectangle m_rectangleFullScreen;
+      ::i32_point m_pointFramebufferOffset;
 
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferWork;
    };

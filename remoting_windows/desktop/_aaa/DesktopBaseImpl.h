@@ -60,12 +60,12 @@ namespace remoting_macos
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
       // Puts the current frame buffer dimension and pixel format to
       // the size and pixelformat function arguments.
-      virtual void getFramebufferProperties(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat);
-      virtual void getPrimaryDesktopCoords(::int_rectangle rectangle);
-      virtual void getDisplayNumberCoords(::int_rectangle rectangle, unsigned char dispNumber);
+      virtual void getFramebufferProperties(::i32_size & size, ::innate_subsystem::PixelFormat & pixelformat);
+      virtual void getPrimaryDesktopCoords(::i32_rectangle rectangle);
+      virtual void getDisplayNumberCoords(::i32_rectangle rectangle, unsigned char dispNumber);
       virtual ::int_rectangle_array_base getDisplaysCoords();
-      virtual void getNormalizedRect(::int_rectangle rectangle);
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle rectangle);
+      virtual void getNormalizedRect(::i32_rectangle rectangle);
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle rectangle);
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName);
       virtual void getApplicationRegion(unsigned int procId, Region & region);
       virtual bool isApplicationInFocus(unsigned int procId);
@@ -78,7 +78,7 @@ namespace remoting_macos
       // Calling when at least one update has been detected.
       virtual void onUpdate();
       // Implementation of the UpdateRequestListener interface.
-      virtual void onUpdateRequest(const ::int_rectangle &rectRequested, bool incremental);
+      virtual void onUpdateRequest(const ::i32_rectangle &rectRequested, bool incremental);
       // Calling when a clipbard change detected.
       virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
       // Calling when a configuration has been reloaded.
@@ -92,7 +92,7 @@ namespace remoting_macos
       virtual bool isRemoteInputTempBlocked() = 0;
 
       virtual bool updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const Region & region,
-                                             const ::int_rectangle &rectangleViewport);
+                                             const ::i32_rectangle &rectangleViewport);
 
       void sendUpdate();
 

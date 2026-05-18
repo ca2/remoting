@@ -39,7 +39,7 @@ namespace remoting_macos
    {
    public:
       ::remoting::UpdateKeeper();
-      ::remoting::UpdateKeeper(const ::int_rectangle &borderRect);
+      ::remoting::UpdateKeeper(const ::i32_rectangle &borderRect);
       ~::remoting::UpdateKeeper(void);
 
       virtual ::e_status lock()
@@ -51,7 +51,7 @@ namespace remoting_macos
       virtual void unlock() { m_criticalsectionUpdateContainer.unlock(); }
 
       void addChangedRegion(const ::remoting::Region & regionChanged);
-      void addChangedRect(const ::int_rectangle &rectangleChanged);
+      void addChangedRect(const ::i32_rectangle &rectangleChanged);
       // Adds border rectangle to changed region.
       void dazzleChangedReg()
       {
@@ -59,13 +59,13 @@ namespace remoting_macos
          addChangedRect(m_rectangleBorder);
       }
 
-      void addCopyRect(const ::int_rectangle &rectangleCopy, const ::int_point &src);
+      void addCopyRect(const ::i32_rectangle &rectangleCopy, const ::i32_point &src);
 
-      void setBorderRect(const ::int_rectangle &borderRect);
+      void setBorderRect(const ::i32_rectangle &borderRect);
 
       void setScreenSizeChanged();
       void setCursorPosChanged();
-      void setCursorPos(const ::int_point &curPos);
+      void setCursorPos(const ::i32_point &curPos);
       void setCursorShapeChanged();
 
       void setExcludedRegion(const ::remoting::Region & regionExcluded);
@@ -78,7 +78,7 @@ namespace remoting_macos
       void extract(UpdateContainer & updatecontainer);
 
    private:
-      ::int_rectangle m_rectangleBorder;
+      ::i32_rectangle m_rectangleBorder;
 
       ::remoting::Region m_regionExcluded;
       lockable_critical_section m_criticalsectionExclRegLoc;

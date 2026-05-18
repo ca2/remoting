@@ -46,7 +46,7 @@ namespace remoting_macos
       ::pointer < ScreenGrabber  > m_pscreengrabber;
       ::innate_subsystem::Framebuffer *m_pframebufferBackup;
       lockable_critical_section *m_pcriticalsectionFramebuffer;
-      ::int_rectangle m_rectanglePolling;
+      ::i32_rectangle m_rectanglePolling;
       ::happening m_intervalWaiter;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
       ::pointer < Configurator > m_pconfigurator;

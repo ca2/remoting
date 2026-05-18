@@ -28,7 +28,7 @@ namespace remoting_macos
 {
 
    //
-   // DummyScreenDriver::DummyScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, const ::int_size & size,
+   // DummyScreenDriver::DummyScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, const ::i32_size & size,
    //                                   unsigned int interval, ::subsystem::LogWriter * plogwriter) :
    //  m_pupdatelistener = pupdatelistener;m_pupdatekeeper = pupdatekeeper; m_interval(interval)
    //  {
@@ -60,7 +60,7 @@ namespace remoting_macos
    }
 
 
-   void DummyScreenDriver::initialize_dummy_screen_driver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, const ::int_size & size,
+   void DummyScreenDriver::initialize_dummy_screen_driver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, const ::i32_size & size,
                                      unsigned int interval, ::subsystem::LogWriter * plogwriter)
    {
       m_pupdatelistener = pupdatelistener;
@@ -91,17 +91,17 @@ namespace remoting_macos
          {
             try
             {
-               ::int_size size = m_pframebufferWork->getDimension();
+               ::i32_size size = m_pframebufferWork->getDimension();
                int w = size.cx;
                int h = size.cy;
                int x = rand() % (w / 50) + (w / 50);
                int y = rand() % (h / 50) + (h / 50);
 
-               ::int_rectangle r(0, 0, x, y);
+               ::i32_rectangle r(0, 0, x, y);
                r.offset(rand() % w, rand() % h);
                int m = 0xffffff / RAND_MAX;
                unsigned int color = rand() * m + rand() % m;
-               ::int_rectangle rectangle(0, 0, w, h);
+               ::i32_rectangle rectangle(0, 0, w, h);
                Region region(rectangle);
                if (m_detectionEnabled)
                {
@@ -122,9 +122,9 @@ namespace remoting_macos
 
    void DummyScreenDriver::terminateDetection() { m_detectionEnabled = false; }
 
-   ::int_size DummyScreenDriver::getScreenDimension() { return m_pframebufferWork->getDimension(); }
+   ::i32_size DummyScreenDriver::getScreenDimension() { return m_pframebufferWork->getDimension(); }
 
-   bool DummyScreenDriver::grabFb(const ::int_rectangle & rectangle) { return true; }
+   bool DummyScreenDriver::grabFb(const ::i32_rectangle & rectangle) { return true; }
 
    ::innate_subsystem::Framebuffer *DummyScreenDriver::getScreenBuffer() { return m_pframebufferWork; }
 

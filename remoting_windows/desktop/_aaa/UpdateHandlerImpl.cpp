@@ -57,14 +57,14 @@ namespace remoting_macos
 
    void UpdateHandlerImpl::extract(UpdateContainer & updatecontainer)
    {
-      ::int_rectangle rectangleCopy;
-      ::int_point m_pointCopySource;
+      ::i32_rectangle rectangleCopy;
+      ::i32_point m_pointCopySource;
       m_plogwriter->debug("UpdateHandlerImpl: getCopiedRegion");
       m_pscreendriver->getCopiedRegion(&rectangleCopy, &m_pointCopySource);
       {
          critical_section_lock al(&m_pupdatekeeper); // The following operations should be atomic
          m_pupdatekeeper.addCopyRect(&rectangleCopy, &m_pointCopySource);
-         m_plogwriter->debug("UpdateHandlerImpl: extract Copy ::int_rectangle");
+         m_plogwriter->debug("UpdateHandlerImpl: extract Copy ::i32_rectangle");
          m_pupdatekeeper.extract(updatecontainer);
       }
 
@@ -93,8 +93,8 @@ namespace remoting_macos
       if (m_pscreendriver->getScreenPropertiesChanged() ||
           !m_pframebufferBackup->isEqualTo(m_pscreendriver->getScreenBuffer()))
       {
-         ::int_size sizeCurrent = m_pframebufferBackup->getDimension();
-         ::int_size sizeNew = m_pscreendriver->getScreenDimension();
+         ::i32_size sizeCurrent = m_pframebufferBackup->getDimension();
+         ::i32_size sizeNew = m_pscreendriver->getScreenDimension();
          if (m_pscreendriver->getScreenSizeChanged() || !sizeCurrent.isEqualTo(&sizeNew))
          {
             updatecontainer.m_bScreenSizeChanged = true;

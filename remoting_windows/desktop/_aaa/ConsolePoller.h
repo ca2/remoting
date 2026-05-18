@@ -49,10 +49,10 @@ namespace remoting_macos
       virtual void onTerminate();
 
    //private:
-      ::int_rectangle getConsoleRect();
+      ::i32_rectangle getConsoleRect();
 
       ::pointer < ScreenGrabber > m_pscreengrabber;
-      ::int_rectangle m_rectanglePolling;
+      ::i32_rectangle m_rectanglePolling;
       ::happening m_intervalWaiter;
       ::pointer < ::innate_subsystem::Framebuffer  > m_pframebufferBackup;
       lockable_critical_section *m_pcriticalsectionFramebuffer;

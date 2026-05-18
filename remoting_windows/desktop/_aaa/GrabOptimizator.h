@@ -83,7 +83,7 @@ namespace remoting_macos
 
       // If the grab region is alike to whole desktop the function return true.
       bool isAlikeToWhole(const ::int_rectangle_array_base & rectanglea);
-      bool isEnoughForWholeStats(const ::int_rectangle & rectangle);
+      bool isEnoughForWholeStats(const ::i32_rectangle & rectangle);
       // If the grab region is alike to separate fragments the function
       // return true.
       bool isAlikeToFragments(const ::int_rectangle_array_base & rectanglea);
@@ -95,7 +95,7 @@ namespace remoting_macos
       static const size_t MAX_ELEMENTS_SIZE = 10;
 
       __int64 grabWhole(::remoting::ScreenDriver *grabber);
-      __int64 grabOneRect(const ::int_rectangle & rectangle, ::remoting::ScreenDriver *grabber);
+      __int64 grabOneRect(const ::i32_rectangle & rectangle, ::remoting::ScreenDriver *grabber);
       __int64 grabFragments(const ::int_rectangle_array_base & rectanglea, ::remoting::ScreenDriver *grabber);
 
       void addWholeTElement(double wholeT);

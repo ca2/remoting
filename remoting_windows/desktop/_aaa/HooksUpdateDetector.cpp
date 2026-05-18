@@ -222,7 +222,7 @@ namespace remoting_macos
          {
             if (msg.scopedstrMessage == HookDefinitions::SPEC_IPC_CODE)
             {
-               ::int_rectangle rectangle((short)(msg.wParam >> 16), (short)(msg.wParam & 0xffff), (short)(msg.lParam >> 16),
+               ::i32_rectangle rectangle((short)(msg.wParam >> 16), (short)(msg.wParam & 0xffff), (short)(msg.lParam >> 16),
                                     (short)(msg.lParam & 0xffff));
                if (rectangle.has_area())
                {

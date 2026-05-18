@@ -52,7 +52,7 @@ namespace remoting_macos
       // g - overhead time costs adding on each grabbed rectangle.
       ::int_rectangle_array_base rectanglea;
       regionGrab.getRects(rectanglea);
-      ::int_rectangle rectangleBounds = regionGrab.getBounds();
+      ::i32_rectangle rectangleBounds = regionGrab.getBounds();
       int boundsRectS = rectangleBounds.area();
       size_t n = rectanglea.size();
 
@@ -189,7 +189,7 @@ namespace remoting_macos
       return m_wholeS / area <= 9; // area >= 10%
    }
 
-   bool GrabOptimizator::isEnoughForWholeStats(const ::int_rectangle & rectangle)
+   bool GrabOptimizator::isEnoughForWholeStats(const ::i32_rectangle & rectangle)
    {
       int area = rectangle.area();
       if (area < 1)
@@ -224,7 +224,7 @@ namespace remoting_macos
       }
    }
 
-   __int64 GrabOptimizator::grabOneRect(const ::int_rectangle & rectangle, ::remoting::ScreenDriver *grabber)
+   __int64 GrabOptimizator::grabOneRect(const ::i32_rectangle & rectangle, ::remoting::ScreenDriver *grabber)
    {
       int rectS = rectangle.area();
       ASSERT(rectS != 0);

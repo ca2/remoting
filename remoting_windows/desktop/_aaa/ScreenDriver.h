@@ -53,15 +53,15 @@ namespace remoting_macos
       // Stops screen update detection.
       virtual void terminateDetection() = 0;
 
-      // Return a current screen ::int_size.
+      // Return a current screen ::i32_size.
       // Implementions will ensure that this function is thread safety.
-      virtual ::int_size getScreenDimension() = 0;
+      virtual ::i32_size getScreenDimension() = 0;
 
       // Provides ::innate_subsystem::Framebuffer grabbing.
-      // Parameters:     *rectangle - Pointer to a ::int_rectangle object with relative workRect coordinates.
+      // Parameters:     *rectangle - Pointer to a ::i32_rectangle object with relative workRect coordinates.
       // Return value:   true if success.
       // Implementions will ensure that this function is thread safety.
-      virtual bool grabFb(const ::int_rectangle & rectangle = {}) = 0;
+      virtual bool grabFb(const ::i32_rectangle & rectangle = {}) = 0;
 
       // Returns a pointer an internal screen driver ::innate_subsystem::Framebuffer
       virtual ::innate_subsystem::Framebuffer *getScreenBuffer() = 0;
@@ -88,11 +88,11 @@ namespace remoting_macos
 
       // Returns current cursor pointPosition coordinates which is relative to frame buffer coordinates.
       // Implementions will ensure that this function is thread safety.
-      virtual ::int_point getCursorPosition() = 0;
+      virtual ::i32_point getCursorPosition() = 0;
 
       // Returns a region as known "copy region".
       // Implementions will ensure that this function is thread safety.
-      virtual void getCopiedRegion(::int_rectangle &rectangleCopy, ::int_point & pointSource) = 0;
+      virtual void getCopiedRegion(::i32_rectangle &rectangleCopy, ::i32_point & pointSource) = 0;
 
       // Returns a region which associates with some video data. The region will define
       // by concrete implementation.

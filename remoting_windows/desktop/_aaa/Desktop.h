@@ -47,14 +47,14 @@ namespace remoting_macos
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;
       // Puts the current frame buffer dimension and pixel format to
       // the size and pixelformat function arguments.
-      virtual void getFramebufferProperties(::int_size & size, ::innate_subsystem::PixelFormat & pixelformat) = 0;
+      virtual void getFramebufferProperties(::i32_size & size, ::innate_subsystem::PixelFormat & pixelformat) = 0;
 
-      virtual void getPrimaryDesktopCoords(::int_rectangle rectangle) = 0;
+      virtual void getPrimaryDesktopCoords(::i32_rectangle rectangle) = 0;
       // Returns a rectangle that is normilized from "virtual desktop" to frame buffer coordinates.
-      virtual void getNormalizedRect(::int_rectangle rectangle) = 0;
-      virtual void getDisplayNumberCoords(::int_rectangle rectangle, unsigned char dispNumber) = 0;
+      virtual void getNormalizedRect(::i32_rectangle rectangle) = 0;
+      virtual void getDisplayNumberCoords(::i32_rectangle rectangle, unsigned char dispNumber) = 0;
       virtual ::int_rectangle_array_base getDisplaysCoords() = 0;
-      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::int_rectangle rectangle) = 0;
+      virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle rectangle) = 0;
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) = 0;
 
       virtual void getApplicationRegion(unsigned int procId, ::remoting::Region & region) = 0;
@@ -68,7 +68,7 @@ namespace remoting_macos
       // located at the place in a central frame buffer.
       // If view port is out of central frame buffer bounds the function will return false.
       virtual bool updateExternalFramebuffer(::innate_subsystem::Framebuffer *pframebuffer, const ::remoting::Region & region,
-                                             const ::int_rectangle &rectangleViewport) = 0;
+                                             const ::i32_rectangle &rectangleViewport) = 0;
    };
 
 

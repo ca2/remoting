@@ -69,11 +69,11 @@ namespace remoting_macos
    {
       m_plogwriter->information("console poller thread id = {}", (::iptr) getThreadId());
 
-      ::int_rectangle scanRect;
+      ::i32_rectangle scanRect;
       Region region;
       while (!isTerminating())
       {
-         ::int_rectangle conRect = getConsoleRect();
+         ::i32_rectangle conRect = getConsoleRect();
          if (!conRect.is_empty())
          {
             int pollHeight = m_rectanglePolling.height();
@@ -81,7 +81,7 @@ namespace remoting_macos
 
             {
                critical_section_lock al(m_pcriticalsectionFramebuffer);
-               ::int_rectangle offsetFb = m_pscreengrabber->getScreenRect();
+               ::i32_rectangle offsetFb = m_pscreengrabber->getScreenRect();
                conRect.offset(-offsetFb.left, -offsetFb.top);
                ::innate_subsystem::Framebuffer *pframebufferScreen = m_pscreengrabber->getScreenBuffer();
                if (pframebufferScreen->isEqualTo(m_pframebufferBackup))
@@ -114,9 +114,9 @@ namespace remoting_macos
       }
    }
 
-   ::int_rectangle ConsolePoller::getConsoleRect()
+   ::i32_rectangle ConsolePoller::getConsoleRect()
    {
-      ::int_rectangle rectangle;
+      ::i32_rectangle rectangle;
       auto hwnd = ::GetForegroundWindow();
 
       const WCHAR consoleClassName[] = L"ConsoleWindowClass";
