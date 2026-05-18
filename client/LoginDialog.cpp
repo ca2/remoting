@@ -50,7 +50,7 @@ namespace remoting_client
       dialog_item(m_ok, ::innate_subsystem::e_control_id_ok);
       updateHistory();
       setForegroundWindow();
-      // SetForegroundWindow((HWND) _HWND());
+      // SetForegroundWindow(::as_HWND(this->operating_system_window()));
       m_server.setFocus();
       if (m_isListening)
       {

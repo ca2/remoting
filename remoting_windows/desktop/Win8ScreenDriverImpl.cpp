@@ -44,15 +44,15 @@ namespace remoting_windows
    //     m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter), m_curTimeStamp(0),
    //     m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
    // {
-   //    resume();
+   //    resumeThread();
    //    m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
-   //    m_happeningInit.wait();
+   //    m_happeningInit.waitThreadToFinish();
    //
    //    if (m_hasCriticalError)
    //    {
    //       m_plogwriter->debug("Win8ScreenDriverImpl init critical error");
-   //       terminate();
-   //       wait();
+   //       setThreadToFinish();
+   //       waitThreadToFinish();
    //       throw ::subsystem::Exception("Win8ScreenDriverImpl can't be successfully initialized");
    //    }
    //
@@ -63,8 +63,8 @@ namespace remoting_windows
    //    ::i32_size virtDimension = screen.getDesktopDimension();
    //    if (!sizeBuilt.isEqualTo(&virtDimension))
    //    {
-   //       terminate();
-   //       wait();
+   //       setThreadToFinish();
+   //       waitThreadToFinish();
    //       throw ::subsystem::Exception("The builded screen dimension doesn't match to virtual screen dimension");
    //    }
    //    // At this point the screen driver has valid screen properties.
@@ -84,11 +84,12 @@ namespace remoting_windows
    {
 
       terminateDetection();
-      terminate();
-      int activeResult = (int)isActive();
-      int waitResult = (int)wait();
+      setThreadToFinish();
+      int activeResult = (int)isThreadActive();
+      //int waitResult = (int)waitThreadToFinish();
+      waitThreadToFinish();
       m_plogwriter->debug("Win8ScreenDriverImpl::activeResult = {}", activeResult);
-      m_plogwriter->debug("Win8ScreenDriverImpl::waitResult = {}", waitResult);
+      //m_plogwriter->debug("Win8ScreenDriverImpl::waitResult = {}", waitResult);
    }
 
 
@@ -103,15 +104,15 @@ namespace remoting_windows
        //m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter), m_curTimeStamp(0),
        //m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
 
-          resume();
+          resumeThread();
        m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
        m_happeningInit.wait();
 
        if (m_hasCriticalError)
        {
           m_plogwriter->debug("Win8ScreenDriverImpl init critical error");
-          terminate();
-          wait();
+          setThreadToFinish();
+          waitThreadToFinish();
           throw ::subsystem::Exception("Win8ScreenDriverImpl can't be successfully initialized");
        }
 
@@ -122,8 +123,8 @@ namespace remoting_windows
        ::i32_size virtDimension = screen.getDesktopDimension();
        if (sizeBuilt != virtDimension)
        {
-          terminate();
-          wait();
+          setThreadToFinish();
+          waitThreadToFinish();
           throw ::subsystem::Exception("The builded screen dimension doesn't match to virtual screen dimension");
        }
        // At this point the screen driver has valid screen properties.
@@ -213,7 +214,7 @@ namespace remoting_windows
       m_deskDuplThreadBundle.addThread(thread);
    }
 
-   void Win8ScreenDriverImpl::execute()
+   void Win8ScreenDriverImpl::onThreadMain()
    {
       try
       {
@@ -233,7 +234,7 @@ namespace remoting_windows
       }
       catch (::exception &e)
       {
-         m_plogwriter->error("Catched ::subsystem::Exception in the Win8ScreenDriverImpl::execute() function: {}."
+         m_plogwriter->error("Catched ::subsystem::Exception in the Win8ScreenDriverImpl::onThreadMain() function: {}."
                              " The exception will consider as critical",
                              e.get_message());
          m_hasCriticalError = true;
@@ -256,7 +257,7 @@ namespace remoting_windows
       terminateDetection();
    }
 
-   void Win8ScreenDriverImpl::onTerminate() { m_happeningError.set_happening(); }
+   void Win8ScreenDriverImpl::onTermThread() { m_happeningError.set_happening(); }
 
    void Win8ScreenDriverImpl::onFramebufferUpdate(const ::remoting::Region & regionChanged)
    {

@@ -71,8 +71,8 @@ namespace remoting_windows
       bool isValid();
 
    protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
    private:
       // Implementions of the Win8DuplicationListener listener functions.

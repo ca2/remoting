@@ -55,7 +55,7 @@ namespace remoting_windows
    //       }
    //       m_instance = this;
    //    }
-   //    resume();
+   //    resumeThread();
    // }
 
 
@@ -70,8 +70,8 @@ namespace remoting_windows
 
    WindowsInputBlocker::~WindowsInputBlocker()
    {
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
       m_instance = 0;
    }
    void WindowsInputBlocker::initialize_windows_input_blocker(::subsystem::LogWriter *plogwriter)
@@ -85,7 +85,7 @@ namespace remoting_windows
          }
          m_instance = this;
       }
-      resume();
+      resumeThread();
    }
 
    class ::time WindowsInputBlocker::getLastInputTime() const
@@ -270,12 +270,12 @@ namespace remoting_windows
       return CallNextHookEx(m_hSoftMouseHook, nCode, wParam, lParam);
    }
 
-   void WindowsInputBlocker::onTerminate()
+   void WindowsInputBlocker::onTermThread()
    {
       PostThreadMessage(getThreadId(), 0, 0, 0);
    }
 
-   void WindowsInputBlocker::execute()
+   void WindowsInputBlocker::onThreadMain()
    {
       m_plogwriter->information("input blocker thread id = %d", getThreadId());
 

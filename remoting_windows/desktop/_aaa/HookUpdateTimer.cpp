@@ -27,7 +27,7 @@
 namespace remoting_windows
 {
 
-   //HookUpdateTimer::HookUpdateTimer(::remoting::UpdateListener *pupdatelistener) : m_pupdatelistener = pupdatelistener; { resume(); }
+   //HookUpdateTimer::HookUpdateTimer(::remoting::UpdateListener *pupdatelistener) : m_pupdatelistener = pupdatelistener; { resumeThread(); }
 
    HookUpdateTimer::HookUpdateTimer()
    {
@@ -38,30 +38,30 @@ namespace remoting_windows
 
    HookUpdateTimer::~HookUpdateTimer()
    {
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
    }
 
    void HookUpdateTimer::initialize_hook_update_timer(::remoting::UpdateListener *pupdatelistener)
    {
       m_pupdatelistener = pupdatelistener;
-         resume();
+         resumeThread();
 
     }
 
 
-   void HookUpdateTimer::onTerminate()
+   void HookUpdateTimer::onTermThread()
    {
       m_updateWaiter.set_happening();
       m_happeningTimer.set_happening();
    }
 
-   void HookUpdateTimer::execute()
+   void HookUpdateTimer::onThreadMain()
    {
       while (!isThreadTerminating())
       {
-         m_updateWaiter.wait();
-         m_happeningTimer.wait(100 * 1_ms);
+         m_updateWaiter.waitThreadToFinish();
+         m_happeningTimer.waitThreadToFinish(100 * 1_ms);
          m_pupdatelistener->onUpdate();
       }
    }

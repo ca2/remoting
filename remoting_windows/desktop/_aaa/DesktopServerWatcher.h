@@ -60,8 +60,8 @@ namespace remoting_windows
       virtual void initialize_desktop_server_watcher(Configurator * pconfigurator, ReconnectionListener *preconnectionlistener, ::subsystem::LogWriter * plogwriter);
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
       // Runs desktop server with XP trick if it's needed.
       void start();

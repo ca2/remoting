@@ -52,7 +52,7 @@ namespace remoting_windows
 //       }
 //       catch (::exception &e)
 //       {
-//          Thread::terminate();
+//          Thread::setThreadToFinish();
 //          m_plogwriter->error("Failed to load the hook library: {}", e.get_message());
 //       }
 //       //HINSTANCE hinst = GetModuleHandle(0);
@@ -67,8 +67,8 @@ namespace remoting_windows
 
    HooksUpdateDetector::~HooksUpdateDetector()
    {
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
 
       if (m_hookInstaller != 0)
       {
@@ -100,7 +100,7 @@ namespace remoting_windows
       }
       catch (::exception &e)
       {
-         Thread::terminate();
+         Thread::setThreadToFinish();
          m_plogwriter->error("Failed to load the hook library: {}", e.get_message());
       }
       //HINSTANCE hinst = GetModuleHandle(0);
@@ -110,7 +110,7 @@ namespace remoting_windows
       m_pmessagewindowTarget->createMessageWindow("HookTargetWinClassName");
    }
 
-   void HooksUpdateDetector::onTerminate()
+   void HooksUpdateDetector::onTermThread()
    {
       if (m_pmessagewindowTarget != 0)
       {
@@ -164,7 +164,7 @@ namespace remoting_windows
       }
    }
 
-   void HooksUpdateDetector::execute()
+   void HooksUpdateDetector::onThreadMain()
    {
       m_plogwriter->information("Hooks update detector thread id = {}", getThreadId());
 
@@ -181,7 +181,7 @@ namespace remoting_windows
       }
       catch (::exception &e)
       {
-         terminate();
+         setThreadToFinish();
          m_plogwriter->error(e.get_message());
       }
 
@@ -195,8 +195,8 @@ namespace remoting_windows
          }
          catch (::exception &e)
          {
-            m_plogwriter->error("Hooks installing failed, wait for the next trying: {}", e.get_message());
-            m_initWaiter.wait(5000 * 1_ms);
+            m_plogwriter->error("Hooks installing failed, waitThreadToFinish for the next trying: {}", e.get_message());
+            m_initWaiter.waitThreadToFinish(5000 * 1_ms);
             try
             {
                m_hookInstaller->uninstall();
@@ -242,7 +242,7 @@ namespace remoting_windows
             if (WaitMessage() == 0)
             {
                m_plogwriter->error("Hooks update detector has failed");
-               Thread::terminate();
+               Thread::setThreadToFinish();
             }
          }
       }

@@ -27,13 +27,15 @@
 
 #include "subsystem/_common_header.h"
 #include "subsystem/node/DynamicLibrary.h"
+#include "remoting/desktop/HookInstaller.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
-   class CLASS_DECL_REMOTING HookInstaller
+   class CLASS_DECL_REMOTING_WINDOWS HookInstaller :
+        virtual public ::remoting::HookInstaller
    {
    public:
       HookInstaller();
@@ -42,9 +44,9 @@ namespace remoting
       // Instals hooks to windowed applications.
       // targedWinHwnd - is hwnd to a target window that will receive
       // hooked messages.
-      void install(const ::operating_system::window & operatingsystemwindow);
+      void install(const ::operating_system::window & operatingsystemwindow) override;
       // Uninstals hooks from windowed applications.
-      void uninstall();
+      void uninstall() override;
 
    //private:
       static ::string_literal LIBRARY_NAME;

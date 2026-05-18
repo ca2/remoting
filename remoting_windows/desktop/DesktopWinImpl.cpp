@@ -65,7 +65,7 @@ namespace remoting_windows
    //       freeResource();
    //       throw;
    //    }
-   //    resume();
+   //    resumeThread();
    // }
 
    DesktopWinImpl::DesktopWinImpl()
@@ -104,7 +104,7 @@ namespace remoting_windows
              m_pdesktopconfiglocal->initialize_desktop_config_local(pconfigurator, m_plogwriter);
              applyNewConfiguration();
 
-             construct_newø(m_pwallpaperutil);
+             constructø(m_pwallpaperutil);
              m_pwallpaperutil->initialize_wallpaper_util(pconfigurator,m_plogwriter);
              m_pwallpaperutil->updateWallpaper();
 
@@ -116,7 +116,7 @@ namespace remoting_windows
              freeResource();
              throw;
           }
-          resume();
+          resumeThread();
        }
 
 
@@ -124,8 +124,8 @@ namespace remoting_windows
    DesktopWinImpl::~DesktopWinImpl()
    {
       m_plogwriter->information("Deleting DesktopWinImpl");
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
       freeResource();
       m_plogwriter->information("DesktopWinImpl deleted");
    }
@@ -162,7 +162,7 @@ namespace remoting_windows
    //        freeResource();
    //        throw;
    //     }
-   //     resume();
+   //     resumeThread();
    //  }
 
 
@@ -186,9 +186,9 @@ namespace remoting_windows
       //    delete m_puserinput;
    }
 
-   void DesktopWinImpl::onTerminate() { m_happeningNewUpdate.set_happening(); }
+   void DesktopWinImpl::onTermThread() { m_happeningNewUpdate.set_happening(); }
 
-   void DesktopWinImpl::execute()
+   void DesktopWinImpl::onThreadMain()
    {
       m_plogwriter->information("DesktopWinImpl thread started");
 

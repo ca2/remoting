@@ -57,7 +57,7 @@ namespace remoting_client
 
     bool DesktopWindow::onCreate(void * pCreateStruct)
     {
-       //auto hwnd = (HWND) _HWND();
+       //auto hwnd = ::as_HWND(this->operating_system_window());
         m_sbar.set_operating_system_window(operating_system_window());
         m_clipboard.setHWnd(operating_system_window());
         m_premotingstyle = allocateø ::remoting_client::style;
@@ -176,19 +176,19 @@ namespace remoting_client
            case ::user::e_message_sys_dead_char:
                 return onDeadChar(wParam, lParam);
             // case WM_CHANGECBCHAIN:
-            //     if ((HWND)wParam == (HWND) _HWND()NextViewer)
+            //     if ((HWND)wParam == ::as_HWND(this->operating_system_window())NextViewer)
             //     {
-            //         (HWND) _HWND()NextViewer = (HWND)lParam;
+            //         ::as_HWND(this->operating_system_window())NextViewer = (HWND)lParam;
             //     }
-            //     else if ((HWND) _HWND()NextViewer != NULL)
+            //     else if (::as_HWND(this->operating_system_window())NextViewer != NULL)
             //     {
-            //         SendMessage((HWND) _HWND()NextViewer, scopedstrMessage, wParam, lParam);
+            //         SendMessage(::as_HWND(this->operating_system_window())NextViewer, scopedstrMessage, wParam, lParam);
             //     }
             //     return true;
             // case WM_DRAWCLIPBOARD:
             // {
             //     bool ok = onDrawClipboard();
-            //     SendMessage((HWND) _HWND()NextViewer, scopedstrMessage, wParam, lParam);
+            //     SendMessage(::as_HWND(this->operating_system_window())NextViewer, scopedstrMessage, wParam, lParam);
             //     return ok;
             // }
            case ::user::e_message_create:
@@ -318,7 +318,7 @@ namespace remoting_client
       auto rectClient = getClientRect();
 
       //RECT rcClient;
-      //if (::GetClientRect((HWND) _HWND(), &rcClient))
+      //if (::GetClientRect(::as_HWND(this->operating_system_window()), &rcClient))
       if(rectClient.is_set())
       {
 
@@ -354,7 +354,7 @@ namespace remoting_client
             if (operatingsystemwindowCapture != operatingsystemwindowThis)
             {
 
-               //::SetCapture((HWND) _HWND());
+               //::SetCapture(::as_HWND(this->operating_system_window()));
                InnateSubsystem().setMouseCapture(operatingsystemwindowThis);
                
                m_premoteviewercore->m_pfbupdatenotifier->m_cursorpainter.m_bHideCursor = false;

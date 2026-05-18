@@ -28,10 +28,10 @@
 
 //#include "remoting/remoting/region/::i32_point.h"
 #include "subsystem/_common_header.h"
-//#include aaa_<list>
+#include "remoting/remoting/desktop/CopyRectDetector.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
    struct WinProp
@@ -45,8 +45,8 @@ namespace remoting
       ::i32_rectangle m_rectangleOld;
    };
 
-   class CLASS_DECL_REMOTING CopyRectDetector :
-      virtual public ::particle
+   class CLASS_DECL_REMOTING_WINDOWS CopyRectDetector :
+      virtual public ::remoting::CopyRectDetector
    {
    public:
       CopyRectDetector();
@@ -72,7 +72,7 @@ namespace remoting
 
    
 
-} // namespace remoting
+} // namespace remoting_windows
  
 
 

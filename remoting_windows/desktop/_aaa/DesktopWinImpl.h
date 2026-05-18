@@ -52,8 +52,8 @@ namespace remoting_windows
                      AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
    //private:
       void freeResource();

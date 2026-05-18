@@ -22,6 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
+#include "acme/constant/user_key.h"
 #include "remoting/remoting_windows/desktop/WindowsUserInput.h"
 #include "subsystem/thread/DesktopSelector.h"
 #include "subsystem/node/OperatingSystem.h"
@@ -177,14 +178,15 @@ namespace remoting_windows
       {
          m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (int)down);
          // Generate single key event.
-         unsigned char vkCode;
+         //unsigned char vkCode;
+         ::user::enum_key euserkey = ::user::e_key_none;
          int ch;
          bool release = !down;
          bool extended;
 
-         if (m_keyMap.keySymToVirtualCode(keySym, &vkCode, &extended))
+         if (m_keyMap.keySymToVirtualCode(keySym, &euserkey, &extended))
          {
-            m_inputInjector.injectKeyEvent(vkCode, release, extended);
+            m_inputInjector.injectKeyEvent(euserkey, release, extended);
          }
          else if (m_keyMap.keySymToUnicodeChar(keySym, &ch))
          {

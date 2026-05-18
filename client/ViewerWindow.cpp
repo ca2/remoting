@@ -175,7 +175,7 @@ namespace remoting_client
 
     bool ViewerWindow::onCreate(void * pCreateStruct)
     {
-        //getControl()->setWindow((HWND) _HWND());
+        //getControl()->setWindow(::as_HWND(this->operating_system_window()));
 
       auto pcursor = createø<::innate_subsystem::CursorInterface>();
       pcursor->initialize_with_system_cursor(::e_cursor_arrow);
@@ -347,7 +347,7 @@ bool ViewerWindow::on_user_system_command(::user::enum_system_command esystemcom
                 m_stopped = true;
                 return true;
             case (::user::enum_message) WM_USER_STOP:
-                //SendMessage((HWND) _HWND(), WM_DESTROY, 0, 0);
+                //SendMessage(::as_HWND(this->operating_system_window()), WM_DESTROY, 0, 0);
               postMessage(::user::e_message_destroy);
                 return true;
             case (::user::enum_message) WM_USER_FS_WARNING:

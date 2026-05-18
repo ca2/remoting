@@ -38,15 +38,15 @@ namespace remoting_windows
    {
       //: m_plogwriter(plogwriter)
       //{
-        // resume();
+        // resumeThread();
 
 
    }
 
    WinVideoRegionUpdaterImpl::~WinVideoRegionUpdaterImpl()
    {
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
    }
 
 
@@ -57,14 +57,14 @@ namespace remoting_windows
       m_pconfigurator = pconfigurator;
       m_plogwriter = plogwriter;
 
-      resume();
+      resumeThread();
 
    }
 
 
-   void WinVideoRegionUpdaterImpl::onTerminate() { m_happeningSleeper.set_happening(); }
+   void WinVideoRegionUpdaterImpl::onTermThread() { m_happeningSleeper.set_happening(); }
 
-   void WinVideoRegionUpdaterImpl::execute()
+   void WinVideoRegionUpdaterImpl::onThreadMain()
    {
       while (!isThreadTerminating())
       {

@@ -55,19 +55,19 @@ namespace remoting_windows
                                                        (::u32)targetRect[i].height(), m_rotations[i]));
       }
       m_plogwriter->debug("Win8DeskDuplication created");
-      resume();
+      resumeThread();
    }
 
    Win8DeskDuplication::~Win8DeskDuplication()
    {
       m_plogwriter->debug("deleting Win8DeskDuplication");
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
    }
 
    bool Win8DeskDuplication::isValid() { return !m_hasRecoverableError && !m_hasCriticalError; }
 
-   void Win8DeskDuplication::execute()
+   void Win8DeskDuplication::onThreadMain()
    {
       const int ACQUIRE_TIMEOUT = 20;
       try
@@ -87,7 +87,7 @@ namespace remoting_windows
                   {
                      timeouts[i]++;
                      m_plogwriter->debug("Timeout on acquire frame for output: {}", i);
-                     Thread::yield();
+                     Thread::threadYield();
                      continue;
                   }
                   else
@@ -122,7 +122,7 @@ namespace remoting_windows
                      } // Cursor
                   }
                }
-               Thread::yield();
+               Thread::threadYield();
             }
          }
          // FIXME: remove it all, catch exceptions in Win8ScreenDriverImpl
@@ -150,7 +150,7 @@ namespace remoting_windows
       }
    }
 
-   void Win8DeskDuplication::onTerminate() {}
+   void Win8DeskDuplication::onTermThread() {}
 
    void Win8DeskDuplication::setCriticalError(const ::scoped_string &scopedstrReason)
    {

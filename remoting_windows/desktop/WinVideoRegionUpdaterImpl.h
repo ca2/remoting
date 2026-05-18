@@ -63,8 +63,8 @@ namespace remoting_windows
 
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
    //private:
       virtual ::remoting::Region getVideoRegion();
       void updateVideoRegion();

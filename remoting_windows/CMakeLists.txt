@@ -19,12 +19,16 @@ if(${WIN32})
    list(APPEND library_source
 
       _common_header.h
+      desktop/CopyRectDetector.cpp
+      desktop/CopyRectDetector.h
       desktop/DesktopFactory.cpp
       desktop/DesktopFactory.h
       desktop/DesktopClientImpl.cpp
       desktop/DesktopClientImpl.h
    desktop/DesktopWinImpl.cpp
    desktop/DesktopWinImpl.h
+      desktop/HookInstaller.cpp
+      desktop/HookInstaller.h
    desktop/MirrorDriverClient.cpp
    desktop/MirrorDriverClient.h
    desktop/MirrorScreenDriver.cpp

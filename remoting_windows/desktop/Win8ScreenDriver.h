@@ -40,7 +40,7 @@
 #include "remoting/remoting/desktop/UpdateListener.h"
 //#include "log_writer/LogWriter.h"
 #include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
-#include "remoting/remoting/desktop/CopyRectDetector.h"
+#include "remoting/remoting_windows/desktop/CopyRectDetector.h"
 
 namespace remoting_windows
 {
@@ -90,7 +90,7 @@ namespace remoting_windows
       // This member must be always gueranted non zero. Otherwise an excption must
       // be provided from the constructor of this class.
       ::pointer < Win8ScreenDriverImpl > m_pwin8screendriveriimpl;
-      ::remoting::CopyRectDetector m_pcopyrectdetector;
+      ::remoting_windows::CopyRectDetector m_pcopyrectdetector;
       lockable_critical_section m_drvImplMutex;
 
       ::remoting::CursorShape m_cursorshape;

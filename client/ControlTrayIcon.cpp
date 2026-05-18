@@ -170,7 +170,7 @@ namespace remoting_client
         //     pos.x = pos.y = 0;
         // }
         //
-        // HWND notifyWnd = (HWND) _HWND();
+        // HWND notifyWnd = ::as_HWND(this->operating_system_window());
         // SetForegroundWindow(notifyWnd);
         //
         // // int action = TrackPopupMenu(m_menu.getMenu(),

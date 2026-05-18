@@ -114,7 +114,7 @@ void WinFile::open(const ::file::path & path,
   if (append) {
     // Move file pointer to the end of file.
     DWORD result = SetFilePointer(m_hFile, 0, 0, FILE_END);
-    DWORD errCode = GetLastError();
+    auto lasterror = ::windows::last_error();
     // Checking for an error
     if (result == INVALID_SET_FILE_POINTER && errCode != NO_ERROR) {
       throw SystemException(errCode);

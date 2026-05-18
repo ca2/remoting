@@ -33,9 +33,9 @@ namespace remoting_windows
 {
 
    // This class  is a timer that after calling the sear() function
-   // wait a time interval after that it notifies to an update listener
+   // waitThreadToFinish a time interval after that it notifies to an update listener
    // for update/updates catching. It's should to help the HooksupdateDetector
-   // to wait an time interval because the HooksupdateDetector can't wait
+   // to waitThreadToFinish an time interval because the HooksupdateDetector can't waitThreadToFinish
    // directly by sleep. Usage of this class  is questionable.
    class CLASS_DECL_REMOTING HookUpdateTimer :
    virtual public ::subsystem::Thread
@@ -54,8 +54,8 @@ namespace remoting_windows
       void sear();
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
       ::happening m_updateWaiter;
       ::happening m_happeningTimer;

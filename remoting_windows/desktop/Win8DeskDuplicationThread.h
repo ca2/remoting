@@ -55,8 +55,8 @@ namespace remoting_windows
       bool isValid();
 
    private:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
       void setCriticalError(const ::scoped_string &scopedstrReason);
       void setRecoverableError(const ::scoped_string &scopedstrReason);
 

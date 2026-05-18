@@ -62,8 +62,8 @@ namespace remoting_windows
        ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
        ::subsystem::LogWriter * plogwriter);
 
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
    };
 

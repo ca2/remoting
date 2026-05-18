@@ -70,17 +70,17 @@ namespace remoting_windows
 
    void Win32ScreenDriverBaseImpl::executeDetection()
    {
-      m_pcursorpositiondetector->resume();
-      m_pcursorshapedetector->resume();
+      m_pcursorpositiondetector->resumeThread();
+      m_pcursorshapedetector->resumeThread();
    }
 
    void Win32ScreenDriverBaseImpl::terminateDetection()
    {
-      m_pcursorpositiondetector->terminate();
-      m_pcursorshapedetector->terminate();
+      m_pcursorpositiondetector->setThreadToFinish();
+      m_pcursorshapedetector->setThreadToFinish();
 
-      m_pcursorpositiondetector->wait();
-      m_pcursorshapedetector->wait();
+      m_pcursorpositiondetector->waitThreadToFinish();
+      m_pcursorshapedetector->waitThreadToFinish();
    }
 
    lockable_critical_section *Win32ScreenDriverBaseImpl::framebuffer_critical_section() { return m_pcriticalsectionFramebuffer; }

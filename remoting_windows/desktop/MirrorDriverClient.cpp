@@ -66,8 +66,8 @@ namespace remoting_windows
    {
       try
       {
-         terminate();
-         wait();
+         setThreadToFinish();
+         waitThreadToFinish();
 
          dispose();
       }
@@ -417,9 +417,9 @@ namespace remoting_windows
       return true;
    }
 
-   void MirrorDriverClient::onTerminate() { m_messagewindowPropertyChangeListener.postMessage(::user::e_message_quit); }
+   void MirrorDriverClient::onTermThread() { m_messagewindowPropertyChangeListener.postMessage(::user::e_message_quit); }
 
-   void MirrorDriverClient::execute()
+   void MirrorDriverClient::onThreadMain()
    {
       if (!isThreadTerminating())
       {
@@ -449,7 +449,7 @@ namespace remoting_windows
             if (WaitMessage() == 0)
             {
                m_plogwriter->error("Mirror driver client thread has failed");
-               terminate();
+               setThreadToFinish();
             }
          }
          Thread::threadYield();

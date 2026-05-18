@@ -44,6 +44,11 @@
 #include "subsystem/platform/CommandLineArguments.h"
 #include "resource.h"
 
+
+#ifdef WINDOWS
+#include "acme/operating_system/windows_common/last_error.h"
+#endif
+
 namespace remoting_node_desktop
 {
 
@@ -101,7 +106,7 @@ namespace remoting_node_desktop
          } catch (::subsystem::SystemException &sysEx) {
             
 #ifdef WINDOWS
-            if (sysEx.getErrorCode() != ERROR_CANCELLED) {
+            if (sysEx.getErrorCode().as_status() != error_cancelled) {
                reportError(&cmdLine, sysEx.get_message());
             }
 #endif
@@ -242,7 +247,7 @@ namespace remoting_node_desktop
    {
       ::string errorMessage;
 #ifdef WINDOWS
-      switch (ex->getErrorCode()) {
+      switch (::windows::last_error(ex->getErrorCode()).m_uLastError) {
          case ERROR_SERVICE_DOES_NOT_EXIST:
             errorMessage= MainSubsystem().StringTable().getString(IDS_1060_ERROR_DESCRIPTION);
             break;

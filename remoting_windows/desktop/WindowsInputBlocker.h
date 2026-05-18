@@ -42,7 +42,25 @@ namespace remoting_windows
    {
    public:
 
+      static HHOOK m_hKeyboardHook;
+      static HHOOK m_hSoftKeyboardHook;
+      static HHOOK m_hMouseHook;
+      static HHOOK m_hSoftMouseHook;
 
+      static WindowsInputBlocker *m_instance;
+      static lockable_critical_section m_instanceMutex;
+
+      bool m_isKeyboardBlocking;
+      bool m_isMouseBlocking;
+
+      bool m_isSoftKeyboardBlocking;
+      bool m_isSoftMouseBlocking;
+
+      static ::u32 m_timeInterval;
+      static class ::time m_lastInputTime;
+      static lockable_critical_section m_lastInputTimeMutex;
+
+      ::subsystem::LogWriter *m_plogwriter;
       //WindowsInputBlocker(::subsystem::LogWriter *log);
       WindowsInputBlocker();
       ~WindowsInputBlocker() override;
@@ -64,46 +82,28 @@ namespace remoting_windows
       bool isRemoteInputAllowed() override;
 
    //protected:
-      void execute() override;
-      void onTerminate() override;
+      void onThreadMain() override;
+      void onTermThread() override;
 
       bool setKeyboardFilterHook(bool block);
       bool setSoftKeyboardFilterHook(bool block);
       bool setMouseFilterHook(bool block);
       bool setSoftMouseFilterHook(bool block);
 
-      static ::lresult lowLevelKeyboardFilterProc(int nCode,
-                                                         ::wparam wParam,
-                                                         ::lparam lParam);
-      static  ::lresult lowLevelSoftKeyboardFilterProc(int nCode,
-                                                             ::wparam wParam,
-                                                             ::lparam lParam);
-      static  ::lresult lowLevelMouseFilterProc(int nCode,
-                                                      ::wparam wParam,
-                                                      ::lparam lParam);
-      static  ::lresult lowLevelSoftMouseFilterProc(int nCode,
-                                                          ::wparam wParam,
-                                                          ::lparam lParam);
+      static LRESULT CALLBACK lowLevelKeyboardFilterProc(int nCode,
+                                                         WPARAM wParam,
+                                                         LPARAM lParam);
+      static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(int nCode,
+                                                             WPARAM wParam,
+                                                             LPARAM lParam);
+      static  LRESULT CALLBACK lowLevelMouseFilterProc(int nCode,
+                                                      WPARAM wParam,
+                                                      LPARAM lParam);
+      static LRESULT CALLBACK lowLevelSoftMouseFilterProc(int nCode,
+                                                          WPARAM wParam,
+                                                          LPARAM lParam);
 
-//      static HHOOK m_hKeyboardHook;
-//      static HHOOK m_hSoftKeyboardHook;
-//      static HHOOK m_hMouseHook;
-//      static HHOOK m_hSoftMouseHook;
 
-      static WindowsInputBlocker *m_instance;
-      static lockable_critical_section m_instanceMutex;
-
-      bool m_isKeyboardBlocking;
-      bool m_isMouseBlocking;
-
-      bool m_isSoftKeyboardBlocking;
-      bool m_isSoftMouseBlocking;
-
-      static ::u32 m_timeInterval;
-      static class ::time m_lastInputTime;
-      static lockable_critical_section m_lastInputTimeMutex;
-
-      ::subsystem::LogWriter *m_plogwriter;
    };
 } // namespace remoting_windows
 

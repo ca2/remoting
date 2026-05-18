@@ -48,8 +48,8 @@ namespace remoting_windows
 
    Poller::~Poller()
    {
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
    }
 
    void Poller::initialize_poller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
@@ -66,9 +66,9 @@ namespace remoting_windows
 
    }
 
-   void Poller::onTerminate() { m_intervalWaiter.set_happening(); }
+   void Poller::onTermThread() { m_intervalWaiter.set_happening(); }
 
-   void Poller::execute()
+   void Poller::onThreadMain()
    {
       m_plogwriter->information("poller thread id = {}", (::iptr) getThreadId());
 
@@ -130,7 +130,7 @@ namespace remoting_windows
          }
 
          unsigned int pollInterval = m_pconfigurator->getServerConfig()->getPollingInterval();
-         m_intervalWaiter.wait(pollInterval * 1_ms);
+         m_intervalWaiter.waitThreadToFinish(pollInterval * 1_ms);
       }
    }
 

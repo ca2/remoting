@@ -66,8 +66,8 @@ namespace remoting_windows
       Region getVideoRegion() { return Region(); };
 
    protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
    private:
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferWork;

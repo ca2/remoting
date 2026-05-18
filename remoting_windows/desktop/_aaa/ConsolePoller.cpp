@@ -47,8 +47,8 @@ namespace remoting_windows
 
    ConsolePoller::~ConsolePoller()
    {
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
    }
 
    void ConsolePoller::initialize_console_poller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
@@ -63,9 +63,9 @@ namespace remoting_windows
       m_rectanglePolling.set(0, 0, 16, 16);
    }
 
-   void ConsolePoller::onTerminate() { m_intervalWaiter.set_happening(); }
+   void ConsolePoller::onTermThread() { m_intervalWaiter.set_happening(); }
 
-   void ConsolePoller::execute()
+   void ConsolePoller::onThreadMain()
    {
       m_plogwriter->information("console poller thread id = {}", (::iptr) getThreadId());
 
@@ -110,7 +110,7 @@ namespace remoting_windows
             }
          }
          unsigned int pollInterval = 200;
-         m_intervalWaiter.wait(pollInterval * 1_ms);
+         m_intervalWaiter.waitThreadToFinish(pollInterval * 1_ms);
       }
    }
 

@@ -49,8 +49,8 @@ namespace remoting_windows
       virtual void initialize_hooks_update_detector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener, ::subsystem::LogWriter * plogwriter);
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
       void start32Loader();
       void terminate32Loader();

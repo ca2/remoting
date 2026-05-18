@@ -143,9 +143,12 @@ void DesktopServerWatcher::destroy()
             {
                shMemName+=(char)('a' + rand() % ('z' - 'a'));
             }
-            ::shared_memory sharedmemory;
-            sharedmemory.Create(shMemName, 72);
-            ::u64 *mem = (::u64 *)sharedmemory.Data();
+
+            auto psharedmemory = createø<::shared_memory>();
+
+            psharedmemory->CreateSharedMemory(shMemName, 72);
+
+            ::u64 *mem = (::u64 *)psharedmemory->data();
 
             // Sets memory ready flag to false.
             mem[0] = 0;

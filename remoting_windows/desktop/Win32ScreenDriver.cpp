@@ -69,22 +69,22 @@ namespace remoting_windows
    void Win32ScreenDriver::executeDetection()
    {
       Win32ScreenDriverBaseImpl::executeDetection();
-      m_poller.resume();
-      m_consolePoller.resume();
-      m_hooks.resume();
+      m_poller.resumeThread();
+      m_consolePoller.resumeThread();
+      m_hooks.resumeThread();
    }
 
    void Win32ScreenDriver::terminateDetection()
    {
-      m_poller.terminate();
-      m_consolePoller.terminate();
-      m_hooks.terminate();
+      m_poller.setThreadToFinish();
+      m_consolePoller.setThreadToFinish();
+      m_hooks.setThreadToFinish();
 
       Win32ScreenDriverBaseImpl::terminateDetection();
 
-      m_poller.wait();
-      m_consolePoller.wait();
-      m_hooks.wait();
+      m_poller.waitThreadToFinish();
+      m_consolePoller.waitThreadToFinish();
+      m_hooks.waitThreadToFinish();
    }
 
    ::i32_size Win32ScreenDriver::getScreenDimension()

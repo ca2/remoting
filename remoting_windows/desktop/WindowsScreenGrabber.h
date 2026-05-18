@@ -99,8 +99,8 @@ namespace remoting_windows
       virtual bool applyNewProperties();
 
       // protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
       virtual bool openDIBSection();
       virtual bool closeDIBSection();

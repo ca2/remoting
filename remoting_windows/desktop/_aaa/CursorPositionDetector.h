@@ -50,8 +50,8 @@ namespace remoting_windows
       ::i32_point getCursorPos();
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
    //private:
       ::subsystem::Cursor m_cursor;

@@ -64,14 +64,14 @@ namespace remoting_windows
          freeResource();
          throw;
       }
-      resume();
+      resumeThread();
    }
 
    DesktopWinImpl::~DesktopWinImpl()
    {
       m_plogwriter->information("Deleting DesktopWinImpl");
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
       freeResource();
       m_plogwriter->information("DesktopWinImpl deleted");
    }
@@ -91,15 +91,15 @@ namespace remoting_windows
          delete m_puserinput;
    }
 
-   void DesktopWinImpl::onTerminate() { m_happeningNewUpdate.set_happening(); }
+   void DesktopWinImpl::onTermThread() { m_happeningNewUpdate.set_happening(); }
 
-   void DesktopWinImpl::execute()
+   void DesktopWinImpl::onThreadMain()
    {
       m_plogwriter->information("DesktopWinImpl thread started");
 
       while (!isThreadTerminating())
       {
-         m_happeningNewUpdate.wait();
+         m_happeningNewUpdate.waitThreadToFinish();
          if (!isThreadTerminating())
          {
             m_plogwriter->debug("DesktopWinImpl sendUpdate()");

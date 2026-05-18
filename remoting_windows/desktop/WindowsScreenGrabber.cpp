@@ -34,15 +34,15 @@ namespace remoting_windows
    {
       // m_pserverconfig = pconfigurator->getServerConfig();
       // setWorkRectDefault();
-      // resume();
-      // m_hasStartedSignal.wait();
+      // resumeThread();
+      // m_hasStartedSignal.waitThreadToFinish();
    }
 
    WindowsScreenGrabber::~WindowsScreenGrabber(void)
    {
       closeDIBSection();
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
    }
 
 
@@ -50,7 +50,7 @@ namespace remoting_windows
    {
       m_pserverconfig = pconfigurator->getServerConfig();
       setWorkRectDefault();
-      resume();
+      resumeThread();
       m_hasStartedSignal.wait();
    }
 
@@ -257,14 +257,14 @@ namespace remoting_windows
       return !getPropertiesChanged();
    }
 
-   void WindowsScreenGrabber::execute()
+   void WindowsScreenGrabber::onThreadMain()
    {
       applyNewProperties();
       m_hasStartedSignal.set_happening();
       m_threadStopper.wait();
    }
 
-   void WindowsScreenGrabber::onTerminate() { m_threadStopper.set_happening(); }
+   void WindowsScreenGrabber::onTermThread() { m_threadStopper.set_happening(); }
 
 
 } // namespace remoting_windows

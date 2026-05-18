@@ -76,8 +76,8 @@ namespace remoting_windows
 
    DesktopServerWatcher::~DesktopServerWatcher()
    {
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
       delete m_pprocess;
    }
 
@@ -110,7 +110,7 @@ namespace remoting_windows
       }
    }
 
-   void DesktopServerWatcher::execute()
+   void DesktopServerWatcher::onThreadMain()
    {
       AnonymousPipeFactory pipeFactory(512 * 1024, m_plogwriter);
 
@@ -150,7 +150,7 @@ namespace remoting_windows
             start();
 
             // Prepare other side pipe handles for other side
-            m_plogwriter->debug("DesktopServerWatcher::execute(): assigning handles");
+            m_plogwriter->debug("DesktopServerWatcher::onThreadMain(): assigning handles");
             otherSidePipeChanTo->assignHandlesFor(m_pprocess->getProcessHandle(), false);
             otherSidePipeChanFrom->assignHandlesFor(m_pprocess->getProcessHandle(), false);
 
@@ -167,13 +167,13 @@ namespace remoting_windows
 
             // Destroying other side objects
             delete otherSidePipeChanTo;
-            m_plogwriter->debug("DesktopServerWatcher::execute(): Destroyed otherSidePipeChanTo");
+            m_plogwriter->debug("DesktopServerWatcher::onThreadMain(): Destroyed otherSidePipeChanTo");
             otherSidePipeChanTo = 0;
             delete otherSidePipeChanFrom;
-            m_plogwriter->debug("DesktopServerWatcher::execute(): Destroyed otherSidePipeChanFrom");
+            m_plogwriter->debug("DesktopServerWatcher::onThreadMain(): Destroyed otherSidePipeChanFrom");
             otherSidePipeChanFrom = 0;
 
-            m_plogwriter->debug("DesktopServerWatcher::execute(): Try to call onReconnect()");
+            m_plogwriter->debug("DesktopServerWatcher::onThreadMain(): Try to call onReconnect()");
             m_preconnectionlistener->onReconnect(ownSidePipeChanTo, ownSidePipeChanFrom);
 
             m_pprocess->waitForExit();
@@ -196,7 +196,7 @@ namespace remoting_windows
       }
    }
 
-   void DesktopServerWatcher::onTerminate() { m_pprocess->stopWait(); }
+   void DesktopServerWatcher::onTermThread() { m_pprocess->stopWait(); }
 
    void DesktopServerWatcher::start()
    {

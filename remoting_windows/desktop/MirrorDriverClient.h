@@ -85,8 +85,8 @@ namespace remoting_windows
    private:
       virtual bool processMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam);
 
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
       void dispose();
 

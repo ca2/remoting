@@ -68,7 +68,7 @@ namespace remoting_node
       int action;
       char c;
 
-      if (sscanf(pszString, "%15[0123456789.]:{}%c", &firstIp, &action, &c) != 2) {
+      if (sscanf(pszString, "%15[0123456789.]:%d%c", &firstIp, &action, &c) != 2) {
          return false;
       }
 
@@ -92,7 +92,7 @@ namespace remoting_node
       int action;
       char c;
 
-      if (sscanf(pszString, "%15[0123456789.]-%15[0123456789.]:{}%c", &firstIp, &lastIp, &action, &c) != 3) {
+      if (sscanf(pszString, "%15[0123456789.]-%15[0123456789.]:%d%c", &firstIp, &lastIp, &action, &c) != 3) {
          return false;
       }
 
@@ -117,7 +117,7 @@ namespace remoting_node
       int action;
       char c;
 
-      if (sscanf(pszString, "%15[0123456789.]/%15[0123456789.]:{}%c", &pattern, &subnet, &action, &c) != 3) {
+      if (sscanf(pszString, "%15[0123456789.]/%15[0123456789.]:%d%c", &pattern, &subnet, &action, &c) != 3) {
          return false;
       }
 

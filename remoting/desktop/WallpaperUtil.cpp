@@ -95,51 +95,51 @@ namespace remoting
       }
    }
 
-//   void WallpaperUtil::restoreWallpaper()
-//   {
-//      // FIXME: Remove log from here. Log only from caller.
-//      m_plogwriter->information("Try to restore wallpaper");
-//      ::subsystem::Impersonator impersonator;
-//      impersonator.initialize_impersonator(m_plogwriter);
-//      ::subsystem::AutoImpersonator autoimpersonator(&impersonator, m_plogwriter);
-//      int result;
-//
-//      if (m_strWallpaperPath.length() == 0)
-//      {
-//         result = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, 0, 0);
-//      }
-//      else
-//      {
-//         result = SystemParametersInfo(SPI_SETDESKWALLPAPER, m_strWallpaperPath.length(), (void *)m_strWallpaperPath.c_str(), 0);
-//      }
-//
-//      if (result == 0)
-//      {
-//         throw ::subsystem::SystemException("Cannot restore desktop wallpaper");
-//      }
-//   }
-//
-//   void WallpaperUtil::disableWallpaper()
-//   {
-//      m_plogwriter->information("Try to disable wallpaper");
-//      ::subsystem::Impersonator impersonator;
-//      impersonator.initialize_impersonator(m_plogwriter);
-//      ::subsystem::AutoImpersonator ai(&impersonator, m_plogwriter);
-//      WCHAR path[MAX_PATH] = L"";
-//
-//      if (SystemParametersInfo(SPI_GETDESKWALLPAPER, MAX_PATH, path, 0) == 0)
-//      {
-//         path[0] = '\0';
-//      }
-//
-//      WCHAR pathEmptyNew[MAX_PATH] = L"";
-//
-//      if (SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, pathEmptyNew, 0) == 0)
-//      {
-//         throw ::subsystem::SystemException("Cannot disable desktop wallpaper");
-//      }
-//      m_strWallpaperPath = ::string(path);
-//   }
+   void WallpaperUtil::restoreWallpaper()
+   {
+      // // FIXME: Remove log from here. Log only from caller.
+      // m_plogwriter->information("Try to restore wallpaper");
+      // ::subsystem::Impersonator impersonator;
+      // impersonator.initialize_impersonator(m_plogwriter);
+      // ::subsystem::AutoImpersonator autoimpersonator(&impersonator, m_plogwriter);
+      // int result;
+      //
+      // if (m_strWallpaperPath.length() == 0)
+      // {
+      //    result = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, 0, 0);
+      // }
+      // else
+      // {
+      //    result = SystemParametersInfo(SPI_SETDESKWALLPAPER, m_strWallpaperPath.length(), (void *)m_strWallpaperPath.c_str(), 0);
+      // }
+      //
+      // if (result == 0)
+      // {
+      //    throw ::subsystem::SystemException("Cannot restore desktop wallpaper");
+      // }
+   }
+
+   void WallpaperUtil::disableWallpaper()
+   {
+      // m_plogwriter->information("Try to disable wallpaper");
+      // ::subsystem::Impersonator impersonator;
+      // impersonator.initialize_impersonator(m_plogwriter);
+      // ::subsystem::AutoImpersonator ai(&impersonator, m_plogwriter);
+      // WCHAR path[MAX_PATH] = L"";
+      //
+      // if (SystemParametersInfo(SPI_GETDESKWALLPAPER, MAX_PATH, path, 0) == 0)
+      // {
+      //    path[0] = '\0';
+      // }
+      //
+      // WCHAR pathEmptyNew[MAX_PATH] = L"";
+      //
+      // if (SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, pathEmptyNew, 0) == 0)
+      // {
+      //    throw ::subsystem::SystemException("Cannot disable desktop wallpaper");
+      // }
+      // m_strWallpaperPath = ::string(path);
+   }
 
 
 } // namespace remoting

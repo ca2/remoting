@@ -55,7 +55,7 @@ namespace remoting_windows
 
          // At this point the all DesktopServerWatcher's callback resources is initialized.
          m_plogwriter->debug("DesktopClientImpl: Resuming DesktopServerWatcher");
-         m_pdesktopserverwatcher->resume();
+         m_pdesktopserverwatcher->resumeThread();
 
          m_plogwriter->debug("DesktopClientImpl: Creating BlockingGate wrappers for the ReconnectingChannel(s)");
          m_pgateClientToServer = new BlockingGate(m_pchannelClientToServer);
@@ -79,7 +79,7 @@ namespace remoting_windows
          m_pgatekicker = new GateKicker(m_pgateClientToServer);
          // Start dispatcher after handler registrations
          m_plogwriter->debug("DesktopClientImpl: Resuming DesktopSrvDispatcher");
-         m_pdesktopsrvdispatcher->resume();
+         m_pdesktopsrvdispatcher->resumeThread();
          m_plogwriter->debug("DesktopClientImpl: Calling onConfigReload(0)");
          onConfigReload(0);
 
@@ -93,14 +93,14 @@ namespace remoting_windows
          throw;
       }
       m_plogwriter->debug("DesktopClientImpl: Resuming self thread");
-      resume();
+      resumeThread();
    }
 
    DesktopClientImpl::~DesktopClientImpl()
    {
       m_plogwriter->information("Deleting DesktopClientImpl");
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
       freeResource();
       m_plogwriter->information("DesktopClientImpl deleted");
    }
@@ -194,15 +194,15 @@ namespace remoting_windows
       m_pchannelServerToClient->replaceChannel(newChannelFrom);
    }
 
-   void DesktopClientImpl::onTerminate() { m_happeningNewUpdate.set_happening(); }
+   void DesktopClientImpl::onTermThread() { m_happeningNewUpdate.set_happening(); }
 
-   void DesktopClientImpl::execute()
+   void DesktopClientImpl::onThreadMain()
    {
       m_plogwriter->information("DesktopClientImpl thread started");
 
       while (!isThreadTerminating())
       {
-         m_happeningNewUpdate.wait();
+         m_happeningNewUpdate.waitThreadToFinish();
          if (!isThreadTerminating())
          {
             sendUpdate();

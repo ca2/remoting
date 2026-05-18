@@ -55,8 +55,8 @@ namespace remoting_windows
       virtual ~DesktopClientImpl();
 
    protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
    private:
       // Interface functions

@@ -44,7 +44,7 @@ namespace remoting_windows
    //     pixelFormat.blueShift = 0;
    //     m_pframebufferWork->setProperties(size, pixelFormat);
    //     m_detectionEnabled = false;
-   //     resume();
+   //     resumeThread();
    //  }
 
 
@@ -55,8 +55,8 @@ namespace remoting_windows
 
    DummyScreenDriver::~DummyScreenDriver()
    {
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
    }
 
 
@@ -77,16 +77,16 @@ namespace remoting_windows
       pixelFormat.blueShift = 0;
       m_pframebufferWork->setProperties(size, pixelFormat);
       m_detectionEnabled = false;
-      resume();
+      resumeThread();
    }
 
-   void DummyScreenDriver::onTerminate() { m_happeningSleeper.set_happening(); }
+   void DummyScreenDriver::onTermThread() { m_happeningSleeper.set_happening(); }
 
-   void DummyScreenDriver::execute()
+   void DummyScreenDriver::onThreadMain()
    {
       while (!isThreadTerminating())
       {
-         m_happeningSleeper.wait(m_interval * 1_ms);
+         m_happeningSleeper.waitThreadToFinish(m_interval * 1_ms);
          if (!isThreadTerminating())
          {
             try

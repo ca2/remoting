@@ -81,8 +81,8 @@ namespace remoting_windows
 
       void startUpdateSearching();
 
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
    };
 

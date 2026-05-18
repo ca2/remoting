@@ -66,8 +66,8 @@ namespace remoting_windows
 
    void MirrorScreenDriver::terminateDetection()
    {
-      terminate();
-      wait();
+      setThreadToFinish();
+      waitThreadToFinish();
    }
 
    void MirrorScreenDriver::initFramebuffer()
@@ -165,7 +165,7 @@ namespace remoting_windows
 
    void MirrorScreenDriver::startUpdateSearching() { resumeThread(); }
 
-   void MirrorScreenDriver::execute()
+   void MirrorScreenDriver::onThreadMain()
    {
       ::remoting::Region m_regionChanged;
       ::i32_rectangle rectangleChanged;
@@ -206,7 +206,7 @@ namespace remoting_windows
       }
    }
 
-   void MirrorScreenDriver::onTerminate() { m_updateTimeout.set_happening(); }
+   void MirrorScreenDriver::onTermThread() { m_updateTimeout.set_happening(); }
 
 
 } // namespace remoting_windows
