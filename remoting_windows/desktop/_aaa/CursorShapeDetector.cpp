@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "CursorShapeDetector.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    const int SLEEP_TIME = 100;
@@ -58,7 +58,7 @@ namespace remoting_macos
    {
       m_plogwriter->information("mouse shape detector thread id = {}", (::iptr) getThreadId());
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          bool isCursorShapeChanged;
          {
@@ -75,7 +75,7 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

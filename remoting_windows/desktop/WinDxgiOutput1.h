@@ -26,18 +26,18 @@
 
 
 
-#include "remoting/remoting_macos/_common_header.h"
-#include "remoting/remoting_macos/desktop/WinDxgiOutput.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutput.h"
 
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
-   class CLASS_DECL_REMOTING_MACOS WinDxgiOutput1 :
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutput1 :
    virtual public ::particle
    {
    public:
@@ -58,7 +58,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

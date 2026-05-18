@@ -29,7 +29,7 @@
 //#include "remoting/remoting/region/::i32_point.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING UpdateContainer
@@ -60,7 +60,7 @@ namespace remoting_macos
    //// __UPDATECONTAINER_H__
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

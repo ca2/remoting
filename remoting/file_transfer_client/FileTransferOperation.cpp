@@ -56,7 +56,7 @@ namespace remoting
          m_isTerminating = true;
       }
 
-      bool FileTransferOperation::isTerminating()
+      bool FileTransferOperation::isThreadTerminating()
       {
          return m_isTerminating;
       }

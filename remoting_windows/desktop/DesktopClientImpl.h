@@ -40,11 +40,11 @@
 #include "remoting/remoting/desktop_ipc/ReconnectionListener.h"
 #include "remoting/remoting/desktop/UpdateListener.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    //class CLASS_DECL_REMOTING DesktopClientImpl : public AnEventListener, public ReconnectionListener, public Thread, public DesktopBaseImpl
-   class CLASS_DECL_REMOTING_MACOS DesktopClientImpl :
+   class CLASS_DECL_REMOTING_WINDOWS DesktopClientImpl :
       virtual public ::remoting::ReconnectionListener,
       virtual public ::subsystem::Thread,
       virtual public ::remoting::DesktopBaseImpl
@@ -96,7 +96,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

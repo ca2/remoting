@@ -31,7 +31,7 @@
 #include "subsystem/thread/Lockable.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -88,7 +88,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

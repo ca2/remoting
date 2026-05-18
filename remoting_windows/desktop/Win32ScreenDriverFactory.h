@@ -24,15 +24,15 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting/desktop/ScreenDriverFactory.h"
 #include "remoting/remoting/node_config/ServerConfig.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_MACOS Win32ScreenDriverFactory :
+   class CLASS_DECL_REMOTING_WINDOWS Win32ScreenDriverFactory :
       virtual public ::remoting::ScreenDriverFactory
    {
    public:
@@ -78,7 +78,7 @@ namespace remoting_macos
 
    //// __WIN32SCREENDRIVERFACTORY_H__
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

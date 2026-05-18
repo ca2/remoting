@@ -27,7 +27,7 @@
 
 //#include "subsystem/thread/lockable_critical_section.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING ::remoting::UpdateListener :
@@ -47,7 +47,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

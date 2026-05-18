@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_macos/desktop/WinDxCriticalException.h"
-#include "remoting/remoting_macos/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_macos/desktop/WinDxgiOutput.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutput.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -91,5 +91,5 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  

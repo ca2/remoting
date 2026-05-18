@@ -26,12 +26,12 @@
 
 
 #include "remoting/remoting/region/Region.h"
-#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_MACOS Win8DuplicationListener :
+   class CLASS_DECL_REMOTING_WINDOWS Win8DuplicationListener :
    virtual public ::particle
    {
    public:
@@ -52,7 +52,7 @@ namespace remoting_macos
 
    //// __WIN8DUPLICATIONLISTENER_H__
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

@@ -43,7 +43,7 @@ void ParentWatcher::onTerminate()
 
 void ParentWatcher::execute()
 {
-  while (!isTerminating()) {
+  while (!isThreadTerminating()) {
     if (!m_parentProcess.isAlive()) {
       m_parentEventListener->onParentTerminate();
     }

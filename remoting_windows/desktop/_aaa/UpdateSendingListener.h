@@ -30,7 +30,7 @@
 #include "UpdateContainer.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING UpdateSendingListener
@@ -42,4 +42,4 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows

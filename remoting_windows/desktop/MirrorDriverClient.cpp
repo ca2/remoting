@@ -26,10 +26,10 @@
 #include "subsystem/platform/Exception.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/platform/Registry.h"
-// FIXME: Why the class CLASS_DECL_REMOTING_MACOS should depence from the remoting_node_desktop project?
+// FIXME: Why the class CLASS_DECL_REMOTING_WINDOWS should depence from the remoting_node_desktop project?
 //#include "remoting/node_desktop/NamingDefs.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    ::string_literal MirrorDriverClient::MINIPORT_REGISTRY_PATH = "SYSTEM\\CurrentControlSet\\Hardware Profiles\\"
@@ -51,7 +51,7 @@ namespace remoting_macos
       load();
       connect();
 
-      resume();
+      resumeThread();
       m_initListener.wait();
       if (!m_messagewindowPropertyChangeListener.is_window())
       {
@@ -421,17 +421,17 @@ namespace remoting_macos
 
    void MirrorDriverClient::execute()
    {
-      if (!isTerminating())
+      if (!isThreadTerminating())
       {
          m_messagewindowPropertyChangeListener.createMessageWindow({}, this);
          m_plogwriter->information("Mirror driver client window has been created (hwnd = {})",
-                                   ::operating_system_window_as_uptr(m_messagewindowPropertyChangeListener.operating_system_window()));
+                                   as_u64(m_messagewindowPropertyChangeListener.operating_system_window()));
       }
 
       m_initListener.set_happening();
       auto hwndMessageWindow = ::as_HWND(m_messagewindowPropertyChangeListener.operating_system_window());
       MSG msg;
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          if (PeekMessage(&msg, hwndMessageWindow, 0, 0, PM_REMOVE) != 0)
          {
@@ -452,11 +452,11 @@ namespace remoting_macos
                terminate();
             }
          }
-         Thread::yield();
+         Thread::threadYield();
       }
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  
 

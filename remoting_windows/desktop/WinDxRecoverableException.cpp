@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_macos/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -36,4 +36,4 @@ namespace remoting_macos
    WinDxRecoverableException::~WinDxRecoverableException() {}
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows

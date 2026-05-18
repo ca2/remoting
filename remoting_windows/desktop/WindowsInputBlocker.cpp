@@ -26,7 +26,7 @@
 #include "subsystem/platform/Exception.h"
 #include "subsystem/thread/AutoLock.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
    lockable_critical_section WindowsInputBlocker::m_instanceMutex;
    HHOOK WindowsInputBlocker::m_hKeyboardHook = 0;
@@ -281,7 +281,7 @@ namespace remoting_macos
 
       MSG msg;
       try {
-         while (!isTerminating()) {
+         while (!isThreadTerminating()) {
             if (m_isKeyboardBlocking && m_hKeyboardHook == 0) {
                // FIXME: write error handler
                bool res = setKeyboardFilterHook(true);
@@ -345,4 +345,4 @@ namespace remoting_macos
       setSoftKeyboardFilterHook(false);
       setSoftMouseFilterHook(false);
    }
-} // namespace remoting_macos
+} // namespace remoting_windows

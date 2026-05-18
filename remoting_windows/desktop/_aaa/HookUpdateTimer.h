@@ -29,7 +29,7 @@
 #include "::remoting::UpdateListener.h"
 #include "acme/parallelization/happening.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    // This class  is a timer that after calling the sear() function
@@ -63,4 +63,4 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows

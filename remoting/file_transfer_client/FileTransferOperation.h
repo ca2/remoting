@@ -79,7 +79,7 @@ namespace remoting
          // Sets terminating flag to true in this operation.
          //
          // Remark: subclasses of FileTransferOperation must finish
-         // execution when protected isTerminating method returns true.
+         // execution when protected isThreadTerminating method returns true.
          //
 
          virtual void terminate();
@@ -90,7 +90,7 @@ namespace remoting
          // Returns value of m_isTerminating flag
          //
 
-         virtual bool isTerminating();
+         virtual bool isThreadTerminating();
 
          //
          // Some helper methods that will be used by child classes.

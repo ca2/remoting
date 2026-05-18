@@ -123,7 +123,7 @@ namespace remoting
 
       void UploadOperation::onUploadDataReply(DataInputStream * pinput)
       {
-         if (isTerminating()) {
+         if (isThreadTerminating()) {
             gotoNext();
             return ;
          }
@@ -291,7 +291,7 @@ namespace remoting
 
       void UploadOperation::startUpload()
       {
-         if (isTerminating()) {
+         if (isThreadTerminating()) {
             killOp();
             return ;
          } // terminate operation is needed
@@ -315,7 +315,7 @@ namespace remoting
             processFile();
          } // if not directory
 
-         if (isTerminating()) {
+         if (isThreadTerminating()) {
             killOp();
             return ;
          } // terminate operation is needed
@@ -393,7 +393,7 @@ namespace remoting
                      gotoNext();
                      return ;
                   case CopyFileEventListener::TFE_CANCEL:
-                     if (!isTerminating()) {
+                     if (!isThreadTerminating()) {
                         terminate();
                      } // if not terminating
                      return ;

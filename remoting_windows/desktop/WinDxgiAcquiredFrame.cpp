@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_macos/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_macos/desktop/WinDxgiAcquiredFrame.h"
+#include "remoting/remoting_windows/desktop/WinDxgiAcquiredFrame.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -64,6 +64,6 @@ namespace remoting_macos
    DXGI_OUTDUPL_FRAME_INFO *WinDxgiAcquiredFrame::getFrameInfo() { return &m_frameInfo; }
 
 
-} // namespace remoting_macos
-//namespace remoting_macos
+} // namespace remoting_windows
+//namespace remoting_windows
 //{

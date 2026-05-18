@@ -25,7 +25,7 @@
 #include "MirrorScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    // MirrorScreenDriver::MirrorScreenDriver(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
@@ -62,7 +62,7 @@ namespace remoting_macos
    }
 
 
-   void MirrorScreenDriver::executeDetection() { resume(); }
+   void MirrorScreenDriver::executeDetection() { resumeThread(); }
 
    void MirrorScreenDriver::terminateDetection()
    {
@@ -163,7 +163,7 @@ namespace remoting_macos
       return true;
    }
 
-   void MirrorScreenDriver::startUpdateSearching() { resume(); }
+   void MirrorScreenDriver::startUpdateSearching() { resumeThread(); }
 
    void MirrorScreenDriver::execute()
    {
@@ -171,7 +171,7 @@ namespace remoting_macos
       ::i32_rectangle rectangleChanged;
       unsigned long currentCounter = 0;
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_updateTimeout.wait(20 * 1_ms);
 
@@ -209,7 +209,7 @@ namespace remoting_macos
    void MirrorScreenDriver::onTerminate() { m_updateTimeout.set_happening(); }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  
 
 

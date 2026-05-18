@@ -64,11 +64,11 @@ namespace remoting
                  " = %#x, bExtended = %#", (::u32)keyhappening.m_euserkey, keyhappening.m_bDown,
                           keyhappening.m_bExtendedKey);
 
-      auto ekey = keyhappening.m_euserkey;
+      auto euserkey = keyhappening.m_euserkey;
 #ifdef WINDOWS
        // Ignoring win key (when fullscreen mode is off).
        if (m_winKeyIgnore) {
-          if (virtKey == VK_LWIN || virtKey == VK_RWIN) { // Ignoring the Win key
+          if (euserkey == ::user::e_key_left_command || euserkey == ::user::e_key_right_command) { // Ignoring the Win key
              m_plogwriter->debug("Ignoring the Win key event");
              return;
           }
@@ -101,17 +101,17 @@ namespace remoting
         (::u32)capsToggled);
 
       // Without distinguishing between left and right modifiers.
-      m_keyboardstate.m_viewerKeyState[constrain(ekey, ::user::e_key_none, ::user::e_key_count)] = down ? 128 : 0;
+      m_keyboardstate.m_viewerKeyState[constrain(euserkey, ::user::e_key_none, ::user::e_key_count)] = down ? 128 : 0;
       m_keyboardstate.m_viewerKeyState[::user::e_key_capslock] = capsToggled ? 1 : 0;
 
       //bool extended = (addKeyData & 0x1000000) != 0; // 24 bit
       bool extended = keyhappening.m_bExtendedKey;
-      ekey = distinguishLeftRightModifier(ekey, extended);
+      euserkey = distinguishLeftRightModifier(euserkey, extended);
 
       // With distinguishing between left and right modifiers.
-      m_keyboardstate.m_serverKeyState[constrain(ekey, ::user::e_key_none, ::user::e_key_count)] = down ? 128 : 0;
+      m_keyboardstate.m_serverKeyState[constrain(euserkey, ::user::e_key_none, ::user::e_key_count)] = down ? 128 : 0;
       ::u32 rfbSym;
-      if (m_keyMap.virtualCodeToKeySym(&rfbSym, constrain(ekey, ::user::e_key_none, ::user::e_key_count))) {
+      if (m_keyMap.virtualCodeToKeySym(&rfbSym, constrain(euserkey, ::user::e_key_none, ::user::e_key_count))) {
          // Special case for VK_RETURN that have no self numpad code.
          // FIXME: May be replace this code to the virtualCodeToKeySym() function?
          if (rfbSym == XK_Return && extended) {
@@ -123,7 +123,7 @@ namespace remoting
          sendKeySymEvent(rfbSym, down);
       } else {
          ::wstring chars;
-         bool needReleaseModifiers = vkCodeToString(ekey, down, &chars);
+         bool needReleaseModifiers = vkCodeToString(euserkey, down, &chars);
          if (ctrlPressed && altPressed && needReleaseModifiers) {
             m_plogwriter->debug("Release the ctrl and alt"
               " modifiers before send the key event(s)");

@@ -120,7 +120,7 @@ namespace remoting
 
       void RemoteFilesDeleteOperation::remove(bool removeIfFolder)
       {
-         if (isTerminating()) {
+         if (isThreadTerminating()) {
             killOp();
             return ;
          }

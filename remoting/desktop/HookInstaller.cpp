@@ -1,4 +1,4 @@
-// Copyright (C) 2012 GlavSoft LLC.
+// Copyright (C) 2010,2011,2012 GlavSoft LLC.
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
@@ -21,39 +21,29 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
+#include "framework.h"
+#include "HookInstaller.h"
 
-#pragma once
-
-
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinD3D11Device.h"
-
-
-namespace remoting_windows
+namespace remoting
 {
 
-   // #include aaa_<d3d11.h>
-   // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiDevice
+   HookInstaller::HookInstaller()
    {
-   public:
-      // Uses WinD3D11Device to create internal handle
-      WinDxgiDevice(WinD3D11Device *winD3D11Device);
-      virtual ~WinDxgiDevice();
 
-      HRESULT getParent(REFIID riid, void **ppvObject);
+   }
 
-   private:
-      IDXGIDevice *m_dxgiDevice;
-   };
+   HookInstaller::~HookInstaller() { uninstall(); }
 
+   void HookInstaller::install(const ::operating_system::window & operatingsystemwindow)
+   {
 
-} // namespace remoting_windows
+   }
 
+   void HookInstaller::uninstall()
+   {
 
-
+   }
 
 
-
-
+} // namespace remoting

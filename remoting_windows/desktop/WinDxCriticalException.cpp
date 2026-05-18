@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_macos/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -36,4 +36,4 @@ namespace remoting_macos
    WinDxCriticalException::~WinDxCriticalException() {}
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows

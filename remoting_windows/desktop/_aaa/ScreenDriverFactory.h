@@ -31,7 +31,7 @@
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 
 {
 
@@ -48,7 +48,7 @@ namespace remoting_macos
    //// __SCREENDRIVERFACTORY_H__
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

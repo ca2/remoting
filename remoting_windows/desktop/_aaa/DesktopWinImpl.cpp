@@ -33,7 +33,7 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "remoting/remoting/win_system/WindowsDisplays.h"
 
-namespace remoting_macos
+namespace remoting_windows
 
 {
 
@@ -97,10 +97,10 @@ namespace remoting_macos
    {
       m_plogwriter->information("DesktopWinImpl thread started");
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_happeningNewUpdate.wait();
-         if (!isTerminating())
+         if (!isThreadTerminating())
          {
             m_plogwriter->debug("DesktopWinImpl sendUpdate()");
             sendUpdate();
@@ -148,7 +148,7 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  
 
 

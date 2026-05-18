@@ -27,7 +27,7 @@
 #include "acme/_operating_system.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    GrabOptimizator::GrabOptimizator() :
@@ -380,5 +380,5 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  

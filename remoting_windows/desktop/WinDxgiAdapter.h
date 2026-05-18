@@ -24,16 +24,16 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
-#include "remoting/remoting_macos/desktop/WinDxgiDevice.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinDxgiDevice.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING_MACOS WinDxgiAdapter
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiAdapter
    {
    public:
       WinDxgiAdapter(WinDxgiDevice *winDxgiDevice);
@@ -49,7 +49,7 @@ namespace remoting_macos
    };
 
 
-} //  namespace remoting_macos
+} //  namespace remoting_windows
 
 
 

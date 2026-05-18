@@ -29,7 +29,7 @@
 #include "::remoting::ScreenDriver.h"
 #include "ScreenDriverFactory.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    // This class  contain a base architecture implementation of the UpdateHandler class.
@@ -79,7 +79,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

@@ -31,7 +31,7 @@
 #include "remoting/remoting/desktop_ipc/ReconnectionListener.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    /**
@@ -74,7 +74,7 @@ namespace remoting_macos
 
  
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  
 
 

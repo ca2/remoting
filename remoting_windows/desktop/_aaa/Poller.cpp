@@ -27,7 +27,7 @@
 #include "remoting/remoting/region/Region.h"
 #include "remoting/remoting/node_config/Configurator.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    //
@@ -81,7 +81,7 @@ namespace remoting_macos
          m_pupdatekeeper->addChangedRect(fullScreenRect);
       }
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          Region region;
 
@@ -135,6 +135,6 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 

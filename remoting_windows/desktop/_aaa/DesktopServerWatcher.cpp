@@ -38,7 +38,7 @@
 #include "subsystem/platform/subsystem.h"
 //#include aaa_<time.h>
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -116,7 +116,7 @@ namespace remoting_macos
 
       AnonymousPipe *ownSidePipeChanTo, *otherSidePipeChanTo, *ownSidePipeChanFrom, *otherSidePipeChanFrom;
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          try
          {
@@ -280,7 +280,7 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

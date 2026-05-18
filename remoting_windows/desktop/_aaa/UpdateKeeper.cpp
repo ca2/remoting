@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::remoting::UpdateKeeper.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -254,7 +254,7 @@ namespace remoting_macos
 
    }
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  
 
 

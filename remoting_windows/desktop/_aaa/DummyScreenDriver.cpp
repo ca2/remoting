@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "DummyScreenDriver.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    //
@@ -84,10 +84,10 @@ namespace remoting_macos
 
    void DummyScreenDriver::execute()
    {
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_happeningSleeper.wait(m_interval * 1_ms);
-         if (!isTerminating())
+         if (!isThreadTerminating())
          {
             try
             {
@@ -135,7 +135,7 @@ namespace remoting_macos
    bool DummyScreenDriver::applyNewScreenProperties() { return true; }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  
 
 

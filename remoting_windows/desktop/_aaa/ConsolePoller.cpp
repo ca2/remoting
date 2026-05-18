@@ -26,7 +26,7 @@
 #include "remoting/remoting/node_config/Configurator.h"
 #include "acme/_operating_system.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    // ConsolePoller::ConsolePoller(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
@@ -71,7 +71,7 @@ namespace remoting_macos
 
       ::i32_rectangle scanRect;
       Region region;
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          ::i32_rectangle conRect = getConsoleRect();
          if (!conRect.is_empty())
@@ -134,7 +134,7 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

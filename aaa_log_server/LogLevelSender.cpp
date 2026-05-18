@@ -64,7 +64,7 @@ void LogLevelSender::updateLevel(unsigned char newLevel)
 void LogLevelSender::execute()
 {
   try {
-    while (!isTerminating()) {
+    while (!isThreadTerminating()) {
       m_happeningSleeper.waitForEvent();
       OutputStream *outStream;
       bool updateAvailable;

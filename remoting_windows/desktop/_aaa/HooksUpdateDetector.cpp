@@ -33,7 +33,7 @@
 #include "subsystem_windows/node/UipiControl.h"
 #include "subsystem/node/OperatingSystem.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 //    HooksUpdateDetector::HooksUpdateDetector(::remoting::UpdateKeeper * pupdatekeeper, ::remoting::UpdateListener * pupdatelistener,
@@ -123,7 +123,7 @@ namespace remoting_macos
    {
 #ifdef _WIN64
       m_plogwriter->debug("Loading the screenhook library for 32bit system with hookldr.exe");
-      if (!isTerminating())
+      if (!isThreadTerminating())
       {
          ::string path, folder;
          folder = MainSubsystem().OperatingSystem().getCurrentModuleFolderPath();;
@@ -168,7 +168,7 @@ namespace remoting_macos
    {
       m_plogwriter->information("Hooks update detector thread id = {}", getThreadId());
 
-      if (!isTerminating() && m_pmessagewindowTarget != 0)
+      if (!isThreadTerminating() && m_pmessagewindowTarget != 0)
       {
          m_pmessagewindowTarget->createMessageWindow();
          m_plogwriter->information("Hooks target window has been created (hwnd = {})", (::iptr)m_pmessagewindowTarget->_HWND());
@@ -186,7 +186,7 @@ namespace remoting_macos
       }
 
       bool hookInstalled = false;
-      while (!isTerminating() && !hookInstalled)
+      while (!isThreadTerminating() && !hookInstalled)
       {
          try
          {
@@ -210,13 +210,13 @@ namespace remoting_macos
 
       start32Loader();
 
-      if (!isTerminating())
+      if (!isThreadTerminating())
       {
          m_plogwriter->information("Hooks update detector has been successfully initialized");
       }
 
       MSG msg;
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          if (PeekMessage(&msg, m_pmessagewindowTarget->getHWND(), 0, 0, PM_REMOVE) != 0)
          {
@@ -263,5 +263,5 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  

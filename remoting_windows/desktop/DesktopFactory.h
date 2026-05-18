@@ -24,14 +24,14 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting/desktop/DesktopFactory.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
-   class CLASS_DECL_REMOTING_MACOS DesktopFactory :
+   class CLASS_DECL_REMOTING_WINDOWS DesktopFactory :
       virtual public ::remoting::DesktopFactory
    {
    public:
@@ -49,7 +49,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

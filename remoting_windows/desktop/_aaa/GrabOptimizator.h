@@ -32,7 +32,7 @@
 //#include aaa_<vector>
 //#include aaa_<list>
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    // This class  provides the screen grabbing by an optimal way.
@@ -110,7 +110,7 @@ namespace remoting_macos
 
  
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  
 
 

@@ -65,7 +65,7 @@
 */
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -119,7 +119,7 @@ namespace remoting_macos
 
    ////// __SCREENGRABBER_H__
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

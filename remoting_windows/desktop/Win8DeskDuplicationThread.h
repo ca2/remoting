@@ -26,21 +26,21 @@
 
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-#include "remoting/remoting_macos/desktop/Win8CursorShape.h"
+#include "remoting/remoting_windows/desktop/Win8CursorShape.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem/thread/GuiThread.h"
 
-#include "remoting/remoting_macos/_common_header.h"
-#include "remoting/remoting_macos/desktop/Win8DuplicationListener.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/Win8DuplicationListener.h"
 //#include "log_writer/LogWriter.h"
 
-#include "remoting/remoting_macos/desktop/WinCustomD3D11Texture2D.h"
-#include "remoting/remoting_macos/desktop/WinDxgiOutputDuplication.h"
+#include "remoting/remoting_windows/desktop/WinCustomD3D11Texture2D.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_MACOS Win8DeskDuplication :
+   class CLASS_DECL_REMOTING_WINDOWS Win8DeskDuplication :
       virtual public ::subsystem::GuiThread
    {
    public:
@@ -89,7 +89,7 @@ namespace remoting_macos
       bool m_hasRecoverableError;
 
 
-      // Use this variables as class CLASS_DECL_REMOTING_MACOS fields to avoid frequency memory allocations.
+      // Use this variables as class CLASS_DECL_REMOTING_WINDOWS fields to avoid frequency memory allocations.
       ::array_base<RECT> m_dirtyRects;
       ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 
@@ -102,7 +102,7 @@ namespace remoting_macos
    //// __WIN8DESKDUPLICATIONTHREAD_H__
 
 
-}// namespace remoting_macos
+}// namespace remoting_windows
 
 
 

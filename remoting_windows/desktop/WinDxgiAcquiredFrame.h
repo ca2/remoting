@@ -24,17 +24,17 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
-#include "remoting/remoting_macos/desktop/WinDxgiOutputDuplication.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING_MACOS WinDxgiAcquiredFrame
+   class CLASS_DECL_REMOTING_WINDOWS WinDxgiAcquiredFrame
    {
    public:
       WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, ::u32 timeOutMilliSec);
@@ -56,7 +56,7 @@ namespace remoting_macos
    //// __WINDXGIACQUIREDFRAME_H__
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

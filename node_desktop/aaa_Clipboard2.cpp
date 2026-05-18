@@ -163,7 +163,7 @@ void WindowsClipboard::execute()
   }
 
   MSG msg;
-  while (!isTerminating()) {
+  while (!isThreadTerminating()) {
     if (GetMessage(&msg, m_hwnd, 0, 0)) {
       DispatchMessage(&msg);
     } else {

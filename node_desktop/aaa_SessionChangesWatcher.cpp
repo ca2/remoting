@@ -54,7 +54,7 @@ void SessionChangesWatcher::execute()
   ::string prevDeskName, currDeskName;
   WindowsSubsystem()DesktopSelector::getThreadDesktopName(&prevDeskName);
 
-  while (!isTerminating()) {
+  while (!isThreadTerminating()) {
     DWORD currSessionId = prevSession;
     if (!isRdp) {
       currSessionId = WindowsSubsystem().WTS().getActiveConsoleSessionId(m_plogwriter);

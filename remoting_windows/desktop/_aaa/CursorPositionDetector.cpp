@@ -25,7 +25,7 @@
 #include "CursorPositionDetector.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    const int MOUSE_SLEEP_TIME = 10;
@@ -63,7 +63,7 @@ namespace remoting_macos
 
       ::i32_point curPoint;
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          curPoint = m_cursor.getCursorPos();
          if (m_lastCursorPos!= curPoint)
@@ -77,7 +77,7 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

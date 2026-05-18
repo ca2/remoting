@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "MirrorDriverClient.h"
 #include "subsystem/platform/RegistryKey.h"
 #include "remoting/remoting/desktop/DisplayEsc.h"
@@ -33,10 +33,10 @@
 #include "remoting/remoting/desktop/UpdateDetector.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_MACOS MirrorScreenDriver :
+   class CLASS_DECL_REMOTING_WINDOWS MirrorScreenDriver :
    virtual public ::remoting::UpdateDetector
    {
    public:
@@ -87,7 +87,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

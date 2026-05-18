@@ -31,7 +31,7 @@
 #include "subsystem/node/Cursor.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING CursorPositionDetector :
@@ -61,7 +61,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

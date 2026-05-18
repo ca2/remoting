@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "subsystem/thread/GuiThread.h"
 //#include "thread/LocalMutex.h"
 //#include "win-system/WinTimeMillis.h"
@@ -34,9 +34,9 @@
 
 // Only one instance of this class may be created.
 
-namespace remoting_macos
+namespace remoting_windows
 {
-   class CLASS_DECL_REMOTING_MACOS WindowsInputBlocker :
+   class CLASS_DECL_REMOTING_WINDOWS WindowsInputBlocker :
       virtual public ::remoting::InputBlocker,
    virtual public ::subsystem::GuiThread
    {
@@ -105,7 +105,7 @@ namespace remoting_macos
 
       ::subsystem::LogWriter *m_plogwriter;
    };
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

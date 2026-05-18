@@ -31,7 +31,7 @@
 
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -66,7 +66,7 @@ namespace remoting_macos
 
    //// __UPDATEDETECTOR_H__
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

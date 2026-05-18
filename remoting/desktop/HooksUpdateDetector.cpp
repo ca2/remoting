@@ -25,9 +25,9 @@
 #include "subsystem/_common_header.h"
 //#include "remoting/node_desktop/NamingDefs.h"
 #include "HooksUpdateDetector.h"
-
-#include "acme/operating_system/windows/_.h"
 #ifdef WINDOWS
+#include "acme/operating_system/windows/_.h"
+#include "remoting/desktop/HookInstaller.h"
 #include "subsystem_windows/node/MessageWindow.h"
 #include "subsystem_windows/node/UipiControl.h"
 #include "subsystem_windows/node/UipiControl.h"
@@ -103,7 +103,7 @@ void HooksUpdateDetector::destroy()
 //      {
 //         delete m_hookInstaller;
 //      }
-   m_pparticleHookInstalled.release();
+   m_phookinstaller.release();
    //if (m_pmessagewindowTarget != 0)
    //{
      // delete m_pmessagewindowTarget;
@@ -128,11 +128,11 @@ void HooksUpdateDetector::destroy()
 
       try
       {
-            m_pparticleHookInstalled = createø("::remoting::HookInstaller");
+            m_phookinstaller = createø < ::remoting::HookInstaller >();
       }
       catch (::exception &e)
       {
-         Thread::terminate();
+         Thread::setThreadToFinish();
          m_plogwriter->error("Failed to load the hook library: {}", e.get_message());
       }
       //HINSTANCE hinst = GetModuleHandle(0);
@@ -158,7 +158,7 @@ void HooksUpdateDetector::destroy()
    {
 #ifdef _WIN64
       m_plogwriter->debug("Loading the screenhook library for 32bit system with hookldr.exe");
-      if (!isTerminating())
+      if (!isThreadTerminating())
       {
          ::string path, folder;
          folder = MainSubsystem().OperatingSystem().getCurrentModuleFolderPath();;
@@ -206,7 +206,7 @@ void HooksUpdateDetector::destroy()
    {
       m_plogwriter->information("Hooks update detector thread id = {}", getThreadId());
 #ifdef WINDOWS
-      if (!isTerminating() && m_pmessagewindowTarget != 0)
+      if (!isThreadTerminating() && m_pmessagewindowTarget != 0)
       {
          m_pmessagewindowTarget->createMessageWindow();
          m_plogwriter->information("Hooks target window has been created (hwnd = {})", (::iptr)m_pmessagewindowTarget->_HWND());
@@ -226,11 +226,11 @@ void HooksUpdateDetector::destroy()
       }
 
       bool hookInstalled = false;
-      while (!isTerminating() && !hookInstalled)
+      while (!isThreadTerminating() && !hookInstalled)
       {
          try
          {
-            m_hookInstaller->install(::as_operating_system_window((HWND)m_pmessagewindowTarget->_HWND()));
+            m_phookinstaller->install(::as_operating_system_window((HWND)m_pmessagewindowTarget->_HWND()));
             hookInstalled = true;
          }
          catch (::exception &e)
@@ -239,7 +239,7 @@ void HooksUpdateDetector::destroy()
             m_initWaiter.wait(5000 * 1_ms);
             try
             {
-               m_hookInstaller->uninstall();
+               m_phookinstaller->uninstall();
             }
             catch (::exception &e)
             {
@@ -260,7 +260,7 @@ void HooksUpdateDetector::destroy()
       UINT message_SPEC_IPC_CODE = MainSubsystem().get_SPEC_IPC_CODE();
 
       MSG msg;
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          if (PeekMessage(&msg, hwndMessageWindowTarget, 0, 0, PM_REMOVE) != 0)
          {
@@ -286,16 +286,17 @@ void HooksUpdateDetector::destroy()
             if (WaitMessage() == 0)
             {
                m_plogwriter->error("Hooks update detector has failed");
-               Thread::terminate();
+               //Thread::terminate();
+               setThreadToFinish();
             }
          }
       }
 
       try
       {
-         if (m_hookInstaller != 0)
+         if (m_phookinstaller)
          {
-            m_hookInstaller->uninstall();
+            m_phookinstaller->uninstall();
          }
          terminate32Loader();
       }

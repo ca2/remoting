@@ -28,7 +28,7 @@
 #include "remoting/remoting/node_config/ConfigReloadListener.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING WallpaperUtil : protected ConfigReloadListener
@@ -65,7 +65,7 @@ namespace remoting_macos
    //// __WALLPAPERUTIL_H__
 
 
-}// namespace remoting_macos
+}// namespace remoting_windows
 
 
 

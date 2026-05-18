@@ -1,4 +1,4 @@
-// Copyright (C) 2012 GlavSoft LLC.
+// Copyright (C) 2010,2011,2012 GlavSoft LLC.
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
@@ -25,31 +25,43 @@
 #pragma once
 
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinD3D11Device.h"
+#include "subsystem/_common_header.h"
+//#include "subsystem/node/DynamicLibrary.h"
 
 
-namespace remoting_windows
+namespace remoting
 {
 
-   // #include aaa_<d3d11.h>
-   // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiDevice
+   class CLASS_DECL_REMOTING HookInstaller :
+      virtual public ::particle
    {
    public:
-      // Uses WinD3D11Device to create internal handle
-      WinDxgiDevice(WinD3D11Device *winD3D11Device);
-      virtual ~WinDxgiDevice();
 
-      HRESULT getParent(REFIID riid, void **ppvObject);
+      HookInstaller();
+      ~HookInstaller() override;
 
-   private:
-      IDXGIDevice *m_dxgiDevice;
+      // Instals hooks to windowed applications.
+      // targedWinHwnd - is hwnd to a target window that will receive
+      // hooked messages.
+      virtual void install(const ::operating_system::window & operatingsystemwindow);
+      // Uninstals hooks from windowed applications.
+      virtual void uninstall();
+
+//    //private:
+//       static ::string_literal LIBRARY_NAME;
+//
+// #ifdef WINDOWS
+//       static ::string_literal SET_HOOK_FUNCTION_NAME;
+//       static ::string_literal UNSET_HOOK_FUNCTION_NAME;
+// #endif
+//       ::subsystem::DynamicLibrary m_library;
+//       void * m_pSetHook;
+//       void * m_pUnSetHook;
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting
 
 
 

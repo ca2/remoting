@@ -26,7 +26,7 @@
 #include "subsystem/_common_header.h"
 #include "acme/_operating_system.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    CopyRectDetector::CopyRectDetector() {}
@@ -111,7 +111,7 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

@@ -32,7 +32,7 @@
 #include "remoting/remoting/region/Region.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    // This class  will be an abstract interface for user input such as keyboard,
@@ -71,7 +71,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

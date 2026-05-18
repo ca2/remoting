@@ -64,6 +64,7 @@ namespace remoting_client
    }
 bool CoreEventsAdapter::_disconnect()
 {
+      return true;
 }
    void CoreEventsAdapter::onAuthError(const AuthException *exception)
    {

@@ -32,7 +32,7 @@
 #include "acme/parallelization/happening.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING DummyScreenDriver : public ::remoting::ScreenDriver, ::subsystem::Thread
@@ -80,7 +80,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  
 
 

@@ -115,7 +115,7 @@ void LogConn::dispatch()
   DataOutputStream output(m_logListenChannel);
   // Simple dispatcher (normal phase)
   ::string logMess;
-  while (!isTerminating()) {
+  while (!isThreadTerminating()) {
     unsigned int processId = input.readUInt32();
     unsigned int threadId = input.readUInt32();
     class ::time dt(input.readUInt64());

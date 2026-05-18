@@ -102,7 +102,7 @@ namespace remoting
 
       bool LocalFilesDeleteOperation::deleteFile(::file::item *pfileitem)
       {
-         // if (Thread::isTerminating()) {
+         // if (Thread::isThreadTerminating()) {
          //   return false;
          // }
 
@@ -122,7 +122,7 @@ namespace remoting
             //
             //    for (::u32 i = 0; i < filesCount; i++) {
             //
-            //       if (Thread::isTerminating()) {
+            //       if (Thread::isThreadTerminating()) {
             //          return false;
             //       }
             //

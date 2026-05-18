@@ -32,7 +32,7 @@
 #include "remoting/remoting/desktop/DesktopConfigLocal.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    // DesktopClientImpl::DesktopClientImpl(ClipboardListener *pclipboardlistenerExternal,
@@ -148,7 +148,7 @@ namespace remoting_macos
 
          // At this point the all DesktopServerWatcher's callback resources is initialized.
          m_plogwriter->debug("DesktopClientImpl: Resuming DesktopServerWatcher");
-         m_pdesktopserverwatcher->resume();
+         m_pdesktopserverwatcher->resumeThread();
 
          m_plogwriter->debug("DesktopClientImpl: Creating BlockingGate wrappers for the ReconnectingChannel(s)");
          raw_construct_newø(m_pgateClientToServer, m_pchannelClientToServer);
@@ -289,10 +289,10 @@ namespace remoting_macos
    {
       m_plogwriter->information("DesktopClientImpl thread started");
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_happeningNewUpdate.wait();
-         if (!isTerminating())
+         if (!isThreadTerminating())
          {
             sendUpdate();
          }
@@ -310,6 +310,6 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 

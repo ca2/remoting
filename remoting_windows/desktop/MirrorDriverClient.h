@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting/desktop/UpdateKeeper.h"
 #include "remoting/remoting/desktop/UpdateListener.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
@@ -39,10 +39,10 @@
 //#include "remoting/remoting/desktop/DisplayEsc.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_MACOS MirrorDriverClient :
+   class CLASS_DECL_REMOTING_WINDOWS MirrorDriverClient :
       virtual public ::subsystem::GuiThread,
       virtual public ::subsystem::WindowMessageHandler
    {
@@ -126,7 +126,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

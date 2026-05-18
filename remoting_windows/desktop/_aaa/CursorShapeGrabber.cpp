@@ -25,7 +25,7 @@
 #include "CursorShapeGrabber.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
    CursorShapeGrabber::CursorShapeGrabber()
    {
@@ -39,4 +39,4 @@ namespace remoting_macos
    {
       return &m_cursorshape;
    }
-} // namespace remoting_macos
+} // namespace remoting_windows

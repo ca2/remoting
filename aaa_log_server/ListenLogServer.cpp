@@ -45,12 +45,12 @@ ListenLogServer::~ListenLogServer()
 
 void ListenLogServer::execute()
 {
-  while (!isTerminating()) {
+  while (!isThreadTerminating()) {
     try {
       NamedPipe *pipe = m_listenPipe->accept();
       m_connListener->onNewConnection(pipe);
     } catch (...) {
-      if (!isTerminating()) {
+      if (!isThreadTerminating()) {
         m_happeningTimer.waitForEvent(1000); // Pause
       }
     }

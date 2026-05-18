@@ -30,7 +30,7 @@
 #include "acme/parallelization/happening.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING ConsolePoller :
@@ -60,7 +60,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

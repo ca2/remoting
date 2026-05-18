@@ -156,7 +156,7 @@ namespace remoting
 
       void DownloadOperation::onDownloadDataReply(DataInputStream * pinput)
       {
-         if (isTerminating()) {
+         if (isThreadTerminating()) {
             gotoNext();
             return ;
          }
@@ -258,7 +258,7 @@ namespace remoting
 
       void DownloadOperation::startDownload()
       {
-         if (isTerminating()) {
+         if (isThreadTerminating()) {
             killOp();
             return ;
          } // if terminating
@@ -281,7 +281,7 @@ namespace remoting
             processFile();
          } // if not directory
 
-         if (isTerminating()) {
+         if (isThreadTerminating()) {
             killOp();
             return ;
          } // if terminating
@@ -315,7 +315,7 @@ namespace remoting
                   m_fileOffset = targetFileInfo.getSize();
                   break;
                case CopyFileEventListener::TFE_CANCEL:
-                  if (!isTerminating()) {
+                  if (!isThreadTerminating()) {
                      terminate();
                   } // if not terminating
                   return ;

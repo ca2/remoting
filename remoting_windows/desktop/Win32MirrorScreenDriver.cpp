@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_macos/desktop/Win32MirrorScreenDriver.h"
+#include "remoting/remoting_windows/desktop/Win32MirrorScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -83,4 +83,4 @@ namespace remoting_macos
    bool Win32MirrorScreenDriver::applyNewScreenProperties() { return m_mirrorDriver.applyNewProperties(); }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows

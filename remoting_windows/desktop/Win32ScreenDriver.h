@@ -24,17 +24,17 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
-#include "remoting/remoting_macos/desktop/Win32ScreenDriverBaseImpl.h"
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_windows/desktop/Win32ScreenDriverBaseImpl.h"
 #include "remoting/remoting/desktop/Poller.h"
 #include "remoting/remoting/desktop/ConsolePoller.h"
 #include "remoting/remoting/desktop/HooksUpdateDetector.h"
-#include "remoting/remoting_macos/desktop/WindowsScreenGrabber.h"
+#include "remoting/remoting_windows/desktop/WindowsScreenGrabber.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING_MACOS Win32ScreenDriver : public Win32ScreenDriverBaseImpl
+   class CLASS_DECL_REMOTING_WINDOWS Win32ScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
 
@@ -79,7 +79,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

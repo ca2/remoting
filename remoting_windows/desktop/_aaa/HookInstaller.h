@@ -29,7 +29,7 @@
 #include "subsystem/node/DynamicLibrary.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -57,7 +57,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

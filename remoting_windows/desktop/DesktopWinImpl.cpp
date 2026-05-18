@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopWinImpl.h"
-#include "remoting/remoting_macos/desktop/WindowsUserInput.h"
+#include "remoting/remoting_windows/desktop/WindowsUserInput.h"
 #include "remoting/remoting/node_config/Configurator.h"
 #include "remoting/remoting/desktop_ipc/UpdateHandlerClient.h"
 #include "remoting/remoting/desktop/UpdateHandlerImpl.h"
@@ -34,7 +34,7 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/Displays.h"
 
-namespace remoting_macos
+namespace remoting_windows
 
 {
    //
@@ -192,10 +192,10 @@ namespace remoting_macos
    {
       m_plogwriter->information("DesktopWinImpl thread started");
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_happeningNewUpdate.wait();
-         if (!isTerminating())
+         if (!isThreadTerminating())
          {
             m_plogwriter->debug("DesktopWinImpl sendUpdate()");
             sendUpdate();
@@ -244,7 +244,7 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  
 
 

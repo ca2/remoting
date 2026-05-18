@@ -28,8 +28,10 @@
 #include "UpdateDetector.h"
 #include "acme/parallelization/happening.h"
 //#ifdef Wi
-//#include "HookInstaller.h"
-//#include "subsystem_windows/node/MessageWindow.h"
+#ifdef WINDOWS
+namespace remoting { class HookInstaller; }
+namespace subsystem_windows { class MessageWindow; }
+#endif
 #include "HookUpdateTimer.h"
 #include "subsystem/node/Process.h"
 //#include "log_writer/LogWriter.h"
@@ -63,7 +65,7 @@ namespace remoting
       ///
       ///
 #ifdef WINDOWS
-      ::pointer < ::particle > m_pparticleHookInstaller;
+      ::pointer < ::remoting::HookInstaller > m_phookinstaller;
       ::pointer < ::subsystem_windows::MessageWindow  > m_pmessagewindowTarget;
 #endif
       ::pointer < HookUpdateTimer > m_phookupdatetimer;

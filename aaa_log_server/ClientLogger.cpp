@@ -160,7 +160,7 @@ void ClientLogWriter::execute()
 {
   DataInputStream levInput(m_levListenChan);
   try {
-    while (!isTerminating()) {
+    while (!isThreadTerminating()) {
       setLogBarrier(levInput.readUInt8());
     }
   } catch (...) {

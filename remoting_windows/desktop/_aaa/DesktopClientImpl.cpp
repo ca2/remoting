@@ -31,7 +31,7 @@
 #include "windows/WindowsUserInput.h"
 #include "DesktopConfigLocal.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    DesktopClientImpl::DesktopClientImpl(ClipboardListener *pclipboardlistenerExternal,
@@ -200,10 +200,10 @@ namespace remoting_macos
    {
       m_plogwriter->information("DesktopClientImpl thread started");
 
-      while (!isTerminating())
+      while (!isThreadTerminating())
       {
          m_happeningNewUpdate.wait();
-         if (!isTerminating())
+         if (!isThreadTerminating())
          {
             sendUpdate();
          }
@@ -221,6 +221,6 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 

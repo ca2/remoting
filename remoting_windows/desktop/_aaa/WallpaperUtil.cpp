@@ -29,7 +29,7 @@
 #include "acme/_operating_system.h"
 
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -140,7 +140,7 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

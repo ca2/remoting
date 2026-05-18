@@ -34,7 +34,7 @@
 #include "UpdateSendingListener.h"
 #include "subsystem/node/ClipboardListener.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
    // This class  is a base class CLASS_DECL_REMOTING for different implemetations of desktops
@@ -119,7 +119,7 @@ namespace remoting_macos
    };
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
 
 
 

@@ -26,9 +26,9 @@
 
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_macos/desktop/WinD3D11Device.h"
+#include "remoting/remoting_windows/desktop/WinD3D11Device.h"
 
-namespace remoting_macos
+namespace remoting_windows
 {
 
 
@@ -147,5 +147,5 @@ namespace remoting_macos
    }
 
 
-} // namespace remoting_macos
+} // namespace remoting_windows
  

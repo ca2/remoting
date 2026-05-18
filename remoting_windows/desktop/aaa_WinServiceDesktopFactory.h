@@ -24,13 +24,13 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting/desktop/DesktopFactory.h"
 
-// namespace remoting_macos
+// namespace remoting_windows
 // {
 //
-//    class CLASS_DECL_REMOTING_MACOS WinServiceDesktopFactory : public DesktopFactory
+//    class CLASS_DECL_REMOTING_WINDOWS WinServiceDesktopFactory : public DesktopFactory
 //    {
 //    public:
 //       WinServiceDesktopFactory();
@@ -42,7 +42,7 @@
 //    };
 //
 //
-// } // namespace remoting_macos
+// } // namespace remoting_windows
 //
 //
 
