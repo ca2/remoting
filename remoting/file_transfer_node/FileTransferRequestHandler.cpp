@@ -74,7 +74,7 @@ namespace remoting
         //m_enabled(enabled),
         m_plogwriter(plogwriter)
       {
-         m_pfiletransfersecurity = createø <FileTransferSecurity>();
+         m_pfiletransfersecurity = create_newø <FileTransferSecurity>();
          
          m_pfiletransfersecurity->initialize_file_transfer_security(pconfigurator, pdesktop, plogwriter);
          

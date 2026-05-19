@@ -207,11 +207,11 @@ namespace remoting_windows
          threadsNum = 12;
       DWORD millis = 1 << threadsNum; // delay up to 4 seconds if there are threads waiting to delete
       sleep(millis);
-      Thread *thread = new Win8DeskDuplication(m_pframebufferProperty, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
+      auto pthread = allocateø Win8DeskDuplication(m_pframebufferProperty, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
                                                &m_cursorMutex, this, dxgiOutputArray, m_plogwriter);
-      DWORD id = thread->getThreadId();
+      DWORD id = pthread->getThreadId();
       m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);
-      m_deskDuplThreadBundle.addThread(thread);
+      m_deskDuplThreadBundle.addThread(pthread);
    }
 
    void Win8ScreenDriverImpl::onThreadMain()

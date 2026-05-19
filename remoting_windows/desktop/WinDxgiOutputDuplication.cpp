@@ -37,7 +37,15 @@ namespace remoting_windows
    WinDxgiOutputDuplication::WinDxgiOutputDuplication(WinDxgiOutput1 *dxgiOutput, WinD3D11Device *d3D11Device) :
        m_outDupl(0)
    {
-      HRESULT hr = dxgiOutput->getDxgiOutput1()->DuplicateOutput(d3D11Device->getDevice(), &m_outDupl);
+
+      auto pdxgiOutput = dxgiOutput;
+
+      auto pdxgiOutput1 = dxgiOutput->getDxgiOutput1();
+
+      auto pd3D11Device = d3D11Device;
+
+      auto pdevice = pd3D11Device->getDevice();
+      HRESULT hr = pdxgiOutput1->DuplicateOutput(pdevice, &m_outDupl);
       if (FAILED(hr))
       {
          if (hr == DXGI_ERROR_NOT_CURRENTLY_AVAILABLE)
