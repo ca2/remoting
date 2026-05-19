@@ -262,6 +262,9 @@
     <Image Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\innate_ui_win32\innate_ui_win32.vcxproj">
+      <Project>{1f20cf93-ae0b-4a16-a786-56a623c8726a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
     </ProjectReference>

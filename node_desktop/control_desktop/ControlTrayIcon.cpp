@@ -35,7 +35,8 @@
 #include "application.h"
 
 #include "remoting/node_desktop/ServerApplication.h"
-
+#include "apex/innate_ui/innate_ui.h"
+#include "apex/innate_ui/menu.h"
 #include "innate_subsystem/platform/ResourceLoader.h"
 #include "innate_subsystem/platform/subsystem.h"
 #include "subsystem/platform/StringTable.h"
@@ -166,32 +167,40 @@ initialize(::system());
 
 void ControlTrayIcon::trackPopupMenu()
 {
-   throw todo;
+
+   auto pmenu = system()->innate_ui()->load_menu_from_resource(IDR_TRAYMENU);
    
-//   HMENU hRoot = LoadMenu(GetModuleHandle(0), MAKEINTRESOURCE(IDR_TRAYMENU));
-//   HMENU hMenu = GetSubMenu(hRoot, 0);
-//
-//   SetMenuDefaultItem(hMenu, ID_CONFIGURATION, false);
-//
-//   if (m_pcontrolapplication->m_slaveModeEnabled) {
-//      RemoveMenu(hMenu, ID_CLOSE_CONTROL_INTERFACE, MF_BYCOMMAND);
-//   }
-//
-//   POINT pos;
-//
-//   if (!GetCursorPos(&pos)) {
-//      pos.x = pos.y = 0;
-//   }
-//
-//   ///SetForegroundWindow(operating_system_window());
-//   ///
-//   setForegroundWindow();
-//
-//   int action = TrackPopupMenu(hMenu,
-//                               TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
-//                               pos.x, pos.y, 0, ::as_HWND(operating_system_window()), NULL);
-//
-   // onAction(action);
+   pmenu->track_popup_menu(operating_system_window(), [this](int iActionId)
+      {
+
+         onAction(iActionId);
+
+      });
+   
+////   HMENU hRoot = LoadMenu(GetModuleHandle(0), MAKEINTRESOURCE(IDR_TRAYMENU));
+////   HMENU hMenu = GetSubMenu(hRoot, 0);
+////
+////   SetMenuDefaultItem(hMenu, ID_CONFIGURATION, false);
+////
+////   if (m_pcontrolapplication->m_slaveModeEnabled) {
+////      RemoveMenu(hMenu, ID_CLOSE_CONTROL_INTERFACE, MF_BYCOMMAND);
+////   }
+////
+////   POINT pos;
+////
+////   if (!GetCursorPos(&pos)) {
+////      pos.x = pos.y = 0;
+////   }
+////
+////   ///SetForegroundWindow(operating_system_window());
+////   ///
+////   setForegroundWindow();
+////
+////   int action = TrackPopupMenu(hMenu,
+////                               TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
+////                               pos.x, pos.y, 0, ::as_HWND(operating_system_window()), NULL);
+////
+//   // onAction(action);
    
 }
 
