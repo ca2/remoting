@@ -55,7 +55,7 @@ namespace remoting_node_desktop
       virtual ~OutgoingRfbConnectionThread();
 
    protected:
-      virtual void execute();
+      virtual void onThreadMain();
 
    private:
       ::string m_connectHost;

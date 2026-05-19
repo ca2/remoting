@@ -51,7 +51,7 @@ namespace remoting
          m_replyBuffer = replyBuffer;
       }
 
-      void FileTransferOperation::terminate()
+      void FileTransferOperation::setThreadToFinish()
       {
          m_isTerminating = true;
       }

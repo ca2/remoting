@@ -101,6 +101,10 @@ namespace remoting_node_desktop
 
    }
 
+   void Service::onServiceMain()
+   {
+
+   }
 
    void Service::onServerShutdown()
    {

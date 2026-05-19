@@ -199,9 +199,9 @@ namespace remoting_node_desktop
 
          auto papp = create_newø<::remoting_node_desktop::QueryConnectionApplication>();
 
-         auto queryRetVal = papp->execute(peerHost, pserverconfig->isDefaultActionAccept(), pserverconfig->getQueryTimeout());
+         auto queryRetVal = papp->run_synchronously(peerHost, pserverconfig->isDefaultActionAccept(), pserverconfig->getQueryTimeout());
 
-         // int queryRetVal = QueryConnectionApplication::execute(
+         // int queryRetVal = QueryConnectionApplication::onThreadMain(
          //    peerHost,
          //    pserverconfig->isDefaultActionAccept(),
          //    pserverconfig->getQueryTimeout());
@@ -376,7 +376,7 @@ namespace remoting_node_desktop
          if (count > 13)
             count = 13;
          // about 1 hour max login rate after 14 unsuccessful logins
-         // wait about 1 minute after 8 unsuccessful logins
+         // waitThreadToFinish about 1 minute after 8 unsuccessful logins
          if ((now - lastTime).m_iSecond < 500 * (1 << count))
          {
             return true;
@@ -511,7 +511,7 @@ namespace remoting_node_desktop
       critical_section_lock al(&m_clientListLocker);
       m_dynViewPort = *dynViewPort;
 
-      // Assign the dynViewPort value for all already run clients too.
+      // Assign the dynViewPort value for all already onThreadMain clients too.
       for (ClientListIter iter = m_clientList.begin(); iter != m_clientList.end(); iter++)
       {
          (*iter)->changeDynViewPort(dynViewPort);

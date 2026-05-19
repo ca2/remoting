@@ -38,7 +38,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void UpdateLocalConfigCommand::execute()
+   void UpdateLocalConfigCommand::onThreadMain()
    {
       m_pcontrolproxy->getServerConfig(m_pconfigurator->getServerConfig());
    }

@@ -127,7 +127,7 @@ namespace remoting
                //revertToSelf();
             } catch (...) {
             } // try / catch.
-         } // if run as service.
+         } // if onThreadMain as service.
       }
 
 

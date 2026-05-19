@@ -138,7 +138,7 @@ namespace remoting_windows
          }
          catch (::exception &e)
          {
-            m_plogwriter->error("Can't run the 32-bit hook loader: {}", e.get_message());
+            m_plogwriter->error("Can't onThreadMain the 32-bit hook loader: {}", e.get_message());
          }
       }
 #endif

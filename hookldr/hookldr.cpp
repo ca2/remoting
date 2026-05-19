@@ -34,7 +34,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     HookLoaderApplication application(hInstance,
                                       WindowNames::WINDOW_CLASS_NAME,
                                       lpCmdLine);
-    return application.run();
+    return application.onThreadMain();
   } catch (...) {
     return 1;
   }

@@ -70,7 +70,7 @@ namespace remoting_node_desktop
       /**
        * Inherited from superclass.
        */
-      virtual void run() override;
+      virtual void onOperatingSystemApplicationMain() override;
 
    //protected:
       // virtual void onAnObjectEvent();

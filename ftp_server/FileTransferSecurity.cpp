@@ -101,5 +101,5 @@ void FileTransferSecurity::endMessageProcessing()
       revertToSelf();
     } catch (...) {
     } // try / catch.
-  } // if run as service.
+  } // if onThreadMain as service.
 }

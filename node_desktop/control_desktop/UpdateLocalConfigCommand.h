@@ -52,7 +52,7 @@ namespace remoting_control_desktop
        * Executes command.
        * @throws ::io_exception, RemoteException.
        */
-      virtual void execute();
+      virtual void onThreadMain();
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
       ::pointer < ::remoting_node::Configurator > m_pconfigurator;

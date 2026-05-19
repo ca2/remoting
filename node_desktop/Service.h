@@ -85,7 +85,7 @@ namespace remoting_node_desktop
       /**
        * Deletes object.
        */
-      virtual ~Service();
+      ~Service() override;
 
 
       virtual void initialize_remoting_node_desktop_service(ServiceEvents *winServiceEvents, ::remoting_node::NewConnectionEvents *newConnectionEvents);
@@ -122,14 +122,14 @@ namespace remoting_node_desktop
       static void reinstall();
       /**
        * Starts remoting_node service.
-       * @param waitCompletion if true, wait until the status becomes
+       * @param waitCompletion if true, waitThreadToFinish until the status becomes
        *   SERVICE_RUNNING.
        * @throws SystemException on fail.
        */
       static void start(bool waitCompletion = false);
       /**
        * Stopps remoting_node service.
-       * @param waitCompletion if true, wait until the status becomes
+       * @param waitCompletion if true, waitThreadToFinish until the status becomes
        *   SERVICE_STOPPED.
        * @throws SystemException on fail.
        */
@@ -143,6 +143,8 @@ namespace remoting_node_desktop
        */
       ////virtual void onStart() override;
 
+
+      void onServiceMain() override;
 
       ///void on_server_task_run() override;
 

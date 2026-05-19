@@ -38,7 +38,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void ShareRectCommand::execute()
+   void ShareRectCommand::onThreadMain()
    {
       m_pcontrolproxy->shareRect(m_shareRect);
    }

@@ -80,7 +80,7 @@ namespace remoting_node_desktop
        *
        * @return application exit code.
        */
-      // virtual int run();
+      // virtual int onThreadMain();
       //virtual void on_server_task_start();
 
       //virtual void on_server_task_execute();

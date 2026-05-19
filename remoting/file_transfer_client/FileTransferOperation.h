@@ -82,7 +82,7 @@ namespace remoting
          // execution when protected isThreadTerminating method returns true.
          //
 
-         virtual void terminate();
+         virtual void setThreadToFinish();
 
       //protected:
 

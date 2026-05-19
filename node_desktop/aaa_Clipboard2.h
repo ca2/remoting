@@ -48,8 +48,8 @@ public:
 protected:
   virtual bool wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
 
-  virtual void execute();
-  virtual void onTerminate();
+  virtual void onThreadMain();
+  virtual void onTermThread();
 
   void convertToRfbFormat(const ::scoped_string & source, ::string & dest);
   void convertFromRfbFormat(const ::scoped_string & scopedstrSource, ::string & dest);

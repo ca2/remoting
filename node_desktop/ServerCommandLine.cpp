@@ -38,13 +38,13 @@ namespace remoting_node_desktop
       ::subsystem::CommandLineFormat format[] = {{"-help", ::subsystem::NO_ARG}, {"-h", ::subsystem::NO_ARG},
                                                  {"-?", ::subsystem::NO_ARG},    {"/help", ::subsystem::NO_ARG},
                                                  {"/h", ::subsystem::NO_ARG},    {"/?", ::subsystem::NO_ARG},
-                                                 {"-run", ::subsystem::NO_ARG}};
+                                                 {"-onThreadMain", ::subsystem::NO_ARG}};
 
       if (!CommandLine::parse(format, sizeof(format) / sizeof(::subsystem::CommandLineFormat), cmdArgs))
       {
          return false;
       }
-      if (showHelp() && optionSpecified("-run"))
+      if (showHelp() && optionSpecified("-onThreadMain"))
       {
          return false;
       }

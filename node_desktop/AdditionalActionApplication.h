@@ -75,7 +75,7 @@ namespace remoting_node_desktop
        * Runs application.
        * @return 0 on success, non-zero on error (Windows error code).
        */
-      virtual void run();
+      virtual void onThreadMain();
 
    private:
       /**

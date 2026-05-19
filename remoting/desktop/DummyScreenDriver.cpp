@@ -55,8 +55,8 @@ namespace remoting
 
    DummyScreenDriver::~DummyScreenDriver()
    {
-      //terminate();
-      //wait();
+      //setThreadToFinish();
+      //waitThreadToFinish();
    }
 
 
@@ -64,7 +64,7 @@ void DummyScreenDriver::destroy()
 {
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
 }
 
 void DummyScreenDriver::initialize_dummy_screen_driver(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, const ::i32_size & size,

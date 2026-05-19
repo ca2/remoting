@@ -59,7 +59,7 @@ namespace remoting_control_desktop
        *
        * @throws ::io_exception on io error, ::subsystem::Exception on server side error.
        */
-      virtual void execute();
+      virtual void onThreadMain();
 
    private:
       /**

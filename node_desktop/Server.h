@@ -85,7 +85,7 @@ namespace remoting_node_desktop
       lockable_critical_section m_mutex;
 
       /**
-       * Flag that determitates if we run in server context.
+       * Flag that determitates if we onThreadMain in server context.
        * true if service, false if application.
        */
       bool m_bRunAsService;
@@ -230,7 +230,7 @@ namespace remoting_node_desktop
       //lockable_critical_section m_mutex;
 
       ///**
-      // * Flag that determitates if we run in server context.
+      // * Flag that determitates if we onThreadMain in server context.
       // * true if service, false if application.
       // */
       //bool m_bRunAsService;

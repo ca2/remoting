@@ -74,7 +74,7 @@ namespace remoting
          // TFE_OVERWRITE - overwrite
          // TFE_SKIP - skip
          // TFE_APPEND - append
-         // TFE_CANCEL - terminate operation
+         // TFE_CANCEL - setThreadToFinish operation
          //
          // Remark: method must return valid value (see above), or assertion will
          // fail.

@@ -114,6 +114,12 @@
     <Filter Include="Source Files\event_log">
       <UniqueIdentifier>{f9556b07-b431-421b-bfc1-75a711c80021}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\desktop">
+      <UniqueIdentifier>{23d1d714-dc28-4316-9056-93d2fad47aef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\desktop_ipc">
+      <UniqueIdentifier>{d518f028-594b-439a-a6bb-a242b6d291ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -1359,6 +1365,162 @@
     </ClInclude>
     <ClInclude Include="platform\EOFException.h">
       <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\_.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\AbnormDeskTermListener.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\ConsolePoller.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\CopyRectDetector.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\CursorPositionDetector.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\CursorShapeDetector.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\CursorShapeGrabber.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Desktop.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DesktopBaseImpl.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DesktopConfigLocal.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DesktopFactory.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DesktopServerWatcher.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DisplayEsc.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DummyScreenDriver.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\GrabOptimizator.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\HookInstaller.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\HooksUpdateDetector.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\HookUpdateTimer.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\InputBlocker.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Poller.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\SasUserInput.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\ScreenDriver.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\ScreenDriverFactory.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\ScreenGrabber.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\UpdateContainer.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\UpdateDetector.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\UpdateFilter.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\UpdateHandler.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\UpdateHandlerImpl.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\UpdateKeeper.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\UpdateListener.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\UpdateSendingListener.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\UserInput.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WallpaperUtil.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\_.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\BlockingGate.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\BlockingInputGate.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\BlockingOutputGate.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\ClientListener.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\ConfigServer.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\DesktopConfigClient.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\DesktopServerProto.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\DesktopSrvDispatcher.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\GateKicker.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\GateKickHandler.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\ReconnectException.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\ReconnectingChannel.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\ReconnectionListener.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\UpdateHandlerClient.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\UpdateHandlerServer.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\UserInputClient.h">
+      <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop_ipc\UserInputServer.h">
+      <Filter>Header Files\desktop_ipc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

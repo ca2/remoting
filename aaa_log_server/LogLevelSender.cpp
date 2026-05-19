@@ -35,8 +35,8 @@ LogLevelSender::LogLevelSender()
 
 LogLevelSender::~LogLevelSender()
 {
-  terminate();
-  wait();
+  setThreadToFinish();
+  waitThreadToFinish();
 }
 
 void LogLevelSender::startSender(OutputStream *outStream)
@@ -45,7 +45,7 @@ void LogLevelSender::startSender(OutputStream *outStream)
   m_outStream = outStream;
 }
 
-void LogLevelSender::onTerminate()
+void LogLevelSender::onTermThread()
 {
   m_happeningSleeper.notify();
 }
@@ -61,7 +61,7 @@ void LogLevelSender::updateLevel(unsigned char newLevel)
   m_happeningSleeper.notify();
 }
 
-void LogLevelSender::execute()
+void LogLevelSender::onThreadMain()
 {
   try {
     while (!isThreadTerminating()) {

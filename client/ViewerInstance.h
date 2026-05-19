@@ -73,7 +73,7 @@ namespace remoting_client
       void start();
       void stop();
 
-      // wait while viewer is not terminated
+      // waitThreadToFinish while viewer is not terminated
       void waitViewer();
 
     };

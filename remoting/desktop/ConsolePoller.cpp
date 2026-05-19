@@ -56,15 +56,15 @@ namespace remoting
 
    ConsolePoller::~ConsolePoller()
    {
-//      terminate();
-//      wait();
+//      setThreadToFinish();
+//      waitThreadToFinish();
    }
 void ConsolePoller::destroy()
 {
    
    ::subsystem::Thread::destroy();
-//   terminate();
-//   wait();
+//   setThreadToFinish();
+//   waitThreadToFinish();
 }
 
    void ConsolePoller::initialize_console_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,

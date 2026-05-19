@@ -64,7 +64,7 @@ private:
 
   void freeResources();
 
-  virtual void execute();
+  virtual void onThreadMain();
 
   int getLogBarrier();
   void setLogBarrier(int newLogBar);

@@ -131,7 +131,7 @@ m_commandLine(scopedstrCommandLine)
       //}
    }
 
-   void ControlApplication::run()
+   void ControlApplication::onThreadMain()
    {
       ControlCommandLine cmdLineParser;
 
@@ -292,6 +292,13 @@ return;
 
    void ControlApplication::connect(bool controlService, bool slave)
    {
+
+      if (m_ptransport)
+      {
+
+         information("Trying to understand this ControlApplication... should a connect be asked if there is an existing transport?");
+
+      }
       // Determine the name of pipe to connect to.
       ::string pipeName;
       ControlPipeName::createPipeName(controlService, pipeName, &m_plogwriter);
@@ -299,9 +306,11 @@ return;
       int numTriesRemaining = slave ? 10 : 1;
       int msDelayBetweenTries = 2000;
 
+      ::pointer<Transport> ptransportNew;
+
       while (numTriesRemaining-- > 0) {
          try {
-            m_ptransport = TransportFactory::createPipeClientTransport(pipeName);
+            ptransportNew = TransportFactory::createPipeClientTransport(pipeName);
             break;
          } catch (::subsystem::Exception &) {
             if (numTriesRemaining <= 0) {
@@ -311,8 +320,10 @@ return;
          preempt(msDelayBetweenTries * 1_ms);
       }
 
+
+      m_ptransport = ptransportNew;
       // We can get here only on successful connection.
-      m_pcontrolgate = allocateø ControlGate(m_ptransport->getIOStream());
+      m_pcontrolgate = allocateø ControlGate(ptransportNew->getIOStream());
       m_pcontrolproxy = allocateø ControlProxy(m_pcontrolgate);
    }
 
@@ -333,7 +344,7 @@ return;
                  ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
    }
 
-   void ControlApplication::execute()
+   void ControlApplication::onOperatingSystemApplicationMain()
    {
       try {
          while (!isThreadTerminating()) {
@@ -355,7 +366,7 @@ return;
             }
          }
       } catch (...) {
-         m_pcontroltrayicon->terminate();
+         m_pcontroltrayicon->setThreadToFinish();
          m_pcontroltrayicon->waitForTermination();
          shutdown();
       }
@@ -367,10 +378,10 @@ return;
 
       resumeThread();
 
-      OperatingSystemApplication::run();
+      onOperatingSystemApplicationMain();
 
-      //terminate();
-      //wait();
+      //setThreadToFinish();
+      //waitThreadToFinish();
 
       delete m_pcontroltrayicon;
 

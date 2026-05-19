@@ -41,7 +41,7 @@ public:
   virtual ~HttpClient();
 
 protected:
-  virtual void execute();
+  virtual void onThreadMain();
 
 protected:
   Channel *m_stream;

@@ -40,7 +40,7 @@ namespace remoting_control_desktop
 {
    /**
     * Proxy to some of TightVNC server methods, supported by control protocol.
-    * Used to execute remote commands on on TightVNC server.
+    * Used to onThreadMain remote commands on on TightVNC server.
     * remote errors.
     */
    class ControlProxy :

@@ -43,8 +43,8 @@ public:
   void updateLevel(unsigned char newLevel);
 
 private:
-  virtual void execute();
-  virtual void onTerminate();
+  virtual void onThreadMain();
+  virtual void onTermThread();
 
   ::happening m_happeningSleeper;
 

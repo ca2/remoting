@@ -83,8 +83,8 @@ namespace remoting
 
    DesktopServerWatcher::~DesktopServerWatcher()
    {
-      //terminate();
-      //wait();
+      //setThreadToFinish();
+      //waitThreadToFinish();
       //delete m_pprocess;
    }
 
@@ -92,7 +92,7 @@ void DesktopServerWatcher::destroy()
 {
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
    delete m_pprocess;
 }
 

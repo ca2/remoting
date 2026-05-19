@@ -113,7 +113,7 @@ namespace remoting_node_desktop
          tvnService.initialize_remoting_node_desktop_service(&winEventLogWriter, &winEventLogWriter);
     try {
       crashHook.setHklmRoot();
-      tvnService.run();
+      tvnService.onServiceMain();
     } catch (::subsystem::Exception &) {
        m_iExitCode = 1;
       //return 1;
@@ -135,7 +135,12 @@ namespace remoting_node_desktop
         ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
 #endif
         strCommandLine);
-      return pcontrolapplication->run();
+
+      pcontrolapplication->resumeThread();
+      //return pcontrolapplication->onThreadMain();
+      //payload("control_application") = pcontrolapplication;
+      return;
+
        
     } catch (::subsystem::Exception &fatalException) {
       auto pmessagebox = message_box({},
@@ -154,7 +159,7 @@ namespace remoting_node_desktop
        //actionApp.initialize_additional_action_application(::system()->m_hinstanceThis,
         //WindowNames::WINDOW_CLASS_NAME,
         actionApp.initialize_additional_action_application(::system()->command_line_text());
-      return actionApp.run();
+      return actionApp.onThreadMain();
     } catch (::subsystem::SystemException &ex) {
        m_iExitCode = ex.getErrorCode().m_iOsError;
       return ;
@@ -171,7 +176,7 @@ namespace remoting_node_desktop
 #endif
         pcommandlinearguments);
 
-      desktopServerApp.run();
+      desktopServerApp.onOperatingSystemApplicationMain();
        int retCode = desktopServerApp.getExitCode();
        m_iExitCode = retCode;
       return ;
@@ -189,7 +194,7 @@ namespace remoting_node_desktop
         //WindowNames::WINDOW_CLASS_NAME,
         pconfigurationDummy,
         ::system()->command_line_text());
-      return app.run();
+      return app.onOperatingSystemApplicationMain();
     } catch (...) {
        m_iExitCode= 1;
       return;
@@ -206,10 +211,10 @@ namespace remoting_node_desktop
       ::remoting_node::WindowNames::WINDOW_CLASS_NAME,
 #endif
       ::system()->command_line_text());
-    return tvnsc.run();
+    return tvnsc.onThreadMain();
   }
 
-  // No additional applications, run TightVNC server as single application.
+  // No additional applications, onThreadMain TightVNC server as single application.
   crashHook.setGuiEnabled();
   //ServerApplication tvnServer;
 
@@ -292,7 +297,7 @@ namespace remoting_node_desktop
 //     TvnService tvnService(&winEventLogWriter, &winEventLogWriter);
 //     try {
 //       crashHook.setHklmRoot();
-//       tvnService.run();
+//       tvnService.onThreadMain();
 //     } catch (::subsystem::Exception &) {
 //       return 1;
 //     }
@@ -309,7 +314,7 @@ namespace remoting_node_desktop
 //       ControlApplication tvnControl(hInstance,
 //         WindowNames::WINDOW_CLASS_NAME,
 //         lpCmdLine);
-//       return tvnControl.run();
+//       return tvnControl.onThreadMain();
 //     } catch (::subsystem::Exception &fatalException) {
 //       MessageBox(0,
 //         fatalException.get_message(),
@@ -324,7 +329,7 @@ namespace remoting_node_desktop
 //       AdditionalActionApplication actionApp(hInstance,
 //         WindowNames::WINDOW_CLASS_NAME,
 //         lpCmdLine);
-//       return actionApp.run();
+//       return actionApp.onThreadMain();
 //     } catch (SystemException &ex) {
 //       return ex.getErrorCode();
 //     }
@@ -336,7 +341,7 @@ namespace remoting_node_desktop
 //         WindowNames::WINDOW_CLASS_NAME,
 //         &args);
 //
-//       int retCode = desktopServerApp.run();
+//       int retCode = desktopServerApp.onThreadMain();
 //       return retCode;
 //     } catch (...) {
 //       return 1;
@@ -347,7 +352,7 @@ namespace remoting_node_desktop
 //       QueryConnectionApplication app(hInstance,
 //         WindowNames::WINDOW_CLASS_NAME,
 //         lpCmdLine);
-//       return app.run();
+//       return app.onThreadMain();
 //     } catch (...) {
 //       return 1;
 //     }
@@ -360,14 +365,14 @@ namespace remoting_node_desktop
 //     ServiceControlApplication tvnsc(hInstance,
 //       WindowNames::WINDOW_CLASS_NAME,
 //       lpCmdLine);
-//     return tvnsc.run();
+//     return tvnsc.onThreadMain();
 //   }
 //
-//   // No additional applications, run TightVNC server as single application.
+//   // No additional applications, onThreadMain TightVNC server as single application.
 //   crashHook.setGuiEnabled();
 //   ServerApplication tvnServer(hInstance,
 //     WindowNames::WINDOW_CLASS_NAME,
 //     lpCmdLine, &winEventLogWriter);
 //
-//   return tvnServer.run();
+//   return tvnServer.onThreadMain();
 // }

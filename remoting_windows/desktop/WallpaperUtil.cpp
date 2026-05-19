@@ -29,7 +29,7 @@
 #include "acme/_operating_system.h"
 
 
-namespace remoting
+namespace remoting_windows
 {
 
 
@@ -142,7 +142,7 @@ namespace remoting
    }
 
 
-} // namespace remoting
+} // namespace remoting_windows
 
 
 

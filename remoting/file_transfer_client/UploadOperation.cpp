@@ -165,7 +165,7 @@ namespace remoting
 
          //
          // If this LRF scopedstrMessage comes to file ::list_base request, then
-         // don't need to upload next file, we must execute "special scopedstrMessage handler".
+         // don't need to upload next file, we must onThreadMain "special scopedstrMessage handler".
          //
 
          if (specialHandler()) {
@@ -294,7 +294,7 @@ namespace remoting
          if (isThreadTerminating()) {
             killOp();
             return ;
-         } // terminate operation is needed
+         } // setThreadToFinish operation is needed
 
          // Current file info
          FileInfo *fileInfo = m_toCopy->getFileInfo();
@@ -318,7 +318,7 @@ namespace remoting
          if (isThreadTerminating()) {
             killOp();
             return ;
-         } // terminate operation is needed
+         } // setThreadToFinish operation is needed
       } // void
 
       void UploadOperation::processFolder()
@@ -394,7 +394,7 @@ namespace remoting
                      return ;
                   case CopyFileEventListener::TFE_CANCEL:
                      if (!isThreadTerminating()) {
-                        terminate();
+                        setThreadToFinish();
                      } // if not terminating
                      return ;
                   default: ASSERT(false);

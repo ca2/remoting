@@ -316,7 +316,7 @@ namespace remoting
                   break;
                case CopyFileEventListener::TFE_CANCEL:
                   if (!isThreadTerminating()) {
-                     terminate();
+                     setThreadToFinish();
                   } // if not terminating
                   return ;
                default:

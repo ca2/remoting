@@ -38,15 +38,15 @@ namespace remoting
 
    HookUpdateTimer::~HookUpdateTimer()
    {
-      //terminate();
-      //wait();
+      //setThreadToFinish();
+      //waitThreadToFinish();
    }
 
 void HookUpdateTimer::destroy()
 {
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
 }
 
    void HookUpdateTimer::initialize_hook_update_timer(UpdateListener *pupdatelistener)

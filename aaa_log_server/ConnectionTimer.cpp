@@ -37,16 +37,16 @@ ConnectionTimer::ConnectionTimer(TimerListener *timerListener,
 ConnectionTimer::~ConnectionTimer()
 {
   m_signalEnabled = false;
-  terminate();
-  wait();
+  setThreadToFinish();
+  waitThreadToFinish();
 }
 
-void ConnectionTimer::onTerminate()
+void ConnectionTimer::onTermThread()
 {
   m_happeningTimer.notify();
 }
 
-void ConnectionTimer::execute()
+void ConnectionTimer::onThreadMain()
 {
   m_happeningTimer.waitForEvent(m_iTimeout);
   if (m_signalEnabled) {

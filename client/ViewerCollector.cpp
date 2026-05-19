@@ -94,7 +94,7 @@ namespace remoting_client
     {
         critical_section_lock l(&m_criticalsection);
 
-        // If not active instance and count wait to reconnect is 0,
+        // If not active instance and count waitThreadToFinish to reconnect is 0,
         // then return true and false otherwise.
         return m_viewerinstancelist.empty() && (m_countToReconnect == 0);
     }

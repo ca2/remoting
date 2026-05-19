@@ -35,7 +35,7 @@ namespace remoting_windows
 {
 
    /**
-    * Thread that used to execute desktop server application.
+    * Thread that used to onThreadMain desktop server application.
     *
     * @behavour:
     *   Thread in infinity loop executes (and waits until it dies) desktop

@@ -34,7 +34,7 @@ int _tmain(int argc, TCHAR *argv[])
   }
   try {
     KeySymTest keySymTest(argv[1], argv[2]);
-    keySymTest.run();
+    keySymTest.onThreadMain();
   } catch (::exception &e) {
     _ftprintf(stderr, "Error: {}\n", e.get_message());
     return 1;

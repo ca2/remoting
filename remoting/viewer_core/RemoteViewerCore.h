@@ -143,8 +143,8 @@ namespace remoting_client
       //
       // The destructor.
       //
-      // Before actually destroying the object, it will terminate its active
-      // threads and will wait until all the threads are actually finished. So
+      // Before actually destroying the object, it will setThreadToFinish its active
+      // threads and will waitThreadToFinish until all the threads are actually finished. So
       // calling the destructor may block the calling thread until all object's
       // internal threads are gone. To prevent this, call stop() and then
       // waitTermination() prior to destroying the object.
@@ -243,11 +243,11 @@ namespace remoting_client
       bool wasStarted() const;
 
       //
-      // Stop operation, detach from the data connection and terminate all active
+      // Stop operation, detach from the data connection and setThreadToFinish all active
       // threads.
       //
       // This function will return control to the caller immediately, and threads
-      // may run for some time after the function has finished. To wait for actual
+      // may onThreadMain for some time after the function has finished. To waitThreadToFinish for actual
       // thread completion after stop(), call waitTermination().
       //
       // Note that this function does not close the actual data connection if that
@@ -262,7 +262,7 @@ namespace remoting_client
       // DispatchDataProvider), but only if remote viewer core was actually
       // started.
       //
-      // This function does not terminate threads. That can be done by calling
+      // This function does not setThreadToFinish threads. That can be done by calling
       // stop(). If stop() was not and will not be called, and no error occures,
       // this function blocks the calling thread forever.
       //

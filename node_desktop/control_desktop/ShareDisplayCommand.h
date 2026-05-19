@@ -38,7 +38,7 @@ namespace remoting_control_desktop
                           unsigned char displayNumber);
       virtual ~ShareDisplayCommand();
 
-      virtual void execute();
+      virtual void onThreadMain();
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
       unsigned char m_displayNumber;

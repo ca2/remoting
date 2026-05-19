@@ -173,7 +173,7 @@ int application::remoting_impact_main( const ::file::path & path)
       } else {
          tvnViewer.showLoginDialog();
       }
-      tvnViewer.run();
+      tvnViewer.onThreadMain();
       result = tvnViewer.getExitCode();
    } catch (const ::subsystem::Exception &ex) {
       MainSubsystem().message_box({},

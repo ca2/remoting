@@ -26,7 +26,7 @@ void UpdateRequestSender::destroy()
 //   try
 //   {
 //      terminateThread();
-//      wait();
+//      waitThreadToFinish();
 //   }
 //   catch (...)
 //   {

@@ -93,7 +93,7 @@ void UpdateSender::destroy()
    ::subsystem::Thread::destroy();
    
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
    delete m_pupdatekeeper;
 
    

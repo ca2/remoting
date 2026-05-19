@@ -57,8 +57,8 @@ namespace remoting
 
    DesktopSrvDispatcher::~DesktopSrvDispatcher()
    {
-  //    terminate();
-//      wait();
+  //    setThreadToFinish();
+//      waitThreadToFinish();
    }
 
 void DesktopSrvDispatcher::destroy()
@@ -66,7 +66,7 @@ void DesktopSrvDispatcher::destroy()
    
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
 }
 
 

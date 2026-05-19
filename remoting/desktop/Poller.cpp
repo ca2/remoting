@@ -48,15 +48,15 @@ namespace remoting
 
    Poller::~Poller()
    {
-     // terminate();
-      //wait();
+     // setThreadToFinish();
+      //waitThreadToFinish();
    }
 
 void Poller::destroy()
 {
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
 }
 
 

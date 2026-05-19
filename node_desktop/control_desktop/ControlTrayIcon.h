@@ -56,7 +56,7 @@ namespace remoting_control_desktop
    public:
       /**
        * Creates control tray icon and places it to system tray.
-       * @param serverControl proxy to execute methods in TightVNC server process.
+       * @param serverControl proxy to onThreadMain methods in TightVNC server process.
        * @param notificator interface to report about errors during execution of remote methods.
        * @param appControl parent control application.
        * @param showAfterCreation determinates if needs to show icon in tray.
@@ -80,7 +80,7 @@ namespace remoting_control_desktop
 
       // Terminates all function callings and then notifying to the
       // function waitForTermination() to continue.
-      void terminate();
+      void setThreadToFinish();
 
       // Wait termination of using a function by windows (e.g. windowProc) and then
       // continue. Don't use this function from thread which call the windowProc()
@@ -141,7 +141,7 @@ namespace remoting_control_desktop
       ::pointer < ::innate_subsystem::IconInterface > m_piconIdle;
       ::pointer < ::innate_subsystem::IconInterface > m_piconDisabled;
 
-      // Interface to execute some commands on remote TightVNC server.
+      // Interface to onThreadMain some commands on remote TightVNC server.
       ::pointer < ControlProxy > m_pcontrolproxy;
 
       // Configuration dialog.

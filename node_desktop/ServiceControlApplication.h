@@ -60,7 +60,7 @@ namespace remoting_node_desktop
        * Runs service control application.
        * @return application exit code.
        */
-      virtual void run();
+      virtual void onThreadMain();
 
    private:
       /**

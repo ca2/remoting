@@ -81,8 +81,8 @@ namespace remoting_node_desktop
 
    ControlClient::~ControlClient()
    {
-      //terminate();
-      //wait();
+      //setThreadToFinish();
+      //waitThreadToFinish();
 
       //delete m_pcontrolgate;
       //delete m_ptransport;
@@ -98,7 +98,7 @@ void ControlClient::destroy()
    
 }
 
-   void ControlClient::execute()
+   void ControlClient::onThreadMain()
    {
       // Client passes authentication by default if server does not uses control authentication.
       if (!m_pconfigurator->getServerConfig()->isControlAuthEnabled())
@@ -253,7 +253,7 @@ void ControlClient::destroy()
       }
    }
 
-   void ControlClient::onTerminate()
+   void ControlClient::onTermThread()
    {
       try
       {

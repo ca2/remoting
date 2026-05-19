@@ -37,15 +37,15 @@ namespace remoting_node_desktop
 
    WsConfigRunner::~WsConfigRunner()
    {
-//      terminate();
-//      wait();
+//      setThreadToFinish();
+//      waitThreadToFinish();
    }
 
 
    void WsConfigRunner::destroy()
    {
-   //   terminate();
-   //   wait();
+   //   setThreadToFinish();
+   //   waitThreadToFinish();
    }
 
 

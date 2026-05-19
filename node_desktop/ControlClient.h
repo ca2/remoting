@@ -86,14 +86,14 @@ namespace remoting_node_desktop
        *   Auth phase (send auth type and try auth client).
        *   ::innate_subsystem::Control scopedstrMessage processing loop.
        */
-      virtual void execute();
+      virtual void onThreadMain();
 
       /**
        * Inherited from Thread class.
        *
        * Closes transport.
        */
-      virtual void onTerminate();
+      virtual void onTermThread();
 
    private:
       /**

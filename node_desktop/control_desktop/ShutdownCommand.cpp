@@ -35,7 +35,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void ShutdownCommand::execute()
+   void ShutdownCommand::onThreadMain()
    {
       m_pcontrolproxy->shutdownTightVnc();
    }

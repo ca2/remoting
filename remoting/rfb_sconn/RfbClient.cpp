@@ -83,8 +83,8 @@ namespace remoting
 
    RfbClient::~RfbClient()
    {
-      //terminate();
-      //wait();
+      //setThreadToFinish();
+      //waitThreadToFinish();
       //delete m_psocket;
    }
 
@@ -93,7 +93,7 @@ void RfbClient::destroy()
 {
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
    //delete m_psocket;
 }
    void RfbClient::disconnect()

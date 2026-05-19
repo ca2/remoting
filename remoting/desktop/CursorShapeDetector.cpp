@@ -35,8 +35,8 @@ namespace remoting
 
    CursorShapeDetector::~CursorShapeDetector()
    {
-//      terminate();
-//      wait();
+//      setThreadToFinish();
+//      waitThreadToFinish();
    }
 
 
@@ -45,7 +45,7 @@ void CursorShapeDetector::destroy()
    
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
 }
 
 

@@ -38,8 +38,8 @@ WindowsClipboard::WindowsClipboard(::remoting::ClipboardListener *pclipboardlist
 
 WindowsClipboard::~WindowsClipboard()
 {
-  terminate();
-  wait();
+  setThreadToFinish();
+  waitThreadToFinish();
 }
 
 bool WindowsClipboard::writeToClipBoard(const ::scoped_string & scopedstrText)
@@ -147,14 +147,14 @@ bool WindowsClipboard::wndProc(unsigned int scopedstrMessage, ::wparam wParam, :
   return true;
 }
 
-void WindowsClipboard::onTerminate()
+void WindowsClipboard::onTermThread()
 {
   if (m_hwnd != 0) {
     PostMessage(m_hwnd, WM_QUIT, 0, 0);
   }
 }
 
-void WindowsClipboard::execute()
+void WindowsClipboard::onThreadMain()
 {
   m_plogwriter->information("clipboard thread id = {}", getThreadId());
 

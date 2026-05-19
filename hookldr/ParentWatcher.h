@@ -39,8 +39,8 @@ public:
   virtual ~ParentWatcher();
 
 private:
-  virtual void execute();
-  virtual void onTerminate();
+  virtual void onThreadMain();
+  virtual void onTermThread();
 
   ParentEventsListener *m_parentEventListener;
   ParentProcess m_parentProcess;

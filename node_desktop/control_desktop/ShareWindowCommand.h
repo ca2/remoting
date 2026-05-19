@@ -39,7 +39,7 @@ namespace remoting_control_desktop
                          const ::scoped_string & shareWindowName);
       virtual ~ShareWindowCommand();
 
-      virtual void execute();
+      virtual void onThreadMain();
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
       ::string m_shareWindowName;

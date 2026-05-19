@@ -37,7 +37,7 @@ namespace remoting_control_desktop
       ShareAppCommand(ControlProxy *serverControl, ::u32 procId);
       virtual ~ShareAppCommand();
 
-      virtual void execute();
+      virtual void onThreadMain();
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
       ::u32 m_procId;

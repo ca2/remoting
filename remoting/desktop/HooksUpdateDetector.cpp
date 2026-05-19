@@ -54,7 +54,7 @@ namespace remoting
 //       }
 //       catch (::exception &e)
 //       {
-//          Thread::terminate();
+//          Thread::setThreadToFinish();
 //          m_plogwriter->error("Failed to load the hook library: {}", e.get_message());
 //       }
 //       //HINSTANCE hinst = GetModuleHandle(0);
@@ -73,8 +73,8 @@ namespace remoting
 
    HooksUpdateDetector::~HooksUpdateDetector()
    {
-//      terminate();
-//      wait();
+//      setThreadToFinish();
+//      waitThreadToFinish();
 //
 //#ifdef WINDOWS
 ////      if (m_hookInstaller != 0)
@@ -96,7 +96,7 @@ void HooksUpdateDetector::destroy()
    
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
 
 #ifdef WINDOWS
 //      if (m_hookInstaller != 0)
@@ -173,7 +173,7 @@ void HooksUpdateDetector::destroy()
          }
          catch (::exception &e)
          {
-            m_plogwriter->error("Can't run the 32-bit hook loader: {}", e.get_message());
+            m_plogwriter->error("Can't onThreadMain the 32-bit hook loader: {}", e.get_message());
          }
       }
 #endif
@@ -221,7 +221,7 @@ void HooksUpdateDetector::destroy()
       }
       catch (::exception &e)
       {
-         terminate();
+         setThreadToFinish();
          m_plogwriter->error(e.get_message());
       }
 
@@ -235,7 +235,7 @@ void HooksUpdateDetector::destroy()
          }
          catch (::exception &e)
          {
-            m_plogwriter->error("Hooks installing failed, wait for the next trying: {}", e.get_message());
+            m_plogwriter->error("Hooks installing failed, waitThreadToFinish for the next trying: {}", e.get_message());
             m_initWaiter.wait(5000 * 1_ms);
             try
             {
@@ -286,7 +286,7 @@ void HooksUpdateDetector::destroy()
             if (WaitMessage() == 0)
             {
                m_plogwriter->error("Hooks update detector has failed");
-               //Thread::terminate();
+               //Thread::setThreadToFinish();
                setThreadToFinish();
             }
          }

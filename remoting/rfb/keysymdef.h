@@ -119,7 +119,7 @@ SOFTWARE.
 
 #define XK_Select		0xFF60	/* Select, mark */
 #define XK_Print		0xFF61
-#define XK_Execute		0xFF62	/* Execute, run, do */
+#define XK_Execute		0xFF62	/* Execute, onThreadMain, do */
 #define XK_Insert		0xFF63	/* Insert, insert here */
 #define XK_Undo			0xFF65	/* Undo, oops */
 #define XK_Redo			0xFF66	/* redo, again */

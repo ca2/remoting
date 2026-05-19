@@ -126,7 +126,7 @@ namespace remoting_node_desktop
    //   //}
 
    //   //// check the HKLM\SOFTWARE\TightVNC\Server\ has ServiceOnly subsection and exit if found
-   //   //// to create the key and set acces rights run the PS script:
+   //   //// to create the key and set acces rights onThreadMain the PS script:
    //   //// New-Item -Path HKLM:\SOFTWARE\TightVNC\Server -Name ServiceOnly
    //   //// $ACL = Get-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
    //   //// $AccessRule = new-object System.Security.AccessControl.RegistryAccessRule("Users", "ReadKey", "None", "None", "Allow")
@@ -135,7 +135,7 @@ namespace remoting_node_desktop
    //   //::subsystem::RegistryKey key(MainSubsystem().Registry().getLocalMachineKey(), "SOFTWARE\\TightVNC\\Server\\ServiceOnly", false);
    //   //if (key.isOpened()) {
    //   //   MainSubsystem().message_box({},
-   //   //     "Couldn't run the server in Application mode",
+   //   //     "Couldn't onThreadMain the server in Application mode",
    //   //     "Server error", ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);
 
    //   //   setExitCode(1);
@@ -148,7 +148,7 @@ namespace remoting_node_desktop
    //   //   m_tvnServer->addListener(this);
    //   //   m_tvnControlRunner = new WsConfigRunner(m_fileLogWriter);
 
-   //   //   OperatingSystemApplication::run();
+   //   //   OperatingSystemApplication::onThreadMain();
 
    //   //   //delete m_tvnControlRunner;
    //   //   m_tvnServer->removeListener(this);
@@ -158,7 +158,7 @@ namespace remoting_node_desktop
    //   //} catch (::exception &e) {
    //   //   // FIXME: Move string to resource
    //   //   ::string scopedstrMessage;
-   //   //   scopedstrMessage.format("Couldn't run the server: {}", e.get_message());
+   //   //   scopedstrMessage.format("Couldn't onThreadMain the server: {}", e.get_message());
    //   //   MainSubsystem().message_box({},
    //   //              scopedstrMessage,
    //   //              "Server error", ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation);

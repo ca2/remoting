@@ -36,7 +36,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void DisconnectAllCommand::execute()
+   void DisconnectAllCommand::onThreadMain()
    {
       m_pcontrolproxy->disconnectAllClients();
    }

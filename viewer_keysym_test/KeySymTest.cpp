@@ -61,7 +61,7 @@ KeySymTest::~KeySymTest()
   delete m_rfbKeySym;
 }
 
-int KeySymTest::run()
+int KeySymTest::onThreadMain()
 {
   ::string line;
   while (readLine(&line)) {

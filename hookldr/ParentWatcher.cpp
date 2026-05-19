@@ -32,16 +32,16 @@ ParentWatcher::ParentWatcher(ParentEventsListener *parentEventListener)
 
 ParentWatcher::~ParentWatcher()
 {
-  terminate();
-  wait();
+  setThreadToFinish();
+  waitThreadToFinish();
 }
 
-void ParentWatcher::onTerminate()
+void ParentWatcher::onTermThread()
 {
   m_happeningTimer.notify();
 }
 
-void ParentWatcher::execute()
+void ParentWatcher::onThreadMain()
 {
   while (!isThreadTerminating()) {
     if (!m_parentProcess.isAlive()) {

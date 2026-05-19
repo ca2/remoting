@@ -36,7 +36,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void ShareAppCommand::execute()
+   void ShareAppCommand::onThreadMain()
    {
       m_pcontrolproxy->shareApp(m_procId);
    }

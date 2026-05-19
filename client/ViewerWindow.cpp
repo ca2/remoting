@@ -1466,7 +1466,7 @@ system()->acme_windowing()->post([this]()
 
         //   };
 
-        //pmanualresethappeningWebsocketStarted->wait(30_minutes);
+        //pmanualresethappeningWebsocketStarted->waitThreadToFinish(30_minutes);
 
         // Start viewer window and applying settings.
         post(

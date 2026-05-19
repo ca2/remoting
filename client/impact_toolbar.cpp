@@ -821,7 +821,7 @@ namespace remoting_client
 
          constructø(m_pbitmapBuffer);
 
-         m_pbitmapBuffer->initialize_bitmap(size, false);
+         m_pbitmapBuffer->initialize_bitmap(size);
 
          // if (::is_set(m_pgraphicsBuffer))
          // {

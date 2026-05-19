@@ -40,7 +40,7 @@ namespace remoting_node_desktop
 
    OutgoingRfbConnectionThread::~OutgoingRfbConnectionThread() {}
 
-   void OutgoingRfbConnectionThread::execute()
+   void OutgoingRfbConnectionThread::onThreadMain()
    {
       auto psocket = createø<::subsystem::SocketIPv4Interface>();
 

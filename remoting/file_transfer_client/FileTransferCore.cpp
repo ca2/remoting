@@ -299,7 +299,7 @@ namespace remoting
 
       void FileTransferCore::terminateCurrentOperation()
       {
-         m_currentOperation->terminate();
+         m_currentOperation->setThreadToFinish();
       }
 
       void FileTransferCore::onUpdateState(int state, int result)

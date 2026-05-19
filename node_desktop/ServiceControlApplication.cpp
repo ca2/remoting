@@ -69,7 +69,7 @@ namespace remoting_node_desktop
    {
    }
 
-   void ServiceControlApplication::run()
+   void ServiceControlApplication::onThreadMain()
    {
       // FIXME: Make these constants of the base class, or better make the
       //        function return bool and make the caller care about the proper
@@ -97,7 +97,7 @@ namespace remoting_node_desktop
       //        install/remove/start/stop system services?
       if (!MainSubsystem().OperatingSystem().isUserAnAdmin() && !cmdLine.beSilent() && !cmdLine.dontElevate()) {
          // The privileges are insufficient and there were no -silent/-dontelevate
-         // options so we can request privilege elevation and run another
+         // options so we can request privilege elevation and onThreadMain another
          // "elevated" instance of the same program, with additional -dontelevate
          // option in the command line.
          try {
@@ -126,7 +126,7 @@ namespace remoting_node_desktop
          }
       }
 
-      // After trying to start the service, regardless of the result, run the
+      // After trying to start the service, regardless of the result, onThreadMain the
       // control interface with non-elevated privileges. Make sure to skip this
       // step if there was a -dontelevate option (so we are a child process).
       if (cmdLine.startRequested() && !cmdLine.dontElevate()) 

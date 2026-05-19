@@ -49,8 +49,8 @@ namespace remoting_node_desktop
    {
       m_plogwriter->debug("Destroying control server transport");
 
-      //terminate();
-      //wait();
+      //setThreadToFinish();
+      //waitThreadToFinish();
 
       try
       {
@@ -69,7 +69,7 @@ namespace remoting_node_desktop
       m_plogwriter->debug("{}"), "::innate_subsystem::Control server stopped";
    }
 
-   void ControlServer::execute()
+   void ControlServer::onThreadMain()
    {
       try
       {
@@ -92,7 +92,7 @@ namespace remoting_node_desktop
       }
    }
 
-   void ControlServer::onTerminate()
+   void ControlServer::onTermThread()
    {
       try
       {

@@ -177,7 +177,7 @@ namespace remoting_client
       do {
          delta = pinput->readUInt8();
          runLength += delta;
-      } while (delta == 255); // if value == 255 then continue reading run-length
+      } while (delta == 255); // if value == 255 then continue reading onThreadMain-length
       return runLength + 1; // the length is one more than the sum
    }
 
@@ -282,7 +282,7 @@ namespace remoting_client
 
          size_t runLength = readRunLength(pinput);
          if (indexByte + runLength * m_bytesPerPixel > pixels.size()) {
-            throw ::subsystem::Exception("Bad data received from the server: ZRLE run length is too long in plain RLE tile.");
+            throw ::subsystem::Exception("Bad data received from the server: ZRLE onThreadMain length is too long in plain RLE tile.");
          }
 
          for (size_t i = 0; i < runLength; i++) {
@@ -311,7 +311,7 @@ namespace remoting_client
             color -= 128;
             runLength = readRunLength(pinput);
             if (indexPixel + runLength > tileLength) {
-               throw ::subsystem::Exception("Bad data received from the server: ZRLE run length is too long in palette RLE tile.");
+               throw ::subsystem::Exception("Bad data received from the server: ZRLE onThreadMain length is too long in palette RLE tile.");
             }
          }
 

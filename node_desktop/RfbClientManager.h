@@ -88,8 +88,8 @@ namespace remoting_node_desktop
       virtual void disconnectNonAuthClients();
       virtual void disconnectAuthClients();
 
-      // Sets a view port value to all client that already run and
-      // will be run.
+      // Sets a view port value to all client that already onThreadMain and
+      // will be onThreadMain.
       void setDynViewPort(const ::remoting::ViewPortState *dynViewPort);
 
       // FIXME: Place comment for this method here.

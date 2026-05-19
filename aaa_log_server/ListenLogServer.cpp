@@ -36,14 +36,14 @@ ListenLogServer::ListenLogServer(const ::scoped_string & scopedstrPublicPipeName
 
 ListenLogServer::~ListenLogServer()
 {
-  terminate();
+  setThreadToFinish();
   m_happeningTimer.notify();
   m_listenPipe->close();
-  wait();
+  waitThreadToFinish();
   delete m_listenPipe;
 }
 
-void ListenLogServer::execute()
+void ListenLogServer::onThreadMain()
 {
   while (!isThreadTerminating()) {
     try {

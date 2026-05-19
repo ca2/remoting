@@ -41,7 +41,7 @@ HttpClient::HttpClient(SocketIPv4 *socket, ::subsystem::LogWriter * plogwriter)
 HttpClient::~HttpClient()
 {
   if (Thread::isActive()) {
-    Thread::wait();
+    Thread::waitThreadToFinish();
   }
 
   delete m_stream;
@@ -49,7 +49,7 @@ HttpClient::~HttpClient()
   delete m_dIS;
 }
 
-void HttpClient::execute()
+void HttpClient::onThreadMain()
 {
   try {
 

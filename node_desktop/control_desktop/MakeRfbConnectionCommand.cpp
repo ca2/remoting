@@ -38,7 +38,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void MakeRfbConnectionCommand::execute()
+   void MakeRfbConnectionCommand::onThreadMain()
    {
       m_pcontrolproxy->makeOutgoingConnection(m_connectString, m_viewOnly);
    }

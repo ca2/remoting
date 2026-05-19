@@ -64,7 +64,7 @@ namespace remoting_control_desktop
 
       /**
        * Reply code ERROR AUTH NEEDED (your requested wasn't processed and you
-       * need to authorize before you can execute your request).
+       * need to authorize before you can onThreadMain your request).
        */
       static const ::u32 REPLY_AUTH_NEEDED = 0x2;
 
@@ -164,7 +164,7 @@ namespace remoting_control_desktop
        * Gets flag for autowork mode of TvnControl.
        *
        * @remark
-       * If this flag is true when TvnControl must be run with TightVNC app or service,
+       * If this flag is true when TvnControl must be onThreadMain with TightVNC app or service,
        * if false, then TvnControl app must be shutdowned forced and silent after it knows
        * that "Run TvnControl flag" is false.
        *

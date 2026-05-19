@@ -46,6 +46,18 @@ namespace remoting_node_desktop
 
       ::pointer < ::remoting_node::Configurator > m_pconfigurator;
 
+      ::pointer<ControlAppAuthenticator> m_pcontrolappauthenticator;
+      ::pointer<::subsystem::ThreadCollector> m_pthreadCollector;
+
+      ::pointer<::subsystem::PipeServer> m_ppipeserver;
+      /**
+       * Active rfb client manager that used in TightVNC server.
+       */
+      ::pointer<RfbClientManager> m_prfbclientmanager;
+
+      ::pointer<::subsystem::LogWriter> m_plogwriter;
+
+
       /**
        * Creates and starts control server execution.
        * @param serverTransport ready transport for control server.
@@ -60,7 +72,7 @@ namespace remoting_node_desktop
       /**
        * Stops and deletes control server and deletes transport.
        */
-      virtual ~ControlServer();
+      ~ControlServer();
 
    protected:
       /**
@@ -68,26 +80,26 @@ namespace remoting_node_desktop
        *
        * Awaits for incoming connections.
        */
-      virtual void execute();
+      virtual void onThreadMain();
 
       /**
        * Inherited from Thread.
        *
        * Forced closes transport.
        */
-      virtual void onTerminate();
+      virtual void onTermThread();
 
-   private:
-      ::pointer < ControlAppAuthenticator > m_pcontrolappauthenticator;
-      ::pointer<::subsystem::ThreadCollector> m_pthreadCollector;
+   ////private:
+   //   ::pointer < ControlAppAuthenticator > m_pcontrolappauthenticator;
+   //   ::pointer<::subsystem::ThreadCollector> m_pthreadCollector;
 
-      ::pointer < ::subsystem::PipeServer > m_ppipeserver;
-      /**
-       * Active rfb client manager that used in TightVNC server.
-       */
-      ::pointer < RfbClientManager > m_prfbclientmanager;
+   //   ::pointer < ::subsystem::PipeServer > m_ppipeserver;
+   //   /**
+   //    * Active rfb client manager that used in TightVNC server.
+   //    */
+   //   ::pointer < RfbClientManager > m_prfbclientmanager;
 
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+   //   ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

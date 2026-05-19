@@ -40,7 +40,7 @@ namespace remoting_control_desktop
       virtual ~ReloadConfigCommand();
 
    private:
-      virtual void execute();
+      virtual void onThreadMain();
 
       ::pointer < ControlProxy > m_pcontrolproxy;
    };

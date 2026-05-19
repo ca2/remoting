@@ -47,8 +47,8 @@ public:
   void changeLogLevel(unsigned char newLevel);
 
 private:
-  virtual void execute();
-  virtual void onTerminate();
+  virtual void onThreadMain();
+  virtual void onTermThread();
 
   void assignConnection();
   void dispatch();

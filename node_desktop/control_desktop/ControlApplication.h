@@ -87,7 +87,7 @@ namespace remoting_control_desktop
        * Executes control application.
        * @returns exit code.
        */
-      virtual void run();
+      virtual void onThreadMain();
 
       /**
        * Inherited from Notificator abstract class
@@ -123,7 +123,7 @@ namespace remoting_control_desktop
        *
        * Checks TightVNC server status.
        */
-      void execute();
+      void onOperatingSystemApplicationMain();
 
       /**
        * Runs control interface (tray icon).
@@ -164,7 +164,7 @@ namespace remoting_control_desktop
       // Auxiliary function to the same name function. It does real work.
       void checkServicePasswords();
 
-      // Auxiliary function that forces the current run service to reload configuration.
+      // Auxiliary function that forces the current onThreadMain service to reload configuration.
       void reloadConfig();
 
    private:

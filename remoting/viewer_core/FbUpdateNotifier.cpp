@@ -49,8 +49,8 @@ namespace remoting_client
    FbUpdateNotifier::~FbUpdateNotifier()
    {
 //      try {
-//         terminate();
-//         wait();
+//         setThreadToFinish();
+//         waitThreadToFinish();
 //      } catch (...) {
 //      }
    }
@@ -60,7 +60,7 @@ void FbUpdateNotifier::destroy()
    ::subsystem::Thread::destroy();
 //   try {
 //      terminateThread();
-//      wait();
+//      waitThreadToFinish();
 //   } catch (...) {
 //   }
 }
@@ -91,7 +91,7 @@ void FbUpdateNotifier::setAdapter(CoreEventsAdapter *adapter)
 
       // Send event to adapter, while tread isn't terminated.
       while (!isThreadTerminating()) {
-         // If flag is set, then thread going to sleep (wait event).
+         // If flag is set, then thread going to sleep (waitThreadToFinish event).
          bool noUpdates = true;
 
          // Move updates to local variable with blocking notifier mutex "m_criticalsectionUpdate".

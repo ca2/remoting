@@ -355,9 +355,9 @@ namespace remoting_notify_node
 //         //
 //         //      });
 //         //
-//         //      ev86.wait();
+//         //      ev86.waitThreadToFinish();
 //         //
-//         //      ev64.wait();
+//         //      ev64.waitThreadToFinish();
 //         //
 //         //      ::file::path pathOfficialAdmin = directory()->m_pathCa2Module / "app_app_admin.exe";
 //         //

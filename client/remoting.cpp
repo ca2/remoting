@@ -187,7 +187,7 @@ namespace remoting_client
             });
 
          }
-         //tvnViewer.run();
+         //tvnViewer.onThreadMain();
          //result = tvnViewer.getExitCode();
       }
       catch (const ::subsystem::Exception &ex)

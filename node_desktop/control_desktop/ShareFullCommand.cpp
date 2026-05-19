@@ -36,7 +36,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void ShareFullCommand::execute()
+   void ShareFullCommand::onThreadMain()
    {
       m_pcontrolproxy->shareFull();
    }

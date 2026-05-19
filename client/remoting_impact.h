@@ -164,7 +164,7 @@ void defer_check_dead_instance();
       void addInstance(ViewerInstance *viewerInstance);
 
 
-      void run() override;
+      void onOperatingSystemApplicationMain() override;
 
    };
 

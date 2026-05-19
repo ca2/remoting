@@ -41,7 +41,7 @@
 //
 // So, we need to send file ::list_base request every time before step one folder down
 // or up (as you know, all this features realized in 'gotoNext' method) and when reply
-// for this request (FLR) is received, we must execute old piece of code from
+// for this request (FLR) is received, we must onThreadMain old piece of code from
 // 'gotoNext' method to really step one folder down or up.
 //
 // Also we must do this trick in 'start' method, cause we cannot start upload

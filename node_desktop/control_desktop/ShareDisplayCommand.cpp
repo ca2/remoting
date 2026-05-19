@@ -38,7 +38,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void ShareDisplayCommand::execute()
+   void ShareDisplayCommand::onThreadMain()
    {
       m_pcontrolproxy->shareDisplay(m_displayNumber);
    }

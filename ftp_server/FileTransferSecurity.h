@@ -43,7 +43,7 @@ public:
   // file transfer request handler code.
   void beginMessageProcessing();
   // Checks result and throws exception if caller
-  // must not execute file transfer code and return error
+  // must not onThreadMain file transfer code and return error
   // to client.
   void throwIfAccessDenied();
   // Sets previous (before startMessageProcessing call) access rights

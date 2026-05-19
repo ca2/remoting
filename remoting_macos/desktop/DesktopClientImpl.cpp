@@ -110,7 +110,7 @@ namespace remoting_macos
    {
       m_plogwriter->information("Deleting DesktopClientImpl");
 //      terminateThread();
-//      wait();
+//      waitThreadToFinish();
       freeResource();
       m_plogwriter->information("DesktopClientImpl deleted");
    }
@@ -283,15 +283,15 @@ namespace remoting_macos
       m_pchannelServerToClient->replaceChannel(newChannelFrom);
    }
 
-   void DesktopClientImpl::onTerminate() { m_happeningNewUpdate.set_happening(); }
+   void DesktopClientImpl::onTermThread() { m_happeningNewUpdate.set_happening(); }
 
-   void DesktopClientImpl::execute()
+   void DesktopClientImpl::onThreadMain()
    {
       m_plogwriter->information("DesktopClientImpl thread started");
 
       while (!isThreadTerminating())
       {
-         m_happeningNewUpdate.wait();
+         m_happeningNewUpdate.waitThreadToFinish();
          if (!isThreadTerminating())
          {
             sendUpdate();

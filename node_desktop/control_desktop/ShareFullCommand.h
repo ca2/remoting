@@ -37,7 +37,7 @@ namespace remoting_control_desktop
       ShareFullCommand(ControlProxy * pcontrolproxy);
       virtual ~ShareFullCommand();
 
-      virtual void execute();
+      virtual void onThreadMain();
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
    };

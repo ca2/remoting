@@ -49,20 +49,20 @@ namespace remoting_node_desktop
       // Returns true if authentication has succeed and still has not been called
       // the breakAndDisableAuthentications() function.
       // The function may be blocked as described above then if it will
-      // be called again the caller will wait other callers in order.
+      // be called again the caller will waitThreadToFinish other callers in order.
       bool authenticate(const unsigned char cryptPassword[8], const unsigned char challenge[8],
                         const unsigned char response[8]);
 
-      // Breaks all wait operations for this authenticator. Also if some
+      // Breaks all waitThreadToFinish operations for this authenticator. Also if some
       // caller calls the authenticate() function it immediately return the
       // false value and will be returns the false value for next calls.
       // Call this function
-      // before wait of termination of an object user.
+      // before waitThreadToFinish of termination of an object user.
       void breakAndDisableAuthentications();
 
    private:
       // Call this function before process an authentication. If authentication
-      // is banned at this time then the funciton will wait until authentication
+      // is banned at this time then the funciton will waitThreadToFinish until authentication
       // is freed.
       void checkBeforeAuth();
 

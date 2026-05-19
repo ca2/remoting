@@ -41,7 +41,7 @@ namespace remoting
          ~LocalFilesDeleteOperation() override;
 
          //virtual void start();
-         //virtual void terminate();
+         //virtual void setThreadToFinish();
 
          //private:
 

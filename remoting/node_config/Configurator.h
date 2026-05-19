@@ -52,7 +52,7 @@ namespace remoting_node
       ::pointer < ServerConfig > m_pserverconfig;
 
       //
-      // Is this flag is set configurator think than application run as service
+      // Is this flag is set configurator think than application onThreadMain as service
       //
 
       bool m_isConfiguringService;

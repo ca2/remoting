@@ -398,7 +398,7 @@ void ControlTrayIcon::onAction(int action)
       setText(MainSubsystem().StringTable().getString(IDS_CONTROL_CLIENT_NOT_CONNECTED));
    }
 
-   void ControlTrayIcon::terminate()
+   void ControlTrayIcon::setThreadToFinish()
    {
       m_termination = true;
       // Forcing window scopedstrMessage
@@ -407,7 +407,11 @@ void ControlTrayIcon::onAction(int action)
 
    void ControlTrayIcon::waitForTermination()
    {
+      
       m_happeningEnd.wait();
+
    }
+
+
 } // namespace remoting_control_desktop
 

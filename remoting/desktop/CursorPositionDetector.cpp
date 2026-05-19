@@ -42,15 +42,15 @@ namespace remoting
 
    CursorPositionDetector::~CursorPositionDetector(void)
    {
-//      terminate();
-//      wait();
+//      setThreadToFinish();
+//      waitThreadToFinish();
    }
 
 void CursorPositionDetector::destroy()
 {
    ::subsystem::Thread::destroy();
-//   terminate();
-//   wait();
+//   setThreadToFinish();
+//   waitThreadToFinish();
 }
 
 

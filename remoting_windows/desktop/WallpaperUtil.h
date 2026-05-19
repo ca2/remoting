@@ -25,42 +25,42 @@
 #pragma once
 
 
-#include "remoting/remoting/node_config/ConfigReloadListener.h"
+#include "remoting/remoting/desktop/WallpaperUtil.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting
+namespace remoting_windows
 {
 
-   class CLASS_DECL_REMOTING WallpaperUtil :
-      virtual public ::remoting_node::ConfigReloadListener
+   class CLASS_DECL_REMOTING_WINDOWS WallpaperUtil :
+      virtual public ::remoting::WallpaperUtil
    {
    public:
 
+            ::pointer<::subsystem::LogWriter> m_plogwriter;
+      ::string m_strWallpaperPath;
+      bool m_bWasDisabled;
 
 
       WallpaperUtil();
-      ~WallpaperUtil();
+      ~WallpaperUtil() override;
 
 
-      virtual void initialize_wallpaper_util(::remoting_node::Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter);
+      void initialize_wallpaper_util(::remoting_node::Configurator * pconfigurator, ::subsystem::LogWriter * plogwriter) override;
 
-      virtual void updateWallpaper();
+      void updateWallpaper() override;
 
    //protected:
-      virtual void onConfigReload(::remoting_node::ServerConfig *serverConfig);
+      void onConfigReload(::remoting_node::ServerConfig *serverConfig) override;
 
    //private:
       // Hides the desktop wallpaper.
       // @throws SystemException on a fail.
-      void disableWallpaper();
+      void disableWallpaper() override;
 
       // Restores the desktop wallpaper.
       // @throws SystemException on a fail.
-      void restoreWallpaper();
+      void restoreWallpaper() override;  
 
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
-      ::string m_strWallpaperPath;
-      bool m_bWasDisabled;
    };
 
    //// __WALLPAPERUTIL_H__

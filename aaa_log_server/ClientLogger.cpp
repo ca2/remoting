@@ -47,8 +47,8 @@ ClientLogWriter::~ClientLogWriter()
 void ClientLogWriter::freeResources()
 {
   if (m_levListenChan != 0) m_levListenChan->close();
-  terminate();
-  wait();
+  setThreadToFinish();
+  waitThreadToFinish();
   if (m_levListenChan != 0) delete m_levListenChan;
 
   if (m_logOutput != 0) delete m_logOutput;
@@ -156,7 +156,7 @@ void ClientLogWriter::setLogBarrier(int newLogBar)
   m_logBarrier = newLogBar & 0xf;
 }
 
-void ClientLogWriter::execute()
+void ClientLogWriter::onThreadMain()
 {
   DataInputStream levInput(m_levListenChan);
   try {

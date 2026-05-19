@@ -48,8 +48,8 @@ namespace remoting
 
    RfbDispatcher::~RfbDispatcher()
    {
-      //terminate();
-      //wait();
+      //setThreadToFinish();
+      //waitThreadToFinish();
    }
 
 void RfbDispatcher::destroy()
@@ -57,7 +57,7 @@ void RfbDispatcher::destroy()
    
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
 }
 
 

@@ -46,17 +46,17 @@ LogConn::LogConn(Channel *channel, LogConnAuthListener *pclientauthlistener,
 
 LogConn::~LogConn()
 {
-  terminate();
-  m_logLevelSender.terminate();
-  wait();
-  m_logLevelSender.wait();
+  setThreadToFinish();
+  m_logLevelSender.setThreadToFinish();
+  waitThreadToFinish();
+  m_logLevelSender.waitThreadToFinish();
 
   if (m_serviceChannel != 0) delete m_serviceChannel;
   if (m_logListenChannel != 0) delete m_logListenChannel;
   if (m_levelSendChannel != 0) delete m_levelSendChannel;
 }
 
-void LogConn::onTerminate()
+void LogConn::onTermThread()
 {
   {
     critical_section_lock al(&m_criticalsectionChannel);
@@ -73,7 +73,7 @@ void LogConn::onTerminate()
 
 void LogConn::close()
 {
-  terminate();
+  setThreadToFinish();
 }
 
 void LogConn::changeLogLevel(unsigned char newLevel)
@@ -128,7 +128,7 @@ void LogConn::dispatch()
   }
 }
 
-void LogConn::execute()
+void LogConn::onThreadMain()
 {
   try {
     assignConnection();

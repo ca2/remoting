@@ -40,15 +40,15 @@ namespace remoting
 
    GateKicker::~GateKicker()
    {
-      //terminate();
-      //wait();
+      //setThreadToFinish();
+      //waitThreadToFinish();
    }
 
 void GateKicker::destroy()
 {
    ::subsystem::Thread::destroy();
    // terminateThread();
-   // wait();
+   // waitThreadToFinish();
 }
 
 

@@ -276,7 +276,7 @@ namespace remoting
       //       res->add(unicodeChar);
       //    }
       // } else if (count == -1 && down) {
-      //    m_plogwriter->debug("Dead key pressed, wait for a char event");
+      //    m_plogwriter->debug("Dead key pressed, waitThreadToFinish for a char event");
       //    m_allowProcessCharEvent = true;
       // }
       //return needReleaseModifiers;

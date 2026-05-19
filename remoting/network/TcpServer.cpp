@@ -65,7 +65,7 @@ void TcpServer::destroy()
 
 //   if (isThreadActive()) {
 //      Thread::terminateThread();
-//      Thread::wait();
+//      Thread::waitThreadToFinish();
 //   }
    
 }

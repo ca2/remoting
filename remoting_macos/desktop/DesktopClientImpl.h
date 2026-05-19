@@ -79,8 +79,8 @@ namespace remoting_macos
 
 
    //protected:
-      virtual void execute();
-      virtual void onTerminate();
+      virtual void onThreadMain();
+      virtual void onTermThread();
 
    //private:
       // Interface functions

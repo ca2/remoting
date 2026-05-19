@@ -37,7 +37,7 @@ public:
   virtual ~ListenLogServer();
 
 private:
-  virtual void execute();
+  virtual void onThreadMain();
 
   PipeServer *m_listenPipe;
   SecurityAttributes m_pipeSecurity;

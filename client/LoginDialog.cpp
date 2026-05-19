@@ -236,12 +236,12 @@ namespace remoting_client
       {
          case IDC_CSERVER:
              switch (notificationID) {
-                case ::lightui::CBN_DROPDOWN:
+                case ::lightui::e_CBN_DROPDOWN:
                      updateHistory();
                      break;
 
                     // select item in ComboBox with ::list_base of history
-                case ::lightui::CBN_SELENDOK:
+                case ::lightui::e_CBN_SELENDOK:
             {
                 int selectedItemIndex = m_server.getSelectedItemIndex();
                 if (selectedItemIndex < 0) {

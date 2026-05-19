@@ -38,7 +38,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void ConnectCommand::execute()
+   void ConnectCommand::onThreadMain()
    {
       m_pcontrolproxy->makeOutgoingConnection(m_hostName, false);
    }

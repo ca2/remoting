@@ -43,11 +43,11 @@ SessionChangesWatcher::SessionChangesWatcher(
 }
 SessionChangesWatcher::~SessionChangesWatcher()
 {
-  terminate();
-  wait();
+  setThreadToFinish();
+  waitThreadToFinish();
 }
 
-void SessionChangesWatcher::execute()
+void SessionChangesWatcher::onThreadMain()
 {
   DWORD prevSession = m_baseSessionId;
    bool isRdp = WindowsSubsystem().WTS().SessionIsRdpSession(prevSession, m_plogwriter);
@@ -71,7 +71,7 @@ void SessionChangesWatcher::execute()
       prevSession = currSessionId;
       prevDeskName = currDeskName;
       m_extSessionChangesListener->onAnObjectEvent();
-      terminate();
+      setThreadToFinish();
     } else {
       // FIXME: Use ::happening instead of Sleep().
       Sleep(100);

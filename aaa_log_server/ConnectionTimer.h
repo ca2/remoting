@@ -39,8 +39,8 @@ public:
   virtual ~ConnectionTimer();
 
 private:
-  virtual void execute();
-  virtual void onTerminate();
+  virtual void onThreadMain();
+  virtual void onTermThread();
 
   TimerListener *m_happeningTimerListener;
   unsigned int m_iTimeout;

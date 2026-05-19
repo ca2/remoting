@@ -122,7 +122,7 @@ protected:
 
 protected:
   /**
-   * Checks if we can run file transfer now (using FileTransferSecurity).
+   * Checks if we can onThreadMain file transfer now (using FileTransferSecurity).
    * @throws SystemException if file transfer cannot handle request now (
    * for example, winlogon desktop is active) or access denied (for example,
    * when view-only mode is enabled).

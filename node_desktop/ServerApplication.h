@@ -104,8 +104,9 @@ namespace remoting_node_desktop
        *
        * @return application exit code.
        */
-      //virtual int run();
+      //virtual int onThreadMain();
       //void on_server_task_run() override;
+      void onOperatingSystemApplicationMain() override;
 
       /**
        * Inherited from ServerListener abstact class.

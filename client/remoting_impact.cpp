@@ -535,7 +535,7 @@ namespace remoting_client
 
 
 
-   void remoting_impact::run()
+   void remoting_impact::onOperatingSystemApplicationMain()
    {
 
 

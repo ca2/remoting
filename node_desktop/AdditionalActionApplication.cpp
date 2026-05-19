@@ -76,7 +76,7 @@ namespace remoting_node_desktop
    }
 
 
-   void AdditionalActionApplication::run()
+   void AdditionalActionApplication::onThreadMain()
    {
       ::subsystem::CommandLine args;
 

@@ -190,13 +190,13 @@ defer_construct_newø(m_pframebuffer);
          // Stop all threads.
          stop();
 
-         // If core isn't started, then this thread isn't execute,
-         // wait only thead of FbUpdateNotifier.
+         // If core isn't started, then this thread isn't onThreadMain,
+         // waitThreadToFinish only thead of FbUpdateNotifier.
          if (wasStarted()) {
             waitTermination();
          } else {
-            m_pfbupdatenotifier->wait();
-            m_pupdaterequestsenderProperty->wait();
+            m_pfbupdatenotifier->waitThreadToFinish();
+            m_pupdaterequestsenderProperty->waitThreadToFinish();
          }
       } catch (...) {
       }
@@ -289,9 +289,9 @@ defer_construct_newø(m_pframebuffer);
 
    void RemoteViewerCore::waitTermination()
    {
-      m_pfbupdatenotifier->wait();
-      m_pupdaterequestsenderProperty->wait();
-      wait();
+      m_pfbupdatenotifier->waitThreadToFinish();
+      m_pupdaterequestsenderProperty->waitThreadToFinish();
+      waitThreadToFinish();
    }
 
    void RemoteViewerCore::setPixelFormat(const ::innate_subsystem::PixelFormat & pixelFormat)

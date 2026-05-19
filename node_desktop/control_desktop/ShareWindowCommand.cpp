@@ -37,7 +37,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void ShareWindowCommand::execute()
+   void ShareWindowCommand::onThreadMain()
    {
       m_pcontrolproxy->shareWindow(m_shareWindowName);
    }

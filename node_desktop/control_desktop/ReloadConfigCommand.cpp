@@ -36,7 +36,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void ReloadConfigCommand::execute()
+   void ReloadConfigCommand::onThreadMain()
    {
       m_pcontrolproxy->reloadServerConfig();
    }

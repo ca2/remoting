@@ -54,7 +54,7 @@ namespace remoting_control_desktop
        *
        * @throws ::io_exception on io error, RemoteException on server side error.
        */
-      virtual void execute();
+      virtual void onThreadMain();
 
    protected:
       /**

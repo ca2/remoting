@@ -62,7 +62,7 @@ namespace remoting_node_desktop
    }
 
 
-   void QueryConnectionApplication::run()
+   void QueryConnectionApplication::onOperatingSystemApplicationMain()
    {
       QueryConnectionCommandLine parser;
 
@@ -91,7 +91,8 @@ namespace remoting_node_desktop
 
    }
 
-   int QueryConnectionApplication::execute(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, ::u32 timeOutSec)
+
+   int QueryConnectionApplication::run_synchronously(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, ::u32 timeOutSec)
    {
       // Prepare command for execution.
 

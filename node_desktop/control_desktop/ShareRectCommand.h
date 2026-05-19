@@ -38,7 +38,7 @@ namespace remoting_control_desktop
                        const ::i32_rectangle &  shareRect);
       virtual ~ShareRectCommand();
 
-      virtual void execute();
+      virtual void onThreadMain();
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
       const ::i32_rectangle m_shareRect;

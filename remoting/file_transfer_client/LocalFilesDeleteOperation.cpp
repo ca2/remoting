@@ -57,10 +57,10 @@ namespace remoting
       //   Thread::resume();
       // }
       //
-      // void LocalFilesDeleteOperation::terminate()
+      // void LocalFilesDeleteOperation::setThreadToFinish()
       // {
-      //   FileTransferOperation::terminate();
-      //   Thread::terminate();
+      //   FileTransferOperation::setThreadToFinish();
+      //   Thread::setThreadToFinish();
       // }
 
       //

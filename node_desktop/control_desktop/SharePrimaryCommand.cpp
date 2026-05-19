@@ -36,7 +36,7 @@ namespace remoting_control_desktop
    {
    }
 
-   void SharePrimaryCommand::execute()
+   void SharePrimaryCommand::onThreadMain()
    {
       m_pcontrolproxy->sharePrimary();
    }

@@ -58,14 +58,14 @@ namespace remoting
 
    ClipboardExchange::~ClipboardExchange()
    {
-//      terminate();
-//      wait();
+//      setThreadToFinish();
+//      waitThreadToFinish();
    }
 void ClipboardExchange::destroy()
 {
    ::subsystem::Thread::destroy();
-//   terminate();
-//   wait();
+//   setThreadToFinish();
+//   waitThreadToFinish();
 }
 
    void ClipboardExchange::onRequest(::u32 reqCode, ::remoting::RfbInputGate *prfbinputgate)
@@ -175,9 +175,9 @@ void ClipboardExchange::destroy()
                }
                m_output->flush();
             } catch (::exception &e) {
-               m_plogwriter->error("The clipboard thread force to terminate because"
+               m_plogwriter->error("The clipboard thread force to setThreadToFinish because"
                           " it caught the error: {}", e.get_message());
-               //terminate();
+               //setThreadToFinish();
                setThreadToFinish();
             }
          }

@@ -313,7 +313,7 @@ namespace remoting_client
             return true;
         }
         if (MainSubsystem().message_box(operating_system_window(),
-                       "Do you want to close file transfers and terminate current operation?",
+                       "Do you want to close file transfers and setThreadToFinish current operation?",
                        "TightVNC ::file::item Transfers",
                        ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::e_control_id_yes) {
             // Set flag

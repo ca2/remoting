@@ -238,7 +238,7 @@ namespace remoting_node_desktop
 
    void DesktopServerApplication::onConfigReload(::remoting_node::ServerConfig *serverConfig) {}
 
-   void DesktopServerApplication::run()
+   void DesktopServerApplication::onOperatingSystemApplicationMain()
    {
       try
       {
@@ -247,8 +247,8 @@ namespace remoting_node_desktop
          
          pwallpaperutil->initialize_wallpaper_util(m_pconfigurator, m_plogwriter);
 
-         // int retCode = OperatingSystemApplication::run();
-         OperatingSystemApplication::run();
+         // int retCode = OperatingSystemApplication::onThreadMain();
+         OperatingSystemApplication::onOperatingSystemApplicationMain();
          m_plogwriter->information("Desktop server terminated with return code = {}", this->getExitCode());
          // return retCode;
       }
