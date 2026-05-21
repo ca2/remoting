@@ -60,7 +60,7 @@ namespace remoting_windows
     // m_pcursorshapedetector(pupdatekeeper, pupdatelistener, &m_pcursorshapegrabber, pcriticalsectionFramebuffer, log)
       //{
       WinVideoRegionUpdaterImpl::initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
-         emplace_newø(m_pcursorpositiondetector);
+      emplace_newø(m_pcursorpositiondetector);
       m_pcursorpositiondetector->initialize_cursor_position_detector(pupdatekeeper, pupdatelistener, plogwriter);
       m_pcursorshapedetector = allocateø WindowsCursorShapeGrabber();
       m_pcursorshapedetector->initialize_cursor_shape_detector(pupdatekeeper, pupdatelistener, m_pcursorshapegrabber, pcriticalsectionFramebuffer, plogwriter);

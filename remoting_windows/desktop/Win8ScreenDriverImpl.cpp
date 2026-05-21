@@ -33,6 +33,8 @@
 #include "remoting/remoting_windows/desktop/D3D11Device.h"
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
+::string dxgi_d3d11_diagnostic_for_duplicate_output1();
+::string dxgi_d3d11_diagnostic_for_duplicate_output2(UINT outputIndex, IDXGIOutput *output);
 
 namespace remoting_windows
 {
@@ -139,7 +141,7 @@ namespace remoting_windows
    void Win8ScreenDriverImpl::terminateDetection()
    {
       m_plogwriter->debug("Stop Win8DeskDuplication");
-      m_deskDuplThreadBundle.destroyAllThreads();
+      //m_deskDuplThreadBundle.destroyAllThreads();
       m_detectionEnabled = false;
    }
 
@@ -147,18 +149,20 @@ namespace remoting_windows
 
    void Win8ScreenDriverImpl::initDxgi()
    {
+
+      information() << dxgi_d3d11_diagnostic_for_duplicate_output1();
+
       m_plogwriter->debug("Creating of D3D11Device");
       //WinD3D11Device d3D11Device(m_plogwriter);
       m_pd3d11device = allocateø D3D11Device(m_plogwriter);
       m_plogwriter->debug("Quering Interface for IDXGIDevice");
       //WinDxgiDevice dxgiDevice(&d3D11Device);
-      m_pd3d11device->m_pd3d11device.as(m_pdxgidevice);
+      //m_pd3d11device->m_pd3d11device.as(m_pdxgidevice);
       //m_pdxgiDevice = allocateø WinDxgiDevice(m_pd3D11Device);
       m_plogwriter->debug("Getting Parent for IDXGIAdapter");
       //WinDxgiAdapter dxgiAdapter(&dxgiDevice);
-      m_pdxgidevice->GetParent(__interface_of(m_pdxgiadapter));
+      //m_pdxgidevice->GetParent(__interface_of(m_pdxgiadapter));
       //m_pdxgiAdapter = allocateø WinDxgiAdapter(m_pdxgiDevice);
-
       ::remoting::Region virtDeskRegion;
       m_plogwriter->debug("Try to enumerate dxgi outputs");
       ::array_base<::comptr<IDXGIOutput > > dxgioutputa;
@@ -173,7 +177,7 @@ namespace remoting_windows
 
             //auto hr = m_pdxgiAdapter->getDxgiOutput(iOutput, &pdxgioutput);
 
-            HRESULT hr = m_pdxgiadapter->EnumOutputs(iOutput, &pdxgioutput);
+            HRESULT hr = m_pd3d11device->m_pdxgiadapter1->EnumOutputs(iOutput, &pdxgioutput);
             //return hr;
             if (hr == DXGI_ERROR_NOT_FOUND)
             {
@@ -181,6 +185,14 @@ namespace remoting_windows
                break;
 
             }
+            else if (FAILED(hr))
+            {
+
+               break;
+
+            }
+
+            dxgi_d3d11_diagnostic_for_duplicate_output2(iOutput, pdxgioutput);
 
             DXGI_OUTPUT_DESC desc{};
 
@@ -245,11 +257,12 @@ namespace remoting_windows
       //auto timeSlice = 4_s / 12;
       //preempt(timeSlice * threadsNum);
       //preempt(4_s);
-      auto pthread = allocateø Win8DeskDuplication(m_pframebufferProperty, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
+      auto pdeskduplication = allocateø Win8DeskDuplication(m_pframebufferProperty, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
                                                &m_cursorMutex, this,m_pd3d11device, dxgioutputa, m_plogwriter);
-      DWORD id = pthread->getThreadId();
-      m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);
-      m_deskDuplThreadBundle.addThread(pthread);
+      //DWORD id = pthread->getThreadId();
+      //m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);
+      //m_deskDuplThreadBundle.addThread(pthread);
+      m_pdeskduplication = pdeskduplication;
    }
 
    void Win8ScreenDriverImpl::onThreadMain()
@@ -281,7 +294,9 @@ namespace remoting_windows
 
       while (!isThreadTerminating() && isValid())
       {
-         m_happeningError.wait();
+         m_pdeskduplication->onRunStep();
+         preempt(25_ms);
+         //m_happeningError.wait();
       }
 
       if (!isValid())

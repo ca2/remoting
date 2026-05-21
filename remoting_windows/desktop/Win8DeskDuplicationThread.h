@@ -41,7 +41,8 @@ namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS Win8DeskDuplication :
-      virtual public ::subsystem_windows::GuiThread
+      //virtual public ::subsystem_windows::GuiThread
+       virtual public ::particle
    {
    public:
       // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
@@ -54,8 +55,19 @@ namespace remoting_windows
 
       bool isValid();
 
-   private:
+         ::array_base<int> timeouts;
+         ::array_base<class ::time> begins;
+
+               HRESULT hrErrorRecoverable = S_OK;
+      ::string strErrorRecoverable;
+      HRESULT hrErrorCritical = S_OK;
+      ::string strErrorCritical;
+      ::string strException;
+
+
+   //private:
       virtual void onThreadMain();
+      virtual bool onRunStep();
       virtual void onTermThread();
       void setCriticalError(const ::scoped_string &scopedstrReason);
       void setRecoverableError(const ::scoped_string &scopedstrReason);

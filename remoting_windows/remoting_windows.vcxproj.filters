@@ -119,6 +119,9 @@
     <ClCompile Include="desktop\D3D11Device.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
+    <ClCompile Include="desktop\WindowsGraphicsCapture.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="_.h">
@@ -242,6 +245,9 @@
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
     <ClInclude Include="desktop\WinVideoRegionUpdaterImpl.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WindowsGraphicsCapture.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
   </ItemGroup>

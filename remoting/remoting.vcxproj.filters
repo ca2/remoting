@@ -698,6 +698,9 @@
     <ClCompile Include="event_log\EventLog.cpp">
       <Filter>Source Files\event_log</Filter>
     </ClCompile>
+    <ClCompile Include="desktop\ScreenCapture.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client_config\_.h">
@@ -1521,6 +1524,102 @@
     </ClInclude>
     <ClInclude Include="desktop_ipc\UserInputServer.h">
       <Filter>Header Files\desktop_ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="node\ControlAuthException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node\ControlCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node\NamingDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node\NewConnectionEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node\Notificator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node\RemoteException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node\_.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\ConfigReloadListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\Configurator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\IpAccessControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\IpAccessRule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\PortMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\PortMappingContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\PortMappingRect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\RegistrySecurityAttributes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\ServerConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\_.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\AdministrationConfigDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\ChangePasswordDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\CommonInputValidation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\ConfigDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\EditIpAccessRuleDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\EditPortMappingDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\IpAccessControlDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\PasswordControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\PortMappingDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\ServerConfigDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\TvnLogFilename.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\UIDataAccess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\VideoRegionsConfigDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node_user_config\_.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\ScreenCapture.h">
+      <Filter>Header Files\desktop</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

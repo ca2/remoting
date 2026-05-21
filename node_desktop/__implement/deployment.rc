@@ -42,7 +42,7 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "ca2 Software Development"
-            VALUE "FileDescription", "Remoting Node Desktop Control"
+            VALUE "FileDescription", "Remoting Node Desktop"
             VALUE "FileVersion", "2026.0130.1612.08"
             VALUE "LegalCopyright", "Copyright (C) 2026-01-30-16-12-08"
             VALUE "ProductVersion", "2026.0130.1612.08"

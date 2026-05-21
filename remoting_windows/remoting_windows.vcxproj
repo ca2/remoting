@@ -169,6 +169,7 @@
     <ClCompile Include="desktop\WinCustomD3D11Texture2D.cpp" />
     <ClCompile Include="desktop\WinD3D11Texture2D.cpp" />
     <ClCompile Include="desktop\WindowsCursorShapeGrabber.cpp" />
+    <ClCompile Include="desktop\WindowsGraphicsCapture.cpp" />
     <ClCompile Include="desktop\WindowsInputBlocker.cpp" />
     <ClCompile Include="desktop\WindowsScreenGrabber.cpp" />
     <ClCompile Include="desktop\WindowsUserInput.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="desktop\WinD3D11Device.h" />
     <ClInclude Include="desktop\WinD3D11Texture2D.h" />
     <ClInclude Include="desktop\WindowsCursorShapeGrabber.h" />
+    <ClInclude Include="desktop\WindowsGraphicsCapture.h" />
     <ClInclude Include="desktop\WindowsInputBlocker.h" />
     <ClInclude Include="desktop\WindowsScreenGrabber.h" />
     <ClInclude Include="desktop\WindowsUserInput.h" />

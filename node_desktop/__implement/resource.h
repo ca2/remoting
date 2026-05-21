@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by main.rc
+// Used by deployment.rc
 //
 #define IDD_CONFIG_ADMINISTRATION_PAGE  102
 #define IDD_CONFIG_SERVER_PAGE          103

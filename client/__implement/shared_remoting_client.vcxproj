@@ -243,6 +243,7 @@
     <ClInclude Include="..\..\..\..\operating_system\operating_system-windows\subsystem_win32\resource_loader.h" />
     <ClInclude Include="..\resource.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -261,6 +262,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon.ico" />
+    <Image Include="res\appicon.ico" />
+    <Image Include="res\fileup.ico" />
+    <Image Include="res\ftdir.ico" />
+    <Image Include="res\ftfile.ico" />
+    <Image Include="res\remoting48.bmp" />
+    <Image Include="res\remoting90.bmp" />
+    <Image Include="res\toolbar.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\innate_subsystem_windows\innate_subsystem_windows.vcxproj">
@@ -284,6 +292,11 @@
     <ProjectReference Include="..\remoting_client.vcxproj">
       <Project>{082f71ad-cdf6-44de-84f7-9d2d16784b23}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\dot.cur" />
+    <None Include="res\nocursor.cur" />
+    <None Include="res\smalldot.cur" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

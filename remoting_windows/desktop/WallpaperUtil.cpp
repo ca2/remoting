@@ -122,9 +122,19 @@ namespace remoting_windows
    void WallpaperUtil::disableWallpaper()
    {
       m_plogwriter->information("Try to disable wallpaper");
-      ::subsystem::Impersonator impersonator;
-      impersonator.initialize_impersonator(m_plogwriter);
-      ::subsystem::AutoImpersonator ai(&impersonator, m_plogwriter);
+      ::pointer<::subsystem::Impersonator> impersonator;
+      ::auto_pointer<::subsystem::AutoImpersonator> ai;
+      if (!m_papplication->m_bUserApplication)
+      {
+         ///::subsystem::Impersonator impersonator;
+         construct_newø(impersonator);
+         impersonator->initialize_impersonator(m_plogwriter);
+         emplace_newø(ai, impersonator, m_plogwriter);
+      }
+         
+      
+      //impersonator.initialize_impersonator(m_plogwriter);
+      //::subsystem::AutoImpersonator ai(&impersonator, m_plogwriter);
       WCHAR path[MAX_PATH] = L"";
 
       if (SystemParametersInfo(SPI_GETDESKWALLPAPER, MAX_PATH, path, 0) == 0)

@@ -57,7 +57,8 @@ void CursorPositionDetector::destroy()
    void CursorPositionDetector::initialize_cursor_position_detector(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener,
                                                   ::subsystem::LogWriter * plogwriter)
    {
-       initialize_update_detector(pupdatekeeper, pupdatelistener);
+      
+      initialize_update_detector(pupdatekeeper, pupdatelistener);
       m_plogwriter = plogwriter;
 
    }

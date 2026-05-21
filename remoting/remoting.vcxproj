@@ -171,6 +171,7 @@
     <ClCompile Include="desktop\InputBlocker.cpp" />
     <ClCompile Include="desktop\Poller.cpp" />
     <ClCompile Include="desktop\SasUserInput.cpp" />
+    <ClCompile Include="desktop\ScreenCapture.cpp" />
     <ClCompile Include="desktop\ScreenDriverFactory.cpp" />
     <ClCompile Include="desktop\ScreenGrabber.cpp" />
     <ClCompile Include="desktop\UpdateContainer.cpp" />
@@ -386,6 +387,7 @@
     <ClInclude Include="desktop\InputBlocker.h" />
     <ClInclude Include="desktop\Poller.h" />
     <ClInclude Include="desktop\SasUserInput.h" />
+    <ClInclude Include="desktop\ScreenCapture.h" />
     <ClInclude Include="desktop\ScreenDriver.h" />
     <ClInclude Include="desktop\ScreenDriverFactory.h" />
     <ClInclude Include="desktop\ScreenGrabber.h" />

@@ -41,6 +41,17 @@ namespace remoting_windows
       virtual public ::particle
    {
    public:
+
+            ::comptr<IDXGIDevice> m_pdxgidevice;
+
+      ::comptr<IDXGIAdapter1> m_pdxgiadapter1;
+
+            ::subsystem::DynamicLibrary m_d3d11Lib;
+            ::comptr<ID3D11Device> m_pd3d11device;
+            ::comptr<ID3D11DeviceContext> m_pd3d11devicecontext;
+
+            ::pointer<::subsystem::LogWriter> m_plogwriter;
+
       // Creates new device and context of first found.
       D3D11Device();
       D3D11Device(::subsystem::LogWriter * plogwriter);
@@ -63,11 +74,6 @@ namespace remoting_windows
    //private:
       //void copy(const WinD3D11Device &src);
 
-      ::subsystem::DynamicLibrary m_d3d11Lib;
-      ::comptr<ID3D11Device > m_pd3d11device;
-      ::comptr<ID3D11DeviceContext> m_pd3d11devicecontext;
-
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
    //// __WIND3D11DEVICE_H__

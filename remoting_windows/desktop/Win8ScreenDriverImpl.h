@@ -51,10 +51,6 @@ namespace remoting_windows
 
       ::pointer<D3D11Device> m_pd3d11device;
       
-      ::comptr<IDXGIDevice >m_pdxgidevice;
-      
-      ::comptr<IDXGIAdapter > m_pdxgiadapter;
-
       //Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, ::remoting::UpdateKeeper *pupdatekeeper,
         //                   lockable_critical_section *pcriticalsectionFramebuffer, ::remoting::UpdateListener *pupdatelistener,
           //                 bool detectionEnabled = false);
@@ -99,7 +95,9 @@ namespace remoting_windows
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
-      ::subsystem_windows::ThreadCollector m_deskDuplThreadBundle;
+      //::subsystem_windows::ThreadCollector m_deskDuplThreadBundle;
+
+      ::pointer<Win8DeskDuplication> m_pdeskduplication;
 
       ::happening m_happeningInit;
       ::happening m_happeningError;

@@ -94,7 +94,11 @@ namespace remoting_windows
          m_textureaStage.add(pd3d11texture2d);
       }
       m_plogwriter->debug("Win8DeskDuplication created");
-      resumeThread();
+
+               timeouts.resize(m_outputduplicationa.size());
+         begins.resize(m_outputduplicationa.size());
+
+      //resumeThread();
    }
 
    Win8DeskDuplication::~Win8DeskDuplication()
@@ -106,112 +110,185 @@ namespace remoting_windows
 
    bool Win8DeskDuplication::isValid() { return !m_hasRecoverableError && !m_hasCriticalError; }
 
+
+   bool Win8DeskDuplication::onRunStep()
+   {
+      if (!::task_get_run() || !isValid())
+      {
+         return false;
+      }
+       const int ACQUIRE_TIMEOUT = 20;
+         for (size_t i = 0; i < m_outputduplicationa.size(); i++)
+         {
+            auto &poutputduplication = m_outputduplicationa[i];
+            {
+               begins[i].Now();
+               auto pwindxgiacquiredframe = allocateø DXGIAcquiredFrame(poutputduplication, ACQUIRE_TIMEOUT);
+               if (pwindxgiacquiredframe->wasTimeOut())
+               {
+                  timeouts[i]++;
+                  m_plogwriter->debug("Timeout on acquire frame for output: {}", i);
+                  //Thread::threadYield();
+                  continue;
+               }
+               else
+               {
+                  DXGI_OUTDUPL_FRAME_INFO *info = pwindxgiacquiredframe->getFrameInfo();
+                  int accum_frames = info->AccumulatedFrames;
+                  double dt = begins[i].elapsed().floating_millisecond(); // in milliseconds
+                  m_plogwriter->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i,
+                                      dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
+                  timeouts[i] = 0;
+
+                  ::comptr<ID3D11Texture2D> ptextureAcquiredDesktopImage;
+
+                  HRESULT hr = pwindxgiacquiredframe->m_pdxgiresourceDesktop.as(ptextureAcquiredDesktopImage);
+
+                  if (FAILED(hr) || !ptextureAcquiredDesktopImage)
+                  {
+
+                     hrErrorRecoverable = hr;
+
+                     strErrorRecoverable = "Can't QueryInterface() to create ID3D11Texture2D";
+
+                     break;
+                  }
+
+                  // Get metadata
+                  if (info->TotalMetadataBufferSize)
+                  {
+                     size_t moveCount = poutputduplication->getFrameMoveRects(&m_moveRects);
+                     size_t dirtyCount = poutputduplication->getFrameDirtyRects(&m_dirtyRects);
+
+                     processMoveRects(moveCount, i);
+                     processDirtyRects(dirtyCount, ptextureAcquiredDesktopImage, i);
+                  }
+
+                  // Check cursor pointer for updates.
+                  try
+                  {
+                     processCursor(info, i);
+                  }
+                  catch (WinDxException &e)
+                  {
+                     m_plogwriter->debug("Error on cursor processing: {}, (%x)", e.get_message(),
+                                         (int)e.getErrorCode());
+                  } // Cursor
+               }
+            }
+            //Thread::threadYield();
+         }
+      //}
+   return true;
+
+   }
+
    void Win8DeskDuplication::onThreadMain()
    {
-      const int ACQUIRE_TIMEOUT = 20;
-      //try
+      //const int ACQUIRE_TIMEOUT = 20;
+      ////try
+      ////{
+      //   ::array_base<int> timeouts;
+      //   ::array_base<class ::time> begins;
+      //   timeouts.resize(m_outputduplicationa.size());
+      //   begins.resize(m_outputduplicationa.size());
+
+      //   HRESULT hrErrorRecoverable = S_OK;
+      //   ::string strErrorRecoverable;
+      //   HRESULT hrErrorCritical = S_OK;
+      //   ::string strErrorCritical;
+      //   ::string strException;
+
+      //   while (onRunStep())
+      //   {
+      //      for (size_t i = 0; i < m_outputduplicationa.size(); i++)
+      //      {
+      //         auto & poutputduplication = m_outputduplicationa[i];
+      //         {
+      //            begins[i].Now();
+      //            auto pwindxgiacquiredframe = allocateø DXGIAcquiredFrame(poutputduplication, ACQUIRE_TIMEOUT);
+      //            if (pwindxgiacquiredframe->wasTimeOut())
+      //            {
+      //               timeouts[i]++;
+      //               m_plogwriter->debug("Timeout on acquire frame for output: {}", i);
+      //               Thread::threadYield();
+      //               continue;
+      //            }
+      //            else
+      //            {
+      //               DXGI_OUTDUPL_FRAME_INFO *info = pwindxgiacquiredframe->getFrameInfo();
+      //               int accum_frames = info->AccumulatedFrames;
+      //               double dt = begins[i].elapsed().floating_millisecond(); // in milliseconds
+      //               m_plogwriter->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i,
+      //                                   dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
+      //               timeouts[i] = 0;
+
+      //               ::comptr < ID3D11Texture2D > ptextureAcquiredDesktopImage;
+
+      //               HRESULT hr = pwindxgiacquiredframe->m_pdxgiresourceDesktop.as(ptextureAcquiredDesktopImage);
+
+      //               if (FAILED(hr) || !ptextureAcquiredDesktopImage)
+      //               {
+
+      //                  hrErrorRecoverable = hr;
+
+      //                  strErrorRecoverable = "Can't QueryInterface() to create ID3D11Texture2D";
+
+      //                  break;
+
+      //               }
+
+      //               // Get metadata
+      //               if (info->TotalMetadataBufferSize)
+      //               {
+      //                  size_t moveCount = poutputduplication->getFrameMoveRects(&m_moveRects);
+      //                  size_t dirtyCount = poutputduplication->getFrameDirtyRects(&m_dirtyRects);
+
+      //                  processMoveRects(moveCount, i);
+      //                  processDirtyRects(dirtyCount, ptextureAcquiredDesktopImage, i);
+      //               }
+
+      //               // Check cursor pointer for updates.
+      //               try
+      //               {
+      //                  processCursor(info, i);
+      //               }
+      //               catch (WinDxException &e)
+      //               {
+      //                  m_plogwriter->debug("Error on cursor processing: {}, (%x)", e.get_message(),
+      //                                      (int)e.getErrorCode());
+      //               } // Cursor
+      //            }
+      //         }
+      //         Thread::threadYield();
+      //      }
+      //   }
+      //   // FIXME: remove it all, catch exceptions in Win8ScreenDriverImpl
+      ////}
+
+      //if (strErrorRecoverable.has_character())
       //{
-         ::array_base<int> timeouts;
-         ::array_base<class ::time> begins;
-         timeouts.resize(m_outputduplicationa.size());
-         begins.resize(m_outputduplicationa.size());
-
-         HRESULT hrErrorRecoverable = S_OK;
-         ::string strErrorRecoverable;
-         HRESULT hrErrorCritical = S_OK;
-         ::string strErrorCritical;
-         ::string strException;
-
-         while (!isThreadTerminating() && isValid())
-         {
-            for (size_t i = 0; i < m_outputduplicationa.size(); i++)
-            {
-               auto & poutputduplication = m_outputduplicationa[i];
-               {
-                  begins[i].Now();
-                  auto pwindxgiacquiredframe = allocateø DXGIAcquiredFrame(poutputduplication, ACQUIRE_TIMEOUT);
-                  if (pwindxgiacquiredframe->wasTimeOut())
-                  {
-                     timeouts[i]++;
-                     m_plogwriter->debug("Timeout on acquire frame for output: {}", i);
-                     Thread::threadYield();
-                     continue;
-                  }
-                  else
-                  {
-                     DXGI_OUTDUPL_FRAME_INFO *info = pwindxgiacquiredframe->getFrameInfo();
-                     int accum_frames = info->AccumulatedFrames;
-                     double dt = begins[i].elapsed().floating_millisecond(); // in milliseconds
-                     m_plogwriter->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i,
-                                         dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
-                     timeouts[i] = 0;
-
-                     ::comptr < ID3D11Texture2D > ptextureAcquiredDesktopImage;
-
-                     HRESULT hr = pwindxgiacquiredframe->m_pdxgiresourceDesktop.as(ptextureAcquiredDesktopImage);
-
-                     if (FAILED(hr) || !ptextureAcquiredDesktopImage)
-                     {
-
-                        hrErrorRecoverable = hr;
-
-                        strErrorRecoverable = "Can't QueryInterface() to create ID3D11Texture2D";
-
-                        break;
-
-                     }
-
-                     // Get metadata
-                     if (info->TotalMetadataBufferSize)
-                     {
-                        size_t moveCount = poutputduplication->getFrameMoveRects(&m_moveRects);
-                        size_t dirtyCount = poutputduplication->getFrameDirtyRects(&m_dirtyRects);
-
-                        processMoveRects(moveCount, i);
-                        processDirtyRects(dirtyCount, ptextureAcquiredDesktopImage, i);
-                     }
-
-                     // Check cursor pointer for updates.
-                     try
-                     {
-                        processCursor(info, i);
-                     }
-                     catch (WinDxException &e)
-                     {
-                        m_plogwriter->debug("Error on cursor processing: {}, (%x)", e.get_message(),
-                                            (int)e.getErrorCode());
-                     } // Cursor
-                  }
-               }
-               Thread::threadYield();
-            }
-         }
-         // FIXME: remove it all, catch exceptions in Win8ScreenDriverImpl
+      //   ::string errMess;
+      //   errMess.format("Win8DeskDuplication:: Catched WinDxRecoverableException: {}, (%x)",
+      //                        strErrorRecoverable,
+      //                   (int)hrErrorRecoverable);
+      //   setRecoverableError(errMess);
       //}
-
-      if (strErrorRecoverable.has_character())
-      {
-         ::string errMess;
-         errMess.format("Win8DeskDuplication:: Catched WinDxRecoverableException: {}, (%x)",
-                              strErrorRecoverable,
-                         (int)hrErrorRecoverable);
-         setRecoverableError(errMess);
-      }
-      else if (strErrorCritical.has_character())
-      {
-         ::string errMess;
-         errMess.format("Win8DeskDuplication:: Catched WinDxCriticalException: {}, (%x)", strErrorCritical,
-                         (int)hrErrorCritical);
-         setRecoverableError(errMess); //?????????
-         setCriticalError(errMess);
-      }
-      else if (strException.has_character())
-      {
-         ::string errMess;
-         errMess.format("Win8DeskDuplication:: Catched ::subsystem::Exception: {}", strException);
-         setRecoverableError(errMess); //?????????
-         setCriticalError(errMess);
-      }
+      //else if (strErrorCritical.has_character())
+      //{
+      //   ::string errMess;
+      //   errMess.format("Win8DeskDuplication:: Catched WinDxCriticalException: {}, (%x)", strErrorCritical,
+      //                   (int)hrErrorCritical);
+      //   setRecoverableError(errMess); //?????????
+      //   setCriticalError(errMess);
+      //}
+      //else if (strException.has_character())
+      //{
+      //   ::string errMess;
+      //   errMess.format("Win8DeskDuplication:: Catched ::subsystem::Exception: {}", strException);
+      //   setRecoverableError(errMess); //?????????
+      //   setCriticalError(errMess);
+      //}
    }
 
    void Win8DeskDuplication::onTermThread() {}
