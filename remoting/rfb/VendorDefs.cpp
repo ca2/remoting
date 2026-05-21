@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,5 +27,5 @@
 namespace remoting
 {
    const char *const VendorDefs::STANDARD = "STDV";
-   const char *const VendorDefs::TIGHTVNC = "TGHT";
+   const char *const VendorDefs::REMOTING = "TGHT";
 } // namespace remoting

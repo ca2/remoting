@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 #include "subsystem/_common_header.h"
 #include "remoting/remoting/desktop/DesktopConfigLocal.h"
 #include "remoting/remoting/desktop/WallpaperUtil.h"
-#include "subsystem/thread/GuiThread.h"
+#include "subsystem_windows/thread/GuiThread.h"
 #include "remoting/remoting/desktop/DesktopBaseImpl.h"
 #include "remoting/remoting/desktop/ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"
@@ -38,7 +38,7 @@ namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS DesktopWinImpl :
-   virtual public ::subsystem::GuiThread,
+   virtual public ::subsystem_windows::GuiThread,
    virtual public ::remoting::DesktopBaseImpl
    {
    public:

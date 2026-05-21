@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@
 namespace remoting_node_desktop
 {
    /**
-    * TightVNC server singleton that includes serveral components:
+    * Remoting Node singleton that includes serveral components:
     *   1) Zombie killer singleton.
     *   2) Configurator singleton.
     *   3) Log singleton.
@@ -126,7 +126,7 @@ namespace remoting_node_desktop
 
       ::u32 m_contextSwitchResolution; // in ms
       /**
-       * Creates and starts TightVNC server execution (in separate thread).
+       * Creates and starts Remoting Node execution (in separate thread).
        *
        * Makes sereval steps:
        *  1) Instanizes zombie killer.
@@ -136,21 +136,21 @@ namespace remoting_node_desktop
        *
        * @param runsInServiceContext must be set to true if Server is running in service context,
        * false, if in context of single application. Parameter determinates control client behavour and
-       * initial place for loading TightVNC configuration.
+       * initial place for loading Remoting configuration.
        *
        * @remark doesn't block calling thread execution cause all servers runs in it's own threads.
-       * To know when need to shutdown TightVNC server you need to use addListener method.
+       * To know when need to shutdown Remoting Node you need to use addListener method.
        */
       Server();
       /**
-       * Stops and destroys TightVNC server.
+       * Stops and destroys Remoting Node.
        * @remark don't generate shutdown signal(like shutdown() method does) for listeners.
        */
       ~Server() override;
 
       /**
        * Fills structure with information of current state of Server.
-       * @param info [out] output parameter that will contain TightVNC server information
+       * @param info [out] output parameter that will contain Remoting Node information
        * after call of this method.
        * @fixme place extended information to server info.
        */
@@ -174,14 +174,14 @@ namespace remoting_node_desktop
       /**
        * Only generates shutdown signal (event) for Server listeners.
        *
-       * @remark used by ControlClient, when it recieves command to shutdown TightVNC.
-       * @remark doesn't stop TightVNC server.
+       * @remark used by ControlClient, when it recieves command to shutdown Remoting.
+       * @remark doesn't stop Remoting Node.
        * @fixme rename this method.
        */
       virtual void generateExternalShutdownSignal();
 
       /**
-       * Checks if TightVNC server runs in service context.
+       * Checks if Remoting Node runs in service context.
        * @returns true if runs in service context.
        * @deprecated use getServerInfo() instead or move to private.
        */

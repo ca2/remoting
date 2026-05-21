@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,11 +25,12 @@
 #include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 #include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
 //#include "subsystem/thread/lockable_critical_section.h"
-#include "remoting/remoting_windows/desktop/WinDxgiAcquiredFrame.h"
+#include "remoting/remoting_windows/desktop/DXGIAcquiredFrame.h"
 #include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
 #include "remoting/remoting_windows/desktop/WinAutoMapDxgiSurface.h"
 #include "remoting/remoting_windows/desktop/Win8DeskDuplicationThread.h"
-#include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
+//#include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
+#include "remoting/remoting_windows/desktop/D3D11Device.h"
 
 
 namespace remoting_windows
@@ -40,19 +41,57 @@ namespace remoting_windows
                                             ::int_rectangle_array_base &targetRect, Win8CursorShape *targetCurShape,
                                             LONGLONG *cursorTimeStamp, lockable_critical_section *cursorMutex,
                                             Win8DuplicationListener *duplListener,
-                                            ::pointer_array<WinDxgiOutput> &dxgiOutput, ::subsystem::LogWriter * plogwriter) :
+                                            D3D11Device * pd3d11device,
+                                            const ::array_base<::comptr < IDXGIOutput > > & dxgioutputa, ::subsystem::LogWriter * plogwriter) :
        m_targetFb(targetFb), m_targetRects(targetRect), m_targetCurShape(targetCurShape),
-       m_cursorTimeStamp(cursorTimeStamp), m_cursorMutex(cursorMutex), m_duplListener(duplListener), m_device(plogwriter),
+       m_cursorTimeStamp(cursorTimeStamp), m_cursorMutex(cursorMutex), m_duplListener(duplListener), m_pdevice(pd3d11device),
        m_hasCriticalError(false), m_hasRecoverableError(false), m_plogwriter(plogwriter)
    {
-      m_plogwriter->debug("Creating Win8DeskDuplication for {} outputs", dxgiOutput.size());
-      for (size_t i = 0; i < dxgiOutput.size(); i++)
+      m_plogwriter->debug("Creating Win8DeskDuplication for {} outputs", dxgioutputa.size());
+      for (size_t i = 0; i < dxgioutputa.size(); i++)
       {
-         m_dxgiOutput1.add(allocateø WinDxgiOutput1(dxgiOutput[i]));
-         m_outDupl.add(allocateø WinDxgiOutputDuplication(m_dxgiOutput1[i], &m_device));
-         m_rotations.add(dxgiOutput[i]->getRotation());
-         m_stageTextures2D.add(allocateø WinCustomD3D11Texture2D(m_device.getDevice(), (::u32)targetRect[i].width(),
-                                                       (::u32)targetRect[i].height(), m_rotations[i]));
+         m_dxgioutput1a.add(dxgioutputa[i].as<IDXGIOutput1>());
+         m_outputduplicationa.add(allocateø DXGIOutputDuplication(m_dxgioutput1a[i], m_pdevice));
+         DXGI_OUTPUT_DESC desc;
+         HRESULT hr = m_dxgioutput1a[i]->GetDesc(&desc);
+         if (FAILED(hr))
+         {
+            throw WinDxCriticalException("Can't get output description", hr);
+         }
+         m_rotations.add(desc.Rotation);
+
+         D3D11_TEXTURE2D_DESC desc2{};
+         if (desc.Rotation == DXGI_MODE_ROTATION_ROTATE90 || desc.Rotation == DXGI_MODE_ROTATION_ROTATE270)
+         {
+            desc2.Width = targetRect[i].height();
+            desc2.Height = targetRect[i].width();
+         }
+         else
+         {
+            desc2.Width = targetRect[i].width();
+            desc2.Height = targetRect[i].height();
+         }
+         desc2.MipLevels = 1;
+         desc2.ArraySize = 1;
+         desc2.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+         desc2.SampleDesc.Count = 1;
+         desc2.SampleDesc.Quality = 0;
+         desc2.Usage = D3D11_USAGE_STAGING;
+         desc2.BindFlags = 0;
+         desc2.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+         desc2.MiscFlags = 0;
+         ::comptr < ID3D11Texture2D > pd3d11texture2d;
+         HRESULT hrCreateTexture = pd3d11device->m_pd3d11device->CreateTexture2D(&desc2, 0, &pd3d11texture2d);
+
+         if (FAILED(hrCreateTexture) || !pd3d11texture2d)
+         {
+
+            throw WinDxRecoverableException("Can't CreateTexture2D()", hr);
+
+         }
+         //m_textureaStage.add(allocateø WinCustomD3D11Texture2D(m_pdevice->getDevice(), (::u32)targetRect[i].width(),
+           //                                            (::u32)targetRect[i].height(), m_rotations[i]));
+         m_textureaStage.add(pd3d11texture2d);
       }
       m_plogwriter->debug("Win8DeskDuplication created");
       resumeThread();
@@ -61,8 +100,8 @@ namespace remoting_windows
    Win8DeskDuplication::~Win8DeskDuplication()
    {
       m_plogwriter->debug("deleting Win8DeskDuplication");
-      setThreadToFinish();
-      waitThreadToFinish();
+      //setThreadToFinish();
+      //waitThreadToFinish();
    }
 
    bool Win8DeskDuplication::isValid() { return !m_hasRecoverableError && !m_hasCriticalError; }
@@ -70,20 +109,28 @@ namespace remoting_windows
    void Win8DeskDuplication::onThreadMain()
    {
       const int ACQUIRE_TIMEOUT = 20;
-      try
-      {
+      //try
+      //{
          ::array_base<int> timeouts;
          ::array_base<class ::time> begins;
-         timeouts.resize(m_outDupl.size());
-         begins.resize(m_outDupl.size());
+         timeouts.resize(m_outputduplicationa.size());
+         begins.resize(m_outputduplicationa.size());
+
+         HRESULT hrErrorRecoverable = S_OK;
+         ::string strErrorRecoverable;
+         HRESULT hrErrorCritical = S_OK;
+         ::string strErrorCritical;
+         ::string strException;
+
          while (!isThreadTerminating() && isValid())
          {
-            for (size_t i = 0; i < m_outDupl.size(); i++)
+            for (size_t i = 0; i < m_outputduplicationa.size(); i++)
             {
+               auto & poutputduplication = m_outputduplicationa[i];
                {
                   begins[i].Now();
-                  WinDxgiAcquiredFrame acquiredFrame(m_outDupl[i], ACQUIRE_TIMEOUT);
-                  if (acquiredFrame.wasTimeOut())
+                  auto pwindxgiacquiredframe = allocateø DXGIAcquiredFrame(poutputduplication, ACQUIRE_TIMEOUT);
+                  if (pwindxgiacquiredframe->wasTimeOut())
                   {
                      timeouts[i]++;
                      m_plogwriter->debug("Timeout on acquire frame for output: {}", i);
@@ -92,22 +139,36 @@ namespace remoting_windows
                   }
                   else
                   {
-                     DXGI_OUTDUPL_FRAME_INFO *info = acquiredFrame.getFrameInfo();
+                     DXGI_OUTDUPL_FRAME_INFO *info = pwindxgiacquiredframe->getFrameInfo();
                      int accum_frames = info->AccumulatedFrames;
                      double dt = begins[i].elapsed().floating_millisecond(); // in milliseconds
                      m_plogwriter->debug("Acquire frame for output: {} for %f ms, accumulated {} frames", i,
                                          dt + ACQUIRE_TIMEOUT * timeouts[i], accum_frames);
                      timeouts[i] = 0;
-                     WinD3D11Texture2D acquiredDesktopImage(acquiredFrame.getDxgiResource());
+
+                     ::comptr < ID3D11Texture2D > ptextureAcquiredDesktopImage;
+
+                     HRESULT hr = pwindxgiacquiredframe->m_pdxgiresourceDesktop.as(ptextureAcquiredDesktopImage);
+
+                     if (FAILED(hr) || !ptextureAcquiredDesktopImage)
+                     {
+
+                        hrErrorRecoverable = hr;
+
+                        strErrorRecoverable = "Can't QueryInterface() to create ID3D11Texture2D";
+
+                        break;
+
+                     }
 
                      // Get metadata
                      if (info->TotalMetadataBufferSize)
                      {
-                        size_t moveCount = m_outDupl[i]->getFrameMoveRects(&m_moveRects);
-                        size_t dirtyCount = m_outDupl[i]->getFrameDirtyRects(&m_dirtyRects);
+                        size_t moveCount = poutputduplication->getFrameMoveRects(&m_moveRects);
+                        size_t dirtyCount = poutputduplication->getFrameDirtyRects(&m_dirtyRects);
 
                         processMoveRects(moveCount, i);
-                        processDirtyRects(dirtyCount, &acquiredDesktopImage, i);
+                        processDirtyRects(dirtyCount, ptextureAcquiredDesktopImage, i);
                      }
 
                      // Check cursor pointer for updates.
@@ -126,27 +187,30 @@ namespace remoting_windows
             }
          }
          // FIXME: remove it all, catch exceptions in Win8ScreenDriverImpl
-      }
-      catch (WinDxRecoverableException &e)
+      //}
+
+      if (strErrorRecoverable.has_character())
       {
          ::string errMess;
-         errMess.format("Win8DeskDuplication:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(),
-                         (int)e.getErrorCode());
+         errMess.format("Win8DeskDuplication:: Catched WinDxRecoverableException: {}, (%x)",
+                              strErrorRecoverable,
+                         (int)hrErrorRecoverable);
          setRecoverableError(errMess);
       }
-      catch (WinDxCriticalException &e)
+      else if (strErrorCritical.has_character())
       {
          ::string errMess;
-         errMess.format("Win8DeskDuplication:: Catched WinDxCriticalException: {}, (%x)", e.get_message(),
-                         (int)e.getErrorCode());
+         errMess.format("Win8DeskDuplication:: Catched WinDxCriticalException: {}, (%x)", strErrorCritical,
+                         (int)hrErrorCritical);
          setRecoverableError(errMess); //?????????
          setCriticalError(errMess);
       }
-      catch (::exception &e)
+      else if (strException.has_character())
       {
          ::string errMess;
-         errMess.format("Win8DeskDuplication:: Catched ::subsystem::Exception: {}", e.get_message());
-         setRecoverableError(errMess);
+         errMess.format("Win8DeskDuplication:: Catched ::subsystem::Exception: {}", strException);
+         setRecoverableError(errMess); //?????????
+         setCriticalError(errMess);
       }
    }
 
@@ -166,7 +230,12 @@ namespace remoting_windows
 
    ::i32_size Win8DeskDuplication::getStageDimension(size_t out) const
    {
-      return ::i32_size(m_stageTextures2D[out]->getDesc()->Width, m_stageTextures2D[out]->getDesc()->Height);
+
+      D3D11_TEXTURE2D_DESC desc{};
+
+      m_textureaStage[out]->GetDesc(&desc);
+
+      return ::i32_size(desc.Width, desc.Height);
    }
 
    void Win8DeskDuplication::processMoveRects(size_t moveCount, size_t out)
@@ -194,10 +263,13 @@ namespace remoting_windows
 
          m_duplListener->onCopyRect(destinationRect, x, y);
       }
+
    }
 
-   void Win8DeskDuplication::processDirtyRects(size_t dirtyCount, WinD3D11Texture2D *acquiredDesktopImage, size_t out)
+
+   void Win8DeskDuplication::processDirtyRects(size_t dirtyCount, ID3D11Texture2D * ptextureAcquiredDesktopImage, size_t out)
    {
+
       ASSERT(dirtyCount <= m_dirtyRects.size());
 
       ::remoting::Region m_regionChanged;
@@ -225,12 +297,14 @@ namespace remoting_windows
             throw ::subsystem::Exception(errMess);
             */
          }
-         ID3D11Texture2D *texture = m_stageTextures2D[out]->getTexture();
-         m_device.copySubresourceRegion(texture, dirtyRect.left, dirtyRect.top, acquiredDesktopImage->getTexture(),
+         ::comptr < ID3D11Texture2D  > pd3d11texture2d = m_textureaStage[out];
+         m_pdevice->copySubresourceRegion(pd3d11texture2d, dirtyRect.left, dirtyRect.top,
+            ptextureAcquiredDesktopImage,
                                         dirtyRect, 0, 1);
 
-         WinDxgiSurface surface(texture);
-         WinAutoMapDxgiSurface autoMapSurface(&surface, DXGI_MAP_READ);
+         ::comptr < IDXGISurface > pdxgisurface;
+         pd3d11texture2d.as(pdxgisurface);
+         auto pautomapsurface = allocateø WinAutoMapDxgiSurface(pdxgisurface, DXGI_MAP_READ);
 
          ::i32_rectangle rectangleTarget(dirtyRect);
          rotateRectInsideStage(rectangleTarget, sizeStage, rotation);
@@ -239,11 +313,11 @@ namespace remoting_windows
          m_plogwriter->debug("Destination dirty rectangle = {}, {}, %dx{}", rectangleTarget.left, rectangleTarget.top, rectangleTarget.width(),
                              rectangleTarget.height());
 
-         sizeStage.cx = static_cast<int>(autoMapSurface.getStride() / 4);
+         sizeStage.cx = static_cast<int>(pautomapsurface->getStride() / 4);
          construct_newø(m_pframebufferAuxiliaryProperty);
 
          m_pframebufferAuxiliaryProperty->setPropertiesWithoutResize(sizeStage, m_targetFb->getPixelFormat());
-         m_pframebufferAuxiliaryProperty->setBuffer(autoMapSurface.getBuffer());
+         m_pframebufferAuxiliaryProperty->setBuffer(pautomapsurface->getBuffer());
          switch (rotation)
          {
             case DXGI_MODE_ROTATION_UNSPECIFIED:
@@ -334,7 +408,7 @@ namespace remoting_windows
          if (shapeChanged)
          {
             m_plogwriter->debug("Cursor shape chagned");
-            m_outDupl[out]->getFrameCursorShape(m_targetCurShape->getCursorShapeForWriting(),
+            m_outputduplicationa[out]->getFrameCursorShape(m_targetCurShape->getCursorShapeForWriting(),
                                                info->PointerShapeBufferSize, m_plogwriter);
             m_duplListener->onCursorShapeChanged();
          }

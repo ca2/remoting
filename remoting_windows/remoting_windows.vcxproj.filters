@@ -71,9 +71,6 @@
     <ClCompile Include="desktop\WinCustomD3D11Texture2D.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="desktop\WinD3D11Device.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
     <ClCompile Include="desktop\WinD3D11Texture2D.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
@@ -95,27 +92,6 @@
     <ClCompile Include="desktop\WinDxException.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="desktop\WinDxgiAcquiredFrame.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
-    <ClCompile Include="desktop\WinDxgiAdapter.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
-    <ClCompile Include="desktop\WinDxgiDevice.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
-    <ClCompile Include="desktop\WinDxgiOutput.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
-    <ClCompile Include="desktop\WinDxgiOutput1.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
-    <ClCompile Include="desktop\WinDxgiOutputDuplication.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
-    <ClCompile Include="desktop\WinDxgiSurface.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
     <ClCompile Include="desktop\WinDxRecoverableException.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
@@ -132,6 +108,15 @@
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
     <ClCompile Include="desktop\WallpaperUtil.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\DXGIOutputDuplication.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\DXGIAcquiredFrame.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\D3D11Device.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
   </ItemGroup>

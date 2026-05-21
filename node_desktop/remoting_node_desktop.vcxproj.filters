@@ -200,6 +200,12 @@
     <ClCompile Include="BuildTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="_control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="application_control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdditionalActionApplication.h">

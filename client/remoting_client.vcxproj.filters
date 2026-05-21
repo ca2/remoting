@@ -203,7 +203,7 @@
     <ClInclude Include="ViewerVncAuthHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TvnViewer.h">
+    <ClInclude Include="RemotingClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConnectingDialog.h">

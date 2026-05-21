@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -73,8 +73,8 @@ namespace remoting_client
      m_isUtf8ClipboardEnabled(false)
    {
 defer_construct_newø(m_pframebuffer);
-      raw_construct_newø(m_pfbupdatenotifier, m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller);
-      raw_construct_newø(m_pupdaterequestsenderProperty, &m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter);
+      emplace_newø(m_pfbupdatenotifier, m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller);
+      emplace_newø(m_pupdaterequestsenderProperty, &m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter);
       m_tcpConnection.initialize_tcp_connection(m_plogwriter);
       init();
    }
@@ -93,8 +93,8 @@ defer_construct_newø(m_pframebuffer);
      m_isUtf8ClipboardEnabled(false)
    {
 
-      raw_construct_newø(m_pfbupdatenotifier, m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller);
-      raw_construct_newø(m_pupdaterequestsenderProperty, &m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter);
+      emplace_newø(m_pfbupdatenotifier, m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller);
+      emplace_newø(m_pupdaterequestsenderProperty, &m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter);
 
       m_tcpConnection.initialize_tcp_connection(m_plogwriter);
       init();
@@ -116,8 +116,8 @@ defer_construct_newø(m_pframebuffer);
      m_isUtf8ClipboardEnabled(false)
    {
 
-      raw_construct_newø(m_pfbupdatenotifier, m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller);
-      raw_construct_newø(m_pupdaterequestsenderProperty, &m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter);
+      emplace_newø(m_pfbupdatenotifier, m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller);
+      emplace_newø(m_pupdaterequestsenderProperty, &m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter);
 
       m_tcpConnection.initialize_tcp_connection(m_plogwriter);
       init();
@@ -139,8 +139,8 @@ defer_construct_newø(m_pframebuffer);
      m_isUtf8ClipboardEnabled(false)
    {
 
-      raw_construct_newø(m_pfbupdatenotifier, m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller);
-      raw_construct_newø(m_pupdaterequestsenderProperty, &m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter);
+      emplace_newø(m_pfbupdatenotifier, m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller);
+      emplace_newø(m_pupdaterequestsenderProperty, &m_criticalsectionFramebuffer, m_pframebuffer, m_plogwriter);
 
       m_tcpConnection.initialize_tcp_connection(m_plogwriter);
       init();
@@ -174,12 +174,12 @@ defer_construct_newø(m_pframebuffer);
       m_updateTimeout = 0;
 
       addClientMsgCapability(::remoting::ClientMsgDefs::CLIENT_CUT_TEXT_UTF8,
-        ::remoting::VendorDefs::TIGHTVNC,
+        ::remoting::VendorDefs::REMOTING,
         ::remoting::Utf8CutTextDefs::CLIENT_CUT_TEXT_UTF8_SIG,
         "UTF-8 clipboard");
 
       addClientMsgCapability(::remoting::ClientMsgDefs::ENABLE_CUT_TEXT_UTF8,
-        ::remoting::VendorDefs::TIGHTVNC,
+        ::remoting::VendorDefs::REMOTING,
         ::remoting::Utf8CutTextDefs::ENABLE_CUT_TEXT_UTF8_SIG,
         "enable UTF-8 clipboard");
    }
@@ -1091,7 +1091,7 @@ defer_construct_newø(m_pframebuffer);
    ::u32 RemoteViewerCore::receiveServerMessageType()
    {
       // Viewer in common case read first byte (unsigned char) as scopedstrMessage id,
-      // but if first byte is equal to 0xFC then it's TightVNC extension scopedstrMessage and
+      // but if first byte is equal to 0xFC then it's Remoting extension scopedstrMessage and
       // must read next 3 bytes and create ::u32 scopedstrMessage id for processing.
 
       static const unsigned short SERVER_MSG_SPECIAL_TIGHT_CODE = 0xFC;

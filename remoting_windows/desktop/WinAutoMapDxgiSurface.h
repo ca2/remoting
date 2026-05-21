@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,25 +30,28 @@
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
 #include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinDxgiSurface.h"
+//#include "remoting/remoting_windows/desktop/WinDxgiSurface.h"
+#include <d3d11.h>
+#include <DXGI1_2.h>
 
 
 namespace remoting_windows
 {
 
    // Calls IDXGISurface->Map() function at the constructor and Unmap() at the destructor.
-   class CLASS_DECL_REMOTING_WINDOWS WinAutoMapDxgiSurface
+   class CLASS_DECL_REMOTING_WINDOWS WinAutoMapDxgiSurface :
+      virtual public ::particle
    {
    public:
       // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.
-      WinAutoMapDxgiSurface(WinDxgiSurface *surface, ::u32 mapFlags);
+      WinAutoMapDxgiSurface(IDXGISurface *pdxgisurface, ::u32 mapFlags);
       virtual ~WinAutoMapDxgiSurface();
 
       size_t getStride() const;
       char *getBuffer() const;
 
    private:
-      WinDxgiSurface *m_surface;
+      ::comptr < IDXGISurface > m_pdxgisurface;
       DXGI_MAPPED_RECT m_mappedRect;
    };
 

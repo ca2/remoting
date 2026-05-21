@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
-    <Feature Id='TightVNC'
-             Title='TightVNC'
-             Description='TightVNC includes two components, Server and Viewer. Both are installed by default.'
+    <Feature Id='Remoting'
+             Title='Remoting'
+             Description='Remoting includes two components, Server and Viewer. Both are installed by default.'
              Display='expand'
              Level='1'
              ConfigurableDirectory='INSTALLDIR'>
       <?ifndef SERVER_FREE ?>
       <Feature Id='Server'
-               Title='TightVNC Server'
-               Description='TightVNC Server makes this computer available for remote viewers.'
+               Title='Remoting Node'
+               Description='Remoting Node makes this computer available for remote viewers.'
                Level='1'>
         <ComponentRef Id='ServerExe' />
         <ComponentRef Id='SasDll' />
@@ -23,8 +23,8 @@
       <?endif?>
       <?ifndef VIEWER_FREE ?>
       <Feature Id='Viewer'
-               Title='TightVNC Viewer'
-               Description='TightVNC Viewer is used to view and control remote computers.'
+               Title='Remoting Client'
+               Description='Remoting Client is used to view and control remote computers.'
                Level='1'>
         <ComponentRef Id='ProgramMenuDir' />
         <ComponentRef Id='ViewerExe' />

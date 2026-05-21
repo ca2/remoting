@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -106,7 +106,7 @@ namespace remoting_node_desktop
          return;
       }
 
-      // Reject 2 instances of TightVNC server application.
+      // Reject 2 instances of Remoting Node application.
 
       //::subsystem::GlobalMutex *appInstanceMutex;
 
@@ -125,14 +125,14 @@ namespace remoting_node_desktop
          return;
       }
 
-      // // check the HKLM\SOFTWARE\TightVNC\Server\ has ServiceOnly subsection and exit if found
+      // // check the HKLM\SOFTWARE\Remoting\Server\ has ServiceOnly subsection and exit if found
       // // to create the key and set acces rights onThreadMain the PS script:
-      // // New-Item -Path HKLM:\SOFTWARE\TightVNC\Server -Name ServiceOnly
-      // // $ACL = Get-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
+      // // New-Item -Path HKLM:\SOFTWARE\Remoting\Server -Name ServiceOnly
+      // // $ACL = Get-Acl HKLM:\SOFTWARE\Remoting\Server\ServiceOnly
       // // $AccessRule = new-object System.Security.AccessControl.RegistryAccessRule("Users", "ReadKey", "None", "None",
-      // // "Allow") $ACL.SetAccessRule($AccessRule) $ACL | Set-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
+      // // "Allow") $ACL.SetAccessRule($AccessRule) $ACL | Set-Acl HKLM:\SOFTWARE\Remoting\Server\ServiceOnly
       // ::subsystem::RegistryKey key(MainSubsystem().Registry().getLocalMachineKey(),
-      //                              "SOFTWARE\\TightVNC\\Server\\ServiceOnly", false);
+      //                              "SOFTWARE\\Remoting\\Server\\ServiceOnly", false);
       // if (key.isOpened())
       // {
       //    MainSubsystem().message_box({}, "Couldn't onThreadMain the server in Application mode", "Server error",
@@ -142,7 +142,7 @@ namespace remoting_node_desktop
       //    return;
       // }
 
-      // Start TightVNC server and TightVNC control application.
+      // Start Remoting Node and Remoting control application.
       try
       {
          _start();
@@ -202,7 +202,7 @@ namespace remoting_node_desktop
    //      return;
    //   }
 
-   //   // Reject 2 instances of TightVNC server application.
+   //   // Reject 2 instances of Remoting Node application.
 
    //   ::subsystem::GlobalMutex *appInstanceMutex;
 
@@ -219,14 +219,14 @@ namespace remoting_node_desktop
    //      return;
    //   }
 
-   //   // check the HKLM\SOFTWARE\TightVNC\Server\ has ServiceOnly subsection and exit if found
+   //   // check the HKLM\SOFTWARE\Remoting\Server\ has ServiceOnly subsection and exit if found
    //   // to create the key and set acces rights onThreadMain the PS script:
-   //   // New-Item -Path HKLM:\SOFTWARE\TightVNC\Server -Name ServiceOnly
-   //   // $ACL = Get-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
+   //   // New-Item -Path HKLM:\SOFTWARE\Remoting\Server -Name ServiceOnly
+   //   // $ACL = Get-Acl HKLM:\SOFTWARE\Remoting\Server\ServiceOnly
    //   // $AccessRule = new-object System.Security.AccessControl.RegistryAccessRule("Users", "ReadKey", "None", "None", "Allow")
    //   // $ACL.SetAccessRule($AccessRule)
-   //   // $ACL | Set-Acl HKLM:\SOFTWARE\TightVNC\Server\ServiceOnly
-   //   ::subsystem::RegistryKey key(MainSubsystem().Registry().getLocalMachineKey(), "SOFTWARE\\TightVNC\\Server\\ServiceOnly", false);
+   //   // $ACL | Set-Acl HKLM:\SOFTWARE\Remoting\Server\ServiceOnly
+   //   ::subsystem::RegistryKey key(MainSubsystem().Registry().getLocalMachineKey(), "SOFTWARE\\Remoting\\Server\\ServiceOnly", false);
    //   if (key.isOpened()) {
    //      MainSubsystem().message_box({},
    //        "Couldn't onThreadMain the server in Application mode",
@@ -236,7 +236,7 @@ namespace remoting_node_desktop
    //      return;
    //   }
 
-   //   // Start TightVNC server and TightVNC control application.
+   //   // Start Remoting Node and Remoting control application.
    //   try {
    //      m_tvnServer = new Server(false, m_newConnectionEvents, this, m_fileLogWriter);
    //      m_tvnServer->addListener(this);

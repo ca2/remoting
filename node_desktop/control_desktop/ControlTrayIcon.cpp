@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -227,7 +227,7 @@ void ControlTrayIcon::onAction(int action)
       case ID_OUTGOING_CONN:
          onOutgoingConnectionMenuItemClick();
          break;
-      case ID_ABOUT_TIGHTVNC_MENUITEM:
+      case ID_ABOUT_REMOTING_MENUITEM:
          onAboutMenuItemClick();
          break;
       case ID_CLOSE_CONTROL_INTERFACE:
@@ -260,7 +260,7 @@ void ControlTrayIcon::onAction(int action)
 
       m_pconfigurator->setServiceFlag(isConnectedToService);
 
-      // Copy running tightvnc config to our global server config.
+      // Copy running remoting config to our global server config.
       if (!m_pconfigdialog->isCreated()) {
          UpdateLocalConfigCommand updateLocalConfigCommand(m_pconfigurator, m_pcontrolproxy);
 
@@ -326,7 +326,7 @@ void ControlTrayIcon::onAction(int action)
            }
       }
 
-      // Shutdown TightVNC server.
+      // Shutdown Remoting Node.
 
       ShutdownCommand unsafeCommand(m_pcontrolproxy);
 
@@ -368,7 +368,7 @@ void ControlTrayIcon::onAction(int action)
    void ControlTrayIcon::syncStatusWithServer()
    {
       try {
-         // Get TightVNC server info.
+         // Get Remoting Node info.
          auto serverinfo = m_pcontrolproxy->getServerInfo();
          ::list_base<RfbClientInfo *> clients;
          m_pcontrolproxy->getClientsList(&clients);

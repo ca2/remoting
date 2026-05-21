@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -241,11 +241,11 @@ void RfbClient::destroy()
 
          initialize(m_prfbclient);
 
-         raw_construct_newø(m_psockstream, m_prfbclient->m_psocket);
-         raw_construct_newø(m_prfboutputgate, m_psockstream);
-         raw_construct_newø(m_pbufferedinput, m_psockstream);
-         raw_construct_newø(m_prfbinputgate, m_pbufferedinput);
-         raw_construct_newø(m_prfbinitializer);
+         emplace_newø(m_psockstream, m_prfbclient->m_psocket);
+         emplace_newø(m_prfboutputgate, m_psockstream);
+         emplace_newø(m_pbufferedinput, m_psockstream);
+         emplace_newø(m_prfbinputgate, m_pbufferedinput);
+         emplace_newø(m_prfbinitializer);
 
          m_prfbinitializer->initialize_rfb_initializer(prfbclient->m_pconfigurator, m_psockstream, m_prfbclient->m_pclientauthlistener, m_prfbclient, !m_prfbclient->m_isOutgoing);
 
@@ -266,7 +266,7 @@ void RfbClient::destroy()
 
       auto pserverconfig = m_pconfigurator->getServerConfig();
 
-      raw_construct_newø(m_prun, this);
+      emplace_newø(m_prun, this);
 
       // ::subsystem::SocketStream sockStream(m_psocket);
       //
@@ -310,9 +310,9 @@ void RfbClient::destroy()
          m_pviewportConst->initDesktopInterface(m_pdesktop);
          m_pviewportDynamic->initDesktopInterface(m_pdesktop);
 
-         raw_construct_newø(m_prun->m_prfbdispatcher, m_prun->m_prfbinputgate, &m_connClosingEvent);
+         emplace_newø(m_prun->m_prfbdispatcher, m_prun->m_prfbinputgate, &m_connClosingEvent);
          m_plogwriter->debug("Dispatcher has been created");
-         raw_construct_newø(m_prun->m_prfbcoderegistrator,m_prun->m_prfbdispatcher,
+         emplace_newø(m_prun->m_prfbcoderegistrator,m_prun->m_prfbdispatcher,
             &m_prun->srvToClCaps, &m_prun->clToSrvCaps,
                                        &m_prun->encCaps);
          // Init modules

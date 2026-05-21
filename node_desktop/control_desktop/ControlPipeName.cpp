@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -39,14 +39,14 @@ namespace remoting_control_desktop
       if (forService) {
          pipeName =
            //ServerApplicationNames::FOR_SERVICE_CONTROL_APP_PIPE_NAME
-           "TightVNC_Service_Control"
+           "Remoting_Service_Control"
            ;
       } else {
 
          int iActiveConsoleSessionId = MainSubsystem().OperatingSystem().getActiveConsoleSessionId(plogwriter);
          pipeName.format("{}_On_Session_{}",
            //ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME,
-           "TightVNC_Application_Control",
+           "Remoting_Application_Control",
            iActiveConsoleSessionId);
       }
    }

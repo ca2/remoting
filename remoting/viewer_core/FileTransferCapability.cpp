@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -85,147 +85,147 @@ namespace remoting_client
       {
          // Client-to-Server messages:
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::COMPRESSION_SUPPORT_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::COMPRESSION_SUPPORT_REQUEST_SIG,
                                          "Compression support");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::FILE_LIST_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::FILE_LIST_REQUEST_SIG,
                                          "::file::item ::list_base request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::MD5_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::MD5_REQUEST_SIG,
                                          "::file::item md5 sum request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::DIRSIZE_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::DIRSIZE_REQUEST_SIG,
                                          "Directory size request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::RENAME_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::RENAME_REQUEST_SIG,
                                          "::file::item move request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::MKDIR_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::MKDIR_REQUEST_SIG,
                                          "Directory create request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::REMOVE_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::REMOVE_REQUEST_SIG,
                                          "::file::item remove request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::DOWNLOAD_START_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::DOWNLOAD_START_REQUEST_SIG,
                                          "::file::item download start request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::DOWNLOAD_DATA_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::DOWNLOAD_DATA_REQUEST_SIG,
                                          "::file::item download data request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::UPLOAD_START_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::UPLOAD_START_REQUEST_SIG,
                                          "::file::item upload start request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::UPLOAD_DATA_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::UPLOAD_DATA_REQUEST_SIG,
                                          "::file::item upload data request");
 
          pcapabilitiesmanager->addClientMsgCapability(FTMessage::UPLOAD_END_REQUEST,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::UPLOAD_END_REQUEST_SIG,
                                          "::file::item upload end request");
 
          // Server-to-Client messages:
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::COMPRESSION_SUPPORT_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::COMPRESSION_SUPPORT_REPLY_SIG,
                                          "Compression support");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::FILE_LIST_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::FILE_LIST_REPLY_SIG,
                                          "::file::item ::list_base reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::LAST_REQUEST_FAILED_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::LAST_REQUEST_FAILED_REPLY_SIG,
                                          "Last request failed");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::MD5_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::MD5_REPLY_SIG,
                                          "::file::item md5 sum reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::DIRSIZE_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::DIRSIZE_REPLY_SIG,
                                          "Directory size reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::RENAME_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::RENAME_REPLY_SIG,
                                          "::file::item move reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::MKDIR_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::MKDIR_REPLY_SIG,
                                          "Directory create reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::REMOVE_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::REMOVE_REPLY_SIG,
                                         "::file::item remove reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::DOWNLOAD_START_REPLY,
-                                        ::remoting::VendorDefs::TIGHTVNC,
+                                        ::remoting::VendorDefs::REMOTING,
                                         FTMessage::DOWNLOAD_START_REPLY_SIG,
                                         "::file::item download start reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::DOWNLOAD_DATA_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::DOWNLOAD_DATA_REPLY_SIG,
                                          "::file::item download data reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::DOWNLOAD_END_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::DOWNLOAD_END_REPLY_SIG,
                                          "::file::item download end reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::UPLOAD_START_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::UPLOAD_START_REPLY_SIG,
                                          "::file::item upload start reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::UPLOAD_DATA_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::UPLOAD_DATA_REPLY_SIG,
                                          "::file::item upload data reply");
 
          pcapabilitiesmanager->addServerMsgCapability(this,
                                          FTMessage::UPLOAD_END_REPLY,
-                                         ::remoting::VendorDefs::TIGHTVNC,
+                                         ::remoting::VendorDefs::REMOTING,
                                          FTMessage::UPLOAD_END_REPLY_SIG,
                                          "::file::item upload end reply");
       }

@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -70,8 +70,8 @@ namespace remoting_windows
 
    WindowsInputBlocker::~WindowsInputBlocker()
    {
-      setThreadToFinish();
-      waitThreadToFinish();
+      // setThreadToFinish();
+      // waitThreadToFinish();
       m_instance = 0;
    }
    void WindowsInputBlocker::initialize_windows_input_blocker(::subsystem::LogWriter *plogwriter)

@@ -46,6 +46,8 @@ namespace remoting_node_desktop
 
       m_strAppId = "remoting/node_desktop";
 
+      m_bUserApplication = false;
+
    }
 
 
@@ -114,6 +116,59 @@ namespace remoting_node_desktop
 
       }
       
+   }
+
+
+   bool application::check_pipe_node_client_executable_paths(const file::path& pathNode, const file::path& pathClient)
+   {
+
+      auto pathNodeFolder = pathNode.folder();
+
+      auto pathClientFolder = pathClient.folder();
+
+      if (pathNodeFolder.is_empty() || pathClientFolder.is_empty())
+      {
+
+         return false;
+
+      }
+
+      if (pathNodeFolder != pathClientFolder)
+      {
+
+         return false;
+
+      }
+
+      ::string strNodeName = pathNode.name();
+
+      ::string strClientName = pathClient.name();
+
+      if (!strNodeName.ends_eat(".exe"))
+      {
+
+         return false;
+
+      }
+
+      if (!strClientName.ends_eat(".exe"))
+      {
+
+         return false;
+
+      }
+
+      bool bEaten = strClientName.ends_eat("_control");
+
+      if (strNodeName != strClientName)
+      {
+
+         return false;
+
+      }
+
+      return true;
+
    }
 
 

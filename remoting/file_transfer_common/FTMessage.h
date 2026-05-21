@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
  *  ::u32 messageId 32 bit scopedstrMessage id.
  *  unsigned char[] messageBody scopedstrMessage body depends on messageId.
  * @remark rfb dispatcher in common case read first byte (unsigned char) as scopedstrMessage id,
- * but if first byte is equal to 0xFC then it's TightVNC extension scopedstrMessage and
+ * but if first byte is equal to 0xFC then it's Remoting extension scopedstrMessage and
  * must read next 3 bytes and create ::u32 scopedstrMessage id for processing.
  *
  * Server to client scopedstrMessage have following format:

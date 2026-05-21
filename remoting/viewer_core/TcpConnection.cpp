@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -206,13 +206,13 @@ m_RfbGatesOwner(false)
          }
 
          m_plogwriter->debug("Initialization of socket stream and input/output gates...");
-         raw_construct_newø(m_psocketstream, m_psocket);
+         emplace_newø(m_psocketstream, m_psocket);
          //m_psocketstream->initialize_socket_stream(m_psocket);
-         raw_construct_newø(m_pbufInput, m_psocketstream);
+         emplace_newø(m_pbufInput, m_psocketstream);
          //m_pbufInput->initialize_buffered_input_stream(m_psocketstream);
-         raw_construct_newø(m_pinput, m_pbufInput);
+         emplace_newø(m_pinput, m_pbufInput);
          //m_pinput->initialize_rfb_input_gate(m_pbufInput);
-         raw_construct_newø(m_poutput, m_psocketstream);
+         emplace_newø(m_poutput, m_psocketstream);
          //m_poutput->initialize_rfb_output_gate(m_psocketstream);
          m_RfbGatesOwner = true;
       } else {

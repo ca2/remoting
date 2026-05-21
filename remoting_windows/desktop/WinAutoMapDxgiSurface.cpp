@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -31,9 +31,9 @@ namespace remoting_windows
 {
 
 
-   WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(WinDxgiSurface *surface, ::u32 mapFlags) : m_surface(surface)
+   WinAutoMapDxgiSurface::WinAutoMapDxgiSurface(IDXGISurface *pdxgisurface, ::u32 mapFlags) : m_pdxgisurface(pdxgisurface)
    {
-      HRESULT hr = m_surface->getSurface()->Map(&m_mappedRect, mapFlags);
+      HRESULT hr = m_pdxgisurface->Map(&m_mappedRect, mapFlags);
       if (FAILED(hr))
       {
          ::string errMess;
@@ -42,7 +42,7 @@ namespace remoting_windows
       }
    }
 
-   WinAutoMapDxgiSurface::~WinAutoMapDxgiSurface() { m_surface->getSurface()->Unmap(); }
+   WinAutoMapDxgiSurface::~WinAutoMapDxgiSurface() { m_pdxgisurface->Unmap(); }
 
    size_t WinAutoMapDxgiSurface::getStride() const
    {

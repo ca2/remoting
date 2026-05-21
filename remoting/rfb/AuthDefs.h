@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -49,9 +49,9 @@ namespace remoting
       static const char *const SIG_VNC;
       static const char *const SIG_EXTERNAL;
 
-      // Return TightVNC authentication method corresponding to a VNC-style
+      // Return Remoting authentication method corresponding to a VNC-style
       // security type. Returns 0 if the specified security type does not ::map
-      // to any valid authentication type supported in TightVNC.
+      // to any valid authentication type supported in Remoting.
       static ::u32 convertFromSecurityType(::u32 securityType);
    };
 

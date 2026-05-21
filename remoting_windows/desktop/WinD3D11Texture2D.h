@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,37 +24,38 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
-#include <d3d11.h>
-#include <DXGI1_2.h>
-
-
-namespace remoting_windows
-{
-
-
-   class CLASS_DECL_REMOTING_WINDOWS WinD3D11Texture2D
-   {
-   public:
-      WinD3D11Texture2D(ID3D11Device *device, const D3D11_TEXTURE2D_DESC *deskTexture);
-      // Texture will be created by the IDXGIResource->QueryInterface() function call.
-      WinD3D11Texture2D(IDXGIResource *dxgiResource);
-
-      WinD3D11Texture2D(const WinD3D11Texture2D &other);
-
-      virtual ~WinD3D11Texture2D();
-
-      ID3D11Texture2D *getTexture() const;
-
-   private:
-      ID3D11Texture2D *m_dxgiTexture;
-   };
-
-   //// __WIND3D11TEXTURE2D_H__
-
-
-} // namespace remoting_windows
-
-
-
-
+// #include "remoting/remoting_windows/_common_header.h"
+// #include <d3d11.h>
+// #include <DXGI1_2.h>
+//
+//
+// namespace remoting_windows
+// {
+//
+//
+//    class CLASS_DECL_REMOTING_WINDOWS WinD3D11Texture2D :
+//    virtual public ::particle
+//    {
+//    public:
+//       WinD3D11Texture2D(ID3D11Device *device, const D3D11_TEXTURE2D_DESC *deskTexture);
+//       // Texture will be created by the IDXGIResource->QueryInterface() function call.
+//       WinD3D11Texture2D(IDXGIResource *dxgiResource);
+//
+//       //WinD3D11Texture2D(const WinD3D11Texture2D &other);
+//
+//
+//       virtual ~WinD3D11Texture2D();
+//       ID3D11Texture2D *getTexture();
+//
+//    private:
+//       ::comptr < ID3D11Texture2D > m_pdxgitexture;
+//    };
+//
+//    //// __WIND3D11TEXTURE2D_H__
+//
+//
+// } // namespace remoting_windows
+//
+//
+//
+//

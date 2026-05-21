@@ -410,7 +410,7 @@
     <None Include="res\connected.ico" />
     <None Include="res\disabled.ico" />
     <None Include="res\idle.ico" />
-    <None Include="res\tightvnc.bmp" />
+    <None Include="res\remoting.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\win-event-log\MessageProvider.rc" />

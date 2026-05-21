@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #pragma once
 
 #include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
+#include "remoting/remoting_windows/desktop/DXGIOutputDuplication.h"
 
 
 namespace remoting_windows
@@ -34,24 +34,27 @@ namespace remoting_windows
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiAcquiredFrame :
+   class CLASS_DECL_REMOTING_WINDOWS DXGIAcquiredFrame :
       virtual public ::particle
    {
    public:
-      WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, ::u32 timeOutMilliSec);
-      virtual ~WinDxgiAcquiredFrame();
 
-      bool wasTimeOut();
-
-      IDXGIResource *getDxgiResource();
-      DXGI_OUTDUPL_FRAME_INFO *getFrameInfo();
-
-   private:
-      ::pointer < WinDxgiOutputDuplication > m_poutputduplication;
+      ::pointer < DXGIOutputDuplication > m_poutputduplication;
 
       DXGI_OUTDUPL_FRAME_INFO m_frameInfo;
       ::comptr < IDXGIResource > m_pdxgiresourceDesktop;
       bool m_wasTimeOut;
+
+
+      DXGIAcquiredFrame(DXGIOutputDuplication *outDupl, ::u32 timeOutMilliSec);
+      ~DXGIAcquiredFrame() override;
+
+
+      bool wasTimeOut();
+
+      IDXGIResource *dxgi_resource();
+      DXGI_OUTDUPL_FRAME_INFO *getFrameInfo();
+
    };
 
    //// __WINDXGIACQUIREDFRAME_H__

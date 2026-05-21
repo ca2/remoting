@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 namespace remoting_control_desktop
 {
    /**
-    * Public TightVNC server information.
+    * Public Remoting Node information.
     *
     * Used by tvncontrol only.
     */
@@ -44,11 +44,11 @@ namespace remoting_control_desktop
        */
       bool m_acceptFlag;
       /**
-       * Determinates if TightVNC server runs in context of service or application.
+       * Determinates if Remoting Node runs in context of service or application.
        */
       bool m_serviceFlag;
       /**
-       * TightVNC server status text.
+       * Remoting Node status text.
        */
       ::string m_statusText;
    };

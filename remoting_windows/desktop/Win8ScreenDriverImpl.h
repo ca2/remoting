@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 
 //#include "log_writer/LogWriter.h"
-#include "subsystem/thread/GuiThread.h"
+#include "subsystem_windows/thread/GuiThread.h"
 #include "subsystem_windows/thread/ThreadCollector.h"
 #include "acme/parallelization/happening.h"
 
@@ -43,10 +43,18 @@ namespace remoting_windows
 
 
    class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriverImpl :
-      virtual public ::subsystem::GuiThread,
+      virtual public ::subsystem_windows::GuiThread,
       virtual public Win8DuplicationListener
    {
    public:
+
+
+      ::pointer<D3D11Device> m_pd3d11device;
+      
+      ::comptr<IDXGIDevice >m_pdxgidevice;
+      
+      ::comptr<IDXGIAdapter > m_pdxgiadapter;
+
       //Win8ScreenDriverImpl(::subsystem::LogWriter * plogwriter, ::remoting::UpdateKeeper *pupdatekeeper,
         //                   lockable_critical_section *pcriticalsectionFramebuffer, ::remoting::UpdateListener *pupdatelistener,
           //                 bool detectionEnabled = false);

@@ -70,11 +70,14 @@ list(APPEND library_source
    control_desktop/UpdateRemoteConfigCommand.h
    _.cpp
    _.h
+   _control.cpp
    AdditionalActionApplication.cpp
    AdditionalActionApplication.h
    application_main_node.cpp
    application.cpp
    application.h
+   application_control.cpp
+   application_control.h
    AuthTracker.cpp
    AuthTracker.h
    BuildTime.cpp
@@ -216,6 +219,7 @@ list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/../..)
 target_include_directories(${PROJECT_NAME} PRIVATE ${library_include_directories})
 
 add_subdirectory(__implement)
+add_subdirectory(__implement_control)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE _${PROJECT_NAME}_project)
 

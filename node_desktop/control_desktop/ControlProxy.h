@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -39,8 +39,8 @@
 namespace remoting_control_desktop
 {
    /**
-    * Proxy to some of TightVNC server methods, supported by control protocol.
-    * Used to onThreadMain remote commands on on TightVNC server.
+    * Proxy to some of Remoting Node methods, supported by control protocol.
+    * Used to onThreadMain remote commands on on Remoting Node.
     * remote errors.
     */
    class ControlProxy :
@@ -97,11 +97,11 @@ namespace remoting_control_desktop
       void disconnectAllClients();
 
       /**
-       * Shutdowns TightVNC server.
+       * Shutdowns Remoting Node.
        * @throws RemoteException on error on server.
        * @throws ::io_exception on io error.
        */
-      void shutdownTightVnc();
+      void shutdownRemoting();
 
       /**
        * Initialized outgoing rfb connection.

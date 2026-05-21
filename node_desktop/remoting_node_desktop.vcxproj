@@ -323,6 +323,7 @@
   <ItemGroup>
     <ClCompile Include="AdditionalActionApplication.cpp" />
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="application_control.cpp" />
     <ClCompile Include="AuthTracker.cpp" />
     <ClCompile Include="BuildTime.cpp" />
     <ClCompile Include="ControlAppAuthenticator.cpp" />
@@ -392,6 +393,7 @@
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="WsConfigRunner.cpp" />
     <ClCompile Include="_.cpp" />
+    <ClCompile Include="_control.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdditionalActionApplication.h" />
@@ -400,6 +402,40 @@
     <ClInclude Include="ControlAppAuthenticator.h" />
     <ClInclude Include="ControlClient.h" />
     <ClInclude Include="ControlServer.h" />
+    <ClInclude Include="control_desktop\aaa_ControlAuthException.h" />
+    <ClInclude Include="control_desktop\AboutDialog.h" />
+    <ClInclude Include="control_desktop\ConnectCommand.h" />
+    <ClInclude Include="control_desktop\ConnectStringParser.h" />
+    <ClInclude Include="control_desktop\ControlApplication.h" />
+    <ClInclude Include="control_desktop\ControlAuth.h" />
+    <ClInclude Include="control_desktop\ControlAuthDialog.h" />
+    <ClInclude Include="control_desktop\ControlCommandLine.h" />
+    <ClInclude Include="control_desktop\ControlGate.h" />
+    <ClInclude Include="control_desktop\ControlMessage.h" />
+    <ClInclude Include="control_desktop\ControlPipeName.h" />
+    <ClInclude Include="control_desktop\ControlProto.h" />
+    <ClInclude Include="control_desktop\ControlProxy.h" />
+    <ClInclude Include="control_desktop\ControlTrayIcon.h" />
+    <ClInclude Include="control_desktop\DisconnectAllCommand.h" />
+    <ClInclude Include="control_desktop\MakeRfbConnectionCommand.h" />
+    <ClInclude Include="control_desktop\NamedPipeTransport.h" />
+    <ClInclude Include="control_desktop\OutgoingConnectionDialog.h" />
+    <ClInclude Include="control_desktop\ReloadConfigCommand.h" />
+    <ClInclude Include="control_desktop\RfbClientInfo.h" />
+    <ClInclude Include="control_desktop\ServerInfo.h" />
+    <ClInclude Include="control_desktop\SetPasswordsDialog.h" />
+    <ClInclude Include="control_desktop\ShareAppCommand.h" />
+    <ClInclude Include="control_desktop\ShareDisplayCommand.h" />
+    <ClInclude Include="control_desktop\ShareFullCommand.h" />
+    <ClInclude Include="control_desktop\SharePrimaryCommand.h" />
+    <ClInclude Include="control_desktop\ShareRectCommand.h" />
+    <ClInclude Include="control_desktop\ShareWindowCommand.h" />
+    <ClInclude Include="control_desktop\ShutdownCommand.h" />
+    <ClInclude Include="control_desktop\SocketIPv4Transport.h" />
+    <ClInclude Include="control_desktop\Transport.h" />
+    <ClInclude Include="control_desktop\TransportFactory.h" />
+    <ClInclude Include="control_desktop\UpdateLocalConfigCommand.h" />
+    <ClInclude Include="control_desktop\UpdateRemoteConfigCommand.h" />
     <ClInclude Include="DesktopServerApplication.h" />
     <ClInclude Include="DesktopServerCommandLine.h" />
     <ClInclude Include="ExtraRfbServers.h" />

@@ -37,7 +37,7 @@
       <?endif ?>
 
       <Component Id='UrlComponent' Guid='{9282ED3F-A2F7-4727-909B-02614DEA23EA}'>
-        <File Id='UrlFile' Name='TightVNC Web Site.url' Source='TightVNC Web Site.url'
+        <File Id='UrlFile' Name='Remoting Web Site.url' Source='Remoting Web Site.url'
               KeyPath='yes'>
         </File>
       </Component>
@@ -73,8 +73,8 @@
       <!-- Firewall exception -->
       <!-- Server firewall exception -->
       <?ifndef SERVER_FREE ?>
-      <Component Id="tvnserverFirewallException" Guid='{F4560702-BA2E-4498-A6F2-92FF9C109962}'>
-        <fire:FirewallException Id="FWX1" Name="$(var.ProductName)" File="tvnserverEXE" Scope="any"
+      <Component Id="remotingnodeFirewallException" Guid='{F4560702-BA2E-4498-A6F2-92FF9C109962}'>
+        <fire:FirewallException Id="FWX1" Name="$(var.ProductName)" File="remotingnodeEXE" Scope="any"
                                 IgnoreFailure="yes"/>
         <Condition>
           (ADD_FIREWALL_EXCEPTION = 1 AND <![CDATA[IS_SILENT <> 1]]> OR
@@ -84,7 +84,7 @@
       <?endif?>
       <!-- Viewer firewall exception -->
       <?ifndef VIEWER_FREE ?>
-      <Component Id="TvnviewerFirewallException" Guid='{38F67337-C5C3-4616-9327-713B8A18C430}'>
+      <Component Id="RemotingclientFirewallException" Guid='{38F67337-C5C3-4616-9327-713B8A18C430}'>
         <fire:FirewallException Id="FWX2" Name="$(var.ProductName)" File="viewerEXE" Scope="any"
                                 IgnoreFailure="yes"/>
         <Condition>
@@ -100,12 +100,12 @@
         <Shortcut Id="UrlShortcut"
           Target ="[#UrlFile]"
           Directory="ProgramMenuDir"
-          Name="Visit TightVNC Web Site"
+          Name="Visit Remoting Web Site"
           WorkingDirectory='INSTALLDIR'/>
         <Shortcut Id="startmenuViewer"
           Target ="[#viewerEXE]"
           Directory="ProgramMenuDir"
-          Name="TightVNC Viewer"
+          Name="Remoting Client"
           WorkingDirectory='INSTALLDIR'
           Icon='viewer.ico'
           IconIndex="0"/>
@@ -119,7 +119,7 @@
         <Shortcut Id="menuTvnServerApp"
                   Target ="[#tvnserverEXE]"
                   Directory="ServerMenuDir"
-                  Name="Run TightVNC Server"
+                  Name="Run Remoting Node"
                   WorkingDirectory='INSTALLDIR'
                   Icon='remoting_node.ico'
                   IconIndex="0"/>
@@ -127,7 +127,7 @@
                   Target ="[#tvnserverEXE]"
                   Arguments="-controlapp"
                   Directory="ServerMenuDir"
-                  Name="TightVNC Server - Control Interface"
+                  Name="Remoting Node - Control Interface"
                   WorkingDirectory='INSTALLDIR'
                   Icon='remoting_node.ico'
                   IconIndex="0"/>
@@ -135,7 +135,7 @@
                   Target ="[#tvnserverEXE]"
                   Arguments="-configapp"
                   Directory="ServerMenuDir"
-                  Name="TightVNC Server - Offline Configuration"
+                  Name="Remoting Node - Offline Configuration"
                   WorkingDirectory='INSTALLDIR'
                   Icon='remoting_node.ico'
                   IconIndex="0"/>
@@ -148,42 +148,42 @@
         <Shortcut Id="menuRegisterTvnService"
                   Target ="[#tvnserverEXE]"
                   Arguments="-install"
-                  Name="Register TightVNC Service"
+                  Name="Register Remoting Service"
                   WorkingDirectory='INSTALLDIR'
                   Icon='remoting_node.ico'
                   IconIndex="0"/>
         <Shortcut Id="menuStartTvnService"
                   Target ="[#tvnserverEXE]"
                   Arguments="-start"
-                  Name="Start TightVNC Service"
+                  Name="Start Remoting Service"
                   WorkingDirectory='INSTALLDIR'
                   Icon='remoting_node.ico'
                   IconIndex="0"/>
         <Shortcut Id="menuStopTvnService"
                   Target ="[#tvnserverEXE]"
                   Arguments="-stop"
-                  Name="Stop TightVNC Service"
+                  Name="Stop Remoting Service"
                   WorkingDirectory='INSTALLDIR'
                   Icon='remoting_node.ico'
                   IconIndex="0"/>
         <Shortcut Id="menuTvnControlService"
                   Target ="[#tvnserverEXE]"
                   Arguments="-controlservice"
-                  Name="TightVNC Service - Control Interface"
+                  Name="Remoting Service - Control Interface"
                   WorkingDirectory='INSTALLDIR'
                   Icon='remoting_node.ico'
                   IconIndex="0"/>
         <Shortcut Id="menuTvnOfflineControlService"
                   Target ="[#tvnserverEXE]"
                   Arguments="-configservice"
-                  Name="TightVNC Service - Offline Configuration"
+                  Name="Remoting Service - Offline Configuration"
                   WorkingDirectory='INSTALLDIR'
                   Icon='remoting_node.ico'
                   IconIndex="0"/>
         <Shortcut Id="menuUnregisterTvnService"
                   Target ="[#tvnserverEXE]"
                   Arguments="-remove"
-                  Name="Unregister TightVNC Service"
+                  Name="Unregister Remoting Service"
                   WorkingDirectory='INSTALLDIR'
                   Icon='remoting_node.ico'
                   IconIndex="0"/>

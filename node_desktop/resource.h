@@ -1,8 +1,7 @@
 //{{NO_DEPENDENCIES}}
-// Включаемый файл, созданный в Microsoft Visual C++.
-// Используется remoting_node.rc
+// Microsoft Visual C++ generated include file.
+// Used by deployment.rc
 //
-
 #define IDD_CONFIG_ADMINISTRATION_PAGE  102
 #define IDD_CONFIG_SERVER_PAGE          103
 #define IDD_CONFIG_VIDEO_PAGE           104
@@ -221,12 +220,10 @@
 #define IDS_URL_DISPATCHER              40102
 #define IDS_BAD_PASSWORD                40103
 #define IDS_MBC_BAD_PASSWORD            40104
-#define ID_ABOUT_TIGHTVNC_MENUITEM      40105
+#define ID_ABOUT_REMOTING_MENUITEM      40105
 #define IDS_ENTER_IP_HINT               40106
 #define IDS_SET_CONTROL_PASSWORD_NOTIFICATION 40107
 #define IDR_TRAYMENU                    40108
-
-
 
 // Next default values for new objects
 // 
@@ -238,6 +235,3 @@
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
-
-
-

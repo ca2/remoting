@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,12 +52,12 @@ namespace remoting_windows
    Win8ScreenDriver::~Win8ScreenDriver()
    {
       terminateDetection();
-      critical_section_lock al(&m_drvImplMutex);
-      if (m_pwin8screendriveriimpl != 0)
-      {
-         delete m_pwin8screendriveriimpl;
-         m_pwin8screendriveriimpl = 0;
-      }
+//      critical_section_lock al(&m_drvImplMutex);
+      // if (m_pwin8screendriveriimpl != 0)
+      // {
+      //    delete m_pwin8screendriveriimpl;
+      //    m_pwin8screendriveriimpl = 0;
+      // }
    }
 
 
@@ -77,7 +77,7 @@ namespace remoting_windows
       WinVideoRegionUpdaterImpl::initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
       m_plogwriter->debug("Win8ScreenDriver creating new Win8ScreenDriverImpl");
       critical_section_lock al(&m_drvImplMutex);
-      raw_construct_newø(m_pwin8screendriveriimpl);
+      emplace_newø(m_pwin8screendriveriimpl);
       m_pwin8screendriveriimpl->initialize_win8_screen_driver_impl(m_plogwriter, m_pupdatekeeper, m_pcriticalsectionFramebuffer, m_pupdatelistener);
    }
 

@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
-project(_remoting_node_desktop CXX)
+project(_remoting_node_desktop_control CXX)
 
 
-list(APPEND application_source main.cpp)
+list(APPEND application_source main_control.cpp)
 
 
 if(MSVC)

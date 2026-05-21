@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ namespace remoting_control_desktop
    public:
       /**
        * Creates control tray icon and places it to system tray.
-       * @param serverControl proxy to onThreadMain methods in TightVNC server process.
+       * @param serverControl proxy to onThreadMain methods in Remoting Node process.
        * @param notificator interface to report about errors during execution of remote methods.
        * @param appControl parent control application.
        * @param showAfterCreation determinates if needs to show icon in tray.
@@ -72,9 +72,9 @@ namespace remoting_control_desktop
       virtual ~ControlTrayIcon();
 
       /**
-       * Synchronizes tray icon and status text with TightVNC server.
+       * Synchronizes tray icon and status text with Remoting Node.
        * @remark method shutdowns control application if connection to
-       * TightVNC server is lost.
+       * Remoting Node is lost.
        */
       void syncStatusWithServer();
 
@@ -141,7 +141,7 @@ namespace remoting_control_desktop
       ::pointer < ::innate_subsystem::IconInterface > m_piconIdle;
       ::pointer < ::innate_subsystem::IconInterface > m_piconDisabled;
 
-      // Interface to onThreadMain some commands on remote TightVNC server.
+      // Interface to onThreadMain some commands on remote Remoting Node.
       ::pointer < ControlProxy > m_pcontrolproxy;
 
       // Configuration dialog.
@@ -149,7 +149,7 @@ namespace remoting_control_desktop
       // About dialog.
       ::remoting_control_desktop::AboutDialog m_aboutDialog;
 
-      // Last known TightVNC server information.
+      // Last known Remoting Node information.
       ::remoting_control_desktop::ServerInfo m_serverinfoLastKnown;
       // Thread-safety of m_serverinfoLastKnown member.
       lockable_critical_section m_criticalsectionServerInfo;

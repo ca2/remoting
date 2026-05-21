@@ -8,7 +8,8 @@
 
 #include "remoting/remoting/_.h"
 #include "subsystem_windows/_.h"
-
+#include "acme/_operating_system.h"
+#include "acme/operating_system/windows_common/com/comptr.h"
 
 
 #if defined(_remoting_windows_project)

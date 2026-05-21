@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -83,33 +83,33 @@ namespace remoting
             return ;
          }
 
-         registrator->addSrvToClCap(FTMessage::COMPRESSION_SUPPORT_REPLY, VendorDefs::TIGHTVNC, FTMessage::COMPRESSION_SUPPORT_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::FILE_LIST_REPLY, VendorDefs::TIGHTVNC, FTMessage::FILE_LIST_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::MD5_REPLY, VendorDefs::TIGHTVNC, FTMessage::MD5_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::UPLOAD_START_REPLY, VendorDefs::TIGHTVNC, FTMessage::UPLOAD_START_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::UPLOAD_DATA_REPLY, VendorDefs::TIGHTVNC, FTMessage::UPLOAD_DATA_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::UPLOAD_END_REPLY, VendorDefs::TIGHTVNC, FTMessage::UPLOAD_END_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::DOWNLOAD_START_REPLY, VendorDefs::TIGHTVNC, FTMessage::DOWNLOAD_START_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::DOWNLOAD_DATA_REPLY, VendorDefs::TIGHTVNC, FTMessage::DOWNLOAD_DATA_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::DOWNLOAD_END_REPLY, VendorDefs::TIGHTVNC, FTMessage::DOWNLOAD_END_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::MKDIR_REPLY, VendorDefs::TIGHTVNC, FTMessage::MKDIR_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::REMOVE_REPLY, VendorDefs::TIGHTVNC, FTMessage::REMOVE_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::RENAME_REPLY, VendorDefs::TIGHTVNC, FTMessage::RENAME_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::DIRSIZE_REPLY, VendorDefs::TIGHTVNC, FTMessage::DIRSIZE_REPLY_SIG);
-         registrator->addSrvToClCap(FTMessage::LAST_REQUEST_FAILED_REPLY, VendorDefs::TIGHTVNC, FTMessage::LAST_REQUEST_FAILED_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::COMPRESSION_SUPPORT_REPLY, VendorDefs::REMOTING, FTMessage::COMPRESSION_SUPPORT_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::FILE_LIST_REPLY, VendorDefs::REMOTING, FTMessage::FILE_LIST_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::MD5_REPLY, VendorDefs::REMOTING, FTMessage::MD5_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::UPLOAD_START_REPLY, VendorDefs::REMOTING, FTMessage::UPLOAD_START_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::UPLOAD_DATA_REPLY, VendorDefs::REMOTING, FTMessage::UPLOAD_DATA_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::UPLOAD_END_REPLY, VendorDefs::REMOTING, FTMessage::UPLOAD_END_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::DOWNLOAD_START_REPLY, VendorDefs::REMOTING, FTMessage::DOWNLOAD_START_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::DOWNLOAD_DATA_REPLY, VendorDefs::REMOTING, FTMessage::DOWNLOAD_DATA_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::DOWNLOAD_END_REPLY, VendorDefs::REMOTING, FTMessage::DOWNLOAD_END_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::MKDIR_REPLY, VendorDefs::REMOTING, FTMessage::MKDIR_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::REMOVE_REPLY, VendorDefs::REMOTING, FTMessage::REMOVE_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::RENAME_REPLY, VendorDefs::REMOTING, FTMessage::RENAME_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::DIRSIZE_REPLY, VendorDefs::REMOTING, FTMessage::DIRSIZE_REPLY_SIG);
+         registrator->addSrvToClCap(FTMessage::LAST_REQUEST_FAILED_REPLY, VendorDefs::REMOTING, FTMessage::LAST_REQUEST_FAILED_REPLY_SIG);
 
-         registrator->addClToSrvCap(FTMessage::COMPRESSION_SUPPORT_REQUEST, VendorDefs::TIGHTVNC, FTMessage::COMPRESSION_SUPPORT_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::FILE_LIST_REQUEST, VendorDefs::TIGHTVNC, FTMessage::FILE_LIST_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::MD5_REQUEST, VendorDefs::TIGHTVNC, FTMessage::MD5_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::UPLOAD_START_REQUEST, VendorDefs::TIGHTVNC, FTMessage::UPLOAD_START_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::UPLOAD_DATA_REQUEST, VendorDefs::TIGHTVNC, FTMessage::UPLOAD_DATA_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::UPLOAD_END_REQUEST, VendorDefs::TIGHTVNC, FTMessage::UPLOAD_END_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::DOWNLOAD_START_REQUEST, VendorDefs::TIGHTVNC, FTMessage::DOWNLOAD_START_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::DOWNLOAD_DATA_REQUEST, VendorDefs::TIGHTVNC, FTMessage::DOWNLOAD_DATA_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::MKDIR_REQUEST, VendorDefs::TIGHTVNC, FTMessage::MKDIR_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::REMOVE_REQUEST, VendorDefs::TIGHTVNC, FTMessage::REMOVE_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::RENAME_REQUEST, VendorDefs::TIGHTVNC, FTMessage::RENAME_REQUEST_SIG);
-         registrator->addClToSrvCap(FTMessage::DIRSIZE_REQUEST, VendorDefs::TIGHTVNC, FTMessage::DIRSIZE_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::COMPRESSION_SUPPORT_REQUEST, VendorDefs::REMOTING, FTMessage::COMPRESSION_SUPPORT_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::FILE_LIST_REQUEST, VendorDefs::REMOTING, FTMessage::FILE_LIST_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::MD5_REQUEST, VendorDefs::REMOTING, FTMessage::MD5_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::UPLOAD_START_REQUEST, VendorDefs::REMOTING, FTMessage::UPLOAD_START_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::UPLOAD_DATA_REQUEST, VendorDefs::REMOTING, FTMessage::UPLOAD_DATA_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::UPLOAD_END_REQUEST, VendorDefs::REMOTING, FTMessage::UPLOAD_END_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::DOWNLOAD_START_REQUEST, VendorDefs::REMOTING, FTMessage::DOWNLOAD_START_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::DOWNLOAD_DATA_REQUEST, VendorDefs::REMOTING, FTMessage::DOWNLOAD_DATA_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::MKDIR_REQUEST, VendorDefs::REMOTING, FTMessage::MKDIR_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::REMOVE_REQUEST, VendorDefs::REMOTING, FTMessage::REMOVE_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::RENAME_REQUEST, VendorDefs::REMOTING, FTMessage::RENAME_REQUEST_SIG);
+         registrator->addClToSrvCap(FTMessage::DIRSIZE_REQUEST, VendorDefs::REMOTING, FTMessage::DIRSIZE_REQUEST_SIG);
 
          ::u32 rfbMessagesToProcess[] = {
             FTMessage::COMPRESSION_SUPPORT_REQUEST,

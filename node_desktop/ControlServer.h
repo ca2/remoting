@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ namespace remoting_node_desktop
 
       ::pointer<::subsystem::PipeServer> m_ppipeserver;
       /**
-       * Active rfb client manager that used in TightVNC server.
+       * Active rfb client manager that used in Remoting Node.
        */
       ::pointer<RfbClientManager> m_prfbclientmanager;
 
@@ -61,7 +61,7 @@ namespace remoting_node_desktop
       /**
        * Creates and starts control server execution.
        * @param serverTransport ready transport for control server.
-       * @param rfbClientManager active TightVNC rfb client manager.
+       * @param rfbClientManager active Remoting rfb client manager.
        * @throws ::subsystem::Exception when fail to create server.
        * @remark control server takes ownership over server transport.
        * @remark rfbClientManager and rfbServers parameters are needed for
@@ -95,7 +95,7 @@ namespace remoting_node_desktop
 
    //   ::pointer < ::subsystem::PipeServer > m_ppipeserver;
    //   /**
-   //    * Active rfb client manager that used in TightVNC server.
+   //    * Active rfb client manager that used in Remoting Node.
    //    */
    //   ::pointer < RfbClientManager > m_prfbclientmanager;
 

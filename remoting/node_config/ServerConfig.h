@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ namespace remoting_node
 
       //
       // Enum defines server action when last client disconnects
-      // from the TightVNC server.
+      // from the Remoting Node.
       //
 
       enum DisconnectAction {
@@ -190,7 +190,7 @@ namespace remoting_node
 
       // Flag that determiates where log file directory will be.
       bool m_saveLogToAllUsersPath;
-      // Run control interface with TightVNC server or not.
+      // Run control interface with Remoting Node or not.
       bool m_showTrayIcon;
       // Connect to existing RDP session or drop it.
       bool m_connectToRdp;
@@ -568,7 +568,7 @@ namespace remoting_node
    //
    //    // Flag that determiates where log file directory will be.
    //    bool m_saveLogToAllUsersPath;
-   //    // Run control interface with TightVNC server or not.
+   //    // Run control interface with Remoting Node or not.
    //    bool m_showTrayIcon;
    //    // Connect to existing RDP session or drop it.
    //    bool m_connectToRdp;

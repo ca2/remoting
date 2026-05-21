@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -314,7 +314,7 @@ namespace remoting_client
         }
         if (MainSubsystem().message_box(operating_system_window(),
                        "Do you want to close file transfers and setThreadToFinish current operation?",
-                       "TightVNC ::file::item Transfers",
+                       "Remoting ::file::item Transfers",
                        ::user::e_message_box_yes_no | ::user::e_message_box_icon_question) == ::innate_subsystem::e_control_id_yes) {
             // Set flag
             m_isClosing = true;

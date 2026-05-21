@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 #pragma once
 
 #include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
+#include "remoting/remoting_windows/desktop/aaa_WinDxgiOutput1.h"
 #include "remoting/remoting/rfb/CursorShape.h"
 
 #include <d3d11.h>
@@ -36,16 +36,16 @@ namespace remoting_windows
 {
 
 
-   class WinD3D11Device;
+   class D3D11Device;
 
    // This class  is a wrapper for the IDXGIOutputDuplication interface.
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutputDuplication :
+   class CLASS_DECL_REMOTING_WINDOWS DXGIOutputDuplication :
    virtual public ::particle
    {
    public:
-      WinDxgiOutputDuplication(IDXGIOutput1 * pdxgioutput1, WinD3D11Device *d3D11Device);
+      DXGIOutputDuplication(IDXGIOutput1 * pdxgioutput1, D3D11Device *d3D11Device);
       //WinDxgiOutputDuplication(const WinDxgiOutputDuplication &src);
-      virtual ~WinDxgiOutputDuplication();
+      virtual ~DXGIOutputDuplication();
 
       //WinDxgiOutputDuplication &operator=(WinDxgiOutputDuplication const &src);
 

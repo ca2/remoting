@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@
 //#include aaa_<crtdbg.h>
 #include "subsystem/node/Screen.h"
 
-#include "remoting/remoting_windows/desktop/WinDxgiOutput.h"
-
+#include "remoting/remoting_windows/desktop/aaa_WinDxgiOutput.h"
+#include "remoting/remoting_windows/desktop/D3D11Device.h"
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
 
@@ -84,10 +84,10 @@ namespace remoting_windows
    {
 
       terminateDetection();
-      setThreadToFinish();
+      //setThreadToFinish();
       int activeResult = (int)isThreadActive();
       //int waitResult = (int)waitThreadToFinish();
-      waitThreadToFinish();
+      //waitThreadToFinish();
       m_plogwriter->debug("Win8ScreenDriverImpl::activeResult = {}", activeResult);
       //m_plogwriter->debug("Win8ScreenDriverImpl::waitResult = {}", waitResult);
    }
@@ -148,47 +148,81 @@ namespace remoting_windows
    void Win8ScreenDriverImpl::initDxgi()
    {
       m_plogwriter->debug("Creating of D3D11Device");
-      WinD3D11Device d3D11Device(m_plogwriter);
+      //WinD3D11Device d3D11Device(m_plogwriter);
+      m_pd3d11device = allocateø D3D11Device(m_plogwriter);
       m_plogwriter->debug("Quering Interface for IDXGIDevice");
-      WinDxgiDevice dxgiDevice(&d3D11Device);
+      //WinDxgiDevice dxgiDevice(&d3D11Device);
+      m_pd3d11device->m_pd3d11device.as(m_pdxgidevice);
+      //m_pdxgiDevice = allocateø WinDxgiDevice(m_pd3D11Device);
       m_plogwriter->debug("Getting Parent for IDXGIAdapter");
-      WinDxgiAdapter dxgiAdapter(&dxgiDevice);
+      //WinDxgiAdapter dxgiAdapter(&dxgiDevice);
+      m_pdxgidevice->GetParent(__interface_of(m_pdxgiadapter));
+      //m_pdxgiAdapter = allocateø WinDxgiAdapter(m_pdxgiDevice);
 
       ::remoting::Region virtDeskRegion;
       m_plogwriter->debug("Try to enumerate dxgi outputs");
-      ::pointer_array<WinDxgiOutput> dxgiOutputArray;
+      ::array_base<::comptr<IDXGIOutput > > dxgioutputa;
       ::int_rectangle_array_base deskCoordArray;
       ::u32 iOutput = 0;
-      try
-      {
+      //try
+      //{
          for (iOutput = 0; iOutput < 65535; iOutput++)
          {
-            auto pdxgiOutput = allocateø WinDxgiOutput(&dxgiAdapter, iOutput);
-            if (pdxgiOutput->isAttachedtoDesktop())
+
+            comptr < IDXGIOutput > pdxgioutput;
+
+            //auto hr = m_pdxgiAdapter->getDxgiOutput(iOutput, &pdxgioutput);
+
+            HRESULT hr = m_pdxgiadapter->EnumOutputs(iOutput, &pdxgioutput);
+            //return hr;
+            if (hr == DXGI_ERROR_NOT_FOUND)
             {
-               dxgiOutputArray.add(pdxgiOutput);
-               ::i32_rectangle deskCoord = pdxgiOutput->getDesktopCoordinates();
+
+               break;
+
+            }
+
+            DXGI_OUTPUT_DESC desc{};
+
+            if (FAILED(pdxgioutput->GetDesc(&desc)))
+            {
+
+               throw WinDxCriticalException("Can't get output description", hr);
+
+            }
+
+            //auto pdxgiOutput = allocateø WinDxgiOutput(m_pdxgiAdapter, iOutput);
+            if (desc.AttachedToDesktop)
+            {
+               dxgioutputa.add(pdxgioutput);
+               ::i32_rectangle deskCoord = desc.DesktopCoordinates;
                deskCoordArray.add(deskCoord);
                virtDeskRegion.addRect(deskCoord);
             }
          }
-      }
-      catch (WinDxRecoverableException &)
-      {
-         m_plogwriter->debug("Reached the end of dxgi output ::list_base with iOutput = %u", iOutput);
+      //}
+      //catch (WinDxRecoverableException &)
+      //{
+        // m_plogwriter->debug("Reached the end of dxgi output ::list_base with iOutput = %u", iOutput);
          // End of output ::list_base.
-      }
-      m_plogwriter->debug("We have {} dxgi output(s) connected", dxgiOutputArray.size());
+      //}
+      m_plogwriter->debug("We have {} dxgi output(s) connected", dxgioutputa.size());
 
       // Check that all outputs for the virtual screen are found (in case two or more
       // hardware graphic interfaces are used). It's better to avoid using buggy
       // Desktop Duplication API here rather than getting the wrong pframebuffer->
       ::subsystem::Screen screen;
-      if (screen.getVisibleMonitorCount() != dxgiOutputArray.size())
+      auto iScreenVisibleMonitorCount = screen.getVisibleMonitorCount();
+      auto iDxgiOutputCount = dxgioutputa.size();
+      if (iScreenVisibleMonitorCount != iDxgiOutputCount)
       {
          throw ::subsystem::Exception("Unable get all DXGI outputs for virtual screen");
       }
 
+      if (iDxgiOutputCount <= 0)
+      {
+         throw ::subsystem::Exception("No screens to get DXGI output from");
+      }
 
       construct_newø(m_pframebufferProperty);
 
@@ -198,17 +232,21 @@ namespace remoting_windows
       m_pframebufferProperty->setProperties(rectangleVirtDeskBound, pixelformat);
       m_pframebufferProperty->setColor(0, 0, 0);
 
-      for (size_t iDxgiOutput = 0; iDxgiOutput < dxgiOutputArray.size(); iDxgiOutput++)
+      for (size_t iDxgiOutput = 0; iDxgiOutput < dxgioutputa.size(); iDxgiOutput++)
       {
          deskCoordArray[iDxgiOutput].offset(-rectangleVirtDeskBound.left, -rectangleVirtDeskBound.top);
       }
-      size_t threadsNum = m_deskDuplThreadBundle.Size();
-      if (threadsNum > 12)
-         threadsNum = 12;
-      DWORD millis = 1 << threadsNum; // delay up to 4 seconds if there are threads waiting to delete
-      sleep(millis);
+      //size_t threadsNum = m_deskDuplThreadBundle.Size();
+      //if (threadsNum > 12)
+      //   threadsNum = 12;
+      //else if (threadsNum <= 0)
+      //   threadsNum = 1;
+      ////DWORD millis = 1 << threadsNum; // delay up to 4 seconds if there are threads waiting to delete
+      //auto timeSlice = 4_s / 12;
+      //preempt(timeSlice * threadsNum);
+      //preempt(4_s);
       auto pthread = allocateø Win8DeskDuplication(m_pframebufferProperty, deskCoordArray, &m_win8CursorShape, &m_curTimeStamp,
-                                               &m_cursorMutex, this, dxgiOutputArray, m_plogwriter);
+                                               &m_cursorMutex, this,m_pd3d11device, dxgioutputa, m_plogwriter);
       DWORD id = pthread->getThreadId();
       m_plogwriter->debug("Created a new Win8DeskDuplication with ID: ({})", id);
       m_deskDuplThreadBundle.addThread(pthread);

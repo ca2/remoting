@@ -21,6 +21,9 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -40,6 +43,18 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\remoting96.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\idle.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\connected.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\disabled.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ namespace remoting_windows
       virtual bool applyNewScreenProperties();
 
    private:
-      MirrorScreenDriver m_mirrorDriver;
+      ::pointer < MirrorScreenDriver > m_mirrorDriver;
    };
 
    //// __WIN32MIRRORSCREENDRIVER_H__

@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -41,8 +41,8 @@
 namespace remoting_node_desktop
 {
    /**
-    * Windows TightVNC server application.
-    * Used for running TightVNC server as single windows application.
+    * Windows Remoting Node application.
+    * Used for running Remoting Node as single windows application.
     */
    class CLASS_DECL_REMOTING_NODE_DESKTOP  ServerApplication : 
       virtual public ::subsystem::OperatingSystemApplication,
@@ -58,7 +58,7 @@ namespace remoting_node_desktop
        */
       ::string m_commandLine;
       ///**
-      // * TightVNC server.
+      // * Remoting Node.
       // */
       //::pointer < Server > m_pserver;
       /**
@@ -69,13 +69,13 @@ namespace remoting_node_desktop
       // NewConnectionEvents *m_newConnectionEvents;
 
       /**
-       * Creates TightVNC server application instance.
+       * Creates Remoting Node application instance.
        * @param hInstance HINSTANCE of application.
        * @param commaneLine command line string.
        */
       ServerApplication();
       /**
-       * Deletes TightVNC server application instance.
+       * Deletes Remoting Node application instance.
        */
       virtual ~ServerApplication();
 
@@ -94,7 +94,7 @@ namespace remoting_node_desktop
 
 
       /**
-       * Runs TightVNC server windows application.
+       * Runs Remoting Node windows application.
        *
        * Makes several things:
        *   1) Starts TigthVNC server.

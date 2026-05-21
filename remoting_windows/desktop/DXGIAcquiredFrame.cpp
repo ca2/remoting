@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,14 +24,14 @@
 #include "framework.h"
 #include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/WinDxgiAcquiredFrame.h"
+#include "remoting/remoting_windows/desktop/DXGIAcquiredFrame.h"
 
 namespace remoting_windows
 {
 
 
 
-   WinDxgiAcquiredFrame::WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, ::u32 timeOutMilliSec) :
+   DXGIAcquiredFrame::DXGIAcquiredFrame(DXGIOutputDuplication *outDupl, ::u32 timeOutMilliSec) :
        m_wasTimeOut(false), m_poutputduplication(outDupl)
    {
       ZeroMemory(&m_frameInfo, sizeof(m_frameInfo));
@@ -47,8 +47,15 @@ namespace remoting_windows
       }
    }
 
-   WinDxgiAcquiredFrame::~WinDxgiAcquiredFrame()
+   DXGIAcquiredFrame::~DXGIAcquiredFrame()
    {
+      if (m_wasTimeOut)
+      {
+         information("it wasTimeout");
+         return;
+
+      }
+
       m_pdxgiresourceDesktop.release();
       auto hresultReleaseFrame = m_poutputduplication->getDxgiOutputDuplication()->ReleaseFrame();
       if (FAILED(hresultReleaseFrame))
@@ -59,11 +66,11 @@ namespace remoting_windows
       }
    }
 
-   bool WinDxgiAcquiredFrame::wasTimeOut() { return m_wasTimeOut; }
+   bool DXGIAcquiredFrame::wasTimeOut() { return m_wasTimeOut; }
 
-   IDXGIResource *WinDxgiAcquiredFrame::getDxgiResource() { return m_pdxgiresourceDesktop; }
+   IDXGIResource *DXGIAcquiredFrame::dxgi_resource() { return m_pdxgiresourceDesktop; }
 
-   DXGI_OUTDUPL_FRAME_INFO *WinDxgiAcquiredFrame::getFrameInfo() { return &m_frameInfo; }
+   DXGI_OUTDUPL_FRAME_INFO *DXGIAcquiredFrame::getFrameInfo() { return &m_frameInfo; }
 
 
 } // namespace remoting_windows

@@ -216,7 +216,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceStrings.h" />
     <ClInclude Include="ScaleManager.h" />
-    <ClInclude Include="TvnViewer.h" />
+    <ClInclude Include="RemotingClient.h" />
     <ClInclude Include="ViewerCmdLine.h" />
     <ClInclude Include="ViewerCollector.h" />
     <ClInclude Include="ViewerInstance.h" />

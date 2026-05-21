@@ -146,9 +146,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="desktop\CopyRectDetector.cpp" />
+    <ClCompile Include="desktop\D3D11Device.cpp" />
     <ClCompile Include="desktop\DesktopClientImpl.cpp" />
     <ClCompile Include="desktop\DesktopFactory.cpp" />
     <ClCompile Include="desktop\DesktopWinImpl.cpp" />
+    <ClCompile Include="desktop\DXGIAcquiredFrame.cpp" />
+    <ClCompile Include="desktop\DXGIOutputDuplication.cpp" />
     <ClCompile Include="desktop\HookInstaller.cpp" />
     <ClCompile Include="desktop\MirrorDriverClient.cpp" />
     <ClCompile Include="desktop\MirrorScreenDriver.cpp" />
@@ -164,7 +167,6 @@
     <ClCompile Include="desktop\WinAutoMapDxgiSurface.cpp" />
     <ClCompile Include="desktop\WinCursorShapeUtils.cpp" />
     <ClCompile Include="desktop\WinCustomD3D11Texture2D.cpp" />
-    <ClCompile Include="desktop\WinD3D11Device.cpp" />
     <ClCompile Include="desktop\WinD3D11Texture2D.cpp" />
     <ClCompile Include="desktop\WindowsCursorShapeGrabber.cpp" />
     <ClCompile Include="desktop\WindowsInputBlocker.cpp" />
@@ -172,13 +174,6 @@
     <ClCompile Include="desktop\WindowsUserInput.cpp" />
     <ClCompile Include="desktop\WinDxCriticalException.cpp" />
     <ClCompile Include="desktop\WinDxException.cpp" />
-    <ClCompile Include="desktop\WinDxgiAcquiredFrame.cpp" />
-    <ClCompile Include="desktop\WinDxgiAdapter.cpp" />
-    <ClCompile Include="desktop\WinDxgiDevice.cpp" />
-    <ClCompile Include="desktop\WinDxgiOutput.cpp" />
-    <ClCompile Include="desktop\WinDxgiOutput1.cpp" />
-    <ClCompile Include="desktop\WinDxgiOutputDuplication.cpp" />
-    <ClCompile Include="desktop\WinDxgiSurface.cpp" />
     <ClCompile Include="desktop\WinDxRecoverableException.cpp" />
     <ClCompile Include="desktop\WinVideoRegionUpdaterImpl.cpp" />
     <ClCompile Include="framework.cpp">

@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -51,36 +51,38 @@ namespace remoting_windows
                                                  lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
    {
       Win32ScreenDriverBaseImpl::initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
-      m_mirrorDriver.initialize_mirror_screen_driver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, plogwriter);
+
+      construct_newø(m_mirrorDriver);
+      m_mirrorDriver->initialize_mirror_screen_driver(pupdatekeeper, pupdatelistener, pcriticalsectionFramebuffer, plogwriter);
       // At this point the screen driver has valid screen properties.
    }
 
    void Win32MirrorScreenDriver::executeDetection()
    {
       Win32ScreenDriverBaseImpl::executeDetection();
-      m_mirrorDriver.executeDetection();
+      m_mirrorDriver->executeDetection();
    }
 
    void Win32MirrorScreenDriver::terminateDetection()
    {
       Win32ScreenDriverBaseImpl::terminateDetection();
-      m_mirrorDriver.terminateDetection();
+      m_mirrorDriver->terminateDetection();
    }
 
-   ::i32_size Win32MirrorScreenDriver::getScreenDimension() { return m_mirrorDriver.getScreenDimension(); }
+   ::i32_size Win32MirrorScreenDriver::getScreenDimension() { return m_mirrorDriver->getScreenDimension(); }
 
    ::innate_subsystem::Framebuffer *Win32MirrorScreenDriver::getScreenBuffer()
    {
-      return m_mirrorDriver.getScreenBuffer();
+      return m_mirrorDriver->getScreenBuffer();
    }
 
-   bool Win32MirrorScreenDriver::grabFb(const ::i32_rectangle & rectangle) { return m_mirrorDriver.grab(rectangle); }
+   bool Win32MirrorScreenDriver::grabFb(const ::i32_rectangle & rectangle) { return m_mirrorDriver->grab(rectangle); }
 
-   bool Win32MirrorScreenDriver::getScreenPropertiesChanged() { return m_mirrorDriver.getPropertiesChanged(); }
+   bool Win32MirrorScreenDriver::getScreenPropertiesChanged() { return m_mirrorDriver->getPropertiesChanged(); }
 
-   bool Win32MirrorScreenDriver::getScreenSizeChanged() { return m_mirrorDriver.getScreenSizeChanged(); }
+   bool Win32MirrorScreenDriver::getScreenSizeChanged() { return m_mirrorDriver->getScreenSizeChanged(); }
 
-   bool Win32MirrorScreenDriver::applyNewScreenProperties() { return m_mirrorDriver.applyNewProperties(); }
+   bool Win32MirrorScreenDriver::applyNewScreenProperties() { return m_mirrorDriver->applyNewProperties(); }
 
 
 } // namespace remoting_windows

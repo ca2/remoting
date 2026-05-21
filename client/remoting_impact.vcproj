@@ -905,11 +905,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\res\tightvnc.bmp"
+				RelativePath=".\res\remoting.bmp"
 				>
 			</File>
 			<File
-				RelativePath=".\res\tightvnc48.bmp"
+				RelativePath=".\res\remoting48.bmp"
 				>
 			</File>
 			<File

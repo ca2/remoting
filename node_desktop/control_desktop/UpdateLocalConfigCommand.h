@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 namespace remoting_control_desktop
 {
    /**
-    * Command that copies current configuration of remote TightVNC server
+    * Command that copies current configuration of remote Remoting Node
     * to local application configuration.
     */
    class UpdateLocalConfigCommand : public ::subsystem::Command
@@ -52,7 +52,7 @@ namespace remoting_control_desktop
        * Executes command.
        * @throws ::io_exception, RemoteException.
        */
-      virtual void onThreadMain();
+      void onRunCommand() override;
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
       ::pointer < ::remoting_node::Configurator > m_pconfigurator;

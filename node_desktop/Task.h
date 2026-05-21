@@ -21,8 +21,8 @@ namespace remoting_node_desktop
 {
 
    /**
-    * Windows TightVNC server application.
-    * Used for running TightVNC server as single windows application.
+    * Windows Remoting Node application.
+    * Used for running Remoting Node as single windows application.
     */
    class CLASS_DECL_REMOTING_NODE_DESKTOP Task : 
       virtual public ::subsystem::Task,
@@ -33,7 +33,7 @@ namespace remoting_node_desktop
 
 
        /**
-       * TightVNC server.
+       * Remoting Node.
        */
       ::pointer<Server> m_pserver;
 
@@ -46,13 +46,13 @@ namespace remoting_node_desktop
       //int m_iex
 
       /**
-       * Creates TightVNC server application instance.
+       * Creates Remoting Node application instance.
        * @param hInstance HINSTANCE of application.
        * @param commaneLine command line string.
        */
       Task();
       /**
-       * Deletes TightVNC server application instance.
+       * Deletes Remoting Node application instance.
        */
       ~Task() override;
 
@@ -70,7 +70,7 @@ namespace remoting_node_desktop
 
 
       /**
-       * Runs TightVNC server windows application.
+       * Runs Remoting Node windows application.
        *
        * Makes several things:
        *   1) Starts TigthVNC server.

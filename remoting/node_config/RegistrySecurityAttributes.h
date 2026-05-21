@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -37,21 +37,21 @@
 //
 ///**
 // * Contains security attributes (security descriptor) for protecting
-// * TightVNC server and service configuration.
+// * Remoting Node and service configuration.
 // * @author enikey.
 //*/
 //class CLASS_DECL_REMOTING RegistrySecurityAttributes
 //{
 //public:
 //  /**
-//   * Creates TightVNC configuration registry entry security attributes.
+//   * Creates Remoting configuration registry entry security attributes.
 //   * @throws SystemException if failed to create security attributes.
 //   */
 //  RegistrySecurityAttributes();
 //  virtual ~RegistrySecurityAttributes();
 //
 //  /**
-//  Returns security attributes for protecting tightvnc configuration entry for
+//  Returns security attributes for protecting remoting configuration entry for
 //  service.
 //  @return pointer to WinAPI security attributes structure needed for protecting
 //  securable objects (like registry entry).
@@ -59,7 +59,7 @@
 //  SECURITY_ATTRIBUTES *getServiceSA();
 //
 //  /**
-//  Returns security attributes for protecting tightvnc configuration entry for
+//  Returns security attributes for protecting remoting configuration entry for
 //  application.
 //  @return pointer to WinAPI security attributes structure needed for protecting
 //  securable objects (like registry entry).

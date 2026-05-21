@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -482,7 +482,7 @@ namespace remoting_client
 
       //
       // Read a scopedstrMessage type code (unsigned char) from the data connection.
-      // If the code is 0xFC then it's a beginning of TightVNC-specific extended
+      // If the code is 0xFC then it's a beginning of Remoting-specific extended
       // code so we read next 3 bytes and compose ::u32 scopedstrMessage type.
       //
       ::u32 receiveServerMessageType();

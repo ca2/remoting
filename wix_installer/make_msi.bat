@@ -21,7 +21,7 @@ variable, VIEWER_FREE=1 defines "VIEWER_FREE" and
 set it to 1.
 
 Example:
-make-msi.bat tightvnc-2.5.1-setup-32bit tightvnc-2.5.1-setup-64bit 1 VIEWER_FREE
+make-msi.bat remoting-2.5.1-setup-32bit remoting-2.5.1-setup-64bit 1 VIEWER_FREE
 
 --------------------------------------
 

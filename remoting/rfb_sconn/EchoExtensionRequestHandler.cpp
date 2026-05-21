@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,9 +52,9 @@ namespace remoting
             return ;
          }
 
-         registrator->addClToSrvCap(ClientMsgDefs::ECHO_REQUEST, VendorDefs::TIGHTVNC, EchoExtensionDefs::ECHO_REQUEST_SIG);
+         registrator->addClToSrvCap(ClientMsgDefs::ECHO_REQUEST, VendorDefs::REMOTING, EchoExtensionDefs::ECHO_REQUEST_SIG);
 
-         registrator->addSrvToClCap(ServerMsgDefs::ECHO_RESPONSE, VendorDefs::TIGHTVNC, EchoExtensionDefs::ECHO_RESPONSE_SIG);
+         registrator->addSrvToClCap(ServerMsgDefs::ECHO_RESPONSE, VendorDefs::REMOTING, EchoExtensionDefs::ECHO_RESPONSE_SIG);
 
          registrator->regCode(ClientMsgDefs::ECHO_REQUEST, this);
 

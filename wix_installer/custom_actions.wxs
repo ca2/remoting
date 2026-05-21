@@ -14,28 +14,28 @@
                   Return="ignore" />
 
     <CustomAction Id="RegService"
-                  FileKey="tvnserverEXE"
+                  FileKey="remotingnodeEXE"
                   ExeCommand="-reinstall -silent"
                   Impersonate="no"
                   Execute="commit"
                   Return="ignore" />
 
     <CustomAction Id="UnregService"
-                  FileKey="tvnserverEXE"
+                  FileKey="remotingnodeEXE"
                   ExeCommand="-remove -silent"
                   Impersonate="no"
                   Execute="commit"
                   Return="ignore" />
 
     <CustomAction Id="StartService"
-                  FileKey="tvnserverEXE"
+                  FileKey="remotingnodeEXE"
                   ExeCommand="-start"
                   Impersonate="no"
                   Execute="commit"
                   Return="ignore" />
 
     <CustomAction Id="SetPasswordsAction"
-                  FileKey="tvnserverEXE"
+                  FileKey="remotingnodeEXE"
                   ExeCommand='-checkservicepasswords'
                   Impersonate="no"
                   Execute="commit"
@@ -76,7 +76,7 @@
 
     <?endif?>
 
-    <CustomAction Id='AlreadyUpdated' Error='TightVNC has already been updated to $(var.Version) or newer.' />
+    <CustomAction Id='AlreadyUpdated' Error='Remoting has already been updated to $(var.Version) or newer.' />
     <CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
 
   </Fragment>

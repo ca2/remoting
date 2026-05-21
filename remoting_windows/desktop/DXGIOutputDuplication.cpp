@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,14 +28,14 @@
 #include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
-#include "remoting/remoting_windows/desktop/WinD3D11Device.h"
+#include "remoting/remoting_windows/desktop/DXGIOutputDuplication.h"
+#include "remoting/remoting_windows/desktop/D3D11Device.h"
 
 namespace remoting_windows
 {
 
 
-   WinDxgiOutputDuplication::WinDxgiOutputDuplication(IDXGIOutput1 * pdxgioutput1, WinD3D11Device *pd3d11device) ///:
+   DXGIOutputDuplication::DXGIOutputDuplication(IDXGIOutput1 * pdxgioutput1, D3D11Device *pd3d11device) ///:
        //m_outDupl(0)
    {
 
@@ -79,7 +79,7 @@ namespace remoting_windows
 
    //WinDxgiOutputDuplication::WinDxgiOutputDuplication(const WinDxgiOutputDuplication &src) { copy(src); }
 
-   WinDxgiOutputDuplication::~WinDxgiOutputDuplication()
+   DXGIOutputDuplication::~DXGIOutputDuplication()
    {
       //if (m_poutputduplication != 0)
       {
@@ -104,9 +104,9 @@ namespace remoting_windows
    //    }
    // }
 
-   IDXGIOutputDuplication *WinDxgiOutputDuplication::getDxgiOutputDuplication() { return m_poutputduplication; }
+   IDXGIOutputDuplication *DXGIOutputDuplication::getDxgiOutputDuplication() { return m_poutputduplication; }
 
-   size_t WinDxgiOutputDuplication::getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOVE_RECT> *moveRects)
+   size_t DXGIOutputDuplication::getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOVE_RECT> *moveRects)
    {
       // Get move rectangle buffer size.
       char stub;
@@ -139,7 +139,7 @@ namespace remoting_windows
       return bufSize / elementSize;
    }
 
-   size_t WinDxgiOutputDuplication::getFrameDirtyRects(::array_base<RECT> *dirtyRects)
+   size_t DXGIOutputDuplication::getFrameDirtyRects(::array_base<RECT> *dirtyRects)
    {
       // Get dirty rectangle buffer size.
       char stub;
@@ -172,7 +172,7 @@ namespace remoting_windows
       return bufSize / elementSize;
    }
 
-   void WinDxgiOutputDuplication::getFrameCursorShape(::remoting::CursorShape *cursorShape, ::u32 pointerShapeBufferSize,
+   void DXGIOutputDuplication::getFrameCursorShape(::remoting::CursorShape *cursorShape, ::u32 pointerShapeBufferSize,
                                                       ::subsystem::LogWriter * plogwriter)
    {
       // plogwriter->debug("{}", pointerShapeBufferSize);

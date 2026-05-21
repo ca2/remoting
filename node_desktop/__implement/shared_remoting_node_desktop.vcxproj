@@ -240,6 +240,7 @@
     <PreBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\resource.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -260,6 +261,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon.ico" />
+    <Image Include="res\connected.ico" />
+    <Image Include="res\disabled.ico" />
+    <Image Include="res\idle.ico" />
+    <Image Include="res\remoting96.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\innate_ui_win32\innate_ui_win32.vcxproj">

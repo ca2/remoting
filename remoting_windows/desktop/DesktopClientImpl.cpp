@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -109,8 +109,8 @@ namespace remoting_windows
    DesktopClientImpl::~DesktopClientImpl()
    {
       m_plogwriter->information("Deleting DesktopClientImpl");
-      setThreadToFinish();
-      waitThreadToFinish();
+      //setThreadToFinish();
+      ///waitThreadToFinish();
       freeResource();
       m_plogwriter->information("DesktopClientImpl deleted");
    }
@@ -143,19 +143,19 @@ namespace remoting_windows
 
          // Transport initialization
          m_plogwriter->debug("DesktopClientImpl: Initializing ReconnectingChannel(s)...");
-         raw_construct_newø(m_pchannelClientToServer, 60_s, m_plogwriter);
-         raw_construct_newø(m_pchannelServerToClient, 60_s, m_plogwriter);
+         emplace_newø(m_pchannelClientToServer, 60_s, m_plogwriter);
+         emplace_newø(m_pchannelServerToClient, 60_s, m_plogwriter);
 
          // At this point the all DesktopServerWatcher's callback resources is initialized.
          m_plogwriter->debug("DesktopClientImpl: Resuming DesktopServerWatcher");
          m_pdesktopserverwatcher->resumeThread();
 
          m_plogwriter->debug("DesktopClientImpl: Creating BlockingGate wrappers for the ReconnectingChannel(s)");
-         raw_construct_newø(m_pgateClientToServer, m_pchannelClientToServer);
-         raw_construct_newø(m_pgateServerToClient,m_pchannelServerToClient);
+         emplace_newø(m_pgateClientToServer, m_pchannelClientToServer);
+         emplace_newø(m_pgateServerToClient,m_pchannelServerToClient);
 
          m_plogwriter->debug("DesktopClientImpl: Initializing DesktopSrvDispatcher");
-         raw_construct_newø(m_pdesktopsrvdispatcher, m_pgateServerToClient, this, m_plogwriter);
+         emplace_newø(m_pdesktopsrvdispatcher, m_pgateServerToClient, this, m_plogwriter);
 
          m_plogwriter->debug("DesktopClientImpl: Initializing UpdateHandlerClient...");
          m_pupdatehandler = allocateø ::remoting::UpdateHandlerClient(m_pconfigurator, m_pgateClientToServer, m_pdesktopsrvdispatcher, this, m_plogwriter);

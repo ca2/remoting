@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ namespace remoting_node_desktop
       /**
        * Creates new control client handler thread and starts it.
        * @param transport transport of incoming control connection (non-authorized).
-       * @param rfbClientManager active TightVNC rfb client manager.
+       * @param rfbClientManager active Remoting rfb client manager.
        * @remark control client takes ownership over client transport.
        */
       ControlClient(::remoting_node::Configurator * pconfigurator, ::remoting_control_desktop::Transport *transport, RfbClientManager *rfbClientManager, ControlAppAuthenticator *authenticator,
@@ -211,7 +211,7 @@ namespace remoting_node_desktop
       ::pointer<::subsystem::FileInterface> m_pfilePipeHandle;
 
       /**
-       * Active TightVNC rfb client manager.
+       * Active Remoting rfb client manager.
        */
       ::pointer < RfbClientManager > m_prfbclientmanager;
 

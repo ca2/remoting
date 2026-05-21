@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -123,7 +123,7 @@ void ControlClient::destroy()
             bool requiresControlAuth = m_pconfigurator->getServerConfig()->isControlAuthEnabled();
             bool repeatAuthEnabled = m_pconfigurator->getServerConfig()->getControlAuthAlwaysChecking();
 
-            // Check if scopedstrMessage requires TightVNC admin privilegies.
+            // Check if scopedstrMessage requires Remoting admin privilegies.
             if (requiresControlAuth)
             {
                for (size_t i = 0; i < sizeof(WITHOUT_AUTH) / sizeof(::u32); i++)

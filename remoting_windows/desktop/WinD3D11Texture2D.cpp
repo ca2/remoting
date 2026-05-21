@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,48 +24,48 @@
 #include "framework.h"
 #include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 
-// The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
-
-namespace remoting_windows
-{
-
-
-   WinD3D11Texture2D::WinD3D11Texture2D(ID3D11Device *device, const D3D11_TEXTURE2D_DESC *deskTexture) :
-       m_dxgiTexture(0)
-   {
-      HRESULT hr = device->CreateTexture2D(deskTexture, 0, &m_dxgiTexture);
-      if (FAILED(hr) || m_dxgiTexture == 0)
-      {
-         throw WinDxRecoverableException("Can't CreateTexture2D()", hr);
-      }
-   }
-
-   WinD3D11Texture2D::WinD3D11Texture2D(IDXGIResource *dxgiResource) : m_dxgiTexture(0)
-   {
-      HRESULT hr = dxgiResource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void **>(&m_dxgiTexture));
-      if (FAILED(hr) || m_dxgiTexture == 0)
-      {
-         throw WinDxRecoverableException("Can't QueryInterface() to create ID3D11Texture2D", hr);
-      }
-   }
-
-   WinD3D11Texture2D::WinD3D11Texture2D(const WinD3D11Texture2D &other)
-   {
-      m_dxgiTexture = other.getTexture();
-      m_dxgiTexture->AddRef();
-   };
-
-
-   WinD3D11Texture2D::~WinD3D11Texture2D()
-   {
-      if (m_dxgiTexture != 0)
-      {
-         m_dxgiTexture->Release();
-      }
-   }
-
-   ID3D11Texture2D *WinD3D11Texture2D::getTexture() const { return m_dxgiTexture; }
-
-
-} // namespace remoting_windows
+// // The header including of this cpp file must be at last place to avoid build conflicts.
+// #include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
+//
+// namespace remoting_windows
+// {
+//
+//
+//    WinD3D11Texture2D::WinD3D11Texture2D(ID3D11Device *device, const D3D11_TEXTURE2D_DESC *deskTexture) //:
+//        //m_dxgiTexture(0)
+//    {
+//       HRESULT hr = device->CreateTexture2D(deskTexture, 0, &m_pdxgitexture);
+//       if (FAILED(hr) || !m_pdxgitexture)
+//       {
+//          throw WinDxRecoverableException("Can't CreateTexture2D()", hr);
+//       }
+//    }
+//
+//    WinD3D11Texture2D::WinD3D11Texture2D(IDXGIResource *dxgiResource) //: m_dxgiTexture(0)
+//    {
+//       HRESULT hr = dxgiResource->QueryInterface(__interface_of(m_pdxgitexture));
+//       if (FAILED(hr) || !m_pdxgitexture)
+//       {
+//          throw WinDxRecoverableException("Can't QueryInterface() to create ID3D11Texture2D", hr);
+//       }
+//    }
+//
+//    // WinD3D11Texture2D::WinD3D11Texture2D(const WinD3D11Texture2D &other)
+//    // {
+//    //    m_dxgiTexture = other.getTexture();
+//    //    m_dxgiTexture->AddRef();
+//    // };
+//
+//
+//    WinD3D11Texture2D::~WinD3D11Texture2D()
+//    {
+//       // if (m_dxgiTexture != 0)
+//       // {
+//       //    m_dxgiTexture->Release();
+//       // }
+//    }
+//
+//    ID3D11Texture2D *WinD3D11Texture2D::getTexture() { return m_pdxgitexture; }
+//
+//
+// } // namespace remoting_windows

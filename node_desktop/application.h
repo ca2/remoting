@@ -38,6 +38,8 @@ namespace remoting_node_desktop
 
       void on_request(::request * prequest) override;
 
+      bool check_pipe_node_client_executable_paths(const file::path& pathNode, const file::path& pathClient) override;
+
 
       ::lresult handle_direct_id(const ::enum_id eid, ::wparam wparam, ::lparam lparam) override;
 

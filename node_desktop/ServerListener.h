@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ namespace remoting_node_desktop
 
 
    /**
-    * Listener of TightVNC server (Server class) events.
+    * Listener of Remoting Node (Server class) events.
     */
    class CLASS_DECL_REMOTING_NODE_DESKTOP ServerListener :
       virtual public ::Particle

@@ -50,8 +50,8 @@
       <Directory Id="ProgramMenuFolder" Name="Programs">
         <Directory Id="ProgramMenuDir" Name="$(var.ProductName)">
         <?ifndef SERVER_FREE ?>
-          <Directory Id="ServerMenuDir" Name ="TightVNC Server (Application Mode)"/>
-          <Directory Id="ServiceMenuDir" Name ="TightVNC Server (Service Mode)"/>
+          <Directory Id="ServerMenuDir" Name ="Remoting Node (Application Mode)"/>
+          <Directory Id="ServiceMenuDir" Name ="Remoting Node (Service Mode)"/>
         <?endif?>
         </Directory>
       </Directory>
@@ -67,7 +67,7 @@
          links all properties from the file -->
     <PropertyRef Id="VIEWER_ASSOCIATE_VNC_EXTENSION"/>
 
-    <FeatureRef Id="TightVNC"/>
+    <FeatureRef Id="Remoting"/>
 
     <UIRef Id="TvnUI" />
     <UIRef Id="WixUI_ErrorProgressText" />

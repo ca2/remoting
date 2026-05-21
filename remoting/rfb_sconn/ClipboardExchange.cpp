@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -47,9 +47,9 @@ namespace remoting
       // Request code
       m_prfbcoderegistrator->regCode(ClientMsgDefs::CLIENT_CUT_TEXT, this);
 
-      m_prfbcoderegistrator->addClToSrvCap(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8, VendorDefs::TIGHTVNC, Utf8CutTextDefs::CLIENT_CUT_TEXT_UTF8_SIG);
-      m_prfbcoderegistrator->addClToSrvCap(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8, VendorDefs::TIGHTVNC, Utf8CutTextDefs::ENABLE_CUT_TEXT_UTF8_SIG);
-      m_prfbcoderegistrator->addSrvToClCap(ServerMsgDefs::SERVER_CUT_TEXT_UTF8, VendorDefs::TIGHTVNC, Utf8CutTextDefs::SERVER_CUT_TEXT_UTF8_SIG);
+      m_prfbcoderegistrator->addClToSrvCap(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8, VendorDefs::REMOTING, Utf8CutTextDefs::CLIENT_CUT_TEXT_UTF8_SIG);
+      m_prfbcoderegistrator->addClToSrvCap(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8, VendorDefs::REMOTING, Utf8CutTextDefs::ENABLE_CUT_TEXT_UTF8_SIG);
+      m_prfbcoderegistrator->addSrvToClCap(ServerMsgDefs::SERVER_CUT_TEXT_UTF8, VendorDefs::REMOTING, Utf8CutTextDefs::SERVER_CUT_TEXT_UTF8_SIG);
       m_prfbcoderegistrator->regCode(ClientMsgDefs::CLIENT_CUT_TEXT_UTF8, this);
       m_prfbcoderegistrator->regCode(ClientMsgDefs::ENABLE_CUT_TEXT_UTF8, this);
 

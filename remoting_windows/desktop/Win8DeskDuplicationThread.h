@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,27 +28,27 @@
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 #include "remoting/remoting_windows/desktop/Win8CursorShape.h"
 //#include "subsystem/thread/lockable_critical_section.h"
-#include "subsystem/thread/GuiThread.h"
+#include "subsystem_windows/thread/GuiThread.h"
 
 #include "remoting/remoting_windows/_common_header.h"
 #include "remoting/remoting_windows/desktop/Win8DuplicationListener.h"
 //#include "log_writer/LogWriter.h"
 
 #include "remoting/remoting_windows/desktop/WinCustomD3D11Texture2D.h"
-#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
+#include "remoting/remoting_windows/desktop/DXGIOutputDuplication.h"
 
 namespace remoting_windows
 {
 
    class CLASS_DECL_REMOTING_WINDOWS Win8DeskDuplication :
-      virtual public ::subsystem::GuiThread
+      virtual public ::subsystem_windows::GuiThread
    {
    public:
       // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
       // The WinD3D11Device *device passed object can be destroyed right after the constructor calling.
       Win8DeskDuplication(::innate_subsystem::Framebuffer *targetFb, ::int_rectangle_array_base &targetRect,
                           Win8CursorShape *targetCurShape, LONGLONG *cursorTimeStamp, lockable_critical_section *cursorMutex,
-                          Win8DuplicationListener *duplListener, ::pointer_array<WinDxgiOutput> &dxgiOutput,
+                          Win8DuplicationListener *duplListener, D3D11Device *pd3d11device, const ::array_base< ::comptr < IDXGIOutput > > & dxgioutputa,
                           ::subsystem::LogWriter * plogwriter);
       virtual ~Win8DeskDuplication();
 
@@ -61,7 +61,7 @@ namespace remoting_windows
       void setRecoverableError(const ::scoped_string &scopedstrReason);
 
       void processMoveRects(size_t moveCount, size_t out);
-      void processDirtyRects(size_t dirtyCount, WinD3D11Texture2D *acquiredDesktopImage, size_t out);
+      void processDirtyRects(size_t dirtyCount, ID3D11Texture2D *acquiredDesktopImage, size_t out);
       void processCursor(const DXGI_OUTDUPL_FRAME_INFO *info, size_t out);
 
       ::i32_size getStageDimension(size_t out) const;
@@ -79,9 +79,9 @@ namespace remoting_windows
 
       Win8DuplicationListener *m_duplListener;
 
-      WinD3D11Device m_device;
-      ::pointer_array<WinDxgiOutput1> m_dxgiOutput1;
-      ::pointer_array<WinDxgiOutputDuplication> m_outDupl;
+      ::pointer < D3D11Device > m_pdevice;
+      ::array_base<::comptr < IDXGIOutput1 > > m_dxgioutput1a;
+      ::pointer_array<DXGIOutputDuplication> m_outputduplicationa;
 
       // The duplication interface can't be used
       bool m_hasCriticalError;
@@ -93,7 +93,8 @@ namespace remoting_windows
       ::array_base<RECT> m_dirtyRects;
       ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 
-      ::pointer_array<WinCustomD3D11Texture2D > m_stageTextures2D;
+      //::pointer_array<WinCustomD3D11Texture2D > m_stageTextures2D;
+      ::array_base < ::comptr < ID3D11Texture2D > > m_textureaStage;
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebufferAuxiliaryProperty;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

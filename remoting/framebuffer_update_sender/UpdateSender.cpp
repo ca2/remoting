@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,16 +52,16 @@ namespace remoting
    //    // Capabilities
    //    m_prfbcoderegistrator->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
    //    m_prfbcoderegistrator->addEncCap(EncodingDefs::HEXTILE, VendorDefs::STANDARD, EncodingDefs::SIG_HEXTILE);
-   //    m_prfbcoderegistrator->addEncCap(EncodingDefs::TIGHT, VendorDefs::TIGHTVNC, EncodingDefs::SIG_TIGHT);
-   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::COMPR_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_COMPR_LEVEL);
-   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::QUALITY_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_QUALITY_LEVEL);
-   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::RICH_CURSOR, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_RICH_CURSOR);
-   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::POINTER_POS, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_POINTER_POS);
-   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_SIZE, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_DESKTOP_SIZE);
-   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_CONFIGURATION, VendorDefs::TIGHTVNC,
+   //    m_prfbcoderegistrator->addEncCap(EncodingDefs::TIGHT, VendorDefs::REMOTING, EncodingDefs::SIG_TIGHT);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::COMPR_LEVEL_0, VendorDefs::REMOTING, PseudoEncDefs::SIG_COMPR_LEVEL);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::QUALITY_LEVEL_0, VendorDefs::REMOTING, PseudoEncDefs::SIG_QUALITY_LEVEL);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::RICH_CURSOR, VendorDefs::REMOTING, PseudoEncDefs::SIG_RICH_CURSOR);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::POINTER_POS, VendorDefs::REMOTING, PseudoEncDefs::SIG_POINTER_POS);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_SIZE, VendorDefs::REMOTING, PseudoEncDefs::SIG_DESKTOP_SIZE);
+   //    m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_CONFIGURATION, VendorDefs::REMOTING,
    //                          PseudoEncDefs::SIG_DESKTOP_CONFIGURATION);
    //
-   //    m_prfbcoderegistrator->addClToSrvCap(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, VendorDefs::TIGHTVNC,
+   //    m_prfbcoderegistrator->addClToSrvCap(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, VendorDefs::REMOTING,
    //                              UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE_SIG);
    //
    //    // Request codes
@@ -124,16 +124,16 @@ void UpdateSender::destroy()
       // Capabilities
       m_prfbcoderegistrator->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);
       m_prfbcoderegistrator->addEncCap(EncodingDefs::HEXTILE, VendorDefs::STANDARD, EncodingDefs::SIG_HEXTILE);
-      m_prfbcoderegistrator->addEncCap(EncodingDefs::TIGHT, VendorDefs::TIGHTVNC, EncodingDefs::SIG_TIGHT);
-      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::COMPR_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_COMPR_LEVEL);
-      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::QUALITY_LEVEL_0, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_QUALITY_LEVEL);
-      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::RICH_CURSOR, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_RICH_CURSOR);
-      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::POINTER_POS, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_POINTER_POS);
-      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_SIZE, VendorDefs::TIGHTVNC, PseudoEncDefs::SIG_DESKTOP_SIZE);
-      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_CONFIGURATION, VendorDefs::TIGHTVNC,
+      m_prfbcoderegistrator->addEncCap(EncodingDefs::TIGHT, VendorDefs::REMOTING, EncodingDefs::SIG_TIGHT);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::COMPR_LEVEL_0, VendorDefs::REMOTING, PseudoEncDefs::SIG_COMPR_LEVEL);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::QUALITY_LEVEL_0, VendorDefs::REMOTING, PseudoEncDefs::SIG_QUALITY_LEVEL);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::RICH_CURSOR, VendorDefs::REMOTING, PseudoEncDefs::SIG_RICH_CURSOR);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::POINTER_POS, VendorDefs::REMOTING, PseudoEncDefs::SIG_POINTER_POS);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_SIZE, VendorDefs::REMOTING, PseudoEncDefs::SIG_DESKTOP_SIZE);
+      m_prfbcoderegistrator->addEncCap(PseudoEncDefs::DESKTOP_CONFIGURATION, VendorDefs::REMOTING,
                             PseudoEncDefs::SIG_DESKTOP_CONFIGURATION);
 
-      m_prfbcoderegistrator->addClToSrvCap(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, VendorDefs::TIGHTVNC,
+      m_prfbcoderegistrator->addClToSrvCap(UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE, VendorDefs::REMOTING,
                                 UpdSenderClientMsgDefs::RFB_VIDEO_FREEZE_SIG);
 
       // Request codes

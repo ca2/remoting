@@ -33,6 +33,8 @@ if(${WIN32})
    desktop/MirrorDriverClient.h
    desktop/MirrorScreenDriver.cpp
    desktop/MirrorScreenDriver.h
+      desktop/WallpaperUtil.cpp
+      desktop/WallpaperUtil.h
    desktop/Win8CursorShape.cpp
    desktop/Win8CursorShape.h
    desktop/Win8DeskDuplicationThread.cpp
@@ -56,8 +58,8 @@ if(${WIN32})
    desktop/WinCursorShapeUtils.h
    desktop/WinCustomD3D11Texture2D.cpp
    desktop/WinCustomD3D11Texture2D.h
-   desktop/WinD3D11Device.cpp
-   desktop/WinD3D11Device.h
+      desktop/D3D11Device.cpp
+      desktop/D3D11Device.h
    desktop/WinD3D11Texture2D.cpp
    desktop/WinD3D11Texture2D.h
    desktop/WindowsCursorShapeGrabber.cpp
@@ -72,20 +74,20 @@ if(${WIN32})
    desktop/WinDxCriticalException.h
    desktop/WinDxException.cpp
    desktop/WinDxException.h
-   desktop/WinDxgiAcquiredFrame.cpp
-   desktop/WinDxgiAcquiredFrame.h
-   desktop/WinDxgiAdapter.cpp
-   desktop/WinDxgiAdapter.h
-   desktop/WinDxgiDevice.cpp
-   desktop/WinDxgiDevice.h
-   desktop/WinDxgiOutput.cpp
-   desktop/WinDxgiOutput.h
-   desktop/WinDxgiOutput1.cpp
-   desktop/WinDxgiOutput1.h
-   desktop/WinDxgiOutputDuplication.cpp
-   desktop/WinDxgiOutputDuplication.h
-   desktop/WinDxgiSurface.cpp
-   desktop/WinDxgiSurface.h
+      desktop/DXGIAcquiredFrame.cpp
+      desktop/DXGIAcquiredFrame.h
+      desktop/aaa_WinDxgiAdapter.cpp
+      desktop/aaa_WinDxgiAdapter.h
+      desktop/aaa_WinDxgiDevice.cpp
+      desktop/aaa_WinDxgiDevice.h
+      desktop/aaa_WinDxgiOutput.cpp
+      desktop/aaa_WinDxgiOutput.h
+      desktop/aaa_WinDxgiOutput1.cpp
+      desktop/aaa_WinDxgiOutput1.h
+      desktop/DXGIOutputDuplication.cpp
+      desktop/DXGIOutputDuplication.h
+      desktop/aaa_WinDxgiSurface.cpp
+      desktop/aaa_WinDxgiSurface.h
    desktop/WinDxRecoverableException.cpp
    desktop/WinDxRecoverableException.h
    #desktop/WinServiceDesktopFactory.cpp

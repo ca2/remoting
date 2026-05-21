@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the TightVNC software.  Please visit our Web site:
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
 //
-//                       http://www.tightvnc.com/
+//                       http://www.t i g h t v n c.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -99,7 +99,7 @@ namespace remoting_control_desktop
       static const ::u32 DISCONNECT_ALL_CLIENTS_MSG_ID = 0x6;
 
       /**
-       * Shutdown TightVNC server.
+       * Shutdown Remoting Node.
        * Request body: [empty].
        * Reply body: [empty].
        */
@@ -123,7 +123,7 @@ namespace remoting_control_desktop
       static const ::u32 CONNECT_TO_TCPDISP_MSG_ID = 0x9;
 
       /**
-       * Send new configuration to TightVNC server.
+       * Send new configuration to Remoting Node.
        * Request body:
        *   serialized ::remoting_node::ServerConfig.
        * Reply body: [empty].
@@ -143,7 +143,7 @@ namespace remoting_control_desktop
       static const ::u32 GET_SERVER_INFO_MSG_ID = 0x11;
 
       /**
-       * Get current configuration of TightVNC server.
+       * Get current configuration of Remoting Node.
        * Request body: [empty].
        * Reply body:
        *   serialized ::remoting_node::ServerConfig.
@@ -164,7 +164,7 @@ namespace remoting_control_desktop
        * Gets flag for autowork mode of TvnControl.
        *
        * @remark
-       * If this flag is true when TvnControl must be onThreadMain with TightVNC app or service,
+       * If this flag is true when TvnControl must be onThreadMain with Remoting app or service,
        * if false, then TvnControl app must be shutdowned forced and silent after it knows
        * that "Run TvnControl flag" is false.
        *

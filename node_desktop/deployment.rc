@@ -25,8 +25,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2026,0130,1612,08
- PRODUCTVERSION 2026,0130,1612,08
+ FILEVERSION 2026,130,1612,8
+ PRODUCTVERSION 2026,130,1612,8
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -41,8 +41,8 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-			VALUE "CompanyName", "game"
-			VALUE "FileDescription", "game_csgomatchmaking"
+            VALUE "CompanyName", "ca2 Software Development"
+            VALUE "FileDescription", "Remoting Node Desktop Client"
             VALUE "FileVersion", "2026.0130.1612.08"
             VALUE "LegalCopyright", "Copyright (C) 2026-01-30-16-12-08"
             VALUE "ProductVersion", "2026.0130.1612.08"
