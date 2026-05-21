@@ -37,18 +37,19 @@ namespace remoting_windows
    // #include "log_writer/LogWriter.h"
 
 
-   class CLASS_DECL_REMOTING_WINDOWS WinD3D11Device
+   class CLASS_DECL_REMOTING_WINDOWS D3D11Device :
+      virtual public ::particle
    {
    public:
       // Creates new device and context of first found.
-      WinD3D11Device();
-      WinD3D11Device(::subsystem::LogWriter * plogwriter);
+      D3D11Device();
+      D3D11Device(::subsystem::LogWriter * plogwriter);
       // Copy references and increase count for winD3D11Device's internal handles. So the
       // source winD3D11Device object can be destroyed while this object will use.
-      WinD3D11Device(const WinD3D11Device &src);
-      virtual ~WinD3D11Device();
+      //WinD3D11Device(const WinD3D11Device &src);
+      virtual ~D3D11Device();
 
-      WinD3D11Device &operator=(WinD3D11Device const &src);
+      //WinD3D11Device &operator=(WinD3D11Device const &src);
 
       HRESULT deviceQueryInterface(REFIID riid, void **ppvObject);
       HRESULT contextQueryInterface(REFIID riid, void **ppvObject);
@@ -60,11 +61,11 @@ namespace remoting_windows
       void copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY, ID3D11Texture2D *srcTexture2D,
                                  const ::i32_rectangle &rectangleSource, ::u32 front, ::u32 back);
    //private:
-      void copy(const WinD3D11Device &src);
+      //void copy(const WinD3D11Device &src);
 
       ::subsystem::DynamicLibrary m_d3d11Lib;
-      ID3D11Device *m_device;
-      ID3D11DeviceContext *m_context;
+      ::comptr<ID3D11Device > m_pd3d11device;
+      ::comptr<ID3D11DeviceContext> m_pd3d11devicecontext;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };

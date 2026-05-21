@@ -21,35 +21,37 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
+#include "framework.h"
+#include "subsystem/platform/Exception.h"
 
-#pragma once
+// The header including of this cpp file must be at last place to avoid build conflicts.
+#include "remoting/remoting_windows/desktop/WinDxgiSurface.h"
 
-#include "remoting/remoting_windows/_common_header.h"
-#include <d3d11.h>
-#include <DXGI1_2.h>
-
-namespace remoting_windows
-{
-
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiSurface
-   {
-   public:
-      // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.
-      WinDxgiSurface(ID3D11Texture2D *texture2D);
-      virtual ~WinDxgiSurface();
-
-      IDXGISurface *getSurface() const;
-
-   private:
-      IDXGISurface *m_dxgiSurface;
-   };
-
-   //// __WINDXGISURFACE_H__
-
-} // namespace remoting_windows
-
-
-
-
-
-
+// namespace remoting_windows
+// {
+//
+//
+//    WinDxgiSurface::WinDxgiSurface(ID3D11Texture2D *texture2D) : m_dxgiSurface(0)
+//    {
+//       HRESULT hr = texture2D->QueryInterface(__uuidof(IDXGISurface), (void **)&m_dxgiSurface);
+//       if (FAILED(hr) || m_dxgiSurface == 0)
+//       {
+//          ::string errMess;
+//          errMess.format("Can't create IDXGISurface from ID3D11Texture2D, error code = %l", (long)hr);
+//          throw ::subsystem::Exception(errMess);
+//       }
+//    }
+//
+//    WinDxgiSurface::~WinDxgiSurface()
+//    {
+//       if (m_dxgiSurface != 0)
+//       {
+//          m_dxgiSurface->Release();
+//          m_dxgiSurface = 0;
+//       }
+//    }
+//
+//    IDXGISurface *WinDxgiSurface::getSurface() const { return m_dxgiSurface; }
+//
+//
+// } // namespace remoting_windows

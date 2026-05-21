@@ -21,37 +21,40 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
-#include "subsystem/platform/Exception.h"
 
-// The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/WinDxgiSurface.h"
-
-namespace remoting_windows
-{
+#pragma once
 
 
-   WinDxgiSurface::WinDxgiSurface(ID3D11Texture2D *texture2D) : m_dxgiSurface(0)
-   {
-      HRESULT hr = texture2D->QueryInterface(__uuidof(IDXGISurface), (void **)&m_dxgiSurface);
-      if (FAILED(hr) || m_dxgiSurface == 0)
-      {
-         ::string errMess;
-         errMess.format("Can't create IDXGISurface from ID3D11Texture2D, error code = %l", (long)hr);
-         throw ::subsystem::Exception(errMess);
-      }
-   }
+// #include "remoting/remoting_windows/_common_header.h"
+// #include "remoting/remoting_windows/desktop/WinD3D11Device.h"
+//
+//
+// namespace remoting_windows
+// {
+//
+//    // #include aaa_<d3d11.h>
+//    // #include aaa_<DXGI1_2.h>
+//
+//    class CLASS_DECL_REMOTING_WINDOWS WinDxgiDevice :
+//       virtual public ::particle
+//    {
+//    public:
+//       // Uses WinD3D11Device to create internal handle
+//       WinDxgiDevice(D3D11Device *winD3D11Device);
+//       virtual ~WinDxgiDevice();
+//
+//       HRESULT getParent(REFIID riid, void **ppvObject);
+//
+//    private:
+//       IDXGIDevice *m_dxgiDevice;
+//    };
+//
+//
+// } // namespace remoting_windows
+//
+//
 
-   WinDxgiSurface::~WinDxgiSurface()
-   {
-      if (m_dxgiSurface != 0)
-      {
-         m_dxgiSurface->Release();
-         m_dxgiSurface = 0;
-      }
-   }
-
-   IDXGISurface *WinDxgiSurface::getSurface() const { return m_dxgiSurface; }
 
 
-} // namespace remoting_windows
+
+

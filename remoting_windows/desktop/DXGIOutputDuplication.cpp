@@ -29,23 +29,26 @@
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
+#include "remoting/remoting_windows/desktop/WinD3D11Device.h"
 
 namespace remoting_windows
 {
 
 
-   WinDxgiOutputDuplication::WinDxgiOutputDuplication(WinDxgiOutput1 *dxgiOutput, WinD3D11Device *d3D11Device) :
-       m_outDupl(0)
+   WinDxgiOutputDuplication::WinDxgiOutputDuplication(IDXGIOutput1 * pdxgioutput1, WinD3D11Device *pd3d11device) ///:
+       //m_outDupl(0)
    {
 
-      auto pdxgiOutput = dxgiOutput;
+      //retry:
+      int iTry = 0;
+      //auto pdxgiOutput = dxgiOutput;
 
-      auto pdxgiOutput1 = dxgiOutput->getDxgiOutput1();
+      //auto pdxgiOutput1 = dxgiOutput->getDxgiOutput1();
 
-      auto pd3D11Device = d3D11Device;
+      //auto pd3D11Device = d3D11Device;
 
-      auto pdevice = pd3D11Device->getDevice();
-      HRESULT hr = pdxgiOutput1->DuplicateOutput(pdevice, &m_outDupl);
+      auto pdevice = pd3d11device->getDevice();
+      HRESULT hr = pdxgioutput1->DuplicateOutput(pdevice, &m_poutputduplication);
       if (FAILED(hr))
       {
          if (hr == DXGI_ERROR_NOT_CURRENTLY_AVAILABLE)
@@ -57,6 +60,16 @@ namespace remoting_windows
          {
             throw WinDxRecoverableException("Can't DuplicateOutput() because of access denied error", hr);
          }
+         else if (hr == E_UNEXPECTED)
+         {
+            //if (iTry < 3)
+            //{
+            //   iTry++;
+            //   preempt(2_s * iTry);
+            //   goto retry;
+            //}
+            throw WinDxCriticalException("Can't DuplicateOutput()", hr);
+         }
          else
          {
             throw WinDxCriticalException("Can't DuplicateOutput()", hr);
@@ -64,34 +77,34 @@ namespace remoting_windows
       }
    }
 
-   WinDxgiOutputDuplication::WinDxgiOutputDuplication(const WinDxgiOutputDuplication &src) { copy(src); }
+   //WinDxgiOutputDuplication::WinDxgiOutputDuplication(const WinDxgiOutputDuplication &src) { copy(src); }
 
    WinDxgiOutputDuplication::~WinDxgiOutputDuplication()
    {
-      if (m_outDupl != 0)
+      //if (m_poutputduplication != 0)
       {
-         m_outDupl->Release();
-         m_outDupl = 0;
+        // m_poutputduplication->Release();
+         //m_poutputduplication = 0;
       }
    }
 
 
-   WinDxgiOutputDuplication &WinDxgiOutputDuplication::operator=(WinDxgiOutputDuplication const &src)
-   {
-      copy(src);
-      return *this;
-   }
+   // WinDxgiOutputDuplication &WinDxgiOutputDuplication::operator=(WinDxgiOutputDuplication const &src)
+   // {
+   //    copy(src);
+   //    return *this;
+   // }
 
-   void WinDxgiOutputDuplication::copy(const WinDxgiOutputDuplication &src)
-   {
-      if (this != &src)
-      {
-         m_outDupl = src.m_outDupl;
-         m_outDupl->AddRef();
-      }
-   }
+   // void WinDxgiOutputDuplication::copy(const WinDxgiOutputDuplication &src)
+   // {
+   //    if (this != &src)
+   //    {
+   //       m_poutputduplication = src.m_poutputduplication;
+   //       m_poutputduplication->AddRef();
+   //    }
+   // }
 
-   IDXGIOutputDuplication *WinDxgiOutputDuplication::getDxgiOutputDuplication() { return m_outDupl; }
+   IDXGIOutputDuplication *WinDxgiOutputDuplication::getDxgiOutputDuplication() { return m_poutputduplication; }
 
    size_t WinDxgiOutputDuplication::getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOVE_RECT> *moveRects)
    {
@@ -99,7 +112,7 @@ namespace remoting_windows
       char stub;
       ::u32 reqBufSize = 0;
       HRESULT hr;
-      hr = m_outDupl->GetFrameMoveRects(reqBufSize, reinterpret_cast<DXGI_OUTDUPL_MOVE_RECT *>(&stub), &reqBufSize);
+      hr = m_poutputduplication->GetFrameMoveRects(reqBufSize, reinterpret_cast<DXGI_OUTDUPL_MOVE_RECT *>(&stub), &reqBufSize);
       if (!FAILED(hr))
       {
          return 0;
@@ -118,7 +131,7 @@ namespace remoting_windows
       }
 
       // Get move rectangles.
-      hr = m_outDupl->GetFrameMoveRects(bufSize, moveRects->data(), &bufSize);
+      hr = m_poutputduplication->GetFrameMoveRects(bufSize, moveRects->data(), &bufSize);
       if (FAILED(hr))
       {
          throw WinDxException("Can't get move rectanglea", hr);
@@ -132,7 +145,7 @@ namespace remoting_windows
       char stub;
       ::u32 reqBufSize = 0;
       HRESULT hr;
-      hr = m_outDupl->GetFrameDirtyRects(reqBufSize, reinterpret_cast<RECT *>(&stub), &reqBufSize);
+      hr = m_poutputduplication->GetFrameDirtyRects(reqBufSize, reinterpret_cast<RECT *>(&stub), &reqBufSize);
       if (!FAILED(hr))
       {
          return 0;
@@ -151,7 +164,7 @@ namespace remoting_windows
       }
 
       // Get dirty rectangles.
-      hr = m_outDupl->GetFrameDirtyRects(bufSize, dirtyRects->data(), &bufSize);
+      hr = m_poutputduplication->GetFrameDirtyRects(bufSize, dirtyRects->data(), &bufSize);
       if (FAILED(hr))
       {
          throw WinDxException("Can't get dirty rectanglea", hr);
@@ -173,7 +186,7 @@ namespace remoting_windows
       ::u32 reqSize = 0;
       ::array_base<char> buffer(pointerShapeBufferSize);
       DXGI_OUTDUPL_POINTER_SHAPE_INFO shapeInfo;
-      hr = m_outDupl->GetFramePointerShape((::u32)buffer.size(), buffer.data(), &reqSize, &shapeInfo);
+      hr = m_poutputduplication->GetFramePointerShape((::u32)buffer.size(), buffer.data(), &reqSize, &shapeInfo);
       plogwriter->debug("CursorShapeInfo: pounter info buffer size: {}, required: {}", pointerShapeBufferSize, reqSize);
       if (FAILED(hr))
       {

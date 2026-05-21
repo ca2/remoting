@@ -24,48 +24,32 @@
 
 #pragma once
 
+// #include "remoting/remoting_windows/_common_header.h"
+// #include <d3d11.h>
+// #include <DXGI1_2.h>
+//
+// namespace remoting_windows
+// {
+//
+//    class CLASS_DECL_REMOTING_WINDOWS WinDxgiSurface :
+//    virtual public ::particle
+//    public:
+//       // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.
+//       WinDxgiSurface(ID3D11Texture2D *texture2D);
+//       virtual ~WinDxgiSurface();
+//
+//       IDXGISurface *getSurface() const;
+//
+//    private:
+//       ::comptr < IDXGISurface > m_dxgiSurface;
+//    };
+//
+//    //// __WINDXGISURFACE_H__
+//
+// } // namespace remoting_windows
+//
+//
 
-#include "remoting/remoting_windows/_common_header.h"
-
-#include "remoting/remoting_windows/desktop/WinDxgiAdapter.h"
-#include "acme/operating_system/windows_common/com/comptr.h"
-// #include aaa_<d3d11.h>
-// #include aaa_<DXGI1_2.h>
-
-namespace remoting_windows
-{
-
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutput :
-   virtual public ::particle
-   {
-   public:
-      WinDxgiOutput(WinDxgiAdapter *dxgiAdapter, ::u32 iOutput);
-      WinDxgiOutput(const WinDxgiOutput &src);
-      virtual ~WinDxgiOutput();
-
-      WinDxgiOutput &operator=(WinDxgiOutput const &src);
-
-      bool isAttachedtoDesktop();
-
-      ::i32_rectangle getDesktopCoordinates();
-
-      DXGI_MODE_ROTATION getRotation() const;
-
-      void getDeviceName(::string &out);
-
-      HRESULT queryInterface(REFIID riid, void **ppvObject);
-
-   //private:
-      void copy(const WinDxgiOutput &src);
-
-      comptr < IDXGIOutput >m_dxgiOutput;
-      DXGI_OUTPUT_DESC m_description;
-   };
-
-   //// __WINDXGIOUTPUT_H__
-
-
-} // namespace remoting_windows
 
 
 

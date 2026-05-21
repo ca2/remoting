@@ -28,23 +28,26 @@
 #include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
 #include "remoting/remoting/rfb/CursorShape.h"
 
-// #include aaa_<d3d11.h>
-// #include aaa_<DXGI1_2.h>
+#include <d3d11.h>
+#include <DXGI1_2.h>
 
 
 namespace remoting_windows
 {
+
+
+   class WinD3D11Device;
 
    // This class  is a wrapper for the IDXGIOutputDuplication interface.
    class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutputDuplication :
    virtual public ::particle
    {
    public:
-      WinDxgiOutputDuplication(WinDxgiOutput1 *dxgiOutput, WinD3D11Device *d3D11Device);
-      WinDxgiOutputDuplication(const WinDxgiOutputDuplication &src);
+      WinDxgiOutputDuplication(IDXGIOutput1 * pdxgioutput1, WinD3D11Device *d3D11Device);
+      //WinDxgiOutputDuplication(const WinDxgiOutputDuplication &src);
       virtual ~WinDxgiOutputDuplication();
 
-      WinDxgiOutputDuplication &operator=(WinDxgiOutputDuplication const &src);
+      //WinDxgiOutputDuplication &operator=(WinDxgiOutputDuplication const &src);
 
       // Return pointer to a IDXGIOutputDuplication object. The pointer will be valid until
       // this object destructor has been called.
@@ -66,9 +69,9 @@ namespace remoting_windows
                                ::subsystem::LogWriter * plogwriter);
 
    private:
-      void copy(const WinDxgiOutputDuplication &src);
+      //void copy(const WinDxgiOutputDuplication &src);
 
-      IDXGIOutputDuplication *m_outDupl;
+      ::comptr <IDXGIOutputDuplication > m_poutputduplication;
    };
 
    //// __WINDXGIOUTPUTDUPLICATION_H__

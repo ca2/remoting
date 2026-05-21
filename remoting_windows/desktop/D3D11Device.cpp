@@ -38,8 +38,9 @@ namespace remoting_windows
       ::u32 SDKVersion, _Out_opt_ ID3D11Device **ppDevice, _Out_opt_ D3D_FEATURE_LEVEL *pFeatureLevel,
       _Out_opt_ ID3D11DeviceContext **ppImmediateContext);
 
-   WinD3D11Device::WinD3D11Device(::subsystem::LogWriter * plogwriter) :
-       m_device(0), m_context(0), m_plogwriter(plogwriter)
+   D3D11Device::D3D11Device(::subsystem::LogWriter * plogwriter) :
+       //m_device(0), m_context(0),
+       m_plogwriter(plogwriter)
    {
       m_d3d11Lib.initialize_dynamic_library("d3d11.dll");
       D3D11CreateDeviceFunType d3d11CreateDevice;
@@ -59,14 +60,19 @@ namespace remoting_windows
       ::u32 featureLevelCount = ARRAYSIZE(featureLevels);
 
       D3D_FEATURE_LEVEL featureLevel;
-
+      UINT creationFlags = 0;
+      #if defined(_DEBUG)
+      // If the project is in a debug build, enable the debug layer.
+      creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
       // Create device
       HRESULT hr;
       for (::u32 iDriverType = 0; iDriverType < driverTypeCount; ++iDriverType)
       {
          m_plogwriter->debug("Creating of (%u) driverType device", iDriverType);
-         hr = d3d11CreateDevice(0, driverTypes[iDriverType], 0, 0, featureLevels, featureLevelCount, D3D11_SDK_VERSION,
-                                &m_device, &featureLevel, &m_context);
+         hr = d3d11CreateDevice(0, driverTypes[iDriverType], 0, creationFlags, featureLevels, featureLevelCount,
+                                D3D11_SDK_VERSION,
+                                &m_pd3d11device, &featureLevel, &m_pd3d11devicecontext);
          if (SUCCEEDED(hr))
          {
             m_plogwriter->debugf("Creating of %u driverType device is successfull, supported D3D_FEATURE_LEVEL is %u",
@@ -83,56 +89,58 @@ namespace remoting_windows
       }
    }
 
-   WinD3D11Device::WinD3D11Device(const WinD3D11Device &src) { copy(src); }
+   //WinD3D11Device::WinD3D11Device(const WinD3D11Device &src) { copy(src); }
 
-   WinD3D11Device::~WinD3D11Device()
+   D3D11Device::~D3D11Device()
    {
       m_plogwriter->debug("Release ID3D11Device");
-      if (m_device != 0)
-      {
-         m_device->Release();
-         m_device = 0;
-      }
+      m_pd3d11device.release();
+      // if (m_device != 0)
+      // {
+      //    m_device->Release();
+      //    m_device = 0;
+      // }
       m_plogwriter->debug("Release ID3D11DeviceContext");
-      if (m_context != 0)
-      {
-         m_context->Release();
-         m_context = 0;
-      }
+      m_pd3d11devicecontext.release();
+      // if (m_context != 0)
+      // {
+      //    m_context->Release();
+      //    m_context = 0;
+      // }
    }
 
-   WinD3D11Device &WinD3D11Device::operator=(WinD3D11Device const &src)
+   // WinD3D11Device &WinD3D11Device::operator=(WinD3D11Device const &src)
+   // {
+   //    copy(src);
+   //    return *this;
+   // }
+   //
+   // void WinD3D11Device::copy(const WinD3D11Device &src)
+   // {
+   //    if (this != &src)
+   //    {
+   //       m_pd3d11device = src.m_pd3d11device;
+   //       //m_device->AddRef();
+   //       m_pd3d11devicecontext = src.m_pd3d11devicecontext;
+   //       //m_context->AddRef();
+   //    }
+   // }
+
+   HRESULT D3D11Device::deviceQueryInterface(REFIID riid, void **ppvObject)
    {
-      copy(src);
-      return *this;
+      return m_pd3d11device->QueryInterface(riid, ppvObject);
    }
 
-   void WinD3D11Device::copy(const WinD3D11Device &src)
+   HRESULT D3D11Device::contextQueryInterface(REFIID riid, void **ppvObject)
    {
-      if (this != &src)
-      {
-         m_device = src.m_device;
-         m_device->AddRef();
-         m_context = src.m_context;
-         m_context->AddRef();
-      }
+      return m_pd3d11devicecontext->QueryInterface(riid, ppvObject);
    }
 
-   HRESULT WinD3D11Device::deviceQueryInterface(REFIID riid, void **ppvObject)
-   {
-      return m_device->QueryInterface(riid, ppvObject);
-   }
+   ID3D11Device *D3D11Device::getDevice() { return m_pd3d11device; }
 
-   HRESULT WinD3D11Device::contextQueryInterface(REFIID riid, void **ppvObject)
-   {
-      return m_context->QueryInterface(riid, ppvObject);
-   }
+   ID3D11DeviceContext *D3D11Device::getContext() { return m_pd3d11devicecontext; }
 
-   ID3D11Device *WinD3D11Device::getDevice() { return m_device; }
-
-   ID3D11DeviceContext *WinD3D11Device::getContext() { return m_context; }
-
-   void WinD3D11Device::copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY,
+   void D3D11Device::copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY,
                                               ID3D11Texture2D *srcTexture2D, const ::i32_rectangle &rectangleSource,
                                               ::u32 front, ::u32 back)
    {
@@ -143,7 +151,7 @@ namespace remoting_windows
       box.bottom = rectangleSource.bottom;
       box.front = front;
       box.back = back;
-      m_context->CopySubresourceRegion(dstTexture2D, 0, dstX, dstY, 0, srcTexture2D, 0, &box);
+      m_pd3d11devicecontext->CopySubresourceRegion(dstTexture2D, 0, dstX, dstY, 0, srcTexture2D, 0, &box);
    }
 
 

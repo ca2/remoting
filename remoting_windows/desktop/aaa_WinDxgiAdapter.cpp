@@ -28,43 +28,44 @@
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/WinDxgiAdapter.h"
 
-namespace remoting_windows
-{
-
-
-   WinDxgiAdapter::WinDxgiAdapter(WinDxgiDevice *winDxgiDevice) : m_dxgiAdapter(0)
-   {
-      HRESULT hr = winDxgiDevice->getParent(__uuidof(IDXGIAdapter), reinterpret_cast<void **>(&m_dxgiAdapter));
-      if (FAILED(hr))
-      {
-         throw WinDxCriticalException("Can't GetParent for IDXGIAdapter", hr);
-      }
-   }
-
-   WinDxgiAdapter::~WinDxgiAdapter()
-   {
-      if (m_dxgiAdapter != 0)
-      {
-         m_dxgiAdapter->Release();
-         m_dxgiAdapter = 0;
-      }
-   }
-
-   void WinDxgiAdapter::getDxgiOutput(::u32 iOutput, IDXGIOutput **iDxgiOutput)
-   {
-      HRESULT hr = m_dxgiAdapter->EnumOutputs(iOutput, iDxgiOutput);
-      if (hr == DXGI_ERROR_NOT_FOUND)
-      {
-         ::string errMess;
-         errMess.format("IDXGIOutput not found for iOutput = %u", iOutput);
-         throw WinDxRecoverableException(errMess, hr);
-      }
-      else if (FAILED(hr))
-      {
-         throw WinDxCriticalException("Can't IDXGIAdapter::EnumOutputs()", hr);
-      }
-   }
-
-
-} // namespace remoting_windows
-
+// namespace remoting_windows
+// {
+//
+//
+//    WinDxgiAdapter::WinDxgiAdapter(WinDxgiDevice *winDxgiDevice) //: m_dxgiAdapter(0)
+//    {
+//       HRESULT hr = winDxgiDevice->getParent(__interface_of(m_pdxgiadapter));
+//       if (FAILED(hr))
+//       {
+//          throw WinDxCriticalException("Can't GetParent for IDXGIAdapter", hr);
+//       }
+//    }
+//
+//    WinDxgiAdapter::~WinDxgiAdapter()
+//    {
+//       // if (m_dxgiAdapter != 0)
+//       // {
+//       //    m_dxgiAdapter->Release();
+//       //    m_dxgiAdapter = 0;
+//       // }
+//    }
+//
+//    HRESULT WinDxgiAdapter::getDxgiOutput(::u32 iOutput, IDXGIOutput **iDxgiOutput)
+//    {
+//       HRESULT hr = m_pdxgiadapter->EnumOutputs(iOutput, iDxgiOutput);
+//       return hr;
+//       // if (hr == DXGI_ERROR_NOT_FOUND)
+//       // {
+//       //    ::string errMess;
+//       //    errMess.format("IDXGIOutput not found for iOutput = %u", iOutput);
+//       //    throw WinDxRecoverableException(errMess, hr);
+//       // }
+//       // else if (FAILED(hr))
+//       // {
+//       //    throw WinDxCriticalException("Can't IDXGIAdapter::EnumOutputs()", hr);
+//       // }
+//    }
+//
+//
+// } // namespace remoting_windows
+//

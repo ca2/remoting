@@ -24,39 +24,44 @@
 
 #pragma once
 
+
+
 #include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinDxgiOutputDuplication.h"
+#include "remoting/remoting_windows/desktop/aaa_WinDxgiOutput.h"
 
-
-namespace remoting_windows
-{
-
-   // #include aaa_<d3d11.h>
-   // #include aaa_<DXGI1_2.h>
-
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiAcquiredFrame
-   {
-   public:
-      WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, ::u32 timeOutMilliSec);
-      virtual ~WinDxgiAcquiredFrame();
-
-      bool wasTimeOut();
-
-      IDXGIResource *getDxgiResource();
-      DXGI_OUTDUPL_FRAME_INFO *getFrameInfo();
-
-   private:
-      WinDxgiOutputDuplication m_outDupl;
-
-      DXGI_OUTDUPL_FRAME_INFO m_frameInfo;
-      IDXGIResource *m_desktopResource;
-      bool m_wasTimeOut;
-   };
-
-   //// __WINDXGIACQUIREDFRAME_H__
-
-
-} // namespace remoting_windows
+// #include aaa_<d3d11.h>
+// #include aaa_<DXGI1_2.h>
+//
+//
+// namespace remoting_windows
+// {
+//
+//
+//    class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutput1 :
+//    virtual public ::particle
+//    {
+//    public:
+//       WinDxgiOutput1(WinDxgiOutput *dxgiOutput);
+//       //WinDxgiOutput1(const WinDxgiOutput1 &src);
+//       virtual ~WinDxgiOutput1();
+//
+//       //WinDxgiOutput1 &operator=(WinDxgiOutput1 const &src);
+//
+//       // Return pointer to a IDXGIOutput1 object. The pointer will be valid until
+//       // this object destructor has been called.
+//       IDXGIOutput1 *getDxgiOutput1();
+//
+//    //private:
+//       //void copy(const WinDxgiOutput1 &src);
+//
+//      comptr <  IDXGIOutput1 > m_dxgiOutput1;
+//    };
+//
+//
+// } // namespace remoting_windows
+//
+//
+//
 
 
 

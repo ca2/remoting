@@ -24,36 +24,37 @@
 
 #pragma once
 
-
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinD3D11Device.h"
-
-
-namespace remoting_windows
-{
-
-   // #include aaa_<d3d11.h>
-   // #include aaa_<DXGI1_2.h>
-
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiDevice
-   {
-   public:
-      // Uses WinD3D11Device to create internal handle
-      WinDxgiDevice(WinD3D11Device *winD3D11Device);
-      virtual ~WinDxgiDevice();
-
-      HRESULT getParent(REFIID riid, void **ppvObject);
-
-   private:
-      IDXGIDevice *m_dxgiDevice;
-   };
-
-
-} // namespace remoting_windows
-
-
-
-
-
-
-
+// #include "remoting/remoting_windows/_common_header.h"
+// #include "remoting/remoting_windows/desktop/WinDxgiDevice.h"
+//
+//
+// namespace remoting_windows
+// {
+//    // #include aaa_<d3d11.h>
+//    // #include aaa_<DXGI1_2.h>
+//
+//    class CLASS_DECL_REMOTING_WINDOWS WinDxgiAdapter :
+//       virtual public ::particle
+//    {
+//    public:
+//       WinDxgiAdapter(WinDxgiDevice *winDxgiDevice);
+//       virtual ~WinDxgiAdapter();
+//
+//       // This function try to get output for iOutput from the adapter.
+//       // Throws the WinDxRecoverableException exception if output not found,
+//       // and throws WinDxCriticalException on other errors.
+//       HRESULT getDxgiOutput(::u32 iOutput, IDXGIOutput **iDxgiOutput);
+//
+//    private:
+//       ::comptr < IDXGIAdapter > m_pdxgiadapter;
+//    };
+//
+//
+// } //  namespace remoting_windows
+//
+//
+//
+//
+//
+//
+//

@@ -22,40 +22,50 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "subsystem/platform/Exception.h"
-
+#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/WinDxgiDevice.h"
+#include "remoting/remoting_windows/desktop/WinDxgiAcquiredFrame.h"
 
 namespace remoting_windows
 {
 
 
-   WinDxgiDevice::WinDxgiDevice(WinD3D11Device *winD3D11Device) : m_dxgiDevice(0)
+
+   WinDxgiAcquiredFrame::WinDxgiAcquiredFrame(WinDxgiOutputDuplication *outDupl, ::u32 timeOutMilliSec) :
+       m_wasTimeOut(false), m_poutputduplication(outDupl)
    {
+      ZeroMemory(&m_frameInfo, sizeof(m_frameInfo));
       HRESULT hr =
-         winD3D11Device->deviceQueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void **>(&m_dxgiDevice));
-      if (FAILED(hr))
+         m_poutputduplication->getDxgiOutputDuplication()->AcquireNextFrame(timeOutMilliSec, &m_frameInfo, &m_pdxgiresourceDesktop);
+      if (hr == DXGI_ERROR_WAIT_TIMEOUT)
       {
-         ::string errMess;
-         errMess.format("Can't QueryInterface for IDXGIDevice (%l)", (long)hr);
-         throw ::subsystem::Exception(errMess);
+         m_wasTimeOut = true;
+      }
+      else if (FAILED(hr))
+      {
+         throw WinDxRecoverableException("Can't AcquireNextFrame()", hr);
       }
    }
 
-   WinDxgiDevice::~WinDxgiDevice()
+   WinDxgiAcquiredFrame::~WinDxgiAcquiredFrame()
    {
-      if (m_dxgiDevice != 0)
+      m_pdxgiresourceDesktop.release();
+      auto hresultReleaseFrame = m_poutputduplication->getDxgiOutputDuplication()->ReleaseFrame();
+      if (FAILED(hresultReleaseFrame))
       {
-         m_dxgiDevice->Release();
-         m_dxgiDevice = 0;
+
+         information("failed to release frame");
+
       }
    }
 
-   HRESULT WinDxgiDevice::getParent(REFIID riid, void **ppvObject) { return m_dxgiDevice->GetParent(riid, ppvObject); }
+   bool WinDxgiAcquiredFrame::wasTimeOut() { return m_wasTimeOut; }
+
+   IDXGIResource *WinDxgiAcquiredFrame::getDxgiResource() { return m_pdxgiresourceDesktop; }
+
+   DXGI_OUTDUPL_FRAME_INFO *WinDxgiAcquiredFrame::getFrameInfo() { return &m_frameInfo; }
 
 
 } // namespace remoting_windows
- 
-
-
+//namespace remoting_windows
+//{

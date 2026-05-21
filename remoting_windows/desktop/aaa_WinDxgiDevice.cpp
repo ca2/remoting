@@ -21,39 +21,41 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
+#include "framework.h"
+#include "subsystem/platform/Exception.h"
 
-#pragma once
-
-#include "remoting/remoting_windows/_common_header.h"
+// The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_windows/desktop/WinDxgiDevice.h"
-
-
-namespace remoting_windows
-{
-   // #include aaa_<d3d11.h>
-   // #include aaa_<DXGI1_2.h>
-
-   class CLASS_DECL_REMOTING_WINDOWS WinDxgiAdapter
-   {
-   public:
-      WinDxgiAdapter(WinDxgiDevice *winDxgiDevice);
-      virtual ~WinDxgiAdapter();
-
-      // This function try to get output for iOutput from the adapter.
-      // Throws the WinDxRecoverableException exception if output not found,
-      // and throws WinDxCriticalException on other errors.
-      void getDxgiOutput(::u32 iOutput, IDXGIOutput **iDxgiOutput);
-
-   private:
-      IDXGIAdapter *m_dxgiAdapter;
-   };
-
-
-} //  namespace remoting_windows
-
-
-
-
-
-
+//
+// namespace remoting_windows
+// {
+//
+//
+//    WinDxgiDevice::WinDxgiDevice(D3D11Device *winD3D11Device) : m_dxgiDevice(0)
+//    {
+//       HRESULT hr =
+//          winD3D11Device->deviceQueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void **>(&m_dxgiDevice));
+//       if (FAILED(hr))
+//       {
+//          ::string errMess;
+//          errMess.format("Can't QueryInterface for IDXGIDevice (%l)", (long)hr);
+//          throw ::subsystem::Exception(errMess);
+//       }
+//    }
+//
+//    WinDxgiDevice::~WinDxgiDevice()
+//    {
+//       // if (m_dxgiDevice != 0)
+//       // {
+//       //    m_dxgiDevice->Release();
+//       //    m_dxgiDevice = 0;
+//       // }
+//    }
+//
+//    HRESULT WinDxgiDevice::getParent(REFIID riid, void **ppvObject) { return m_dxgiDevice->GetParent(riid, ppvObject); }
+//
+//
+// } // namespace remoting_windows
+//
+//
 
