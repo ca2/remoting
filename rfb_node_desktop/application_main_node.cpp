@@ -218,6 +218,8 @@ namespace remoting_rfb_node_desktop
   crashHook.setGuiEnabled();
   //ServerApplication tvnServer;
 
+  m_bUserApplication = true;
+
       construct_newø(m_pserverapplication);
 
       m_pserverapplication->initialize_server_application(

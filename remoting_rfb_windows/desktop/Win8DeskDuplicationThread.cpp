@@ -117,7 +117,7 @@ namespace remoting_rfb_windows
       {
          return false;
       }
-       const int ACQUIRE_TIMEOUT = 20;
+       const int ACQUIRE_TIMEOUT = 50;
          for (size_t i = 0; i < m_outputduplicationa.size(); i++)
          {
             auto &poutputduplication = m_outputduplicationa[i];

@@ -45,7 +45,7 @@ namespace remoting_rfb_node_desktop
 
       m_bNetworking = true;
 
-      m_strAppId = "remoting/node_desktop";
+      m_strAppId = "remoting/rfb_node_desktop";
 
       m_bUserApplication = false;
 
@@ -63,7 +63,7 @@ namespace remoting_rfb_node_desktop
    
       ::apex::application::init_instance();
       
-      auto pfactory = system()->factory("remoting", OPERATING_SYSTEM_NAME);
+      auto pfactory = system()->factory("remoting_rfb", OPERATING_SYSTEM_NAME);
 
       pfactory->merge_to_global_factory();
       

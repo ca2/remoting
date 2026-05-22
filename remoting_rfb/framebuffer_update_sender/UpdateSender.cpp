@@ -659,7 +659,7 @@ void UpdateSender::destroy()
                sendCopyRect(rectangleaCopy, updatecontainer.m_pointCopySource);
             }
 
-            m_plogwriter->debug("Time between request and a point before send and coding (in milliseconds): %u",
+            m_plogwriter->debugf("Time between request and a point before send and coding (in milliseconds): %u",
                                 (::u32) timeReqPoint.elapsed().integral_millisecond());
             m_plogwriter->debug("Sending video rectangles");
             sendRectangles(m_pencoderstore->getJpegEncoder(), rectangleaVideo, pframebuffer, &encodeOptions);
@@ -672,16 +672,16 @@ void UpdateSender::destroy()
             sendRectangles(m_pencoderstore->getEncoder(), rectangleaLossless, pframebuffer, &losslessEncodeOptions);
 
             auto processortimes2 = ProfileLogger().checkPoint("After Sending normal rectangles");
-            m_plogwriter->debug("Before Sending normal rectangles %f processor Mcycles, %f process time, %f kernel "
+            m_plogwriter->debugf("Before Sending normal rectangles %f processor Mcycles, %f process time, %f kernel "
                                 "time, %f wall clock time",
                                 processortimes1.m_cycle / 1000000., processortimes1.m_process, processortimes1.m_kernel, (double)(processortimes1.m_time.floating_second()));
             double dt = (double)(processortimes2.m_time.floating_second());
-            m_plogwriter->debug("After Sending normal rectangles Mpoint encoded and send: %f for %f processor Mcycles",
+            m_plogwriter->debugf("After Sending normal rectangles Mpoint encoded and send: %f for %f processor Mcycles",
                                 area, processortimes2.m_cycle / 1000000.);
-            m_plogwriter->debug("After Sending normal rectangles %f process time, %f kernel time, %f wall clock time",
+            m_plogwriter->debugf("After Sending normal rectangles %f process time, %f kernel time, %f wall clock time",
                                 processortimes2.m_process, processortimes2.m_kernel, dt);
 
-            m_plogwriter->information("Time between request and answer is (in milliseconds): %u",
+            m_plogwriter->informationf("Time between request and answer is (in milliseconds): %u",
                                       (::u32) timeReqPoint.elapsed().integral_millisecond());
          }
          else
@@ -801,7 +801,7 @@ void UpdateSender::destroy()
          regionCombinedReq.add(m_regionRequestedFull);
       }
 
-      m_plogwriter->information("update requested ({}, {}, %dx{}, incremental = {})"
+      m_plogwriter->information("update requested ({}, {}, {}x{}, incremental = {})"
                                 " by client (client #{})",
                                 reqRect.left, reqRect.top, reqRect.width(), reqRect.height(), (int)incremental, m_id);
 
