@@ -1,0 +1,177 @@
+//
+// Created by camilo on 2026-02-11 23:14 <3ThomasBorregaardSørensen!!
+//
+
+#pragma once
+
+#include "innate_subsystem/drawing/Graphics.h"
+#include "innate_subsystem/drawing/Pen.h"
+#include "innate_subsystem/drawing/SolidBrush.h"
+#include "acme/prototype/geometry2d/rectangle.h"
+class DesktopWindow;
+
+
+namespace remoting_client
+{
+   enum enum_control
+   {
+
+      e_control_none,
+      e_control_toolbar,
+      e_control_button,
+
+   };
+   enum enum_id
+   {
+      id_none,
+      id_toolbar,
+      id_minimize,
+      id_restore,
+      id_close
+
+   };
+
+   class CLASS_DECL_REMOTING_CLIENT style :
+      virtual public ::particle
+   {
+   public:
+      ::innate_subsystem::SolidBrush m_brushBackground;
+      ::innate_subsystem::SolidBrush m_brushBackgroundHover;
+      ::innate_subsystem::SolidBrush m_brushButtonBackground;
+      ::innate_subsystem::SolidBrush m_brushButtonBackgroundHover;
+      ::innate_subsystem::SolidBrush m_brushButtonPaint;
+      ::innate_subsystem::Pen m_penPaint;
+
+      style();
+      ~style() override;
+
+   };
+
+   class CLASS_DECL_REMOTING_CLIENT control :
+   virtual public ::particle
+   {
+   public:
+      DesktopWindow * m_pdesktopwindow = nullptr;
+      control * m_pcontrolParent = nullptr;
+      ::pointer < style > m_pstyle;
+      ::pointer < ::innate_subsystem::PenInterface> m_ppen001;
+      ::i32_rectangle m_rectangle;
+      bool m_bHover = false;
+      bool m_bLButtonDown = false;
+      //bool m_bPressed = false;
+      bool m_bDrag = false;
+      int m_xCursorDragStart = -1;
+      int m_xWindowDragStart = -1;
+
+      enum_control m_econtrol;
+      enum_id m_eid;
+      //Gdiplus::Bitmap * m_pbitmapBuffer = nullptr;
+      //Gdiplus::Graphics * m_pgraphicsBuffer = nullptr;
+      ::pointer < ::innate_subsystem::BitmapInterface > m_pbitmapBuffer;
+      ::pointer < ::innate_subsystem::GraphicsInterface > m_pgraphicsBuffer;
+
+      bool m_bNewRepaintRectangle;
+      ::i32_rectangle m_rectangleRepaint;
+
+      ::pointer_array < control > m_controlaChildren;
+
+      control();
+      ~control();
+
+      control * get_paint_window();
+      void add_repaint(const ::i32_rectangle & rectangle);
+      void _add_repaint(const ::i32_rectangle & rectangle);
+void defer_repaint();
+virtual void on_hover_off();
+virtual void on_hover();
+virtual bool _000OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+                           const ::i32_point &pointClient, bool &bDoDefaultProcessing);
+virtual bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+                           const ::i32_point &pointClient, bool &bDoDefaultProcessing);
+      //virtual bool _000OnMouse(bool bPress, const ::i32_point& pointRoot, const ::i32_point& pointClient);
+      //virtual bool _001OnMouse(bool bPress, const ::i32_point& pointRoot, const ::i32_point& pointClient);
+      virtual bool on_left_down(const ::i32_point& pointPosition);
+      virtual bool on_left_up(const ::i32_point& pointPosition);
+      virtual void __000OnTopDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle);
+      virtual void __000OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle);
+      virtual void __001OnDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle);
+      virtual bool on_button_click(enum_id eid);
+
+      virtual ::i32_rectangle get_client_rectangle();
+      virtual ::i32_rectangle get_window_rectangle();
+      virtual ::i32_rectangle get_paint_rectangle();
+
+   };
+
+
+   class CLASS_DECL_REMOTING_CLIENT toolbar_button :
+   virtual public control
+   {
+   public:
+
+
+      // enum enum_button
+      // {
+      //    e_button_none,
+      //    e_button_minimize,
+      //    e_button_restore,
+      //    e_button_close,
+      //
+      // };
+
+      //enum_button m_ebutton;
+      //::i32_rectangle      m_rectangle;
+
+      //::i32_rectangle m_rectangleMinimizeDash;
+
+      //bool on_mouse(bool bPress, const ::i32_point& pointPosition);
+      //void on_draw(DeviceContext *dc);
+
+       bool m_bPressed;
+       class ::time m_timePressed;
+       
+
+      toolbar_button();
+      ~toolbar_button() override;
+
+     
+
+      bool on_left_down(const ::i32_point& pointPosition) override;
+      bool on_left_up(const ::i32_point& pointPosition) override;
+
+   };
+
+
+   class CLASS_DECL_REMOTING_CLIENT toolbar :
+   virtual public control
+   {
+   public:
+       
+      //SolidBrush m_brushBackgroundMinimizeDash;
+      //::pointer<impact_toolbar_button> m_pbuttonMinimize;
+      //::pointer<impact_toolbar_button> m_pbuttonRestore;
+      //::pointer<impact_toolbar_button> m_pbuttonClose;
+      //int m_iDesktopWidth = 1920;
+      //float m_fScale;
+      ::pointer < ::innate_subsystem::FontInterface > m_pfont001;
+      ::pointer<toolbar_button> m_pbuttonMinimize;
+      ::pointer<toolbar_button> m_pbuttonRestore;
+      ::pointer<toolbar_button> m_pbuttonClose;
+
+      toolbar();
+      ~toolbar() override;
+
+      virtual void create_impact_toolbar(DesktopWindow * pdesktopwindow,  style * pstyle);
+
+      virtual void on_size();
+      void on_hover() override;
+      void on_hover_off() override;
+      //bool on_mouse(bool bPress, const ::i32_point& pointPosition);
+      void __001OnDraw(::innate_subsystem::GraphicsInterface *pgraphics, const ::i32_rectangle & rectangle) override;
+      bool on_button_click(enum_id eid) override;
+      bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+                         const ::i32_point &pointClient, bool &bDoDefaultProcessing) override;
+   };
+
+
+} // namespace remoting_client
