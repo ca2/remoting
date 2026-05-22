@@ -1,0 +1,564 @@
+cmake_minimum_required(VERSION 3.16)
+project(remoting)
+
+
+
+
+
+list(APPEND library_source
+   client/NamingDefs.cpp
+   client/NamingDefs.h
+   client_config/ConnectionConfig.cpp
+   client_config/ConnectionConfig.h
+   client_config/ConnectionConfigSM.cpp
+   client_config/ConnectionConfigSM.h
+   client_config/ViewerConfig.cpp
+   client_config/ViewerConfig.h
+   client_config/ViewerSettingsManager.cpp
+   client_config/ViewerSettingsManager.h
+   config/ConnectionHistory.cpp
+   config/IniFileSettingsManager.cpp
+   config/IniFileSettingsManager.h
+   config/RegistrySettingsManager.cpp
+   config/RegistrySettingsManager.h
+   config/SettingsManager.cpp
+   config/SettingsManager.h
+   desktop/AbnormDeskTermListener.h
+   desktop/ConsolePoller.cpp
+   desktop/ConsolePoller.h
+   desktop/CopyRectDetector.cpp
+   desktop/CopyRectDetector.h
+   desktop/CursorPositionDetector.cpp
+   desktop/CursorPositionDetector.h
+   desktop/CursorShapeDetector.cpp
+   desktop/CursorShapeDetector.h
+   desktop/CursorShapeGrabber.cpp
+   desktop/CursorShapeGrabber.h
+   desktop/Desktop.h
+   desktop/DesktopBaseImpl.cpp
+   desktop/DesktopBaseImpl.h
+   desktop/DesktopConfigLocal.cpp
+   desktop/DesktopConfigLocal.h
+   desktop/DesktopFactory.cpp
+   desktop/DesktopFactory.h
+   desktop/DesktopServerWatcher.cpp
+   desktop/DesktopServerWatcher.h
+   desktop/DisplayEsc.h
+   desktop/DummyScreenDriver.cpp
+   desktop/DummyScreenDriver.h
+   desktop/GrabOptimizator.cpp
+   desktop/GrabOptimizator.h
+   desktop/HookInstaller.cpp
+   desktop/HookInstaller.h
+   desktop/HookUpdateTimer.cpp
+   desktop/HookUpdateTimer.h
+   desktop/HooksUpdateDetector.cpp
+   desktop/HooksUpdateDetector.h
+   desktop/InputBlocker.cpp
+   desktop/InputBlocker.h
+   desktop/Poller.cpp
+   desktop/Poller.h
+   desktop/SasUserInput.cpp
+   desktop/SasUserInput.h
+   desktop/ScreenDriver.h
+   desktop/ScreenDriverFactory.cpp
+   desktop/ScreenDriverFactory.h
+   desktop/ScreenGrabber.cpp
+   desktop/ScreenGrabber.h
+   desktop/UpdateContainer.cpp
+   desktop/UpdateContainer.h
+   desktop/UpdateDetector.cpp
+   desktop/UpdateDetector.h
+   desktop/UpdateFilter.cpp
+   desktop/UpdateFilter.h
+   desktop/UpdateHandler.cpp
+   desktop/UpdateHandler.h
+   desktop/UpdateHandlerImpl.cpp
+   desktop/UpdateHandlerImpl.h
+   desktop/UpdateKeeper.cpp
+   desktop/UpdateKeeper.h
+   desktop/UpdateListener.cpp
+   desktop/UpdateListener.h
+   desktop/UpdateSendingListener.cpp
+   desktop/UpdateSendingListener.h
+   desktop/UserInput.cpp
+   desktop/UserInput.h
+   desktop/WallpaperUtil.cpp
+   desktop/WallpaperUtil.h
+   desktop/_.h
+   desktop_ipc/BlockingGate.cpp
+   desktop_ipc/BlockingGate.h
+   desktop_ipc/BlockingInputGate.cpp
+   desktop_ipc/BlockingInputGate.h
+   desktop_ipc/BlockingOutputGate.cpp
+   desktop_ipc/BlockingOutputGate.h
+   desktop_ipc/ClientListener.cpp
+   desktop_ipc/ClientListener.h
+   desktop_ipc/ConfigServer.cpp
+   desktop_ipc/ConfigServer.h
+   desktop_ipc/DesktopConfigClient.cpp
+   desktop_ipc/DesktopConfigClient.h
+   desktop_ipc/DesktopServerProto.cpp
+   desktop_ipc/DesktopServerProto.h
+   desktop_ipc/DesktopSrvDispatcher.cpp
+   desktop_ipc/DesktopSrvDispatcher.h
+   desktop_ipc/GateKickHandler.cpp
+   desktop_ipc/GateKickHandler.h
+   desktop_ipc/GateKicker.cpp
+   desktop_ipc/GateKicker.h
+   desktop_ipc/ReconnectException.cpp
+   desktop_ipc/ReconnectException.h
+   desktop_ipc/ReconnectingChannel.cpp
+   desktop_ipc/ReconnectingChannel.h
+   desktop_ipc/ReconnectionListener.h
+   desktop_ipc/UpdateHandlerClient.cpp
+   desktop_ipc/UpdateHandlerClient.h
+   desktop_ipc/UpdateHandlerServer.cpp
+   desktop_ipc/UpdateHandlerServer.h
+   desktop_ipc/UserInputClient.cpp
+   desktop_ipc/UserInputClient.h
+   desktop_ipc/UserInputServer.cpp
+   desktop_ipc/UserInputServer.h
+   desktop_ipc/_.h
+   event_log/EventLog.cpp
+   event_log/EventLog.h
+   file_transfer_client/CopyFileEventListener.h
+   file_transfer_client/CopyOperation.cpp
+   file_transfer_client/CopyOperation.h
+   file_transfer_client/DownloadOperation.cpp
+   file_transfer_client/DownloadOperation.h
+   file_transfer_client/FileInfoList.cpp
+   file_transfer_client/FileInfoList.h
+   file_transfer_client/FileTransferCore.cpp
+   file_transfer_client/FileTransferCore.h
+   file_transfer_client/FileTransferEventAdapter.cpp
+   file_transfer_client/FileTransferEventAdapter.h
+   file_transfer_client/FileTransferEventHandler.cpp
+   file_transfer_client/FileTransferEventHandler.h
+   file_transfer_client/FileTransferInterface.cpp
+   file_transfer_client/FileTransferInterface.h
+   file_transfer_client/FileTransferMessageProcessor.cpp
+   file_transfer_client/FileTransferMessageProcessor.h
+   file_transfer_client/FileTransferOperation.cpp
+   file_transfer_client/FileTransferOperation.h
+   file_transfer_client/FileTransferReplyBuffer.cpp
+   file_transfer_client/FileTransferReplyBuffer.h
+   file_transfer_client/FileTransferRequestSender.cpp
+   file_transfer_client/FileTransferRequestSender.h
+   file_transfer_client/LocalFilesDeleteOperation.cpp
+   file_transfer_client/LocalFilesDeleteOperation.h
+   file_transfer_client/OperationEventListener.cpp
+   file_transfer_client/OperationEventListener.h
+   file_transfer_client/OperationNotPermittedException.cpp
+   file_transfer_client/OperationNotPermittedException.h
+   file_transfer_client/OperationSupport.cpp
+   file_transfer_client/OperationSupport.h
+   file_transfer_client/RemoteFileListOperation.cpp
+   file_transfer_client/RemoteFileListOperation.h
+   file_transfer_client/RemoteFileRenameOperation.cpp
+   file_transfer_client/RemoteFileRenameOperation.h
+   file_transfer_client/RemoteFilesDeleteOperation.cpp
+   file_transfer_client/RemoteFilesDeleteOperation.h
+   file_transfer_client/RemoteFolderCreateOperation.cpp
+   file_transfer_client/RemoteFolderCreateOperation.h
+   file_transfer_client/UploadOperation.cpp
+   file_transfer_client/UploadOperation.h
+   file_transfer_common/FTMessage.cpp
+   file_transfer_common/FTMessage.h
+   file_transfer_common/FileInfo.cpp
+   file_transfer_common/FileInfo.h
+   file_transfer_common/FileTransferException.cpp
+   file_transfer_common/FileTransferException.h
+   file_transfer_common/FolderListener.cpp
+   file_transfer_common/FolderListener.h
+   file_transfer_common/OperationNotSupportedException.cpp
+   file_transfer_common/OperationNotSupportedException.h
+   file_transfer_common/WinFilePath.cpp
+   file_transfer_common/WinFilePath.h
+   file_transfer_node/FileTransferRequestHandler.cpp
+   file_transfer_node/FileTransferRequestHandler.h
+   file_transfer_node/FileTransferSecurity.cpp
+   file_transfer_node/FileTransferSecurity.h
+   framebuffer_update_sender/CursorUpdates.cpp
+   framebuffer_update_sender/CursorUpdates.h
+   framebuffer_update_sender/SenderControlInformationInterface.h
+   framebuffer_update_sender/UpdSenderMsgDefs.cpp
+   framebuffer_update_sender/UpdSenderMsgDefs.h
+   framebuffer_update_sender/UpdateRequestListener.h
+   framebuffer_update_sender/UpdateSender.cpp
+   framebuffer_update_sender/UpdateSender.h
+   framebuffer_update_sender/ViewPortState.cpp
+   framebuffer_update_sender/ViewPortState.h
+   framebuffer_update_sender/Viewport.cpp
+   framebuffer_update_sender/Viewport.h
+   framebuffer_update_sender/_.h
+   network/RfbInputGate.cpp
+   network/RfbInputGate.h
+   network/RfbOutputGate.cpp
+   network/RfbOutputGate.h
+   network/TcpClientThread.cpp
+   network/TcpClientThread.h
+   network/TcpServer.cpp
+   network/TcpServer.h
+   node/ControlAuthException.cpp
+   node/ControlAuthException.h
+   node/ControlCommand.cpp
+   node/ControlCommand.h
+   node/NamingDefs.cpp
+   node/NamingDefs.h
+   node/NewConnectionEvents.h
+   node/Notificator.cpp
+   node/Notificator.h
+   node/RemoteException.cpp
+   node/RemoteException.h
+   node_config/ConfigReloadListener.cpp
+   node_config/ConfigReloadListener.h
+   node_config/Configurator.cpp
+   node_config/Configurator.h
+   node_config/IpAccessControl.cpp
+   node_config/IpAccessControl.h
+   node_config/IpAccessRule.cpp
+   node_config/IpAccessRule.h
+   node_config/PortMapping.cpp
+   node_config/PortMapping.h
+   node_config/PortMappingContainer.cpp
+   node_config/PortMappingContainer.h
+   node_config/PortMappingRect.cpp
+   node_config/PortMappingRect.h
+   node_config/RegistrySecurityAttributes.cpp
+   node_config/RegistrySecurityAttributes.h
+   node_config/ServerConfig.cpp
+   node_config/ServerConfig.h
+   node_config/_.h
+   node_user_config/AdministrationConfigDialog.cpp
+   node_user_config/AdministrationConfigDialog.h
+   node_user_config/ChangePasswordDialog.cpp
+   node_user_config/ChangePasswordDialog.h
+   node_user_config/CommonInputValidation.cpp
+   node_user_config/CommonInputValidation.h
+   node_user_config/ConfigDialog.cpp
+   node_user_config/ConfigDialog.h
+   node_user_config/EditIpAccessRuleDialog.cpp
+   node_user_config/EditIpAccessRuleDialog.h
+   node_user_config/EditPortMappingDialog.cpp
+   node_user_config/EditPortMappingDialog.h
+   node_user_config/IpAccessControlDialog.cpp
+   node_user_config/IpAccessControlDialog.h
+   node_user_config/PasswordControl.cpp
+   node_user_config/PasswordControl.h
+   node_user_config/PortMappingDialog.cpp
+   node_user_config/PortMappingDialog.h
+   node_user_config/ServerConfigDialog.cpp
+   node_user_config/ServerConfigDialog.h
+   node_user_config/TvnLogFilename.cpp
+   node_user_config/TvnLogFilename.h
+   node_user_config/UIDataAccess.cpp
+   node_user_config/UIDataAccess.h
+   node_user_config/VideoRegionsConfigDialog.cpp
+   node_user_config/VideoRegionsConfigDialog.h
+   node_user_config/_.h
+   platform/EOFException.cpp
+   platform/EOFException.h
+   platform/remoting.cpp
+   platform/remoting.h
+   region/RectSerializer.cpp
+   region/RectSerializer.h
+   region/Region.cpp
+   region/Region.h
+   region/x11region.c
+   rfb/AuthDefs.cpp
+   rfb/AuthDefs.h
+   rfb/CursorShape.cpp
+   rfb/CursorShape.h
+   rfb/EncodingDefs.cpp
+   rfb/EncodingDefs.h
+   rfb/HostPath.cpp
+   rfb/HostPath.h
+   rfb/MsgDefs.cpp
+   rfb/MsgDefs.h
+   rfb/PixelConverter.cpp
+   rfb/PixelConverter.h
+   rfb/RfbKeySym.cpp
+   rfb/RfbKeySym.h
+   rfb/RfbKeySymListener.h
+   rfb/TunnelDefs.cpp
+   rfb/TunnelDefs.h
+   rfb/VendorDefs.cpp
+   rfb/VendorDefs.h
+   rfb_sconn/AuthException.cpp
+   rfb_sconn/AuthException.h
+   rfb_sconn/CapContainer.cpp
+   rfb_sconn/CapContainer.h
+   rfb_sconn/ClientAuthListener.h
+   rfb_sconn/ClientInputEventListener.h
+   rfb_sconn/ClientInputHandler.cpp
+   rfb_sconn/ClientInputHandler.h
+   rfb_sconn/ClientTerminationListener.h
+   rfb_sconn/ClipboardExchange.cpp
+   rfb_sconn/ClipboardExchange.h
+   rfb_sconn/EchoExtensionRequestHandler.cpp
+   rfb_sconn/EchoExtensionRequestHandler.h
+   rfb_sconn/EncodeOptions.cpp
+   rfb_sconn/EncodeOptions.h
+   rfb_sconn/Encoder.cpp
+   rfb_sconn/Encoder.h
+   rfb_sconn/EncoderStore.cpp
+   rfb_sconn/EncoderStore.h
+   rfb_sconn/HextileEncoder.cpp
+   rfb_sconn/HextileEncoder.h
+   rfb_sconn/HextileTile.h
+   rfb_sconn/JpegCompressor.cpp
+   rfb_sconn/JpegCompressor.h
+   rfb_sconn/JpegEncoder.cpp
+   rfb_sconn/JpegEncoder.h
+   rfb_sconn/RfbClient.cpp
+   rfb_sconn/RfbClient.h
+   rfb_sconn/RfbCodeRegistrator.cpp
+   rfb_sconn/RfbCodeRegistrator.h
+   rfb_sconn/RfbDispatcher.cpp
+   rfb_sconn/RfbDispatcher.h
+   rfb_sconn/RfbDispatcherListener.h
+   rfb_sconn/RfbInitializer.cpp
+   rfb_sconn/RfbInitializer.h
+   rfb_sconn/RreEncoder.cpp
+   rfb_sconn/RreEncoder.h
+   rfb_sconn/TightEncoder.cpp
+   rfb_sconn/TightEncoder.h
+   rfb_sconn/TightPalette.cpp
+   rfb_sconn/TightPalette.h
+   rfb_sconn/ZrleEncoder.cpp
+   rfb_sconn/ZrleEncoder.h
+   rfb_sconn/_.h
+   viewer_core/AuthHandler.cpp
+   viewer_core/AuthHandler.h
+   viewer_core/CapabilitiesManager.cpp
+   viewer_core/CapabilitiesManager.h
+   viewer_core/CapsContainer.cpp
+   viewer_core/CapsContainer.h
+   viewer_core/CompressionLevel.cpp
+   viewer_core/CompressionLevel.h
+   viewer_core/CopyRectDecoder.cpp
+   viewer_core/CopyRectDecoder.h
+   viewer_core/CoreEventsAdapter.cpp
+   viewer_core/CoreEventsAdapter.h
+   viewer_core/CursorPainter.cpp
+   viewer_core/CursorPainter.h
+   viewer_core/Decoder.cpp
+   viewer_core/Decoder.h
+   viewer_core/DecoderOfRectangle.cpp
+   viewer_core/DecoderOfRectangle.h
+   viewer_core/DecoderStore.cpp
+   viewer_core/DecoderStore.h
+   viewer_core/DesktopSizeDecoder.cpp
+   viewer_core/DesktopSizeDecoder.h
+   viewer_core/DispatchDataProvider.h
+   viewer_core/FbUpdateNotifier.cpp
+   viewer_core/FbUpdateNotifier.h
+   viewer_core/FileTransferCapability.cpp
+   viewer_core/FileTransferCapability.h
+   viewer_core/HexTileDecoder.cpp
+   viewer_core/HexTileDecoder.h
+   viewer_core/JpegDecompressor.cpp
+   viewer_core/JpegDecompressor.h
+   viewer_core/JpegQualityLevel.cpp
+   viewer_core/JpegQualityLevel.h
+   viewer_core/LastRectDecoder.cpp
+   viewer_core/LastRectDecoder.h
+   viewer_core/PointerPosDecoder.cpp
+   viewer_core/PointerPosDecoder.h
+   viewer_core/PseudoDecoder.cpp
+   viewer_core/PseudoDecoder.h
+   viewer_core/RawDecoder.cpp
+   viewer_core/RawDecoder.h
+   viewer_core/RemoteViewerCore.cpp
+   viewer_core/RemoteViewerCore.h
+   viewer_core/RfbClientToServerMessage.cpp
+   viewer_core/RfbClientToServerMessage.h
+   viewer_core/RfbCutTextEventClientMessage.cpp
+   viewer_core/RfbCutTextEventClientMessage.h
+   viewer_core/RfbFramebufferUpdateRequestClientMessage.cpp
+   viewer_core/RfbFramebufferUpdateRequestClientMessage.h
+   viewer_core/RfbKeyEventClientMessage.cpp
+   viewer_core/RfbKeyEventClientMessage.h
+   viewer_core/RfbPointerEventClientMessage.cpp
+   viewer_core/RfbPointerEventClientMessage.h
+   viewer_core/RfbSetEncodingsClientMessage.cpp
+   viewer_core/RfbSetEncodingsClientMessage.h
+   viewer_core/RfbSetPixelFormatClientMessage.cpp
+   viewer_core/RfbSetPixelFormatClientMessage.h
+   viewer_core/RichCursorDecoder.cpp
+   viewer_core/RichCursorDecoder.h
+   viewer_core/RreDecoder.cpp
+   viewer_core/RreDecoder.h
+   viewer_core/ServerMessageListener.h
+   viewer_core/TcpConnection.cpp
+   viewer_core/TcpConnection.h
+   viewer_core/TightDecoder.cpp
+   viewer_core/TightDecoder.h
+   viewer_core/UpdateRequestSender.cpp
+   viewer_core/UpdateRequestSender.h
+   viewer_core/VncAuthentication.cpp
+   viewer_core/VncAuthentication.h
+   viewer_core/VncAuthenticationHandler.cpp
+   viewer_core/VncAuthenticationHandler.h
+   viewer_core/WatermarksController.cpp
+   viewer_core/WatermarksController.h
+   viewer_core/ZrleDecoder.cpp
+   viewer_core/ZrleDecoder.h
+   viewer_core/_.h
+   viewer_core/drawTile.cpp
+   viewer_core/watermark_bmp.h
+   _.cpp
+   _.h
+   framework.cpp
+   framework.h
+)
+
+
+list(APPEND library_references
+   acme
+   subsystem
+   apex
+   innate_subsystem
+)
+
+
+if(${WIN32})
+
+#   list(APPEND library_source
+#
+##   desktop/windows/_common_header.h
+##   desktop/windows/MirrorDriverClient.cpp
+##   desktop/windows/MirrorDriverClient.h
+##   desktop/windows/MirrorScreenDriver.cpp
+##   desktop/windows/MirrorScreenDriver.h
+##   desktop/windows/Win8CursorShape.cpp
+##   desktop/windows/Win8CursorShape.h
+##   desktop/windows/Win8DeskDuplicationThread.cpp
+##   desktop/windows/Win8DeskDuplicationThread.h
+##   desktop/windows/Win8DuplicationListener.h
+##   desktop/windows/Win8ScreenDriver.cpp
+##   desktop/windows/Win8ScreenDriver.h
+##   desktop/windows/Win8ScreenDriverImpl.cpp
+##   desktop/windows/Win8ScreenDriverImpl.h
+##   desktop/windows/Win32MirrorScreenDriver.cpp
+##   desktop/windows/Win32MirrorScreenDriver.h
+##   desktop/windows/Win32ScreenDriver.cpp
+##   desktop/windows/Win32ScreenDriver.h
+##   desktop/windows/Win32ScreenDriverBaseImpl.cpp
+##   desktop/windows/Win32ScreenDriverBaseImpl.h
+##   desktop/windows/Win32ScreenDriverFactory.cpp
+##   desktop/windows/Win32ScreenDriverFactory.h
+##   desktop/windows/WinAutoMapDxgiSurface.cpp
+##   desktop/windows/WinAutoMapDxgiSurface.h
+##   desktop/windows/WinCursorShapeUtils.cpp
+##   desktop/windows/WinCursorShapeUtils.h
+##   desktop/windows/WinCustomD3D11Texture2D.cpp
+##   desktop/windows/WinCustomD3D11Texture2D.h
+##   desktop/windows/WinD3D11Device.cpp
+##   desktop/windows/WinD3D11Device.h
+##   desktop/windows/WinD3D11Texture2D.cpp
+##   desktop/windows/WinD3D11Texture2D.h
+##   desktop/windows/WindowsCursorShapeGrabber.cpp
+##   desktop/windows/WindowsCursorShapeGrabber.h
+##   desktop/windows/WindowsInputBlocker.cpp
+##   desktop/windows/WindowsInputBlocker.h
+##   desktop/windows/WindowsScreenGrabber.cpp
+##   desktop/windows/WindowsScreenGrabber.h
+##   desktop/windows/WindowsUserInput.cpp
+##   desktop/windows/WindowsUserInput.h
+##   desktop/windows/WinDxCriticalException.cpp
+##   desktop/windows/WinDxCriticalException.h
+##   desktop/windows/WinDxException.cpp
+##   desktop/windows/WinDxException.h
+##   desktop/windows/WinDxgiAcquiredFrame.cpp
+##   desktop/windows/WinDxgiAcquiredFrame.h
+##   desktop/windows/WinDxgiAdapter.cpp
+##   desktop/windows/WinDxgiAdapter.h
+##   desktop/windows/WinDxgiDevice.cpp
+##   desktop/windows/WinDxgiDevice.h
+##   desktop/windows/WinDxgiOutput.cpp
+##   desktop/windows/WinDxgiOutput.h
+##   desktop/windows/WinDxgiOutput1.cpp
+##   desktop/windows/WinDxgiOutput1.h
+##   desktop/windows/WinDxgiOutputDuplication.cpp
+##   desktop/windows/WinDxgiOutputDuplication.h
+##   desktop/windows/WinDxgiSurface.cpp
+##   desktop/windows/WinDxgiSurface.h
+##   desktop/windows/WinDxRecoverableException.cpp
+##   desktop/windows/WinDxRecoverableException.h
+##   desktop/windows/WinServiceDesktopFactory.cpp
+##   desktop/windows/WinServiceDesktopFactory.h
+##   desktop/windows/WinVideoRegionUpdaterImpl.cpp
+##   desktop/windows/WinVideoRegionUpdaterImpl.h
+#
+#   )
+
+
+
+   list(APPEND library_references
+      subsystem_windows
+   )
+
+
+
+endif()
+
+list(APPEND library_include_directories
+   ${CMAKE_CURRENT_SOURCE_DIR}/../..
+   ${CMAKE_CURRENT_SOURCE_DIR}/..
+   ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+
+add_library(${PROJECT_NAME} SHARED ${library_source})
+
+#target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
+
+
+
+if (NOT ${NO_PRECOMPILED_HEADER})
+
+   target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
+   #target_precompile_headers(static_${PROJECT_NAME} PRIVATE framework.h)
+   set_source_files_properties(region/x11region.c PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
+endif ()
+
+
+set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
+
+
+if(${WIN32})
+
+
+   target_compile_options(${PROJECT_NAME} PRIVATE "/MD$<$<CONFIG:Debug>:d>")
+   target_link_options(${PROJECT_NAME} PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
+   target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS")
+   target_link_libraries(${PROJECT_NAME} PRIVATE ${library_references} ${global_library_references} port_jpeg zlib)
+
+
+elseif (${LINUX} OR ${__BSD__} OR ${ANDROID})
+
+
+   target_link_libraries(${PROJECT_NAME} PRIVATE ${library_references} ${global_library_references})
+   target_link_options(${PROJECT_NAME} PRIVATE -Wl,-z,defs)
+   # target_link_options(static_${PROJECT_NAME} PRIVATE --whole-archive)
+
+   message(STATUS "(5) PKGCONFIG_LIBRARIES is " ${${PROJECT_NAME}_PKGCONFIG_LIBRARIES})
+
+
+endif ()
+
+
+list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR})
+list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/..)
+list(APPEND library_include_directories ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${library_include_directories})
+
+
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE _${PROJECT_NAME}_project)
+
+
+

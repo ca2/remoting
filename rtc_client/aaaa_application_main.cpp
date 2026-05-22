@@ -1,0 +1,193 @@
+// Copyright (C) 2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+#include "framework.h"
+#include "remoting/remoting_rtc/client_config/ViewerConfig.h"
+//#include "log_writer/LogWriter.h"
+#include "application.h"
+#include "remoting_impact.h"
+#include "ConnectionData.h"
+#include "ConnectionListener.h"
+#include "ViewerCmdLine.h"
+#include "subsystem/platform/ResourceLoader.h"
+#include "acme/platform/system.h"
+#include "acme/filesystem/filesystem/file_context.h"
+#include "remoting/remoting_rtc/remoting.h"
+//int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE,
+//                       LPTSTR lpCmdLine, int nCmdShow)
+
+
+//CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
+
+//CLASS_DECL_ACME hinstance hinstance_from_function(void* pFunc);
+//{
+//   HMODULE hModule = NULL;
+//
+//   GetModuleHandleEx(
+//       GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+//       GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+//       (LPCTSTR)pFunc,
+//       &hModule
+//   );
+//
+//   return hModule;
+//}
+
+
+//hinstance remoting_impact_hinstance()
+//{
+//
+//   auto hinstance = ::windows::hinstance_from_function(&remoting_impact_hinstance);
+//
+//   return hinstance;
+//
+//}
+
+
+namespace remoting_client {
+int application::remoting_impact_main( const ::file::path & path)
+{
+
+   //new ::platform::system();
+
+   // if (__argv[1])
+   // {
+   //
+   //    if (::file_exists(__argv[1]))
+   //    {
+   //
+   //       ::file::path path = __argv[1];
+   //
+   //    }
+   //
+   // }
+
+   ::remoting_rtc::ViewerSettingsManager::initInstance(RegistryPaths::VIEWER_PATH);
+   ::remoting_rtc::SettingsManager *sm = ::remoting_rtc::ViewerSettingsManager::getInstance();
+
+   ::remoting_rtc::ViewerConfig config(RegistryPaths::VIEWER_PATH);
+   config.loadFromStorage(sm);
+   //auto hinstance = remoting_impact_hinstance();
+   ::remoting_rtc::ConnectionConfig conConf;
+   ConnectionData condata;
+   bool isListening = false;
+   //::string strHost;
+   auto ini = file()->get_ini(path);
+
+   ::string strHost =ini["host"];
+   int iNumerator = ini["numerator"].as_int();
+   int iDenominator = ini["denominator"].as_int();
+   conConf.enableFullscreen(true);
+   conConf.requestShapeUpdates(true);
+   conConf.ignoreShapeUpdates(false);
+
+   if (iDenominator <= 0)
+   {
+
+      iDenominator = 1;
+
+   }
+
+   if (iNumerator <= 0)
+   {
+
+      iNumerator = 1;
+
+   }
+
+   conConf.setScale(iNumerator, iDenominator);
+      
+   if (strHost.has_character())
+   {
+      condata.setHost(wstring(strHost).c_str());
+      m_pconnectingdialog->initialize(this);
+      m_pconnectingdialog->show();
+      m_pconnectingdialog->set_host(strHost);
+      m_pconnectingdialog->set_status("Initiating connection...");
+      m_pconnectingdialog->set_phase1();
+
+   }
+   //ViewerCmdLine cmd(&condata, &conConf, &config, &isListening);
+   // resource-loader initialization
+   //ResourceLoader resourceLoader(hInstance);
+   //auto presource
+   // try {
+   //    config.initLog(LogNames::LOG_DIR_NAME, LogNames::VIEWER_LOG_FILE_STUB_NAME);
+   // }  catch (...) {
+   // }
+
+   // try {
+   //   cmd.parse();
+   // }
+   // catch (const CommandLineFormatException &exception) {
+   //   ::string strError(exception.get_message());
+   //   MainSubsystem().message_box({},
+   //     strError,
+   //     ProductNames::VIEWER_PRODUCT_NAME,
+   //     ::user::e_message_box_ok | ::user::e_message_box_icon_error);
+   //   return 0;
+   // }
+   // catch (const CommandLineFormatHelp &) {
+   //   //cmd.onHelp();
+   //   return 0;
+   // }
+
+   m_plogwriter = config.getLogWriter();
+
+
+   m_plogwriter->debug("main()");
+   m_plogwriter->debug("loading settings from storage completed");
+   m_plogwriter->debug("Log initialization completed");
+
+   int result = 0;
+   try {
+      //remoting_impact tvnViewer(this, hinstance,
+      remoting_impact tvnViewer(this,
+                          ApplicationNames::WINDOW_CLASS_NAME,
+                          WindowNames::TVN_WINDOW_CLASS_NAME);
+      if (isListening) {
+         // FIXME: set listening connection options.
+         tvnViewer.startListening(ConnectionListener::DEFAULT_PORT);
+      } else if (!condata.is_empty()) {
+         tvnViewer.newConnection(condata, conConf);
+      } else {
+         tvnViewer.showLoginDialog();
+      }
+      tvnViewer.onThreadMain();
+      result = tvnViewer.getExitCode();
+   } catch (const ::subsystem::Exception &ex) {
+      MainSubsystem().message_box({},
+                 MainSubsystem().StringTable().getString(IDS_UNKNOWN_ERROR_IN_VIEWER),
+                 ProductNames::VIEWER_PRODUCT_NAME,
+                 ::user::e_message_box_ok | ::user::e_message_box_icon_error);
+      m_plogwriter->debug(ex.get_message());
+   }
+
+   return result;
+}
+
+
+} // namespace remoting_client
+
+
+

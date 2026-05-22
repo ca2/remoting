@@ -1,0 +1,77 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+#include "framework.h"
+#include "ClientInputHandler.h"
+#include "remoting/remoting_rfb/rfb/MsgDefs.h"
+#include "subsystem/platform/Exception.h"
+
+namespace remoting_rfb
+{
+   ClientInputHandler::ClientInputHandler(RfbCodeRegistrator *m_prfbcoderegistrator,
+                                          ClientInputEventListener *extEventListener,
+                                          bool viewOnly)
+   : m_extEventListener(extEventListener),
+     m_viewOnly(viewOnly)
+   {
+      // Request codes
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::KEYBOARD_EVENT, this);
+      m_prfbcoderegistrator->regCode(ClientMsgDefs::POINTER_EVENT, this);
+   }
+
+   ClientInputHandler::~ClientInputHandler()
+   {
+   }
+
+   void ClientInputHandler::onRequest(::u32 reqCode, ::remoting_rfb::RfbInputGate *prfbinputgate)
+   {
+      switch (reqCode) {
+         case ClientMsgDefs::KEYBOARD_EVENT:
+         {
+            bool down = prfbinputgate->readUInt8() != 0;
+            prfbinputgate->readUInt16(); // Pad
+            ::u32 keyCode = prfbinputgate->readUInt32();
+            if (!m_viewOnly) {
+               m_extEventListener->onKeyboardEvent(keyCode, down);
+            }
+         }
+            break;
+         case ClientMsgDefs::POINTER_EVENT:
+         {
+            unsigned char buttonMask = prfbinputgate->readUInt8();
+            unsigned short x = prfbinputgate->readUInt16();
+            unsigned short y = prfbinputgate->readUInt16();
+            if (!m_viewOnly) {
+               m_extEventListener->onMouseEvent(x, y, buttonMask);
+            }
+         }
+            break;
+         default:
+            ::string errMess;
+            errMess.format("Unknown {} protocol code received", (int)reqCode);
+            throw ::subsystem::Exception(errMess);
+            break;
+      }
+   }
+} // namespace remoting_rfb
+

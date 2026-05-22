@@ -1,0 +1,412 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\control_desktop">
+      <UniqueIdentifier>{2fdc17c9-ba12-472d-a46d-64c776cc92b9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AdditionalActionApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthTracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlAppAuthenticator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DesktopServerApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DesktopServerCommandLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtraRfbServers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OutgoingRfbConnectionThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QueryConnectionApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QueryConnectionCommandLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QueryConnectionDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RfbClientManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RfbClientManagerEventListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RfbServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerCommandLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceControlApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceControlCommandLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerHelp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WsConfigRunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\AboutDialog.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ConnectCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ConnectStringParser.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlApplication.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlAuth.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlAuthDialog.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlCommandLine.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlGate.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlMessage.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlPipeName.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlProxy.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ControlTrayIcon.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\DisconnectAllCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\MakeRfbConnectionCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\NamedPipeTransport.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\OutgoingConnectionDialog.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ReloadConfigCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\RfbClientInfo.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\SetPasswordsDialog.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareAppCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareDisplayCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareFullCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\SharePrimaryCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareRectCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShareWindowCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\ShutdownCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\SocketIPv4Transport.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\Transport.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\TransportFactory.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\UpdateLocalConfigCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="control_desktop\UpdateRemoteConfigCommand.cpp">
+      <Filter>Source Files\control_desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="application_main_node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EventLogWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="application_control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AdditionalActionApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlAppAuthenticator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlClient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DesktopServerApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DesktopServerCommandLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtraRfbServers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OutgoingRfbConnectionThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QueryConnectionApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QueryConnectionCommandLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QueryConnectionDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RfbClientManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RfbClientManagerEventListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RfbServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerCommandLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceControlApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceControlCommandLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerHelp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Service.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WsConfigRunner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WinServiceEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogInitListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewConnectionEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\aaa_ControlAuthException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\AboutDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ConnectCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ConnectStringParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlAuth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlAuthDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlCommandLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlGate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlPipeName.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlProto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlProxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlTrayIcon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\DisconnectAllCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\MakeRfbConnectionCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\NamedPipeTransport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\OutgoingConnectionDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ReloadConfigCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\RfbClientInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ServerInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\SetPasswordsDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareAppCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareDisplayCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareFullCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\SharePrimaryCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareRectCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareWindowCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShutdownCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\SocketIPv4Transport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\Transport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\TransportFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\UpdateLocalConfigCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\UpdateRemoteConfigCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="remoting_rfb_node_desktop.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

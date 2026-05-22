@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\desktop">
+      <UniqueIdentifier>{5e9fff18-c530-44f4-884d-f4e7a1ada324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\desktop">
+      <UniqueIdentifier>{643da216-4082-4ed5-a308-a83883fe430c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="framework.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\DesktopClientImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\DesktopFactory.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\DesktopWinImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\MirrorDriverClient.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\MirrorScreenDriver.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\Win8CursorShape.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\Win8DeskDuplicationThread.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\Win8ScreenDriver.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\Win8ScreenDriverImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\Win32MirrorScreenDriver.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\Win32ScreenDriver.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\Win32ScreenDriverBaseImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\Win32ScreenDriverFactory.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WinAutoMapDxgiSurface.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WinCursorShapeUtils.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WinCustomD3D11Texture2D.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WinD3D11Texture2D.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WindowsCursorShapeGrabber.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WindowsInputBlocker.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WindowsScreenGrabber.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WindowsUserInput.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WinDxCriticalException.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WinDxException.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WinDxRecoverableException.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WinVideoRegionUpdaterImpl.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="_factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\CopyRectDetector.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\HookInstaller.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WallpaperUtil.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\DXGIOutputDuplication.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\DXGIAcquiredFrame.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\D3D11Device.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="desktop\WindowsGraphicsCapture.cpp">
+      <Filter>Source Files\desktop</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="_.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EOFException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="remoting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\_common_header.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\CopyRectDetector.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DesktopClientImpl.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DesktopFactory.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DesktopWinImpl.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\HookInstaller.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\MirrorDriverClient.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\MirrorScreenDriver.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WallpaperUtil.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Win8CursorShape.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Win8DeskDuplicationThread.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Win8DuplicationListener.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Win8ScreenDriver.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Win8ScreenDriverImpl.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Win32MirrorScreenDriver.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Win32ScreenDriver.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Win32ScreenDriverBaseImpl.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\Win32ScreenDriverFactory.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinAutoMapDxgiSurface.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinCursorShapeUtils.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinCustomD3D11Texture2D.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinD3D11Device.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinD3D11Texture2D.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WindowsCursorShapeGrabber.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WindowsInputBlocker.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WindowsScreenGrabber.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WindowsUserInput.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxCriticalException.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxException.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxgiAcquiredFrame.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxgiAdapter.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxgiDevice.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxgiOutput.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxgiOutput1.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxgiOutputDuplication.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxgiSurface.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinDxRecoverableException.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WinVideoRegionUpdaterImpl.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\WindowsGraphicsCapture.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="remoting_rfb_windows.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

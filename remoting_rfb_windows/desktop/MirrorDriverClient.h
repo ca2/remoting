@@ -1,0 +1,137 @@
+// Copyright (C) 2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rfb/desktop/UpdateKeeper.h"
+#include "remoting/remoting_rfb/desktop/UpdateListener.h"
+#include "innate_subsystem/framebuffer/Framebuffer.h"
+#include "subsystem/platform/RegistryKey.h"
+#include "remoting/remoting_rfb/desktop/DisplayEsc.h"
+#include "subsystem/node/Screen.h"
+#include "subsystem/platform/WindowMessageHandler.h"
+#include "innate_subsystem/gui/MessageWindow.h"
+#include "subsystem/thread/GuiThread.h"
+#include "acme/parallelization/happening.h"
+#include "subsystem_windows/node/MessageWindow.h"
+//#include "remoting/remoting_rfb/desktop/DisplayEsc.h"
+//#include "log_writer/LogWriter.h"
+
+namespace remoting_windows
+{
+
+   class CLASS_DECL_REMOTING_WINDOWS MirrorDriverClient :
+      virtual public ::subsystem::GuiThread,
+      virtual public ::subsystem::WindowMessageHandler
+   {
+   public:
+
+
+      MirrorDriverClient(::subsystem::LogWriter * plogwriter);
+         virtual ~MirrorDriverClient();
+
+      ::innate_subsystem::PixelFormat getPixelFormat() const;
+      ::i32_size getDimension() const;
+
+      void *getBuffer();
+      //CHANGES_BUF *getChangesBuf() const;
+      void *getChangesBuf() const;
+
+      bool getPropertiesChanged();
+      bool getScreenSizeChanged();
+
+      bool applyNewProperties();
+
+      void open();
+      void close();
+
+      void load();
+      void unload();
+
+      void connect();
+      void disconnect();
+
+   private:
+      static ::string_literal MINIPORT_REGISTRY_PATH;
+
+      static const int EXT_DEVMODE_SIZE_MAX = 3072;
+      struct DFEXT_DEVMODE : DEVMODE
+      {
+         char extension[EXT_DEVMODE_SIZE_MAX];
+      };
+
+   private:
+      virtual bool processMessage(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam);
+
+      virtual void onThreadMain();
+      virtual void onTermThread();
+
+      void dispose();
+
+      void extractDeviceInfo(const char *driverName);
+      void openDeviceRegKey(const char *miniportName);
+
+      void initScreenPropertiesByCurrent();
+      // value - true to attach, false to detach.
+      void setAttachToDesktop(bool value);
+      void commitDisplayChanges(DEVMODE *pdm);
+
+      // Driver states.
+      bool m_isDriverOpened;
+      bool m_isDriverLoaded;
+      bool m_isDriverAttached;
+      bool m_isDriverConnected;
+
+      DWORD m_deviceNumber;
+      DISPLAY_DEVICE m_deviceInfo;
+      ::subsystem::RegistryKey m_regkeyDevice;
+      DFEXT_DEVMODE m_deviceMode;
+      HDC m_driverDC;
+
+      CHANGES_BUF *m_changesBuffer;
+      void *m_screenBuffer;
+
+      ::happening m_initListener;
+      bool m_isDisplayChanged;
+      ::subsystem_windows::MessageWindow m_messagewindowPropertyChangeListener;
+
+      ::innate_subsystem::PixelFormat m_pixelformat;
+      ::i32_size m_size;
+      ::i32_point m_pointTopLeftCorner;
+      ::subsystem::Screen m_screen;
+
+      ::pointer < ::subsystem::LogWriter > m_plogwriter;
+   };
+
+
+} // namespace remoting_windows
+
+
+
+
+
+
+
+

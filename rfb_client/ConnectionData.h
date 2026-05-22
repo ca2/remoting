@@ -1,0 +1,114 @@
+// Copyright (C) 2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+//#ifndef _CONNECTION_DATA_
+//#define _CONNECTION_DATA_
+#pragma once
+
+//////#include "subsystem/platform/::string.h"
+#include "remoting/remoting_rfb/rfb/HostPath.h"
+
+
+namespace remoting_rfb_client
+{
+
+
+   class ConnectionData :
+      virtual public ::particle
+   {
+   public:
+
+      // protected:
+      ::remoting_rfb::HostPath m_hostPath;
+      int m_iDivisor;
+
+      // This flag is true, if host isn't set.
+      bool m_isEmpty;
+
+      // This flag is true, if password is set.
+      bool m_isSetPassword;
+
+      // This flag is true, if connection is incoming (e.g. listening mode).
+      bool m_isIncoming;
+
+      // Saved password is crypted.
+      ::string m_defaultPassword;
+
+      bool m_isSetDispatchId;
+      ::u32 m_dispatchId;
+
+
+      ConnectionData();
+      ConnectionData(ConnectionData *pconnectiondata);
+      ~ConnectionData();
+
+      //
+      // This methods is setter and getter of hostname or ::pair of hostname and port.
+      //
+      void setHost(const ::scoped_string & host);
+      ::string getHost() const;
+
+      //void setDivisor(int iDivisor);
+      //int getDivisor() const;
+
+      //
+      // This method return hostname without port.
+      //
+      ::string getReducedHost() const;
+
+      //
+      // This method return port.
+      //
+      int getPort() const;
+
+      //
+      // This method return true, if hostname isn't set.
+      //
+      bool is_empty() const;
+
+      //
+      // This methods is setter and getters of password.
+      //
+      ::string getPlainPassword() const;
+      ::string getCryptedPassword() const;
+      void setPlainPassword(const ::scoped_string & password);
+      void setCryptedPassword(const ::scoped_string & password);
+      bool isSetPassword() const;
+      void resetPassword();
+
+      ::u32 getDispatchId() const;
+      bool isSetDispatchId() const;
+      void setDispatchId(::u32 id);
+      void unsetDispatchId();
+
+      void setIncoming(bool isIncoming);
+      bool isIncoming() const;
+
+   };
+
+
+} //namespace remoting_rfb_client
+
+
+

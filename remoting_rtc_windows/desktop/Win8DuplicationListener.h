@@ -1,0 +1,60 @@
+// Copyright (C) 2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+#include "remoting/remoting_rtc/region/Region.h"
+#include "remoting/remoting_windows/_common_header.h"
+
+namespace remoting_windows
+{
+
+   class CLASS_DECL_REMOTING_WINDOWS Win8DuplicationListener :
+   virtual public ::particle
+   {
+   public:
+      // m_regionChanged in target ::innate_subsystem::Framebuffer coordinates.
+      virtual void onFramebufferUpdate(const ::remoting_rtc::Region & regionChanged) = 0;
+      // rectangleTarget, srcX, srcY in target ::innate_subsystem::Framebuffer coordinates.
+      virtual void onCopyRect(const ::i32_rectangle &rectangleTarget, int srcX, int srcY) = 0;
+
+      virtual void onCursorPositionChanged(int x, int y) = 0;
+      virtual void onCursorShapeChanged() = 0;
+
+      // Calls when an error occurred which can be recover by object recreating.
+      virtual void onRecoverableError(const ::scoped_string &scopedstrReason) = 0;
+      // Calls when an error occurred which can't be recover by object recreating.
+      // Must be selected other way to duplicate desktop.
+      virtual void onCriticalError(const ::scoped_string &scopedstrReason) = 0;
+   };
+
+   //// __WIN8DUPLICATIONLISTENER_H__
+
+} // namespace remoting_windows
+
+
+
+
+

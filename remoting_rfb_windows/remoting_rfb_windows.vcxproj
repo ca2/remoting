@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0BC5B4C8-0D0C-4DDA-AF68-829A35A23482}</ProjectGuid>
+    <RootNamespace>remoting_rfb_windows</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>remoting_rfb_windows</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link />
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>port_jpeg.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+    </ClCompile>
+    <Link />
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>port_jpeg.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link />
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>port_jpeg.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link />
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>port_jpeg.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="desktop\CopyRectDetector.cpp" />
+    <ClCompile Include="desktop\D3D11Device.cpp" />
+    <ClCompile Include="desktop\DesktopClientImpl.cpp" />
+    <ClCompile Include="desktop\DesktopFactory.cpp" />
+    <ClCompile Include="desktop\DesktopWinImpl.cpp" />
+    <ClCompile Include="desktop\DXGIAcquiredFrame.cpp" />
+    <ClCompile Include="desktop\DXGIOutputDuplication.cpp" />
+    <ClCompile Include="desktop\HookInstaller.cpp" />
+    <ClCompile Include="desktop\MirrorDriverClient.cpp" />
+    <ClCompile Include="desktop\MirrorScreenDriver.cpp" />
+    <ClCompile Include="desktop\WallpaperUtil.cpp" />
+    <ClCompile Include="desktop\Win32MirrorScreenDriver.cpp" />
+    <ClCompile Include="desktop\Win32ScreenDriver.cpp" />
+    <ClCompile Include="desktop\Win32ScreenDriverBaseImpl.cpp" />
+    <ClCompile Include="desktop\Win32ScreenDriverFactory.cpp" />
+    <ClCompile Include="desktop\Win8CursorShape.cpp" />
+    <ClCompile Include="desktop\Win8DeskDuplicationThread.cpp" />
+    <ClCompile Include="desktop\Win8ScreenDriver.cpp" />
+    <ClCompile Include="desktop\Win8ScreenDriverImpl.cpp" />
+    <ClCompile Include="desktop\WinAutoMapDxgiSurface.cpp" />
+    <ClCompile Include="desktop\WinCursorShapeUtils.cpp" />
+    <ClCompile Include="desktop\WinCustomD3D11Texture2D.cpp" />
+    <ClCompile Include="desktop\WinD3D11Texture2D.cpp" />
+    <ClCompile Include="desktop\WindowsCursorShapeGrabber.cpp" />
+    <ClCompile Include="desktop\WindowsGraphicsCapture.cpp" />
+    <ClCompile Include="desktop\WindowsInputBlocker.cpp" />
+    <ClCompile Include="desktop\WindowsScreenGrabber.cpp" />
+    <ClCompile Include="desktop\WindowsUserInput.cpp" />
+    <ClCompile Include="desktop\WinDxCriticalException.cpp" />
+    <ClCompile Include="desktop\WinDxException.cpp" />
+    <ClCompile Include="desktop\WinDxRecoverableException.cpp" />
+    <ClCompile Include="desktop\WinVideoRegionUpdaterImpl.cpp" />
+    <ClCompile Include="framework.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="_.cpp" />
+    <ClCompile Include="_factory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="desktop\CopyRectDetector.h" />
+    <ClInclude Include="desktop\DesktopClientImpl.h" />
+    <ClInclude Include="desktop\DesktopFactory.h" />
+    <ClInclude Include="desktop\DesktopWinImpl.h" />
+    <ClInclude Include="desktop\HookInstaller.h" />
+    <ClInclude Include="desktop\MirrorDriverClient.h" />
+    <ClInclude Include="desktop\MirrorScreenDriver.h" />
+    <ClInclude Include="desktop\WallpaperUtil.h" />
+    <ClInclude Include="desktop\Win32MirrorScreenDriver.h" />
+    <ClInclude Include="desktop\Win32ScreenDriver.h" />
+    <ClInclude Include="desktop\Win32ScreenDriverBaseImpl.h" />
+    <ClInclude Include="desktop\Win32ScreenDriverFactory.h" />
+    <ClInclude Include="desktop\Win8CursorShape.h" />
+    <ClInclude Include="desktop\Win8DeskDuplicationThread.h" />
+    <ClInclude Include="desktop\Win8DuplicationListener.h" />
+    <ClInclude Include="desktop\Win8ScreenDriver.h" />
+    <ClInclude Include="desktop\Win8ScreenDriverImpl.h" />
+    <ClInclude Include="desktop\WinAutoMapDxgiSurface.h" />
+    <ClInclude Include="desktop\WinCursorShapeUtils.h" />
+    <ClInclude Include="desktop\WinCustomD3D11Texture2D.h" />
+    <ClInclude Include="desktop\WinD3D11Device.h" />
+    <ClInclude Include="desktop\WinD3D11Texture2D.h" />
+    <ClInclude Include="desktop\WindowsCursorShapeGrabber.h" />
+    <ClInclude Include="desktop\WindowsGraphicsCapture.h" />
+    <ClInclude Include="desktop\WindowsInputBlocker.h" />
+    <ClInclude Include="desktop\WindowsScreenGrabber.h" />
+    <ClInclude Include="desktop\WindowsUserInput.h" />
+    <ClInclude Include="desktop\WinDxCriticalException.h" />
+    <ClInclude Include="desktop\WinDxException.h" />
+    <ClInclude Include="desktop\WinDxgiAcquiredFrame.h" />
+    <ClInclude Include="desktop\WinDxgiAdapter.h" />
+    <ClInclude Include="desktop\WinDxgiDevice.h" />
+    <ClInclude Include="desktop\WinDxgiOutput.h" />
+    <ClInclude Include="desktop\WinDxgiOutput1.h" />
+    <ClInclude Include="desktop\WinDxgiOutputDuplication.h" />
+    <ClInclude Include="desktop\WinDxgiSurface.h" />
+    <ClInclude Include="desktop\WinDxRecoverableException.h" />
+    <ClInclude Include="desktop\WinVideoRegionUpdaterImpl.h" />
+    <ClInclude Include="desktop\_common_header.h" />
+    <ClInclude Include="EOFException.h" />
+    <ClInclude Include="remoting.h" />
+    <ClInclude Include="_.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\operating_system\operating_system-windows\subsystem_windows\subsystem_windows.vcxproj">
+      <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\acme\acme.vcxproj">
+      <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\innate_subsystem\innate_subsystem.vcxproj">
+      <Project>{97d4f12a-916c-4cb2-b4d9-f0d35128065a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\subsystem\subsystem.vcxproj">
+      <Project>{8cc36574-7cff-438f-ae5c-51fd5c6b2823}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\remoting\remoting.vcxproj">
+      <Project>{d3004ab1-f82e-4fa4-b1f2-e15b582db21d}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="remoting_rfb_windows.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

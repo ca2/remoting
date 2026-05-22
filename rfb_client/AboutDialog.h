@@ -1,0 +1,90 @@
+// Copyright (C) 2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+#include "innate_subsystem/gui/Dialog.h"
+
+namespace remoting_rfb_client
+{
+    /**
+     * Remoting Node about dialog.
+     */
+    class AboutDialog : public ::innate_subsystem::Dialog
+    {
+    public:
+        /**
+         * Creates dialog.
+         */
+        AboutDialog();
+        /**
+         * Destroys dialog.
+         */
+        ~AboutDialog() override;
+
+    //protected:
+        /**
+         * Called when user press "Close" button.
+         */
+        virtual void onCloseButtonClick();
+        /**
+         * Called when user press "Order Technical Support" button.
+         */
+        virtual void onOrderSupportButtonClock();
+        /**
+         * Called when user press "Visit Web Site" button.
+         */
+        virtual void onVisitSiteButtonClick();
+        /**
+         * Opens url in default browser or shows error scopedstrMessage on fail.
+         */
+        virtual void openUrl(const ::scoped_string & scopedstrUrl);
+
+    //protected:
+        /**
+         * Inherited from BaseDialog.
+         * Does nothing.
+         */
+        bool onInitDialog() override;
+        /**
+         * Inherited from BaseDialog.
+         * Does nothing.
+         */
+        virtual bool onNotify(::u32 controlID, ::lparam data);
+        /**
+         * Inherited from BaseDialog.
+         * Handles buttons events.
+         */
+        bool onCommand(::u32 controlID, ::u32 notificationID) override;
+        /**
+         * Inherited from BaseDialog.
+         * Does nothing.
+         */
+        bool onDestroy()  override;
+    };
+
+} // namespace remoting_rfb_client
+
+

@@ -1,0 +1,133 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+#include "subsystem/_common_header.h"
+
+#include "subsystem/node/OperatingSystemApplication.h"
+#include "subsystem/node/ServiceControlManagerClient.h"
+
+#include "Service.h"
+#include "ServiceControlCommandLine.h"
+
+namespace remoting_node_desktop
+{
+   /**
+    * Service control application.
+    * Application that can install, remove, start and stop remoting_rtc_node service.
+    */
+   class CLASS_DECL_REMOTING_NODE_DESKTOP ServiceControlApplication : public ::subsystem::OperatingSystemApplication
+   {
+   public:
+      /**
+       * Creates new service control application.
+       */
+      ServiceControlApplication(
+#ifdef WINDOWS
+                                ::hinstance hInstance,
+                                const ::scoped_string & scopedstrwindowClassName,
+#endif
+                                const ::scoped_string & scopedstrCommandLine);
+      /**
+       * Destructor.
+       */
+      virtual ~ServiceControlApplication();
+
+      /**
+       * Runs service control application.
+       * @return application exit code.
+       */
+      virtual void onThreadMain();
+
+   private:
+      /**
+       * Starts an instance of the same ServiceControlApplication with elevated
+       * privileges and an additional -dontelevate command-line option (which is
+       * used to avoid infinite elevation loop).
+       * @throws SystemException on failure.
+       */
+      void runElevatedInstance();
+      /**
+       * Perform the action specified in cmdLine (install, reinstall, remove,
+       * start or stop the service).
+       * @param cmdLine pointer to the parsed command line.
+       * @throws SystemException on failure.
+       */
+      void executeCommand(const ServiceControlCommandLine *cmdLine);
+      /**
+       * Writes tvncontrol entry to registry to start it in every session.
+       * @throws SystemException when failed to write to registry.
+       */
+      // FIXME: Move this function to TvnService, call from TvnService::install().
+      void setTvnControlStartEntry();
+      /**
+       * Removes tvncontrol start entry from registry.
+       * @throws SystemException when failed delete registry key.
+       */
+      // FIXME: Move this function to TvnService, call from TvnService::remove().
+      void removeTvnControlStartEntry();
+      /**
+       * Report an error using error description from a ServiceControlManagerClientException object.
+       * @param cmdLine pointer to command line parser.
+       * @param ex pointer to an ServiceControlManagerClientException object describing the error.
+       * @remark does not show up a scopedstrMessage box if the -silent flag was specified
+       *   in the command line.
+       */
+      void reportError(const ServiceControlCommandLine *cmdLine,
+                       const ::subsystem::ServiceControlManagerClientException *ex);
+      /**
+       * Report an error using error description from a SystemException object.
+       * @param cmdLine pointer to command line parser.
+       * @param ex pointer to a SystemException object describing the error.
+       * @remark does not show up a scopedstrMessage box if the -silent flag was specified
+       *   in the command line.
+       */
+      void reportError(const ServiceControlCommandLine *cmdLine,
+                       const ::subsystem::SystemException *ex);
+      /**
+       * Report an error using error description specified as a string.
+       * @param cmdLine pointer to command line parser.
+       * @param errorMessage error description.
+       * @remark does not show up a scopedstrMessage box if the -silent flag was specified
+       *   in the command line.
+       */
+      void reportError(const ServiceControlCommandLine *cmdLine,
+                       const ::scoped_string & scopedstrErrorMessage);
+      /**
+       * Report successful command execution.
+       * @param cmdLine pointer to command line parser.
+       * @remark does not show up a scopedstrMessage box if the -silent flag was specified
+       *   in the command line.
+       */
+      void reportSuccess(const ServiceControlCommandLine *cmdLine);
+
+   private:
+      /**
+       * Command line passed to the application constructor.
+       */
+      ::string m_commandLine;
+   };
+} // namespace remoting_node_desktop

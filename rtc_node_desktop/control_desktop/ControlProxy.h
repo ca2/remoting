@@ -1,0 +1,201 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+#include "remoting/node_desktop/control_desktop/ControlGate.h"
+#include "remoting/node_desktop/control_desktop/RfbClientInfo.h"
+#include "remoting/node_desktop/control_desktop/ServerInfo.h"
+
+#include "remoting/remoting_rtc/node_config/ServerConfig.h"
+
+#include "ControlMessage.h"
+#include "remoting/remoting_rtc/node/RemoteException.h"
+
+//#include aaa_<list>
+
+namespace remoting_control_desktop
+{
+   /**
+    * Proxy to some of Remoting Node methods, supported by control protocol.
+    * Used to onThreadMain remote commands on on Remoting Node.
+    * remote errors.
+    */
+   class ControlProxy :
+   virtual public ::particle
+   {
+   public:
+      /**
+       * Creates proxy.
+       * @param pblockinggate transport to send and recieve messages.
+       */
+      ControlProxy(ControlGate * pcontrolgate);
+      /**
+       * Class destructor.
+       */
+      virtual ~ControlProxy();
+
+      // If server requests the authentication then firstly will be used
+      // *passwordFile parameter then getPassFromConfigEnabled. Call this function
+      // to determine this parameters. If this function has not been called then
+      // on server auth request will be used a dialog box.
+      void setPasswordProperties(const ::scoped_string & scopedstrPasswordFile,
+                                 bool getPassFromConfigEnabled,
+                                 bool forService);
+
+      /**
+       * Returns rfb server info status.
+       * @return rfb server info status.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      ServerInfo getServerInfo();
+
+      /**
+       * Gets rfb client ::list_base.
+       * @param clients [out] output parameters to retrieve info of clients.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void getClientsList(::list_base<RfbClientInfo *> *clients);
+
+      /**
+       * Reloads rfb server configuration.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       * @deprecated.
+       */
+      void reloadServerConfig();
+
+      /**
+       * Disconnects all existing rfb clients from server.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void disconnectAllClients();
+
+      /**
+       * Shutdowns Remoting Node.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void shutdownRemoting();
+
+      /**
+       * Initialized outgoing rfb connection.
+       * @param connectString connect string in host[:(port|diplay)] format.
+       * @param viewOnly if rfb connection must be in view only mode.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void makeOutgoingConnection(const ::scoped_string & scopedstrConnectString, bool viewOnly);
+
+      /**
+       * Initialized connection to a TcpDispatcher.
+       * @param connectString connect string in host[:(port|diplay)] format.
+       */
+      void makeTcpDispatcherConnection(const ::scoped_string & scopedstrConnectString,
+                                       const ::scoped_string & scopedstrDispatcherName,
+                                       const ::scoped_string & scopedstrKeyword,
+                                       ::u32 connectionId);
+
+      // Share only primary display for all clients.
+      void sharePrimary();
+
+      // Share only the display for all clients.
+      void shareDisplay(unsigned char displayNumber);
+
+      // Share a rectangle that constrained by a window form.
+      // shareWindowName - is a part of the window header name.
+      void shareWindow(const ::scoped_string & shareWindowName);
+
+      // Share only a rectangle.
+      void shareRect(const ::i32_rectangle &  shareRect);
+
+      // Share full desktop for all clients.
+      void shareFull();
+
+      // Share only application region for all clients. Other regions must be painted to black.
+      void shareApp(::u32 procId);
+
+      /**
+       * Sends new configuration to server.
+       * @param config new server configuration.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void setServerConfig(::remoting_rtc_node::ServerConfig * pserverconfig);
+
+      /**
+       * Gets current configuration from server.
+       * @param config [out] output parameter where configuration will be stored.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void getServerConfig(::remoting_rtc_node::ServerConfig * pserverconfig);
+
+      /**
+       * Checks if TvnControl must show icon in tray.
+       * @throws ::io_exception on io error, RemoteException on error on server side.
+       */
+      bool getShowTrayIconFlag();
+
+      /**
+       * Updates TvnControl application process id on server side.
+       * @param processId tvncontrol application process id.
+       * @throws RemoteException on error on server.
+       * @throws ::io_exception on io error.
+       */
+      void updateTvnControlProcessId(DWORD processId);
+
+   protected:
+      /**
+       * Returns control scopedstrMessage to write.
+       * @param messageId control scopedstrMessage id.
+       */
+      ::pointer < ControlMessage >createMessage(DWORD messageId);
+
+   protected:
+      /**
+       * Transport for sending and recieving control proto messages.
+       */
+      ::pointer < ControlGate  > m_pcontrolgate;
+      /**
+       * Current control scopedstrMessage.
+       */
+      ::pointer < ControlMessage > m_pcontrolmessage;
+   private:
+      /**
+       * Deletes control scopedstrMessage created by createMessage() method
+       * if it's exists.
+       */
+      void releaseMessage();
+
+      ::string m_passwordFile;
+      bool m_getPassFromConfigEnabled;
+      bool m_forService;
+   };
+} // namespace remoting_control_desktop
+

@@ -1,0 +1,188 @@
+// Copyright (C) 2013 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+#include "framework.h"
+#include "remoting/remoting_windows/desktop/WinVideoRegionUpdaterImpl.h"
+#include "remoting/remoting_rtc/node_config/Configurator.h"
+#include "innate_subsystem/gui/WindowFinder.h"
+#include "remoting/remoting_rtc/region/RectSerializer.h"
+//#include "subsystem/thread/lockable_critical_section.h"
+
+
+namespace remoting_windows
+{
+
+
+   //WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl(::subsystem::LogWriter * plogwriter)
+   WinVideoRegionUpdaterImpl::WinVideoRegionUpdaterImpl()
+   {
+      //: m_plogwriter(plogwriter)
+      //{
+        // resumeThread();
+
+
+   }
+
+   WinVideoRegionUpdaterImpl::~WinVideoRegionUpdaterImpl()
+   {
+      setThreadToFinish();
+      waitThreadToFinish();
+   }
+
+
+   void WinVideoRegionUpdaterImpl::initialize_screen_driver(::remoting_rtc_node::Configurator * pconfigurator, ::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener,
+                                        ::innate_subsystem::Framebuffer *pframebuffer,
+                          lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)
+   {
+      m_pconfigurator = pconfigurator;
+      m_plogwriter = plogwriter;
+
+      resumeThread();
+
+   }
+
+
+   void WinVideoRegionUpdaterImpl::onTermThread() { m_happeningSleeper.set_happening(); }
+
+   void WinVideoRegionUpdaterImpl::onThreadMain()
+   {
+      while (!isThreadTerminating())
+      {
+         m_happeningSleeper.wait(getInterval() * 1_ms);
+         if (!isThreadTerminating())
+         {
+            try
+            {
+               updateVideoRegion();
+            }
+            catch (...)
+            {
+            }
+         }
+      }
+   }
+
+   ::u32 WinVideoRegionUpdaterImpl::getInterval()
+   {
+      ::remoting_rtc_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      return pserverconfig->getVideoRecognitionInterval();
+   }
+
+   ::remoting_rtc::Region WinVideoRegionUpdaterImpl::getVideoRegion()
+   {
+      critical_section_lock al(&m_criticalsectionRegion);
+      return m_regionVideo;
+   }
+
+   void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames,
+                                                                   ::int_rectangle_array_base &rectanglea)
+   {
+      ::remoting_rtc_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
+      AutoLock al(pserverconfig);
+      classNames = *pserverconfig->getVideoClassNames();
+      rectanglea = *pserverconfig->getVideoRects();
+   }
+
+   void WinVideoRegionUpdaterImpl::updateVideoRegion()
+   {
+      ::string_array classNames;
+      ::int_rectangle_array_base rectanglea;
+      getClassNamesAndRectsFromConfig(classNames, rectanglea);
+      ::remoting_rtc::Region tmpRegion;
+      m_plogwriter->debug("WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(),
+                          m_regionVideo.getCount());
+      if (!classNames.empty())
+      {
+         auto timeStart = ::time::now();
+         tmpRegion.add(getRectsByClass(classNames));
+         ::u32 millis = timeStart.elapsed().integral_millisecond();
+         m_plogwriter->debug("WinVideoRegionUpdaterImpl::getRectsByClass call took {} ms", millis);
+      }
+      if (!rectanglea.empty())
+      {
+         tmpRegion.add(getRectsByCoords(rectanglea));
+      }
+      m_plogwriter->debug("WinVideoRegionUpdaterImpl: copy data");
+      {
+         critical_section_lock al(&m_criticalsectionRegion);
+         m_regionVideo = tmpRegion;
+      }
+      m_plogwriter->debug("WinVideoRegionUpdaterImpl: exit updateVideoRegion()");
+   }
+
+   ::remoting_rtc::Region WinVideoRegionUpdaterImpl::getRectsByClass(::string_array classNames)
+   {
+      //::array_base<HWND> hwndVector;
+      //::array_base<HWND>::iterator hwndIter;
+      ::remoting_rtc::Region vidRegion;
+
+      for (int i = 0; i < classNames.size(); ++i)
+      {
+         m_plogwriter->debug("WinVideoRegionUpdaterImpl: getRectsByClass : classname: {} ", classNames[i]);
+      }
+
+      auto operatingsystemwindowa = ::windows::findWindowsByClass(classNames);
+
+      m_plogwriter->debug("WinVideoRegionUpdaterImpl: getRectsByClass : %u windows found", operatingsystemwindowa.size());
+
+      //for (hwndIter = hwndVector.begin(); hwndIter != hwndVector.end(); hwndIter++)
+      for (auto operatingsystemwindowVideo : operatingsystemwindowa)
+      {
+         //HWND videoHWND = *hwndIter;
+         if (operatingsystemwindowVideo.is_set())
+         {
+            HWND hwndVideo = ::as_HWND(operatingsystemwindowVideo);
+            WINDOWINFO wi;
+            wi.cbSize = sizeof(WINDOWINFO);
+            if (GetWindowInfo(hwndVideo, &wi))
+            {
+               ::i32_rectangle rectangleVideo(wi.rcClient.left, wi.rcClient.top, wi.rcClient.right, wi.rcClient.bottom);
+               if (rectangleVideo.is_set())
+               {
+                  rectangleVideo.offset(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
+                  vidRegion.addRect(rectangleVideo);
+               }
+            }
+         }
+      }
+      return vidRegion;
+   }
+
+   ::remoting_rtc::Region WinVideoRegionUpdaterImpl::getRectsByCoords(::int_rectangle_array_base &rectanglea)
+   {
+      ::int_rectangle_array_base::iterator rIter;
+      ::i32_rectangle rectangleVideo;
+      ::remoting_rtc::Region vidRegion;
+      for (rIter = rectanglea.begin(); rIter != rectanglea.end(); rIter++)
+      {
+         rectangleVideo = *rIter;
+         if (rectangleVideo.is_set())
+         {
+            vidRegion.addRect(rectangleVideo);
+         }
+      }
+      return vidRegion;
+   }
+
+
+} // namespace remoting_windows

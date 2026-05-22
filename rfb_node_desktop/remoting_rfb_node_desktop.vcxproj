@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugNoUnicode|Win32">
+      <Configuration>DebugNoUnicode</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugNoUnicode|x64">
+      <Configuration>DebugNoUnicode</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseNoUnicode|Win32">
+      <Configuration>ReleaseNoUnicode</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseNoUnicode|x64">
+      <Configuration>ReleaseNoUnicode</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EBFC3125-72A4-4029-9941-3BE9EE6444D5}</ProjectGuid>
+    <RootNamespace>remoting_rfb_node_desktop</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-windows\Common.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(WindowsSdkDir_81)Include\shared;$(WindowsSdkDir_81)Include\um</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(WindowsSdkDir_81)Include\shared;$(WindowsSdkDir_81)Include\um</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(WindowsSdkDir_81)Include\shared;$(WindowsSdkDir_81)Include\um</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(WindowsSdkDir_81)Include\shared;$(WindowsSdkDir_81)Include\um</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(WindowsSdkDir_81)Include\shared;$(WindowsSdkDir_81)Include\um</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(WindowsSdkDir_81)Include\shared;$(WindowsSdkDir_81)Include\um</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(WindowsSdkDir_81)Include\shared;$(WindowsSdkDir_81)Include\um</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(WindowsSdkDir_81)Include\shared;$(WindowsSdkDir_81)Include\um</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <Lib>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;Winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <Lib>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;Winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <Lib>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;Winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <Lib>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;Winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <Lib>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <Lib>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <Lib>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <Lib>
+      <AdditionalDependencies>Winmm.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AdditionalActionApplication.cpp" />
+    <ClCompile Include="application.cpp" />
+    <ClCompile Include="application_control.cpp" />
+    <ClCompile Include="AuthTracker.cpp" />
+    <ClCompile Include="BuildTime.cpp" />
+    <ClCompile Include="ControlAppAuthenticator.cpp" />
+    <ClCompile Include="ControlClient.cpp" />
+    <ClCompile Include="ControlServer.cpp" />
+    <ClCompile Include="control_desktop\AboutDialog.cpp" />
+    <ClCompile Include="control_desktop\ConnectCommand.cpp" />
+    <ClCompile Include="control_desktop\ConnectStringParser.cpp" />
+    <ClCompile Include="control_desktop\ControlApplication.cpp" />
+    <ClCompile Include="control_desktop\ControlAuth.cpp" />
+    <ClCompile Include="control_desktop\ControlAuthDialog.cpp" />
+    <ClCompile Include="control_desktop\ControlCommandLine.cpp" />
+    <ClCompile Include="control_desktop\ControlGate.cpp" />
+    <ClCompile Include="control_desktop\ControlMessage.cpp" />
+    <ClCompile Include="control_desktop\ControlPipeName.cpp" />
+    <ClCompile Include="control_desktop\ControlProxy.cpp" />
+    <ClCompile Include="control_desktop\ControlTrayIcon.cpp" />
+    <ClCompile Include="control_desktop\DisconnectAllCommand.cpp" />
+    <ClCompile Include="control_desktop\MakeRfbConnectionCommand.cpp" />
+    <ClCompile Include="control_desktop\NamedPipeTransport.cpp" />
+    <ClCompile Include="control_desktop\OutgoingConnectionDialog.cpp" />
+    <ClCompile Include="control_desktop\ReloadConfigCommand.cpp" />
+    <ClCompile Include="control_desktop\RfbClientInfo.cpp" />
+    <ClCompile Include="control_desktop\SetPasswordsDialog.cpp" />
+    <ClCompile Include="control_desktop\ShareAppCommand.cpp" />
+    <ClCompile Include="control_desktop\ShareDisplayCommand.cpp" />
+    <ClCompile Include="control_desktop\ShareFullCommand.cpp" />
+    <ClCompile Include="control_desktop\SharePrimaryCommand.cpp" />
+    <ClCompile Include="control_desktop\ShareRectCommand.cpp" />
+    <ClCompile Include="control_desktop\ShareWindowCommand.cpp" />
+    <ClCompile Include="control_desktop\ShutdownCommand.cpp" />
+    <ClCompile Include="control_desktop\SocketIPv4Transport.cpp" />
+    <ClCompile Include="control_desktop\Transport.cpp" />
+    <ClCompile Include="control_desktop\TransportFactory.cpp" />
+    <ClCompile Include="control_desktop\UpdateLocalConfigCommand.cpp" />
+    <ClCompile Include="control_desktop\UpdateRemoteConfigCommand.cpp" />
+    <ClCompile Include="DesktopServerApplication.cpp" />
+    <ClCompile Include="DesktopServerCommandLine.cpp" />
+    <ClCompile Include="EventLogWriter.cpp" />
+    <ClCompile Include="ExtraRfbServers.cpp" />
+    <ClCompile Include="framework.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugNoUnicode|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseNoUnicode|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="OutgoingRfbConnectionThread.cpp" />
+    <ClCompile Include="QueryConnectionApplication.cpp" />
+    <ClCompile Include="QueryConnectionCommandLine.cpp" />
+    <ClCompile Include="QueryConnectionDialog.cpp" />
+    <ClCompile Include="RfbClientManager.cpp" />
+    <ClCompile Include="RfbClientManagerEventListener.cpp" />
+    <ClCompile Include="RfbServer.cpp" />
+    <ClCompile Include="application_main_node.cpp" />
+    <ClCompile Include="ServerCommandLine.cpp" />
+    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="ServiceControlApplication.cpp" />
+    <ClCompile Include="ServiceControlCommandLine.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="ServerApplication.cpp" />
+    <ClCompile Include="ServerHelp.cpp" />
+    <ClCompile Include="ServerListener.cpp" />
+    <ClCompile Include="Service.cpp" />
+    <ClCompile Include="WsConfigRunner.cpp" />
+    <ClCompile Include="_.cpp" />
+    <ClCompile Include="_control.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AdditionalActionApplication.h" />
+    <ClInclude Include="application.h" />
+    <ClInclude Include="AuthTracker.h" />
+    <ClInclude Include="ControlAppAuthenticator.h" />
+    <ClInclude Include="ControlClient.h" />
+    <ClInclude Include="ControlServer.h" />
+    <ClInclude Include="control_desktop\aaa_ControlAuthException.h" />
+    <ClInclude Include="control_desktop\AboutDialog.h" />
+    <ClInclude Include="control_desktop\ConnectCommand.h" />
+    <ClInclude Include="control_desktop\ConnectStringParser.h" />
+    <ClInclude Include="control_desktop\ControlApplication.h" />
+    <ClInclude Include="control_desktop\ControlAuth.h" />
+    <ClInclude Include="control_desktop\ControlAuthDialog.h" />
+    <ClInclude Include="control_desktop\ControlCommandLine.h" />
+    <ClInclude Include="control_desktop\ControlGate.h" />
+    <ClInclude Include="control_desktop\ControlMessage.h" />
+    <ClInclude Include="control_desktop\ControlPipeName.h" />
+    <ClInclude Include="control_desktop\ControlProto.h" />
+    <ClInclude Include="control_desktop\ControlProxy.h" />
+    <ClInclude Include="control_desktop\ControlTrayIcon.h" />
+    <ClInclude Include="control_desktop\DisconnectAllCommand.h" />
+    <ClInclude Include="control_desktop\MakeRfbConnectionCommand.h" />
+    <ClInclude Include="control_desktop\NamedPipeTransport.h" />
+    <ClInclude Include="control_desktop\OutgoingConnectionDialog.h" />
+    <ClInclude Include="control_desktop\ReloadConfigCommand.h" />
+    <ClInclude Include="control_desktop\RfbClientInfo.h" />
+    <ClInclude Include="control_desktop\ServerInfo.h" />
+    <ClInclude Include="control_desktop\SetPasswordsDialog.h" />
+    <ClInclude Include="control_desktop\ShareAppCommand.h" />
+    <ClInclude Include="control_desktop\ShareDisplayCommand.h" />
+    <ClInclude Include="control_desktop\ShareFullCommand.h" />
+    <ClInclude Include="control_desktop\SharePrimaryCommand.h" />
+    <ClInclude Include="control_desktop\ShareRectCommand.h" />
+    <ClInclude Include="control_desktop\ShareWindowCommand.h" />
+    <ClInclude Include="control_desktop\ShutdownCommand.h" />
+    <ClInclude Include="control_desktop\SocketIPv4Transport.h" />
+    <ClInclude Include="control_desktop\Transport.h" />
+    <ClInclude Include="control_desktop\TransportFactory.h" />
+    <ClInclude Include="control_desktop\UpdateLocalConfigCommand.h" />
+    <ClInclude Include="control_desktop\UpdateRemoteConfigCommand.h" />
+    <ClInclude Include="DesktopServerApplication.h" />
+    <ClInclude Include="DesktopServerCommandLine.h" />
+    <ClInclude Include="ExtraRfbServers.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="LogInitListener.h" />
+    <ClInclude Include="NewConnectionEvents.h" />
+    <ClInclude Include="OutgoingRfbConnectionThread.h" />
+    <ClInclude Include="QueryConnectionApplication.h" />
+    <ClInclude Include="QueryConnectionCommandLine.h" />
+    <ClInclude Include="QueryConnectionDialog.h" />
+    <ClInclude Include="RfbClientManager.h" />
+    <ClInclude Include="RfbClientManagerEventListener.h" />
+    <ClInclude Include="RfbServer.h" />
+    <ClInclude Include="ServerCommandLine.h" />
+    <ClInclude Include="Task.h" />
+    <ClInclude Include="ServiceControlApplication.h" />
+    <ClInclude Include="ServiceControlCommandLine.h" />
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="ServerApplication.h" />
+    <ClInclude Include="ServerHelp.h" />
+    <ClInclude Include="ServerListener.h" />
+    <ClInclude Include="Service.h" />
+    <ClInclude Include="WinServiceEvents.h" />
+    <ClInclude Include="WsConfigRunner.h" />
+    <ClInclude Include="_.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\app\acme\acme.vcxproj">
+      <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\apex\apex.vcxproj">
+      <Project>{e000ffaf-392f-4e32-bf51-777ca238991f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\innate_subsystem\innate_subsystem.vcxproj">
+      <Project>{97d4f12a-916c-4cb2-b4d9-f0d35128065a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\subsystem\subsystem.vcxproj">
+      <Project>{8cc36574-7cff-438f-ae5c-51fd5c6b2823}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\remoting\remoting.vcxproj">
+      <Project>{d3004ab1-f82e-4fa4-b1f2-e15b582db21d}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="remoting_rfb_node_desktop.def" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
