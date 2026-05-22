@@ -6,7 +6,7 @@ list(APPEND application_source main.cpp)
 
 
 if(MSVC)
-    list(APPEND application_source ../deployment.rc main.rc)
+    list(APPEND application_source ../deployment.rc remoting_client.rc)
 endif()
 
 
