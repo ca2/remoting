@@ -40,7 +40,7 @@
 #include "remoting/remoting_rfb/desktop_ipc/ReconnectionListener.h"
 #include "::remoting_rfb::UpdateListener.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    //class CLASS_DECL_REMOTING_RFB DesktopClientImpl : public AnEventListener, public ReconnectionListener, public Thread, public DesktopBaseImpl
@@ -87,7 +87,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

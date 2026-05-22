@@ -28,7 +28,7 @@
 #include "remoting/remoting_rfb/node_config/ConfigReloadListener.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    class CLASS_DECL_REMOTING_RFB WallpaperUtil : protected ConfigReloadListener
@@ -65,7 +65,7 @@ namespace remoting_windows
    //// __WALLPAPERUTIL_H__
 
 
-}// namespace remoting_windows
+}// namespace remoting_rfb_windows
 
 
 

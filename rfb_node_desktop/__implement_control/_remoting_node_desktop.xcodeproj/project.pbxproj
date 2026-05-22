@@ -86,14 +86,14 @@
 		};
 		9AD3F17E2FB1919C00CB9A78 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9AD3F1772FB1919B00CB9A78 /* remoting_node_desktop.xcodeproj */;
+			containerPortal = 9AD3F1772FB1919B00CB9A78 /* remoting_rfb_node_desktop.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 9A6BC8B62F8161D4000A4200;
 			remoteInfo = remoting_rfb_node;
 		};
 		9AD3F18D2FB1922600CB9A78 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9AD3F1772FB1919B00CB9A78 /* remoting_node_desktop.xcodeproj */;
+			containerPortal = 9AD3F1772FB1919B00CB9A78 /* remoting_rfb_node_desktop.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 9A6BC8B52F8161D4000A4200;
 			remoteInfo = remoting_rfb_node;
@@ -188,7 +188,7 @@
 		9A96BF472FBA3237006EFDF1 /* apex_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = apex_macos.xcodeproj; path = "../../../../operating_system/operating_system-macos/apex_macos/apex_macos.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		9A9A15742AFC230500FA9BEB /* libdarwin.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libdarwin.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AADA8E629D0A8DD0004D7ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
-		9AD3F1772FB1919B00CB9A78 /* remoting_node_desktop.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_node_desktop.xcodeproj; path = ../remoting_node_desktop.xcodeproj; sourceTree = SOURCE_ROOT; };
+		9AD3F1772FB1919B00CB9A78 /* remoting_rfb_node_desktop.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_rfb_node_desktop.xcodeproj; path = ../remoting_rfb_node_desktop.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9AE5CC8E22CBECAE00EDEAD1 /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		9AE6DF272962ADEE008A1335 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9AE7A1B92D1CC34F00070257 /* libacme_windowing_appkit.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme_windowing_appkit.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,7 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				9A96BF472FBA3237006EFDF1 /* apex_macos.xcodeproj */,
-				9AD3F1772FB1919B00CB9A78 /* remoting_node_desktop.xcodeproj */,
+				9AD3F1772FB1919B00CB9A78 /* remoting_rfb_node_desktop.xcodeproj */,
 				9A3615992FBA845E005F1383 /* remoting_macos.xcodeproj */,
 				9AEA19E527602557006437A3 /* __implement */,
 				070B8EEB1B6E53F900D26137 /* Products */,
@@ -457,7 +457,7 @@
 				},
 				{
 					ProductGroup = 9AD3F17B2FB1919B00CB9A78 /* Products */;
-					ProjectRef = 9AD3F1772FB1919B00CB9A78 /* remoting_node_desktop.xcodeproj */;
+					ProjectRef = 9AD3F1772FB1919B00CB9A78 /* remoting_rfb_node_desktop.xcodeproj */;
 				},
 			);
 			projectRoot = "";

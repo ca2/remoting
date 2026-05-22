@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/client/ViewerWindow.h"
+#include "remoting/rfb_client/ViewerWindow.h"
 //#include "remoting/remoting_rfb/network/socket/SocketIPv4.h"
 #include "remoting/remoting_rfb/viewer_core/RemoteViewerCore.h"
 #include "ViewerVncAuthHandler.h"

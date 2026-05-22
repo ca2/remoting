@@ -24,22 +24,22 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/aaa_WinDxgiOutput1.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/desktop/aaa_WinDxgiOutput1.h"
 #include "remoting/remoting_rtc/rfb/CursorShape.h"
 
 #include <d3d11.h>
 #include <DXGI1_2.h>
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
    class D3D11Device;
 
    // This class  is a wrapper for the IDXGIOutputDuplication interface.
-   class CLASS_DECL_REMOTING_WINDOWS DXGIOutputDuplication :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS DXGIOutputDuplication :
    virtual public ::particle
    {
    public:
@@ -77,7 +77,7 @@ namespace remoting_windows
    //// __WINDXGIOUTPUTDUPLICATION_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

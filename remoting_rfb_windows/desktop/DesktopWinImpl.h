@@ -33,11 +33,11 @@
 #include "remoting/remoting_rfb/desktop/ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS DesktopWinImpl :
+   class CLASS_DECL_REMOTING_RFB_WINDOWS DesktopWinImpl :
    virtual public ::subsystem_windows::GuiThread,
    virtual public ::remoting_rfb::DesktopBaseImpl
    {
@@ -77,7 +77,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

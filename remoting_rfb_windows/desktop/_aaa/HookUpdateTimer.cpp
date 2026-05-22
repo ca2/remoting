@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "HookUpdateTimer.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    //HookUpdateTimer::HookUpdateTimer(::remoting_rfb::UpdateListener *pupdatelistener) : m_pupdatelistener = pupdatelistener; { resumeThread(); }
@@ -69,7 +69,7 @@ namespace remoting_windows
    void HookUpdateTimer::sear() { m_updateWaiter.set_happening(); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

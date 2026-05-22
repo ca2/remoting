@@ -88,7 +88,7 @@ IDirect3DDevice CreateDirect3DDevice(IDXGIDevice *dxgiDevice)
 //   /*return 0;
 //}*/
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -299,4 +299,4 @@ if (CopyTextureToBitmap(
 
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows

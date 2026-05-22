@@ -26,11 +26,11 @@
 
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/D3D11Device.h"
+#include "remoting/remoting_rfb_windows/desktop/D3D11Device.h"
    const char *FeatureLevelToString(D3D_FEATURE_LEVEL fl);
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -264,5 +264,5 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  

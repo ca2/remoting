@@ -25,7 +25,7 @@
 #include "CursorShapeGrabber.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
    CursorShapeGrabber::CursorShapeGrabber()
    {
@@ -39,4 +39,4 @@ namespace remoting_windows
    {
       return &m_cursorshape;
    }
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows

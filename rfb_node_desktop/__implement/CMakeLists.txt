@@ -16,7 +16,7 @@ add_executable(${PROJECT_NAME} ${application_source})
 
 list(APPEND executable_references
    acme
-   remoting_node_desktop
+   remoting_rfb_node_desktop
    )
 
 

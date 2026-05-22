@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/client/ConnectionData.h"
+#include "remoting/rfb_client/ConnectionData.h"
 #include "DesktopWindow.h"
 #include "FileTransferMainDialog.h"
 #include "remoting/remoting_rfb/client/NamingDefs.h"

@@ -26,7 +26,7 @@
 #include "remoting/remoting_rfb/node_config/Configurator.h"
 #include "acme/_operating_system.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    // ConsolePoller::ConsolePoller(::remoting_rfb::UpdateKeeper * pupdatekeeper, ::remoting_rfb::UpdateListener * pupdatelistener,
@@ -134,7 +134,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

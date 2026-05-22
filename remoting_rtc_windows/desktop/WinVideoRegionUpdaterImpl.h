@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
 //#include "subsystem/platform/class ::time.h"
 #include "remoting/remoting_rtc/region/Region.h"
 //#include "subsystem/platform/::string_array.h"
@@ -34,10 +34,10 @@
 #include "subsystem/thread/Thread.h"
 #include "acme/parallelization/happening.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WinVideoRegionUpdaterImpl :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS WinVideoRegionUpdaterImpl :
       virtual public ::remoting_rtc::ScreenDriver,
       virtual public ::subsystem::Thread
    {
@@ -76,7 +76,7 @@ namespace remoting_windows
    };
 
 
-}// namespace remoting_windows
+}// namespace remoting_rtc_windows
 
 
 

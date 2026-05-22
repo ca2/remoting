@@ -34,7 +34,7 @@
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    class CLASS_DECL_REMOTING_RFB HooksUpdateDetector :
@@ -71,4 +71,4 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows

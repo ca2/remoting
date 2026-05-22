@@ -24,15 +24,15 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
 #include "remoting/remoting_rfb/desktop/ScreenDriverFactory.h"
 #include "remoting/remoting_rfb/node_config/ServerConfig.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win32ScreenDriverFactory :
+   class CLASS_DECL_REMOTING_RFB_WINDOWS Win32ScreenDriverFactory :
       virtual public ::remoting_rfb::ScreenDriverFactory
    {
    public:
@@ -78,7 +78,7 @@ namespace remoting_windows
 
    //// __WIN32SCREENDRIVERFACTORY_H__
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

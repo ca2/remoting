@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::remoting_rtc::UpdateListener.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -33,5 +33,5 @@ namespace remoting_windows
    ::remoting_rtc::UpdateListener::~::remoting_rtc::UpdateListener(void) {}
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
  

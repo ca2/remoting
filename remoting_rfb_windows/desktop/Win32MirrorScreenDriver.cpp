@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/Win32MirrorScreenDriver.h"
+#include "remoting/remoting_rfb_windows/desktop/Win32MirrorScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -85,4 +85,4 @@ namespace remoting_windows
    bool Win32MirrorScreenDriver::applyNewScreenProperties() { return m_mirrorDriver->applyNewProperties(); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows

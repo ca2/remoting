@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/Win32ScreenDriverBaseImpl.h"
+#include "remoting/remoting_rtc_windows/desktop/Win32ScreenDriverBaseImpl.h"
 #include "subsystem/platform/Exception.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    // Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl(::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener,
@@ -108,7 +108,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

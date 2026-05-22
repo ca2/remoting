@@ -8,15 +8,15 @@
 #include "acme/constant/id.h"
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
-#include "remoting/client/remoting.h"
+#include "remoting/rfb_client/remoting.h"
 #include "remoting/remoting_rfb/platform/remoting.h"
 #include "Service.h"
 //#include "acme/_operating_system.h"
 //#include "main_window.h"
 
 
-__IMPLEMENT_APPLICATION_RELEASE_TIME(remoting_node_desktop);
-IMPLEMENT_APPLICATION_FACTORY(remoting_node_desktop);
+__IMPLEMENT_APPLICATION_RELEASE_TIME(remoting_rfb_node_desktop);
+IMPLEMENT_APPLICATION_FACTORY(remoting_rfb_node_desktop);
 
 
 //int remoting_impact_main(::particle * pparticle, const ::file::path & path);
@@ -209,43 +209,6 @@ namespace remoting_rfb_node_desktop
       //
 
       return *m_pserver;
-
-   }
-
-
-   // -----------------------------
-   // Example usage
-   // -----------------------------
-   int application::transmit_video()
-   {
-      
-      WebRTCSession session;
-
-      session.addMediaTracks();
-
-      std::cout << "WebRTC session started\n";
-
-      // -----------------------------
-      // Fake streaming loop
-      // Replace with:
-      // - Windows.Graphics.Capture frames
-      // - FFmpeg encoder output
-      // -----------------------------
-      while (true)
-      {
-         // Example fake H264 frame
-         std::vector<uint8_t> fakeFrame(1024, 0xAA);
-
-         session.sendVideoPacket(fakeFrame.data(), fakeFrame.size());
-
-         // Fake audio packet (Opus)
-         std::vector<uint8_t> fakeAudio(256, 0x55);
-
-         session.sendAudioPacket(fakeAudio.data(), fakeAudio.size());
-
-         std::this_thread::sleep_for(std::chrono::milliseconds(16));
-
-      }
 
    }
 

@@ -25,17 +25,17 @@
 #pragma once
 
 //
-// #include "remoting/remoting_windows/_common_header.h"
+// #include "remoting/remoting_rfb_windows/_common_header.h"
 //
-// #include "remoting/remoting_windows/desktop/WinDxgiAdapter.h"
+// #include "remoting/remoting_rfb_windows/desktop/WinDxgiAdapter.h"
 // #include "acme/operating_system/windows_common/com/comptr.h"
 // // #include aaa_<d3d11.h>
 // // #include aaa_<DXGI1_2.h>
 //
-// namespace remoting_windows
+// namespace remoting_rfb_windows
 // {
 //
-//    class CLASS_DECL_REMOTING_WINDOWS WinDxgiOutput :
+//    class CLASS_DECL_REMOTING_RFB_WINDOWS WinDxgiOutput :
 //    virtual public ::particle
 //    {
 //    public:
@@ -65,7 +65,7 @@
 //    //// __WINDXGIOUTPUT_H__
 //
 //
-// } // namespace remoting_windows
+// } // namespace remoting_rfb_windows
 //
 //
 //

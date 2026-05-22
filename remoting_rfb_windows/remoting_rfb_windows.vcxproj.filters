@@ -119,9 +119,6 @@
     <ClCompile Include="desktop\D3D11Device.cpp">
       <Filter>Source Files\desktop</Filter>
     </ClCompile>
-    <ClCompile Include="desktop\WindowsGraphicsCapture.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="_.h">
@@ -220,34 +217,19 @@
     <ClInclude Include="desktop\WinDxException.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
-    <ClInclude Include="desktop\WinDxgiAcquiredFrame.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop\WinDxgiAdapter.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop\WinDxgiDevice.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop\WinDxgiOutput.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop\WinDxgiOutput1.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop\WinDxgiOutputDuplication.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop\WinDxgiSurface.h">
-      <Filter>Header Files\desktop</Filter>
-    </ClInclude>
     <ClInclude Include="desktop\WinDxRecoverableException.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
     <ClInclude Include="desktop\WinVideoRegionUpdaterImpl.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
-    <ClInclude Include="desktop\WindowsGraphicsCapture.h">
+    <ClInclude Include="desktop\D3D11Device.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DXGIAcquiredFrame.h">
+      <Filter>Header Files\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="desktop\DXGIOutputDuplication.h">
       <Filter>Header Files\desktop</Filter>
     </ClInclude>
   </ItemGroup>

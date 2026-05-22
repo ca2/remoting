@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "FullscreenWarningDialog.h"
 #include "innate_subsystem/gui/CheckBox.h"
-#include "remoting/client/remoting.h"
+#include "remoting/rfb_client/remoting.h"
 #include "remoting/remoting_rfb/client_config/ViewerConfig.h"
 #include "remoting/remoting_rfb/client_config/ViewerSettingsManager.h"
 

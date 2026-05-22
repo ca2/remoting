@@ -32,7 +32,7 @@
 namespace remoting_rfb_node_desktop
 {
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ExtraRfbServers :virtual public ::particle
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP ExtraRfbServers :virtual public ::particle
 
    {
    public:
@@ -49,7 +49,7 @@ namespace remoting_rfb_node_desktop
       };
 
 
-      ::ø<::list_base<::pointer<::remoting_node_desktop::RfbServer>>> m_servers;
+      ::ø<::list_base<::pointer<::remoting_rfb_node_desktop::RfbServer>>> m_servers;
       Conf m_effectiveConf;
       ::pointer<::remoting_rfb_node::Configurator> m_pconfigurator;
       ::pointer < ::subsystem::LogWriter > m_plogwriter;

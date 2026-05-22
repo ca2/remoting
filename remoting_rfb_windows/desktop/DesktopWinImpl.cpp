@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopWinImpl.h"
-#include "remoting/remoting_windows/desktop/WindowsUserInput.h"
+#include "remoting/remoting_rfb_windows/desktop/WindowsUserInput.h"
 #include "remoting/remoting_rfb/node_config/Configurator.h"
 #include "remoting/remoting_rfb/desktop_ipc/UpdateHandlerClient.h"
 #include "remoting/remoting_rfb/desktop/UpdateHandlerImpl.h"
@@ -34,7 +34,7 @@
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/Displays.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 
 {
    //
@@ -244,7 +244,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  
 
 

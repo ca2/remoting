@@ -33,4 +33,4 @@ namespace remoting
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows

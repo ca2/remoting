@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_rfb_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_rfb_windows/desktop/WinDxRecoverableException.h"
 #include "subsystem/framebuffer/StandardPixelFormatFactory.h"
-#include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
+#include "remoting/remoting_rfb_windows/desktop/WinCursorShapeUtils.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/DXGIOutputDuplication.h"
-#include "remoting/remoting_windows/desktop/D3D11Device.h"
+#include "remoting/remoting_rfb_windows/desktop/DXGIOutputDuplication.h"
+#include "remoting/remoting_rfb_windows/desktop/D3D11Device.h"
 
 
 // dxgi_diagnostic.cpp
@@ -322,7 +322,7 @@ static ::wstring HResultToString(HRESULT hr)
    //return wstr;
 }
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -559,90 +559,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  
 
 
-using namespace winrt;
-
-initializeEncoder(size.Width, size.Height);
-
-m_framePool = Direct3D11CaptureFramePool::Create(m_winrtDevice, DirectXPixelFormat::B8G8R8A8UIntNormalized, 2, size);
-
-m_session = m_framePool.CreateCaptureSession(item);
-
-m_framePool.FrameArrived([this](auto &pool, auto &) { onFrame(pool); });
-
-m_session.StartCapture();
-}
-
-void onFrame(Direct3D11CaptureFramePool const &pool)
-{
-   auto frame = pool.TryGetNextFrame();
-
-   auto surface = frame.Surface();
-
-   auto access = surface.as<IDirect3DDxgiInterfaceAccess>();
-
-   com_ptr<ID3D11Texture2D> texture;
-
-   check_hresult(access->GetInterface(guid_of<ID3D11Texture2D>(), texture.put_void()));
-
-   D3D11_TEXTURE2D_DESC desc{};
-   texture->GetDesc(&desc);
-
-   // Create FFmpeg frame
-   AVFrame *avFrame = av_frame_alloc();
-
-   avFrame->format = AV_PIX_FMT_D3D11;
-
-   avFrame->width = desc.Width;
-   avFrame->height = desc.Height;
-
-   // Attach D3D11 texture directly
-   avFrame->data[0] = reinterpret_cast<uint8_t *>(texture.get());
-
-   avFrame->data[1] = reinterpret_cast<uint8_t *>(0);
-
-   avFrame->pts = m_pts++;
-
-   int err = avcodec_send_frame(m_codecCtx, avFrame);
-
-   av_frame_free(&avFrame);
-
-   if (err < 0)
-      return;
-
-   while (true)
-   {
-      err = avcodec_receive_packet(m_codecCtx, m_packet);
-
-      if (err == AVERROR(EAGAIN) || err == AVERROR_EOF)
-      {
-         break;
-      }
-
-      if (err < 0)
-         break;
-
-      // Encoded H264 packet
-      printf("Encoded packet: %d bytes\n", m_packet->size);
-
-      // Send packet->data over network here
-
-      av_packet_unref(m_packet);
-   }
-}
-
-void shutdown()
-{
-   if (m_packet)
-      av_packet_free(&m_packet);
-
-   if (m_codecCtx)
-      avcodec_free_context(&m_codecCtx);
-}
-}
-;
-
-int main() { winrt::init_apartment(); }

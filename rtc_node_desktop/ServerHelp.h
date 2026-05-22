@@ -29,7 +29,7 @@ namespace remoting_node_desktop
    /**
     * remoting_rtc_node.exe help class.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServerHelp
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP ServerHelp
    {
    public:
       /**

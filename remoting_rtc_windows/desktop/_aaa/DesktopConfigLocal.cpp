@@ -26,7 +26,7 @@
 #include "remoting/remoting_rtc/node_config/Configurator.h"
 #include "windows/WindowsInputBlocker.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    DesktopConfigLocal::DesktopConfigLocal():
@@ -70,5 +70,5 @@ namespace remoting_windows
    void DesktopConfigLocal::correctLastTime(const class ::time & time) { m_pinputblocker->correctLastTime(time); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
  

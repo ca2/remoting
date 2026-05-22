@@ -41,7 +41,7 @@ namespace remoting_node_desktop
     *
     * @fixme stub class.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP AdditionalActionApplication : public ::subsystem::LocalOperatingSystemApplication
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP AdditionalActionApplication : public ::subsystem::LocalOperatingSystemApplication
    {
    public:
       /**

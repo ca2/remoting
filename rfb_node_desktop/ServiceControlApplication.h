@@ -39,7 +39,7 @@ namespace remoting_rfb_node_desktop
     * Service control application.
     * Application that can install, remove, start and stop remoting_rfb_node service.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServiceControlApplication : public ::subsystem::OperatingSystemApplication
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP ServiceControlApplication : public ::subsystem::OperatingSystemApplication
    {
    public:
       /**

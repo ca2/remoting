@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "UpdateHandlerImpl.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -194,4 +194,4 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows

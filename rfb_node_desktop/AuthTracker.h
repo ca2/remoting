@@ -33,7 +33,7 @@ namespace remoting_rfb_node_desktop
 
    // This class will be insert an time interval between trying of
    // authentications
-   class CLASS_DECL_REMOTING_NODE_DESKTOP AuthTracker :
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP AuthTracker :
    virtual public ::particle
    {
    public:

@@ -25,20 +25,20 @@
 #pragma once
 
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
 #include "remoting/remoting_rfb/desktop/ScreenDriver.h"
-#include "remoting/remoting_windows/desktop/WinVideoRegionUpdaterImpl.h"
+#include "remoting/remoting_rfb_windows/desktop/WinVideoRegionUpdaterImpl.h"
 #include "remoting/remoting_rfb/desktop/CursorPositionDetector.h"
 #include "remoting/remoting_rfb/desktop/CursorShapeDetector.h"
-#include "remoting/remoting_windows/desktop/WindowsCursorShapeGrabber.h"
+#include "remoting/remoting_rfb_windows/desktop/WindowsCursorShapeGrabber.h"
 #include "remoting/remoting_rfb/desktop/CopyRectDetector.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    // This class  implements "grabbers" and "detectors" which is not couple� with screen frame buffer.
-   class CLASS_DECL_REMOTING_WINDOWS Win32ScreenDriverBaseImpl :
+   class CLASS_DECL_REMOTING_RFB_WINDOWS Win32ScreenDriverBaseImpl :
       virtual public WinVideoRegionUpdaterImpl
    {
    public:
@@ -83,7 +83,7 @@ namespace remoting_windows
    //// __WIN32SCREENDRIVERBASEIMPL_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  
 
 

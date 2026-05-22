@@ -3,14 +3,3 @@
 
 
 
-#include "remoting/_.h"
-
-
-#if defined(_remoting_client_config_project)
-#define CLASS_DECL_REMOTING_CLIENT_CONFIG CLASS_DECL_EXPORT
-#else
-#define CLASS_DECL_REMOTING_CLIENT_CONFIG CLASS_DECL_IMPORT
-#endif
-
-
-

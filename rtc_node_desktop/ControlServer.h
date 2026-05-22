@@ -40,7 +40,7 @@ namespace remoting_node_desktop
     * Tcp server that listens for incoming control connections
     * and give management over these connection to ControlClient instances.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ControlServer : public ::subsystem::Thread
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP ControlServer : public ::subsystem::Thread
    {
    public:
 

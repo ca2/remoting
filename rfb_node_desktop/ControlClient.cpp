@@ -340,7 +340,7 @@ void ControlClient::destroy()
       ::remoting_control_desktop::ServerInfo info;
 
 
-      ::cast<::remoting_node_desktop::application> papplication = ::system()->m_papplication;
+      ::cast<::remoting_rfb_node_desktop::application> papplication = ::system()->m_papplication;
 
       papplication->Server().getServerInfo(&info);
 
@@ -376,7 +376,7 @@ void ControlClient::destroy()
    {
       m_pcontrolgate->writeUInt32(::remoting_control_desktop::ControlProto::REPLY_OK);
 
-      ::cast<::remoting_node_desktop::application> papplication = ::system()->m_papplication;
+      ::cast<::remoting_rfb_node_desktop::application> papplication = ::system()->m_papplication;
 
       papplication->Server().generateExternalShutdownSignal();
    }

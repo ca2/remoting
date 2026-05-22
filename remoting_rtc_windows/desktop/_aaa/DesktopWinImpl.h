@@ -33,7 +33,7 @@
 #include "windows/Win32ScreenDriverFactory.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 
 {
 
@@ -74,7 +74,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

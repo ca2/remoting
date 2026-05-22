@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinServiceDesktopFactory.h"
+#include "remoting/remoting_rtc_windows/desktop/WinServiceDesktopFactory.h"
 #include "remoting/remoting_rtc/desktop/DesktopClientImpl.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    WinServiceDesktopFactory::WinServiceDesktopFactory() {}
@@ -41,7 +41,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
  
 
 

@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "ViewerInstance.h"
-#include "remoting/client/remoting.h"
+#include "remoting/rfb_client/remoting.h"
 #include "remoting/remoting_rfb/viewer_core/FileTransferCapability.h"
 #include "remoting/remoting_rfb/viewer_core/RemoteViewerCore.h"
 #include "subsystem/socket/SocketIPv4.h"

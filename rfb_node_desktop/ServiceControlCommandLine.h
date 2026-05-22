@@ -38,7 +38,7 @@ namespace remoting_rfb_node_desktop
     * @remark only one allowed key can be specified.
     * @fixme no test for this class.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServiceControlCommandLine :
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP ServiceControlCommandLine :
       virtual public ::subsystem::CommandLine
    {
    public:

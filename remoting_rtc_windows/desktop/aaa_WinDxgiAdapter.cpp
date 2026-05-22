@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_rtc_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_rtc_windows/desktop/WinDxRecoverableException.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/aaa_WinDxgiAdapter.h"
+#include "remoting/remoting_rtc_windows/desktop/aaa_WinDxgiAdapter.h"
 
-// namespace remoting_windows
+// namespace remoting_rtc_windows
 // {
 //
 //
@@ -67,5 +67,5 @@
 //    }
 //
 //
-// } // namespace remoting_windows
+// } // namespace remoting_rtc_windows
 //

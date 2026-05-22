@@ -5,16 +5,16 @@
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 #include "remoting/remoting_rtc/desktop/ScreenCapture.h"
-#include "remoting/remoting_windows/desktop/Win8CursorShape.h"
+#include "remoting/remoting_rtc_windows/desktop/Win8CursorShape.h"
 // #include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem_windows/thread/GuiThread.h"
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/Win8DuplicationListener.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/desktop/Win8DuplicationListener.h"
 // #include "log_writer/LogWriter.h"
 
-#include "remoting/remoting_windows/desktop/DXGIOutputDuplication.h"
-#include "remoting/remoting_windows/desktop/WinCustomD3D11Texture2D.h"
+#include "remoting/remoting_rtc_windows/desktop/DXGIOutputDuplication.h"
+#include "remoting/remoting_rtc_windows/desktop/WinCustomD3D11Texture2D.h"
 
 #include <d3d11.h>
 #include <dxgi1_2.h>
@@ -32,7 +32,7 @@
 #include <windows.graphics.directx.direct3d11.interop.h>
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 
 {
 
@@ -48,7 +48,7 @@ namespace remoting_windows
    };
 
 
-   class CLASS_DECL_REMOTING_WINDOWS WindowsGraphicsCapture : virtual public ::remoting_rtc::ScreenCapture
+   class CLASS_DECL_REMOTING_RTC_WINDOWS WindowsGraphicsCapture : virtual public ::remoting_rtc::ScreenCapture
    {
    public:
 
@@ -78,5 +78,5 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 

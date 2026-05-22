@@ -44,7 +44,7 @@ namespace remoting_node_desktop
     * Windows Remoting Node application.
     * Used for running Remoting Node as single windows application.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP  ServerApplication : 
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP  ServerApplication : 
       virtual public ::subsystem::OperatingSystemApplication,
                              virtual public Task
    {

@@ -142,7 +142,7 @@ m_commandLine(scopedstrCommandLine)
          ///cmdLineParser.parse(&cmdArgs);
          cmdLineParser.parse(pcommandlinearguments);
       } catch (CommandLineFormatException &) {
-         ::remoting_node_desktop::ServerHelp::showUsage();
+         ::remoting_rfb_node_desktop::ServerHelp::showUsage();
          setExitCode(1);
          return;
       }

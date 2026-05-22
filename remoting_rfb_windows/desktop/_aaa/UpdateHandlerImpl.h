@@ -29,7 +29,7 @@
 #include "::remoting_rfb::ScreenDriver.h"
 #include "ScreenDriverFactory.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    // This class  contain a base architecture implementation of the UpdateHandler class.
@@ -79,7 +79,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

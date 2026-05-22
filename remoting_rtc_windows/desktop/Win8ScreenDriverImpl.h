@@ -31,18 +31,18 @@
 #include "acme/parallelization/happening.h"
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-#include "remoting/remoting_windows/desktop/Win8CursorShape.h"
+#include "remoting/remoting_rtc_windows/desktop/Win8CursorShape.h"
 #include "remoting/remoting_rtc/desktop/UpdateKeeper.h"
 #include "remoting/remoting_rtc/desktop/UpdateListener.h"
-#include "remoting/remoting_windows/desktop/Win8DuplicationListener.h"
-#include "remoting/remoting_windows/desktop/Win8DeskDuplicationThread.h"
+#include "remoting/remoting_rtc_windows/desktop/Win8DuplicationListener.h"
+#include "remoting/remoting_rtc_windows/desktop/Win8DeskDuplicationThread.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
-   class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriverImpl :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS Win8ScreenDriverImpl :
       virtual public ::subsystem_windows::GuiThread,
       virtual public Win8DuplicationListener
    {
@@ -125,7 +125,7 @@ namespace remoting_windows
    //// __WIN8SCREENDRIVERIMPL_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

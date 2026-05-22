@@ -32,7 +32,7 @@
 #include "remoting/remoting_rfb/region/Region.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    // This class  will be an abstract interface for user input such as keyboard,
@@ -71,7 +71,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

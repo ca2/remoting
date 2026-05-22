@@ -22,15 +22,15 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/DesktopFactory.h"
+#include "remoting/remoting_rfb_windows/desktop/DesktopFactory.h"
 
 #include "acme/platform/ProfileLogger.h"
-#include "remoting/remoting_windows/desktop/DesktopClientImpl.h"
-#include "remoting/remoting_windows/desktop/DesktopWinImpl.h"
+#include "remoting/remoting_rfb_windows/desktop/DesktopClientImpl.h"
+#include "remoting/remoting_rfb_windows/desktop/DesktopWinImpl.h"
 #include "remoting/remoting_rfb/node_config/Configurator.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    DesktopFactory::DesktopFactory()
@@ -86,7 +86,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  
 
 

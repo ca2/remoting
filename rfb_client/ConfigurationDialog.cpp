@@ -29,7 +29,7 @@
 #include "acme/filesystem/file/item.h"
 //#include "file_lib/::file::item.h"
 #include "subsystem/node/Process.h"
-#include "remoting/client/remoting.h"
+#include "remoting/rfb_client/remoting.h"
 //#include "remoting/remoting_rfb/remoting.h"
 
 

@@ -30,11 +30,11 @@
 #include "remoting/desktop/HookInstaller.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
-   class CLASS_DECL_REMOTING_WINDOWS HookInstaller :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS HookInstaller :
         virtual public ::remoting_rtc::HookInstaller
    {
    public:

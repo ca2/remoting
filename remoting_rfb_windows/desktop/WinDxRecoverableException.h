@@ -24,13 +24,13 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/WinDxException.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/desktop/WinDxException.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WinDxRecoverableException : public WinDxException
+   class CLASS_DECL_REMOTING_RFB_WINDOWS WinDxRecoverableException : public WinDxException
    {
    public:
       WinDxRecoverableException(const ::scoped_string &scopedstrMessage, HRESULT errCode);
@@ -40,7 +40,7 @@ namespace remoting_windows
    //// __WINDXRECOVERABLEEXCEPTION_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

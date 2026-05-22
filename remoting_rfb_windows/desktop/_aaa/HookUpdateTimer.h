@@ -29,7 +29,7 @@
 #include "::remoting_rfb::UpdateListener.h"
 #include "acme/parallelization/happening.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    // This class  is a timer that after calling the sear() function
@@ -63,4 +63,4 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows

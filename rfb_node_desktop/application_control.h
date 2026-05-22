@@ -9,14 +9,14 @@
 
 
 
-namespace remoting_node_desktop_control
+namespace remoting_rfb_node_desktop_control
 {
 
 
    //class remoting;
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP application :
-      virtual public ::remoting_node_desktop::application
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP application :
+      virtual public ::remoting_rfb_node_desktop::application
    {
    public:
 

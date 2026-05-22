@@ -41,7 +41,7 @@ namespace remoting_rfb_node_desktop
     *
     * @fixme stub class.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP AdditionalActionApplication : public ::subsystem::LocalOperatingSystemApplication
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP AdditionalActionApplication : public ::subsystem::LocalOperatingSystemApplication
    {
    public:
       /**

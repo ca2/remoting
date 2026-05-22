@@ -503,7 +503,7 @@
       <Project>{fc19ffe8-6294-4f1a-8d7a-281c93c5c040}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\remoting_node_desktop\remoting_remoting_node_desktop.vcxproj">
+    <ProjectReference Include="..\remoting_rfb_node_desktop\remoting_remoting_node_desktop.vcxproj">
       <Project>{ebfc3125-72a4-4029-9941-3be9ee6444d5}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

@@ -24,16 +24,16 @@
 
 #pragma once
 
-// #include "remoting/remoting_windows/_common_header.h"
+// #include "remoting/remoting_rfb_windows/_common_header.h"
 // #include <d3d11.h>
 // #include <DXGI1_2.h>
 //
 //
-// namespace remoting_windows
+// namespace remoting_rfb_windows
 // {
 //
 //
-//    class CLASS_DECL_REMOTING_WINDOWS WinD3D11Texture2D :
+//    class CLASS_DECL_REMOTING_RFB_WINDOWS WinD3D11Texture2D :
 //    virtual public ::particle
 //    {
 //    public:
@@ -54,7 +54,7 @@
 //    //// __WIND3D11TEXTURE2D_H__
 //
 //
-// } // namespace remoting_windows
+// } // namespace remoting_rfb_windows
 //
 //
 //

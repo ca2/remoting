@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/Win8ScreenDriver.h"
+#include "remoting/remoting_rtc_windows/desktop/Win8ScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 #include "remoting/remoting_rtc/node_config/Configurator.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -175,4 +175,4 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows

@@ -60,7 +60,7 @@ namespace remoting_node_desktop
     * @remark class uses Server singleton and actual Server instance must exist
     * while any control client is runnin. If this rule is broken, it can cause application crash.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ControlClient : public ::subsystem::Thread
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP ControlClient : public ::subsystem::Thread
    {
    public:
       ::pointer < ::remoting_rtc_node::Configurator > m_pconfigurator;

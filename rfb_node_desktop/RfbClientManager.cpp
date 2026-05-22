@@ -197,7 +197,7 @@ namespace remoting_rfb_node_desktop
 
          peerHost = peerAddr->toString();
 
-         auto papp = create_newø<::remoting_node_desktop::QueryConnectionApplication>();
+         auto papp = create_newø<::remoting_rfb_node_desktop::QueryConnectionApplication>();
 
          auto queryRetVal = papp->run_synchronously(peerHost, pserverconfig->isDefaultActionAccept(), pserverconfig->getQueryTimeout());
 

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "ControlServer.h"
 #include "ControlClient.h"
-#include "remoting/node_config/Configurator.h"
+#include "remoting/remoting_rfb/node_config/Configurator.h"
 #include "remoting/rfb_node_desktop/control_desktop/NamedPipeTransport.h"
 
 

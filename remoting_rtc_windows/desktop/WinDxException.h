@@ -24,13 +24,13 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
 #include "subsystem/platform/Exception.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WinDxException : public ::subsystem::Exception
+   class CLASS_DECL_REMOTING_RTC_WINDOWS WinDxException : public ::subsystem::Exception
    {
    public:
       WinDxException(const ::scoped_string &scopedstrMessage, HRESULT errCode);
@@ -44,7 +44,7 @@ namespace remoting_windows
 
    //// __WINDXEXCEPTION_H__
 
-}// namespace remoting_windows
+}// namespace remoting_rtc_windows
 
 
 

@@ -26,7 +26,7 @@
 #include "remoting/remoting_rtc/node_config/Configurator.h"
 #include "acme/_operating_system.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    // ConsolePoller::ConsolePoller(::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener,
@@ -134,7 +134,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

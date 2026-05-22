@@ -38,7 +38,7 @@
 #include "remoting/remoting_rfb/desktop_ipc/BlockingGate.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    class CLASS_DECL_REMOTING_RFB UpdateHandler :
@@ -128,7 +128,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

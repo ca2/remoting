@@ -63,7 +63,7 @@ namespace remoting_rfb_node_desktop
         1) Do action when last client disconnects.
     */
    //class Server : public Singleton<Server>,
-   class  CLASS_DECL_REMOTING_NODE_DESKTOP Server : 
+   class  CLASS_DECL_REMOTING_RFB_NODE_DESKTOP Server : 
          public ::subsystem::ListenerContainer<ServerListener *>,
          public ::remoting_rfb_node::ConfigReloadListener,
          public RfbClientManagerEventListener

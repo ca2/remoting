@@ -27,12 +27,6 @@
     <Filter Include="Header Files\client_config">
       <UniqueIdentifier>{7f0104f9-cbf6-43db-b78d-46db64c38f52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\win_system">
-      <UniqueIdentifier>{db6bb7a4-2918-47e6-8724-567e568ec56b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\thread">
-      <UniqueIdentifier>{5b0d532e-374f-444b-8b3f-2d8211e38132}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\config">
       <UniqueIdentifier>{3c937965-0622-4b71-9543-17535b8e7a41}</UniqueIdentifier>
     </Filter>
@@ -45,32 +39,14 @@
     <Filter Include="Header Files\network\socket">
       <UniqueIdentifier>{4895dd81-5c23-4a31-90d3-6b2c9dd7a1c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\rpframebuffer">
-      <UniqueIdentifier>{6d69830f-4d47-47ca-a0b9-43759b649e7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ftp_client">
-      <UniqueIdentifier>{013363a9-fa2d-45ee-83e3-c4324e9ad735}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ftp_common">
-      <UniqueIdentifier>{f78fca25-142b-431a-83c5-cbe845a51e8e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\region">
       <UniqueIdentifier>{a11a7b24-63b7-4cce-bb1f-e1f80c6144e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\server_config">
-      <UniqueIdentifier>{30b50dc8-cc51-4a80-88d3-ff581a49e799}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\rfb_sconn">
       <UniqueIdentifier>{35fbf084-6919-4a0e-ac66-47ee77cc6747}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\rfb_sconn">
       <UniqueIdentifier>{197cfb2d-faaf-4ab4-9cf6-55b886cd2a2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\fb_update_sender">
-      <UniqueIdentifier>{2577669b-7268-420a-87d5-4f493e46773c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ds">
-      <UniqueIdentifier>{9364a541-8436-4de9-953d-f56fcebc7f7e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\framebuffer_update_sender">
       <UniqueIdentifier>{1501d7aa-4571-4178-93ed-e50a607dfc02}</UniqueIdentifier>
@@ -119,6 +95,21 @@
     </Filter>
     <Filter Include="Header Files\desktop_ipc">
       <UniqueIdentifier>{d518f028-594b-439a-a6bb-a242b6d291ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\rfb">
+      <UniqueIdentifier>{fba2b37e-dd28-46be-bdeb-463ae637304a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\framebuffer_update_sender">
+      <UniqueIdentifier>{2577669b-7268-420a-87d5-4f493e46773c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\file_transfer_client">
+      <UniqueIdentifier>{013363a9-fa2d-45ee-83e3-c4324e9ad735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\file_transfer_common">
+      <UniqueIdentifier>{f78fca25-142b-431a-83c5-cbe845a51e8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\node_config">
+      <UniqueIdentifier>{30b50dc8-cc51-4a80-88d3-ff581a49e799}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -698,207 +689,15 @@
     <ClCompile Include="event_log\EventLog.cpp">
       <Filter>Source Files\event_log</Filter>
     </ClCompile>
-    <ClCompile Include="desktop\ScreenCapture.cpp">
-      <Filter>Source Files\desktop</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client_config\_.h">
       <Filter>Header Files\client_config</Filter>
     </ClInclude>
-    <ClInclude Include="_.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\_.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\AnonymousPipe.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\AnonymousPipeFactory.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\ApplicationCrashEvents.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\AutoImpersonator.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\CtrlAltDelSimulator.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\CurrentConsoleProcess.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\DibSection.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\DynamicLibrary.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\EmulatedAnonymousPipeFactory.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\HookEventListener.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\Impersonator.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\InputInjector.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\Keyboard.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\LocalWindowsApplication.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\NamedPipe.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\ParentProcess.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\Pipe.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\PipeClient.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\PipeImpersonatedThread.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\PipeServer.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\Process.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\ProcessHandle.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\Registry.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\RegistryKey.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\resource.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\SCMClient.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\Screen.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\SecurityAttributes.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\Service.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\SharedMemory.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\Shell.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\SystemException.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\SystemInformation.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\UipiControl.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\VersionInfo.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WinClipboard.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WinCommandLineArgs.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WinCursor.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WindowsApplication.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WindowsDisplays.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WindowsEvent.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WindowsEventEx.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WinHandles.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WinHooks.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WinProcessCommandLine.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WinStaLibrary.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WinTimeMillis.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\Workstation.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WsaStartup.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="win_system\WTS.h">
-      <Filter>Header Files\win_system</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\_.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\critical_section_lock.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\DesktopSelector.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\GlobalMutex.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\GuiThread.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\critical_section.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\lockable.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\resource.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\Thread.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="thread\ThreadCollector.h">
-      <Filter>Header Files\thread</Filter>
-    </ClInclude>
     <ClInclude Include="client_config\ConnectionConfig.h">
       <Filter>Header Files\client_config</Filter>
     </ClInclude>
     <ClInclude Include="client_config\ConnectionConfigSM.h">
-      <Filter>Header Files\client_config</Filter>
-    </ClInclude>
-    <ClInclude Include="client_config\resource.h">
       <Filter>Header Files\client_config</Filter>
     </ClInclude>
     <ClInclude Include="client_config\ViewerConfig.h">
@@ -917,9 +716,6 @@
       <Filter>Header Files\config</Filter>
     </ClInclude>
     <ClInclude Include="config\RegistrySettingsManager.h">
-      <Filter>Header Files\config</Filter>
-    </ClInclude>
-    <ClInclude Include="config\resource.h">
       <Filter>Header Files\config</Filter>
     </ClInclude>
     <ClInclude Include="config\SettingsManager.h">
@@ -1087,281 +883,14 @@
     <ClInclude Include="network\socket\WindowsSocket.h">
       <Filter>Header Files\network\socket</Filter>
     </ClInclude>
-    <ClInclude Include="rfb\_.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\AuthDefs.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\CursorShape.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\EncodingDefs.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\Framebuffer.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\HostPath.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\keysymdef.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\MsgDefs.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\PixelConverter.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\PixelFormat.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\RfbKeySym.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\RfbKeySymListener.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\StandardPixelFormatFactory.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\TunnelDefs.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb\VendorDefs.h">
-      <Filter>Header Files\rpframebuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\_.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\CopyFileEventListener.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\CopyOperation.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\DownloadOperation.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\FileInfoList.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\FileTransferCore.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\FileTransferEventAdapter.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\FileTransferEventHandler.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\FileTransferInterface.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\FileTransferMessageProcessor.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\FileTransferOperation.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\FileTransferReplyBuffer.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\FileTransferRequestSender.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\LocalFilesDeleteOperation.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\OperationEventListener.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\OperationNotPermittedException.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\OperationSupport.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\RemoteFileListOperation.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\RemoteFileRenameOperation.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\RemoteFolderCreateOperation.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\resource.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_client\UploadOperation.h">
-      <Filter>Header Files\ftp_client</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_common\_.h">
-      <Filter>Header Files\ftp_common</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_common\FileInfo.h">
-      <Filter>Header Files\ftp_common</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_common\FileTransferException.h">
-      <Filter>Header Files\ftp_common</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_common\FolderListener.h">
-      <Filter>Header Files\ftp_common</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_common\FTMessage.h">
-      <Filter>Header Files\ftp_common</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_common\OperationNotSupportedException.h">
-      <Filter>Header Files\ftp_common</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_common\resource.h">
-      <Filter>Header Files\ftp_common</Filter>
-    </ClInclude>
-    <ClInclude Include="ftp_common\WinFilePath.h">
-      <Filter>Header Files\ftp_common</Filter>
-    </ClInclude>
     <ClInclude Include="region\x11region_inttypes.h">
       <Filter>Header Files\region</Filter>
     </ClInclude>
     <ClInclude Include="region\x11region.h">
       <Filter>Header Files\region</Filter>
     </ClInclude>
-    <ClInclude Include="server_config\_.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\ConfigReloadListener.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\IpAccessControl.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\IpAccessRule.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\PortMapping.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\PortMappingContainer.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\PortMappingRect.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\RegistrySecurityAttributes.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\resource.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\ServerConfig.h">
-      <Filter>Header Files\server_config</Filter>
-    </ClInclude>
     <ClInclude Include="region\Region.h">
       <Filter>Header Files\region</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\_.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\AuthException.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\CapContainer.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\ClientAuthListener.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\ClientInputEventListener.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\ClientInputHandler.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\ClientTerminationListener.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\ClipboardExchange.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\EchoExtensionRequestHandler.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\EncodeOptions.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\Encoder.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\EncoderStore.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\HextileEncoder.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\HextileTile.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\JpegCompressor.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\JpegEncoder.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\RfbClient.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\RfbCodeRegistrator.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\RfbDispatcher.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\RfbDispatcherListener.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\RfbInitializer.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\RreEncoder.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\TightEncoder.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\TightPalette.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="rfb_sconn\ZrleEncoder.h">
-      <Filter>Header Files\rfb_sconn</Filter>
-    </ClInclude>
-    <ClInclude Include="fb_update_sender\_.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
-    <ClInclude Include="fb_update_sender\CursorUpdates.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
-    <ClInclude Include="fb_update_sender\SenderControlInformationInterface.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
-    <ClInclude Include="fb_update_sender\UpdateRequestListener.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
-    <ClInclude Include="fb_update_sender\UpdateSender.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
-    <ClInclude Include="fb_update_sender\UpdSenderMsgDefs.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
-    <ClInclude Include="fb_update_sender\Viewport.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
-    <ClInclude Include="fb_update_sender\ViewPortState.h">
-      <Filter>Header Files\fb_update_sender</Filter>
-    </ClInclude>
-    <ClInclude Include="server_config\Configurator.h">
-      <Filter>Header Files\server_config</Filter>
     </ClInclude>
     <ClInclude Include="platform\remoting.h">
       <Filter>Header Files\platform</Filter>
@@ -1525,101 +1054,257 @@
     <ClInclude Include="desktop_ipc\UserInputServer.h">
       <Filter>Header Files\desktop_ipc</Filter>
     </ClInclude>
-    <ClInclude Include="node\ControlAuthException.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\_.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node\ControlCommand.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\AuthException.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node\NamingDefs.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\CapContainer.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node\NewConnectionEvents.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\ClientAuthListener.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node\Notificator.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\ClientInputEventListener.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node\RemoteException.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\ClientInputHandler.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node\_.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\ClientTerminationListener.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node_config\ConfigReloadListener.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\ClipboardExchange.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node_config\Configurator.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\EchoExtensionRequestHandler.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node_config\IpAccessControl.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\EncodeOptions.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node_config\IpAccessRule.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\Encoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node_config\PortMapping.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\EncoderStore.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node_config\PortMappingContainer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\HextileEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node_config\PortMappingRect.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\HextileTile.h">
+      <Filter>Header Files\rfb_sconn</Filter>
     </ClInclude>
-    <ClInclude Include="node_config\RegistrySecurityAttributes.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="rfb_sconn\JpegCompressor.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\JpegEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbClient.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbCodeRegistrator.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbDispatcher.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbDispatcherListener.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RfbInitializer.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\RreEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\TightEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\TightPalette.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb_sconn\ZrleEncoder.h">
+      <Filter>Header Files\rfb_sconn</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\VendorDefs.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\TunnelDefs.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\RfbKeySymListener.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\RfbKeySym.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\PixelConverter.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\MsgDefs.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\keysymdef.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\HostPath.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\EncodingDefs.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\CursorShape.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\AuthDefs.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="rfb\_.h">
+      <Filter>Header Files\rfb</Filter>
+    </ClInclude>
+    <ClInclude Include="framebuffer_update_sender\_.h">
+      <Filter>Header Files\framebuffer_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="framebuffer_update_sender\CursorUpdates.h">
+      <Filter>Header Files\framebuffer_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="framebuffer_update_sender\SenderControlInformationInterface.h">
+      <Filter>Header Files\framebuffer_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="framebuffer_update_sender\UpdateRequestListener.h">
+      <Filter>Header Files\framebuffer_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="framebuffer_update_sender\UpdateSender.h">
+      <Filter>Header Files\framebuffer_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="framebuffer_update_sender\UpdSenderMsgDefs.h">
+      <Filter>Header Files\framebuffer_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="framebuffer_update_sender\ViewPort.h">
+      <Filter>Header Files\framebuffer_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="framebuffer_update_sender\ViewPortState.h">
+      <Filter>Header Files\framebuffer_update_sender</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\_.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\CopyFileEventListener.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\CopyOperation.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\DownloadOperation.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\FileInfoList.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\FileTransferCore.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\FileTransferEventAdapter.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\FileTransferEventHandler.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\FileTransferInterface.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\FileTransferMessageProcessor.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\FileTransferOperation.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\FileTransferReplyBuffer.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\FileTransferRequestSender.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\LocalFilesDeleteOperation.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\OperationEventListener.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\OperationNotPermittedException.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\OperationSupport.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\RemoteFileListOperation.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\RemoteFileRenameOperation.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\RemoteFilesDeleteOperation.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\RemoteFolderCreateOperation.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_client\UploadOperation.h">
+      <Filter>Header Files\file_transfer_client</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_common\WinFilePath.h">
+      <Filter>Header Files\file_transfer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_common\OperationNotSupportedException.h">
+      <Filter>Header Files\file_transfer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_common\FTMessage.h">
+      <Filter>Header Files\file_transfer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_common\FolderListener.h">
+      <Filter>Header Files\file_transfer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_common\FileTransferException.h">
+      <Filter>Header Files\file_transfer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_common\FileInfo.h">
+      <Filter>Header Files\file_transfer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="file_transfer_common\_.h">
+      <Filter>Header Files\file_transfer_common</Filter>
     </ClInclude>
     <ClInclude Include="node_config\ServerConfig.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\node_config</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\RegistrySecurityAttributes.h">
+      <Filter>Header Files\node_config</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\PortMappingRect.h">
+      <Filter>Header Files\node_config</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\PortMappingContainer.h">
+      <Filter>Header Files\node_config</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\PortMapping.h">
+      <Filter>Header Files\node_config</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\IpAccessRule.h">
+      <Filter>Header Files\node_config</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\IpAccessControl.h">
+      <Filter>Header Files\node_config</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\Configurator.h">
+      <Filter>Header Files\node_config</Filter>
+    </ClInclude>
+    <ClInclude Include="node_config\ConfigReloadListener.h">
+      <Filter>Header Files\node_config</Filter>
     </ClInclude>
     <ClInclude Include="node_config\_.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\AdministrationConfigDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\ChangePasswordDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\CommonInputValidation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\ConfigDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\EditIpAccessRuleDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\EditPortMappingDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\IpAccessControlDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\PasswordControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\PortMappingDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\ServerConfigDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\TvnLogFilename.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\UIDataAccess.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\VideoRegionsConfigDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="node_user_config\_.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="desktop\ScreenCapture.h">
-      <Filter>Header Files\desktop</Filter>
+      <Filter>Header Files\node_config</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

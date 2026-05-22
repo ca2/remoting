@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::remoting_rfb::UpdateKeeper.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -254,7 +254,7 @@ namespace remoting_windows
 
    }
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  
 
 

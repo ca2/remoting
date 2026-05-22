@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
 #include "subsystem/_common_header.h"
 #ifndef CAPTUREBLT
 #define CAPTUREBLT          (DWORD)0x40000000 /* Include layered windows */
@@ -39,9 +39,9 @@
 #include "acme/parallelization/happening.h"
 #include "subsystem/thread/GuiThread.h"
 #include "subsystem_windows/node/Screen.h"
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    //
@@ -77,7 +77,7 @@ namespace remoting_windows
      }
    */
 
-   class CLASS_DECL_REMOTING_WINDOWS WindowsScreenGrabber :
+   class CLASS_DECL_REMOTING_RFB_WINDOWS WindowsScreenGrabber :
    virtual public ::remoting_rfb::ScreenGrabber,
    virtual public ::subsystem::GuiThread
    {
@@ -125,7 +125,7 @@ namespace remoting_windows
 
    //// __WINDOWSSCREENGRABBER_H__
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

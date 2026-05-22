@@ -277,7 +277,7 @@ void ControlTrayIcon::onAction(int action)
       m_pconfigdialog->setServiceFlag(isConnectedToService);
       m_pconfigdialog->show();
 
-      //::cast < ::remoting_node_desktop::application > papp = m_papplication;
+      //::cast < ::remoting_rfb_node_desktop::application > papp = m_papplication;
 
       //auto pserverapp = papp->m_pserverapplication;
 

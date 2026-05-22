@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinDxException.h"
+#include "remoting/remoting_rfb_windows/desktop/WinDxException.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -38,4 +38,4 @@ namespace remoting_windows
    HRESULT WinDxException::getErrorCode() const { return m_errCode; }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows

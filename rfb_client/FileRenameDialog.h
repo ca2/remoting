@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/client/NewFolderDialog.h"
+#include "remoting/rfb_client/NewFolderDialog.h"
 
 
 namespace remoting_rfb_client

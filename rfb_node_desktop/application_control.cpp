@@ -5,11 +5,11 @@
 #include "application_control.h"
 
 
-__IMPLEMENT_APPLICATION_RELEASE_TIME(remoting_node_desktop_control);
-IMPLEMENT_APPLICATION_FACTORY(remoting_node_desktop_control);
+__IMPLEMENT_APPLICATION_RELEASE_TIME(remoting_rfb_node_desktop_control);
+IMPLEMENT_APPLICATION_FACTORY(remoting_rfb_node_desktop_control);
 
 
-namespace remoting_node_desktop_control
+namespace remoting_rfb_node_desktop_control
 {
 
    application::application()
@@ -182,4 +182,4 @@ namespace remoting_node_desktop_control
 //
 //    }
 
-} // namespace remoting_node_desktop_control
+} // namespace remoting_rfb_node_desktop_control

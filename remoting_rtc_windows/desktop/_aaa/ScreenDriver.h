@@ -31,7 +31,7 @@
 #include "remoting/remoting_rtc/rfb/CursorShape.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    // Derived classes commits oneself that internal frame buffer (accessing with getScreenBuffer()) will
@@ -101,7 +101,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

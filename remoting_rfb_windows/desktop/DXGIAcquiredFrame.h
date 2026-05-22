@@ -24,17 +24,17 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/DXGIOutputDuplication.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/desktop/DXGIOutputDuplication.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    // #include aaa_<d3d11.h>
    // #include aaa_<DXGI1_2.h>
 
-   class CLASS_DECL_REMOTING_WINDOWS DXGIAcquiredFrame :
+   class CLASS_DECL_REMOTING_RFB_WINDOWS DXGIAcquiredFrame :
       virtual public ::particle
    {
    public:
@@ -60,7 +60,7 @@ namespace remoting_windows
    //// __WINDXGIACQUIREDFRAME_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

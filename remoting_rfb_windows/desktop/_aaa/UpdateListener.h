@@ -27,7 +27,7 @@
 
 //#include "subsystem/thread/lockable_critical_section.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    class CLASS_DECL_REMOTING_RFB ::remoting_rfb::UpdateListener :
@@ -47,7 +47,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

@@ -33,7 +33,7 @@ namespace remoting_node_desktop
    /**
     * ServerApplication command line parser.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServerCommandLine : public ::subsystem::CommandLine
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP ServerCommandLine : public ::subsystem::CommandLine
    {
    public:
       ServerCommandLine();

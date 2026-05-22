@@ -25,7 +25,7 @@
 #include "MirrorScreenDriver.h"
 #include "subsystem/platform/Exception.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    // MirrorScreenDriver::MirrorScreenDriver(::remoting_rfb::UpdateKeeper * pupdatekeeper, ::remoting_rfb::UpdateListener * pupdatelistener,
@@ -209,7 +209,7 @@ namespace remoting_windows
    void MirrorScreenDriver::onTermThread() { m_updateTimeout.set_happening(); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  
 
 

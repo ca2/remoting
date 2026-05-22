@@ -27,7 +27,7 @@
 
 #include "DesktopFactory.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    class CLASS_DECL_REMOTING_RFB ApplicationDesktopFactory :
@@ -42,7 +42,7 @@ namespace remoting_windows
                                      AbnormDeskTermListener *pdesktermlistenerExternal, ::subsystem::LogWriter * plogwriter);
    };
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

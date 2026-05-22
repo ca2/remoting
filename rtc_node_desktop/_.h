@@ -7,9 +7,9 @@
 #include "acme/_operating_system.h"
 #include "subsystem_bsd_sockets/_.h"
 #if defined(_remoting_node_desktop_project)
-#define CLASS_DECL_REMOTING_NODE_DESKTOP CLASS_DECL_EXPORT
+#define CLASS_DECL_REMOTING_RTC_NODE_DESKTOP CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_REMOTING_NODE_DESKTOP CLASS_DECL_IMPORT
+#define CLASS_DECL_REMOTING_RTC_NODE_DESKTOP CLASS_DECL_IMPORT
 #endif
 
 

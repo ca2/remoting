@@ -48,7 +48,7 @@ namespace remoting_node_desktop
     *
     * Also contains body of tvnservice.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP Service : 
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP Service : 
       virtual public ::subsystem::Service,
       virtual public Task        
    {

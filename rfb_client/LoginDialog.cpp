@@ -26,7 +26,7 @@
 #include "remoting/remoting_rfb/client/NamingDefs.h"
 #include "OptionsDialog.h"
 #include "innate_subsystem/platform/subsystem.h"
-#include "remoting/client/remoting.h"
+#include "remoting/rfb_client/remoting.h"
 #include "remoting/remoting_rfb/platform/remoting.h"
 #include "subsystem/node/Shell.h"
 #include "subsystem/node/SystemException.h"

@@ -579,9 +579,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		9A6BC8B52F8161D4000A4200 /* remoting_node_desktop */ = {
+		9A6BC8B52F8161D4000A4200 /* remoting_rfb_node_desktop */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_node_desktop" */;
+			buildConfigurationList = 9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_rfb_node_desktop" */;
 			buildPhases = (
 				9A6BC8B22F8161D4000A4200 /* Headers */,
 				9A6BC8B32F8161D4000A4200 /* Sources */,
@@ -593,7 +593,7 @@
 			dependencies = (
 				9AD3F1902FB1924800CB9A78 /* PBXTargetDependency */,
 			);
-			name = remoting_node_desktop;
+			name = remoting_rfb_node_desktop;
 			packageProductDependencies = (
 			);
 			productName = remoting_rfb_node;
@@ -614,7 +614,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_node_desktop" */;
+			buildConfigurationList = 9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_rfb_node_desktop" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -634,7 +634,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				9A6BC8B52F8161D4000A4200 /* remoting_node_desktop */,
+				9A6BC8B52F8161D4000A4200 /* remoting_rfb_node_desktop */,
 			);
 		};
 /* End PBXProject section */
@@ -1027,7 +1027,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_node_desktop" */ = {
+		9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_rfb_node_desktop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A6BC8B82F8161D4000A4200 /* Debug */,
@@ -1036,7 +1036,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_node_desktop" */ = {
+		9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_rfb_node_desktop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A6BC8BB2F8161D4000A4200 /* Debug */,

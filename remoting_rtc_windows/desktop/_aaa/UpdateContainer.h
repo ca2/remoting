@@ -29,7 +29,7 @@
 //#include "remoting/remoting_rtc/region/::i32_point.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    class CLASS_DECL_REMOTING UpdateContainer
@@ -60,7 +60,7 @@ namespace remoting_windows
    //// __UPDATECONTAINER_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

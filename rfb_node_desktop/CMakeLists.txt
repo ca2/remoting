@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(remoting_node_desktop)
+project(remoting_rfb_node_desktop)
 
 
 list(APPEND library_source

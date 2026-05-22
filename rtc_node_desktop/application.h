@@ -15,7 +15,7 @@ namespace remoting_node_desktop
 
    //class remoting;
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP application :
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP application :
       virtual public ::apex::application
    {
    public:

@@ -29,17 +29,17 @@
 
 // #include aaa_<d3d11.h>
 // #include aaa_<DXGI1_2.h>
-#include "remoting/remoting_windows/_common_header.h"
-//#include "remoting/remoting_windows/desktop/WinDxgiSurface.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
+//#include "remoting/remoting_rtc_windows/desktop/WinDxgiSurface.h"
 #include <d3d11.h>
 #include <DXGI1_2.h>
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    // Calls IDXGISurface->Map() function at the constructor and Unmap() at the destructor.
-   class CLASS_DECL_REMOTING_WINDOWS WinAutoMapDxgiSurface :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS WinAutoMapDxgiSurface :
       virtual public ::particle
    {
    public:
@@ -58,7 +58,7 @@ namespace remoting_windows
    //// __WINAUTOMAPDXGISURFACE_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

@@ -26,21 +26,21 @@
 
 
 #include "innate_subsystem/framebuffer/Framebuffer.h"
-#include "remoting/remoting_windows/desktop/Win8CursorShape.h"
+#include "remoting/remoting_rfb_windows/desktop/Win8CursorShape.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 #include "subsystem_windows/thread/GuiThread.h"
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/Win8DuplicationListener.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/desktop/Win8DuplicationListener.h"
 //#include "log_writer/LogWriter.h"
 
-#include "remoting/remoting_windows/desktop/WinCustomD3D11Texture2D.h"
-#include "remoting/remoting_windows/desktop/DXGIOutputDuplication.h"
+#include "remoting/remoting_rfb_windows/desktop/WinCustomD3D11Texture2D.h"
+#include "remoting/remoting_rfb_windows/desktop/DXGIOutputDuplication.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win8DeskDuplication :
+   class CLASS_DECL_REMOTING_RFB_WINDOWS Win8DeskDuplication :
       //virtual public ::subsystem_windows::GuiThread
        virtual public ::particle
    {
@@ -101,7 +101,7 @@ namespace remoting_windows
       bool m_hasRecoverableError;
 
 
-      // Use this variables as class CLASS_DECL_REMOTING_WINDOWS fields to avoid frequency memory allocations.
+      // Use this variables as class CLASS_DECL_REMOTING_RFB_WINDOWS fields to avoid frequency memory allocations.
       ::array_base<RECT> m_dirtyRects;
       ::array_base<DXGI_OUTDUPL_MOVE_RECT> m_moveRects;
 
@@ -115,7 +115,7 @@ namespace remoting_windows
    //// __WIN8DESKDUPLICATIONTHREAD_H__
 
 
-}// namespace remoting_windows
+}// namespace remoting_rfb_windows
 
 
 

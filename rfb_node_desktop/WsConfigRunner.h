@@ -33,7 +33,7 @@ namespace remoting_rfb_node_desktop
 
    // This class runs TvnControl in current session.
    // This class only for application mode running.
-   class CLASS_DECL_REMOTING_NODE_DESKTOP WsConfigRunner : 
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP WsConfigRunner : 
       virtual public ::subsystem::Thread
    {
    public:

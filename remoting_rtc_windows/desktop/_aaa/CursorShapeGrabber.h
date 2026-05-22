@@ -28,7 +28,7 @@
 #include "remoting/remoting_rtc/rfb/CursorShape.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    class CLASS_DECL_REMOTING CursorShapeGrabber :
@@ -51,7 +51,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

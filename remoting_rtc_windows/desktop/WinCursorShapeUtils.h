@@ -24,17 +24,17 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
 #include "innate_subsystem/framebuffer/Framebuffer.h"
 #include <DXGI1_2.h>
 //#include aaa_<vector>
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    // This class  provides some functions to work with windows cursor shape data.
-   class CLASS_DECL_REMOTING_WINDOWS WinCursorShapeUtils
+   class CLASS_DECL_REMOTING_RTC_WINDOWS WinCursorShapeUtils
    {
    public:
       WinCursorShapeUtils();
@@ -148,7 +148,7 @@ namespace remoting_windows
 
    //// __WINCURSORSHAPEUTILS_H__
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

@@ -33,7 +33,7 @@ namespace remoting_rfb_node_desktop
    /**
     * ServerApplication command line parser.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServerCommandLine : public ::subsystem::CommandLine
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP ServerCommandLine : public ::subsystem::CommandLine
    {
    public:
       ServerCommandLine();

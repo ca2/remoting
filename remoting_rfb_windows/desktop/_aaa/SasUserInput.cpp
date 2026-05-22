@@ -35,7 +35,7 @@
 #include "subsystem_windows/platform/subsystem.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -130,4 +130,4 @@ namespace remoting_windows
    bool SasUserInput::isApplicationInFocus(unsigned int procId) { return m_client->isApplicationInFocus(procId); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows

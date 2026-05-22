@@ -24,19 +24,19 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
 #include "remoting/remoting_rtc/desktop/UserInput.h"
-//#include "remoting/remoting_windows/desktop/WindowsClipboard.h"
+//#include "remoting/remoting_rtc_windows/desktop/WindowsClipboard.h"
 #include "subsystem/platform/Keymap.h"
 #include "subsystem/node/InputInjector.h"
 #include "subsystem/node/Displays.h"
 //#include "log_writer/LogWriter.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WindowsUserInput :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS WindowsUserInput :
    virtual public ::remoting_rtc::UserInput
    {
    public:
@@ -84,7 +84,7 @@ namespace remoting_windows
 
    //// __WINDOWSUSERINPUT_H__
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

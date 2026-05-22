@@ -29,7 +29,7 @@
 #include "acme/_operating_system.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -152,7 +152,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

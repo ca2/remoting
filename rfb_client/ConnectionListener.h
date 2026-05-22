@@ -25,7 +25,7 @@
 #pragma once
 
 
-#include "remoting/client/ViewerInstance.h"
+#include "remoting/rfb_client/ViewerInstance.h"
 #include "remoting/remoting_rfb/network/TcpServer.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 

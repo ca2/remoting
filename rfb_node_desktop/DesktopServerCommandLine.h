@@ -38,7 +38,7 @@ namespace remoting_rfb_node_desktop
     * pathToLogDir arg is full path to directory where desktop server log
     * will be created.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP DesktopServerCommandLine : private ::subsystem::CommandLine
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP DesktopServerCommandLine : private ::subsystem::CommandLine
    {
    public:
       DesktopServerCommandLine();

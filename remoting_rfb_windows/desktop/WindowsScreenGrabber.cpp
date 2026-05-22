@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WindowsScreenGrabber.h"
+#include "remoting/remoting_rfb_windows/desktop/WindowsScreenGrabber.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -267,5 +267,5 @@ namespace remoting_windows
    void WindowsScreenGrabber::onTermThread() { m_threadStopper.set_happening(); }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  

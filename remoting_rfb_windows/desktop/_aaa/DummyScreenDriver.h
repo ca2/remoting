@@ -32,7 +32,7 @@
 #include "acme/parallelization/happening.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    class CLASS_DECL_REMOTING_RFB DummyScreenDriver : public ::remoting_rfb::ScreenDriver, ::subsystem::Thread
@@ -80,7 +80,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  
 
 

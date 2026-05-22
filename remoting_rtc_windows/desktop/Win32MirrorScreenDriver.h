@@ -24,14 +24,14 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
-#include "remoting/remoting_windows/desktop/MirrorScreenDriver.h"
-#include "remoting/remoting_windows/desktop/Win32ScreenDriverBaseImpl.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/desktop/MirrorScreenDriver.h"
+#include "remoting/remoting_rtc_windows/desktop/Win32ScreenDriverBaseImpl.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
+   class CLASS_DECL_REMOTING_RTC_WINDOWS Win32MirrorScreenDriver : public Win32ScreenDriverBaseImpl
    {
    public:
       //Win32MirrorScreenDriver(::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener,
@@ -53,7 +53,7 @@ namespace remoting_windows
       // Stops screen update detection.
       virtual void terminateDetection();
 
-      // Note: This class  is a wrapper for the MirrorScreenDriver class CLASS_DECL_REMOTING_WINDOWS and then
+      // Note: This class  is a wrapper for the MirrorScreenDriver class CLASS_DECL_REMOTING_RTC_WINDOWS and then
       // only MirrorScreenDriver can provide appropriate thread safety for the ::remoting_rtc::ScreenDriver functions.
 
       virtual ::i32_size getScreenDimension();
@@ -70,7 +70,7 @@ namespace remoting_windows
    //// __WIN32MIRRORSCREENDRIVER_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

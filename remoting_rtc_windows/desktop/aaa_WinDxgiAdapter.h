@@ -24,16 +24,16 @@
 
 #pragma once
 
-// #include "remoting/remoting_windows/_common_header.h"
-// #include "remoting/remoting_windows/desktop/WinDxgiDevice.h"
+// #include "remoting/remoting_rtc_windows/_common_header.h"
+// #include "remoting/remoting_rtc_windows/desktop/WinDxgiDevice.h"
 //
 //
-// namespace remoting_windows
+// namespace remoting_rtc_windows
 // {
 //    // #include aaa_<d3d11.h>
 //    // #include aaa_<DXGI1_2.h>
 //
-//    class CLASS_DECL_REMOTING_WINDOWS WinDxgiAdapter :
+//    class CLASS_DECL_REMOTING_RTC_WINDOWS WinDxgiAdapter :
 //       virtual public ::particle
 //    {
 //    public:
@@ -50,7 +50,7 @@
 //    };
 //
 //
-// } //  namespace remoting_windows
+// } //  namespace remoting_rtc_windows
 //
 //
 //

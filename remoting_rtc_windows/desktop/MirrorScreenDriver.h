@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
 #include "MirrorDriverClient.h"
 #include "subsystem/platform/RegistryKey.h"
 #include "remoting/remoting_rtc/desktop/DisplayEsc.h"
@@ -33,10 +33,10 @@
 #include "remoting/remoting_rtc/desktop/UpdateDetector.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS MirrorScreenDriver :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS MirrorScreenDriver :
    virtual public ::remoting_rtc::UpdateDetector
    {
    public:
@@ -87,7 +87,7 @@ namespace remoting_windows
    };
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

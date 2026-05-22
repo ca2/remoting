@@ -33,7 +33,7 @@
 #include "subsystem_windows/node/UipiControl.h"
 #include "subsystem/node/OperatingSystem.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 //    HooksUpdateDetector::HooksUpdateDetector(::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener,
@@ -263,5 +263,5 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
  

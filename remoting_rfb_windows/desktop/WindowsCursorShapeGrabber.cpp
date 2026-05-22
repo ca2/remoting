@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WindowsCursorShapeGrabber.h"
-#include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
+#include "remoting/remoting_rfb_windows/desktop/WindowsCursorShapeGrabber.h"
+#include "remoting/remoting_rfb_windows/desktop/WinCursorShapeUtils.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -223,5 +223,5 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 

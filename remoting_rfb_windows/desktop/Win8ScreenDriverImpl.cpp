@@ -24,19 +24,19 @@
 #include "framework.h"
 #include "subsystem/platform/Exception.h"
 #include "subsystem/framebuffer/StandardPixelFormatFactory.h"
-#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_rfb_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_rfb_windows/desktop/WinDxRecoverableException.h"
 //#include aaa_<crtdbg.h>
 #include "subsystem/node/Screen.h"
 
-#include "remoting/remoting_windows/desktop/aaa_WinDxgiOutput.h"
-#include "remoting/remoting_windows/desktop/D3D11Device.h"
+#include "remoting/remoting_rfb_windows/desktop/aaa_WinDxgiOutput.h"
+#include "remoting/remoting_rfb_windows/desktop/D3D11Device.h"
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
+#include "remoting/remoting_rfb_windows/desktop/Win8ScreenDriverImpl.h"
 ::string dxgi_d3d11_diagnostic_for_duplicate_output1();
 ::string dxgi_d3d11_diagnostic_for_duplicate_output2(UINT outputIndex, IDXGIOutput *output);
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    //
@@ -385,4 +385,4 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows

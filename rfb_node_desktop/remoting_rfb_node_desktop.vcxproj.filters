@@ -12,6 +12,9 @@
     <Filter Include="Source Files\control_desktop">
       <UniqueIdentifier>{2fdc17c9-ba12-472d-a46d-64c776cc92b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\control_desktop">
+      <UniqueIdentifier>{f389f342-ebef-4dec-8760-bf7f67a31e68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdditionalActionApplication.cpp">
@@ -208,10 +211,135 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="remoting_rfb_node_desktop.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="control_desktop\_.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\aaa_ControlAuthException.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\AboutDialog.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ConnectCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ConnectStringParser.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlApplication.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlAuth.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlAuthDialog.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlCommandLine.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlGate.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlMessage.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlPipeName.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlProto.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlProxy.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ControlTrayIcon.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\DisconnectAllCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\MakeRfbConnectionCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\NamedPipeTransport.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\OutgoingConnectionDialog.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ReloadConfigCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\RfbClientInfo.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ServerInfo.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\SetPasswordsDialog.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareAppCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareDisplayCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareFullCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\SharePrimaryCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareRectCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShareWindowCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\ShutdownCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\SocketIPv4Transport.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\Transport.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\TransportFactory.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\UpdateLocalConfigCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="control_desktop\UpdateRemoteConfigCommand.h">
+      <Filter>Header Files\control_desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="_.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_Clipboard2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="AdditionalActionApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="application_control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="AuthTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ControlAppAuthenticator.h">
@@ -229,7 +357,16 @@
     <ClInclude Include="DesktopServerCommandLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EventLogWriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ExtraRfbServers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogInitListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OutgoingRfbConnectionThread.h">
@@ -244,6 +381,9 @@
     <ClInclude Include="QueryConnectionDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="RfbClientManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -253,19 +393,13 @@
     <ClInclude Include="RfbServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ServerCommandLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ServiceControlApplication.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ServiceControlCommandLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Server.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServerApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerCommandLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServerHelp.h">
@@ -277,136 +411,23 @@
     <ClInclude Include="Service.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WsConfigRunner.h">
+    <ClInclude Include="ServiceControlApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WinServiceEvents.h">
+    <ClInclude Include="ServiceControlCommandLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_.h">
+    <ClInclude Include="ServiceEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="application.h">
+    <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LogInitListener.h">
+    <ClInclude Include="WsConfigRunner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NewConnectionEvents.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\aaa_ControlAuthException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\AboutDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ConnectCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ConnectStringParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlApplication.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlAuth.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlAuthDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlCommandLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlGate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlPipeName.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlProto.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlProxy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ControlTrayIcon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\DisconnectAllCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\MakeRfbConnectionCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\NamedPipeTransport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\OutgoingConnectionDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ReloadConfigCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\RfbClientInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ServerInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\SetPasswordsDialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ShareAppCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ShareDisplayCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ShareFullCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\SharePrimaryCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ShareRectCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ShareWindowCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\ShutdownCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\SocketIPv4Transport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\Transport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\TransportFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\UpdateLocalConfigCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="control_desktop\UpdateRemoteConfigCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="remoting_rfb_node_desktop.def">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

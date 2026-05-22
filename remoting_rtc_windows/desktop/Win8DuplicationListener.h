@@ -26,12 +26,12 @@
 
 
 #include "remoting/remoting_rtc/region/Region.h"
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win8DuplicationListener :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS Win8DuplicationListener :
    virtual public ::particle
    {
    public:
@@ -52,7 +52,7 @@ namespace remoting_windows
 
    //// __WIN8DUPLICATIONLISTENER_H__
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

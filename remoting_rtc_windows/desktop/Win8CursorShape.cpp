@@ -22,9 +22,9 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/Win8CursorShape.h"
+#include "remoting/remoting_rtc_windows/desktop/Win8CursorShape.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -60,7 +60,7 @@ namespace remoting_windows
    bool Win8CursorShape::getIsVisible() const { return m_isVisible; }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
  
 
 

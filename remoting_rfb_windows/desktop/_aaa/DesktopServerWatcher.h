@@ -31,7 +31,7 @@
 #include "remoting/remoting_rfb/desktop_ipc/ReconnectionListener.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    /**
@@ -74,7 +74,7 @@ namespace remoting_windows
 
  
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  
 
 

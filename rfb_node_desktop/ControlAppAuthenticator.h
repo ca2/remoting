@@ -35,7 +35,7 @@ namespace remoting_rfb_node_desktop
 
    // This class will be authenticate insert an time interval between
    // failure trying of authentications.
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ControlAppAuthenticator :
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP ControlAppAuthenticator :
     virtual public AuthTracker
    {
    public:

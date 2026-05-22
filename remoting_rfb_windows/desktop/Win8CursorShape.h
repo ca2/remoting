@@ -26,15 +26,15 @@
 
 
 #include "remoting/remoting_rfb/rfb/CursorShape.h"
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
-   // This class  is wrapper for CursorShape class CLASS_DECL_REMOTING_WINDOWS to extend it behaviour for the Win8 desktop
+   // This class  is wrapper for CursorShape class CLASS_DECL_REMOTING_RFB_WINDOWS to extend it behaviour for the Win8 desktop
    // duplication model.
-   class CLASS_DECL_REMOTING_WINDOWS Win8CursorShape
+   class CLASS_DECL_REMOTING_RFB_WINDOWS Win8CursorShape
    {
    public:
       Win8CursorShape();
@@ -58,7 +58,7 @@ namespace remoting_windows
    };
 
 
-} //  namespace remoting_windows
+} //  namespace remoting_rfb_windows
 
 
 

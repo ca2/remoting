@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
 #include "subsystem/thread/GuiThread.h"
 //#include "thread/LocalMutex.h"
 //#include "win-system/WinTimeMillis.h"
@@ -34,9 +34,9 @@
 
 // Only one instance of this class may be created.
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
-   class CLASS_DECL_REMOTING_WINDOWS WindowsInputBlocker :
+   class CLASS_DECL_REMOTING_RFB_WINDOWS WindowsInputBlocker :
       virtual public ::remoting_rfb::InputBlocker,
    virtual public ::subsystem::GuiThread
    {
@@ -105,7 +105,7 @@ namespace remoting_windows
 
 
    };
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::remoting_rtc::UpdateKeeper.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -254,7 +254,7 @@ namespace remoting_windows
 
    }
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
  
 
 

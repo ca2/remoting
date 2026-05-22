@@ -25,7 +25,7 @@
 #include "UpdateFilter.h"
 #include "subsystem/_common_header.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -343,6 +343,6 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
-namespace remoting_windows
+} // namespace remoting_rfb_windows
+namespace remoting_rfb_windows
 {

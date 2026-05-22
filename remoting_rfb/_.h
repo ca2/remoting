@@ -22,6 +22,7 @@
 #include "remoting/remoting_rfb/framebuffer_update_sender/_.h"
 #include "remoting/remoting_rfb/file_transfer_node/_.h"
 #include "remoting/remoting_rfb/network/_.h"
+#include "remoting/remoting_rfb/rfb/_.h"
 #include "remoting/remoting_rfb/rfb_sconn/_.h"
 #include "remoting/remoting_rfb/node/_.h"
 #include "remoting/remoting_rfb/node_config/_.h"

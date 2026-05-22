@@ -6,7 +6,7 @@
 #include "acme/constant/id.h"
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
-#include "remoting/client/remoting.h"
+#include "remoting/rfb_client/remoting.h"
 #include "remoting/remoting_rfb/platform/remoting.h"
 #include "subsystem/socket/Sockets.h"
 #include "resource.h"

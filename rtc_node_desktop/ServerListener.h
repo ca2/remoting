@@ -31,7 +31,7 @@ namespace remoting_node_desktop
    /**
     * Listener of Remoting Node (Server class) events.
     */
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServerListener :
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP ServerListener :
       virtual public ::Particle
    {
    public:

@@ -22,18 +22,18 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
-#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_rtc_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_rtc_windows/desktop/WinDxCriticalException.h"
 //#include "subsystem/thread/lockable_critical_section.h"
-#include "remoting/remoting_windows/desktop/DXGIAcquiredFrame.h"
-#include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
-#include "remoting/remoting_windows/desktop/WinAutoMapDxgiSurface.h"
-#include "remoting/remoting_windows/desktop/Win8DeskDuplicationThread.h"
-//#include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
-#include "remoting/remoting_windows/desktop/D3D11Device.h"
+#include "remoting/remoting_rtc_windows/desktop/DXGIAcquiredFrame.h"
+#include "remoting/remoting_rtc_windows/desktop/WinD3D11Texture2D.h"
+#include "remoting/remoting_rtc_windows/desktop/WinAutoMapDxgiSurface.h"
+#include "remoting/remoting_rtc_windows/desktop/Win8DeskDuplicationThread.h"
+//#include "remoting/remoting_rtc_windows/desktop/WinDxgiOutput1.h"
+#include "remoting/remoting_rtc_windows/desktop/D3D11Device.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -502,5 +502,5 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
  

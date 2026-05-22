@@ -27,7 +27,7 @@
 #include "remoting/remoting_rtc/region/Region.h"
 #include "remoting/remoting_rtc/node_config/Configurator.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    //
@@ -135,6 +135,6 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 

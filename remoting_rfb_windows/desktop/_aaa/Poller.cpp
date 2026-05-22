@@ -27,7 +27,7 @@
 #include "remoting/remoting_rfb/region/Region.h"
 #include "remoting/remoting_rfb/node_config/Configurator.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    //
@@ -135,6 +135,6 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 

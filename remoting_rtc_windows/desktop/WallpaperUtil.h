@@ -28,10 +28,10 @@
 #include "remoting/remoting_rtc/desktop/WallpaperUtil.h"
 //#include "log_writer/LogWriter.h"
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS WallpaperUtil :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS WallpaperUtil :
       virtual public ::remoting_rtc::WallpaperUtil
    {
    public:

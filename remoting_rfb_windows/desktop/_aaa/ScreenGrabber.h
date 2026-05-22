@@ -65,7 +65,7 @@
 */
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -119,7 +119,7 @@ namespace remoting_windows
 
    ////// __SCREENGRABBER_H__
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

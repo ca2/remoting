@@ -25,19 +25,19 @@
 #pragma once
 
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rtc_windows/_common_header.h"
 #include "subsystem/node/DynamicLibrary.h"
 #include <d3d11.h>
 #include <DXGI1_2.h>
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
    // #include "log_writer/LogWriter.h"
 
 
-   class CLASS_DECL_REMOTING_WINDOWS D3D11Device :
+   class CLASS_DECL_REMOTING_RTC_WINDOWS D3D11Device :
       virtual public ::particle
    {
    public:
@@ -79,7 +79,7 @@ namespace remoting_windows
    //// __WIND3D11DEVICE_H__
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
 
 
 

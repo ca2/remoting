@@ -24,7 +24,7 @@
 #include "framework.h"
 #include "::remoting_rfb::UpdateListener.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
 
@@ -33,5 +33,5 @@ namespace remoting_windows
    ::remoting_rfb::UpdateListener::~::remoting_rfb::UpdateListener(void) {}
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  

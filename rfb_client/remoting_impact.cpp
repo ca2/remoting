@@ -27,7 +27,7 @@
 #include "innate_subsystem/platform/ResourceLoader.h"
 #include "resource.h"
 #include "innate_subsystem/platform/subsystem.h"
-#include "remoting/client/remoting.h"
+#include "remoting/rfb_client/remoting.h"
 #include "remoting/remoting_rfb/platform/remoting.h"
 #include "acme/windowing/windowing.h"
 

@@ -22,13 +22,13 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_rfb_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_rfb_windows/desktop/WinDxRecoverableException.h"
 
 // // The header including of this cpp file must be at last place to avoid build conflicts.
-// #include "remoting/remoting_windows/desktop/WinDxgiOutput1.h"
+// #include "remoting/remoting_rfb_windows/desktop/WinDxgiOutput1.h"
 //
-// namespace remoting_windows
+// namespace remoting_rfb_windows
 // {
 //
 //
@@ -68,7 +68,7 @@
 //    // }
 //
 //    IDXGIOutput1 *WinDxgiOutput1::getDxgiOutput1() { return m_dxgiOutput1; }
-// } // // namespace remoting_windows
+// } // // namespace remoting_rfb_windows
 //
 //
 //

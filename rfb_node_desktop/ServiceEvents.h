@@ -31,7 +31,7 @@ namespace remoting_rfb_node_desktop
 {
 
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP ServiceEvents :
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP ServiceEvents :
       virtual public ::Particle
    {
    public:

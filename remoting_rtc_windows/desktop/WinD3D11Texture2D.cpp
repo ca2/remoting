@@ -22,12 +22,12 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_rtc_windows/desktop/WinDxRecoverableException.h"
 
 // // The header including of this cpp file must be at last place to avoid build conflicts.
-// #include "remoting/remoting_windows/desktop/WinD3D11Texture2D.h"
+// #include "remoting/remoting_rtc_windows/desktop/WinD3D11Texture2D.h"
 //
-// namespace remoting_windows
+// namespace remoting_rtc_windows
 // {
 //
 //
@@ -68,4 +68,4 @@
 //    ID3D11Texture2D *WinD3D11Texture2D::getTexture() { return m_pdxgitexture; }
 //
 //
-// } // namespace remoting_windows
+// } // namespace remoting_rtc_windows

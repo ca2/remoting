@@ -32,7 +32,7 @@
 #include "remoting/remoting_rfb/desktop/DesktopConfigLocal.h"
 
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    // DesktopClientImpl::DesktopClientImpl(ClipboardListener *pclipboardlistenerExternal,
@@ -310,6 +310,6 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 

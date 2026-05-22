@@ -2,22 +2,12 @@
 #pragma once
 
 
-/*
-
-#include "remoting/_.h"
-
-
-#if defined(_remoting_config_project)
-#define CLASS_DECL_REMOTING_CONFIG CLASS_DECL_EXPORT
-#else
-#define CLASS_DECL_REMOTING_CONFIG  CLASS_DECL_IMPORT
-#endif
-
-*/
-
 namespace remoting_rfb
 {
 
     class IniFileSettingsManager;
 
 } // namespace remoting_rfb
+
+
+

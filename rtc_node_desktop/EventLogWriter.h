@@ -34,7 +34,7 @@
 namespace remoting_node_desktop
 {
    // This class provide response to events by writing to the Windows log.
-   class CLASS_DECL_REMOTING_NODE_DESKTOP  EventLogWriter : public ::remoting_rtc_node::NewConnectionEvents,
+   class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP  EventLogWriter : public ::remoting_rtc_node::NewConnectionEvents,
                              public ::subsystem::ApplicationCrashEvents,
                              public ServiceEvents
    {

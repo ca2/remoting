@@ -31,7 +31,7 @@
 #include "remoting/remoting_rfb/desktop/CopyRectDetector.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
    struct WinProp
@@ -45,7 +45,7 @@ namespace remoting_windows
       ::i32_rectangle m_rectangleOld;
    };
 
-   class CLASS_DECL_REMOTING_WINDOWS CopyRectDetector :
+   class CLASS_DECL_REMOTING_RFB_WINDOWS CopyRectDetector :
       virtual public ::remoting_rfb::CopyRectDetector
    {
    public:
@@ -72,7 +72,7 @@ namespace remoting_windows
 
    
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
  
 
 

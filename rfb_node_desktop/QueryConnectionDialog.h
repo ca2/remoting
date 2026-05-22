@@ -33,7 +33,7 @@
 namespace remoting_rfb_node_desktop
 {
 
-   class CLASS_DECL_REMOTING_NODE_DESKTOP QueryConnectionDialog : public ::innate_subsystem::Dialog
+   class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP QueryConnectionDialog : public ::innate_subsystem::Dialog
    {
    public:
       static const int ACCEPT_CHOISE = 0x0;

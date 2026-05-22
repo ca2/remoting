@@ -26,26 +26,26 @@
 
 
 // FIXME: Remove this detectors when will be ready win8 detectors.
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
 
-#include "remoting/remoting_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/_common_header.h"
 #include "remoting/remoting_rfb/desktop/CursorPositionDetector.h"
 
 #include "remoting/remoting_rfb/desktop/CursorShapeDetector.h"
-#include "remoting/remoting_windows/desktop/WindowsCursorShapeGrabber.h"
+#include "remoting/remoting_rfb_windows/desktop/WindowsCursorShapeGrabber.h"
 
 #include "remoting/remoting_rfb/desktop/ScreenDriver.h"
-#include "remoting/remoting_windows/desktop/WinVideoRegionUpdaterImpl.h"
+#include "remoting/remoting_rfb_windows/desktop/WinVideoRegionUpdaterImpl.h"
 #include "remoting/remoting_rfb/desktop/UpdateKeeper.h"
 #include "remoting/remoting_rfb/desktop/UpdateListener.h"
 //#include "log_writer/LogWriter.h"
-#include "remoting/remoting_windows/desktop/Win8ScreenDriverImpl.h"
-#include "remoting/remoting_windows/desktop/CopyRectDetector.h"
+#include "remoting/remoting_rfb_windows/desktop/Win8ScreenDriverImpl.h"
+#include "remoting/remoting_rfb_windows/desktop/CopyRectDetector.h"
 
-namespace remoting_windows
+namespace remoting_rfb_windows
 {
 
-   class CLASS_DECL_REMOTING_WINDOWS Win8ScreenDriver :
+   class CLASS_DECL_REMOTING_RFB_WINDOWS Win8ScreenDriver :
    virtual public WinVideoRegionUpdaterImpl
    {
    public:
@@ -90,7 +90,7 @@ namespace remoting_windows
       // This member must be always gueranted non zero. Otherwise an excption must
       // be provided from the constructor of this class.
       ::pointer < Win8ScreenDriverImpl > m_pwin8screendriveriimpl;
-      ::remoting_windows::CopyRectDetector m_pcopyrectdetector;
+      ::remoting_rfb_windows::CopyRectDetector m_pcopyrectdetector;
       lockable_critical_section m_drvImplMutex;
 
       ::remoting_rfb::CursorShape m_cursorshape;
@@ -100,7 +100,7 @@ namespace remoting_windows
 
    //// __WIN8SCREENDRIVER_H__
 
-} // namespace remoting_windows
+} // namespace remoting_rfb_windows
 
 
 

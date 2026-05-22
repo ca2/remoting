@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinVideoRegionUpdaterImpl.h"
+#include "remoting/remoting_rtc_windows/desktop/WinVideoRegionUpdaterImpl.h"
 #include "remoting/remoting_rtc/node_config/Configurator.h"
 #include "innate_subsystem/gui/WindowFinder.h"
 #include "remoting/remoting_rtc/region/RectSerializer.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -185,4 +185,4 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows

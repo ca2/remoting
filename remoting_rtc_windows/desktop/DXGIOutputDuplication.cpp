@@ -22,14 +22,14 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_windows/desktop/WinDxCriticalException.h"
-#include "remoting/remoting_windows/desktop/WinDxRecoverableException.h"
+#include "remoting/remoting_rtc_windows/desktop/WinDxCriticalException.h"
+#include "remoting/remoting_rtc_windows/desktop/WinDxRecoverableException.h"
 #include "subsystem/framebuffer/StandardPixelFormatFactory.h"
-#include "remoting/remoting_windows/desktop/WinCursorShapeUtils.h"
+#include "remoting/remoting_rtc_windows/desktop/WinCursorShapeUtils.h"
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
-#include "remoting/remoting_windows/desktop/DXGIOutputDuplication.h"
-#include "remoting/remoting_windows/desktop/D3D11Device.h"
+#include "remoting/remoting_rtc_windows/desktop/DXGIOutputDuplication.h"
+#include "remoting/remoting_rtc_windows/desktop/D3D11Device.h"
 
 
 // dxgi_diagnostic.cpp
@@ -322,7 +322,7 @@ static ::wstring HResultToString(HRESULT hr)
    //return wstr;
 }
 
-namespace remoting_windows
+namespace remoting_rtc_windows
 {
 
 
@@ -559,7 +559,7 @@ namespace remoting_windows
    }
 
 
-} // namespace remoting_windows
+} // namespace remoting_rtc_windows
  
 
 
