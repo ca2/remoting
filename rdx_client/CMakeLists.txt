@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(remoting_client)
+project(remoting_rdx_client)
 
 
 list(APPEND library_source
@@ -7,73 +7,100 @@ list(APPEND library_source
    #NamingDefs.cpp
    #NamingDefs.h
    #application_main.cpp
-   AboutDialog.cpp
-   AboutDialog.h
-   AuthenticationDialog.cpp
-   AuthenticationDialog.h
-   BuildTime.cpp
-   BuildTime.h
-   ConfigurationDialog.cpp
-   ConfigurationDialog.h
-   ConnectingDialog.cpp
-   ConnectingDialog.h
-   ConnectionData.cpp
-   ConnectionData.h
-   ConnectionListener.cpp
-   ConnectionListener.h
-   ControlTrayIcon.cpp
-   ControlTrayIcon.h
-   DesktopWindow.cpp
-   DesktopWindow.h
-   FileExistDialog.cpp
-   FileExistDialog.h
-   FileInfoListView.cpp
-   FileInfoListView.h
-   FileRenameDialog.cpp
-   FileRenameDialog.h
-   FileTransferMainDialog.cpp
-   FileTransferMainDialog.h
-   FullscreenWarningDialog.cpp
-   FullscreenWarningDialog.h
-   HelpDialog.cpp
-   HelpDialog.h
-   LoginDialog.cpp
-   LoginDialog.h
-   NewFolderDialog.cpp
-   NewFolderDialog.h
-   OptionsDialog.cpp
-   OptionsDialog.h
-   ResourceStrings.cpp
-   ResourceStrings.h
-   ScaleManager.cpp
-   ScaleManager.h
-   ViewerCmdLine.cpp
-   ViewerCmdLine.h
-   ViewerCollector.cpp
-   ViewerCollector.h
-   ViewerInstance.cpp
-   ViewerInstance.h
-   ViewerMenu.cpp
-   ViewerMenu.h
-   ViewerVncAuthHandler.cpp
-   ViewerVncAuthHandler.h
-   ViewerWindow.cpp
-   ViewerWindow.h
+#   AboutDialog.cpp
+#   AboutDialog.h
+#   AuthenticationDialog.cpp
+#   AuthenticationDialog.h
+#   BuildTime.cpp
+#   BuildTime.h
+#   ConfigurationDialog.cpp
+#   ConfigurationDialog.h
+#   ConnectingDialog.cpp
+#   ConnectingDialog.h
+#   ConnectionData.cpp
+#   ConnectionData.h
+#   ConnectionListener.cpp
+#   ConnectionListener.h
+#   ControlTrayIcon.cpp
+#   ControlTrayIcon.h
+#   DesktopWindow.cpp
+#   DesktopWindow.h
+#   FileExistDialog.cpp
+#   FileExistDialog.h
+#   FileInfoListView.cpp
+#   FileInfoListView.h
+#   FileRenameDialog.cpp
+#   FileRenameDialog.h
+#   FileTransferMainDialog.cpp
+#   FileTransferMainDialog.h
+#   FullscreenWarningDialog.cpp
+#   FullscreenWarningDialog.h
+#   HelpDialog.cpp
+#   HelpDialog.h
+#   LoginDialog.cpp
+#   LoginDialog.h
+#   NewFolderDialog.cpp
+#   NewFolderDialog.h
+#   OptionsDialog.cpp
+#   OptionsDialog.h
+#   ResourceStrings.cpp
+#   ResourceStrings.h
+#   ScaleManager.cpp
+#   ScaleManager.h
+#   ViewerCmdLine.cpp
+#   ViewerCmdLine.h
+#   ViewerCollector.cpp
+#   ViewerCollector.h
+#   ViewerInstance.cpp
+#   ViewerInstance.h
+#   ViewerMenu.cpp
+#   ViewerMenu.h
+#   ViewerVncAuthHandler.cpp
+#   ViewerVncAuthHandler.h
+#   ViewerWindow.cpp
+#   ViewerWindow.h
    _.cpp
    _.h
    application.cpp
    application.h
    framework.cpp
    framework.h
-   impact_toolbar.cpp
-   impact_toolbar.h
-   keyboard_layout_change.cpp
-   keyboard_layout_change.h
-   remoting.cpp
-   remoting.h
-   #remoting_client.rc
-   remoting_impact.cpp
-   remoting_impact.h
+   client_site.cpp
+   client_site.h
+   event_sink.cpp
+   event_sink.h
+   main_window.h
+   main_window.cpp
+   rdx_client.cpp
+   rdx_client.h
+
+   com_window_thread.cpp
+   com_window_thread.h
+   in_place_frame.cpp
+   in_place_frame.h
+   com_base.cpp
+   com_base.h
+   in_place_site.cpp
+   in_place_site.h
+   com_window.cpp
+   com_window.h
+   main_rdp_host.cpp
+   main_rdp_host.h
+   rdp_host2.cpp
+   rdp_host2.h
+   rdp_host4.cpp
+   rdp_host4.h
+   rdp_host5.cpp
+   rdp_host5.h
+#   impact_toolbar.cpp
+#   impact_toolbar.h
+#   keyboard_layout_change.cpp
+#   keyboard_layout_change.h
+#   remoting.cpp
+#   remoting.h
+#   #remoting_client.rc
+#   remoting_impact.cpp
+#   remoting_impact.h
 
 )
 
@@ -101,7 +128,8 @@ list(APPEND library_references
 #   remoting_viewer_core
 #   remoting_win_system
 #   remoting_zlib
-   remoting
+   remoting_rdx
+   acme_windowing_win32
 )
 
 
@@ -143,7 +171,8 @@ elseif(${LINUX} OR ${__BSD__} OR ${ANDROID})
 endif ()
 
 add_dependencies(${PROJECT_NAME} acme)
-add_dependencies(${PROJECT_NAME} remoting)
+add_dependencies(${PROJECT_NAME} remoting_rdx)
+add_dependencies(${PROJECT_NAME} folder_zip)
 #add_dependencies(${PROJECT_NAME} remoting)
 #add_dependencies(${PROJECT_NAME} remoting_client_config_lib)
 #add_dependencies(${PROJECT_NAME} remoting_config_lib)

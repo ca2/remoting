@@ -1,20 +1,24 @@
 cmake_minimum_required(VERSION 3.16)
 project(remoting)
 
-set(default_remoting remoting_windows)
+set(default_rfb_remoting remoting_rfb_windows)
 
 
 
-add_subdirectory(remoting)
+add_subdirectory(remoting_rfb)
 
 
-add_subdirectory(${default_remoting})
+add_subdirectory(${default_rfb_remoting})
 
 
-add_subdirectory(client)
+add_subdirectory(rfb_client)
 #add_subdirectory(control_desktop)
-add_subdirectory(node_desktop)
+add_subdirectory(rfb_node_desktop)
 
+if(${WIN32})
+   add_subdirectory(remoting_rdx)
+   add_subdirectory(rdx_client)
+endif()
 
 #add_subdirectory(client_config)
 #add_subdirectory(config)

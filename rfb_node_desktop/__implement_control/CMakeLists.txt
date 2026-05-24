@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(_remoting_node_desktop_control CXX)
+project(_remoting_rfb_node_desktop_control CXX)
 
 
 list(APPEND application_source main_control.cpp)

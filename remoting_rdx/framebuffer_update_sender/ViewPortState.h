@@ -1,0 +1,108 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+
+//#include "acme/_operating_system.h"
+#include "acme/prototype/geometry2d/rectangle.h"
+
+//////#include "subsystem/platform/::string.h"
+
+
+namespace remoting_rfb
+{
+
+   // This class stores a view port state.
+   class CLASS_DECL_REMOTING_RDX  ViewPortState
+   {
+   public:
+      ViewPortState();
+      ViewPortState(const ViewPortState &);
+      ViewPortState &operator=(const ViewPortState &viewPortState);
+      ~ViewPortState();
+
+      // After calling this function the update() function will set the view
+      // port rectangle equal to it's the sizeFramebuffer argument rectangle.
+      void setFullDesktop();
+
+      // After calling this function the update() function will set the view
+      // port rectangle to the *rectangle rectangle constrained by the sizeFramebuffer
+      // update() function argument.
+      void setArbitraryRect(const ::i32_rectangle & rectangle);
+
+      // After calling this function the update() function will set the view
+      // port rectangle by the primary display coordinates.
+      void setPrimaryDisplay();
+
+      // After calling this function the update() function will set the view
+      // port rectangle by the display coordinates with a number.
+      void setDisplayNumber(unsigned char displayNumber);
+
+      // After calling this function the update() function will set the view
+      // port rectangle by a window that own the hwnd argument.
+      void setWindowHandle(const ::operating_system::window & operatingsystemwindow);
+
+      // After calling this function the update() function will set the view
+      // port rectangle by a window that own the windowName argument.
+      void setWindowName(const ::scoped_string &windowName);
+
+      // After calling this function the hwnd will be zeroid and state
+      // will be changed to unresolved.
+      void unresolveHwnd();
+
+      // After calling this function the update() function will set the view
+      // port rectangle to "Full desktop" and the view port region to a region constrained
+      // by windows of the process id.
+      void setProcessId(::u32 processId);
+
+   private:
+      static const int FULL_DESKTOP = 0;
+      static const int PRIMARY_DISPLAY = 1;
+      static const int ARBITRARY_RECT = 2;
+      static const int WINDOW_RECT = 3;
+      static const int DISPLAY_NUMBER = 4;
+      static const int APPLICATION = 5;
+
+      int m_mode;
+      ::i32_rectangle m_arbitraryRect;
+      ::operating_system::window m_operatingsystemwindow;
+      ::string m_windowName;
+      bool m_windowIsResolved;
+      unsigned char m_displayNumber;
+      ::u32 m_processId;
+
+      friend class CLASS_DECL_REMOTING_RDX  Viewport;
+   };
+
+
+} // namespace remoting_rfb
+
+
+
+
+
+
+

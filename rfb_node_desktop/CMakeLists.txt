@@ -151,7 +151,7 @@ list(APPEND library_references
    apex
    subsystem
    innate_subsystem
-   remoting
+   remoting_rfb
    #remoting_control_desktop
 )
 
@@ -190,7 +190,7 @@ elseif(${LINUX} OR ${__BSD__} OR ${ANDROID})
 endif ()
 
 add_dependencies(${PROJECT_NAME} acme)
-add_dependencies(${PROJECT_NAME} remoting)
+add_dependencies(${PROJECT_NAME} remoting_rfb)
 #add_dependencies(${PROJECT_NAME} remoting)
 #add_dependencies(${PROJECT_NAME} remoting_client_config_lib)
 #add_dependencies(${PROJECT_NAME} remoting_config_lib)

@@ -149,12 +149,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
-    <ClCompile Include="event_sink.cpp" />
+    <ClCompile Include="client_site.cpp" />
+    <ClCompile Include="com_base.cpp" />
+    <ClCompile Include="com_window.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="in_place_frame.cpp" />
+    <ClCompile Include="in_place_site.cpp" />
+    <ClCompile Include="main_rdp_host.cpp" />
+    <ClCompile Include="main_window.cpp">
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
     </ClCompile>
     <ClCompile Include="rdx_client.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
@@ -163,7 +172,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
+    <ClInclude Include="client_site.h" />
+    <ClInclude Include="com_base.h" />
+    <ClInclude Include="com_window.h" />
     <ClInclude Include="event_sink.h" />
+    <ClInclude Include="in_place_site.h" />
+    <ClInclude Include="main_window.h" />
     <ClInclude Include="rdx_client.h" />
     <ClInclude Include="_.h" />
   </ItemGroup>
@@ -183,6 +197,9 @@
     <ProjectReference Include="..\remoting\remoting.vcxproj">
       <Project>{d3004ab1-f82e-4fa4-b1f2-e15b582db21d}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="remoting_rdx_client.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

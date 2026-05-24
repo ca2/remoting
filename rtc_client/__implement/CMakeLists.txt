@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(_remoting_client CXX)
+project(_remoting_rtc_client CXX)
 
 
 list(APPEND application_source main.cpp)

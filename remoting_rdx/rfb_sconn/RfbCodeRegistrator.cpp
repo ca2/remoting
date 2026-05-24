@@ -1,0 +1,66 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+#include "framework.h"
+#include "RfbCodeRegistrator.h"
+
+namespace remoting_rfb
+{
+   RfbCodeRegistrator::RfbCodeRegistrator(RfbDispatcher *dispatcher,
+                                          CapContainer *srvToClCaps,
+                                          CapContainer *clToSrvCaps,
+                                          CapContainer *encCaps)
+   : m_pdesktopsrvdispatcher(dispatcher),
+     m_srvToClCaps(srvToClCaps),
+     m_clToSrvCaps(clToSrvCaps),
+     m_encCaps(encCaps)
+   {
+   }
+
+   RfbCodeRegistrator::~RfbCodeRegistrator()
+   {
+   }
+
+   void RfbCodeRegistrator::regCode(::u32 code, RfbDispatcherListener *listener)
+   {
+      m_pdesktopsrvdispatcher->registerNewHandle(code, listener);
+   }
+
+   void RfbCodeRegistrator::addSrvToClCap(::u32 code, const char *vendorSignature,
+                                          const char *nameSignature)
+   {
+      m_srvToClCaps->addCap(code, vendorSignature, nameSignature);
+   }
+
+   void RfbCodeRegistrator::addClToSrvCap(::u32 code, const char *vendorSignature,
+                                          const char *nameSignature)
+   {
+      m_clToSrvCaps->addCap(code, vendorSignature, nameSignature);
+   }
+
+   void RfbCodeRegistrator::addEncCap(::u32 code, const char *vendorSignature,
+                                      const char *nameSignature)
+   {
+      m_encCaps->addCap(code, vendorSignature, nameSignature);
+   }
+} // namespace remoting_rfb

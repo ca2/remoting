@@ -1,0 +1,53 @@
+//
+// Created by camilo on 2026-02-15 21:52 <3ThomasBorregaardSørensen!!
+// Changed 2026-04-29 12:20 by camilo <3ThomasBorregaardSørensen!! Mummi!! bilbo!!
+//
+
+#pragma once
+
+//#include "acme/_operating_system.h"
+#include "acme/platform/remoting.h"
+
+namespace remoting_rdx
+{
+
+
+   //   class Environment;
+
+
+   class CLASS_DECL_REMOTING_RDX remoting :
+   virtual public  ::platform::remoting
+   {
+   public:
+
+      //::pointer < Environment > m_penvironment;
+
+
+      remoting();
+      ~remoting() override;
+
+      //virtual Environment * environment();
+
+   };
+
+
+   CLASS_DECL_REMOTING_RDX void defer_initialize_remoting();
+
+} // namespace remoting_rdx
+
+
+
+
+namespace str
+{
+
+   CLASS_DECL_REMOTING_RDX ::string to_ansi(const ::scoped_string & scopedstr);
+
+   CLASS_DECL_REMOTING_RDX ::string to_ansi(unsigned char * puch, int iSize);
+
+   CLASS_DECL_REMOTING_RDX bool checkAnsiConversion(const ::scoped_string & scopedstr);
+
+}
+
+
+

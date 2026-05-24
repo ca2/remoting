@@ -25,13 +25,13 @@
 #pragma once
 
 
-#include "AboutDialog.h"
-#include "ConfigurationDialog.h"
-#include "ConnectionListener.h"
-#include "ControlTrayIcon.h"
-#include "LoginDialog.h"
-#include "OptionsDialog.h"
-#include "ViewerCollector.h"
+#include "___aaa2026Q1/AboutDialog.h"
+#include "___aaa2026Q1/ConfigurationDialog.h"
+#include "___aaa2026Q1/ConnectionListener.h"
+#include "___aaa2026Q1/ControlTrayIcon.h"
+#include "___aaa2026Q1/LoginDialog.h"
+#include "___aaa2026Q1/OptionsDialog.h"
+#include "___aaa2026Q1/ViewerCollector.h"
 #include "subsystem/node/OperatingSystemApplication.h"
 
 //#include "log_writer/LogWriter.h"

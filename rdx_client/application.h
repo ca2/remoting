@@ -14,7 +14,7 @@ namespace remoting_rdx_client
    public:
       //::pointer<::app_app::main_window> m_pmainwindow;
 
-      bool m_bStartedRdxClient = false;
+      ::pointer < rdx_client > m_prdxclient;
 
       application();
       ~application() override;
@@ -22,11 +22,19 @@ namespace remoting_rdx_client
       __DECLARE_APPLICATION_RELEASE_TIME();
 
 
+      //virtual void on_system_main() override;
+
 
       virtual void on_request(::request * prequest) override;
 
 
+      virtual void defer_start_rdx_client(const ::scoped_string & scopedstrHost);
 
+
+      virtual void rdx_client_main(const ::scoped_string & scopedstrHost);
+
+
+      static LRESULT CALLBACK s_window_procedure_redirect(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
    };
 

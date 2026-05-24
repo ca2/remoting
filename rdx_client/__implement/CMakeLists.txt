@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
-project(_remoting_client CXX)
+project(_remoting_rdx_client CXX)
 
 
 list(APPEND application_source main.cpp)
 
 
 if(MSVC)
-    list(APPEND application_source ../deployment.rc remoting_client.rc)
+    list(APPEND application_source ../deployment.rc remoting_rdx_client.rc)
 endif()
 
 
@@ -16,7 +16,7 @@ add_executable(${PROJECT_NAME} ${application_source})
 
 list(APPEND executable_references
    acme
-   remoting_client
+   remoting_rdx_client
    )
 
 
@@ -55,8 +55,9 @@ add_dependencies(${PROJECT_NAME} ${default_acme})
 add_dependencies(${PROJECT_NAME} ${default_acme_windowing})
 add_dependencies(${PROJECT_NAME} ${default_nano_graphics})
 add_dependencies(${PROJECT_NAME} ${default_subsystem})
+add_dependencies(${PROJECT_NAME} ${default_innate_ui})
 add_dependencies(${PROJECT_NAME} ${default_innate_subsystem})
-add_dependencies(${PROJECT_NAME} ${default_remoting})
+add_dependencies(${PROJECT_NAME} remoting_rdx)
 #add_dependencies(${PROJECT_NAME} ${default_draw2d})
 #add_dependencies(${PROJECT_NAME} ${default_imaging})
 #add_dependencies(${PROJECT_NAME} ${default_node})

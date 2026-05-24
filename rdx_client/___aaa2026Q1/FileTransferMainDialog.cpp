@@ -28,8 +28,8 @@
 //#include "subsystem/platform/winhdr.h"
 //#include "acme/_operating_system.h"
 
-#include "../NewFolderDialog.h"
 #include "FileRenameDialog.h"
+#include "NewFolderDialog.h"
 
 // #include "file_lib/::file::item.h"
 

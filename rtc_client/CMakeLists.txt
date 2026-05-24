@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(remoting_client)
+project(remoting_rtc_client)
 
 
 list(APPEND library_source

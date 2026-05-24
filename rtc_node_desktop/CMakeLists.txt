@@ -151,7 +151,7 @@ list(APPEND library_references
    apex
    subsystem
    innate_subsystem
-   remoting
+   remoting_rfb
    #remoting_control_desktop
 )
 

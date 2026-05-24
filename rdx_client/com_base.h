@@ -1,14 +1,43 @@
 //
-// Created by camilo on 5/23/2026.
+// Created by camilo on 2026-05-23 10:30 <3ThomasBorregaardSørensen!! Mummi!! Bilbo!!
 //
+#pragma once
+// ============================================================================
+// Basic COM RefCount Helper
+// ============================================================================
 
-#ifndef MAIN_COM_BASE_H
-#define MAIN_COM_BASE_H
-
-
-class com_base
+namespace windows
 {
-};
 
 
-#endif // MAIN_COM_BASE_H
+   class com_base :
+      virtual public ::particle
+   {
+   public:
+
+
+      com_base() {}
+      ~com_base() override {}
+
+
+      ULONG InternalAddRef()
+      {
+
+         return this->increment_reference_count();
+
+      }
+
+
+      ULONG InternalRelease()
+      {
+
+         return this->release();
+
+      }
+
+
+   };
+
+
+} // namespace windows
+

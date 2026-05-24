@@ -14,351 +14,241 @@
 // https : // www.duolingo.com/learn
 // https : // github.com/paullouisageneau/libjuice
 // https : // github.com/cpp-port/libjuice
-#include "framework.h"
 #include "rdx_client.h"
 #include "acme/_operating_system.h"
 #include "acme/operating_system/windows_common/com/comptr.h"
 #include "acme/platform/system.h"
+#include "acme/windowing/windowing.h"
 #include "application.h"
+#include "client_site.h"
+#include "com_window_thread.h"
+#include "event_sink.h"
+#include "framework.h"
+#include "in_place_site.h"
 //#include "main_window.h"
+#include "in_place_frame.h"
+#include "main_window.h"
 
-#define _CRT_SECURE_NO_WARNINGS
 
-#include <comdef.h>
-#include <ocidl.h>
-#include <oleidl.h>
-#include <windows.h>
+//#import "mstscax.dll" rename_namespace("RDP")
 
-#import "mstscax.dll" rename_namespace("RDP")
 
-using namespace RDP;
-
-#pragma comment(lib, "ole32.lib")
-#pragma comment(lib, "oleaut32.lib")
+//#pragma comment(lib, "ole32.lib")
+//#pragma comment(lib, "oleaut32.lib")
 
 namespace remoting_rdx_client
 {
 
-   //HWND g_hwnd = nullptr;
-   //IOleObject *g_oleObject = nullptr;
-   //IMsRdpClient9 *g_rdp = nullptr;
+   //HWND hwnd = nullptr;
+   //IOleObject *m_poleobject = nullptr;
+   //IMsRdpClient9 *m_prdxclient->m_prdpclient = nullptr;
 
 
-   //IConnectionPoint *g_cp = nullptr;
-   //DWORD g_cookie = 0;
-   //RdpEventSink *g_sink = nullptr;
+   //IConnectionPoint *m_pconnectionpoint = nullptr;
+   //DWORD m_dwCookie = 0;
+   //RdpEventSink *m_peventsink = nullptr;
+   //
+   // struct rdx_client_t
+   // {
+   //
+   //    ::comptr < RDP::IMsRdpClient9  > m_prdpclient;
+   //
+   //
+   // };
 
-   rdx_client::rdx_client
-      {}
 
 
-   class ClientSite : public IOleClientSite, public IOleInPlaceSite, public IOleInPlaceFrame
+   rdx_client::rdx_client()
    {
-      ULONG refCount = 1;
 
-   public:
 
-      // IUnknown
-      HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void **ppvObject)
-      {
-         if (!ppvObject)
-            return E_POINTER;
+      //m_prdxclient = new rdx_client_t;
 
-         *ppvObject = nullptr;
-
-         if (riid == IID_IUnknown || riid == IID_IOleClientSite)
-         {
-            *ppvObject = (IOleClientSite *)this;
-         }
-         else if (riid == IID_IOleInPlaceSite)
-         {
-            *ppvObject = (IOleInPlaceSite *)this;
-         }
-         else if (riid == IID_IOleInPlaceFrame)
-         {
-            *ppvObject = (IOleInPlaceFrame *)this;
-         }
-
-         if (*ppvObject)
-         {
-            AddRef();
-            return S_OK;
-         }
-
-         return E_NOINTERFACE;
-      }
-
-      ULONG STDMETHODCALLTYPE AddRef() { return ++refCount; }
-
-      ULONG STDMETHODCALLTYPE Release()
-      {
-         ULONG r = --refCount;
-
-         if (!r)
-            delete this;
-
-         return r;
-      }
-
-      // IOleClientSite
-      HRESULT STDMETHODCALLTYPE SaveObject() { return E_NOTIMPL; }
-      HRESULT STDMETHODCALLTYPE GetMoniker(DWORD, DWORD, IMoniker **) { return E_NOTIMPL; }
-      HRESULT STDMETHODCALLTYPE GetContainer(IOleContainer **ppContainer)
-      {
-         *ppContainer = nullptr;
-         return E_NOINTERFACE;
-      }
-
-      HRESULT STDMETHODCALLTYPE ShowObject() { return S_OK; }
-      HRESULT STDMETHODCALLTYPE OnShowWindow(BOOL) { return S_OK; }
-      HRESULT STDMETHODCALLTYPE RequestNewObjectLayout() { return E_NOTIMPL; }
-
-      // IOleWindow
-      HRESULT STDMETHODCALLTYPE GetWindow(HWND *phwnd)
-      {
-         *phwnd = g_hwnd;
-         return S_OK;
-      }
-
-      HRESULT STDMETHODCALLTYPE ContextSensitiveHelp(BOOL) { return E_NOTIMPL; }
-
-      // IOleInPlaceSite
-      HRESULT STDMETHODCALLTYPE CanInPlaceActivate() { return S_OK; }
-      HRESULT STDMETHODCALLTYPE OnInPlaceActivate() { return S_OK; }
-      HRESULT STDMETHODCALLTYPE OnUIActivate() { return S_OK; }
-
-      HRESULT STDMETHODCALLTYPE GetWindowContext(IOleInPlaceFrame **ppFrame, IOleInPlaceUIWindow **ppDoc,
-                                                 LPRECT lprcPosRect, LPRECT lprcClipRect,
-                                                 OLEINPLACEFRAMEINFO *lpFrameInfo)
-      {
-         *ppFrame = this;
-         AddRef();
-
-         *ppDoc = nullptr;
-
-         GetClientRect(g_hwnd, lprcPosRect);
-         GetClientRect(g_hwnd, lprcClipRect);
-
-         lpFrameInfo->fMDIApp = FALSE;
-         lpFrameInfo->hwndFrame = g_hwnd;
-         lpFrameInfo->haccel = nullptr;
-         lpFrameInfo->cAccelEntries = 0;
-
-         return S_OK;
-      }
-
-      HRESULT STDMETHODCALLTYPE Scroll(SIZE) { return E_NOTIMPL; }
-      HRESULT STDMETHODCALLTYPE OnUIDeactivate(BOOL) { return S_OK; }
-      HRESULT STDMETHODCALLTYPE OnInPlaceDeactivate() { return S_OK; }
-      HRESULT STDMETHODCALLTYPE DiscardUndoState() { return E_NOTIMPL; }
-      HRESULT STDMETHODCALLTYPE DeactivateAndUndo() { return E_NOTIMPL; }
-      HRESULT STDMETHODCALLTYPE OnPosRectChange(LPCRECT prcPosRect)
-      {
-
-         IOleInPlaceObject *inplace = nullptr;
-
-         if (SUCCEEDED(g_oleObject->QueryInterface(IID_IOleInPlaceObject, (void **)&inplace)))
-         {
-            inplace->SetObjectRects(prcPosRect, prcPosRect);
-            inplace->Release();
-         }
-         return S_OK;
-      }
-
-      // IOleInPlaceUIWindow / Frame
-      HRESULT STDMETHODCALLTYPE GetBorder(LPRECT) { return E_NOTIMPL; }
-      HRESULT STDMETHODCALLTYPE RequestBorderSpace(LPCBORDERWIDTHS) { return E_NOTIMPL; }
-      HRESULT STDMETHODCALLTYPE SetBorderSpace(LPCBORDERWIDTHS) { return S_OK; }
-      HRESULT STDMETHODCALLTYPE SetActiveObject(IOleInPlaceActiveObject *, LPCOLESTR) { return S_OK; }
-
-      HRESULT STDMETHODCALLTYPE InsertMenus(HMENU, LPOLEMENUGROUPWIDTHS) { return E_NOTIMPL; }
-
-      HRESULT STDMETHODCALLTYPE SetMenu(HMENU, HOLEMENU, HWND) { return S_OK; }
-
-      HRESULT STDMETHODCALLTYPE RemoveMenus(HMENU) { return S_OK; }
-      HRESULT STDMETHODCALLTYPE SetStatusText(LPCOLESTR) { return S_OK; }
-      HRESULT STDMETHODCALLTYPE EnableModeless(BOOL) { return S_OK; }
-
-      HRESULT STDMETHODCALLTYPE TranslateAccelerator(LPMSG, WORD) { return E_NOTIMPL; }
-   };
-
-   ClientSite *g_site = nullptr;
-
-   LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
-   {
-      switch (msg)
-      {
-         case WM_SIZE:
-         {
-            if (g_oleObject)
-            {
-               IOleInPlaceObject *inplace = nullptr;
-
-               if (SUCCEEDED(g_oleObject->QueryInterface(IID_IOleInPlaceObject, (void **)&inplace)))
-               {
-                  RECT rc;
-                  GetClientRect(hwnd, &rc);
-
-                  inplace->SetObjectRects(&rc, &rc);
-                  inplace->Release();
-               }
-            }
-
-            return 0;
-         }
-         case WM_ERASEBKGND:
-            return 1;
-         case WM_DESTROY:
-         {
-            PostQuitMessage(0);
-            return 0;
-         }
-      }
-
-      return DefWindowProc(hwnd, msg, wParam, lParam);
    }
 
-   int rdx_client_main()
+   rdx_client::~rdx_client()
    {
+
+      // if (m_prdxclient)
+      // {
+      //
+      //
+      //    delete m_prdxclient;
+      //
+      // }
+
+
+
+   }
+   //
+   // i64 rdx_client::get_style_for_creating_window()
+   // {
+   //
+   //    return WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+   //
+   // }
+   //
+
+   //
+   // LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+   // {
+   //    switch (msg)
+   //    {
+   //       case WM_SIZE:
+   //       {
+   //          if (m_poleobject)
+   //          {
+   //             IOleInPlaceObject *pinplaceobject = nullptr;
+   //
+   //             if (SUCCEEDED(m_poleobject->QueryInterface(IID_IOleInPlaceObject, (void **)&pinplaceobject)))
+   //             {
+   //                RECT rc;
+   //                GetClientRect(hwnd, &rc);
+   //
+   //                pinplaceobject->SetObjectRects(&rc, &rc);
+   //                pinplaceobject->Release();
+   //             }
+   //          }
+   //
+   //          return 0;
+   //       }
+   //       case WM_ERASEBKGND:
+   //          return 1;
+   //       case WM_DESTROY:
+   //       {
+   //          PostQuitMessage(0);
+   //          return 0;
+   //       }
+   //    }
+   //
+   //    return DefWindowProc(hwnd, msg, wParam, lParam);
+   // }
+   //
+   //
+   // void rdx_client::on_size()
+   // {
+   //
+   //    if (m_poleobject)
+   //    {
+   //
+   //       ::comptr < IOleInPlaceObject > pinplaceobject;
+   //
+   //       m_poleobject.as(pinplaceobject);
+   //
+   //       auto hwnd = ::as_HWND(this->operating_system_window());
+   //
+   //       RECT rc;
+   //
+   //       GetClientRect(hwnd, &rc);
+   //
+   //       pinplaceobject->SetObjectRects(&rc, &rc);
+   //
+   //    }
+   //
+   // }
+   //
+   //
+   // string rdx_client::get_title()
+   // {
+   //
+   //    return "Remoting RDX Client";
+   //
+   // }
+
+
+
+   void rdx_client::start_main_window()
+   {
+      //construct_newø(m_pcomwindowthread);
+
+
+   }
+
+
+   void rdx_client::main_window_main(const ::scoped_string & scopedstrHost)
+   {
+
       // CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
-      OleInitialize(nullptr);
-      auto hInst = (HINSTANCE)::system()->m_hinstanceThis;
-      WNDCLASS wc = {};
-      wc.lpfnWndProc = WndProc;
-      wc.hInstance = hInst;
-      wc.lpszClassName = L"RawOLEHost";
+      //OleInitialize(nullptr);
 
-      RegisterClass(&wc);
+      //HRESULT hr = CoInitializeEx(
+    //nullptr,
+    // COINIT_APARTMENTTHREADED);
+    //
+    //   if (FAILED(hr))
+    //      throw ::hresult_exception(hr);
+    //
 
-      g_hwnd = CreateWindowEx(0, wc.lpszClassName, L"Raw COM RDP Host",
-                              WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, CW_USEDEFAULT,
-                              CW_USEDEFAULT, 1400, 900, nullptr, nullptr, hInst, nullptr);
-      auto hwnd = g_hwnd;
-      g_site = new ClientSite();
+      APTTYPE aptType;
+      APTTYPEQUALIFIER qual;
 
-      HRESULT hr =
-         CoCreateInstance(__uuidof(MsRdpClient9), nullptr, CLSCTX_INPROC_SERVER, IID_IOleObject, (void **)&g_oleObject);
+      CoGetApartmentType(&aptType, &qual);
 
-      if (FAILED(hr))
-      {
-         MessageBox(hwnd, L"Failed to create RDP ActiveX", L"Error", MB_ICONERROR);
-         return 1;
-      }
+      informationf(
+          "Apartment: %d qualifier: %d",
+          aptType,
+          qual);
 
-      g_oleObject->SetClientSite(g_site);
+      construct_newø(m_pmainwindow);
 
-      RECT rc;
-      GetClientRect(g_hwnd, &rc);
+      //int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+      //int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
-      OleSetContainedObject(g_oleObject, TRUE);
+      m_pmainwindow->m_rectangle.left = 140*2;
+      m_pmainwindow->m_rectangle.top = 90 *2;
+      m_pmainwindow->m_rectangle.set_width(1400);
+      m_pmainwindow->m_rectangle.set_height(900);
 
-      OleRun(g_oleObject);
+      m_pmainwindow->m_strHost = scopedstrHost;
 
-      // SHOW first
-      hr = g_oleObject->DoVerb(OLEIVERB_SHOW, nullptr, g_site, 0, g_hwnd, &rc);
-
-      // Then UI activate
-      hr = g_oleObject->DoVerb(OLEIVERB_UIACTIVATE, nullptr, g_site, 0, g_hwnd, &rc);
-
-      IOleInPlaceObject *inplace = nullptr;
-
-      hr = g_oleObject->QueryInterface(IID_IOleInPlaceObject, (void **)&inplace);
+      m_pmainwindow->create_window();
 
 
-      hr = g_oleObject->QueryInterface(__uuidof(IMsRdpClient9), (void **)&g_rdp);
+      //m_pmainwindow->show_window(SW_SHOW);
+      //m_pmainwindow->update_window();
 
-      if (FAILED(hr))
-      {
-         MessageBox(hwnd, L"QueryInterface failed", L"Error", MB_ICONERROR);
-         return 1;
-      }
+      auto hwnd = ::as_HWND(m_pmainwindow->operating_system_window());
 
-      IConnectionPointContainer *cpc = nullptr;
+      LONG style = GetWindowLong(hwnd, GWL_STYLE);
+      LONG exstyle = GetWindowLong(hwnd, GWL_EXSTYLE);
 
-      hr = g_rdp->QueryInterface(IID_IConnectionPointContainer, (void **)&cpc);
+      informationf(
+          "STYLE=%08X EXSTYLE=%08X",
+          style,
+          exstyle);
 
-      if (SUCCEEDED(hr))
-      {
-         hr = cpc->FindConnectionPoint(__uuidof(IMsTscAxEvents), &g_cp);
-
-         if (SUCCEEDED(hr))
-         {
-            g_sink = new RdpEventSink();
-
-            g_cp->Advise((IUnknown *)g_sink, &g_cookie);
-         }
-
-         cpc->Release();
-      }
-
-      g_rdp->put_Server(_bstr_t(L"192.168.18.51"));
-      // g_rdp->put_Server(_bstr_t(L"localhost"));
-      g_rdp->put_DesktopWidth(2560);
-      g_rdp->put_DesktopHeight(1440);
-
-      g_rdp->Connect();
-
-      if (SUCCEEDED(hr))
-      {
-         RECT rc;
-         GetClientRect(g_hwnd, &rc);
-
-         inplace->SetObjectRects(&rc, &rc);
-
-         inplace->Release();
-      }
       MSG msg;
-
-      bool bIsConnected = false;
 
       while (GetMessage(&msg, nullptr, 0, 0))
       {
-         TranslateMessage(&msg);
-         DispatchMessage(&msg);
-         // short connected = 0;
 
-         // g_rdp->get_Connected(&connected);
-         // if (connected == 1)
-         //{
+         BOOL handled = FALSE;
 
-         //   if (!bIsConnected)
-         //   {
-         //      bIsConnected = true;
+         // if (m_pmainwindow->m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceactiveobject)
+         // {
+         //
+         //    HRESULT hr = m_pmainwindow->m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceactiveobject->TranslateAccelerator(&msg);
+         //
+         //    handled = (hr == S_OK);
+         //
+         // }
 
-         //      MessageBox(nullptr, L"Now it should be connected", L"", MB_OK);
+         if (!handled)
+         {
 
-         //   }
-         //}
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+
+         }
+
       }
 
-      if (g_cp)
-      {
-         g_cp->Unadvise(g_cookie);
-         g_cp->Release();
-      }
+      //OleUninitialize();
 
-      if (g_sink)
-      {
-         g_sink->Release();
-      }
+      //CoUninitialize();
 
-      if (g_rdp)
-         g_rdp->Disconnect();
 
-      if (g_rdp)
-         g_rdp->Release();
 
-      if (g_oleObject)
-         g_oleObject->Release();
-
-      if (g_site)
-         g_site->Release();
-
-      // CoUninitialize();
-
-      OleUninitialize();
-
-      return 0;
    }
 
 
@@ -376,9 +266,9 @@ namespace remoting_rdx_client
 //
 //using namespace RDP;
 //
-//CComPtr<IMsRdpClient9> g_rdp;
+//CComPtr<IMsRdpClient9> m_prdxclient->m_prdpclient;
 //
-//HWND g_hwnd = nullptr;
+//HWND hwnd = nullptr;
 //
 //LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 //{
@@ -386,14 +276,14 @@ namespace remoting_rdx_client
 //   {
 //      case WM_SIZE:
 //      {
-//         if (g_rdp)
+//         if (m_prdxclient->m_prdpclient)
 //         {
-//            CComQIPtr<IOleInPlaceObject> inplace(g_rdp);
-//            if (inplace)
+//            CComQIPtr<IOleInPlaceObject> pinplaceobject(m_prdxclient->m_prdpclient);
+//            if (pinplaceobject)
 //            {
 //               RECT rc;
 //               GetClientRect(hwnd, &rc);
-//               inplace->SetObjectRects(&rc, &rc);
+//               pinplaceobject->SetObjectRects(&rc, &rc);
 //            }
 //         }
 //         return 0;
@@ -419,12 +309,12 @@ namespace remoting_rdx_client
 //
 //   RegisterClass(&wc);
 //
-//   g_hwnd = CreateWindowEx(0, wc.lpszClassName, L"Embedded RDP", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
+//   hwnd = CreateWindowEx(0, wc.lpszClassName, L"Embedded RDP", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
 //                           1280, 720, nullptr, nullptr, hInst, nullptr);
 //
-//   ShowWindow(g_hwnd, SW_SHOW);
+//   ShowWindow(hwnd, SW_SHOW);
 //
-//   HRESULT hr = g_rdp.CoCreateInstance(__uuidof(MsRdpClient9));
+//   HRESULT hr = m_prdxclient->m_prdpclient.CoCreateInstance(__uuidof(MsRdpClient9));
 //
 //   if (FAILED(hr))
 //   {
@@ -433,29 +323,29 @@ namespace remoting_rdx_client
 //   }
 //
 //   // Create ActiveX host
-//   CComQIPtr<IOleObject> oleObj(g_rdp);
+//   CComQIPtr<IOleObject> oleObj(m_prdxclient->m_prdpclient);
 //
 //   oleObj->SetClientSite(nullptr);
 //
 //   RECT rc;
-//   GetClientRect(g_hwnd, &rc);
+//   GetClientRect(hwnd, &rc);
 //
-//   oleObj->DoVerb(OLEIVERB_INPLACEACTIVATE, nullptr, nullptr, 0, g_hwnd, &rc);
+//   oleObj->DoVerb(OLEIVERB_INPLACEACTIVATE, nullptr, nullptr, 0, hwnd, &rc);
 //
 //   // Basic settings
-//   //g_rdp->put_Server(_bstr_t(L"canada2.camilothomas.com"));
-//   g_rdp->put_Server(_bstr_t(L"192.168.18.51"));
-//   //g_rdp->put_UserName(_bstr_t(L"user"));
+//   //m_prdxclient->m_prdpclient->put_Server(_bstr_t(L"canada2.camilothomas.com"));
+//   m_prdxclient->m_prdpclient->put_Server(_bstr_t(L"192.168.18.51"));
+//   //m_prdxclient->m_prdpclient->put_UserName(_bstr_t(L"user"));
 //
 //   // Fixed resolution
-//   g_rdp->put_DesktopWidth(2560);
-//   g_rdp->put_DesktopHeight(1440);
+//   m_prdxclient->m_prdpclient->put_DesktopWidth(2560);
+//   m_prdxclient->m_prdpclient->put_DesktopHeight(1440);
 //
 //   // Fullscreen
-//   g_rdp->put_FullScreen(VARIANT_TRUE);
+//   m_prdxclient->m_prdpclient->put_FullScreen(VARIANT_TRUE);
 //
 //   // Smart sizing
-//   CComQIPtr<IMsRdpClientAdvancedSettings7> adv(g_rdp);
+//   CComQIPtr<IMsRdpClientAdvancedSettings7> adv(m_prdxclient->m_prdpclient);
 //
 //   if (adv)
 //   {
@@ -468,7 +358,7 @@ namespace remoting_rdx_client
 //   }
 //
 //   // Disable dynamic resolution updates
-//   CComQIPtr<IMsRdpExtendedSettings> ext(g_rdp);
+//   CComQIPtr<IMsRdpExtendedSettings> ext(m_prdxclient->m_prdpclient);
 //
 //   if (ext)
 //   {
@@ -477,7 +367,7 @@ namespace remoting_rdx_client
 //      ext->put_Property(_bstr_t(L"EnableFrameBufferRedirection"), &v);
 //   }
 //
-//   hr = g_rdp->Connect();
+//   hr = m_prdxclient->m_prdpclient->Connect();
 //
 //   if (FAILED(hr))
 //   {
@@ -492,9 +382,9 @@ namespace remoting_rdx_client
 //      DispatchMessage(&msg);
 //   }
 //
-//   if (g_rdp)
+//   if (m_prdxclient->m_prdpclient)
 //   {
-//      g_rdp->Disconnect();
+//      m_prdxclient->m_prdpclient->Disconnect();
 //   }
 //
 //   CoUninitialize();

@@ -1,30 +1,155 @@
 #include "framework.h"
 #include "main_window.h"
-#include "acme/constant/user_message.h"
-#include "acme/handler/item.h"
-#include "acme/platform/node.h"
+#include "client_site.h"
+#include "in_place_frame.h"
+#include "in_place_site.h"
+#include "acme/_operating_system.h"
+#include "acme/operating_system/windows_common/com/comptr.h"
 #include "acme/platform/system.h"
-#include "acme/user/user/tool.h"
-#include "aura/graphics/draw2d/graphics.h"
-#include "aura/graphics/user/control_box_button.h"
-#include "aura/message/user.h"
-#include "acme/prototype/mathematics/mathematics.h"
-#include "aura/platform/application.h"
+#include "application.h"
+#include "acme/windowing/windowing.h"
+//#include "main_window.h"
+
+#import "mstscax.dll" raw_native_types no_namespace named_guids
+
+#pragma comment(lib, "ole32.lib")
+#pragma comment(lib, "oleaut32.lib")
 
 
-#define STEPPY_DEBUG 0
 
-
-namespace app_app
+namespace remoting_rdx_client
 {
+
+
+   namespace rdp
+   {
+
+      enum enum_dispatch
+      {
+
+         DISPID_CONNECTING = 1, // OnConnecting
+         DISPID_CONNECTED = 2, // OnConnected
+         DISPID_LOGINCOMPLETE = 3, // OnLoginComplete
+         DISPID_DISCONNECTED = 4, // OnDisconnected
+         DISPID_ENTERFULLSCREENMODE = 5, // OnEnterFullScreenMode
+         DISPID_LEAVEFULLSCREENMODE = 6, // OnLeaveFullScreenMode
+         DISPID_CHANNELRECEIVEDDATA = 7, // OnChannelReceivedData
+         DISPID_REQUESTGOFULLSCREEN = 8, // OnRequestGoFullScreen
+         DISPID_REQUESTLEAVEFULLSCREEN = 9, // OnRequestLeaveFullScreen
+         DISPID_FATALERROR = 10, // OnFatalError
+         DISPID_WARNING = 11, // OnWarning
+         DISPID_REMOTEDESKTOPSIZECHANGE = 12, // OnRemoteDesktopSizeChange
+         DISPID_IDLETIMEOUTNOTIFICATION = 13, // OnIdleTimeoutNotification
+         DISPID_REQUESTCONTAINERMINIMIZE = 14, // OnRequestContainerMinimize
+         DISPID_CONFIRMCLOSE = 15, // OnConfirmClose
+         DISPID_RECEIVEDTSPUBLICKEY = 16, // OnReceivedTSPublicKey
+         DISPID_AUTORECONNECTING = 17, // OnAutoReconnecting
+         DISPID_INTERNALDIALOGDISPLAYED = 18, // OnAuthenticationWarningDisplayed
+         DISPID_INTERNALDIALOGDISMISSED = 19, // OnAuthenticationWarningDismissed
+         DISPID_ONREMOTEPROGRAMRESULT = 20, // OnRemoteProgramResult
+         DISPID_ONREMOTEPROGRAMDISPLAYED = 21, // OnRemoteProgramDisplayed
+         DISPID_LOGONERROR = 22, // OnLogonError
+         DISPID_FOCUSRELEASED = 23, // OnFocusReleased
+         DISPID_USERNAMEACQUIRED = 24, // OnUserNameAcquired
+         DISPID_MOUSEINPUTMODECHANGED = 26, // OnMouseInputModeChanged
+         DISPID_ONSTATUSINFO = 27, // None. Provides a VT_UI4 status code to the application. The application can pass
+                                   // the status code contained in `pDispParams->rgvarg[0].ulVal`` to
+                                   // IMsRdpClient7::GetStatusText to get the associated status text.
+         DISPID_SERVICEMESSAGERECEIVED = 28, // OnServiceMessageReceived
+         DISPID_ONREMOTEWINDOWDISPLAYED = 29, // OnRemoteWindowDisplayed
+         DISPID_CONNECTIONBARPULLDOWN = 30, // OnConnectionBarPullDown
+         DISPID_ONNETWORKSTATUSCHANGED = 32, // OnNetworkStatusChanged
+         DISPID_AUTORECONNECTED = 33, // OnAutoReconnected
+         DISPID_AUTORECONNECTING2 = 34, // OnAutoReconnecting2
+         DISPID_CONNECTIONBARDEVICES = 35, // OnDevicesButtonPressed
+         DISPID_HVSINOTIFICATION =
+            36, // None. Provides a VT_UI4 event code. This event is emitted in Microsoft Defender Application Guard
+                // scenarios. It should not be emitted during normal operations.
+         DISPID_ONWOKEUPANDRECONNECTING =
+            37, // None. This event is no longer emitted by the Remote Desktop ActiveX control.
+         DISPID_ONLOCATIONREDIRECTIONENABLEDRECEIVED =
+            39, // None. This event notifies the application that it can start using
+                // IMsRdpClientNonScriptable6::SendLocation2D or IMsRdpClientNonScriptable6::SendLocation3D its location
+                // to the server so the client's geographic location can be reflected in the remote session.
+
+      };
+   } // namespace rdp
+
+   class  main_window_internal :
+      virtual public ::windows::event_sink<IMsTscAxEvents>
+   {
+   public:
+
+      ::pointer<main_window> m_pmainwindow;
+      ::comptr<IMsRdpClient9> m_prdpclient;
+
+
+
+         HRESULT STDMETHODCALLTYPE Invoke(DISPID dispIdMember, REFIID, LCID, WORD, DISPPARAMS *pDispParams, VARIANT *,
+                                       EXCEPINFO *, UINT *)
+      {
+
+            auto edispatch = (rdp::enum_dispatch)dispIdMember;
+            switch (edispatch)
+            {
+               case rdp::DISPID_CONNECTING:
+               information("RDP Happening : Connecting");
+               m_pmainwindow->OnRdpConnecting();
+               break;
+               case rdp::DISPID_CONNECTED:
+               information("RDP Happening : Connected");
+               m_pmainwindow->OnRdpConnected();
+               break;
+               case rdp::DISPID_LOGINCOMPLETE:
+                  information("RDP Happening : Login Complete");
+                  m_pmainwindow->OnRdpLoginComplete();
+                  break;
+               case rdp::DISPID_DISCONNECTED:
+                  information("RDP Happening : Disconnected");
+                  m_pmainwindow->OnRdpDisconnected();
+                  break;
+               case rdp::DISPID_ENTERFULLSCREENMODE:
+                  information("RDP Happening : Enter full screen");
+                  m_pmainwindow->OnRdpEnterFullScreen();
+                  break;
+               case rdp::DISPID_LEAVEFULLSCREENMODE:
+                  information("RDP Happening : Leave full screen");
+                  m_pmainwindow->OnRdpLeaveFullScreen();
+                  break;
+               case rdp::DISPID_REQUESTGOFULLSCREEN:
+                  information("RDP Happening : Request go full screen");
+                  m_pmainwindow->OnRdpRequestGoFullScreen();
+                  break;
+               case rdp::DISPID_REQUESTLEAVEFULLSCREEN:
+                  information("RDP Happening : Request leave full screen");
+                  m_pmainwindow->OnRdpRequestLeaveFullScreen();
+                  break;
+
+            }
+         return S_OK;
+      }
+
+
+
+   };
+   //HWND hwnd = nullptr;
+   //IOleObject *m_poleobject = nullptr;
+   //IMsRdpClient9 *m_pinternal->m_prdpclient = nullptr;
+
+
+   //IConnectionPoint *m_pconnectionpoint = nullptr;
+   //DWORD m_dwCookie = 0;
+   //RdpEventSink *m_peventsink = nullptr;
 
 
    main_window::main_window()
    {
 
-      m_bTransparent = true;
+      m_pinternal = new main_window_internal;
 
-      m_rectangleInitialRateOrSize = { 0.05, 0.05, 0.4, 0.4 };
+      m_pinternal->m_pmainwindow = this;
+
+      m_dwCookie = 0;
 
       m_dBreathPeriod = 60.0;
 
@@ -32,290 +157,874 @@ namespace app_app
 
       m_dPhaseShift = 0.0;
 
-      m_bNeedFullRedrawOnResize = true;
-
    }
 
 
    main_window::~main_window()
    {
 
+      if (m_pinternal)
+      {
+
+         delete m_pinternal;
+
+         m_pinternal = nullptr;
+
+      }
+   }
+
+
+   i64 main_window::get_style_for_creating_window()
+   {
+
+      //return WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+      //return WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+      return WS_OVERLAPPEDWINDOW;
 
    }
 
 
-   void main_window::install_message_routing(::channel * pchannel)
+   //
+   // LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+   // {
+   //    switch (msg)
+   //    {
+   //       case WM_SIZE:
+   //       {
+   //          if (m_poleobject)
+   //          {
+   //             IOleInPlaceObject *pinplaceobject = nullptr;
+   //
+   //             if (SUCCEEDED(m_poleobject->QueryInterface(IID_IOleInPlaceObject, (void **)&pinplaceobject)))
+   //             {
+   //                RECT rc;
+   //                GetClientRect(hwnd, &rc);
+   //
+   //                pinplaceobject->SetObjectRects(&rc, &rc);
+   //                pinplaceobject->Release();
+   //             }
+   //          }
+   //
+   //          return 0;
+   //       }
+   //       case WM_ERASEBKGND:
+   //          return 1;
+   //       case WM_DESTROY:
+   //       {
+   //          PostQuitMessage(0);
+   //          return 0;
+   //       }
+   //    }
+   //
+   //    return DefWindowProc(hwnd, msg, wParam, lParam);
+   // }
+   //
+
+
+   // void main_window::do_control_layout()
+   // {
+   //
+   //    if (!m_poleobject)
+   //    {
+   //
+   //       return;
+   //
+   //    }
+   //
+   //    ::comptr<IOleInPlaceObject> pinplaceobject;
+   //
+   //    m_poleobject.as(pinplaceobject);
+   //
+   //    if (!pinplaceobject)
+   //    {
+   //
+   //       information("No IOleInPlaceObject");
+   //
+   //       return;
+   //
+   //    }
+   //
+   //    auto hwnd = ::as_HWND(this->operating_system_window());
+   //
+   //    RECT rc;
+   //
+   //    GetClientRect(hwnd, &rc);
+   //
+   //    informationf(
+   //        "SetObjectRects: %d x %d",
+   //        rc.right - rc.left,
+   //        rc.bottom - rc.top);
+   //
+   //    HRESULT hr =
+   //        pinplaceobject->SetObjectRects(&rc, &rc);
+   //
+   //    if (FAILED(hr))
+   //    {
+   //
+   //       information(hresult_to_string(hr));
+   //
+   //    }
+   //
+   // }
+   //
+   //
+   // void main_window::control_activate(bool bActivate)
+   // {
+   //
+   //    if (m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceactiveobject)
+   //    {
+   //
+   //       m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceactiveobject->OnFrameWindowActivate(bActivate ? TRUE : FALSE);
+   //
+   //       m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceactiveobject->OnDocWindowActivate(bActivate ? TRUE : FALSE);
+   //
+   //    }
+   //
+   // }
+   //
+   //
+   // void main_window::do_control_show_verb()
+   // {
+   //
+   //    auto hwnd = ::as_HWND(this->operating_system_window());
+   //
+   //    auto rectangleClient = window_get_client_rect();
+   //
+   //    auto rect = ::as_RECT(rectangleClient);
+   //
+   //    auto hr = m_poleobject->DoVerb(OLEIVERB_SHOW, nullptr, m_pclientsite, 0, hwnd, &rect);
+   //
+   //    if (FAILED(hr))
+   //    {
+   //
+   //       information("do_control_ui_activate DoVer(OLEIVERB_SHOW ... ) Failed");
+   //
+   //    }
+   //
+   // }
+   //
+   //
+   // void main_window::do_control_ui_activate()
+   // {
+   //
+   //    auto hwnd = ::as_HWND(this->operating_system_window());
+   //
+   //    auto rectangleClient = window_get_client_rect();
+   //
+   //    auto rect = ::as_RECT(rectangleClient);
+   //
+   //    auto hr = m_poleobject->DoVerb(OLEIVERB_UIACTIVATE, nullptr, m_pclientsite, 0, hwnd, &rect);
+   //
+   //    if (FAILED(hr))
+   //    {
+   //
+   //       information("do_control_ui_activate DoVer(OLEIVERB_UIACTIVATE ... ) Failed");
+   //
+   //    }
+   //
+   // }
+   //
+   //
+   // void main_window::on_window_size()
+   // {
+   //
+   //    do_control_layout();
+   //
+   // }
+   //
+   //
+   // void main_window::on_window_set_focus()
+   // {
+   //
+   //    control_activate(true);
+   //
+   // }
+   //
+   //
+   // bool main_window::on_window_activate(int iActivate, bool bMinimized,
+   //                                      const operating_system::window &operatingsystemwindow)
+   // {
+   //
+   //    auto active = iActivate != WA_INACTIVE;
+   //
+   //    control_activate(active);
+   //
+   //    return false;
+   //
+   // }
+   //
+   //
+   // bool main_window::on_window_mouse_activate(int &iResult, const operating_system::window &operatingsystemwindowTop, int iHitTest, int iMessage)
+   // {
+   //
+   //    iResult = MA_ACTIVATE;
+   //
+   //    return true;
+   //
+   // }
+
+
+   bool main_window::_on_window_procedure(lresult &lresult, u32 message, wparam wparam, lparam lparam)
    {
 
-      ::user::main_window::install_message_routing(pchannel);
-
-      USER_MESSAGE_LINK(::user::e_message_create, pchannel, this, &main_window::on_message_create);
-
-   }
-
-
-   void main_window::on_message_create(::message::message * pmessage)
-   {
-
-#if !STEPPY_DEBUG
-
-      if (is_sandboxed())
+      switch (message)
       {
-
-         add_graphical_output_purpose(this, ::graphics::e_output_purpose_screen);
-
-      }
-      else
-      {
-
-         //set_fps_interest();
-
-         add_graphical_output_purpose(this, ::graphics::e_output_purpose_screen_fps);
-
-      }
-
-#endif
-
-   }
-
-
-   void main_window::_001OnDraw(::draw2d::graphics_pointer & pgraphics)
-   {
-
-      m_iCloseButtonDraw = 0;
-
-      m_dDrawOnlyMainRectangles = false;
-
-      auto rectangleX = this->rectangle();
-
-      if (rectangleX.is_empty())
-      {
-
-         return;
-
-      }
-
-      pgraphics->set_alpha_mode(::draw2d::e_alpha_mode_blend);
-
-      pgraphics->set_smooth_mode(::draw2d::e_smooth_mode_none);
-
-      if (system()->background_color().get_luminance() < 0.5)
-      {
-
-         pgraphics->fill_rectangle(rectangleX, argb(255, 127, 127, 127));
-
-      }
-      else
-      {
-
-         pgraphics->fill_rectangle(rectangleX, argb(255, 255, 255, 255));
-
-      }
-
-      auto dMinimumDimension = (double)rectangleX.minimum_signed_absolute_dimension();
-
-      double dBase = dMinimumDimension / 17.0;
-
-      double x = dBase * 3;
-
-      double y = dBase * 3;
-
-      pgraphics->fill_rectangle(::double_rectangle_dimension(x, y, dBase * 5.0, dBase * 5.0), ::argb(127, 40, 150, 235));
-
-      pgraphics->fill_rectangle(::double_rectangle_dimension(x + dBase * 6.0, y, dBase * 5.0, dBase * 5.0), ::argb(127, 40, 150, 235));
-
-      pgraphics->fill_rectangle(::double_rectangle_dimension(x, y + dBase * 6.0, dBase * 11.0, dBase * 5.0), ::argb(127, 255, 110, 150));
-
-      if (m_dDrawOnlyMainRectangles)
-      {
-
-         return;
-
-      }
-
-      rectangleX.deflate((int)dBase);
-
-      ::color::color colorInset;
-
-      if (system()->background_color().get_luminance() < 0.5)
-      {
-
-         colorInset = argb(255, 89, 89, 89);
-
-      }
-      else
-      {
-
-         colorInset = argb(255, 127, 127, 127);
-
-      }
-
-      pgraphics->draw_inset_rectangle(rectangleX, colorInset, dBase);
-
-      //m_dDrawControlBox = true;
-
-      if (should_show_platform_control_box())
-      {
-
-         pgraphics->set_smooth_mode(::draw2d::e_smooth_mode_high);
-
-         auto pitemClose = user_item(tool().item(::e_element_close_button));
-
-         auto pitemZoom = user_item(tool().item(::e_element_maximize_button));
-
-         auto pitemIcon = user_item(tool().item(::e_element_minimize_button));
-
-         if (::is_set(pitemClose))
+         case WM_TIMER:
          {
 
-            bool bHover = ::is_element(m_pitemHover, ::e_element_close_button);
-
-            double dSourcePeriod;
-
-            if (bHover)
+            if (wparam == 1453)
             {
 
-               dSourcePeriod = 0.5;
+               show_window(SW_SHOW);
 
-            }
-            else
-            {
-
-               dSourcePeriod = 5.0;
-
-            }
-
-            double time = m_timeStart.elapsed().floating_second();
-
-            double dFrequency = 1.0 / m_dBreathPeriod;
-
-            //auto pmathematics = mathematics();
-
-            double omega = 2.0 * π * dFrequency;
-
-            double angle = omega * time;
-
-            angle += m_dPhaseShift;
-
-            double dNewPeriod = m_dBreathPeriod;
-
-            if (dSourcePeriod < dNewPeriod)
-            {
-
-               dNewPeriod -= dNewPeriod * 0.01;
-
-            }
-            else if (dSourcePeriod > dNewPeriod)
-            {
-
-               dNewPeriod += dNewPeriod * 0.01;
-
-            }
-
-            if (dNewPeriod != m_dBreathPeriod)
-            {
-
-               m_dBreathPeriod = dNewPeriod;
-
-               dFrequency = 1.0 / m_dBreathPeriod;
-
-               ///auto pmathematics = mathematics();
-
-               omega = 2.0 * π * dFrequency;
-
-               double angleNew = omega * time;
-
-               m_dPhaseShift = angle - angleNew;
-
-               m_dPhaseShift = fmod(m_dPhaseShift, 2.0 * π);
-
-            }
-
-            int iSize = (int)(::sin(angle) * 25.0 + 64.0);
-
-            pitemClose->m_rectangle2 = this->rectangle();
-
-            pitemClose->m_rectangle2.left = pitemClose->m_rectangle2.right - iSize;
-
-            pitemClose->m_rectangle2.bottom = pitemClose->m_rectangle2.top + iSize;
-
-//            auto pmouse = create_newø < ::message::mouse >();
-//
-//            pmouse->m_pointHost = host_mouse_cursor_position();
-//
-//            pmouse->m_pointAbsolute = absolute_mouse_cursor_position();
-//
-            update_hover_according_to_last_hover_update(::user::e_zorder_any);
-
-            if (::is_set(pitemZoom))
-            {
-
-               pitemZoom->m_rectangle2 = this->rectangle();
-
-               pitemZoom->m_rectangle2.right = pitemClose->m_rectangle2.left;
-
-               pitemZoom->m_rectangle2.bottom = pitemClose->m_rectangle2.bottom;
-
-               pitemZoom->m_rectangle2.left = pitemZoom->m_rectangle2.right - iSize;
-
-               if (::is_set(pitemIcon))
-               {
-
-                  pitemIcon->m_rectangle2 = this->rectangle();
-
-                  pitemIcon->m_rectangle2.right = pitemZoom->m_rectangle2.left;
-
-                  pitemIcon->m_rectangle2.bottom = pitemClose->m_rectangle2.bottom;
-
-                  pitemIcon->m_rectangle2.left = pitemIcon->m_rectangle2.right - iSize;
-
-               }
+               auto hwnd = ::as_HWND(this->operating_system_window());
+               KillTimer(hwnd, 1453);
 
             }
 
          }
-
-      }
-
-      ::user::interaction::_001OnDraw(pgraphics);
-
-   }
-
-
-   void main_window::_001DrawItem(::draw2d::graphics_pointer & pgraphics, ::user::item & useritem, const ::user::e_state & estate)
-   {
-
-      auto pitem = useritem.m_pitem;
-
-      if (::is_null(useritem.m_pitem))
-      {
-
-         return;
-
-      }
-
-      if (pitem->m_item.m_eelement == ::e_element_close_button)
-      {
-
-         ::user::draw_close_button(pgraphics, this, useritem, estate);
-
-         m_iCloseButtonDraw++;
-
-         if (m_iCloseButtonDraw > 1)
+            break;
+         case WM_SYSCOMMAND:
          {
+            if ((wparam.loword() & 0xFFF0) == SC_MAXIMIZE)
+            {
+               m_pinternal->m_prdpclient->put_FullScreen(VARIANT_TRUE);
+               lresult= 0; // 👈 block normal maximize
+               return true;
+            }
 
-            //informationf("output");
+            break;
+         }
+         case WM_CLOSE:
+         {
+            auto hwnd = ::as_HWND(this->operating_system_window());
+            KillTimer(hwnd, 1453);
+
+            shutdown_rdp();
 
          }
+            break;
+
+      }
+      return false;
+      // if (message == WM_CREATE)
+      // {
+      //
+      //    on_create_window();
+      //
+      //    lresult = 0;
+      //
+      //    return true;
+      //
+      // }
+      // else if (message == WM_SIZE)
+      // {
+      //
+      //    on_window_size();
+      //
+      //    lresult = 0;
+      //
+      //    return true;
+      //
+      // }
+      //
+      // auto hwnd = ::as_HWND(this->operating_system_window());
+      //
+      // lresult = DefWindowProc(hwnd, message, wparam, lparam);
+      //
+      // return true;
+
+
+   }
+
+
+   void main_window::shutdown_rdp()
+   {
+
+      auto hwnd = ::as_HWND(this->operating_system_window());
+      KillTimer(hwnd, 1453);
+
+      show_window(SW_HIDE);
+
+      if (m_pinternal &&
+          m_pinternal->m_prdpclient)
+      {
+         short connected = 0;
+
+         m_pinternal->m_prdpclient->get_Connected(&connected);
+
+         if (connected != 0)
+         {
+            m_pinternal->m_prdpclient->Disconnect();
+         }
+      }
+
+      if (m_pinternal)
+      {
+
+         m_pinternal->close_event_sink();
+
+      }
+
+      if (m_poleobject)
+      {
+
+         m_poleobject->Close(OLECLOSE_NOSAVE);
+
+      }
+
+      m_pclientsite.release();
+      m_poleobject.release();
+
+      if (m_pinternal)
+      {
+         delete m_pinternal;
+         m_pinternal = nullptr;
+      }
+
+      PostQuitMessage(0);
+
+   }
+
+
+   string main_window::get_title()
+   {
+
+      return "Remoting RDX Client";
+
+   }
+
+
+   void main_window::on_create_window()
+   {
+
+
+      //m_rclsid = __uuidof(RDP::MsRdpClient9);
+
+      m_rclsid = CLSID_MsRdpClient9NotSafeForScripting;
+
+      com_window::on_create_window();
+
+      // HRESULT hr =
+      //    CoCreateInstance(__uuidof(RDP::MsRdpClient9), nullptr, CLSCTX_INPROC_SERVER, IID_IOleObject, (void **)&m_poleobject);
+      //
+      // if (FAILED(hr))
+      // {
+      //
+      //    post_message_box(L"Failed to create RDP ActiveX", L"Error", ::user::e_message_box_icon_error);
+      //
+      //    return;
+      //
+      // }
+      //
+      // m_pclientsite->initialize_client_site(this);
+      //
+      // m_poleobject->SetClientSite(m_pclientsite);
+      //
+      // OleSetContainedObject(m_poleobject, TRUE);
+      //
+      // OleRun(m_poleobject);
+      //
+      // do_control_show_verb();
+      //
+      // do_control_ui_activate();
+      //
+      // ::comptr < IOleInPlaceObject > pinplaceobject;
+      //
+      // m_poleobject.as(pinplaceobject);
+
+      auto hr = m_poleobject.as(m_pinternal->m_prdpclient);
+
+      auto hwnd = ::as_HWND(this->operating_system_window());
+
+      if (FAILED(hr))
+      {
+
+         MessageBox(hwnd, L"QueryInterface failed", L"Error", MB_ICONERROR);
 
          return;
 
       }
 
-      ::user::interaction::_001DrawItem(pgraphics, useritem, estate);
+       ::comptr < IConnectionPointContainer > pconnectionpointcontainer;
+
+       m_pinternal->m_prdpclient.as(pconnectionpointcontainer);
+
+       m_pinternal->event_sink<IMsTscAxEvents>::initialize_event_sink(pconnectionpointcontainer);
+
+      ::wstring wstrHost = m_strHost;
+
+      m_pinternal->m_prdpclient->put_Server(_bstr_t(wstrHost));
+
+      ::comptr<IMsRdpClientAdvancedSettings7> padvancedsettings;
+
+      m_pinternal->m_prdpclient->get_AdvancedSettings8(&padvancedsettings);
+
+      if (padvancedsettings)
+      {
+
+         padvancedsettings->put_EnableCredSspSupport(VARIANT_TRUE);
+
+         //padvancedsettings->put_ContainerHandledFullScreen(VARIANT_TRUE);
+
+         padvancedsettings->put_SmartSizing(VARIANT_FALSE);
+
+         padvancedsettings->put_EnableAutoReconnect(VARIANT_FALSE);
+
+         padvancedsettings->put_SmartSizing(VARIANT_FALSE);
+
+         padvancedsettings->put_BitmapCacheSize(0);
+
+         padvancedsettings->put_BitmapPersistence(VARIANT_FALSE);
+
+         padvancedsettings->put_PerformanceFlags(0);
+
+         //padvancedsettings->put_ConnectionBarShowMinimizeButton(VARIANT_FALSE);
+
+      }
+      IMsRdpExtendedSettings *pext = nullptr;
+
+      ::comptr<IMsRdpExtendedSettings> ext;
+      m_pinternal->m_prdpclient.as(ext);
+
+      if (ext)
+      {
+         _variant_t vFalse(VARIANT_FALSE);
+
+         ext->put_Property(
+             _bstr_t(L"EnableHardwareMode"),
+             &vFalse);
+
+         ext->put_Property(
+             _bstr_t(L"UseURCP"),
+             &vFalse);
+
+         ext->put_Property(
+             _bstr_t(L"DisableUDPTransport"),
+             &vFalse);
+
+         _variant_t varScaleFactor((LONG)100);
+
+         ext->put_Property(_bstr_t(L"DesktopScaleFactor"), &varScaleFactor);
+
+         ext->put_Property(_bstr_t(L"DeviceScaleFactor"), &varScaleFactor);
+
+      }
+
+      m_pinternal->m_prdpclient->put_ColorDepth(32);
+
+      int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+
+      int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+
+      m_pinternal->m_prdpclient->put_DesktopWidth(screenWidth);
+
+      m_pinternal->m_prdpclient->put_DesktopHeight(screenHeight);
+
+      m_pinternal->m_prdpclient->put_FullScreen(VARIANT_TRUE);
+
+      auto hrConnect = m_pinternal->m_prdpclient->Connect();
 
    }
 
+
+// #define DISPID_RDPCONTROL_ONCONNECTING 1
+// #define DISPID_RDPCONTROL_ONCONNECTED 2
+// #define DISPID_RDPCONTROL_ONLOGINCOMPLETE 3
+// #define DISPID_RDPCONTROL_ONDISCONNECTED 4
+// #define DISPID_RDPCONTROL_ONENTERFULLSCREENMODE 5
+// #define DISPID_RDPCONTROL_ONLEAVEFULLSCREENMODE 6
+// #define DISPID_RDPCONTROL_ONREQUESTENTERFULLSCREENMODE 8
+// #define DISPID_RDPCONTROL_ONREQUESTLEAVEFULLSCREENMODE 9
+// #define DISPID_RDPCONTROL_ONFATALERROR 10
+//
+//
+//    HRESULT STDMETHODCALLTYPE main_window_internal::Invoke(DISPID dispIdMember, REFIID, LCID, WORD, DISPPARAMS *pDispParams,
+//                                                 VARIANT *, EXCEPINFO *, UINT *)
+//    {
+//       switch (dispIdMember)
+//       {
+//          case DISPID_RDPCONTROL_ONCONNECTING:
+//             //MessageBox(m_hwnd, L"Connected", L"RDP Event", MB_OK);
+//             information("RDP Event :: Connecting");
+//             break;
+//          case DISPID_RDPCONTROL_ONCONNECTED:
+//             //MessageBox(m_hwnd, L"Connected", L"RDP Event", MB_OK);
+//             information("RDP Event :: Connected");
+//             on_rdp_connected();
+//             break;
+//
+//          case DISPID_RDPCONTROL_ONLOGINCOMPLETE:
+//             //information("RDP Event :: Connected");MessageBox(m_hwnd, L"Login complete", L"RDP Event", MB_OK);
+//
+//             information("RDP Event :: Login Complete");
+//             on_rdp_login_complete();
+//             break;
+//             // case DISPID_DISCONNECTED:
+//             //  MessageBox(g_hwnd, L"Disconnected", L"RDP Event", MB_OK);
+//             // break;
+//          case DISPID_RDPCONTROL_ONDISCONNECTED:
+//          {
+//
+//             LONG reason = 0;
+//
+//             if (pDispParams && pDispParams->cArgs >= 1)
+//             {
+//
+//                VARIANTARG &arg = pDispParams->rgvarg[0];
+//
+//                if (arg.vt == VT_I4)
+//                {
+//
+//                   reason = arg.lVal;
+//                }
+//             }
+//
+//             auto hwnd = ::as_HWND(this->operating_system_window());
+//
+//             wchar_t buf[256];
+//
+//             swprintf_s(buf, L"Disconnected. Reason code = %ld", reason);
+//
+//             // MessageBox(hwnd, buf, L"RDP Disconnect", MB_OK);
+//             ::PostMessage(hwnd, WM_CLOSE, 0, 0);
+//          }
+//          break;
+//          case DISPID_RDPCONTROL_ONFATALERROR:
+//          {
+//
+//             auto hwnd = ::as_HWND(this->operating_system_window());
+//
+//             //MessageBox(hwnd, L"Fatal error", L"RDP Event", MB_OK);
+//             wchar_t buf[256];
+//
+//             swprintf_s(buf, L"Fatal error RDP Event");
+//
+//             ::PostMessage(hwnd, WM_CLOSE, 0, 0);
+//
+//          }
+//             break;
+//
+//
+//          case DISPID_RDPCONTROL_ONENTERFULLSCREENMODE:
+//             OnEnterFullScreen();
+//             break;
+//
+//          case DISPID_RDPCONTROL_ONLEAVEFULLSCREENMODE:
+//             OnLeaveFullScreen();
+//             break;
+//
+//          case DISPID_RDPCONTROL_ONREQUESTENTERFULLSCREENMODE:
+//             OnRequestGoFullScreen();
+//             break;
+//
+//          case DISPID_RDPCONTROL_ONREQUESTLEAVEFULLSCREENMODE:
+//             OnRequestLeaveFullScreen();
+//             break;
+//       }
+//             return S_OK;
+//       }
+
+      // void main_window::OnEnterFullScreen()
+      // {
+      //    auto hwnd = ::as_HWND(this->operating_system_window());
+      //
+      //    if (::IsWindowVisible(hwnd))
+      //    {
+      //       ShowWindow(hwnd, SW_HIDE);
+      //    }
+      // }
+      //
+      // void main_window::OnLeaveFullScreen()
+      // {
+      // auto hwnd = ::as_HWND(this->operating_system_window());
+      //    ShowWindow(hwnd, SW_SHOW);
+      // }
+      //
+      // void main_window::OnRequestGoFullScreen()
+      // {
+      // auto hwnd = ::as_HWND(this->operating_system_window());
+      //    ShowWindow(hwnd, SW_HIDE);
+      // }
+      //
+      // void main_window::OnRequestLeaveFullScreen()
+      // {
+      // auto hwnd = ::as_HWND(this->operating_system_window());
+      //    // 👈 THIS is your “restore clicked”
+      //    ShowWindow(hwnd, SW_SHOW);
+      // }
+
+//
+// } // namespace remoting_rdx_client 
+//
+//
+//
+// //#define _CRT_SECURE_NO_WARNINGS
+// //
+// //#include <atlbase.h>
+// //#include <atlwin.h>
+// //#include <windows.h>
+// //
+// //#import "mstscax.dll" rename_namespace("RDP")
+// //
+// //using namespace RDP;
+// //
+// //CComPtr<IMsRdpClient9> m_pinternal->m_prdpclient;
+// //
+// //HWND hwnd = nullptr;
+// //
+// //LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+// //{
+// //   switch (msg)
+// //   {
+// //      case WM_SIZE:
+// //      {
+// //         if (m_pinternal->m_prdpclient)
+// //         {
+// //            CComQIPtr<IOleInPlaceObject> pinplaceobject(m_pinternal->m_prdpclient);
+// //            if (pinplaceobject)
+// //            {
+// //               RECT rc;
+// //               GetClientRect(hwnd, &rc);
+// //               pinplaceobject->SetObjectRects(&rc, &rc);
+// //            }
+// //         }
+// //         return 0;
+// //      }
+// //
+// //      case WM_DESTROY:
+// //         PostQuitMessage(0);
+// //         return 0;
+// //   }
+// //
+// //   return DefWindowProc(hwnd, msg, wParam, lParam);
+// //}
+// //
+// ////int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
+// //int rdx_client_main()
+// //{
+// //   CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+// //   HINSTANCE hInst = (HINSTANCE)::system()->m_hinstanceThis;
+// //   WNDCLASS wc = {};
+// //   wc.lpfnWndProc = WndProc;
+// //   wc.hInstance = hInst;
+// //   wc.lpszClassName = L"MinimalRDP";
+// //
+// //   RegisterClass(&wc);
+// //
+// //   hwnd = CreateWindowEx(0, wc.lpszClassName, L"Embedded RDP", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
+// //                           1280, 720, nullptr, nullptr, hInst, nullptr);
+// //
+// //   ShowWindow(hwnd, SW_SHOW);
+// //
+// //   HRESULT hr = m_pinternal->m_prdpclient.CoCreateInstance(__uuidof(MsRdpClient9));
+// //
+// //   if (FAILED(hr))
+// //   {
+// //      MessageBox(nullptr, L"Failed to create RDP client", L"Error", MB_ICONERROR);
+// //      return 1;
+// //   }
+// //
+// //   // Create ActiveX host
+// //   CComQIPtr<IOleObject> oleObj(m_pinternal->m_prdpclient);
+// //
+// //   oleObj->SetClientSite(nullptr);
+// //
+// //   RECT rc;
+// //   GetClientRect(hwnd, &rc);
+// //
+// //   oleObj->DoVerb(OLEIVERB_INPLACEACTIVATE, nullptr, nullptr, 0, hwnd, &rc);
+// //
+// //   // Basic settings
+// //   //m_pinternal->m_prdpclient->put_Server(_bstr_t(L"canada2.camilothomas.com"));
+// //   m_pinternal->m_prdpclient->put_Server(_bstr_t(L"192.168.18.51"));
+// //   //m_pinternal->m_prdpclient->put_UserName(_bstr_t(L"user"));
+// //
+// //   // Fixed resolution
+// //   m_pinternal->m_prdpclient->put_DesktopWidth(2560);
+// //   m_pinternal->m_prdpclient->put_DesktopHeight(1440);
+// //
+// //   // Fullscreen
+// //   m_pinternal->m_prdpclient->put_FullScreen(VARIANT_TRUE);
+// //
+// //   // Smart sizing
+// //   CComQIPtr<IMsRdpClientAdvancedSettings7> adv(m_pinternal->m_prdpclient);
+// //
+// //   if (adv)
+// //   {
+// //      adv->put_SmartSizing(VARIANT_TRUE);
+// //   }
+// //
+// //   if (adv)
+// //   {
+// //      adv->put_EnableCredSspSupport(VARIANT_TRUE);
+// //   }
+// //
+// //   // Disable dynamic resolution updates
+// //   CComQIPtr<IMsRdpExtendedSettings> ext(m_pinternal->m_prdpclient);
+// //
+// //   if (ext)
+// //   {
+// //      CComVariant v(false);
+// //
+// //      ext->put_Property(_bstr_t(L"EnableFrameBufferRedirection"), &v);
+// //   }
+// //
+// //   hr = m_pinternal->m_prdpclient->Connect();
+// //
+// //   if (FAILED(hr))
+// //   {
+// //      MessageBox(nullptr, L"Connect failed", L"Error", MB_ICONERROR);
+// //   }
+// //
+// //   MSG msg;
+// //
+// //   while (GetMessage(&msg, nullptr, 0, 0))
+// //   {
+// //      TranslateMessage(&msg);
+// //      DispatchMessage(&msg);
+// //   }
+// //
+// //   if (m_pinternal->m_prdpclient)
+// //   {
+// //      m_pinternal->m_prdpclient->Disconnect();
+// //   }
+// //
+// //   CoUninitialize();
+// //
+// //   return 0;
+// //}
+
+
+   void main_window::OnRdpConnecting() {
+
+
+   }
+
+
+   void main_window::OnRdpConnected() {
+
+
+   }
+
+
+   void main_window::OnRdpLoginComplete() {
+
+
+   }
+
+
+   void main_window::OnRdpDisconnected() {
+
+      shutdown_rdp();
+
+   }
+
+
+   void main_window::OnRdpEnterFullScreen() {
+
+      auto hwnd = ::as_HWND(this->operating_system_window());
+
+      if (::IsIconic(hwnd))
+      {
+         ShowWindow(hwnd, SW_MINIMIZE);
+      }
+
+   }
+
+
+   void main_window::OnRdpLeaveFullScreen() {
+
+      auto hwnd = ::as_HWND(this->operating_system_window());
+
+      //if (::IsWindowVisible(hwnd))
+      {
+
+         SetTimer(hwnd, 1453, 150, nullptr);
+         //ShowWindow(hwnd, SW_SHOW);
+      }
+
+   }
+
+
+   void main_window::OnRdpRequestGoFullScreen() {
+
+      auto hwnd = ::as_HWND(this->operating_system_window());
+
+      if (::IsWindowVisible(hwnd))
+      {
+         ShowWindow(hwnd, SW_HIDE);
+      }
+
+   }
+
+
+   void main_window::OnRdpRequestLeaveFullScreen() {
+
+      auto hwnd = ::as_HWND(this->operating_system_window());
+
+      if (::IsIconic(hwnd))
+      {
+         ShowWindow(hwnd, SW_MINIMIZE);
+      }
+
+   }
+
+
+
+//
+//
+//    void main_window::on_rdp_connected()
+//    {
+//
+//  //     do_control_layout();
+//
+//    }
+//
+//
+//    void main_window::on_rdp_login_complete()
+//    {
+//
+//       //do_control_layout();
+//       //window_invalidate_rect(nullptr, true);
+//       //show_window(SW_SHOW);
+//       ///update_window();
+//       //redraw_window(nullptr, nullptr, RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_UPDATENOW);
+//       //dump_operating_system_child_window_hierarchy();
+//       //control_activate(true);
+//       //window_set_focus();
+//       //do_control_show_verb();
+//       //do_control_ui_activate();
+// //
+// //       auto hwnd = ::as_HWND(this->operating_system_window());
+// //
+// //
+// //       EnumChildWindows(hwnd, [](HWND child, LPARAM)
+// // {
+// //     wchar_t cls[256];
+// //     GetClassNameW(child, cls, 256);
+// //
+// //     if (
+// //         wcscmp(cls, L"OPWindowClass") == 0 ||
+// //         wcscmp(cls, L"OPContainerClass") == 0)
+// //     {
+// //         LONG style = GetWindowLong(child, GWL_STYLE);
+// //
+// //         style |= WS_VISIBLE;
+// //
+// //         SetWindowLong(child, GWL_STYLE, style);
+// //
+// //         ShowWindow(child, SW_SHOW);
+// //
+// //         UpdateWindow(child);
+// //     }
+// //
+// //     return TRUE;
+// // }, 0);
+// //
+//
+//    }
+//
 
 } // namespace app_app
 

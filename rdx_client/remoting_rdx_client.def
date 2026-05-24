@@ -10,7 +10,7 @@
 ;   MyExportedFunction2
 
 
-LIBRARY "remoting_client"
+LIBRARY "remoting_rdx_client"
 
 
 EXPORTS

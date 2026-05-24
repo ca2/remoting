@@ -1,0 +1,137 @@
+// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+#include "remoting/remoting_rfb/file_transfer_common/FileInfo.h"
+//#include "file_lib/WinFileChannel.h"
+#include "FileInfoList.h"
+#include "CopyOperation.h"
+
+
+namespace remoting_rfb
+{
+   namespace file_transfer
+   {
+      //
+      // ::file::item transfer operation class for downloading files (and file trees).
+      //
+
+      class CLASS_DECL_REMOTING_RDX DownloadOperation : public CopyOperation
+      {
+      public:
+
+         //
+         // Parameters:
+         //
+         // [IN] filesToDownload - array of files info to be downloaded
+         // [IN] filesCount - count elements in filesToDownload array
+         // [IN] pathToTargetRoot - full path to local folder where downloaded files
+         // will be located (system depended).
+         // [IN] pathToSourceRoot - full path to remote folder where files to download
+         // is located (system independed, see ft protocol info)
+         //
+
+         DownloadOperation(::subsystem::LogWriter * plogwriter,
+                           const ::pointer_array< FileInfo >  & fileinfoa,
+                           const ::file::path & pathToTargetRoot,
+                           const ::file::path & pathToSourceRoot);
+
+         virtual ~DownloadOperation();
+
+         //
+         // Inherited from FileTransferOperation
+         //
+
+         void do_file_transfer_operation() override;
+
+      //protected:
+
+         //
+         // Inherited from FileTransferEventHandler
+         //
+
+         virtual void onFileListReply(DataInputStream * pinput) override;
+         virtual void onDownloadReply(DataInputStream * pinput) override;
+         virtual void onDownloadDataReply(DataInputStream * pinput) override;
+         virtual void onDownloadEndReply(DataInputStream * pinput) override;
+         virtual void onLastRequestFailedReply(DataInputStream * pinput) override;
+         virtual void onDirSizeReply(DataInputStream * pinput) override;
+
+      //private:
+
+         // Starts download of current file (m_toCopy member)
+         void startDownload();
+
+         // Starts download of file
+         void processFile();
+
+         // Start download of folder
+         void processFolder();
+
+         // Sets m_toCopy member to next file to download
+         void gotoNext();
+
+         // Sends get folder size request to server to know
+         // how many bytes must be receivied during
+         // all download process
+         void tryCalcInputFilesSize();
+
+         // Terminates operation execution
+         void killOp();
+
+         // Helper method that decrements m_foldersToCalcSizeLeft count
+         // and if it's equal to null, start first file download
+         void decFoldersToCalcSizeCount();
+
+         // Helper method that creates scopedstrMessage string and notifies listeners
+         void notifyFailedToDownload(const ::scoped_string & scopedstrErrorDescription);
+
+         // Sets current m_toCopy member value and updates
+         // m_pathToSourceFile, m_pathToTargetFile members
+         void changeFileToDownload(FileInfoList *toDownload);
+
+      //protected:
+         // Target local file
+         ::pointer < ::file::item >m_pfileitem;
+         // ::file::item output stream associated with m_file
+          //::pointer < ::file::stream> m_pstream;
+
+         ::pointer < ::file::writable > m_pwriteable;
+
+         // Initial file offset for current download (broken downloads)
+         ::u64 m_fileOffset;
+
+         // Helper member to know how many folders to download left
+         // to get their file size
+         ::u32 m_foldersToCalcSizeLeft;
+
+         // request data size changes dynamicaly depends on request rate
+         size_t m_bufferSize;
+         class ::time m_timeLastRequest;
+
+      };
+   } // namespace file_transfer
+} // namespace remoting_rfb

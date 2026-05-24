@@ -13,29 +13,45 @@
 #endif
 
 
-#define DISPID_CONNECTED 1
-#define DISPID_LOGINCOMPLETE 4
-#define DISPID_DISCONNECTED 2
-#define DISPID_FATALERROR 3
+// #define DISPID_CONNECTING 1
+// #define DISPID_CONNECTED 2
+// #define DISPID_DISCONNECTED 2
+// #define DISPID_FATALERROR 3
+// #define DISPID_LOGINCOMPLETE 4
+// #define DISPID_ENTERFULLSCREENMODE 5
+// #define DISPID_LEAVEFULLSCREENMODE 6
+// #define DISPID_REQUEST_ENTERFULLSCREENMODE 8
+// #define DISPID_REQUEST_LEAVEFULLSCREENMODE 9
 
 namespace remoting_rdx_client
 {
 
    class rdx_client;
 
-   class event_sink;
-
+   class main_window;
    
-   class keyboard_layout_change;
-
-   class remoting;
-
-   class ViewerWindow;
-
-   class DesktopWindow;
-
+   // class keyboard_layout_change;
+   //
+   // class remoting;
+   //
+   // class ViewerWindow;
+   //
+   // class DesktopWindow;
+   //
 
 } // namespace remoting_client
 
 
+namespace windows
+{
+
+   class in_place_frame;
+
+   class in_place_site;
+
+   class client_site;
+
+   class com_window;
+
+}// namespace windows
 

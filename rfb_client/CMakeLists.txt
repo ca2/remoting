@@ -101,7 +101,7 @@ list(APPEND library_references
 #   remoting_viewer_core
 #   remoting_win_system
 #   remoting_zlib
-   remoting
+   remoting_rfb
 )
 
 
@@ -143,7 +143,7 @@ elseif(${LINUX} OR ${__BSD__} OR ${ANDROID})
 endif ()
 
 add_dependencies(${PROJECT_NAME} acme)
-add_dependencies(${PROJECT_NAME} remoting)
+add_dependencies(${PROJECT_NAME} remoting_rfb)
 #add_dependencies(${PROJECT_NAME} remoting)
 #add_dependencies(${PROJECT_NAME} remoting_client_config_lib)
 #add_dependencies(${PROJECT_NAME} remoting_config_lib)

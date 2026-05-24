@@ -1,14 +1,29 @@
 //
-// Created by camilo on 5/22/2026.
+// Created by camilo on 2026-05-22 22:44 <3ThomasBorregaardSørensen!! Mummi!! Bilbo!!
 //
 
-#ifndef MAIN_COM_WINDOW_THREAD_H
-#define MAIN_COM_WINDOW_THREAD_H
-
-
-class com_window_thread
-{
-};
-
-
-#endif // MAIN_COM_WINDOW_THREAD_H
+#pragma once
+//
+//
+// class com_window_thread :
+//    virtual public ::thread
+// {
+// public:
+//
+//
+//    ::procedure m_procedureOnStart;
+//
+//
+//    com_window_thread();
+//    ~com_window_thread() override;
+//
+//
+//    void run() override;
+//
+//    void run_main_loop() override;
+//
+//
+// };
+//
+//
+//

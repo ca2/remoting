@@ -6,8 +6,8 @@
 namespace remoting_rfb_node
 {
 
-   class CLASS_DECL_REMOTING_RFB Configurator;
-   class CLASS_DECL_REMOTING_RFB ServerConfig;
+   class Configurator;
+   class ServerConfig;
 
 }// namespace remoting_rfb_node
 
