@@ -1,0 +1,75 @@
+// Copyright (C) 2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+#include "ResourceStrings.h"
+#include "../framework.h"
+#include "subsystem/platform/ResourceLoader.h"
+
+namespace remoting_client
+{
+    ResourceStrings::ResourceStrings()
+    : m_min(0),
+      m_max(0)
+    {
+    }
+
+    ResourceStrings::ResourceStrings(int min, int max)
+    {
+        m_min = min;
+        m_max = max;
+    }
+
+    bool ResourceStrings::isValid(int res)
+    {
+        if (res >= m_min && res <= m_max) {
+            return true;
+        }
+        return false;
+    }
+
+    ::string ResourceStrings::getStrRes(int iRes)
+    {
+       auto presourceloader = MainSubsystem().ResourceLoader();
+
+
+        //auto presourceloader = MainSubsystem().ResourceLoader();
+
+        ::string str;
+        //presourceloader->loadString(strRes, str);
+
+       presourceloader->loadString(iRes, str);
+
+        return str;
+    }
+
+    ::string ResourceStrings::getStrPureRes(int strRes)
+    {
+        ::string strTemp = getStrRes(strRes);
+        auto p = strTemp.find_first_character('\t');
+        if (::found(p)) {
+            strTemp = {p + 1, strTemp.end()};
+        }
+        strTemp.erase_any_character_in("&");
+        return strTemp;
+    }
+} // namespace remoting_client
