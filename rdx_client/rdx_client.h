@@ -43,20 +43,15 @@ namespace remoting_rdx_client
       ~rdx_client() override;
 
 
-      // ::i64 get_style_for_creating_window() override;
-      //
-      //
-      //
-      // string get_title() override;
-      //
-      // void on_size() override;
-
-
-
       virtual void start_main_window();
 
-      virtual void main_window_main(const ::scoped_string & scopedstrHost);
+      virtual void main_window_main();
 
    };
+
+
+   
+   ::pointer<::windows::com_window> create_main_window(::particle * pparticle);
+
 
 }// namespace remoting_rdx_client

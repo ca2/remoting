@@ -2,7 +2,7 @@
 #include "framework.h"
 #include "event_sink.h"
 
-#include "main_window.h"
+#include "rdp_host.h"
 
 void DumpWindowHierarchy(HWND hwnd);
 

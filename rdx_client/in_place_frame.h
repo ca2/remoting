@@ -25,9 +25,13 @@ namespace windows
       ::pointer < com_window > m_pcomwindow;
       ::comptr < IOleInPlaceActiveObject > m_pinplaceactiveobject;
       ::comptr < IOleInPlaceObject > m_pinplaceobject;
+      ::function<bool(MSG *)> m_translatorhandler;
 
 
       øDECL_INTERFACE_MAP();
+
+
+      virtual ::function<bool(MSG *)> get_translator_handler();
 
       HRESULT STDMETHODCALLTYPE GetWindow(HWND* phwnd) override;
       HRESULT STDMETHODCALLTYPE ContextSensitiveHelp(BOOL) override;

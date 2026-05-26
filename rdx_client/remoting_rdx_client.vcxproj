@@ -106,6 +106,7 @@
       <AdditionalManifestDependencies>type=%27win32%27 name=%27Microsoft.Windows.Common-Controls%27 version=%276.0.0.0%27 processorArchitecture=%27amd64%27 publicKeyToken=%276595b64144ccf1df%27 language=%27*%27;%(AdditionalManifestDependencies)</AdditionalManifestDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>GdiPlus.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -145,6 +146,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>GdiPlus.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -160,14 +162,15 @@
     </ClCompile>
     <ClCompile Include="in_place_frame.cpp" />
     <ClCompile Include="in_place_site.cpp" />
-    <ClCompile Include="main_rdp_host.cpp" />
-    <ClCompile Include="main_window.cpp">
-      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MultiProcessorCompilation>
+    <ClCompile Include="main_window.cpp" />
+    <ClCompile Include="rdp_host.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
+      <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MultiProcessorCompilation>
     </ClCompile>
     <ClCompile Include="rdx_client.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MultiProcessorCompilation>
     </ClCompile>
+    <ClCompile Include="toolbar.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,9 +196,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\app\subsystem\subsystem.vcxproj">
       <Project>{8cc36574-7cff-438f-ae5c-51fd5c6b2823}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\remoting\remoting.vcxproj">
-      <Project>{d3004ab1-f82e-4fa4-b1f2-e15b582db21d}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

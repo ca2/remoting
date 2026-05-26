@@ -42,10 +42,13 @@
     <ClCompile Include="in_place_site.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main_rdp_host.cpp">
+    <ClCompile Include="main_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main_window.cpp">
+    <ClCompile Include="rdp_host.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="toolbar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,9 +65,6 @@
     <ClInclude Include="client_site.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rdx_client.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="com_base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -75,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="main_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rdx_client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,6 +16,29 @@ namespace windows
    øEND_INTERFACE_MAP()
 
 
+      ::function<bool(MSG *)> in_place_frame::get_translator_handler()
+   {
+
+      if (!m_translatorhandler)
+      {
+
+         m_translatorhandler = [this](MSG *pmsg) -> bool
+         {
+            auto hr = m_pinplaceactiveobject->TranslateAccelerator(pmsg);
+
+            auto handled = (hr == S_OK);
+
+            return handled;
+         };
+
+
+      }
+
+      return m_translatorhandler;
+
+   }
+
+
    HRESULT STDMETHODCALLTYPE in_place_frame::GetWindow(HWND* phwnd)
    {
       

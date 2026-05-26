@@ -30,6 +30,8 @@ namespace windows
       int               m_iCloseButtonDraw;
 
 
+
+
       //::pointer<event_sink> m_peventsink;
       ::pointer < client_site > m_pclientsite;
 
@@ -83,6 +85,7 @@ namespace windows
       //virtual void on_rdp_login_complete();
 
 
+      //virtual float get_window_scale();
 
 
    };

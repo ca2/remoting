@@ -14,7 +14,8 @@ namespace windows
 
    com_window::com_window()
    {
-m_bCustomPaint = false;
+      m_bCustomPaint = false;
+      m_bHasOwnWindow = true;
 
    }
 
@@ -24,6 +25,14 @@ m_bCustomPaint = false;
 
    }
 
+   //
+   // float com_window::get_window_scale()
+   // {
+   //    auto hwnd = ::as_HWND(this->operating_system_window());
+   //    UINT dpi = GetDpiForWindow(hwnd);
+   //    return (float)dpi / 96.0f;
+   // }
+   //
 
    ::windows::window_class com_window::_get_window_class()
    {
@@ -122,13 +131,60 @@ m_bCustomPaint = false;
 
       GetClientRect(hwnd, &rc);
 
-      informationf(
-          "SetObjectRects: %d x %d",
-          rc.right - rc.left,
-          rc.bottom - rc.top);
-
       HRESULT hr =
           m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceobject->SetObjectRects(&rc, &rc);
+
+      ::string strMessage;
+
+      strMessage.formatf(
+    "SetObjectRects: %d x %d;",
+    rc.right - rc.left,
+    rc.bottom - rc.top);
+
+      int iStyle = get_window_style();
+
+      strMessage.append_formatf(" style=%08x;", iStyle);
+
+      if (iStyle & WS_POPUP)
+      {
+
+         strMessage += " with popup;";
+
+      }
+      else
+      {
+
+         strMessage += " without popup;";
+
+      }
+
+      if (iStyle & WS_BORDER)
+      {
+
+         strMessage += " with border;";
+
+      }
+      else
+      {
+
+         strMessage += " without border;";
+
+      }
+
+      if (iStyle & WS_DLGFRAME)
+      {
+
+         strMessage += " with dialog frame;";
+
+      }
+      else
+      {
+
+         strMessage += " without dialog frame;";
+
+      }
+
+      information(strMessage);
 
       if (FAILED(hr))
       {

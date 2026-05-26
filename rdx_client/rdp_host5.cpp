@@ -36,13 +36,13 @@
 #pragma comment(lib, "ole32.lib")
 #pragma comment(lib, "oleaut32.lib")
 #include "acme/operating_system/windows/window.h"
-#include "com_base.h"
- #include "in_place_frame.h"
- #include "in_place_site.h"
- #include "client_site.h"
-#include "main_window.h"
 #include "acme_windowing_win32/_.h"
 #include "acme_windowing_win32/window.h"
+#include "client_site.h"
+#include "com_base.h"
+#include "in_place_frame.h"
+#include "in_place_site.h"
+#include "rdp_host.h"
 CLASS_DECL_ACME void set_main_wndproc(void *p);
 CLASS_DECL_ACME LRESULT CALLBACK RDP_HOST2_WndProc(
     HWND hwnd,

@@ -14,7 +14,9 @@
 // https : // www.duolingo.com/learn
 // https : // github.com/paullouisageneau/libjuice
 // https : // github.com/cpp-port/libjuice
+#include "framework.h"
 #include "rdx_client.h"
+#include "main_window.h"
 #include "acme/_operating_system.h"
 #include "acme/operating_system/windows_common/com/comptr.h"
 #include "acme/platform/system.h"
@@ -22,12 +24,12 @@
 #include "application.h"
 #include "client_site.h"
 #include "com_window_thread.h"
+#include "com_window.h"
+#include "__implement/resource.h"
 #include "event_sink.h"
-#include "framework.h"
 #include "in_place_site.h"
 //#include "main_window.h"
 #include "in_place_frame.h"
-#include "main_window.h"
 
 
 //#import "mstscax.dll" rename_namespace("RDP")
@@ -165,7 +167,7 @@ namespace remoting_rdx_client
    }
 
 
-   void rdx_client::main_window_main(const ::scoped_string & scopedstrHost)
+   void rdx_client::main_window_main()
    {
 
       // CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
@@ -189,17 +191,43 @@ namespace remoting_rdx_client
           aptType,
           qual);
 
+
+
+
       construct_newø(m_pmainwindow);
 
-      //int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-      //int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+      HICON hiconBig = (HICON)LoadImage(
+      GetModuleHandle(nullptr),
+      MAKEINTRESOURCE(IDI_APP_ICON),
+      IMAGE_ICON,
+      32,
+      32,
+      LR_DEFAULTCOLOR);
 
-      m_pmainwindow->m_rectangle.left = 140*2;
-      m_pmainwindow->m_rectangle.top = 90 *2;
-      m_pmainwindow->m_rectangle.set_width(1400);
-      m_pmainwindow->m_rectangle.set_height(900);
+      HICON hiconSmall = (HICON)LoadImage(
+      GetModuleHandle(nullptr),
+      MAKEINTRESOURCE(IDI_APP_ICON),
+      IMAGE_ICON,
+      32,
+      32,
+      LR_DEFAULTCOLOR);
 
-      m_pmainwindow->m_strHost = scopedstrHost;
+      m_pmainwindow->m_pHICON_Big = (void*) hiconBig;
+
+      m_pmainwindow->m_pHICON_Small = (void*) hiconSmall;
+
+      //construct_newø(m_pmainwindow);
+
+      auto sizeMainScreen = m_pmainwindow->get_main_screen_size();
+
+      m_pmainwindow->m_rectangle.left = 0;
+      m_pmainwindow->m_rectangle.top = 0;
+      m_pmainwindow->m_rectangle.set_size( sizeMainScreen);
+
+      // m_pmainwindow->m_rectangle.left = 140*2;
+      // m_pmainwindow->m_rectangle.top = 90 *2;
+      // m_pmainwindow->m_rectangle.set_width(1400);
+      // m_pmainwindow->m_rectangle.set_height(900);
 
       m_pmainwindow->create_window();
 
@@ -217,31 +245,37 @@ namespace remoting_rdx_client
           style,
           exstyle);
 
-      MSG msg;
+      ::get_task()->m_bMessageThread2 = true;
 
-      while (GetMessage(&msg, nullptr, 0, 0))
-      {
+      ::get_task()->add_msg_translator(m_pmainwindow->in_place_frame()->get_translator_handler());
 
-         BOOL handled = FALSE;
+      ::get_task()->run_loop();
 
-         // if (m_pmainwindow->m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceactiveobject)
-         // {
-         //
-         //    HRESULT hr = m_pmainwindow->m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceactiveobject->TranslateAccelerator(&msg);
-         //
-         //    handled = (hr == S_OK);
-         //
-         // }
+      //MSG msg;
 
-         if (!handled)
-         {
+      //while (GetMessage(&msg, nullptr, 0, 0))
+      //{
 
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+      //   BOOL handled = FALSE;
 
-         }
+      //   // if (m_pmainwindow->m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceactiveobject)
+      //   // {
+      //   //
+      //   //    HRESULT hr = m_pmainwindow->m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceactiveobject->TranslateAccelerator(&msg);
+      //   //
+      //   //    handled = (hr == S_OK);
+      //   //
+      //   // }
 
-      }
+      //   if (!handled)
+      //   {
+
+      //      TranslateMessage(&msg);
+      //      DispatchMessage(&msg);
+
+      //   }
+
+      //}
 
       //OleUninitialize();
 

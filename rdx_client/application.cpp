@@ -46,6 +46,9 @@ namespace remoting_rdx_client
       m_bWriteText = false;
 
       m_bInterprocessCommunication = false;
+      SetProcessDpiAwarenessContext(
+    DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+
 
    }
 
@@ -107,7 +110,9 @@ namespace remoting_rdx_client
 
          }
 
-         defer_start_rdx_client(strHost);
+         m_strHost = strHost;
+
+         defer_start_rdx_client();
          //::cast < ::win32::acme::windowing::windowing > pacmewindowingwindowing = system()->acme_windowing();
 
          //pacmewindowingwindowing->_register_acme_nano_window_class(::system()->m_hinstanceThis);
@@ -164,22 +169,18 @@ namespace remoting_rdx_client
    }
 
 
-   void application::defer_start_rdx_client(const ::scoped_string & scopedstrHost)
+   void application::defer_start_rdx_client()
    {
 
       if (!m_prdxclient)
       {
 
-         ::string strHost(scopedstrHost);
-
-         m_papplication->fork([this, strHost]()
+         m_papplication->fork([this]()
          {
 
             ::task_set_name("rdxclientwnd");
 
-            rdx_client_main(strHost);
-
-
+            rdx_client_main();
 
          });
 
@@ -191,24 +192,21 @@ namespace remoting_rdx_client
 
 
 
-   void application::rdx_client_main(const ::scoped_string & scopedstrHost)
+   void application::rdx_client_main()
    {
 
       _defer_co_initialize_ex(false);
-
-
-
 
       construct_newø(m_prdxclient);
 
       //rdp_host5::main();
 
-       m_prdxclient->main_window_main(scopedstrHost);
-
+      m_prdxclient->main_window_main();
 
       set_finish();
 
    }
+
 
 } // namespace remoting_rdx_client
 

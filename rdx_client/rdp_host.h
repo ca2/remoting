@@ -23,7 +23,7 @@ namespace remoting_rdx_client
    {
    public:
 
-
+::pointer < main_window > m_pmainwindow;
       // bool              m_dDrawControlBox;
       // bool              m_dDrawOnlyMainRectangles;
       // double            m_dBreathPeriod;
@@ -36,11 +36,11 @@ namespace remoting_rdx_client
       // ::pointer < client_site > m_pclientsite;
       ::pointer < rdp_host_internal > m_pinternal;
 
-
-      ::pointer < toolbar > m_ptoolbar;
+::i32_rectangle m_rectanglePosition;
+      //::pointer < toolbar > m_ptoolbar;
 
       //HWND m_hwnd;
-      DWORD m_dwCookie;
+      //DWORD m_dwCookie;
 
       //::comptr < IOleObject> m_poleobject;
       //::comptr < IOleInPlaceActiveObject > m_pinplaceactiveobject;
@@ -110,12 +110,7 @@ namespace remoting_rdx_client
       virtual void CloseRdp();
 
 
-      virtual void doMinimize();
-      virtual void doRestore();
-      virtual void doFullscreen();
-
-
-      //virtual ::i32_size get_main_screen_size();
+      void do_control_layout() override;
 
    };
 

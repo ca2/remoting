@@ -1,2 +1,1 @@
-app/acme
-remoting/remoting
+remoting/remoting_rdx

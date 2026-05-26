@@ -11,7 +11,7 @@
 ;   MyExportedFunction2
 
 
-LIBRARY "remoting_rfb"
+LIBRARY "remoting_rdx"
 
 
 EXPORTS

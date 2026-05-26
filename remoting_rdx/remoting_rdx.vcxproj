@@ -20,10 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D3004AB1-F82E-4FA4-B1F2-E15B582DB21D}</ProjectGuid>
-    <RootNamespace>remoting_rfb</RootNamespace>
+    <RootNamespace>remoting_rdx</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>remoting_rfb</ProjectName>
+    <ProjectName>remoting_rdx</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -106,7 +106,7 @@
     <Link />
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>port_jpeg.lib;zlib.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,216 +141,17 @@
     <Link />
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>port_jpeg.lib;zlib.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="client\NamingDefs.cpp" />
-    <ClCompile Include="client_config\ConnectionConfig.cpp" />
-    <ClCompile Include="client_config\ConnectionConfigSM.cpp" />
-    <ClCompile Include="client_config\ViewerConfig.cpp" />
-    <ClCompile Include="client_config\ViewerSettingsManager.cpp" />
-    <ClCompile Include="config\ConnectionHistory.cpp" />
-    <ClCompile Include="config\IniFileSettingsManager.cpp" />
-    <ClCompile Include="config\RegistrySettingsManager.cpp" />
-    <ClCompile Include="config\SettingsManager.cpp" />
-    <ClCompile Include="desktop\ConsolePoller.cpp" />
-    <ClCompile Include="desktop\CopyRectDetector.cpp" />
-    <ClCompile Include="desktop\CursorPositionDetector.cpp" />
-    <ClCompile Include="desktop\CursorShapeDetector.cpp" />
-    <ClCompile Include="desktop\CursorShapeGrabber.cpp" />
-    <ClCompile Include="desktop\DesktopBaseImpl.cpp" />
-    <ClCompile Include="desktop\DesktopConfigLocal.cpp" />
-    <ClCompile Include="desktop\DesktopFactory.cpp" />
-    <ClCompile Include="desktop\DesktopServerWatcher.cpp" />
-    <ClCompile Include="desktop\DummyScreenDriver.cpp" />
-    <ClCompile Include="desktop\GrabOptimizator.cpp" />
-    <ClCompile Include="desktop\HookInstaller.cpp" />
-    <ClCompile Include="desktop\HooksUpdateDetector.cpp" />
-    <ClCompile Include="desktop\HookUpdateTimer.cpp" />
-    <ClCompile Include="desktop\InputBlocker.cpp" />
-    <ClCompile Include="desktop\Poller.cpp" />
-    <ClCompile Include="desktop\SasUserInput.cpp" />
-    <ClCompile Include="desktop\ScreenDriverFactory.cpp" />
-    <ClCompile Include="desktop\ScreenGrabber.cpp" />
-    <ClCompile Include="desktop\UpdateContainer.cpp" />
-    <ClCompile Include="desktop\UpdateDetector.cpp" />
-    <ClCompile Include="desktop\UpdateFilter.cpp" />
-    <ClCompile Include="desktop\UpdateHandler.cpp" />
-    <ClCompile Include="desktop\UpdateHandlerImpl.cpp" />
-    <ClCompile Include="desktop\UpdateKeeper.cpp" />
-    <ClCompile Include="desktop\UpdateListener.cpp" />
-    <ClCompile Include="desktop\UpdateSendingListener.cpp" />
-    <ClCompile Include="desktop\UserInput.cpp" />
-    <ClCompile Include="desktop\WallpaperUtil.cpp" />
-    <ClCompile Include="desktop_ipc\BlockingGate.cpp" />
-    <ClCompile Include="desktop_ipc\BlockingInputGate.cpp" />
-    <ClCompile Include="desktop_ipc\BlockingOutputGate.cpp" />
-    <ClCompile Include="desktop_ipc\ClientListener.cpp" />
-    <ClCompile Include="desktop_ipc\ConfigServer.cpp" />
-    <ClCompile Include="desktop_ipc\DesktopConfigClient.cpp" />
-    <ClCompile Include="desktop_ipc\DesktopServerProto.cpp" />
-    <ClCompile Include="desktop_ipc\DesktopSrvDispatcher.cpp" />
-    <ClCompile Include="desktop_ipc\GateKicker.cpp" />
-    <ClCompile Include="desktop_ipc\GateKickHandler.cpp" />
-    <ClCompile Include="desktop_ipc\ReconnectException.cpp" />
-    <ClCompile Include="desktop_ipc\ReconnectingChannel.cpp" />
-    <ClCompile Include="desktop_ipc\UpdateHandlerClient.cpp" />
-    <ClCompile Include="desktop_ipc\UpdateHandlerServer.cpp" />
-    <ClCompile Include="desktop_ipc\UserInputClient.cpp" />
-    <ClCompile Include="desktop_ipc\UserInputServer.cpp" />
-    <ClCompile Include="event_log\EventLog.cpp" />
-    <ClCompile Include="file_transfer_client\CopyOperation.cpp" />
-    <ClCompile Include="file_transfer_client\DownloadOperation.cpp" />
-    <ClCompile Include="file_transfer_client\FileInfoList.cpp" />
-    <ClCompile Include="file_transfer_client\FileTransferCore.cpp" />
-    <ClCompile Include="file_transfer_client\FileTransferEventAdapter.cpp" />
-    <ClCompile Include="file_transfer_client\FileTransferEventHandler.cpp" />
-    <ClCompile Include="file_transfer_client\FileTransferInterface.cpp" />
-    <ClCompile Include="file_transfer_client\FileTransferMessageProcessor.cpp" />
-    <ClCompile Include="file_transfer_client\FileTransferOperation.cpp" />
-    <ClCompile Include="file_transfer_client\FileTransferReplyBuffer.cpp" />
-    <ClCompile Include="file_transfer_client\FileTransferRequestSender.cpp" />
-    <ClCompile Include="file_transfer_client\LocalFilesDeleteOperation.cpp" />
-    <ClCompile Include="file_transfer_client\OperationEventListener.cpp" />
-    <ClCompile Include="file_transfer_client\OperationNotPermittedException.cpp" />
-    <ClCompile Include="file_transfer_client\OperationSupport.cpp" />
-    <ClCompile Include="file_transfer_client\RemoteFileListOperation.cpp" />
-    <ClCompile Include="file_transfer_client\RemoteFileRenameOperation.cpp" />
-    <ClCompile Include="file_transfer_client\RemoteFilesDeleteOperation.cpp" />
-    <ClCompile Include="file_transfer_client\RemoteFolderCreateOperation.cpp" />
-    <ClCompile Include="file_transfer_client\UploadOperation.cpp" />
-    <ClCompile Include="file_transfer_common\FileInfo.cpp" />
-    <ClCompile Include="file_transfer_common\FileTransferException.cpp" />
-    <ClCompile Include="file_transfer_common\FolderListener.cpp" />
-    <ClCompile Include="file_transfer_common\FTMessage.cpp" />
-    <ClCompile Include="file_transfer_common\OperationNotSupportedException.cpp" />
-    <ClCompile Include="file_transfer_common\WinFilePath.cpp" />
-    <ClCompile Include="file_transfer_node\FileTransferRequestHandler.cpp" />
-    <ClCompile Include="file_transfer_node\FileTransferSecurity.cpp" />
-    <ClCompile Include="framebuffer_update_sender\CursorUpdates.cpp" />
-    <ClCompile Include="framebuffer_update_sender\UpdateSender.cpp" />
-    <ClCompile Include="framebuffer_update_sender\UpdSenderMsgDefs.cpp" />
-    <ClCompile Include="framebuffer_update_sender\ViewPort.cpp" />
-    <ClCompile Include="framebuffer_update_sender\ViewPortState.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="network\RfbInputGate.cpp" />
-    <ClCompile Include="network\RfbOutputGate.cpp" />
-    <ClCompile Include="network\TcpClientThread.cpp" />
-    <ClCompile Include="network\TcpServer.cpp" />
-    <ClCompile Include="node\ControlAuthException.cpp" />
-    <ClCompile Include="node\ControlCommand.cpp" />
-    <ClCompile Include="node\NamingDefs.cpp" />
-    <ClCompile Include="node\Notificator.cpp" />
-    <ClCompile Include="node\RemoteException.cpp" />
-    <ClCompile Include="node_config\ConfigReloadListener.cpp" />
-    <ClCompile Include="node_config\Configurator.cpp" />
-    <ClCompile Include="node_config\IpAccessControl.cpp" />
-    <ClCompile Include="node_config\IpAccessRule.cpp" />
-    <ClCompile Include="node_config\PortMapping.cpp" />
-    <ClCompile Include="node_config\PortMappingContainer.cpp" />
-    <ClCompile Include="node_config\PortMappingRect.cpp" />
-    <ClCompile Include="node_config\RegistrySecurityAttributes.cpp" />
-    <ClCompile Include="node_config\ServerConfig.cpp" />
-    <ClCompile Include="node_user_config\AdministrationConfigDialog.cpp" />
-    <ClCompile Include="node_user_config\ChangePasswordDialog.cpp" />
-    <ClCompile Include="node_user_config\CommonInputValidation.cpp" />
-    <ClCompile Include="node_user_config\ConfigDialog.cpp" />
-    <ClCompile Include="node_user_config\EditIpAccessRuleDialog.cpp" />
-    <ClCompile Include="node_user_config\EditPortMappingDialog.cpp" />
-    <ClCompile Include="node_user_config\IpAccessControlDialog.cpp" />
-    <ClCompile Include="node_user_config\PasswordControl.cpp" />
-    <ClCompile Include="node_user_config\PortMappingDialog.cpp" />
-    <ClCompile Include="node_user_config\ServerConfigDialog.cpp" />
-    <ClCompile Include="node_user_config\TvnLogFilename.cpp" />
-    <ClCompile Include="node_user_config\UIDataAccess.cpp" />
-    <ClCompile Include="node_user_config\VideoRegionsConfigDialog.cpp" />
-    <ClCompile Include="platform\EOFException.cpp" />
     <ClCompile Include="platform\remoting.cpp" />
-    <ClCompile Include="region\RectSerializer.cpp" />
-    <ClCompile Include="region\Region.cpp" />
-    <ClCompile Include="region\x11region.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="rfb\AuthDefs.cpp" />
-    <ClCompile Include="rfb\CursorShape.cpp" />
-    <ClCompile Include="rfb\EncodingDefs.cpp" />
-    <ClCompile Include="rfb\HostPath.cpp" />
-    <ClCompile Include="rfb\MsgDefs.cpp" />
-    <ClCompile Include="rfb\PixelConverter.cpp" />
-    <ClCompile Include="rfb\RfbKeySym.cpp" />
-    <ClCompile Include="rfb\TunnelDefs.cpp" />
-    <ClCompile Include="rfb\VendorDefs.cpp" />
-    <ClCompile Include="rfb_sconn\AuthException.cpp" />
-    <ClCompile Include="rfb_sconn\CapContainer.cpp" />
-    <ClCompile Include="rfb_sconn\ClientInputHandler.cpp" />
-    <ClCompile Include="rfb_sconn\ClipboardExchange.cpp" />
-    <ClCompile Include="rfb_sconn\EchoExtensionRequestHandler.cpp" />
-    <ClCompile Include="rfb_sconn\EncodeOptions.cpp" />
-    <ClCompile Include="rfb_sconn\Encoder.cpp" />
-    <ClCompile Include="rfb_sconn\EncoderStore.cpp" />
-    <ClCompile Include="rfb_sconn\HextileEncoder.cpp" />
-    <ClCompile Include="rfb_sconn\JpegCompressor.cpp" />
-    <ClCompile Include="rfb_sconn\JpegEncoder.cpp" />
-    <ClCompile Include="rfb_sconn\RfbClient.cpp" />
-    <ClCompile Include="rfb_sconn\RfbCodeRegistrator.cpp" />
-    <ClCompile Include="rfb_sconn\RfbDispatcher.cpp" />
-    <ClCompile Include="rfb_sconn\RfbInitializer.cpp" />
-    <ClCompile Include="rfb_sconn\RreEncoder.cpp" />
-    <ClCompile Include="rfb_sconn\TightEncoder.cpp" />
-    <ClCompile Include="rfb_sconn\TightPalette.cpp" />
-    <ClCompile Include="rfb_sconn\ZrleEncoder.cpp" />
-    <ClCompile Include="viewer_core\AuthHandler.cpp" />
-    <ClCompile Include="viewer_core\CapabilitiesManager.cpp" />
-    <ClCompile Include="viewer_core\CapsContainer.cpp" />
-    <ClCompile Include="viewer_core\CompressionLevel.cpp" />
-    <ClCompile Include="viewer_core\CopyRectDecoder.cpp" />
-    <ClCompile Include="viewer_core\CoreEventsAdapter.cpp" />
-    <ClCompile Include="viewer_core\CursorPainter.cpp" />
-    <ClCompile Include="viewer_core\Decoder.cpp" />
-    <ClCompile Include="viewer_core\DecoderOfRectangle.cpp" />
-    <ClCompile Include="viewer_core\DecoderStore.cpp" />
-    <ClCompile Include="viewer_core\DesktopSizeDecoder.cpp" />
-    <ClCompile Include="viewer_core\drawTile.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
-      <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IntrinsicFunctions>
-      <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Speed</FavorSizeOrSpeed>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
-    </ClCompile>
-    <ClCompile Include="viewer_core\FbUpdateNotifier.cpp" />
-    <ClCompile Include="viewer_core\FileTransferCapability.cpp" />
-    <ClCompile Include="viewer_core\HexTileDecoder.cpp" />
-    <ClCompile Include="viewer_core\JpegDecompressor.cpp" />
-    <ClCompile Include="viewer_core\JpegQualityLevel.cpp" />
-    <ClCompile Include="viewer_core\LastRectDecoder.cpp" />
-    <ClCompile Include="viewer_core\PointerPosDecoder.cpp" />
-    <ClCompile Include="viewer_core\PseudoDecoder.cpp" />
-    <ClCompile Include="viewer_core\RawDecoder.cpp" />
-    <ClCompile Include="viewer_core\RemoteViewerCore.cpp" />
-    <ClCompile Include="viewer_core\RfbClientToServerMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbCutTextEventClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbFramebufferUpdateRequestClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbKeyEventClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbPointerEventClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbSetEncodingsClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RfbSetPixelFormatClientMessage.cpp" />
-    <ClCompile Include="viewer_core\RichCursorDecoder.cpp" />
-    <ClCompile Include="viewer_core\RreDecoder.cpp" />
-    <ClCompile Include="viewer_core\TcpConnection.cpp" />
-    <ClCompile Include="viewer_core\TightDecoder.cpp" />
-    <ClCompile Include="viewer_core\UpdateRequestSender.cpp" />
-    <ClCompile Include="viewer_core\VncAuthentication.cpp" />
-    <ClCompile Include="viewer_core\VncAuthenticationHandler.cpp" />
-    <ClCompile Include="viewer_core\WatermarksController.cpp" />
-    <ClCompile Include="viewer_core\ZrleDecoder.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -575,7 +376,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="remoting_rfb.def" />
+    <None Include="remoting_rdx.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

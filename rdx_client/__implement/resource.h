@@ -3,6 +3,7 @@
 // Used by remoting_client.rc
 //
 #define IDC_MYICON                      2
+#define IDI_APP_ICON                    100
 #define IDB_TOOLBAR                     101
 #define IDI_CNOCURSOR                   102
 #define IDI_CSMALLDOT                   103

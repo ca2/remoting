@@ -63,35 +63,38 @@ list(APPEND library_source
    _.h
    application.cpp
    application.h
-   framework.cpp
-   framework.h
    client_site.cpp
    client_site.h
-   event_sink.cpp
-   event_sink.h
-   main_window.h
-   main_window.cpp
-   rdx_client.cpp
-   rdx_client.h
-
-   com_window_thread.cpp
-   com_window_thread.h
-   in_place_frame.cpp
-   in_place_frame.h
    com_base.cpp
    com_base.h
-   in_place_site.cpp
-   in_place_site.h
    com_window.cpp
    com_window.h
-   main_rdp_host.cpp
-   main_rdp_host.h
-   rdp_host2.cpp
-   rdp_host2.h
-   rdp_host4.cpp
-   rdp_host4.h
-   rdp_host5.cpp
-   rdp_host5.h
+   com_window_thread.cpp
+   com_window_thread.h
+   event_sink.cpp
+   event_sink.h
+   framework.cpp
+   framework.h
+   in_place_frame.cpp
+   in_place_frame.h
+   in_place_site.cpp
+   in_place_site.h
+   main_window.cpp
+   main_window.h
+   rdp_host.h
+   rdp_host.cpp
+   rdx_client.cpp
+   rdx_client.h
+   #main_rdp_host.cpp
+   #main_rdp_host.h
+   #rdp_host2.cpp
+   #rdp_host2.h
+   #rdp_host4.cpp
+   #rdp_host4.h
+   #rdp_host5.cpp
+   #rdp_host5.h
+   toolbar.cpp
+   toolbar.h
 #   impact_toolbar.cpp
 #   impact_toolbar.h
 #   keyboard_layout_change.cpp
@@ -160,7 +163,7 @@ if(${WIN32})
    target_compile_options(${PROJECT_NAME} PRIVATE "/bigobj")
    target_link_options(${PROJECT_NAME} PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
    target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS")
-   target_link_libraries(${PROJECT_NAME} PRIVATE Ws2_32 Version Comctl32 ${library_references} ${global_library_references})
+   target_link_libraries(${PROJECT_NAME} PRIVATE Gdiplus Ws2_32 Version Comctl32 ${library_references} ${global_library_references})
 
 elseif(${LINUX} OR ${__BSD__} OR ${ANDROID})
    target_compile_options(${PROJECT_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-fpermissive  ${EXTRA_CXX_TARGET_COMPILER_OPTIONS}>)

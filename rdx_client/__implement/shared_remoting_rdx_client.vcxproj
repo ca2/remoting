@@ -271,14 +271,47 @@
     <Image Include="res\toolbar.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\acme_windowing_win32\acme_windowing_win32.vcxproj">
+      <Project>{9273d94e-bf81-41ed-9cb2-83d981450c9b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\acme_windows\acme_windows.vcxproj">
+      <Project>{cc8e8200-00a9-414e-9829-7ca3f1091add}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\apex_windows\apex_windows.vcxproj">
+      <Project>{c598e718-55ae-4d6e-81e0-53450fc3a649}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\innate_subsystem_windows\innate_subsystem_windows.vcxproj">
       <Project>{31f3d4c6-61f7-4e68-8c48-6de00a2d7d78}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\innate_ui_win32\innate_ui_win32.vcxproj">
+      <Project>{1f20cf93-ae0b-4a16-a786-56a623c8726a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\nano_graphics_gdi\nano_graphics_gdi.vcxproj">
+      <Project>{01c37e3e-ea56-4af4-bf1a-28ac282d9885}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\subsystem_windows\subsystem_windows.vcxproj">
       <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows_common\acme_windows_common\acme_windows_common.vcxproj">
+      <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows_common\apex_windows_common\apex_windows_common.vcxproj">
+      <Project>{a094e038-d195-4400-82ce-44a7edf91b78}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\apex\apex.vcxproj">
+      <Project>{e000ffaf-392f-4e32-bf51-777ca238991f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\crypto_openssl\crypto_openssl.vcxproj">
+      <Project>{d08014e6-e329-41cf-81b5-957c290a4aa8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\folder_zip\folder_zip.vcxproj">
+      <Project>{a69cc125-e38a-4f77-9677-8860d43ab3b0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\app\networking_bsd\networking_bsd.vcxproj">
+      <Project>{46d7d9c9-7b52-4dc6-af84-46a5e3cdc43d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\subsystem\subsystem.vcxproj">
       <Project>{8cc36574-7cff-438f-ae5c-51fd5c6b2823}</Project>
@@ -288,6 +321,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\subsystem_bsd_sockets\subsystem_bsd_sockets.vcxproj">
       <Project>{40f49b85-a888-4a1d-a7f5-7631f14a3d4a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\remoting_rdx\remoting_rdx.vcxproj">
+      <Project>{d3004ab1-f82e-4fa4-b1f2-e15b582db21d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\remoting_rdx_client.vcxproj">
       <Project>{082f71ad-cdf6-44de-84f7-9d2d16784b23}</Project>

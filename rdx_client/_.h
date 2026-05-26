@@ -28,8 +28,10 @@ namespace remoting_rdx_client
 
    class rdx_client;
 
+   class toolbar;
+
    class main_window;
-   
+
    // class keyboard_layout_change;
    //
    // class remoting;
