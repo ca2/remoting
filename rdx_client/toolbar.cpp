@@ -1,10 +1,12 @@
 //
 // Created by camilo on 2026-05-24 08:49 <ThomasBorregaardSørensen!! Mummi!! Bilbo!!
 //
-#include "framework.h"
-#include "com_window.h"
 #include "toolbar.h"
 #include "acme/operating_system/windows/window.h"
+#include "acme/operating_system/windows/windows.h"
+#include "com_window.h"
+#include "framework.h"
+#include "main_window.h"
 #pragma comment(lib, "msimg32.lib")
 
 
@@ -32,11 +34,17 @@ toolbar::CLASS_NAME[];
 toolbar::toolbar()
 {
 
+   m_ehitPress = e_hit_none;
+   m_ehitHover = e_hit_none;
+
    m_bHasOwnWindow = true;
    //m_iExStyle = WS_EX_LAYERED |
    //WS_EX_TOOLWINDOW;
 
-    InitGdiplus();
+   m_bControlDeactivated = false;
+
+   InitGdiplus();
+
 }
 
 toolbar::~toolbar()
@@ -48,6 +56,7 @@ toolbar::~toolbar()
 
    void toolbar::InstallMouseHook()
 {
+      //return;
    s_instance = this;
 
    if (!s_mouseHook)
@@ -126,7 +135,7 @@ void toolbar::ShutdownGdiplus()
    ::i64 toolbar::get_ex_style_for_creating_window()
 {
 
-   return WS_EX_LAYERED | WS_EX_TOOLWINDOW;
+   return WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE;
 
 }
 
@@ -141,7 +150,7 @@ void toolbar::ShutdownGdiplus()
 //     if (!RegisterClass())
 //         return false;
 //
-//     m_pacmeuserinteractionMain = pcomwindowParent;
+//     m_pmainwindow = pcomwindowParent;
 //
 //    auto hwndParent = ::as_HWND(pcomwindowParent->operating_system_window());
 //     m_x = x;
@@ -181,6 +190,13 @@ void toolbar::ShutdownGdiplus()
     WPARAM wParam,
     LPARAM lParam)
 {
+
+          // If nCode is less than zero, you must pass the message on without processing it
+   if (nCode < 0)
+   {
+      return CallNextHookEx(s_mouseHook, nCode, wParam, lParam);
+   }
+
    if (nCode == HC_ACTION && s_instance)
    {
       MSLLHOOKSTRUCT* info =
@@ -189,9 +205,18 @@ void toolbar::ShutdownGdiplus()
       if (info)
       {
          s_instance->on_global_mouse(
-             {info->pt.x, info->pt.y
-      },
-             wParam);
+            { info->pt.x, info->pt.y
+            },
+            wParam);
+         // if (s_instance->on_global_mouse(
+         //    { info->pt.x, info->pt.y
+         //    },
+         //    wParam))
+         // {
+         //
+         //    return 1;
+         //
+         // }
       }
    }
 
@@ -221,72 +246,183 @@ void toolbar::Destroy()
    ::i32_rectangle toolbar::get_rectangle()
 {
 
-   return m_rectangle;
+      return {m_point, m_size};
 
 }
 
-   void toolbar::on_global_mouse( const ::i32_point & point, ::wparam wparam)
-{
-   if (!m_bMouseEnable)
+   toolbar::enum_hit toolbar::hitTest(const ::i32_point &point)
+   {
+      enum_hit ehit = e_hit_none;
+      if (Hit(m_rcMin, point))
+      {
+         ehit = e_hit_min;
+      }
+      else if (Hit(m_rcRestore, point))
+      {
+         ehit = e_hit_restore;
+      }
+      else if (Hit(m_rcClose, point))
+      {
+         ehit = e_hit_close;
+      }
+      else if (i32_rectangle(m_size).contains(point))
+      {
+
+         ehit = e_hit_client;
+      }
+      return ehit;
+   }
+
+   
+   bool toolbar::on_global_mouse( const ::i32_point & point, ::wparam wparam)
    {
 
-      return;
+      if (!m_bMouseEnable)
+      {
 
-   }
-   auto rectangleWindow = get_window_rectangle();
-   if (!rectangleWindow.contains(point))
-   {
+         return false;
 
-      return;
+      }
 
-   }
-   auto pointClient = screen_to_window_client(point);
+      auto rectangleWindow = get_window_rectangle();
+      
+      if (m_ehitHover == e_hit_none && m_ehitPress == e_hit_none && !rectangleWindow.contains(point))
+      {
+
+         if (m_bControlDeactivated)
+         {
+
+            m_bControlDeactivated = false;
+
+            release_mouse_capture();
+
+            m_pmainwindow->do_cancel_mode();
+
+            information("::remoting_rdx_client::toolbar::on_global_mouse Setting Focus to Control...");
+
+            m_pmainwindow->set_focus_to_rdp_host();
+
+            m_pmainwindow->activate_rdp_host_control(true);
+
+            m_pmainwindow->ui_activate_rdp_host_control();
+
+         }
+
+         return false;
+
+      }
+
+      if (!m_bControlDeactivated)
+      {
+
+         m_bControlDeactivated = true;
+
+         set_mouse_capture();
+
+         ///m_pmainwindow->activate_rdp_host_control(false);
+
+      }
+
+      bool bRet = false;
+   
+      auto pointClient = screen_to_window_client(point);
    //ScreenToClient(m_hwnd, &pointClient);
 
-   bool oldMin = m_hoverMin;
-   bool oldRestore = m_hoverRestore;
-   bool oldClose = m_hoverClose;
+   auto ehitHoverOld = m_ehitHover;
+   //bool oldMin = m_hoverMin;
+   //bool oldRestore = m_hoverRestore;
+   //bool oldClose = m_hoverClose;
 
-   m_hoverMin = Hit(m_rcMin, pointClient);
-   m_hoverRestore = Hit(m_rcRestore, pointClient);
-   m_hoverClose = Hit(m_rcClose, pointClient);
+   auto ehitNew = hitTest(pointClient);
 
-   if (wparam.m_wparam == WM_LBUTTONUP)
+   if (wparam.m_wparam == WM_LBUTTONDOWN)
    {
-      if (m_hoverClose)
+
+      m_ehitPress = ehitNew;
+
+      if (ehitNew == e_hit_client)
       {
-         m_bMouseEnable = false;
-         PostToHost(3); // close
+
+         m_pointDragStartCursor = point;
+
+         m_pointDragWindowOrigin = m_point;
+
+         m_iMainScreenWidth = m_pmainwindow->get_main_screen_size().width();
+
       }
-      else if (m_hoverRestore)
+
+      if (m_ehitPress != e_hit_none)
       {
-         m_bMouseEnable = true;
-         PostToHost(2); // restore
-      }
-      else if (m_hoverMin)
-      {
-         m_bMouseEnable = false;
-         PostToHost(1); // minimize
+
+         bRet = true;
+
       }
    }
-
-   if (m_hoverMin != oldMin ||
-       m_hoverRestore != oldRestore ||
-       m_hoverClose != oldClose)
+   else if (wparam.m_wparam == WM_MOUSEMOVE)
    {
+      
+      if (m_ehitPress == e_hit_client)
+      {
+
+         int dx = point.x - m_pointDragStartCursor.x;
+
+         auto x = m_pointDragWindowOrigin.x + dx;
+
+         x = minimum_maximum(x, 0, m_iMainScreenWidth - m_size.cx);
+
+         Move(x, m_pointDragWindowOrigin.y);
+         //SetWindowPos(hwnd, nullptr, m_xDragStartWindow + dx, m_yDragStartWindow, 0, 0,
+                      //SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+         bRet = true;
+      }
+   }
+   else if (wparam.m_wparam == WM_LBUTTONUP)
+   {
+      if (ehitNew == m_ehitPress)
+      {
+         if (ehitNew == e_hit_close)
+         {
+            m_bMouseEnable = false;
+            PostToHost(3); // close
+         }
+         else if (ehitNew == e_hit_restore)
+         {
+            m_bMouseEnable = true;
+            PostToHost(2); // restore
+         }
+         else if (ehitNew == e_hit_min)
+         {
+            m_bMouseEnable = false;
+            PostToHost(1); // minimize
+         }
+      }
+      if (m_ehitPress != e_hit_none)
+      {
+
+         m_pmainwindow->set_focus_to_rdp_host();
+
+         bRet = true;
+
+      }
+      m_ehitPress = e_hit_none;
+   }
+
+   if (m_ehitHover != ehitNew)
+   {
+      m_ehitHover = ehitNew;
       Redraw();
    }
-
+   return bRet;
 }
 
 
    void toolbar::PostToHost(int cmd)
 {
-   if (!m_pacmeuserinteractionMain)
+   if (!m_pmainwindow)
       return;
 
    HWND hwndHost =
-       ::as_HWND(m_pacmeuserinteractionMain->operating_system_window());
+       ::as_HWND(m_pmainwindow->operating_system_window());
 
    PostMessage(hwndHost, WM_APP + 100, cmd, 0);
 }
@@ -301,20 +437,31 @@ void toolbar::Destroy()
 //    }
 // }
 
-void toolbar::Move(
+   void toolbar::Move(int x, int y)
+{
+   m_point.x= x;
+   m_point.y = y;
+
+   set_window_position(
+      ::as_operating_system_window({HWND_TOPMOST}), m_point, {},
+                       SWP_NOACTIVATE | SWP_NOSIZE);
+
+   Redraw();
+}
+
+void toolbar::Place(
     int x,
     int y,
     int width,
     int height)
 {
-    m_rectangle.left = x;
-   m_rectangle.top = y;
-   m_rectangle.set_size({width, height});
+   m_point = {x, y};
+   m_size = {width, height};
 
     set_window_position(
         ::as_operating_system_window({HWND_TOPMOST}),
-        m_rectangle.origin(),
-        m_rectangle.size(),
+        m_point,
+        m_size,
         SWP_NOACTIVATE);
 
     Redraw();
@@ -393,53 +540,53 @@ bool toolbar::_on_window_procedure(lresult &lresult, u32 message, wparam wparam,
     }
        case WM_MOUSEMOVE:
        {
-          float x = lparam.x();
-          float y = lparam.y();
 
-          bool newHoverMin = Hit(m_rcMin, x, y);
-          bool newHoverRestore = Hit(m_rcRestore, x, y);
-          bool newHoverClose = Hit(m_rcClose, x, y);
+             //float x = lparam.x();
+             //float y = lparam.y();
 
-          if (newHoverMin != m_hoverMin ||
-              newHoverRestore != m_hoverRestore ||
-              newHoverClose != m_hoverClose)
-          {
-             m_hoverMin = newHoverMin;
-             m_hoverRestore = newHoverRestore;
-             m_hoverClose = newHoverClose;
+             //bool newHoverMin = Hit(m_rcMin, x, y);
+             //bool newHoverRestore = Hit(m_rcRestore, x, y);
+             //bool newHoverClose = Hit(m_rcClose, x, y);
 
-             Redraw();
-          }
+             //if (newHoverMin != m_hoverMin || newHoverRestore != m_hoverRestore || newHoverClose != m_hoverClose)
+             //{
+             //   m_hoverMin = newHoverMin;
+             //   m_hoverRestore = newHoverRestore;
+             //   m_hoverClose = newHoverClose;
+
+             //   Redraw();
+             //}
 
        lresult = 0;
           return true;
        }
        case WM_LBUTTONDOWN:
        {
-          m_mouseDown = true;
-          set_mouse_capture();
+          //m_mouseDown = true;
+          //set_mouse_capture();
        lresult = 0;
        return true;
        }
        case WM_LBUTTONUP:
        {
-          m_mouseDown = false;
-          ReleaseCapture();
+          //m_mouseDown = false;
+          
+          //ReleaseCapture();
 
           float x = lparam.x();
           float y = lparam.y();
 
           if (Hit(m_rcMin, x, y))
           {
-             m_pacmeuserinteractionMain->post_message((::user::enum_message) WM_TOOLBAR_CMD, 1); // minimize
+             m_pmainwindow->post_message((::user::enum_message) WM_TOOLBAR_CMD, 1); // minimize
           }
           else if (Hit(m_rcRestore, x, y))
           {
-             m_pacmeuserinteractionMain->post_message((::user::enum_message) WM_TOOLBAR_CMD, 2); // restore
+             m_pmainwindow->post_message((::user::enum_message) WM_TOOLBAR_CMD, 2); // restore
           }
           else if (Hit(m_rcClose, x, y))
           {
-             m_pacmeuserinteractionMain->post_message((::user::enum_message) WM_TOOLBAR_CMD, 3);  // close
+             m_pmainwindow->post_message((::user::enum_message) WM_TOOLBAR_CMD, 3);  // close
           }
 
        lresult = 0;
@@ -457,8 +604,8 @@ void toolbar::RenderLayered()
 
     BITMAPINFO bmi{};
     bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-    bmi.bmiHeader.biWidth = m_rectangle.width();
-    bmi.bmiHeader.biHeight = -m_rectangle.height();
+    bmi.bmiHeader.biWidth = m_size.width();
+    bmi.bmiHeader.biHeight = -m_size.height();
     bmi.bmiHeader.biPlanes = 1;
     bmi.bmiHeader.biBitCount = 32;
     bmi.bmiHeader.biCompression = BI_RGB;
@@ -487,13 +634,13 @@ void toolbar::RenderLayered()
 
     POINT ptSrc{0,0};
     SIZE sizeWnd{
-        m_rectangle.width(),
-        m_rectangle.height()
+        m_size.width(),
+        m_size.height()
     };
 
     POINT ptDst{
-        m_rectangle.left,
-        m_rectangle.top
+        m_point.x,
+        m_point.y
     };
 
     BLENDFUNCTION blend{};
@@ -526,8 +673,8 @@ void toolbar::RenderLayered()
 {
 
 
-   float wForDraw = ((REAL)m_rectangle.width() - 2.0f);
-   float hForDraw = ((REAL)m_rectangle.height() - 2.0f);
+   float wForDraw = ((REAL)m_size.width() - 2.0f);
+   float hForDraw = ((REAL)m_size.height() - 2.0f);
 
 
    {
@@ -743,7 +890,7 @@ void toolbar::RenderLayered()
              14.f,
              0.f,
              300.f * get_window_scale(),
-             (REAL)m_rectangle.height());
+             (REAL)m_size.height());
 
          ::wstring wstrTitle(m_strTitle);
 
@@ -763,7 +910,7 @@ void toolbar::RenderLayered()
          const float btnSpce = m_btnSpacing* get_window_scale();
 
          float closeX =
-             (float)m_rectangle.width() - btnSize - 10.f;
+             (float)m_size.width() - btnSize - 10.f;
 
          float restoreX =
              closeX - btnSize - btnSpce;
@@ -805,7 +952,7 @@ void toolbar::RenderLayered()
 
 
          Color minColor =
-    m_hoverMin
+    m_ehitHover == e_hit_min
     ? Color(120, 255, 255, 255)
     : Color(60, 255, 255, 255);
 
@@ -815,8 +962,7 @@ void toolbar::RenderLayered()
              &minBrush,
              rcMin);
 
-         Color resColor =
-    m_hoverRestore
+         Color resColor = m_ehitHover == e_hit_restore
     ? Color(120, 255, 255, 255)
     : Color(60, 255, 255, 255);
 
@@ -827,8 +973,7 @@ void toolbar::RenderLayered()
              rcRestore);
 
 
-         Color closeColor =
-    m_hoverClose
+         Color closeColor = m_ehitHover == e_hit_close
     ? Color(200, 255, 80, 80)
     : Color(120, 220, 60, 60);
 

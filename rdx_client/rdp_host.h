@@ -112,6 +112,10 @@ namespace remoting_rdx_client
 
       void do_control_layout() override;
 
+
+      virtual void onEnterFullscreen();
+      virtual void onExitFullscreen();
+
    };
 
 

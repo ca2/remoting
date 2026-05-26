@@ -181,7 +181,9 @@
     <ClInclude Include="event_sink.h" />
     <ClInclude Include="in_place_site.h" />
     <ClInclude Include="main_window.h" />
+    <ClInclude Include="rdp_host.h" />
     <ClInclude Include="rdx_client.h" />
+    <ClInclude Include="toolbar.h" />
     <ClInclude Include="_.h" />
   </ItemGroup>
   <ItemGroup>

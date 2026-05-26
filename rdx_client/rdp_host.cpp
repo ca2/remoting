@@ -86,6 +86,9 @@ namespace remoting_rdx_client
 
       ::pointer<rdp_host> m_pmainwindow;
       ::comptr<IMsRdpClient9> m_prdpclient;
+      ::comptr<IMsRdpClientAdvancedSettings7> m_padvancedsettings;
+      ::comptr < IMsRdpExtendedSettings > m_pextendedsettings;
+      ::comptr<IMsRdpClientSecuredSettings> m_psecuredsettings;
 
 
 
@@ -138,12 +141,12 @@ namespace remoting_rdx_client
    };
 
 
-   ::pointer<::windows::com_window> create_rdp_host(::particle * pparticle)
-   {
+   //::pointer<::windows::com_window> create_rdp_host(::particle * pparticle)
+   //{
 
-      return pparticle->create_newø<rdp_host>();
+   //   return pparticle->create_newø<rdp_host>();
 
-   }
+   //}
 
    // HHOOK g_mouseHook;
    //
@@ -538,72 +541,82 @@ namespace remoting_rdx_client
 
       }
 
-       ::comptr < IConnectionPointContainer > pconnectionpointcontainer;
+      ::comptr < IConnectionPointContainer > pconnectionpointcontainer;
 
-       m_pinternal->m_prdpclient.as(pconnectionpointcontainer);
+      m_pinternal->m_prdpclient.as(pconnectionpointcontainer);
 
-       m_pinternal->event_sink<IMsTscAxEvents>::initialize_event_sink(pconnectionpointcontainer);
+      m_pinternal->event_sink<IMsTscAxEvents>::initialize_event_sink(pconnectionpointcontainer);
        
-       ::cast<::remoting_rdx_client::application> papp = m_papplication;
+      ::cast<::remoting_rdx_client::application> papp = m_papplication;
 
       ::wstring wstrHost = papp->m_strHost;
 
       m_pinternal->m_prdpclient->put_Server(_bstr_t(wstrHost));
 
-      ::comptr<IMsRdpClientAdvancedSettings7> padvancedsettings;
 
-      m_pinternal->m_prdpclient->get_AdvancedSettings8(&padvancedsettings);
 
-      if (padvancedsettings)
+      m_pinternal->m_prdpclient->get_AdvancedSettings8(&m_pinternal->m_padvancedsettings);
+
+      if (m_pinternal->m_padvancedsettings)
       {
 
-         padvancedsettings->put_EnableCredSspSupport(VARIANT_TRUE);
+         m_pinternal->m_padvancedsettings->put_EnableCredSspSupport(VARIANT_TRUE);
 
          //padvancedsettings->put_ContainerHandledFullScreen(VARIANT_TRUE);
 
-         padvancedsettings->put_SmartSizing(VARIANT_FALSE);
+         m_pinternal->m_padvancedsettings->put_SmartSizing(VARIANT_FALSE);
 
-         padvancedsettings->put_EnableAutoReconnect(VARIANT_FALSE);
+         m_pinternal->m_padvancedsettings->put_EnableAutoReconnect(VARIANT_FALSE);
 
-         padvancedsettings->put_SmartSizing(VARIANT_FALSE);
+         m_pinternal->m_padvancedsettings->put_SmartSizing(VARIANT_FALSE);
 
-         padvancedsettings->put_BitmapCacheSize(0);
+         m_pinternal->m_padvancedsettings->put_ContainerHandledFullScreen(1);
 
-         padvancedsettings->put_BitmapPersistence(VARIANT_FALSE);
+         m_pinternal->m_padvancedsettings->put_DisplayConnectionBar(VARIANT_FALSE);
+         //}
+         //m_pinternal->m_padvancedsettings->put_BitmapCacheSize(0);
 
-         padvancedsettings->put_PerformanceFlags(0);
+         //padvancedsettings->put_BitmapPersistence(VARIANT_FALSE);
+
+         ///padvancedsettings->put_PerformanceFlags(0);
 
          //padvancedsettings->put_ConnectionBarShowMinimizeButton(VARIANT_FALSE);
 
       }
 
-      ::comptr < IMsRdpExtendedSettings > ext;
+      //::comptr < IMsRdpExtendedSettings > ext;
 
-      m_pinternal->m_prdpclient.as(ext);
+      m_pinternal->m_prdpclient.as(m_pinternal->m_pextendedsettings);
 
-      if (ext)
+      if (m_pinternal->m_pextendedsettings)
       {
          _variant_t vFalse(VARIANT_FALSE);
 
-         ext->put_Property(
+         m_pinternal->m_pextendedsettings->put_Property(
              _bstr_t(L"EnableHardwareMode"),
              &vFalse);
 
-         ext->put_Property(
+         m_pinternal->m_pextendedsettings->put_Property(
              _bstr_t(L"UseURCP"),
              &vFalse);
 
-         ext->put_Property(
+         m_pinternal->m_pextendedsettings->put_Property(
              _bstr_t(L"DisableUDPTransport"),
              &vFalse);
 
+         m_pinternal->m_pextendedsettings->put_Property(
+            _bstr_t(L"EnableConnectionBar"),
+            &vFalse);
+
          _variant_t varScaleFactor((LONG)100);
 
-         ext->put_Property(_bstr_t(L"DesktopScaleFactor"), &varScaleFactor);
+         m_pinternal->m_pextendedsettings->put_Property(_bstr_t(L"DesktopScaleFactor"), &varScaleFactor);
 
-         ext->put_Property(_bstr_t(L"DeviceScaleFactor"), &varScaleFactor);
+         m_pinternal->m_pextendedsettings->put_Property(_bstr_t(L"DeviceScaleFactor"), &varScaleFactor);
 
       }
+
+      m_pinternal->m_prdpclient->get_SecuredSettings2(&m_pinternal->m_psecuredsettings);
 
       m_pinternal->m_prdpclient->put_ColorDepth(32);
 
@@ -849,6 +862,55 @@ namespace remoting_rdx_client
    //    }
    //
    // }
+
+
+   void rdp_host::onEnterFullscreen()
+   {
+
+      if(m_pinternal->m_psecuredsettings)
+      {
+         auto hresult = m_pinternal->m_psecuredsettings->put_KeyboardHookMode(1);
+
+         if (FAILED(hresult))
+         {
+
+            information("Failed to set keyboard hook mode to 1");
+
+         }
+
+      }
+
+
+//      m_pinternal->m_prdpclient->put_FullScreen(VARIANT_TRUE);
+
+      m_pinternal->m_padvancedsettings->put_DisplayConnectionBar(VARIANT_FALSE);
+
+   }
+
+
+   void rdp_host::onExitFullscreen()
+   {
+
+      if(m_pinternal->m_psecuredsettings)
+      {
+         auto hresult = m_pinternal->m_psecuredsettings->put_KeyboardHookMode(1);
+
+         if (FAILED(hresult))
+         {
+
+            information("Failed to set keyboard hook mode to 1");
+
+         }
+
+      }
+
+
+      //m_pinternal->m_prdpclient->put_FullScreen(VARIANT_FALSE);
+
+      m_pinternal->m_padvancedsettings->put_DisplayConnectionBar(VARIANT_FALSE);
+
+   }
+
 
 
 

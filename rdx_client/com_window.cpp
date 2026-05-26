@@ -242,6 +242,12 @@ namespace windows
          information("do_control_ui_activate DoVer(OLEIVERB_SHOW ... ) Failed");
 
       }
+      else
+      {
+
+         information("do_control_ui_activate DoVer(OLEIVERB_SHOW ... ) Succeeded");
+
+      }
 
    }
 
@@ -260,7 +266,13 @@ namespace windows
       if (FAILED(hr))
       {
 
-         information("do_control_ui_activate DoVer(OLEIVERB_UIACTIVATE ... ) Failed");
+         information("do_control_ui_activate DoVerb(OLEIVERB_UIACTIVATE ... ) Failed");
+
+      }
+      else
+      {
+
+         information("do_control_ui_activate DoVerb(OLEIVERB_UIACTIVATE ... ) Succeeded");
 
       }
 
@@ -289,7 +301,7 @@ namespace windows
 
       auto active = iActivate != WA_INACTIVE;
 
-      control_activate(active);
+      //control_activate(active);
 
       return false;
 

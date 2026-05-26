@@ -67,7 +67,7 @@ namespace remoting_rdx_client
 
       //return WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
       //return WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
-      return WS_POPUP | WS_HSCROLL | WS_VSCROLL | WS_SYSMENU  | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+      return WS_POPUP | WS_HSCROLL | WS_VSCROLL | WS_SYSMENU  | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE;
 
    }
 
@@ -325,6 +325,48 @@ namespace remoting_rdx_client
       //m_prdphost->do_control_layout();
 
    }
+
+
+   void main_window::set_focus_to_rdp_host()
+   {
+
+      information("::remoting_rdx_client::main_window::set_focus_to_rdp_host");
+
+      set_foreground_window(::system()->acme_windowing()->get_user_activation_token());
+
+      set_active_window();
+
+      m_prdphost->window_set_focus();
+
+   }
+
+
+   void main_window::activate_rdp_host_control(bool bActive)
+   {
+
+      m_prdphost->control_activate(bActive);
+
+   }
+
+   
+   void main_window::ui_activate_rdp_host_control()
+   {
+
+      m_prdphost->do_control_ui_activate();
+
+   }
+
+
+   void main_window::do_cancel_mode()
+   {
+
+      m_ptoolbar->send_message((::user::enum_message) WM_CANCELMODE);
+      send_message((::user::enum_message) WM_CANCELMODE);
+      m_prdphost->send_message((::user::enum_message) WM_CANCELMODE);
+
+   }
+
+
 
    bool main_window::_on_window_procedure(lresult &lresult, u32 message, wparam wparam, lparam lparam)
    {
@@ -986,14 +1028,14 @@ namespace remoting_rdx_client
      // m_ptoolbar->m_rectangle.top = 0;
      // m_ptoolbar->m_rectangle.set_size(sizeToolbar);
 
-     //m_ptoolbar->m_pacmeuserinteractionParent = this;
+     m_ptoolbar->m_pacmeuserinteractionParent = this;
      //m_ptoolbar->Create(this, screenWidth /2 - iToolbarWidth / 2, 0, iToolbarWidth, iToolbarHeight);
 
-     m_ptoolbar->m_pacmeuserinteractionMain = this;
+     m_ptoolbar->m_pmainwindow = this;
 
      m_ptoolbar->create_window();
 
-     m_ptoolbar->Move(sizeMainScreen.width() /2 - sizeToolbar.cx / 2, 0, sizeToolbar.cx, sizeToolbar.cy);
+     m_ptoolbar->Place(sizeMainScreen.width() /2 - sizeToolbar.cx / 2, 0, sizeToolbar.cx, sizeToolbar.cy);
 
 
      m_ptoolbar->show_window(SW_SHOW);
@@ -1462,11 +1504,13 @@ namespace remoting_rdx_client
 
       m_bFullscreen = false;
 
+
+      m_prdphost->onExitFullscreen();
+
       m_ptoolbar->show_window(SW_HIDE);
       m_ptoolbar ->m_bMouseEnable = false;
-      m_ptoolbar->m_hoverMin = false;
-      m_ptoolbar->m_hoverRestore = false;
-      m_ptoolbar->m_hoverClose = false;
+      m_ptoolbar->m_ehitHover = toolbar::e_hit_none;
+      m_ptoolbar->m_ehitPress = toolbar::e_hit_none;
       m_ptoolbar->Redraw();
       show_window(SW_MINIMIZE);
 
@@ -1480,11 +1524,12 @@ namespace remoting_rdx_client
 
       m_bFullscreenStored = false;
 
+      m_prdphost->onExitFullscreen();
+
       m_ptoolbar->show_window(SW_HIDE);
       m_ptoolbar ->m_bMouseEnable = false;
-      m_ptoolbar->m_hoverMin = false;
-      m_ptoolbar->m_hoverRestore = false;
-      m_ptoolbar->m_hoverClose = false;
+      m_ptoolbar->m_ehitHover = toolbar::e_hit_none;
+      m_ptoolbar->m_ehitPress = toolbar::e_hit_none;
       m_ptoolbar->Redraw();
 
       //set_window_style(WS_OVERLAPPEDWINDOW);
@@ -1589,6 +1634,10 @@ namespace remoting_rdx_client
 
       }
 
+      m_pointScroll.clear();
+
+      layout_rdp_host();
+
       set_window_position(
          ::as_operating_system_window((HWND) HWND_TOP), 
          rFullscreen.origin(),
@@ -1599,6 +1648,8 @@ namespace remoting_rdx_client
       m_ptoolbar->m_bMouseEnable = true;
 
       m_ptoolbar->show_window(SW_SHOW);
+
+      m_prdphost->onEnterFullscreen();
 
    }
 

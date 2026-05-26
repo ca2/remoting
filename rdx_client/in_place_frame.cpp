@@ -24,6 +24,12 @@ namespace windows
 
          m_translatorhandler = [this](MSG *pmsg) -> bool
          {
+
+               if (!m_pinplaceactiveobject)
+            {
+                  return false;
+            }
+
             auto hr = m_pinplaceactiveobject->TranslateAccelerator(pmsg);
 
             auto handled = (hr == S_OK);

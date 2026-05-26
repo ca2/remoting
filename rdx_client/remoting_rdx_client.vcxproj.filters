@@ -80,6 +80,12 @@
     <ClInclude Include="rdx_client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="toolbar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rdp_host.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="remoting_rdx_client.def">

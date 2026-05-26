@@ -96,6 +96,13 @@ namespace remoting_rdx_client
 
       virtual void layout_rdp_host();
 
+      virtual void set_focus_to_rdp_host();
+
+      virtual void activate_rdp_host_control(bool bActive);
+
+      virtual void ui_activate_rdp_host_control();
+
+      virtual void do_cancel_mode();
 
       bool _on_window_procedure(lresult &lresult, u32 message, wparam wparam, lparam lparam) override;
       //void install_message_routing(::channel * pchannel) override;

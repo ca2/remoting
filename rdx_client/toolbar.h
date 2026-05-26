@@ -17,13 +17,28 @@ using namespace Gdiplus;
 namespace remoting_rdx_client
 {
 
+   
 
    class CLASS_DECL_REMOTING_RDX_CLIENT toolbar :
    virtual public ::acme::user::interaction
    {
    public:
 
-      ::pointer < ::acme::user::interaction > m_pacmeuserinteractionMain;
+      enum enum_hit
+      {
+         e_hit_none,
+         e_hit_client,
+         e_hit_min,
+         e_hit_restore,
+         e_hit_close,
+
+      };
+
+      ::pointer < main_window > m_pmainwindow;
+
+      int m_iMainScreenWidth;
+
+      bool m_bControlDeactivated;
 
       //HWND m_hwnd{};
 
@@ -37,7 +52,9 @@ namespace remoting_rdx_client
       //int m_width{};
       //int m_height{};
 
-      ::i32_rectangle m_rectangle;
+      //::i32_rectangle m_rectangle;
+      ::i32_point m_point;
+      ::i32_size m_size;
       const float m_btnSize = 18.f;
       const float m_btnSpacing = 2.f;
 
@@ -50,20 +67,27 @@ namespace remoting_rdx_client
       static HHOOK s_mouseHook;
       static toolbar* s_instance;
 
+               ::i32_point m_pointDragStartCursor;
+
+      ::i32_point m_pointDragWindowOrigin;
 
 
+      enum_hit m_ehitHover;
+      enum_hit m_ehitPress;
+      //bool m_hoverMin = false;
+      //bool m_hoverRestore = false;
+      //bool m_hoverClose = false;
 
-      bool m_hoverMin = false;
-      bool m_hoverRestore = false;
-      bool m_hoverClose = false;
-
-      bool m_mouseDown = false;
+      //bool m_mouseDown = false;
 
       ULONG_PTR m_gdiplusToken{};
 
 
       toolbar();
       ~toolbar() override;
+
+      enum_hit hitTest(const ::i32_point &point);
+
 
 
       static LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam);
@@ -75,7 +99,7 @@ namespace remoting_rdx_client
 
       ::i32_rectangle get_rectangle() override;
 
-      void on_global_mouse(const ::i32_point & point, ::wparam wparam);
+      bool on_global_mouse(const ::i32_point & point, ::wparam wparam);
 
       void InstallMouseHook();
       void UninstallMouseHook();
@@ -86,7 +110,8 @@ namespace remoting_rdx_client
       void Destroy();
 
       //void Show(bool show);
-      void Move(int x, int y, int width, int height);
+      void Move(int x, int y);
+      void Place(int x, int y, int width, int height);
 
       void Redraw();
 
