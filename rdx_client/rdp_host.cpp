@@ -474,17 +474,38 @@ namespace remoting_rdx_client
 
       show_window(SW_HIDE);
 
+      if (m_pinternal)
+      {
+
+         if (m_pinternal->m_padvancedsettings)
+         {
+            m_pinternal->m_padvancedsettings.release();
+         }
+         if (m_pinternal->m_pextendedsettings)
+         {
+            m_pinternal->m_pextendedsettings.release();
+         }
+         if (m_pinternal->m_psecuredsettings)
+         {
+            m_pinternal->m_psecuredsettings.release();
+         }
+      }
+
       if (m_pinternal &&
           m_pinternal->m_prdpclient)
       {
+
          ::i16 connected = 0;
 
          m_pinternal->m_prdpclient->get_Connected(&connected);
 
          if (connected != 0)
          {
+
             m_pinternal->m_prdpclient->Disconnect();
+
          }
+
       }
 
       if (m_pinternal)
@@ -502,12 +523,16 @@ namespace remoting_rdx_client
       }
 
       m_pclientsite.release();
+
       m_poleobject.release();
 
       if (m_pinternal)
       {
+
          delete m_pinternal;
+
          m_pinternal = nullptr;
+
       }
 
    }

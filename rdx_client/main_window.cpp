@@ -27,6 +27,7 @@ namespace remoting_rdx_client
    main_window::main_window()
    {
 
+      m_bIsClosing = false;
       m_bFullscreen = false;
       m_bFullscreenStored = true;
 
@@ -845,7 +846,17 @@ namespace remoting_rdx_client
    void main_window::shutdown_rdp()
    {
 
+      if (m_bIsClosing)
+      {
+
+         return;
+
+      }
+
+      m_bIsClosing = true;
+
       auto hwnd = ::as_HWND(this->operating_system_window());
+
       KillTimer(hwnd, 1453);
 
       show_window(SW_HIDE);

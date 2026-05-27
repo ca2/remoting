@@ -53,6 +53,7 @@ namespace remoting_rdx_client
 
       ::pointer < toolbar > m_ptoolbar;
 
+      bool m_bIsClosing;
       bool m_bFullscreen;
       bool m_bFullscreenStored;
 

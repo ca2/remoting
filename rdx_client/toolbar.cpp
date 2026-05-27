@@ -634,6 +634,8 @@ void toolbar::RenderLayered()
 
    {
 
+       system()->do_graphics_factory();
+
        auto pgraphicscontext = createø<::nano::graphics::context>();
 
        pgraphicscontext->attach(hdcMemory, m_size, 0);
@@ -683,13 +685,15 @@ void toolbar::RenderLayered()
    {
 
       auto fW = (::f64) m_size.width();
-      auto fH = (::f64) m_size.width();
+      auto fH = (::f64) m_size.height();
 
       //auto wForDraw = fW - 2.0f;
       //auto hForDraw = fH - 2.0f;
 
-      auto wForDraw = fW;
-      auto hForDraw = fH;
+      auto wForDraw = fW - 1.0;
+      auto hForDraw = fH - 1.0;
+
+      auto pnanographics = nano()->graphics();
 
       {
 
@@ -764,7 +768,7 @@ void toolbar::RenderLayered()
             //SolidBrush bgBrush(
               //  Color(120, 30, 130, 230));
 
-            pgraphicscontext->fill_path(ppath, pbrushBackground);
+            
 
             //pgraphicscontext->FillPath(&bgBrush, &path);
 
@@ -775,17 +779,19 @@ void toolbar::RenderLayered()
             //    Color(180, 255, 255, 255),
             //    1.5f);
 
+            pgraphicscontext->do_path(ppath, pbrushBackground, ppenBorder);
+
             //pgraphicscontext->DrawPath(&border, &path);
 
-               pgraphicscontext->draw_path(ppath, ppenBorder);
+            //   pgraphicscontext->draw_path(ppath, ppenBorder);
 
             // Buttons
-               auto pbrushButton = nano()->graphics()->create_solid_brush(::argb(220, 0, 120, 215));
+               auto pbrushButton = pnanographics->create_solid_brush(::argb(220, 0, 120, 215));
 
             //SolidBrush buttonBrush(
               //  Color(220, 0, 120, 215));
 
-            auto pbrushText = nano()->graphics()->create_solid_brush(::color::white);
+            auto pbrushText = pnanographics->create_solid_brush(::color::white);
 
             //SolidBrush textBrush(
                // Color(255,255,255,255));
@@ -922,10 +928,10 @@ void toolbar::RenderLayered()
             //    FontStyleRegular,
             //    UnitPixel);
 
-            auto pfontText = nano()->graphics()->create_point_font(e_font_sans_ui, 12. * get_window_scale(), false);
+            auto pfontText = pnanographics->create_pixel_font(e_font_sans_ui, 12. * get_window_scale(), false);
 
 
-            auto pbrushText = nano()->graphics()->create_solid_brush(::argb(230, 255, 255, 255));
+            auto pbrushText = pnanographics->create_solid_brush(::argb(230, 255, 255, 255));
             //SolidBrush textBrush(
               //  Color(230,255,255,255));
 
@@ -959,44 +965,44 @@ void toolbar::RenderLayered()
             // Window buttons (right side)
             //
 
-            const ::f32 btnSize = m_btnSize * get_window_scale();
-            const ::f32 btnSpce = m_btnSpacing* get_window_scale();
+            const ::f64 btnSize = m_btnSize * get_window_scale();
+            const ::f64 btnSpce = m_btnSpacing* get_window_scale();
 
-            ::f32 closeX =
-                (::f32)m_size.width() - btnSize - 10.f;
+            ::f64 closeX =
+                (::f64)m_size.width() - btnSize - 10.f;
 
-            ::f32 restoreX =
+            ::f64 restoreX =
                 closeX - btnSize - btnSpce;
 
-            ::f32 minimizeX =
+            ::f64 minimizeX =
                 restoreX - btnSize - btnSpce;
 
-            ::f32 topY =
-                ((::f32)hForDraw - btnSize) * 0.5f;
+            ::f64 topY =
+                ((::f64)hForDraw - btnSize) * 0.5f;
 
-            auto rectangleMinimized = ::f64_rectangle_dimension(
+            auto rectangleMinimize = ::f64_rectangle_dimension(
                 minimizeX,
                 topY,
                 btnSize,
                 btnSize);
 
-            m_rectangleMinimize = rcMin;
+            m_rectangleMinimize = rectangleMinimize;
 
-            RectF rcRestore(
+            auto rectangleRestore = ::f64_rectangle_dimension(
                 restoreX,
                 topY,
                 btnSize,
                 btnSize);
 
-            m_rectangleRestore = rcRestore;
+            m_rectangleRestore = rectangleRestore;
 
-            RectF rcClose(
+            auto rectangleClose = ::f64_rectangle_dimension(
                 closeX,
                 topY,
                 btnSize,
                 btnSize);
 
-            m_rectangleClose = rcClose;
+            m_rectangleClose = rectangleClose;
 
             //
             // Hover-style fills
@@ -1004,96 +1010,103 @@ void toolbar::RenderLayered()
 
 
 
-            Color minColor =
+            ::color::color colorMinimize =
        m_ehitHover == e_hit_min
-       ? Color(120, 255, 255, 255)
-       : Color(60, 255, 255, 255);
+       ? ::argb(120, 255, 255, 255)
+       : ::argb(60, 255, 255, 255);
 
-            SolidBrush minBrush(minColor);
+            auto pbrushMinimize = pnanographics->create_solid_brush(colorMinimize);
 
-            pgraphicscontext->FillEllipse(
-                &minBrush,
-                rcMin);
+            //SolidBrush minBrush(minColor);
 
-            Color resColor = m_ehitHover == e_hit_restore
-       ? Color(120, 255, 255, 255)
-       : Color(60, 255, 255, 255);
+            //pgraphicscontext->FillEllipse(
+            //    &minBrush,
+            //    rcMin);
 
-            SolidBrush resBrush(resColor);
+            pgraphicscontext->ellipse(rectangleMinimize, pbrushMinimize, nullptr);
 
-            pgraphicscontext->FillEllipse(
-                &resBrush,
-                rcRestore);
+            ::color::color colorRestore = m_ehitHover == e_hit_restore
+       ? ::argb(120, 255, 255, 255)
+       : ::argb(60, 255, 255, 255);
 
+            auto pbrushRestore = pnanographics->create_solid_brush(colorRestore);
+            //SolidBrush resBrush(resColor);
 
-            Color closeColor = m_ehitHover == e_hit_close
-       ? Color(200, 255, 80, 80)
-       : Color(120, 220, 60, 60);
+            //pgraphicscontext->FillEllipse(
+            //    &resBrush,
+            //    rcRestore);
 
-            SolidBrush closeBrush(closeColor);
+            pgraphicscontext->ellipse(rectangleRestore, pbrushRestore, nullptr);
+            ::color::color colorClose = m_ehitHover == e_hit_close
+       ? ::argb(200, 255, 80, 80)
+       : ::argb(120, 220, 60, 60);
 
-            pgraphicscontext->FillEllipse(
-                &closeBrush,
-                rcClose);
+            auto pbrushClose = pnanographics->create_solid_brush(colorClose);
+            //SolidBrush closeBrush(closeColor);
+
+            //pgraphicscontext->FillEllipse(
+            //    &closeBrush,
+            //    rectangleClose);
+
+            pgraphicscontext->ellipse(rectangleClose, pbrushClose, nullptr);
 
             //
             // Glyph pen
             //
 
-            Pen glyphPen(
-                Color(240,255,255,255),
-                1.8f);
+            auto ppenGlyph = pnanographics->create_pen(::argb(240, 255, 255, 255), 1.8);
+            //Pen glyphPen(
+            //    Color(240,255,255,255),
+            //    1.8f);
 
-            glyphPen.SetStartCap(LineCapRound);
-            glyphPen.SetEndCap(LineCapRound);
+            ppenGlyph->set_start_cap(::nano::graphics::e_line_cap_round);
+            ppenGlyph->set_end_cap(::nano::graphics::e_line_cap_round);
 
-            ::f32 fSmaller = 6.f * get_window_scale();
+            //glyphPen.SetStartCap(LineCapRound);
+            //glyphPen.SetEndCap(LineCapRound);
+
+            ::f64 fSmaller = 6 * get_window_scale();
 
             //
             // Minimize glyph
             //
 
-            ::f32 midY =
-                rcMin.Y + rcMin.Height * 0.62f;
+            ::f64 midY = rectangleMinimize.top + rectangleMinimize.height() * 0.62;
 
-            pgraphicscontext->DrawLine(
-                &glyphPen,
-                rcMin.X + fSmaller,
-                midY,
-                rcMin.X + rcMin.Width - fSmaller,
-                midY);
+            //pgraphicscontext->DrawLine(
+            //    &glyphPen,
+            //    rcMin.X + fSmaller,
+            //    midY,
+            //    rcMin.X + rcMin.Width - fSmaller,
+            //    midY);
+            pgraphicscontext->line({rectangleMinimize.left + fSmaller, midY},
+                                   {rectangleMinimize.left + rectangleMinimize.width() - fSmaller, midY}, 
+                ppenGlyph);
 
             //
             // Restore glyph
             //
 
-            RectF restoreInner(
-                rcRestore.X + fSmaller,
-                rcRestore.Y + fSmaller,
-                rcRestore.Width - fSmaller*2.f,
-                rcRestore.Height - fSmaller*2.f);
+            auto rectangleRestoreInner = ::f64_rectangle_dimension(
+                rectangleRestore.left + fSmaller, rectangleRestore.top + fSmaller,
+                rectangleRestore.width() - fSmaller * 2., rectangleRestore.height() - fSmaller * 2.);
 
-            pgraphicscontext->DrawRectangle(
-                &glyphPen,
-                restoreInner);
+            //pgraphicscontext->DrawRectangle(
+            //    &glyphPen,
+            //    restoreInner);
 
+            pgraphicscontext->rectangle(rectangleRestoreInner, nullptr, ppenGlyph);
             //
             // Close glyph
             //
 
-            pgraphicscontext->DrawLine(
-                &glyphPen,
-                rcClose.X + fSmaller,
-                rcClose.Y + fSmaller,
-                rcClose.X + rcClose.Width - fSmaller,
-                rcClose.Y + rcClose.Height - fSmaller);
+            pgraphicscontext->line({rectangleClose.left + fSmaller, rectangleClose.top + fSmaller},
+                                   {rectangleClose.right - fSmaller, rectangleClose.bottom - fSmaller},
+               ppenGlyph);
 
-            pgraphicscontext->DrawLine(
-                &glyphPen,
-                rcClose.X + rcClose.Width - fSmaller,
-                rcClose.Y + fSmaller,
-                rcClose.X + fSmaller,
-                rcClose.Y + rcClose.Height - fSmaller);
+            pgraphicscontext->line({rectangleClose.right - fSmaller, rectangleClose.top + fSmaller},
+                                   {rectangleClose.left + fSmaller, rectangleClose.bottom - fSmaller}
+            , ppenGlyph);
 
           }
 
