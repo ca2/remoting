@@ -60,9 +60,9 @@ namespace remoting_rdx_client
 
       bool m_bMouseEnable = true;
       ::i32_rectangle m_titleRect;
-      ::i32_rectangle m_rcMin;
-      ::i32_rectangle m_rcRestore;
-      ::i32_rectangle m_rcClose;
+      ::i32_rectangle m_rectangleMinimize;
+      ::i32_rectangle m_rectangleRestore;
+      ::i32_rectangle m_rectangleClose;
 
       static HHOOK s_mouseHook;
       static toolbar* s_instance;

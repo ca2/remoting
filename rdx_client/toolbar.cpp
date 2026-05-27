@@ -3,8 +3,11 @@
 //
 #include "framework.h"
 #include "toolbar.h"
+#include "acme/nano/nano.h"
 #include "acme/nano/graphics/brush.h"
 #include "acme/nano/graphics/context.h"
+#include "acme/nano/graphics/font.h"
+#include "acme/nano/graphics/graphics.h"
 #include "acme/nano/graphics/path.h"
 #include "acme/nano/graphics/pen.h"
 #include "acme/operating_system/windows/window.h"
@@ -258,15 +261,15 @@ void toolbar::Destroy()
    toolbar::enum_hit toolbar::hitTest(const ::i32_point &point)
    {
       enum_hit ehit = e_hit_none;
-      if (m_rcMin.contains(point))
+      if (m_rectangleMinimize.contains(point))
       {
          ehit = e_hit_min;
       }
-      else if (m_rcRestore.contains(point))
+      else if (m_rectangleRestore.contains(point))
       {
          ehit = e_hit_restore;
       }
-      else if (m_rcClose.contains( point))
+      else if (m_rectangleClose.contains( point))
       {
          ehit = e_hit_close;
       }
@@ -549,9 +552,9 @@ bool toolbar::_on_window_procedure(lresult &lresult, u32 message, wparam wparam,
              //::f32 x = lparam.x();
              //::f32 y = lparam.y();
 
-             //bool newHoverMin = Hit(m_rcMin, x, y);
-             //bool newHoverRestore = Hit(m_rcRestore, x, y);
-             //bool newHoverClose = Hit(m_rcClose, x, y);
+             //bool newHoverMin = Hit(m_rectangleMinimize, x, y);
+             //bool newHoverRestore = Hit(m_rectangleRestore, x, y);
+             //bool newHoverClose = Hit(m_rectangleClose, x, y);
 
              //if (newHoverMin != m_hoverMin || newHoverRestore != m_hoverRestore || newHoverClose != m_hoverClose)
              //{
@@ -777,11 +780,15 @@ void toolbar::RenderLayered()
                pgraphicscontext->draw_path(ppath, ppenBorder);
 
             // Buttons
-            SolidBrush buttonBrush(
-                Color(220, 0, 120, 215));
+               auto pbrushButton = nano()->graphics()->create_solid_brush(::argb(220, 0, 120, 215));
 
-            SolidBrush textBrush(
-                Color(255,255,255,255));
+            //SolidBrush buttonBrush(
+              //  Color(220, 0, 120, 215));
+
+            auto pbrushText = nano()->graphics()->create_solid_brush(::color::white);
+
+            //SolidBrush textBrush(
+               // Color(255,255,255,255));
 
             // FontFamily ff(L"Segoe UI");
             // Gdiplus::Font font(
@@ -907,39 +914,46 @@ void toolbar::RenderLayered()
             // Left-side placeholder text
             //
 
-            FontFamily ff(L"Segoe UI");
+            //FontFamily ff(L"Segoe UI");
 
-            Gdiplus::Font textFont(
-                &ff,
-                12.f * get_window_scale(),
-                FontStyleRegular,
-                UnitPixel);
+            //Gdiplus::Font textFont(
+            //    &ff,
+            //    12.f * get_window_scale(),
+            //    FontStyleRegular,
+            //    UnitPixel);
 
-            SolidBrush textBrush(
-                Color(230,255,255,255));
+            auto pfontText = nano()->graphics()->create_point_font(e_font_sans_ui, 12. * get_window_scale(), false);
 
-            StringFormat leftAlign;
-            leftAlign.SetAlignment(
-                StringAlignmentNear);
 
-            leftAlign.SetLineAlignment(
-                StringAlignmentCenter);
+            auto pbrushText = nano()->graphics()->create_solid_brush(::argb(230, 255, 255, 255));
+            //SolidBrush textBrush(
+              //  Color(230,255,255,255));
 
-            RectF titleRect(
-                14.f,
-                0.f,
-                300.f * get_window_scale(),
-                (REAL)m_size.height());
+            //StringFormat leftAlign;
+            //leftAlign.SetAlignment(
+            //    StringAlignmentNear);
+
+            //leftAlign.SetLineAlignment(
+            //    StringAlignmentCenter);
+
+            auto rectangleTitle = ::f64_rectangle_dimension(
+                14.,
+                0.,
+                300. * get_window_scale(),
+                (::f64) m_size.height());
 
             ::wstring wstrTitle(m_strTitle);
 
-            pgraphicscontext->DrawString(
+            /*pgraphicscontext->DrawString(
                 wstrTitle,
                 -1,
                 &textFont,
                 titleRect,
                 &leftAlign,
-                &textBrush);
+                &textBrush);*/
+
+            pgraphicscontext->draw_text123(m_strTitle, rectangleTitle, e_align_left_center, e_draw_text_none, nullptr,
+                                           pbrushText, pfontText);
 
             //
             // Window buttons (right side)
@@ -960,13 +974,13 @@ void toolbar::RenderLayered()
             ::f32 topY =
                 ((::f32)hForDraw - btnSize) * 0.5f;
 
-            RectF rcMin(
+            auto rectangleMinimized = ::f64_rectangle_dimension(
                 minimizeX,
                 topY,
                 btnSize,
                 btnSize);
 
-            m_rcMin = rcMin;
+            m_rectangleMinimize = rcMin;
 
             RectF rcRestore(
                 restoreX,
@@ -974,7 +988,7 @@ void toolbar::RenderLayered()
                 btnSize,
                 btnSize);
 
-            m_rcRestore = rcRestore;
+            m_rectangleRestore = rcRestore;
 
             RectF rcClose(
                 closeX,
@@ -982,7 +996,7 @@ void toolbar::RenderLayered()
                 btnSize,
                 btnSize);
 
-            m_rcClose = rcClose;
+            m_rectangleClose = rcClose;
 
             //
             // Hover-style fills
