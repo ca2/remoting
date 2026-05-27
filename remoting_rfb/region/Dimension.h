@@ -31,7 +31,7 @@
 //{
 //public:
 //  ::i32_size(void) : width(0), height(0) {}
-//  ::i32_size(const int w, const int h) { set(w, h); }
+//  ::i32_size(const ::i32 w, const ::i32 h) { set(w, h); }
 //  ::i32_size(const ::i32_rectangle &  r) { width = r.width(); height = r.height(); }
 //  ::i32_size(const ::i32_size &other): width(other.cx), height(other.cy) {}
 //
@@ -58,12 +58,12 @@
 //  // Exchanges width and height
 //  void transpose()
 //  {
-//    int temp = width;
+//    ::i32 temp = width;
 //    width = height;
 //    height = temp;
 //  }
 //
-//  inline void set(const int w, const int h) { width = w; height = h; }
+//  inline void set(const ::i32 w, const ::i32 h) { width = w; height = h; }
 //  inline void set(const ::i32_rectangle &  rectangle) { width = rectangle.width();
 //                                         height = rectangle.height(); }
 //
@@ -75,7 +75,7 @@
 //  {
 //    return (width == other.cx)&& (height == other.cy);
 //  }
-//  inline int area() const { return is_empty() ? 0 : width * height; }
+//  inline ::i32 area() const { return is_empty() ? 0 : width * height; }
 //
 //  inline void clear() { width = height = 0; }
 //
@@ -85,8 +85,8 @@
 //                     height < other.cy ? height : other.cy);
 //  }
 //
-//  int width;
-//  int height;
+//  ::i32 width;
+//  ::i32 height;
 //};
 //
 ////// __DIMENSION_H__

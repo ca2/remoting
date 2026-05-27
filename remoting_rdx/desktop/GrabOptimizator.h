@@ -46,12 +46,12 @@ namespace remoting_rfb
       static const size_t MAX_ELEMENTS_SIZE = 10;
 
 
-      int m_wholeS;
-      ::list_base<double> m_wholeTElements;
-      double m_wholeTSum;
+      ::i32 m_wholeS;
+      ::list_base<::f64> m_wholeTElements;
+      ::f64 m_wholeTSum;
 
-      ::list_base<double> m_gElements;
-      double m_gSum;
+      ::list_base<::f64> m_gElements;
+      ::f64 m_gSum;
 
       ::subsystem::DemandTimer m_happeningTimer;
 
@@ -83,7 +83,7 @@ namespace remoting_rfb
       void refreshStatistic(ScreenDriver *grabber);
 
       // Returns absolute sum area of rectangle ::array_base.
-      int getArea(const ::int_rectangle_array_base & rectanglea);
+      ::i32 getArea(const ::int_rectangle_array_base & rectanglea);
 
       // If the grab region is alike to whole desktop the function return true.
       bool isAlikeToWhole(const ::int_rectangle_array_base & rectanglea);
@@ -100,11 +100,11 @@ namespace remoting_rfb
       ::i64 grabOneRect(const ::i32_rectangle & rectangle, ScreenDriver *grabber);
       ::i64 grabFragments(const ::int_rectangle_array_base & rectanglea, ScreenDriver *grabber);
 
-      void addWholeTElement(double wholeT);
+      void addWholeTElement(::f64 wholeT);
       void removeObsoleteWholeTElements();
       void removeFirstWholeTElement();
 
-      void addFragmentStats(double g);
+      void addFragmentStats(::f64 g);
       void removeObsoleteFragmentStats();
       void removeFirstElementsFromFragmentStats();
 

@@ -43,7 +43,7 @@ namespace remoting_rfb_node_desktop
 
       bool m_bService;
 
-      //int m_iex
+      //::i32 m_iex
 
       /**
        * Creates Remoting Node application instance.
@@ -80,7 +80,7 @@ namespace remoting_rfb_node_desktop
        *
        * @return application exit code.
        */
-      // virtual int onThreadMain();
+      // virtual ::i32 onThreadMain();
       //virtual void on_server_task_start();
 
       //virtual void on_server_task_execute();
@@ -97,10 +97,10 @@ namespace remoting_rfb_node_desktop
       // private:
       //  This is a callback function that calls when the log can be initialized.
       virtual void onLogInit(const ::scoped_string &scopedstrLogDir, const ::scoped_string &scopedstrFileName,
-                             unsigned char logLevel);
+                             ::u8 logLevel);
 
       // This is a callback function that calls when log properties have changed.
-      virtual void onChangeLogProps(const ::scoped_string &scopedstrNewLogDir, unsigned char newLevel);
+      virtual void onChangeLogProps(const ::scoped_string &scopedstrNewLogDir, ::u8 newLevel);
 
       // FileLogWriter m_fileLogWriter;
       //::subsystem::LogWriter *m_fileLogWriter;

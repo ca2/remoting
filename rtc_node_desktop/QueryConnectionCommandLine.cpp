@@ -59,7 +59,7 @@ namespace remoting_node_desktop
       ::string timeoutStr;
 
       if (optionSpecified(TIMEOUT, &timeoutStr) &&
-          !MainSubsystem().StringParser().parseInt(timeoutStr, (int *)&m_timeout))
+          !MainSubsystem().StringParser().parseInt(timeoutStr, (::i32 *)&m_timeout))
       {
          throw ::subsystem::Exception("Invalid timeout");
       }

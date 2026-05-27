@@ -85,7 +85,7 @@ namespace remoting_rfb
       }
    }
 
-   void UserInputServer::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
+   void UserInputServer::onRequest(::u8 reqCode, BlockingGate *pblockinggate)
    {
       switch (reqCode)
       {
@@ -140,14 +140,14 @@ namespace remoting_rfb
 
    void UserInputServer::serverInit(BlockingGate *pblockinggate)
    {
-      unsigned char keyFlags = pblockinggate->readUInt8();
+      ::u8 keyFlags = pblockinggate->readUInt8();
       m_puserinput->initKeyFlag(keyFlags);
    }
 
    void UserInputServer::applyNewPointerPos(BlockingGate *pblockinggate)
    {
       ::i32_point newPointerPos;
-      unsigned char keyFlags;
+      ::u8 keyFlags;
       readNewPointerPos(&newPointerPos, &keyFlags, pblockinggate);
       m_puserinput->setMouseEvent(newPointerPos, keyFlags);
    }
@@ -210,7 +210,7 @@ namespace remoting_rfb
 
    void UserInputServer::ansDisplayNumberCoords(BlockingGate *pblockinggate)
    {
-      unsigned char dispNumber = pblockinggate->readUInt8();
+      ::u8 dispNumber = pblockinggate->readUInt8();
       ::i32_rectangle rectangle;
       m_puserinput->getDisplayNumberCoords(rectangle, dispNumber);
       sendRect(rectangle, pblockinggate);
@@ -224,7 +224,7 @@ namespace remoting_rfb
       {
          number = 255;
       }
-      pblockinggate->writeUInt8((unsigned char)number);
+      pblockinggate->writeUInt8((::u8)number);
       for (size_t i = 0; i < number; i++)
       {
          ::i32_rectangle rectangle = rectanglea[i];

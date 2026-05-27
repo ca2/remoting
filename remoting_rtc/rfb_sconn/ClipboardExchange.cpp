@@ -85,7 +85,7 @@ void ClipboardExchange::destroy()
             break;
          default:
             ::string errMess;
-            errMess.format("Unknown {} protocol code received", (int)reqCode);
+            errMess.format("Unknown {} protocol code received", (::i32)reqCode);
             throw ::subsystem::Exception(errMess);
             break;
       }
@@ -94,7 +94,7 @@ void ClipboardExchange::destroy()
    {
       ::u32 length = prfbinputgate->readUInt32();
 
-      ::array_base<char> charBuff(length + 1);
+      ::array_base<::i8> charBuff(length + 1);
 
       prfbinputgate->readFully(charBuff.data(), length);
       charBuff[length] = '\0';
@@ -140,7 +140,7 @@ void ClipboardExchange::destroy()
          if (m_hasNewClip && !isThreadTerminating() && !m_viewOnly) {
 
             try {
-               const char * data;
+               const_char_pointer data;
                size_t length;
                critical_section_lock al(m_output);
                if (m_isUtf8ClipboardEnabled) {

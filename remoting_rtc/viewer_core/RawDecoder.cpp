@@ -51,11 +51,11 @@ namespace remoting_client
          return;
       }
 
-      int width = rectangle.width();
-      int height = rectangle.height();
+      ::i32 width = rectangle.width();
+      ::i32 height = rectangle.height();
 
       // Division with round to up.
-      int deltaHeight = (AREA_OF_ONE_PART + width - 1) / width;
+      ::i32 deltaHeight = (AREA_OF_ONE_PART + width - 1) / width;
 
       ::i32_rectangle deltaRect(0, 0, width, deltaHeight);
       deltaRect.set_top_left(rectangle.left, rectangle.top);
@@ -88,7 +88,7 @@ namespace remoting_client
 
       if (::i32_rectangle(pframebuffer->getDimension()).intersection(rectangle) != rectangle)
          throw ::subsystem::Exception("Error in protocol: incorrect size of rectangle");
-      for (int y = rectangle.top; y < rectangle.bottom; y++)
+      for (::i32 y = rectangle.top; y < rectangle.bottom; y++)
          pinput->readFully(pframebuffer->getBufferPtr(rectangle.left, y), bytesPerLine);
    }
 } // namespace remoting_client

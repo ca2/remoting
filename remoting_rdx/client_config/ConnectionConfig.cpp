@@ -52,22 +52,22 @@ namespace remoting_rfb
    ConnectionConfig& ConnectionConfig::operator=(const ConnectionConfig& other)
    {
       bool allowedCopyRect;
-      unsigned char preferredEncoding;
+      ::u8 preferredEncoding;
       bool use8BitColor;
-      int customCompressionLevel;
-      int jpegCompressionLevel;
+      ::i32 customCompressionLevel;
+      ::i32 jpegCompressionLevel;
       bool viewOnly;
       bool isClipboardEnabled;
       bool useFullscreen;
       bool deiconifyOnRemoteBell;
-      int scaleNumerator;
-      int scaleDenominator;
+      ::i32 scaleNumerator;
+      ::i32 scaleDenominator;
       bool swapMouse;
       bool requestSharedSession;
       bool fitWindow;
       bool requestShapeUpdates;
       bool ignoreShapeUpdates;
-      int localCursor;
+      ::i32 localCursor;
 
       {
          critical_section_lock lockOther(&other.m_cs);
@@ -135,13 +135,13 @@ namespace remoting_rfb
       return m_allowedCopyRect;
    }
 
-   void ConnectionConfig::setPreferredEncoding(int encoding)
+   void ConnectionConfig::setPreferredEncoding(::i32 encoding)
    {
       critical_section_lock l(&m_cs);
       m_preferredEncoding = encoding;
    }
 
-   int ConnectionConfig::getPreferredEncoding()
+   ::i32 ConnectionConfig::getPreferredEncoding()
    {
       critical_section_lock l(&m_cs);
       return m_preferredEncoding;
@@ -159,7 +159,7 @@ namespace remoting_rfb
       return m_use8BitColor;
    }
 
-   void ConnectionConfig::setCustomCompressionLevel(int level)
+   void ConnectionConfig::setCustomCompressionLevel(::i32 level)
    {
       // level in interval [0..9]
       // if compression is disable, then level is -1.
@@ -174,7 +174,7 @@ namespace remoting_rfb
       }
    }
 
-   void ConnectionConfig::setJpegCompressionLevel(int level)
+   void ConnectionConfig::setJpegCompressionLevel(::i32 level)
    {
       // level in interval [0..9]
       // if jpeg compression is disable, then level is -1.
@@ -189,13 +189,13 @@ namespace remoting_rfb
       }
    }
 
-   int ConnectionConfig::getCustomCompressionLevel()
+   ::i32 ConnectionConfig::getCustomCompressionLevel()
    {
       critical_section_lock l(&m_cs);
       return m_customCompressionLevel;
    }
 
-   int ConnectionConfig::getJpegCompressionLevel()
+   ::i32 ConnectionConfig::getJpegCompressionLevel()
    {
       critical_section_lock l(&m_cs);
       return m_jpegCompressionLevel;
@@ -269,19 +269,19 @@ namespace remoting_rfb
       return m_deiconifyOnRemoteBell;
    }
 
-   int ConnectionConfig::getScaleNumerator()
+   ::i32 ConnectionConfig::getScaleNumerator()
    {
       critical_section_lock l(&m_cs);
       return m_scaleNumerator;
    }
 
-   int ConnectionConfig::getScaleDenominator()
+   ::i32 ConnectionConfig::getScaleDenominator()
    {
       critical_section_lock l(&m_cs);
       return m_scaleDenominator;
    }
 
-   void ConnectionConfig::setScale(int n, int d)
+   void ConnectionConfig::setScale(::i32 n, ::i32 d)
    {
       if ((n < 1) || (d < 1)) {
          n = d = 1;
@@ -292,7 +292,7 @@ namespace remoting_rfb
          d = 100;
       }
 
-      int g = gcd(n, d);
+      ::i32 g = gcd(n, d);
 
       n /= g;
       d /= g;
@@ -364,7 +364,7 @@ namespace remoting_rfb
       return m_ignoreShapeUpdates;
    }
 
-   void ConnectionConfig::setLocalCursorShape(int cursorShape)
+   void ConnectionConfig::setLocalCursorShape(::i32 cursorShape)
    {
       switch (cursorShape) {
          case NO_CURSOR:
@@ -383,7 +383,7 @@ namespace remoting_rfb
       }
    }
 
-   int ConnectionConfig::getLocalCursorShape()
+   ::i32 ConnectionConfig::getLocalCursorShape()
    {
       critical_section_lock l(&m_cs);
       return m_localCursor;
@@ -448,7 +448,7 @@ namespace remoting_rfb
       TEST_FAIL(sm->getBoolean("cursorshape",      &m_requestShapeUpdates), loadAllOk);
       TEST_FAIL(sm->getBoolean("noremotecursor",   &m_ignoreShapeUpdates), loadAllOk);
 
-      TEST_FAIL(sm->getByte("preferred_encoding",  (char *)&m_preferredEncoding), loadAllOk);
+      TEST_FAIL(sm->getByte("preferred_encoding",  (char_pointer )&m_preferredEncoding), loadAllOk);
 
       TEST_FAIL(sm->getInt("compresslevel",        &m_customCompressionLevel), loadAllOk);
       TEST_FAIL(sm->getInt("quality",              &m_jpegCompressionLevel), loadAllOk);
@@ -462,7 +462,7 @@ namespace remoting_rfb
    }
 
    // Greatest common denominator, by Euclid
-   int ConnectionConfig::gcd(int a, int b) const
+   ::i32 ConnectionConfig::gcd(::i32 a, ::i32 b) const
    {
       if (a < b) {
          return gcd(b, a);

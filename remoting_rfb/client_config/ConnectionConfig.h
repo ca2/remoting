@@ -42,10 +42,10 @@ namespace remoting_rfb
     virtual public ::particle
    {
    public:
-      static const int NO_CURSOR = 0;
-      static const int DOT_CURSOR = 1;
-      static const int NORMAL_CURSOR = 2;
-      static const int SMALL_CURSOR = 3;
+      static const ::i32 NO_CURSOR = 0;
+      static const ::i32 DOT_CURSOR = 1;
+      static const ::i32 NORMAL_CURSOR = 2;
+      static const ::i32 SMALL_CURSOR = 3;
 
    public:
       ConnectionConfig();
@@ -59,10 +59,10 @@ namespace remoting_rfb
       bool isCopyRectAllowed();
 
       // Sets prefered encoding
-      void setPreferredEncoding(int encoding);
+      void setPreferredEncoding(::i32 encoding);
 
       // Returns prefered encoding
-      int getPreferredEncoding();
+      ::i32 getPreferredEncoding();
 
       // Sets 8 bit flag
       void use8BitColor(bool use);
@@ -77,17 +77,17 @@ namespace remoting_rfb
       // Sets custom compression level.
       // Remark: if level is equals to -1 than custom compression
       // will be disabled.
-      void setCustomCompressionLevel(int level);
+      void setCustomCompressionLevel(::i32 level);
 
       // Sets jpeg compression level.
       // Remark: if level is equals to -1 than custom compression
       // will be disabled.
-      void setJpegCompressionLevel(int level);
+      void setJpegCompressionLevel(::i32 level);
 
       // Returns custom compression level or -1 if custom compression is disabled.
-      int getCustomCompressionLevel();
+      ::i32 getCustomCompressionLevel();
       // Returns jpeg compression level or -1 if jpeg compression is disabled.
-      int getJpegCompressionLevel();
+      ::i32 getJpegCompressionLevel();
 
       bool isCustomCompressionEnabled();
       bool isJpegCompressionEnabled();
@@ -118,12 +118,12 @@ namespace remoting_rfb
       bool isDeiconifyOnRemoteBellEnabled();
 
       // Returns scale numerator
-      int getScaleNumerator();
+      ::i32 getScaleNumerator();
       // Returns scale denominator
-      int getScaleDenominator();
+      ::i32 getScaleDenominator();
 
       // Sets scale in percent relative to original
-      void setScale(int n, int d);
+      void setScale(::i32 n, ::i32 d);
 
       //
       // Mouse members access methods
@@ -159,9 +159,9 @@ namespace remoting_rfb
       bool isIgnoringShapeUpdates();
 
       // Sets local cursor shape
-      void setLocalCursorShape(int cursorShape);
+      void setLocalCursorShape(::i32 cursorShape);
       // Gets local cursor shape
-      int getLocalCursorShape();
+      ::i32 getLocalCursorShape();
 
       //
       // Serialization / deserialization methods
@@ -177,7 +177,7 @@ namespace remoting_rfb
       bool loadFromStorage(SettingsManager *sm);
    private:
       // FIXME: Move this method away from here.
-      int gcd(int a, int b) const;
+      ::i32 gcd(::i32 a, ::i32 b) const;
 
    protected:
 
@@ -188,13 +188,13 @@ namespace remoting_rfb
       // Allowed "copy rectangle" encoding
       bool m_allowedCopyRect;
       // Preferred encoding
-      unsigned char m_preferredEncoding;
+      ::u8 m_preferredEncoding;
       // Use 8bit color (for low-speed connections)
       bool m_use8BitColor;
       // Custom compression level
-      int m_customCompressionLevel;
+      ::i32 m_customCompressionLevel;
       // Jpeg compression level
-      int m_jpegCompressionLevel;
+      ::i32 m_jpegCompressionLevel;
 
       //
       // "Restrictions" group members
@@ -216,9 +216,9 @@ namespace remoting_rfb
       // If set then use autoscale to scale remote display image
       bool m_useAutoScale;
       // Scale numerator
-      int m_scaleNumerator;
+      ::i32 m_scaleNumerator;
       // Scale denominator
-      int m_scaleDenominator;
+      ::i32 m_scaleDenominator;
 
       //
       // "Mouse" members group
@@ -238,7 +238,7 @@ namespace remoting_rfb
       bool m_requestShapeUpdates;
       bool m_ignoreShapeUpdates;
 
-      int m_localCursor;
+      ::i32 m_localCursor;
 
       // Critical section
       mutable lockable_critical_section m_cs;

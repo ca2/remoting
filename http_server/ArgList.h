@@ -33,7 +33,7 @@
 class CLASS_DECL_REMOTING ArgList
 {
 public:
-  ArgList(const char *argString);
+  ArgList(const_char_pointer argString);
   virtual ~ArgList();
 
   // Return arguments count.
@@ -41,19 +41,19 @@ public:
 
   // Returns key name with specified index or NULL if index out of range.
   // It can be used for enumerating keys.
-  const char *getKey(size_t index);
+  const_char_pointer getKey(size_t index);
 
   // Returns value of argument with specified key or NULL if no such
   // argument.
-  const char *getValue(const char *key);
+  const_char_pointer getValue(const_char_pointer key);
 
 protected:
-  void splitPair(const char *par, char delimitter, char *key, char *value);
+  void splitPair(const_char_pointer par, ::i8 delimitter, char_pointer key, char_pointer value);
 
-  void htmlDecode(char *value) const;
+  void htmlDecode(char_pointer value) const;
 
 protected:
-  ::map<string, char *> m_args;
+  ::map<string, char_pointer > m_args;
 };
 
 

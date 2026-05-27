@@ -48,7 +48,7 @@ namespace remoting_rfb_client
 
       virtual void initialize_tcp_connection(::subsystem::LogWriter * plogwriter);
 
-      void bind(const ::scoped_string & scopedstrHost, unsigned short port);
+      void bind(const ::scoped_string & scopedstrHost, ::u16 port);
       void bind(::subsystem::SocketIPv4Interface *socket);
       void bind(::remoting_rfb::RfbInputGate *input, ::remoting_rfb::RfbOutputGate *output);
 
@@ -59,7 +59,7 @@ namespace remoting_rfb_client
       ::remoting_rfb::RfbOutputGate *getOutput() const;
    //;;private:
       ::string m_host;
-      unsigned short m_port;
+      ::u16 m_port;
       ::pointer < ::subsystem::SocketIPv4Interface > m_psocket;
       bool m_socketOwner;
       ::pointer < ::subsystem::SocketStream > m_psocketstream;

@@ -138,10 +138,10 @@ void DesktopServerWatcher::destroy()
          try
          {
             ::string shMemName("Global\\");
-            srand((unsigned)time(0));
-            for (int i = 0; i < 20; i++)
+            srand((::u32)time(0));
+            for (::i32 i = 0; i < 20; i++)
             {
-               shMemName+=(char)('a' + rand() % ('z' - 'a'));
+               shMemName+=(::i8)('a' + rand() % ('z' - 'a'));
             }
 
             auto psharedmemory = createø<::shared_memory>();
@@ -224,9 +224,9 @@ void DesktopServerWatcher::destroy()
 
    void DesktopServerWatcher::start()
    {
-      int pipeNotConnectedErrorCount = 0;
+      ::i32 pipeNotConnectedErrorCount = 0;
 
-      for (int i = 0; i < 5; i++)
+      for (::i32 i = 0; i < 5; i++)
       {
          try
          {

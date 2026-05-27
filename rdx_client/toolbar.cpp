@@ -1,29 +1,34 @@
 //
 // Created by camilo on 2026-05-24 08:49 <ThomasBorregaardSørensen!! Mummi!! Bilbo!!
 //
+#include "framework.h"
 #include "toolbar.h"
+#include "acme/nano/graphics/brush.h"
+#include "acme/nano/graphics/context.h"
+#include "acme/nano/graphics/path.h"
+#include "acme/nano/graphics/pen.h"
 #include "acme/operating_system/windows/window.h"
 #include "acme/operating_system/windows/windows.h"
 #include "com_window.h"
-#include "framework.h"
 #include "main_window.h"
 #pragma comment(lib, "msimg32.lib")
 
 
-namespace remoting_rdx_client {
+namespace remoting_rdx_client 
+{
 
 
-   bool Hit(const RectF& rc, float x, float y)
-   {
-      return x >= rc.X &&
-             y >= rc.Y &&
-             x <= rc.X + rc.Width &&
-             y <= rc.Y + rc.Height;
-   }
-   bool Hit(const RectF& rc, const ::i32_point & point)
-   {
-      return Hit(rc, (float)point.x, (float) point.y);
-   }
+   //bool Hit(const Gdiplus::RectF& rc, ::f32 x, ::f32 y)
+   //{
+   //   return x >= rc.X &&
+   //          y >= rc.Y &&
+   //          x <= rc.X + rc.Width &&
+   //          y <= rc.Y + rc.Height;
+   //}
+   //bool Hit(const Gdiplus::RectF &rc, const ::i32_point &point)
+   //{
+   //   return Hit(rc, (::f32)point.x, (::f32) point.y);
+   //}
 constexpr wchar_t toolbar::CLASS_NAME[];
    HHOOK toolbar::s_mouseHook = nullptr;
    toolbar* toolbar::s_instance = nullptr;
@@ -43,14 +48,14 @@ toolbar::toolbar()
 
    m_bControlDeactivated = false;
 
-   InitGdiplus();
+   //InitGdiplus();
 
 }
 
 toolbar::~toolbar()
 {
     Destroy();
-    ShutdownGdiplus();
+    //ShutdownGdiplus();
 }
 
 
@@ -79,24 +84,24 @@ toolbar::~toolbar()
 
    s_instance = nullptr;
 }
-bool toolbar::InitGdiplus()
-{
-    GdiplusStartupInput input{};
-
-    return GdiplusStartup(
-        &m_gdiplusToken,
-        &input,
-        nullptr) == Ok;
-}
-
-void toolbar::ShutdownGdiplus()
-{
-    if (m_gdiplusToken)
-    {
-        GdiplusShutdown(m_gdiplusToken);
-        m_gdiplusToken = 0;
-    }
-}
+//bool toolbar::InitGdiplus()
+//{
+//    GdiplusStartupInput input{};
+//
+//    return GdiplusStartup(
+//        &m_gdiplusToken,
+//        &input,
+//        nullptr) == Ok;
+//}
+//
+//void toolbar::ShutdownGdiplus()
+//{
+//    if (m_gdiplusToken)
+//    {
+//        GdiplusShutdown(m_gdiplusToken);
+//        m_gdiplusToken = 0;
+//    }
+//}
 
    ::windows::window_class toolbar::_get_window_class()
 {
@@ -142,10 +147,10 @@ void toolbar::ShutdownGdiplus()
 //
 // bool toolbar::Create(
 //     ::windows::com_window * pcomwindowParent,
-//     int x,
-//     int y,
-//     int width,
-//     int height)
+//     ::i32 x,
+//     ::i32 y,
+//     ::i32 width,
+//     ::i32 height)
 // {
 //     if (!RegisterClass())
 //         return false;
@@ -186,7 +191,7 @@ void toolbar::ShutdownGdiplus()
 //   void toolbar::on_c
 
    LRESULT CALLBACK toolbar::MouseProc(
-    int nCode,
+    ::i32 nCode,
     WPARAM wParam,
     LPARAM lParam)
 {
@@ -235,11 +240,11 @@ void toolbar::Destroy()
     // }
 }
 
-//    float toolbar::get_window_scale()
+//    ::f32 toolbar::get_window_scale()
 // {
 //    auto hwnd = m_hwnd;
 //    UINT dpi = GetDpiForWindow(hwnd);
-//    return (float)dpi / 96.0f;
+//    return (::f32)dpi / 96.0f;
 // }
 
 
@@ -253,15 +258,15 @@ void toolbar::Destroy()
    toolbar::enum_hit toolbar::hitTest(const ::i32_point &point)
    {
       enum_hit ehit = e_hit_none;
-      if (Hit(m_rcMin, point))
+      if (m_rcMin.contains(point))
       {
          ehit = e_hit_min;
       }
-      else if (Hit(m_rcRestore, point))
+      else if (m_rcRestore.contains(point))
       {
          ehit = e_hit_restore;
       }
-      else if (Hit(m_rcClose, point))
+      else if (m_rcClose.contains( point))
       {
          ehit = e_hit_close;
       }
@@ -364,7 +369,7 @@ void toolbar::Destroy()
       if (m_ehitPress == e_hit_client)
       {
 
-         int dx = point.x - m_pointDragStartCursor.x;
+         ::i32 dx = point.x - m_pointDragStartCursor.x;
 
          auto x = m_pointDragWindowOrigin.x + dx;
 
@@ -416,7 +421,7 @@ void toolbar::Destroy()
 }
 
 
-   void toolbar::PostToHost(int cmd)
+   void toolbar::PostToHost(::i32 cmd)
 {
    if (!m_pmainwindow)
       return;
@@ -437,7 +442,7 @@ void toolbar::Destroy()
 //    }
 // }
 
-   void toolbar::Move(int x, int y)
+   void toolbar::Move(::i32 x, ::i32 y)
 {
    m_point.x= x;
    m_point.y = y;
@@ -450,10 +455,10 @@ void toolbar::Destroy()
 }
 
 void toolbar::Place(
-    int x,
-    int y,
-    int width,
-    int height)
+    ::i32 x,
+    ::i32 y,
+    ::i32 width,
+    ::i32 height)
 {
    m_point = {x, y};
    m_size = {width, height};
@@ -541,8 +546,8 @@ bool toolbar::_on_window_procedure(lresult &lresult, u32 message, wparam wparam,
        case WM_MOUSEMOVE:
        {
 
-             //float x = lparam.x();
-             //float y = lparam.y();
+             //::f32 x = lparam.x();
+             //::f32 y = lparam.y();
 
              //bool newHoverMin = Hit(m_rcMin, x, y);
              //bool newHoverRestore = Hit(m_rcRestore, x, y);
@@ -573,18 +578,19 @@ bool toolbar::_on_window_procedure(lresult &lresult, u32 message, wparam wparam,
           
           //ReleaseCapture();
 
-          float x = lparam.x();
-          float y = lparam.y();
+          auto point = lparam.point();
 
-          if (Hit(m_rcMin, x, y))
+          auto ehit = hitTest(point);
+
+          if (ehit == e_hit_min)
           {
              m_pmainwindow->post_message((::user::enum_message) WM_TOOLBAR_CMD, 1); // minimize
           }
-          else if (Hit(m_rcRestore, x, y))
+          else if (ehit == e_hit_restore)
           {
              m_pmainwindow->post_message((::user::enum_message) WM_TOOLBAR_CMD, 2); // restore
           }
-          else if (Hit(m_rcClose, x, y))
+          else if (ehit == e_hit_close)
           {
              m_pmainwindow->post_message((::user::enum_message) WM_TOOLBAR_CMD, 3);  // close
           }
@@ -599,8 +605,8 @@ bool toolbar::_on_window_procedure(lresult &lresult, u32 message, wparam wparam,
 
 void toolbar::RenderLayered()
 {
-    HDC screenDC = GetDC(nullptr);
-    HDC memDC = CreateCompatibleDC(screenDC);
+    HDC hdcScreen = GetDC(nullptr);
+    HDC hdcMemory = CreateCompatibleDC(hdcScreen);
 
     BITMAPINFO bmi{};
     bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -613,7 +619,7 @@ void toolbar::RenderLayered()
     void* bits = nullptr;
 
     HBITMAP bitmap = CreateDIBSection(
-        screenDC,
+        hdcScreen,
         &bmi,
         DIB_RGB_COLORS,
         &bits,
@@ -621,14 +627,15 @@ void toolbar::RenderLayered()
         0);
 
     HBITMAP oldBitmap =
-        (HBITMAP)SelectObject(memDC, bitmap);
+        (HBITMAP)SelectObject(hdcMemory, bitmap);
 
    {
 
-       Graphics g(memDC);
+       auto pgraphicscontext = createø<::nano::graphics::context>();
 
-       
-       _on_draw(&g);
+       pgraphicscontext->attach(hdcMemory, m_size, 0);
+
+       _on_draw(pgraphicscontext);
 
    }
 
@@ -652,399 +659,431 @@ void toolbar::RenderLayered()
 
     UpdateLayeredWindow(
         hwnd,
-        screenDC,
+        hdcScreen,
         &ptDst,
         &sizeWnd,
-        memDC,
+        hdcMemory,
         &ptSrc,
         0,
         &blend,
         ULW_ALPHA);
 
-    SelectObject(memDC, oldBitmap);
+    SelectObject(hdcMemory, oldBitmap);
 
     DeleteObject(bitmap);
-    DeleteDC(memDC);
-    ReleaseDC(nullptr, screenDC);
+    DeleteDC(hdcMemory);
+    ReleaseDC(nullptr, hdcScreen);
 }
    
    
-   void toolbar::_on_draw(::Gdiplus::Graphics * pgraphics)
-{
-
-
-   float wForDraw = ((REAL)m_size.width() - 2.0f);
-   float hForDraw = ((REAL)m_size.height() - 2.0f);
-
-
+   void toolbar::_on_draw(::nano::graphics::context * pgraphicscontext)
    {
 
-         pgraphics->SetSmoothingMode(
-             SmoothingModeHighQuality);
+      auto fW = (::f64) m_size.width();
+      auto fH = (::f64) m_size.width();
 
-         pgraphics->SetTextRenderingHint(
-             TextRenderingHintClearTypeGridFit);
+      //auto wForDraw = fW - 2.0f;
+      //auto hForDraw = fH - 2.0f;
 
-         pgraphics->Clear(Color(0,0,0,0));
+      auto wForDraw = fW;
+      auto hForDraw = fH;
 
+      {
+
+         //pgraphicscontext->SetSmoothingMode(
+           //    SmoothingModeHighQuality);
+
+         pgraphicscontext->set_smoothing_mode(::nano::graphics::e_smoothing_mode_high_quality);
+
+         //pgraphicscontext->SetTextRenderingHint(
+           //    TextRenderingHintClearTypeGridFit);
+
+         pgraphicscontext->set_text_rendering_hint(::nano::graphics::e_text_rendering_hint_clear_type_grid_fit);
+
+         //pgraphicscontext->Clear(Color(0,0,0,0));
+         pgraphicscontext->clear(::color::transparent);
 
          // Toolbar background
-         RectF bgRect(
-             0.f,
-             0.f,
-             (REAL)wForDraw,
-             (REAL)hForDraw);
-
-         GraphicsPath path;
-
-         const float radius = (hForDraw / 2.f);
-
-         path.AddArc(0.f, 0.f, radius, radius, 180.f, 90.f);
-         path.AddArc(
-             (float) (wForDraw - radius),
-             0.f,
-             radius,
-             radius,
-             270.f,
-             90.f);
-
-         path.AddArc(
-             (float) (wForDraw - radius),
-             (float) (hForDraw - radius),
-             radius,
-             radius,
-             0.f,
-             90.f);
-
-         path.AddArc(
-             0.f,
-             (float) (hForDraw - radius),
-             radius,
-             radius,
-             90.f,
-             90.f);
-
-         path.CloseFigure();
-
-         SolidBrush bgBrush(
-             Color(120, 30, 130, 230));
-
-         pgraphics->FillPath(&bgBrush, &path);
-
-         Pen border(
-             Color(180, 255, 255, 255),
-             1.5f);
-
-         pgraphics->DrawPath(&border, &path);
-
-         // Buttons
-         SolidBrush buttonBrush(
-             Color(220, 0, 120, 215));
-
-         SolidBrush textBrush(
-             Color(255,255,255,255));
-
-         // FontFamily ff(L"Segoe UI");
-         // Gdiplus::Font font(
-         //     &ff,
-         //     12.f,
-         //     FontStyleRegular,
-         //     UnitPixel);
-         //
-         // StringFormat sf;
-         // sf.SetAlignment(
-         //     StringAlignmentCenter);
-         //
-         // sf.SetLineAlignment(
-         //     StringAlignmentCenter);
-         //
-         // RectF btn1(12.f, 8.f, 80.f, 32.f);
-         // RectF btn2(100.f, 8.f, 80.f, 32.f);
-         // RectF btn3(188.f, 8.f, 80.f, 32.f);
-         //
-         // pgraphics->FillRectangle(
-         //     &buttonBrush,
-         //     btn1);
-         //
-         // pgraphics->FillRectangle(
-         //     &buttonBrush,
-         //     btn2);
-         //
-         // pgraphics->FillRectangle(
-         //     &buttonBrush,
-         //     btn3);
-         //
-         // pgraphics->DrawString(
-         //     L"CTRL",
-         //     -1,
-         //     &font,
-         //     btn1,
-         //     &sf,
-         //     &textBrush);
-         //
-         // pgraphics->DrawString(
-         //     L"ALT",
-         //     -1,
-         //     &font,
-         //     btn2,
-         //     &sf,
-         //     &textBrush);
-         //
-         // pgraphics->DrawString(
-         //     L"DEL",
-         //     -1,
-         //     &font,
-         //     btn3,
-         //     &sf,
-         //     &textBrush);
-       }
-
-       {
-
-
-         // Replace the old button drawing section inside RenderLayered()
-         // with this version.
-         //
-         // Layout:
-         //
-         // -----------------------------------------------------
-         // |  Host Placeholder                     _ []  X     |
-         // -----------------------------------------------------
-         //
-         // The right-side buttons are placeholders only.
-         // You can later map them to host callbacks/messages.
-         //
-
-         // // Toolbar background
-         // RectF bgRect(
-         //     0.f,
-         //     0.f,
-         //     (REAL)m_width,
-         //     (REAL)m_height);
-         //
-         // GraphicsPath path;
-         //
-         // const float radius = 14.f;
-         //
-         // path.AddArc(0, 0, radius, radius, 180, 90);
-         // path.AddArc(
-         //     m_width - radius,
-         //     0,
-         //     radius,
-         //     radius,
-         //     270,
-         //     90);
-         //
-         // path.AddArc(
-         //     m_width - radius,
-         //     m_height - radius,
-         //     radius,
-         //     radius,
-         //     0,
-         //     90);
-         //
-         // path.AddArc(
-         //     0,
-         //     m_height - radius,
-         //     radius,
-         //     radius,
-         //     90,
-         //     90);
-         //
-         // path.CloseFigure();
-         //
-         // SolidBrush bgBrush(
-         //     Color(210, 25, 25, 25));
-         //
-         // pgraphics->FillPath(&bgBrush, &path);
-         //
-         // Pen border(
-         //     Color(120, 255, 255, 255),
-         //     1.f);
-         //
-         // pgraphics->DrawPath(&border, &path);
-
-         //
-         // Left-side placeholder text
-         //
-
-         FontFamily ff(L"Segoe UI");
-
-         Gdiplus::Font textFont(
-             &ff,
-             12.f * get_window_scale(),
-             FontStyleRegular,
-             UnitPixel);
-
-         SolidBrush textBrush(
-             Color(230,255,255,255));
-
-         StringFormat leftAlign;
-         leftAlign.SetAlignment(
-             StringAlignmentNear);
-
-         leftAlign.SetLineAlignment(
-             StringAlignmentCenter);
-
-         RectF titleRect(
-             14.f,
-             0.f,
-             300.f * get_window_scale(),
-             (REAL)m_size.height());
-
-         ::wstring wstrTitle(m_strTitle);
-
-         pgraphics->DrawString(
-             wstrTitle,
-             -1,
-             &textFont,
-             titleRect,
-             &leftAlign,
-             &textBrush);
-
-         //
-         // Window buttons (right side)
-         //
-
-         const float btnSize = m_btnSize * get_window_scale();
-         const float btnSpce = m_btnSpacing* get_window_scale();
-
-         float closeX =
-             (float)m_size.width() - btnSize - 10.f;
-
-         float restoreX =
-             closeX - btnSize - btnSpce;
-
-         float minimizeX =
-             restoreX - btnSize - btnSpce;
-
-         float topY =
-             ((float)hForDraw - btnSize) * 0.5f;
-
-         RectF rcMin(
-             minimizeX,
-             topY,
-             btnSize,
-             btnSize);
-
-         m_rcMin = rcMin;
-
-         RectF rcRestore(
-             restoreX,
-             topY,
-             btnSize,
-             btnSize);
-
-         m_rcRestore = rcRestore;
-
-         RectF rcClose(
-             closeX,
-             topY,
-             btnSize,
-             btnSize);
-
-         m_rcClose = rcClose;
-
-         //
-         // Hover-style fills
-         //
-
-
-
-         Color minColor =
-    m_ehitHover == e_hit_min
-    ? Color(120, 255, 255, 255)
-    : Color(60, 255, 255, 255);
-
-         SolidBrush minBrush(minColor);
-
-         pgraphics->FillEllipse(
-             &minBrush,
-             rcMin);
-
-         Color resColor = m_ehitHover == e_hit_restore
-    ? Color(120, 255, 255, 255)
-    : Color(60, 255, 255, 255);
-
-         SolidBrush resBrush(resColor);
-
-         pgraphics->FillEllipse(
-             &resBrush,
-             rcRestore);
-
-
-         Color closeColor = m_ehitHover == e_hit_close
-    ? Color(200, 255, 80, 80)
-    : Color(120, 220, 60, 60);
-
-         SolidBrush closeBrush(closeColor);
-
-         pgraphics->FillEllipse(
-             &closeBrush,
-             rcClose);
-
-         //
-         // Glyph pen
-         //
-
-         Pen glyphPen(
-             Color(240,255,255,255),
-             1.8f);
-
-         glyphPen.SetStartCap(LineCapRound);
-         glyphPen.SetEndCap(LineCapRound);
-
-         float fSmaller = 6.f * get_window_scale();
-
-         //
-         // Minimize glyph
-         //
-
-         float midY =
-             rcMin.Y + rcMin.Height * 0.62f;
-
-         pgraphics->DrawLine(
-             &glyphPen,
-             rcMin.X + fSmaller,
-             midY,
-             rcMin.X + rcMin.Width - fSmaller,
-             midY);
-
-         //
-         // Restore glyph
-         //
-
-         RectF restoreInner(
-             rcRestore.X + fSmaller,
-             rcRestore.Y + fSmaller,
-             rcRestore.Width - fSmaller*2.f,
-             rcRestore.Height - fSmaller*2.f);
-
-         pgraphics->DrawRectangle(
-             &glyphPen,
-             restoreInner);
-
-         //
-         // Close glyph
-         //
-
-         pgraphics->DrawLine(
-             &glyphPen,
-             rcClose.X + fSmaller,
-             rcClose.Y + fSmaller,
-             rcClose.X + rcClose.Width - fSmaller,
-             rcClose.Y + rcClose.Height - fSmaller);
-
-         pgraphics->DrawLine(
-             &glyphPen,
-             rcClose.X + rcClose.Width - fSmaller,
-             rcClose.Y + fSmaller,
-             rcClose.X + fSmaller,
-             rcClose.Y + rcClose.Height - fSmaller);
-
-       }
+         auto rectangleBackground = ::f64_rectangle_dimension(
+             0.,
+             0.,
+               wForDraw,
+               hForDraw);
+
+         auto ppath = createø<::nano::graphics::path>();
+
+//            Gdiplus::GraphicsPath path;
+
+            const ::f64 radius = (hForDraw / 2.);
+
+         /*   path.AddArc(
+                (::f32) (wForDraw - radius),
+                0.f,
+                radius,
+                radius,
+                270.f,
+                90.f);
+
+            path.AddArc(
+                (::f32) (wForDraw - radius),
+                (::f32) (hForDraw - radius),
+                radius,
+                radius,
+                0.f,
+                90.f);
+
+            path.AddArc(
+                0.f,
+                (::f32) (hForDraw - radius),
+                radius,
+                radius,
+                90.f,
+                90.f);*/
+            // ppath->AddArc(0.f, 0.f, radius, radius, 180.f, 90.f);
+            ppath->add_arc(0., 0., radius, radius, 180_degree, 90_degree);
+
+
+            ppath->add_arc(wForDraw - radius, 0., radius, radius, 270_degrees, 90_degrees);
+
+            ppath->add_arc(wForDraw - radius, hForDraw - radius, radius, radius, 0_degrees,
+                                       90_degrees);
+
+            ppath->add_arc(0., hForDraw - radius, radius, radius, 90_degrees, 90_degrees);
+
+
+            ppath->close_figure();
+            //path.CloseFigure();
+
+            auto pbrushBackground = createø<::nano::graphics::brush>();
+
+            pbrushBackground->create_solid_brush(::argb(120, 30, 130, 230));
+
+            //SolidBrush bgBrush(
+              //  Color(120, 30, 130, 230));
+
+            pgraphicscontext->fill_path(ppath, pbrushBackground);
+
+            //pgraphicscontext->FillPath(&bgBrush, &path);
+
+            auto ppenBorder = createø<::nano::graphics::pen>();
+
+            ppenBorder->create_pen(::argb(180, 255, 255, 255), 1.5);
+            //Pen border(
+            //    Color(180, 255, 255, 255),
+            //    1.5f);
+
+            //pgraphicscontext->DrawPath(&border, &path);
+
+               pgraphicscontext->draw_path(ppath, ppenBorder);
+
+            // Buttons
+            SolidBrush buttonBrush(
+                Color(220, 0, 120, 215));
+
+            SolidBrush textBrush(
+                Color(255,255,255,255));
+
+            // FontFamily ff(L"Segoe UI");
+            // Gdiplus::Font font(
+            //     &ff,
+            //     12.f,
+            //     FontStyleRegular,
+            //     UnitPixel);
+            //
+            // StringFormat sf;
+            // sf.SetAlignment(
+            //     StringAlignmentCenter);
+            //
+            // sf.SetLineAlignment(
+            //     StringAlignmentCenter);
+            //
+            // RectF btn1(12.f, 8.f, 80.f, 32.f);
+            // RectF btn2(100.f, 8.f, 80.f, 32.f);
+            // RectF btn3(188.f, 8.f, 80.f, 32.f);
+            //
+            // pgraphicscontext->FillRectangle(
+            //     &buttonBrush,
+            //     btn1);
+            //
+            // pgraphicscontext->FillRectangle(
+            //     &buttonBrush,
+            //     btn2);
+            //
+            // pgraphicscontext->FillRectangle(
+            //     &buttonBrush,
+            //     btn3);
+            //
+            // pgraphicscontext->DrawString(
+            //     L"CTRL",
+            //     -1,
+            //     &font,
+            //     btn1,
+            //     &sf,
+            //     &textBrush);
+            //
+            // pgraphicscontext->DrawString(
+            //     L"ALT",
+            //     -1,
+            //     &font,
+            //     btn2,
+            //     &sf,
+            //     &textBrush);
+            //
+            // pgraphicscontext->DrawString(
+            //     L"DEL",
+            //     -1,
+            //     &font,
+            //     btn3,
+            //     &sf,
+            //     &textBrush);
+          }
+
+          {
+
+
+            // Replace the old button drawing section inside RenderLayered()
+            // with this version.
+            //
+            // Layout:
+            //
+            // -----------------------------------------------------
+            // |  Host Placeholder                     _ []  X     |
+            // -----------------------------------------------------
+            //
+            // The right-side buttons are placeholders only.
+            // You can later map them to host callbacks/messages.
+            //
+
+            // // Toolbar background
+            // RectF rectangleBackground(
+            //     0.f,
+            //     0.f,
+            //     (REAL)m_width,
+            //     (REAL)m_height);
+            //
+            // GraphicsPath path;
+            //
+            // const ::f32 radius = 14.f;
+            //
+            // path.AddArc(0, 0, radius, radius, 180, 90);
+            // path.AddArc(
+            //     m_width - radius,
+            //     0,
+            //     radius,
+            //     radius,
+            //     270,
+            //     90);
+            //
+            // path.AddArc(
+            //     m_width - radius,
+            //     m_height - radius,
+            //     radius,
+            //     radius,
+            //     0,
+            //     90);
+            //
+            // path.AddArc(
+            //     0,
+            //     m_height - radius,
+            //     radius,
+            //     radius,
+            //     90,
+            //     90);
+            //
+            // path.CloseFigure();
+            //
+            // SolidBrush bgBrush(
+            //     Color(210, 25, 25, 25));
+            //
+            // pgraphicscontext->FillPath(&bgBrush, &path);
+            //
+            // Pen border(
+            //     Color(120, 255, 255, 255),
+            //     1.f);
+            //
+            // pgraphicscontext->DrawPath(&border, &path);
+
+            //
+            // Left-side placeholder text
+            //
+
+            FontFamily ff(L"Segoe UI");
+
+            Gdiplus::Font textFont(
+                &ff,
+                12.f * get_window_scale(),
+                FontStyleRegular,
+                UnitPixel);
+
+            SolidBrush textBrush(
+                Color(230,255,255,255));
+
+            StringFormat leftAlign;
+            leftAlign.SetAlignment(
+                StringAlignmentNear);
+
+            leftAlign.SetLineAlignment(
+                StringAlignmentCenter);
+
+            RectF titleRect(
+                14.f,
+                0.f,
+                300.f * get_window_scale(),
+                (REAL)m_size.height());
+
+            ::wstring wstrTitle(m_strTitle);
+
+            pgraphicscontext->DrawString(
+                wstrTitle,
+                -1,
+                &textFont,
+                titleRect,
+                &leftAlign,
+                &textBrush);
+
+            //
+            // Window buttons (right side)
+            //
+
+            const ::f32 btnSize = m_btnSize * get_window_scale();
+            const ::f32 btnSpce = m_btnSpacing* get_window_scale();
+
+            ::f32 closeX =
+                (::f32)m_size.width() - btnSize - 10.f;
+
+            ::f32 restoreX =
+                closeX - btnSize - btnSpce;
+
+            ::f32 minimizeX =
+                restoreX - btnSize - btnSpce;
+
+            ::f32 topY =
+                ((::f32)hForDraw - btnSize) * 0.5f;
+
+            RectF rcMin(
+                minimizeX,
+                topY,
+                btnSize,
+                btnSize);
+
+            m_rcMin = rcMin;
+
+            RectF rcRestore(
+                restoreX,
+                topY,
+                btnSize,
+                btnSize);
+
+            m_rcRestore = rcRestore;
+
+            RectF rcClose(
+                closeX,
+                topY,
+                btnSize,
+                btnSize);
+
+            m_rcClose = rcClose;
+
+            //
+            // Hover-style fills
+            //
+
+
+
+            Color minColor =
+       m_ehitHover == e_hit_min
+       ? Color(120, 255, 255, 255)
+       : Color(60, 255, 255, 255);
+
+            SolidBrush minBrush(minColor);
+
+            pgraphicscontext->FillEllipse(
+                &minBrush,
+                rcMin);
+
+            Color resColor = m_ehitHover == e_hit_restore
+       ? Color(120, 255, 255, 255)
+       : Color(60, 255, 255, 255);
+
+            SolidBrush resBrush(resColor);
+
+            pgraphicscontext->FillEllipse(
+                &resBrush,
+                rcRestore);
+
+
+            Color closeColor = m_ehitHover == e_hit_close
+       ? Color(200, 255, 80, 80)
+       : Color(120, 220, 60, 60);
+
+            SolidBrush closeBrush(closeColor);
+
+            pgraphicscontext->FillEllipse(
+                &closeBrush,
+                rcClose);
+
+            //
+            // Glyph pen
+            //
+
+            Pen glyphPen(
+                Color(240,255,255,255),
+                1.8f);
+
+            glyphPen.SetStartCap(LineCapRound);
+            glyphPen.SetEndCap(LineCapRound);
+
+            ::f32 fSmaller = 6.f * get_window_scale();
+
+            //
+            // Minimize glyph
+            //
+
+            ::f32 midY =
+                rcMin.Y + rcMin.Height * 0.62f;
+
+            pgraphicscontext->DrawLine(
+                &glyphPen,
+                rcMin.X + fSmaller,
+                midY,
+                rcMin.X + rcMin.Width - fSmaller,
+                midY);
+
+            //
+            // Restore glyph
+            //
+
+            RectF restoreInner(
+                rcRestore.X + fSmaller,
+                rcRestore.Y + fSmaller,
+                rcRestore.Width - fSmaller*2.f,
+                rcRestore.Height - fSmaller*2.f);
+
+            pgraphicscontext->DrawRectangle(
+                &glyphPen,
+                restoreInner);
+
+            //
+            // Close glyph
+            //
+
+            pgraphicscontext->DrawLine(
+                &glyphPen,
+                rcClose.X + fSmaller,
+                rcClose.Y + fSmaller,
+                rcClose.X + rcClose.Width - fSmaller,
+                rcClose.Y + rcClose.Height - fSmaller);
+
+            pgraphicscontext->DrawLine(
+                &glyphPen,
+                rcClose.X + rcClose.Width - fSmaller,
+                rcClose.Y + fSmaller,
+                rcClose.X + fSmaller,
+                rcClose.Y + rcClose.Height - fSmaller);
+
+          }
 
    
-}
+   }
    
 } // namespace remoting_rdx_client

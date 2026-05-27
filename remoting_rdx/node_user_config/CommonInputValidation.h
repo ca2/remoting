@@ -45,7 +45,7 @@ namespace remoting_rfb_node
        */
       static bool validatePort(::innate_subsystem::TextBox *textBox);
       /**
-       * Validates unsigned integer value.
+       * Validates ::u32 integer value.
        * @param textBox text box text of that need to validate.
        * @param scopedstrMessageText text to show on validation fail.
        * @return true if validation ok, false if validation failed.

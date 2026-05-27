@@ -51,7 +51,7 @@ namespace remoting_rfb
    {
    }
 
-   HostPath::HostPath(const char *path, int defaultPort)
+   HostPath::HostPath(const_char_pointer pszPath, ::i32 defaultPort)
      : m_path(0),
        m_sshHost(0),
        m_sshPort(0),
@@ -68,7 +68,7 @@ namespace remoting_rfb
    }
 
    bool
-   HostPath::set(const char *path)
+   HostPath::set(const_char_pointer pszPath)
    {
       // Forget previous path if one was set earlier.
       clear();
@@ -81,7 +81,7 @@ namespace remoting_rfb
       if (pathLen < 1 || pathLen > m_MAX_PATH_LEN) {
          return false;
       }
-      m_path = new char[pathLen + 1];
+      m_path = new ::i8[pathLen + 1];
       memcpy(m_path, path, pathLen);
       m_path[pathLen] = '\0';
 
@@ -93,7 +93,7 @@ namespace remoting_rfb
          clear();
          return false;
            }
-      const char *tokenStart = m_path;
+      const_char_pointer tokenStart = m_path;
 
       // Handle SSH host name.
       if (tokens[0] != 0) {
@@ -102,7 +102,7 @@ namespace remoting_rfb
             clear();
             return false;
          }
-         m_sshHost = new char[hostLen + 1];
+         m_sshHost = new ::i8[hostLen + 1];
          memcpy(m_sshHost, tokenStart, hostLen);
          m_sshHost[hostLen] = '\0';
          m_sshPort = 22;
@@ -126,7 +126,7 @@ namespace remoting_rfb
       }
 
       // Handle VNC host name.
-      const char* hostStart = tokenStart;
+      const_char_pointer hostStart = tokenStart;
       size_t hostLen = tokens[2];
       if (tokens[2] == 0) {
          hostStart = "localhost";
@@ -137,7 +137,7 @@ namespace remoting_rfb
             return false;
          }
       }
-      m_vncHost = new char[hostLen + 1];
+      m_vncHost = new ::i8[hostLen + 1];
       memcpy(m_vncHost, hostStart, hostLen);
       m_vncHost[hostLen] = '\0';
       tokenStart += tokens[2];
@@ -151,7 +151,7 @@ namespace remoting_rfb
             clear();
             return false;
          }
-         const char* portStart = tokenStart + 1;
+         const_char_pointer portStart = tokenStart + 1;
          bool twoColons = (*portStart == ':');
          if (twoColons) {
             portStart++;
@@ -205,16 +205,16 @@ namespace remoting_rfb
       if (m_path == 0)
          return;
 
-      const char* vncHostStart = m_path;
+      const_char_pointer vncHostStart = m_path;
 
-      const char* slashPtr = strchr(m_path, '/');
+      const_char_pointer slashPtr = strchr(m_path, '/');
       if (slashPtr != 0) {
          results[0] = strcspn(m_path, ":/");
          results[1] = (slashPtr - m_path) - results[0];
          vncHostStart = slashPtr + 1;
       }
 
-      const char *colonPtr = strchr(vncHostStart, ':');
+      const_char_pointer colonPtr = strchr(vncHostStart, ':');
       if (colonPtr != 0) {
          results[2] = colonPtr - vncHostStart;
          results[3] = strnlen(colonPtr, m_MAX_PATH_LEN);
@@ -226,16 +226,16 @@ namespace remoting_rfb
    bool
    HostPath::validateHostNames() const
    {
-      const char* acceptChars =
+      const_char_pointer acceptChars =
         ".-_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890";
 
       if (m_sshHost != 0) {
-         const char* sshHostPtr = m_sshHost;
+         const_char_pointer sshHostPtr = m_sshHost;
          size_t sshHostLen = strlen(m_sshHost);
 
-         const char *sobakaPtr = strchr(m_sshHost, '@');
+         const_char_pointer sobakaPtr = strchr(m_sshHost, '@');
          if (sobakaPtr != 0) {
-            const char* sshUserPtr = m_sshHost;
+            const_char_pointer sshUserPtr = m_sshHost;
             size_t sshUserLen = sobakaPtr - m_sshHost;
             sshHostPtr = sobakaPtr + 1;
             sshHostLen = sshHostLen - sshUserLen - 1;

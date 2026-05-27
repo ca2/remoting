@@ -65,7 +65,7 @@ namespace remoting_rtc_node
       void updateUI();
       void apply();
 
-      bool _002OnUpDown(int iControl, int iPos, int iDelta) override;
+      bool _002OnUpDown(::i32 iControl, ::i32 iPos, ::i32 iDelta) override;
 
    private:
       void initControls();
@@ -84,7 +84,7 @@ namespace remoting_rtc_node
       void onUnsetReadOnlyPasswordClick();
       void onShowTrayIconCheckBoxClick();
       void onConnectToRdpCheckBoxClick();
-      void onPollingIntervalSpinChangePos(int iControlId, int iPos, int iDelta);
+      void onPollingIntervalSpinChangePos(::i32 iControlId, ::i32 iPos, ::i32 iDelta);
       void onRfbPortUpdate();
       void onHttpPortUpdate();
       void onUrlParamsClick();

@@ -31,7 +31,7 @@ namespace remoting
 {
 
 
-   static const int BLOCK_SIZE = 32;
+   static const ::i32 BLOCK_SIZE = 32;
 
    // UpdateFilter::UpdateFilter(ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
    //                            lockable_critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter) :
@@ -99,7 +99,7 @@ if (defer_construct_newø(m_pgraboptimizator))
 
       rectanglea = toCheck.getRects();
       // Grabbing
-      m_plogwriter->debug("grabbing region, {} rectangles", (int)rectanglea.size());
+      m_plogwriter->debug("grabbing region, {} rectangles", (::i32)rectanglea.size());
       auto processortimes1 = ProfileLogger().checkPoint("grabbing region");
       try
       {
@@ -112,13 +112,13 @@ if (defer_construct_newø(m_pgraboptimizator))
       auto processortimes2 = ProfileLogger().checkPoint("end of grabbing region");
 
       rectanglea = toCheck.getRects();
-      double area = rectanglea.total_area();
+      ::f64 area = rectanglea.total_area();
       // for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
       // {
       //    area += (*iRect).area();
       // }
       area /= 1000000.0; // in millions of pixels
-      double dt = processortimes2.m_time.floating_millisecond(); // in milliseconds
+      ::f64 dt = processortimes2.m_time.floating_millisecond(); // in milliseconds
       m_plogwriter->debug(
          "Before grabbing region %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ",
          processortimes1.m_cycle / 1000000., processortimes1.m_process, processortimes1.m_kernel, processortimes1.m_time.floating_millisecond());
@@ -161,19 +161,19 @@ if (defer_construct_newø(m_pgraboptimizator))
    {
 
       const ::u32 bytesPerPixel = m_pframebuffer->getBytesPerPixel();
-      const int bytes_per_scanline = (rectangle.right - rectangle.left) * bytesPerPixel;
+      const ::i32 bytes_per_scanline = (rectangle.right - rectangle.left) * bytesPerPixel;
 
-      const int bytesPerRow = m_pframebuffer->getBytesPerRow();
-      const int offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
-      unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
-      unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
+      const ::i32 bytesPerRow = m_pframebuffer->getBytesPerRow();
+      const ::i32 offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
+      ::u8 *o_ptr = (::u8 *)m_pframebuffer->getBuffer() + offset;
+      ::u8 *n_ptr = (::u8 *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
 
       ::i32_rectangle new_rect = rectangle;
 
       // Fast processing for small rectangles
       if (rectangle.right - rectangle.left <= BLOCK_SIZE && rectangle.bottom - rectangle.top <= BLOCK_SIZE)
       {
-         for (int y = rectangle.top; y < rectangle.bottom; y++)
+         for (::i32 y = rectangle.top; y < rectangle.bottom; y++)
          {
             if (memcmp(o_ptr, n_ptr, bytes_per_scanline) != 0)
             {
@@ -189,7 +189,7 @@ if (defer_construct_newø(m_pgraboptimizator))
 
       // Process bigger rectangles
       new_rect.top = -1;
-      for (int y = rectangle.top; y < rectangle.bottom; y++)
+      for (::i32 y = rectangle.top; y < rectangle.bottom; y++)
       {
          if (memcmp(o_ptr, n_ptr, bytes_per_scanline) != 0)
          {
@@ -198,7 +198,7 @@ if (defer_construct_newø(m_pgraboptimizator))
                new_rect.top = y;
             }
             // Skip a number of lines after a non-matched one
-            int n = BLOCK_SIZE / 2 - 1;
+            ::i32 n = BLOCK_SIZE / 2 - 1;
             y += n;
             o_ptr += n * bytesPerRow;
             n_ptr += n * bytesPerRow;
@@ -234,29 +234,29 @@ if (defer_construct_newø(m_pgraboptimizator))
       const ::u32 bytesPerPixel = m_pframebuffer->getBytesPerPixel();
 
       ::i32_rectangle new_rect;
-      int x, y, ay;
+      ::i32 x, y, ay;
 
       // Scan down the rectangle
-      const int bytesPerRow = m_pframebuffer->getBytesPerRow();
-      const int offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
-      unsigned char *o_topleft_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
-      unsigned char *n_topleft_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
+      const ::i32 bytesPerRow = m_pframebuffer->getBytesPerRow();
+      const ::i32 offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
+      ::u8 *o_topleft_ptr = (::u8 *)m_pframebuffer->getBuffer() + offset;
+      ::u8 *n_topleft_ptr = (::u8 *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
 
       for (y = rectangle.top; y < rectangle.bottom; y += BLOCK_SIZE)
       {
          // Work out way down the bitmap
-         unsigned char *o_row_ptr = o_topleft_ptr;
-         unsigned char *n_row_ptr = n_topleft_ptr;
+         ::u8 *o_row_ptr = o_topleft_ptr;
+         ::u8 *n_row_ptr = n_topleft_ptr;
 
-         const int blockbottom = minimum(y + BLOCK_SIZE, rectangle.bottom);
+         const ::i32 blockbottom = minimum(y + BLOCK_SIZE, rectangle.bottom);
          new_rect.bottom = blockbottom;
          new_rect.left = -1;
 
          for (x = rectangle.left; x < rectangle.right; x += BLOCK_SIZE)
          {
             // Work our way across the row
-            unsigned char *n_block_ptr = n_row_ptr;
-            unsigned char *o_block_ptr = o_row_ptr;
+            ::u8 *n_block_ptr = n_row_ptr;
+            ::u8 *o_block_ptr = o_row_ptr;
 
             const ::u32 blockright = minimum(x + BLOCK_SIZE, rectangle.right);
             const ::u32 bytesPerBlockRow = (blockright - x) * bytesPerPixel;
@@ -311,14 +311,14 @@ if (defer_construct_newø(m_pgraboptimizator))
    void UpdateFilter::updateChangedSubRect(Region & region, const ::i32_rectangle & rectangle)
    {
       const ::u32 bytesPerPixel = m_pframebuffer->getBytesPerPixel();
-      int bytes_in_row = (rectangle.right - rectangle.left) * bytesPerPixel;
-      int y, i;
+      ::i32 bytes_in_row = (rectangle.right - rectangle.left) * bytesPerPixel;
+      ::i32 y, i;
 
       // Exclude unchanged scan lines at the bottom
-      const int bytesPerRow = m_pframebuffer->getBytesPerRow();
-      int offset = (rectangle.bottom - 1) * bytesPerRow + rectangle.left * bytesPerPixel;
-      unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
-      unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
+      const ::i32 bytesPerRow = m_pframebuffer->getBytesPerRow();
+      ::i32 offset = (rectangle.bottom - 1) * bytesPerRow + rectangle.left * bytesPerPixel;
+      ::u8 *o_ptr = (::u8 *)m_pframebuffer->getBuffer() + offset;
+      ::u8 *n_ptr = (::u8 *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
       ::i32_rectangle rectangleFinal = rectangle;
       rectangleFinal.bottom = rectangle.top + 1;
       for (y = rectangle.bottom - 1; y > rectangle.top; y--)
@@ -334,10 +334,10 @@ if (defer_construct_newø(m_pgraboptimizator))
 
       // Exclude unchanged pixels at left and right sides
       offset = rectangleFinal.top * bytesPerRow + rectangleFinal.left * bytesPerPixel;
-      o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
-      n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
-      int left_delta = bytes_in_row - 1;
-      int right_delta = 0;
+      o_ptr = (::u8 *)m_pframebuffer->getBuffer() + offset;
+      n_ptr = (::u8 *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
+      ::i32 left_delta = bytes_in_row - 1;
+      ::i32 right_delta = 0;
       for (y = rectangleFinal.top; y < rectangleFinal.bottom; y++)
       {
          for (i = 0; i < bytes_in_row - 1; i++)

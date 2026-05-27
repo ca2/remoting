@@ -52,9 +52,9 @@ public:
   // before.
   // @throw ::subsystem::Exception on an error.
   void start(const ::scoped_string & scopedstrLogDir,
-             unsigned char logLevel, size_t headerLineCount);
+             ::u8 logLevel, size_t headerLineCount);
 
-  void changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
+  void changeLogProps(const ::scoped_string & scopedstrNewLogDir, ::u8 newLevel);
 
 private:
   virtual void onNewConnection(Channel *channel);
@@ -62,10 +62,10 @@ private:
                                            const ::scoped_string & scopedstrFileName);
   virtual void onDisconnect(LogConn *logConn);
   virtual void onLog(FileAccountHandle handle,
-                     unsigned int processId,
-                     unsigned int threadId,
+                     ::u32 processId,
+                     ::u32 threadId,
                      const class ::time & dt,
-                     int level,
+                     ::i32 level,
                      const ::scoped_string & scopedstrMessage);
   virtual void onAnErrorFromLogConn(const ::scoped_string & scopedstrMessage);
 
@@ -77,7 +77,7 @@ private:
   ::string m_publicPipeName;
 
   ::string m_logDir;
-  unsigned char m_logLevel;
+  ::u8 m_logLevel;
   ConnList m_notAuthConnList;
   ConnList m_connList;
   FileAccountList m_fileAccountList;

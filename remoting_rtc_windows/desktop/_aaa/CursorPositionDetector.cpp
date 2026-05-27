@@ -28,7 +28,7 @@
 namespace remoting_rtc_windows
 {
 
-   const int MOUSE_SLEEP_TIME = 10;
+   const ::i32 MOUSE_SLEEP_TIME = 10;
 
    // CursorPositionDetector::CursorPositionDetector(::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener,
    //                                                ::subsystem::LogWriter * plogwriter) :

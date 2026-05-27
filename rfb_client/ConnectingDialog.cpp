@@ -93,8 +93,8 @@ namespace remoting_rfb_client
    // public:
 
    // ProgressBar*m_pbar;
-   // double m_dStart = 0.0;
-   // double m_dEnd = 0.0;
+   // ::f64 m_dStart = 0.0;
+   // ::f64 m_dEnd = 0.0;
    // class ::time & m_time;
 
 
@@ -110,7 +110,7 @@ namespace remoting_rfb_client
 
    }
 
-   void progress_bar_animation::set_animation_range(double dStart, double dEnd)
+   void progress_bar_animation::set_animation_range(::f64 dStart, ::f64 dEnd)
    {
 
       m_dStart = dStart;
@@ -143,9 +143,9 @@ namespace remoting_rfb_client
 
       while (m_bRunning)
       {
-         m_d = m_time.elapsed().floating_second();
-         auto d= fmod(m_d * 0.125, m_dEnd - m_dStart) + m_dStart;
-         m_bar.postMessage(WM_USER + 327, (int) (d * 8'000.0), 0);
+         m_f64 = m_time.elapsed().floating_second();
+         auto d= fmod(m_f64 * 0.125, m_dEnd - m_dStart) + m_dStart;
+         m_bar.postMessage(WM_USER + 327, (::i32) (d * 8'000.0), 0);
          preempt(100_ms);
       }
 
@@ -157,7 +157,7 @@ namespace remoting_rfb_client
    // {
    //   return m_strPassword;
    // }
-   void ConnectingDialog::_start_animating_progress_range(double dStart, double dEnd)
+   void ConnectingDialog::_start_animating_progress_range(::f64 dStart, ::f64 dEnd)
    {
 
       defer_construct_newø(m_panimation);
@@ -173,7 +173,7 @@ namespace remoting_rfb_client
       _start_animating_progress_range(0.0, 0.4);
    }
 
-   void ConnectingDialog::set_connecting(int iPhase)
+   void ConnectingDialog::set_connecting(::i32 iPhase)
    {
 
       if (iPhase == 1)
@@ -198,7 +198,7 @@ namespace remoting_rfb_client
          if (wparam == id_remoting_connecting)
          {
 
-            set_connecting((int) lparam.m_lparam);
+            set_connecting((::i32) lparam.m_lparam);
 
          }
 

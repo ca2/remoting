@@ -50,14 +50,14 @@ namespace remoting_rfb
       bool setProperties(const ::i32_size & sizeNew, const ::innate_subsystem::PixelFormat & pixelFormat);
 
       const ::innate_subsystem::Framebuffer *getPixels() const { return &m_pixels; }
-      int getPixelsSize() const { return m_pixels.getBufferSize(); }
-      const char *getMask() const { return m_mask.empty() ? 0 : m_mask.data(); }
-      void assignMaskFromRfb(const char *srcMask);
-      void assignMaskFromWindows(const char *srcMask);
-      int getMaskSize() const;
-      int getMaskWidthInBytes() const;
+      ::i32 getPixelsSize() const { return m_pixels.getBufferSize(); }
+      const_char_pointer getMask() const { return m_mask.empty() ? 0 : m_mask.data(); }
+      void assignMaskFromRfb(const_char_pointer srcMask);
+      void assignMaskFromWindows(const_char_pointer srcMask);
+      ::i32 getMaskSize() const;
+      ::i32 getMaskWidthInBytes() const;
 
-      void setHotSpot(int x, int y) { m_hotSpot.x = x; m_hotSpot.y = y; }
+      void setHotSpot(::i32 x, ::i32 y) { m_hotSpot.x = x; m_hotSpot.y = y; }
       ::i32_point getHotSpot() const { return m_hotSpot; }
 
       // Resets the cursor shape to empty state (zero dimension and hot spot
@@ -68,7 +68,7 @@ namespace remoting_rfb
       bool resizeBuffer();
 
       ::innate_subsystem::Framebuffer m_pixels;
-      ::array_base<char> m_mask;
+      ::array_base<::i8> m_mask;
       ::i32_point m_hotSpot;
    };
 

@@ -61,7 +61,7 @@ KeySymTest::~KeySymTest()
   delete m_rfbKeySym;
 }
 
-int KeySymTest::onThreadMain()
+::i32 KeySymTest::onThreadMain()
 {
   ::string line;
   while (readLine(&line)) {
@@ -91,7 +91,7 @@ int KeySymTest::onThreadMain()
         validWord = validWord &&
                     MainSubsystem().StringParser().parseUInt(word2, &downInt);
         if (validWord && (downInt == 0 || downInt == 1)) {
-          unsigned char virtKey = virtKeyInt & 255;
+          ::u8 virtKey = virtKeyInt & 255;
           bool down = downInt != 0;
           ::u32 addKeyData = 0;
           addKeyData = down ? 0 : 0x80000000;
@@ -174,6 +174,6 @@ void KeySymTest::onRfbKeySymEvent(::u32 rfbKeySym, bool down)
   if (m_isNextEventInSeries) {
     _ftprintf(m_fTo, "\n");
   }
-  _ftprintf(m_fTo, "{} %#4.4x           ", int(down), (::u32)rfbKeySym);
+  _ftprintf(m_fTo, "{} %#4.4x           ", ::i32(down), (::u32)rfbKeySym);
   m_isNextEventInSeries = true;
 }

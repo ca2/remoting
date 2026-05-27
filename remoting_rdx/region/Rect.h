@@ -35,18 +35,18 @@
 //       ::i32_rectangle(void) : left(0), top(0), right(0), bottom(0) {}
 //       //::i32_rectangle(const ::i32_rectangle &  rectangle) { setRect(rectangle); }
 //       ::i32_rectangle(const ::i32_rectangle & rectangle) { setRect(rectangle); }
-//       ::i32_rectangle(int lt, int tp, int rt, int bm) { setRect(lt, tp, rt, bm); }
+//       ::i32_rectangle(::i32 lt, ::i32 tp, ::i32 rt, ::i32 bm) { setRect(lt, tp, rt, bm); }
 //       ::i32_rectangle(const ::i32_size & size) { setRect(0, 0, width, height); }
 //       ::i32_rectangle(const RECT *rectangle) {fromWindowsRect(rectangle);}
 //
 //       virtual ~::i32_rectangle(void) {}
 //
-//       int left;
-//       int top;
-//       int right;
-//       int bottom;
+//       ::i32 left;
+//       ::i32 top;
+//       ::i32 right;
+//       ::i32 bottom;
 //
-//       inline void setRect(int lt, int tp, int rt, int bm)
+//       inline void setRect(::i32 lt, ::i32 tp, ::i32 rt, ::i32 bm)
 //       {
 //          left = lt;
 //          top = tp;
@@ -76,7 +76,7 @@
 //          return true;
 //       }
 //
-//       inline bool isPointInRect(int pointX, int pointY) {
+//       inline bool isPointInRect(::i32 pointX, ::i32 pointY) {
 //          if (pointX < left || pointX >= right) {
 //             return false;
 //          }
@@ -114,7 +114,7 @@
 //          bottom  = rectangle.bottom;
 //       }
 //
-//       inline void move(int offsetX, int offsetY)
+//       inline void move(::i32 offsetX, ::i32 offsetY)
 //       {
 //          left    += offsetX;
 //          right   += offsetX;
@@ -122,10 +122,10 @@
 //          bottom  += offsetY;
 //       }
 //
-//       inline void set_top_left(int destX, int destY)
+//       inline void set_top_left(::i32 destX, ::i32 destY)
 //       {
-//          int offsetX = destX - left;
-//          int offsetY = destY - top;
+//          ::i32 offsetX = destX - left;
+//          ::i32 offsetY = destY - top;
 //          left    = destX;
 //          right   += offsetX;
 //          top     = destY;
@@ -137,44 +137,44 @@
 //                                                         rectangle.right == right &&
 //                                                         rectangle.bottom == bottom; }
 //
-//       inline void set_width(int value)   { right = left + value; }
-//       inline void set_height(int value)  { bottom = top + value; }
+//       inline void set_width(::i32 value)   { right = left + value; }
+//       inline void set_height(::i32 value)  { bottom = top + value; }
 //
-//       inline int getWidth()  const { return right - left; }
-//       inline int getHeight() const { return bottom - top; }
+//       inline ::i32 getWidth()  const { return right - left; }
+//       inline ::i32 getHeight() const { return bottom - top; }
 //
-//       void rotateOn90InsideDimension(int dimHeight)
+//       void rotateOn90InsideDimension(::i32 dimHeight)
 //       {
 //          ::i32_rectangle localCopy(this);
 //          set_width(localCopy.height());
 //          set_height(localCopy.width());
-//          int newLeft = dimHeight - localCopy.top - localCopy.height();
-//          int newTop = localCopy.left;
+//          ::i32 newLeft = dimHeight - localCopy.top - localCopy.height();
+//          ::i32 newTop = localCopy.left;
 //          set_top_left(newLeft, newTop);
 //       }
 //
-//       void rotateOn180InsideDimension(int dimWidth, int dimHeight)
+//       void rotateOn180InsideDimension(::i32 dimWidth, ::i32 dimHeight)
 //       {
-//          int newLeft = dimWidth - left - getWidth();
-//          int newTop = dimHeight - top - getHeight();
+//          ::i32 newLeft = dimWidth - left - getWidth();
+//          ::i32 newTop = dimHeight - top - getHeight();
 //          set_top_left(newLeft, newTop);
 //       }
 //
-//       void rotateOn270InsideDimension(int dimWidth)
+//       void rotateOn270InsideDimension(::i32 dimWidth)
 //       {
 //          ::i32_rectangle localCopy(this);
 //          set_width(localCopy.height());
 //          set_height(localCopy.width());
-//          int newLeft = localCopy.top;
-//          int newTop = dimWidth - localCopy.left - localCopy.width();
+//          ::i32 newLeft = localCopy.top;
+//          ::i32 newTop = dimWidth - localCopy.left - localCopy.width();
 //          set_top_left(newLeft, newTop);
 //       }
 //
 //       inline bool is_empty() const { return getWidth() <= 0 || getHeight() <= 0; }
-//       inline int area() const { return is_empty() ? 0 : getWidth() * getHeight(); }
+//       inline ::i32 area() const { return is_empty() ? 0 : getWidth() * getHeight(); }
 //
-//       static int totalArea(::int_rectangle_array_base &v) {
-//          int area = 0;
+//       static ::i32 totalArea(::int_rectangle_array_base &v) {
+//          ::i32 area = 0;
 //          for (::int_rectangle_array_base::iterator i = v.begin(); i < v.end(); i++)
 //             area += i.area();
 //          return area;

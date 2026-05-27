@@ -34,8 +34,8 @@ namespace remoting_rfb_node_desktop
    public:
       
       
-      virtual void onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel) = 0;
-      virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel) = 0;
+      virtual void onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, ::u8 logLevel) = 0;
+      virtual void onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, ::u8 newLevel) = 0;
 
 
    };

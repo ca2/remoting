@@ -26,6 +26,6 @@
 
 namespace remoting_rfb
 {
-   const char *const VendorDefs::STANDARD = "STDV";
-   const char *const VendorDefs::REMOTING = "TGHT";
+   const_char_pointer const VendorDefs::STANDARD = "STDV";
+   const_char_pointer const VendorDefs::REMOTING = "TGHT";
 } // namespace remoting_rfb

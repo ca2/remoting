@@ -69,8 +69,8 @@ namespace remoting
 
       virtual void sendNewClipboard(const ::scoped_string &newClipboard, BlockingGate *pblockinggate);
       virtual void readNewClipboard(::string &newClipboard, BlockingGate *pblockinggate);
-      virtual void sendNewPointerPos(const ::i32_point pointNewPosition, unsigned char keyFlag, BlockingGate *pblockinggate);
-      virtual void readNewPointerPos(::i32_point *pointNewPosition, unsigned char *keyFlag, BlockingGate *pblockinggate);
+      virtual void sendNewPointerPos(const ::i32_point pointNewPosition, ::u8 keyFlag, BlockingGate *pblockinggate);
+      virtual void readNewPointerPos(::i32_point *pointNewPosition, ::u8 *keyFlag, BlockingGate *pblockinggate);
       virtual void sendKeyEvent(::u32 keySym, bool down, BlockingGate *pblockinggate);
       virtual void readKeyEvent(::u32 *keySym, bool *down, BlockingGate *pblockinggate);
       virtual void sendUserInfo(const ::scoped_string &desktopName, const ::scoped_string &userName,
@@ -80,29 +80,29 @@ namespace remoting
       virtual void readConfigSettings(BlockingGate *pblockinggate);
 
 
-      static const unsigned char EXTRACT_REQ = 0;
-      static const unsigned char SCREEN_PROP_REQ = 1;
-      static const unsigned char FRAME_BUFFER_INIT = 2;
-      static const unsigned char SET_FULL_UPD_REQ_REGION = 3;
-      static const unsigned char SET_EXCLUDING_REGION = 4;
-      static const unsigned char UPDATE_DETECTED = 10;
+      static const ::u8 EXTRACT_REQ = 0;
+      static const ::u8 SCREEN_PROP_REQ = 1;
+      static const ::u8 FRAME_BUFFER_INIT = 2;
+      static const ::u8 SET_FULL_UPD_REQ_REGION = 3;
+      static const ::u8 SET_EXCLUDING_REGION = 4;
+      static const ::u8 UPDATE_DETECTED = 10;
 
-      static const unsigned char CLIPBOARD_CHANGED = 30;
-      static const unsigned char POINTER_POS_CHANGED = 31;
-      static const unsigned char KEYBOARD_EVENT = 32;
-      static const unsigned char USER_INPUT_INIT = 33;
-      static const unsigned char USER_INFO_REQ = 34;
-      static const unsigned char DESKTOP_COORDS_REQ = 35;
-      static const unsigned char WINDOW_COORDS_REQ = 36;
-      static const unsigned char WINDOW_HANDLE_REQ = 37;
-      static const unsigned char DISPLAY_NUMBER_COORDS_REQ = 38;
-      static const unsigned char APPLICATION_REGION_REQ = 39;
-      static const unsigned char NORMALIZE_RECT_REQ = 40;
-      static const unsigned char APPLICATION_CHECK_FOCUS = 41;
-      static const unsigned char DISPLAYS_COORDS_REQ = 42;
+      static const ::u8 CLIPBOARD_CHANGED = 30;
+      static const ::u8 POINTER_POS_CHANGED = 31;
+      static const ::u8 KEYBOARD_EVENT = 32;
+      static const ::u8 USER_INPUT_INIT = 33;
+      static const ::u8 USER_INFO_REQ = 34;
+      static const ::u8 DESKTOP_COORDS_REQ = 35;
+      static const ::u8 WINDOW_COORDS_REQ = 36;
+      static const ::u8 WINDOW_HANDLE_REQ = 37;
+      static const ::u8 DISPLAY_NUMBER_COORDS_REQ = 38;
+      static const ::u8 APPLICATION_REGION_REQ = 39;
+      static const ::u8 NORMALIZE_RECT_REQ = 40;
+      static const ::u8 APPLICATION_CHECK_FOCUS = 41;
+      static const ::u8 DISPLAYS_COORDS_REQ = 42;
 
-      static const unsigned char CONFIG_RELOAD_REQ = 50;
-      static const unsigned char SOFT_INPUT_ENABLING_REQ = 51;
+      static const ::u8 CONFIG_RELOAD_REQ = 50;
+      static const ::u8 SOFT_INPUT_ENABLING_REQ = 51;
 
    //private:
       void checkPixelFormat(const ::innate_subsystem::PixelFormat &pixelformat);

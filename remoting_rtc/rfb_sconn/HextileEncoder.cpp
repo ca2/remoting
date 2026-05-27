@@ -37,7 +37,7 @@ namespace remoting_rfb
    {
    }
 
-   int HextileEncoder::getCode() const
+   ::i32 HextileEncoder::getCode() const
    {
       return EncodingDefs::HEXTILE;
    }
@@ -50,9 +50,9 @@ namespace remoting_rfb
 
       size_t bpp = pframebuffer->getBitsPerPixel();
       if (bpp == 8) {
-         hextileFunction<unsigned char>(rectangle, pframebuffer);
+         hextileFunction<::u8>(rectangle, pframebuffer);
       } else if (bpp == 16) {
-         hextileFunction<unsigned short>(rectangle, pframebuffer);
+         hextileFunction<::u16>(rectangle, pframebuffer);
       } else if (bpp == 32) {
          hextileFunction<::u32>(rectangle, pframebuffer);
       } else {
@@ -70,7 +70,7 @@ namespace remoting_rfb
       PIXEL_T oldBg = 0, oldFg = 0;
       bool oldBgValid = false;
       bool oldFgValid = false;
-      unsigned char encoded[256 * sizeof(PIXEL_T)];
+      ::u8 encoded[256 * sizeof(PIXEL_T)];
 
       HextileTile<PIXEL_T> tile;
 
@@ -87,13 +87,13 @@ namespace remoting_rfb
             buf = (PIXEL_T *)pframebuffer->getBuffer();
 
             tile.newTile(buf, t.width(), t.height());
-            int tileType = tile.getFlags();
+            ::i32 tileType = tile.getFlags();
             size_t encodedLen = tile.getSize();
 
             if ( (tileType & e_hextile_raw) != 0 ||
                  encodedLen >= t.width() * t.height() * sizeof(PIXEL_T) ) {
                m_pdataoutputstream->writeUInt8(e_hextile_raw);
-               m_pdataoutputstream->write((char *)buf, t.width() * t.height() * sizeof(PIXEL_T));
+               m_pdataoutputstream->write((char_pointer )buf, t.width() * t.height() * sizeof(PIXEL_T));
                oldBgValid = oldFgValid = false;
                continue;
                  }

@@ -28,7 +28,7 @@ namespace remoting_rfb_windows
 {
 
 
-   ::remoting_rfb::UpdateListener::::remoting_rfb::UpdateListener(void) {}
+   ::remoting_rfb::UpdateListener::remoting_rfb::UpdateListener(void) {}
 
    ::remoting_rfb::UpdateListener::~::remoting_rfb::UpdateListener(void) {}
 

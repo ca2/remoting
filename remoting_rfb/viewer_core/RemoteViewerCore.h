@@ -123,7 +123,7 @@ namespace remoting_rfb_client
       //       If you use this component under Windows, you should call
       //       WindowsSocket::startup() prior to calling this constructor.
       //
-      RemoteViewerCore(const ::scoped_string & scopedstrHost, unsigned short port,
+      RemoteViewerCore(const ::scoped_string & scopedstrHost, ::u16 port,
                        CoreEventsAdapter *adapter,
                        ::subsystem::LogWriter * plogwriter = 0,
                        bool sharedFlag = true);
@@ -220,7 +220,7 @@ namespace remoting_rfb_client
       //       If you use this component under Windows, you should call
       //       WindowsSocket::startup() prior to calling function.
       //
-      void start(const ::scoped_string & scopedstrHost, unsigned short port,
+      void start(const ::scoped_string & scopedstrHost, ::u16 port,
                  CoreEventsAdapter *adapter,
                  bool sharedFlag = true);
 
@@ -343,7 +343,7 @@ namespace remoting_rfb_client
       // request will not send until the response on the previous request is
       // recieved even if timeout is expired.
       //
-      void deferUpdateRequests(const int& milliseconds);
+      void deferUpdateRequests(const ::i32& milliseconds);
 
       //
       // Send a keyboard event. Arguments specify the event as defined in the
@@ -355,7 +355,7 @@ namespace remoting_rfb_client
       // Send a pointer (mouse) event. Arguments specify the event as defined in
       // the RFB v.3 protocol specification.
       //
-      void sendPointerEvent(unsigned char buttonMask, const ::i32_point &pointPosition);
+      void sendPointerEvent(::u8 buttonMask, const ::i32_point &pointPosition);
 
       //
       // Send cut text (clipboard) to the server.
@@ -367,7 +367,7 @@ namespace remoting_rfb_client
       // to use this encoding, this is only a recommendation for the server.
       // By default, Tight encoding (EncodingDefs::TIGHT) is the preferred one.
       //
-      void setPreferredEncoding(int encodingType);
+      void setPreferredEncoding(::i32 encodingType);
 
       //
       // Allow or disallow CopyRect encoding. Correctly designed server is
@@ -390,7 +390,7 @@ namespace remoting_rfb_client
       // to disable JPEG and ensure lossless compression (thus, it's possible to
       // say that -1 stands for best image quality).
       //
-      void setJpegQualityLevel(int newJpegQualityLevel);
+      void setJpegQualityLevel(::i32 newJpegQualityLevel);
 
       //
       // Set the compression level for Tight encoging (in theory, it can apply to
@@ -399,7 +399,7 @@ namespace remoting_rfb_client
       // Valid levels are in the range 0..9. Also, -1 can be used to let the
       // server choose actual compression level.
       //
-      void setCompressionLevel(int newCompressionLevel);
+      void setCompressionLevel(::i32 newCompressionLevel);
 
       //
       // Enable or disable cursor shape updates (enabled by default). If enabled,
@@ -430,26 +430,26 @@ namespace remoting_rfb_client
 
       void addAuthCapability(AuthHandler *authHandler,
                                      ::u32 code,
-                                     const char *vendorSignature,
-                                     const char *nameSignature,
+                                     const_char_pointer vendorSignature,
+                                     const_char_pointer pszNameSignature,
                                      const ::string description = "") override;
 
       void addServerMsgCapability(ServerMessageListener *listener,
                                           ::u32 code,
-                                          const char *vendorSignature,
-                                          const char *nameSignature,
+                                          const_char_pointer vendorSignature,
+                                          const_char_pointer pszNameSignature,
                                           const ::string description = "")override;
 
       void addClientMsgCapability(::u32 code,
-                                          const char *vendorSignature,
-                                          const char *nameSignature,
+                                          const_char_pointer vendorSignature,
+                                          const_char_pointer pszNameSignature,
                                           const ::string description = "")override;
 
       void addEncodingCapability(Decoder *decoder,
-                                         int priorityEncoding,
+                                         ::i32 priorityEncoding,
                                          ::u32 code,
-                                         const char *vendorSignature,
-                                         const char *nameSignature,
+                                         const_char_pointer vendorSignature,
+                                         const_char_pointer pszNameSignature,
                                          const ::string description = "") override;
 
       void getEnabledClientMsgCapabilities(::array_base<::u32> *codes) const override;
@@ -481,7 +481,7 @@ namespace remoting_rfb_client
       //
 
       //
-      // Read a scopedstrMessage type code (unsigned char) from the data connection.
+      // Read a scopedstrMessage type code (::u8) from the data connection.
       // If the code is 0xFC then it's a beginning of Remoting-specific extended
       // code so we read next 3 bytes and compose ::u32 scopedstrMessage type.
       //
@@ -512,7 +512,7 @@ namespace remoting_rfb_client
       //
       // Process a fake rectangle which represents a pseudo-encoding.
       //
-      void processPseudoEncoding(const ::i32_rectangle &  rectangle, int encType);
+      void processPseudoEncoding(const ::i32_rectangle &  rectangle, ::i32 encType);
 
       //
       // Send FramebufferUpdateRequest client scopedstrMessage (code 3).
@@ -539,20 +539,20 @@ namespace remoting_rfb_client
       //
       void receiveSetColorMapEntries();
 
-      bool isRfbProtocolString(const char protocol[12]) const;
+      bool isRfbProtocolString(const ::i8 protocol[12]) const;
       void connectToHost();
       void handshake();
-      int negotiateSecurityType();
+      ::i32 negotiateSecurityType();
       void authenticate();
       void clientAndServerInit();
       void readSecurityTypeList(::array_base<::u32> *secTypes);
       ::string getSecurityTypeName(::u32 securityType) const;
       ::string getAuthenticationTypeName(::u32 authenticationType) const;
-      int selectSecurityType(const ::array_base<::u32> *secTypes,
+      ::i32 selectSecurityType(const ::array_base<::u32> *secTypes,
                              const ::map<::u32, AuthHandler *> *authHandlers,
                              const bool isTightEnabled) const;
       void initTunnelling();
-      int initAuthentication();
+      ::i32 initAuthentication();
       void readCapabilities();
       RfbCapabilityInfo readCapability();
       void sendEncodings();
@@ -593,7 +593,7 @@ namespace remoting_rfb_client
       //
       // This method add ::pair <code, decoder> to ::map m_decoderHandlers.
       //
-      void registerDecoderHandler(const ::u32 code, Decoder *decoder, int priority);
+      void registerDecoderHandler(const ::u32 code, Decoder *decoder, ::i32 priority);
 
       ::subsystem::LogWriter * m_plogwriter;
 
@@ -628,7 +628,7 @@ namespace remoting_rfb_client
 
       CapsContainer m_encodingCaps;
       ::map<::u32, Decoder *> m_decoderHandlers;
-      ::map<::u32, int> m_decoderPriority;
+      ::map<::u32, ::i32> m_decoderPriority;
 
       // This flag is set after call start().
       mutable lockable_critical_section m_startLock;
@@ -673,8 +673,8 @@ namespace remoting_rfb_client
       bool m_bNeedRequestUpdate;
 
       bool m_bShared;
-      int m_major;
-      int m_minor;
+      ::i32 m_major;
+      ::i32 m_minor;
       bool m_isTightEnabled;
       bool m_isTight;
       ::string m_remoteDesktopName;
@@ -682,7 +682,7 @@ namespace remoting_rfb_client
 
       bool m_forceFullUpdate;
 
-      int m_updateTimeout;
+      ::i32 m_updateTimeout;
 
       ::pointer < UpdateRequestSender > m_pupdaterequestsenderProperty;
 

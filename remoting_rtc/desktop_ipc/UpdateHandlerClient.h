@@ -60,7 +60,7 @@ namespace remoting
       void sendInit(BlockingGate *pblockinggate) override;
 
       // To catch update event
-      void onRequest(unsigned char reqCode, BlockingGate *pblockinggate) override;
+      void onRequest(::u8 reqCode, BlockingGate *pblockinggate) override;
 
       ::pointer < UpdateListener > m_pupdatelistenerExternal;
 

@@ -61,9 +61,9 @@ namespace remoting_rfb
       bool encoderWasSet = false;
 
       size_t numCodes = ia.size();
-      ::array_base<int>::const_iterator i;
+      ::array_base<::i32>::const_iterator i;
       for (i = ia.begin(); i != ia.end(); i++) {
-         int code = *i;
+         ::i32 code = *i;
          if (!encoderWasSet && normalEncoding(code)) {
             m_preferredEncoding = code;
             encoderWasSet = true;
@@ -88,22 +88,22 @@ namespace remoting_rfb
             m_enableDesktopConfiguration = true;
          } else if (code >= PseudoEncDefs::COMPR_LEVEL_0 &&
                     code <= PseudoEncDefs::COMPR_LEVEL_9) {
-            int level = code - PseudoEncDefs::COMPR_LEVEL_0;
+            ::i32 level = code - PseudoEncDefs::COMPR_LEVEL_0;
             m_compressionLevel = level;
                     } else if (code >= PseudoEncDefs::QUALITY_LEVEL_0 &&
                                code <= PseudoEncDefs::QUALITY_LEVEL_9) {
-                       int level = code - PseudoEncDefs::QUALITY_LEVEL_0;
+                       ::i32 level = code - PseudoEncDefs::QUALITY_LEVEL_0;
                        m_jpegQualityLevel = level;
                                }
       }
    }
 
-   int EncodeOptions::getPreferredEncoding() const
+   ::i32 EncodeOptions::getPreferredEncoding() const
    {
       return m_preferredEncoding;
    }
 
-   bool EncodeOptions::encodingEnabled(int code) const
+   bool EncodeOptions::encodingEnabled(::i32 code) const
    {
       switch (code) {
          case EncodingDefs::RAW:
@@ -120,13 +120,13 @@ namespace remoting_rfb
       return false;
    }
 
-   int EncodeOptions::getCompressionLevel(int defaultLevel) const
+   ::i32 EncodeOptions::getCompressionLevel(::i32 defaultLevel) const
    {
-      int wasSet = (m_compressionLevel != EO_DEFAULT);
+      ::i32 wasSet = (m_compressionLevel != EO_DEFAULT);
       return wasSet ? m_compressionLevel : defaultLevel;
    }
 
-   int EncodeOptions::getJpegQualityLevel(int defaultLevel) const
+   ::i32 EncodeOptions::getJpegQualityLevel(::i32 defaultLevel) const
    {
       return jpegEnabled() ? m_jpegQualityLevel : defaultLevel;
    }
@@ -166,7 +166,7 @@ namespace remoting_rfb
       return m_enableDesktopConfiguration;
    }
 
-   bool EncodeOptions::normalEncoding(int code)
+   bool EncodeOptions::normalEncoding(::i32 code)
    {
       return (code == EncodingDefs::RAW ||
               code == EncodingDefs::RRE ||

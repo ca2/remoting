@@ -90,8 +90,8 @@ namespace remoting_rfb_client
       auto ini = file()->get_ini(path);
 
       ::string strHost = ini["host"];
-      int iNumerator = ini["numerator"].as_i32();
-      int iDenominator = ini["denominator"].as_i32();
+      ::i32 iNumerator = ini["numerator"].as_i32();
+      ::i32 iDenominator = ini["denominator"].as_i32();
       m_pconnectionconfig->enableFullscreen(true);
       m_pconnectionconfig->requestShapeUpdates(true);
       m_pconnectionconfig->ignoreShapeUpdates(false);
@@ -152,7 +152,7 @@ namespace remoting_rfb_client
       m_plogwriter->debug("loading settings from storage completed");
       m_plogwriter->debug("Log initialization completed");
 
-      //int result = 0;
+      //::i32 result = 0;
       try
       {
 

@@ -28,7 +28,7 @@
 
 namespace remoting_rtc_node
 {
-   PortMappingRect::PortMappingRect(int l, int t, int r, int b)
+   PortMappingRect::PortMappingRect(::i32 l, ::i32 t, ::i32 r, ::i32 b)
     : m_rectangle(l, t, r, b)
    {
    }
@@ -50,8 +50,8 @@ namespace remoting_rtc_node
    {
 
       ::string str(scopedstr);
-      int width, height, x, y;
-      char c;
+      ::i32 width, height, x, y;
+      ::i8 c;
       if (sscanf(str.c_str(), "%dx%d+%d+%d%c", &width, &height, &x, &y, &c) != 4) {
          return false;
       }
@@ -67,7 +67,7 @@ namespace remoting_rtc_node
       return true;
    }
 
-   bool PortMappingRect::tryParse(const char * psz)
+   bool PortMappingRect::tryParse(const_char_pointer psz)
    {
       return parse(psz, NULL);
    }

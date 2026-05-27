@@ -111,7 +111,7 @@ namespace remoting
       }
    }
 
-   void UpdateHandlerServer::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
+   void UpdateHandlerServer::onRequest(::u8 reqCode, BlockingGate *pblockinggate)
    {
       switch (reqCode)
       {
@@ -138,7 +138,7 @@ namespace remoting
             break;
          default:
             ::string errMess;
-            errMess.format("Unknown {} protocol code received from a pipe client", (int)reqCode);
+            errMess.format("Unknown {} protocol code received from a pipe client", (::i32)reqCode);
             throw ::subsystem::Exception(errMess);
             break;
       }

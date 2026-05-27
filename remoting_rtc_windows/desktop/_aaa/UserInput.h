@@ -52,20 +52,20 @@ namespace remoting_rtc_windows
       virtual void setNewClipboard(const ::scoped_string &newClipboard) = 0;
       // By the keyFlag argument will be set the mouse button state as described in
       // the rfb protocol.
-      virtual void setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag) = 0;
-      virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
+      virtual void setMouseEvent(const ::i32_point pointNewPosition, ::u8 keyFlag) = 0;
+      virtual void setKeyboardEvent(::u32 keySym, bool down) = 0;
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;
 
       virtual void getPrimaryDisplayCoords(::i32_rectangle & rectangle) = 0;
-      virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber) = 0;
+      virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber) = 0;
       virtual ::int_rectangle_array_base getDisplaysCoords() = 0;
       virtual void getNormalizedRect(::i32_rectangle & rectangle) = 0;
 
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle) = 0;
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) = 0;
 
-      virtual void getApplicationRegion(unsigned int procId, ::remoting_rtc::Region & region) = 0;
-      virtual bool isApplicationInFocus(unsigned int procId) = 0;
+      virtual void getApplicationRegion(::u32 procId, ::remoting_rtc::Region & region) = 0;
+      virtual bool isApplicationInFocus(::u32 procId) = 0;
 
 
    };

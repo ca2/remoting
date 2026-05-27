@@ -53,7 +53,7 @@ void HookLoaderApplication::registerWindowClass(WNDCLASS *wndClass)
   RegisterClass(wndClass);
 }
 
-int HookLoaderApplication::processMessages()
+::i32 HookLoaderApplication::processMessages()
 {
   // m_commandLine - is a target window hwnd by 64-bit text number.
   ::u64 targetWinValue = 0;

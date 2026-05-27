@@ -36,7 +36,7 @@ namespace remoting_rfb
    {
    public:
       virtual void onKeyboardEvent(::u32 keySym, bool down) = 0;
-      virtual void onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
+      virtual void onMouseEvent(::u16 x, ::u16 y, ::u8 buttonMask) = 0;
    };
 
 

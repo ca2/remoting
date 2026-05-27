@@ -28,7 +28,7 @@ namespace remoting_rtc_windows
 {
 
 
-   ::remoting_rtc::UpdateListener::::remoting_rtc::UpdateListener(void) {}
+   ::remoting_rtc::UpdateListener::remoting_rtc::UpdateListener(void) {}
 
    ::remoting_rtc::UpdateListener::~::remoting_rtc::UpdateListener(void) {}
 

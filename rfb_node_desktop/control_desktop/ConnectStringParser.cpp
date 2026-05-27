@@ -38,7 +38,7 @@ namespace remoting_control_desktop
 
    bool ConnectStringParser::parse(const ::scoped_string & scopedstrConnectString,
                                    ::string * pstrHost,
-                                   unsigned short * pushPort)
+                                   ::u16 * pushPort)
    {
       ::string connStrStorage(scopedstrConnectString);
 
@@ -51,7 +51,7 @@ namespace remoting_control_desktop
          return false;
       }
 
-      int port = 0;
+      ::i32 port = 0;
 
       if (!MainSubsystem().StringParser().parseInt(splitted[1], &port)) {
          return false;
@@ -68,7 +68,7 @@ namespace remoting_control_desktop
 
       if (pushPort)
       {
-         *pushPort = (unsigned short)port;
+         *pushPort = (::u16)port;
       }
 
       return true;

@@ -36,7 +36,7 @@ namespace remoting_rfb
    {
    }
 
-   int RreEncoder::getCode() const
+   ::i32 RreEncoder::getCode() const
    {
       return EncodingDefs::RRE;
    }
@@ -46,10 +46,10 @@ namespace remoting_rfb
                                    const ::innate_subsystem::Framebuffer *serverFb,
                                    const EncodeOptions *options)
    {
-      for (int y0 = rectangle.top; y0 < rectangle.bottom; y0 += RECT_SIZE) {
-         for (int x0 = rectangle.left; x0 < rectangle.right; x0 += RECT_SIZE) {
-            int x1 = minimum(x0 + RECT_SIZE, rectangle.right);
-            int y1 = minimum(y0 + RECT_SIZE, rectangle.bottom);
+      for (::i32 y0 = rectangle.top; y0 < rectangle.bottom; y0 += RECT_SIZE) {
+         for (::i32 x0 = rectangle.left; x0 < rectangle.right; x0 += RECT_SIZE) {
+            ::i32 x1 = minimum(x0 + RECT_SIZE, rectangle.right);
+            ::i32 y1 = minimum(y0 + RECT_SIZE, rectangle.bottom);
             rectanglea.add(::i32_rectangle(x0, y0, x1, y1));
          }
       }
@@ -64,9 +64,9 @@ namespace remoting_rfb
       size_t bpp = pframebuffer->getBitsPerPixel();
       // Choose size of pixel according to options.
       if (bpp == 8) {
-         rreEncode<unsigned char>(rectangle, pframebuffer);
+         rreEncode<::u8>(rectangle, pframebuffer);
       } else if (bpp == 16) {
-         rreEncode<unsigned short>(rectangle, pframebuffer);
+         rreEncode<::u16>(rectangle, pframebuffer);
       } else if (bpp == 32) {
          rreEncode<::u32>(rectangle, pframebuffer);
       } else {
@@ -79,7 +79,7 @@ namespace remoting_rfb
                               const ::innate_subsystem::Framebuffer *pframebuffer)
    {
       PIXEL_T *buffer = (PIXEL_T *)pframebuffer->getBuffer();
-      int fbWidth = pframebuffer->getDimension().cx;
+      ::i32 fbWidth = pframebuffer->getDimension().cx;
       ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
       // Mask for cutting rubbish bits.
       PIXEL_T mask = pixelformat.redMax << pixelformat.redShift |
@@ -94,8 +94,8 @@ namespace remoting_rfb
       ::array_base<PIXEL_T> subrectPixelValue;
 
       // Find lines with the same pixel values.
-      for (int i = r.top; i < r.bottom; i++) {
-         for (int j = r.left; j < r.right; j++) {
+      for (::i32 i = r.top; i < r.bottom; i++) {
+         for (::i32 j = r.left; j < r.right; j++) {
             if ((buffer[i * fbWidth + j] & mask) != backgroundPixelValue) {
                if (subrectPixelValue.empty() ||
                    (buffer[i * fbWidth + j] & mask) != (buffer[i * fbWidth + j - 1] & mask) ||

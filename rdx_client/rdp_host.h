@@ -26,10 +26,10 @@ namespace remoting_rdx_client
 ::pointer < main_window > m_pmainwindow;
       // bool              m_dDrawControlBox;
       // bool              m_dDrawOnlyMainRectangles;
-      // double            m_dBreathPeriod;
+      // ::f64            m_dBreathPeriod;
       // class ::time      m_timeStart;
-      // double            m_dPhaseShift;
-      // int               m_iCloseButtonDraw;
+      // ::f64            m_dPhaseShift;
+      // ::i32               m_iCloseButtonDraw;
       //
       //
       // ::pointer<event_sink> m_peventsink;
@@ -63,8 +63,8 @@ namespace remoting_rdx_client
 
       //void on_window_size() override;
       //void on_window_set_focus() override;
-      //bool on_window_activate(int iActivate, bool bMinimized, const ::operating_system::window & operatingsystemwindow) override;
-      //bool on_window_mouse_activate(int &iResult, const operating_system::window &operatingsystemwindowTop, int iHitTest, int iMessage) override;
+      //bool on_window_activate(::i32 iActivate, bool bMinimized, const ::operating_system::window & operatingsystemwindow) override;
+      //bool on_window_mouse_activate(::i32 &iResult, const operating_system::window &operatingsystemwindowTop, ::i32 iHitTest, ::i32 iMessage) override;
 
 
       virtual void on_create_window();
@@ -79,7 +79,7 @@ namespace remoting_rdx_client
 
       //virtual void on_create_user_interaction() override;
 
-      void on_window_paint(nano::graphics::device *pnanographicsdevice) override;
+      void on_window_paint(::nano::graphics::context *pgraphicscontext) override;
 
       //virtual void _001OnDraw(::draw2d::graphics_pointer & pgraphics) override;
 

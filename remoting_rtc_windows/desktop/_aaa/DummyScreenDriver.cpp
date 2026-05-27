@@ -29,7 +29,7 @@ namespace remoting_rtc_windows
 
    //
    // DummyScreenDriver::DummyScreenDriver(::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener, const ::i32_size & size,
-   //                                   unsigned int interval, ::subsystem::LogWriter * plogwriter) :
+   //                                   ::u32 interval, ::subsystem::LogWriter * plogwriter) :
    //  m_pupdatelistener = pupdatelistener;m_pupdatekeeper = pupdatekeeper; m_interval(interval)
    //  {
    //
@@ -61,7 +61,7 @@ namespace remoting_rtc_windows
 
 
    void DummyScreenDriver::initialize_dummy_screen_driver(::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener, const ::i32_size & size,
-                                     unsigned int interval, ::subsystem::LogWriter * plogwriter)
+                                     ::u32 interval, ::subsystem::LogWriter * plogwriter)
    {
       m_pupdatelistener = pupdatelistener;
       m_pupdatekeeper = pupdatekeeper;
@@ -92,15 +92,15 @@ namespace remoting_rtc_windows
             try
             {
                ::i32_size size = m_pframebufferWork->getDimension();
-               int w = size.cx;
-               int h = size.cy;
-               int x = rand() % (w / 50) + (w / 50);
-               int y = rand() % (h / 50) + (h / 50);
+               ::i32 w = size.cx;
+               ::i32 h = size.cy;
+               ::i32 x = rand() % (w / 50) + (w / 50);
+               ::i32 y = rand() % (h / 50) + (h / 50);
 
                ::i32_rectangle r(0, 0, x, y);
                r.offset(rand() % w, rand() % h);
-               int m = 0xffffff / RAND_MAX;
-               unsigned int color = rand() * m + rand() % m;
+               ::i32 m = 0xffffff / RAND_MAX;
+               ::u32 color = rand() * m + rand() % m;
                ::i32_rectangle rectangle(0, 0, w, h);
                Region region(rectangle);
                if (m_detectionEnabled)

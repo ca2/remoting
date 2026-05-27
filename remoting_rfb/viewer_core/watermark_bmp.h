@@ -2,7 +2,7 @@
 
 namespace remoting_rfb_client
 {
-   const unsigned char WATERMARK_BMP_BODY[] = {
+   const ::u8 WATERMARK_BMP_BODY[] = {
 #ifdef _DEMO_VERSION_
       66,  77,  14,  39,   0,   0,   0,   0,   0,   0,  54,   0,   0,   0,  40,   0,
        0,   0, 150,   0,   0,   0,  22,   0,   0,   0,   1,   0,  24,   0,   0,   0,

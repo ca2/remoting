@@ -87,7 +87,7 @@ namespace remoting_control_desktop
       bool hasShareWindow();
       bool hasShareFull();
       bool hasShareApp();
-      unsigned char getShareDisplayNumber();
+      ::u8 getShareDisplayNumber();
       void getShareWindowName(::string & out);
       ::i32_rectangle getShareRect();
       ::u32 getSharedAppProcessId();
@@ -110,7 +110,7 @@ namespace remoting_control_desktop
       ::string m_passwordFile;
 
       ::i32_rectangle m_shareRect;
-      unsigned char m_displayNumber;
+      ::u8 m_displayNumber;
       ::string m_windowHeaderName;
       ::u32 m_sharedAppProcessId;
    };

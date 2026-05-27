@@ -64,7 +64,7 @@ namespace remoting_rfb_node
 
       void onOkButtonClick();
       void onCancelButtonClick();
-      void onAccessTypeRadioClick(int num);
+      void onAccessTypeRadioClick(::i32 num);
    private:
       void initControls();
       bool validateInput();

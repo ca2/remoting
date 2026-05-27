@@ -41,14 +41,14 @@ namespace remoting_rfb
    struct TightColorList
    {
       TightColorList *next;
-      int idx;
+      ::i32 idx;
       ::u32 rgb;
    };
 
    struct TightPaletteEntry
    {
       TightColorList *listNode;
-      int numPixels;
+      ::i32 numPixels;
    };
 
    class TightPalette
@@ -57,11 +57,11 @@ namespace remoting_rfb
    protected:
 
       // FIXME: Bigger hash table? Better hash function?
-      inline static int hashFunc(::u32 rgb) { return (rgb ^ (rgb >> 13)) & 0xFF; }
+      inline static ::i32 hashFunc(::u32 rgb) { return (rgb ^ (rgb >> 13)) & 0xFF; }
 
    public:
 
-      TightPalette(int maxColors = 254);
+      TightPalette(::i32 maxColors = 254);
 
       //
       // Re-initialize the object. This does not change maximum number
@@ -73,7 +73,7 @@ namespace remoting_rfb
       // Set limit on the number of colors in the palette. Note that
       // this value cannot exceed 254.
       //
-      void setMaxColors(int maxColors);
+      void setMaxColors(::i32 maxColors);
 
       //
       // Insert new color into the palette, or increment its counter if
@@ -82,18 +82,18 @@ namespace remoting_rfb
       // reports zero colors and cannot be used any more without calling
       // reset().
       //
-      int insert(::u32 rgb, int numPixels);
+      ::i32 insert(::u32 rgb, ::i32 numPixels);
 
       //
       // Return the number of colors in the palette. If the palette is full,
       // this function returns 0.
       //
-      inline int getNumColors() const { return m_numColors; }
+      inline ::i32 getNumColors() const { return m_numColors; }
 
       //
       // Return the color specified by its index in the palette.
       //
-      inline ::u32 getEntry(int i) const
+      inline ::u32 getEntry(::i32 i) const
       {
          return (i < m_numColors) ? m_entry[i].listNode->rgb : (::u32)-1;
       }
@@ -101,19 +101,19 @@ namespace remoting_rfb
       //
       // Return the pixel counter of the color specified by its index.
       //
-      inline int getCount(int i) const { return (i < m_numColors) ? m_entry[i].numPixels : 0; }
+      inline ::i32 getCount(::i32 i) const { return (i < m_numColors) ? m_entry[i].numPixels : 0; }
 
       //
       // Return the index of a specified color.
       //
-      inline unsigned char getIndex(::u32 rgb) const
+      inline ::u8 getIndex(::u32 rgb) const
       {
          TightColorList *pnode = m_hash[hashFunc(rgb)];
          while (pnode != NULL)
          {
             if (pnode->rgb == rgb)
             {
-               return (unsigned char)pnode->idx;
+               return (::u8)pnode->idx;
             }
             pnode = pnode->next;
          }
@@ -122,8 +122,8 @@ namespace remoting_rfb
 
    protected:
 
-      int m_maxColors;
-      int m_numColors;
+      ::i32 m_maxColors;
+      ::i32 m_numColors;
 
       TightPaletteEntry m_entry[256];
       TightColorList *m_hash[256];

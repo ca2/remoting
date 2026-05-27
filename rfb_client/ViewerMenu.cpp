@@ -37,7 +37,7 @@ namespace remoting_rfb_client
         m_startIndex++;
     }
 
-    void ViewerMenu::menuItem(int id)
+    void ViewerMenu::menuItem(::i32 id)
     {
         ::string helpString;
         auto presourceloader = InnateSubsystem().ResourceLoader();

@@ -44,13 +44,13 @@ namespace remoting_rtc_windows
       // Builds rfb mask AND by alpha channel of given pixels.
       // If isInversedAlpha is false the pixel supposes by transparent if alpha value less than 128.
       // If isInversedAlpha is true the pixel supposes by transparent if alpha value greater than 128.
-      static void fixAlphaChannel(const ::innate_subsystem::Framebuffer *pixels, char *maskAND, bool isInversedAlpha,
-                                  int maskWidthInBytes);
+      static void fixAlphaChannel(const ::innate_subsystem::Framebuffer *pixels, char_pointer maskAND, bool isInversedAlpha,
+                                  ::i32 maskWidthInBytes);
 
       // This function combines windows cursor mask and image and convert
       // theirs to rfb format. This function uses for monochrome cursor image.
-      static void winMonoShapeToRfb(const ::innate_subsystem::Framebuffer *pixels, char *maskAND, char *maskXOR,
-                                    int maskWidthInBytes);
+      static void winMonoShapeToRfb(const ::innate_subsystem::Framebuffer *pixels, char_pointer maskAND, char_pointer maskXOR,
+                                    ::i32 maskWidthInBytes);
 
       //   This function combines windows the cursor mask and image and convert
       // theirs to rfb format. This function uses for 16 or 24 bit color cursor
@@ -58,62 +58,62 @@ namespace remoting_rtc_windows
       //   Also, this function determines whether image contains the alhpa channel
       // and returns true in this case.
       template<typename T>
-      static bool winColorShapeToRfb(const ::innate_subsystem::Framebuffer *pixels, char *maskAND,
-                                     int maskWidthInBytes);
+      static bool winColorShapeToRfb(const ::innate_subsystem::Framebuffer *pixels, char_pointer maskAND,
+                                     ::i32 maskWidthInBytes);
 
       // Matrox videocard returns 256 byte width buffer for 32 pixel cursor,
       // need trim it for correct handling
-      static void trimBuffer(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo);
+      static void trimBuffer(::array_base<::i8> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo);
 
    private:
       // Inverts bit array with the "not" operator.
-      static void inverse(char *bits, int count);
+      static void inverse(char_pointer bits, ::i32 count);
 
       // Returns true if a bit on the index place is true. High-order bit has zero index.
-      inline static bool testBit(char byte, int index)
+      inline static bool testBit(::i8 byte, ::i32 index)
       {
-         char dummy = 128 >> index;
+         ::i8 dummy = 128 >> index;
          return (dummy & byte) != 0;
       };
 
-      inline static char setBit(char byte, int index)
+      inline static ::i8 setBit(::i8 byte, ::i32 index)
       {
-         char dummy = 128 >> index;
+         ::i8 dummy = 128 >> index;
          return dummy | byte;
       };
 
-      inline static char clearBit(char byte, int index)
+      inline static ::i8 clearBit(::i8 byte, ::i32 index)
       {
-         char dummy = 128 >> index;
+         ::i8 dummy = 128 >> index;
          return ~dummy & byte;
       };
 
       static ::u32 getAlphaMask(const ::innate_subsystem::PixelFormat & pixelformat);
       static ::u32 getCursorHeight(DXGI_OUTDUPL_POINTER_SHAPE_INFO &shapeInfo);
-      static bool isPixelTransparent(char *const buffer, ::u32 type, ::u32 height, ::u32 pitch,
+      static bool isPixelTransparent(char_pointer const buffer, ::u32 type, ::u32 height, ::u32 pitch,
                                      ::u32 x, ::u32 y);
       static bool isColorPixelTransparent(::u32 pixel, ::u32 type);
-      static bool isMonochromePixelTransparent(char andByte, char xorByte, ::u32 x);
-      static void trimTransparent(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo);
+      static bool isMonochromePixelTransparent(::i8 andByte, ::i8 xorByte, ::u32 x);
+      static void trimTransparent(::array_base<::i8> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo);
    };
 
    template<typename T>
-   static bool WinCursorShapeUtils::winColorShapeToRfb(const ::innate_subsystem::Framebuffer *pixels, char *maskAND,
-                                                       int maskWidthInBytes)
+   static bool WinCursorShapeUtils::winColorShapeToRfb(const ::innate_subsystem::Framebuffer *pixels, char_pointer maskAND,
+                                                       ::i32 maskWidthInBytes)
    {
-      char *pixelsBuffer = (char *)pixels->getBuffer();
+      char_pointer pixelsBuffer = (char_pointer )pixels->getBuffer();
       ::innate_subsystem::PixelFormat pixelformat = pixels->getPixelFormat();
       T *pixel;
 
-      int fbWidth = pixels->getDimension().cx;
-      int fbHeight = pixels->getDimension().cy;
+      ::i32 fbWidth = pixels->getDimension().cx;
+      ::i32 fbHeight = pixels->getDimension().cy;
 
       bool hasAlphaChannel = false;
       ::u32 alphaMask = getAlphaMask(pixelformat);
 
-      for (int iRow = 0; iRow < fbHeight; iRow++)
+      for (::i32 iRow = 0; iRow < fbHeight; iRow++)
       {
-         for (int iCol = 0; iCol < fbWidth; iCol++)
+         for (::i32 iCol = 0; iCol < fbWidth; iCol++)
          {
             pixel = (T *)pixelsBuffer + iRow * fbWidth + iCol;
 

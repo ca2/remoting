@@ -90,7 +90,7 @@ namespace remoting
       // the size and pixelformat function arguments.
       void getFramebufferProperties(::i32_size & size, ::innate_subsystem::PixelFormat & pixelformat) override;
       void getPrimaryDesktopCoords(::i32_rectangle rectangle) override;
-      void getDisplayNumberCoords(::i32_rectangle rectangle, unsigned char dispNumber) override;
+      void getDisplayNumberCoords(::i32_rectangle rectangle, ::u8 dispNumber) override;
       ::int_rectangle_array_base getDisplaysCoords() override;
       void getNormalizedRect(::i32_rectangle rectangle) override;
       void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle rectangle) override;
@@ -99,7 +99,7 @@ namespace remoting
       bool isApplicationInFocus(::u32 procId) override;
 
       void setKeyboardEvent(::u32 keySym, bool down) override;
-      void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) override;
+      void setMouseEvent(::u16 x, ::u16 y, ::u8 buttonMask) override;
       void setNewClipText(const ::scoped_string &newClipboard) override;
 
    //protected:

@@ -104,11 +104,11 @@ namespace remoting_rtc_windows
       }
    }
 
-   void DesktopBaseImpl::getDisplayNumberCoords(::i32_rectangle rectangle, unsigned char dispNumber)
+   void DesktopBaseImpl::getDisplayNumberCoords(::i32_rectangle rectangle, ::u8 dispNumber)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
-      m_plogwriter->information("get the %u display coordinates", (unsigned int)dispNumber);
+      m_plogwriter->information("get the %u display coordinates", (::u32)dispNumber);
       try
       {
          m_puserinput->getDisplayNumberCoords(rectangle, dispNumber);
@@ -191,7 +191,7 @@ namespace remoting_rtc_windows
       return 0;
    }
 
-   void DesktopBaseImpl::getApplicationRegion(unsigned int procId, Region & region)
+   void DesktopBaseImpl::getApplicationRegion(::u32 procId, Region & region)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -207,7 +207,7 @@ namespace remoting_rtc_windows
       }
    }
 
-   bool DesktopBaseImpl::isApplicationInFocus(unsigned int procId)
+   bool DesktopBaseImpl::isApplicationInFocus(::u32 procId)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -233,12 +233,12 @@ namespace remoting_rtc_windows
       return enabled;
    }
 
-   void DesktopBaseImpl::setKeyboardEvent(unsigned int keySym, bool down)
+   void DesktopBaseImpl::setKeyboardEvent(::u32 keySym, bool down)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
 
-      m_plogwriter->information("set keyboard event (keySym = %u, down = {})", keySym, (int)down);
+      m_plogwriter->information("set keyboard event (keySym = %u, down = {})", keySym, (::i32)down);
       try
       {
          if (isRemoteInputAllowed())
@@ -253,13 +253,13 @@ namespace remoting_rtc_windows
       }
    }
 
-   void DesktopBaseImpl::setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask)
+   void DesktopBaseImpl::setMouseEvent(::u16 x, ::u16 y, ::u8 buttonMask)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
 
-      m_plogwriter->information("set mouse event (x = %u, y = %u, mask = %u)", (unsigned int)x, (unsigned int)y,
-                                (unsigned int)buttonMask);
+      m_plogwriter->information("set mouse event (x = %u, y = %u, mask = %u)", (::u32)x, (::u32)y,
+                                (::u32)buttonMask);
       ::i32_point point(x, y);
       try
       {

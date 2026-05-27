@@ -184,7 +184,7 @@ namespace remoting_rfb
 
    bool RegistrySettingsManager::getBoolean(const ::scoped_string & scopedstrFullPath, bool *value)
    {
-      int intVal = 0;
+      ::i32 intVal = 0;
       if (!getInt(scopedstrFullPath, &intVal)) {
          return false;
       }
@@ -199,15 +199,15 @@ namespace remoting_rfb
 
    bool RegistrySettingsManager::getUINT(const ::scoped_string & scopedstrFullPath, ::u32 *value)
    {
-      return getInt(scopedstrFullPath, (int *)value);
+      return getInt(scopedstrFullPath, (::i32 *)value);
    }
 
    bool RegistrySettingsManager::setUINT(const ::scoped_string & scopedstrFullPath, ::u32 value)
    {
-      return setInt(scopedstrFullPath, (int)value);
+      return setInt(scopedstrFullPath, (::i32)value);
    }
 
-   bool RegistrySettingsManager::getInt(const ::scoped_string & scopedstrFullPath, int *value)
+   bool RegistrySettingsManager::getInt(const ::scoped_string & scopedstrFullPath, ::i32 *value)
    {
       ::string path;
       ::string name;
@@ -221,7 +221,7 @@ namespace remoting_rfb
       return subKey.getValueAsInt32(name, value);
    }
 
-   bool RegistrySettingsManager::setInt(const ::scoped_string & scopedstrFullPath, int value)
+   bool RegistrySettingsManager::setInt(const ::scoped_string & scopedstrFullPath, ::i32 value)
    {
       ::string path;
       ::string name;
@@ -234,19 +234,19 @@ namespace remoting_rfb
       return subKey.setValueAsInt32(name, value);
    }
 
-   bool RegistrySettingsManager::getByte(const ::scoped_string & scopedstrFullPath, char *value)
+   bool RegistrySettingsManager::getByte(const ::scoped_string & scopedstrFullPath, char_pointer value)
    {
-      int intVal = 0;
+      ::i32 intVal = 0;
       if (!getInt(scopedstrFullPath, &intVal)) {
          return false;
       }
-      *value = (char)intVal;
+      *value = (::i8)intVal;
       return true;
    }
 
-   bool RegistrySettingsManager::setByte(const ::scoped_string & scopedstrFullPath, char value)
+   bool RegistrySettingsManager::setByte(const ::scoped_string & scopedstrFullPath, ::i8 value)
    {
-      return setInt(scopedstrFullPath, (int)value);
+      return setInt(scopedstrFullPath, (::i32)value);
    }
 
    bool RegistrySettingsManager::getBinaryData(const ::scoped_string & scopedstrFullPath, void *value, memsize *size)

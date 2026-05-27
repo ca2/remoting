@@ -49,7 +49,7 @@ namespace remoting_rfb_client
         // Adds new item to FileInfoListView
         //
 
-        virtual void addItem(int index, ::remoting_rfb::file_transfer::FileInfo *fileInfo);
+        virtual void addItem(::i32 index, ::remoting_rfb::file_transfer::FileInfo *fileInfo);
 
         //
         // Adds files info array to the end of ::list_base view
@@ -64,7 +64,7 @@ namespace remoting_rfb_client
 
         virtual ::pointer < ::remoting_rfb::file_transfer::FileInfo >getSelectedFileInfo();
 
-        virtual void set_sort(int columnIndex);
+        virtual void set_sort(::i32 columnIndex);
         //protected:
 
         //
@@ -76,9 +76,9 @@ namespace remoting_rfb_client
         //
         // This function compare two item with file-contex (file name, date, size).
         //
-        //static int  s_compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort);
+        //static ::i32  s_compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort);
 
-        virtual int  compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort);
+        virtual ::i32  compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort);
 
         //
         // This function return:
@@ -86,16 +86,16 @@ namespace remoting_rfb_client
         //   0, if first == second
         //   1, if first > second
         //
-        virtual int compareUInt64(::u64 first, ::u64 second);
+        virtual ::i32 compareUInt64(::u64 first, ::u64 second);
 
         ::pointer < ::innate_subsystem::ImageListInterface > m_pimagelistSmall;
 
         //private:
         virtual bool window_procedure(::lresult & lresult, ::u32 scopedstrMessage, ::wparam wparam, ::lparam lparam);
 
-        static const int IMAGE_FOLDER_UP_INDEX = 0;
-        static const int IMAGE_FOLDER_INDEX = 1;
-        static const int IMAGE_FILE_INDEX = 2;
+        static const ::i32 IMAGE_FOLDER_UP_INDEX = 0;
+        static const ::i32 IMAGE_FOLDER_INDEX = 1;
+        static const ::i32 IMAGE_FILE_INDEX = 2;
     };
 } // namespace remoting_rfb_client
 

@@ -40,24 +40,24 @@ namespace remoting_rfb_client
       DecoderStore(::subsystem::LogWriter * plogwriter);
       ~DecoderStore();
 
-      Decoder *getDecoder(int decoderId);
-      ::array_base<int> getDecoderIds();
+      Decoder *getDecoder(::i32 decoderId);
+      ::array_base<::i32> getDecoderIds();
 
       // return true, if adding is complete
       // return false, if decoder already exist
-      bool addDecoder(Decoder *newDecoder, int priority);
+      bool addDecoder(Decoder *newDecoder, ::i32 priority);
       // return true, if deleting is complete
       // return false, if decoder not exist
-      bool removeDecoder(int decoderId);
+      bool removeDecoder(::i32 decoderId);
 
-      void setPreferredEncoding(int encodingType);
+      void setPreferredEncoding(::i32 encodingType);
       void allowCopyRect(bool allow);
 
    private:
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
-      ::map<int, ::pair<int, ::pointer < Decoder >> > m_decoders;
-      int m_preferredEncoding;
+      ::map<::i32, ::pair<::i32, ::pointer < Decoder >> > m_decoders;
+      ::i32 m_preferredEncoding;
       bool m_allowCopyRect;
    };
 } // namespace remoting_rfb_client

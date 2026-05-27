@@ -32,25 +32,25 @@ namespace remoting_rtc_windows
 
    WinCursorShapeUtils::~WinCursorShapeUtils() {}
 
-   void WinCursorShapeUtils::winMonoShapeToRfb(const ::innate_subsystem::Framebuffer *pixels, char *maskAND,
-                                               char *maskXOR, int maskWidthInBytes)
+   void WinCursorShapeUtils::winMonoShapeToRfb(const ::innate_subsystem::Framebuffer *pixels, char_pointer maskAND,
+                                               char_pointer maskXOR, ::i32 maskWidthInBytes)
    {
-      char *pixelsBuffer = (char *)pixels->getBuffer();
-      char *pixel;
-      int pixelSize = pixels->getBytesPerPixel();
-      int pixelCount = pixels->getBufferSize() / pixelSize;
+      char_pointer pixelsBuffer = (char_pointer )pixels->getBuffer();
+      char_pointer pixel;
+      ::i32 pixelSize = pixels->getBytesPerPixel();
+      ::i32 pixelCount = pixels->getBufferSize() / pixelSize;
 
-      int fbWidth = pixels->getDimension().cx;
-      int fbHeight = pixels->getDimension().cy;
+      ::i32 fbWidth = pixels->getDimension().cx;
+      ::i32 fbHeight = pixels->getDimension().cy;
 
-      for (int iRow = 0; iRow < fbHeight; iRow++)
+      for (::i32 iRow = 0; iRow < fbHeight; iRow++)
       {
-         for (int iCol = 0; iCol < fbWidth; iCol++)
+         for (::i32 iCol = 0; iCol < fbWidth; iCol++)
          {
             pixel = pixelsBuffer + (iRow * fbWidth + iCol) * pixelSize;
 
-            char byteAnd = maskAND[iRow * maskWidthInBytes + iCol / 8];
-            char byteXor = maskXOR[iRow * maskWidthInBytes + iCol / 8];
+            ::i8 byteAnd = maskAND[iRow * maskWidthInBytes + iCol / 8];
+            ::i8 byteXor = maskXOR[iRow * maskWidthInBytes + iCol / 8];
 
             bool maskANDBit = testBit(byteAnd, iCol % 8);
             bool maskXORBit = testBit(byteXor, iCol % 8);
@@ -71,14 +71,14 @@ namespace remoting_rtc_windows
       }
 
       inverse(maskAND, maskWidthInBytes * fbHeight);
-      for (int i = 0; i < maskWidthInBytes * fbHeight; i++)
+      for (::i32 i = 0; i < maskWidthInBytes * fbHeight; i++)
       {
          *(maskAND + i) |= *(maskXOR + i);
       }
    }
 
-   void WinCursorShapeUtils::fixAlphaChannel(const ::innate_subsystem::Framebuffer *pixels, char *maskAND,
-                                             bool maskedColor, int maskWidthInBytes)
+   void WinCursorShapeUtils::fixAlphaChannel(const ::innate_subsystem::Framebuffer *pixels, char_pointer maskAND,
+                                             bool maskedColor, ::i32 maskWidthInBytes)
    {
       ::innate_subsystem::PixelFormat pixelformat = pixels->getPixelFormat();
       if (pixelformat.bitsPerPixel != 32)
@@ -86,7 +86,7 @@ namespace remoting_rtc_windows
          return;
       }
       ::u32 alphaMask = getAlphaMask(pixelformat);
-      unsigned short alphaShift = 0;
+      ::u16 alphaShift = 0;
 
       for (; alphaShift < 32 && ((alphaMask >> alphaShift) % 2) == 0; alphaShift++)
       {
@@ -98,14 +98,14 @@ namespace remoting_rtc_windows
       }
 
       ::u32 *pixelBuffer = (::u32 *)pixels->getBuffer();
-      int pixelSize = pixels->getBytesPerPixel();
+      ::i32 pixelSize = pixels->getBytesPerPixel();
 
-      int fbWidth = pixels->getDimension().cx;
-      int fbHeight = pixels->getDimension().cy;
+      ::i32 fbWidth = pixels->getDimension().cx;
+      ::i32 fbHeight = pixels->getDimension().cy;
 
-      for (int iRow = 0; iRow < fbHeight; iRow++)
+      for (::i32 iRow = 0; iRow < fbHeight; iRow++)
       {
-         for (int iCol = 0; iCol < fbWidth; iCol++)
+         for (::i32 iCol = 0; iCol < fbWidth; iCol++)
          {
             ::u32 *pixel = &pixelBuffer[iRow * fbWidth + iCol];
             ::u32 colorValue = *pixel & ~alphaMask;
@@ -117,7 +117,7 @@ namespace remoting_rtc_windows
             }
             if (transparent)
             {
-               char *byteAnd = &maskAND[iRow * maskWidthInBytes + iCol / 8];
+               char_pointer byteAnd = &maskAND[iRow * maskWidthInBytes + iCol / 8];
                *byteAnd = clearBit(*byteAnd, iCol % 8);
             }
          }
@@ -138,15 +138,15 @@ namespace remoting_rtc_windows
       }
    }
 
-   void WinCursorShapeUtils::inverse(char *bits, int count)
+   void WinCursorShapeUtils::inverse(char_pointer bits, ::i32 count)
    {
-      for (int i = 0; i < count; i++, bits++)
+      for (::i32 i = 0; i < count; i++, bits++)
       {
          *bits = ~*bits;
       }
    }
 
-   void WinCursorShapeUtils::trimBuffer(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
+   void WinCursorShapeUtils::trimBuffer(::array_base<::i8> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
    {
       ::u32 newPitch;
       ::u32 oldPitch = shapeInfo->Pitch;
@@ -165,16 +165,16 @@ namespace remoting_rtc_windows
          return;
       }
 
-      for (int i = 1; i < shapeInfo->Height; i++)
+      for (::i32 i = 1; i < shapeInfo->Height; i++)
       {
-         char *dst = &buffer->at(i * newPitch);
-         char *src = &buffer->at(i * oldPitch);
+         char_pointer dst = &buffer->at(i * newPitch);
+         char_pointer src = &buffer->at(i * oldPitch);
          memcpy(dst, src, newPitch);
       }
       shapeInfo->Pitch = newPitch;
    }
 
-   void WinCursorShapeUtils::trimTransparent(::array_base<char> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
+   void WinCursorShapeUtils::trimTransparent(::array_base<::i8> *buffer, DXGI_OUTDUPL_POINTER_SHAPE_INFO *shapeInfo)
    {
       ::u32 pitch = shapeInfo->Pitch;
       ::u32 height = getCursorHeight(*shapeInfo);
@@ -225,8 +225,8 @@ namespace remoting_rtc_windows
             shapeInfo->Height = (2 * trimmedHeight);
 
             // Shift the XOR mask
-            char *dst = &buffer->at(trimmedHeight * pitch);
-            char *src = &buffer->at(height * pitch);
+            char_pointer dst = &buffer->at(trimmedHeight * pitch);
+            char_pointer src = &buffer->at(height * pitch);
             memcpy(dst, src, trimmedHeight * pitch);
          }
          else
@@ -236,7 +236,7 @@ namespace remoting_rtc_windows
       }
    }
 
-   bool WinCursorShapeUtils::isMonochromePixelTransparent(char andByte, char xorByte, ::u32 x)
+   bool WinCursorShapeUtils::isMonochromePixelTransparent(::i8 andByte, ::i8 xorByte, ::u32 x)
    {
       bool pixelSet = WinCursorShapeUtils::testBit(andByte, x % 8);
       bool xorSet = WinCursorShapeUtils::testBit(xorByte, x % 8);
@@ -268,15 +268,15 @@ namespace remoting_rtc_windows
       return transparent;
    }
 
-   bool WinCursorShapeUtils::isPixelTransparent(char *const buffer, ::u32 type, ::u32 height,
+   bool WinCursorShapeUtils::isPixelTransparent(char_pointer const buffer, ::u32 type, ::u32 height,
                                                 ::u32 pitch, ::u32 x, ::u32 y)
    {
       if (type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MONOCHROME)
       {
          ::u32 andOffset = (y * pitch) + (x / 8);
          ::u32 xorOffset = andOffset + height * pitch;
-         char andByte = buffer[andOffset];
-         char xorByte = buffer[xorOffset];
+         ::i8 andByte = buffer[andOffset];
+         ::i8 xorByte = buffer[xorOffset];
 
          return isMonochromePixelTransparent(andByte, xorByte, x);
       }

@@ -65,7 +65,7 @@ namespace remoting_rfb
    {
       bool loadAllOk = true;
 
-      int iTrace;
+      ::i32 iTrace;
       TEST_FAIL(storage->getInt("LogLevel", &iTrace), loadAllOk);
       m_etracelevel = (enum_trace_level) iTrace;
       //setLogLevel(m_logLevel);
@@ -95,7 +95,7 @@ namespace remoting_rfb
    {
       bool saveAllOk = true;
 
-      TEST_FAIL(storage->setInt("LogLevel",  (int) m_etracelevel), saveAllOk);
+      TEST_FAIL(storage->setInt("LogLevel",  (::i32) m_etracelevel), saveAllOk);
       TEST_FAIL(storage->setInt("ListenPort", m_listenPort), saveAllOk);
       TEST_FAIL(storage->setInt("HistoryLimit", m_historyLimit), saveAllOk);
       TEST_FAIL(storage->setBoolean("NoToolbar", m_showToolbar), saveAllOk);
@@ -104,7 +104,7 @@ namespace remoting_rfb
       return saveAllOk;
    }
 
-   void ViewerConfig::setListenPort(int listenPort)
+   void ViewerConfig::setListenPort(::i32 listenPort)
    {
       critical_section_lock l(&m_cs);
 
@@ -117,7 +117,7 @@ namespace remoting_rfb
       m_listenPort = listenPort;
    }
 
-   int ViewerConfig::getListenPort() const
+   ::i32 ViewerConfig::getListenPort() const
    {
       critical_section_lock l(&m_cs);
       return m_listenPort;
@@ -161,7 +161,7 @@ namespace remoting_rfb
    //    }
     }
 
-   void ViewerConfig::setHistoryLimit(int historyLimit)
+   void ViewerConfig::setHistoryLimit(::i32 historyLimit)
    {
       critical_section_lock l(&m_cs);
 
@@ -176,7 +176,7 @@ namespace remoting_rfb
       m_conHistory.setLimit(m_historyLimit);
    }
 
-   int ViewerConfig::getHistoryLimit() const
+   ::i32 ViewerConfig::getHistoryLimit() const
    {
       critical_section_lock l(&m_cs);
       return m_historyLimit;

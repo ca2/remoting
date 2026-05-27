@@ -35,7 +35,7 @@
 class ConnectionTimer : private Thread
 {
 public:
-  ConnectionTimer(TimerListener *timerListener, unsigned int timeOut);
+  ConnectionTimer(TimerListener *timerListener, ::u32 timeOut);
   virtual ~ConnectionTimer();
 
 private:
@@ -43,7 +43,7 @@ private:
   virtual void onTermThread();
 
   TimerListener *m_happeningTimerListener;
-  unsigned int m_iTimeout;
+  ::u32 m_iTimeout;
   ::happening m_happeningTimer;
   bool m_signalEnabled;
 };

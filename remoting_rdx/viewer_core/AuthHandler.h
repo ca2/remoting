@@ -44,15 +44,15 @@ namespace remoting_rfb_client
     public:
         AuthException(const ::scoped_string & scopedstrMessage = "Error in authentication");
         virtual ~AuthException();
-        int getAuthCode() const;
+        ::i32 getAuthCode() const;
 
     //public:
-        static const int AUTH_ERROR = 1;
-        static const int AUTH_UNKNOWN_TYPE = 2;
-        static const int AUTH_CANCELED = 3;
+        static const ::i32 AUTH_ERROR = 1;
+        static const ::i32 AUTH_UNKNOWN_TYPE = 2;
+        static const ::i32 AUTH_CANCELED = 3;
 
     //protected:
-        int m_authErrorCode;
+        ::i32 m_authErrorCode;
     };
 
     class CLASS_DECL_REMOTING_RDX AuthUnknownException : public AuthException
@@ -80,10 +80,10 @@ namespace remoting_rfb_client
     public:
 
 
-       int m_id;
+       ::i32 m_id;
 
 
-       AuthHandler(int authType);
+       AuthHandler(::i32 authType);
        ~AuthHandler() override;
 
         //
@@ -101,7 +101,7 @@ namespace remoting_rfb_client
         //
         // This method return type of authentication (m_id).
         //
-        virtual int getType() const;
+        virtual ::i32 getType() const;
 
     };
 

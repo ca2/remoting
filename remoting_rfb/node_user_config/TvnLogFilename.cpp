@@ -40,7 +40,7 @@ namespace remoting_rfb_node
                                               bool shareToAll,
                                               ::string & logFileDirectory)
    {
-      int specialFolderId = (shareToAll) ? subsystem::OperatingSystem::COMMON_APPLICATION_DATA_SPECIAL_FOLDER : subsystem::OperatingSystem::APPLICATION_DATA_SPECIAL_FOLDER;
+      ::i32 specialFolderId = (shareToAll) ? subsystem::OperatingSystem::COMMON_APPLICATION_DATA_SPECIAL_FOLDER : subsystem::OperatingSystem::APPLICATION_DATA_SPECIAL_FOLDER;
 
       ::string specialFolder("");
 

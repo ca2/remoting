@@ -62,7 +62,7 @@ namespace remoting_client
    void LoginDialog::enableConnect()
    {
       ::string str;
-      int iSelected = m_server.getSelectedItemIndex();
+      ::i32 iSelected = m_server.getSelectedItemIndex();
       if (iSelected == -1)
       {
          str = m_server.getText();
@@ -243,7 +243,7 @@ namespace remoting_client
                     // select item in ComboBox with ::list_base of history
                 case ::lightui::e_CBN_SELENDOK:
             {
-                int selectedItemIndex = m_server.getSelectedItemIndex();
+                ::i32 selectedItemIndex = m_server.getSelectedItemIndex();
                 if (selectedItemIndex < 0) {
                     return false;
                 }

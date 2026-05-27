@@ -55,9 +55,9 @@ namespace remoting_rtc
          //FileInfo *getFilesInfo();
 
          ::u32 getDownloadBufferSize();
-         ::array_base<unsigned char> getDownloadBuffer();
+         ::array_base<::u8> getDownloadBuffer();
 
-         unsigned char getDownloadFileFlags();
+         ::u8 getDownloadFileFlags();
          ::u64 getDownloadLastModified();
 
          ::u64 getDirSize();
@@ -87,10 +87,10 @@ namespace remoting_rtc
 
       //private:
 
-         ::array_base<unsigned char> readCompressedDataBlock(::DataInputStream * pinput,
+         ::array_base<::u8> readCompressedDataBlock(::DataInputStream * pinput,
                                                ::u32 compressedSize,
                                                ::u32 uncompressedSize,
-                                               unsigned char compressionLevel)
+                                               ::u8 compressionLevel)
        ;
 
 //      protected:
@@ -120,11 +120,11 @@ namespace remoting_rtc
          ::string m_lastErrorMessage;
 
          // Download data reply
-         ::array_base<unsigned char> m_downloadBuffer;
+         ::array_base<::u8> m_downloadBuffer;
          ::u32 m_downloadBufferSize;
 
          // Download end reply
-         unsigned char m_downloadFileFlags;
+         ::u8 m_downloadFileFlags;
          ::u64 m_downloadLastModified;
 
          // Dirsize reply data

@@ -73,10 +73,10 @@ namespace remoting_rfb_node
       // ::innate_subsystem::Control event handlers
       //
 
-      void onShareRadioButtonClick(int number);
+      void onShareRadioButtonClick(::i32 number);
       void onOpenFolderButtonClick();
       void onLogLevelUpdate();
-      void onDARadioButtonClick(int number);
+      void onDARadioButtonClick(::i32 number);
       void onLogForAllUsersClick();
       void onUseControlAuthClick();
       void onRepeatControlAuthClick();

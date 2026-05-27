@@ -72,12 +72,12 @@ namespace str
 {
 
 
-   ::string to_ansi(unsigned char * puch, int iSize)
+   ::string to_ansi(::u8 * puch, ::i32 iSize)
    {
 
       ::string str;
 
-      for (int i = 0; i < iSize; i++)
+      for (::i32 i = 0; i < iSize; i++)
       {
 
          auto uch = puch[i];
@@ -97,7 +97,7 @@ namespace str
          else
          {
 
-            str += (char) uch;
+            str += (::i8) uch;
 
          }
 
@@ -111,7 +111,7 @@ namespace str
    ::string to_ansi(const ::scoped_string & scopedstr)
    {
 
-      ::string str = to_ansi((unsigned char *) scopedstr.c_str(), scopedstr.length());
+      ::string str = to_ansi((::u8 *) scopedstr.c_str(), scopedstr.length());
 
       return str;
 

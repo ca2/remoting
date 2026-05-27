@@ -61,7 +61,7 @@ namespace remoting
 
    void SasUserInput::sendInit(BlockingGate *pblockinggate) { m_client->sendInit(pblockinggate); }
 
-   void SasUserInput::setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag)
+   void SasUserInput::setMouseEvent(const ::i32_point pointNewPosition, ::u8 keyFlag)
    {
       m_client->setMouseEvent(pointNewPosition, keyFlag);
    }
@@ -112,7 +112,7 @@ namespace remoting
 
    ::int_rectangle_array_base SasUserInput::getDisplaysCoords() { return m_client->getDisplaysCoords(); }
 
-   void SasUserInput::getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber)
+   void SasUserInput::getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber)
    {
       m_client->getDisplayNumberCoords(rectangle, dispNumber);
    }

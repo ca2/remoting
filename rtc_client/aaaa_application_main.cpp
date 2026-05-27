@@ -33,8 +33,8 @@
 #include "acme/platform/system.h"
 #include "acme/filesystem/filesystem/file_context.h"
 #include "remoting/remoting_rtc/remoting.h"
-//int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE,
-//                       LPTSTR lpCmdLine, int nCmdShow)
+//::i32 APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE,
+//                       LPTSTR lpCmdLine, ::i32 nCmdShow)
 
 
 //CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
@@ -65,7 +65,7 @@
 
 
 namespace remoting_client {
-int application::remoting_impact_main( const ::file::path & path)
+::i32 application::remoting_impact_main( const ::file::path & path)
 {
 
    //new ::platform::system();
@@ -95,8 +95,8 @@ int application::remoting_impact_main( const ::file::path & path)
    auto ini = file()->get_ini(path);
 
    ::string strHost =ini["host"];
-   int iNumerator = ini["numerator"].as_int();
-   int iDenominator = ini["denominator"].as_int();
+   ::i32 iNumerator = ini["numerator"].as_int();
+   ::i32 iDenominator = ini["denominator"].as_int();
    conConf.enableFullscreen(true);
    conConf.requestShapeUpdates(true);
    conConf.ignoreShapeUpdates(false);
@@ -159,7 +159,7 @@ int application::remoting_impact_main( const ::file::path & path)
    m_plogwriter->debug("loading settings from storage completed");
    m_plogwriter->debug("Log initialization completed");
 
-   int result = 0;
+   ::i32 result = 0;
    try {
       //remoting_impact tvnViewer(this, hinstance,
       remoting_impact tvnViewer(this,

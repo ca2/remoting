@@ -29,8 +29,8 @@ namespace remoting_rfb
    class CLASS_DECL_REMOTING_RDX VendorDefs
    {
    public:
-      static const char *const STANDARD;
-      static const char *const REMOTING;
+      static const_char_pointer const STANDARD;
+      static const_char_pointer const REMOTING;
    };
 } // namespace remoting_rfb
 

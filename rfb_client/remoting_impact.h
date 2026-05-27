@@ -104,7 +104,7 @@ namespace remoting_rfb_client
       void newListeningConnection();
       void newConnection(const ::scoped_string & hostName, ::remoting_rfb::ConnectionConfig * pconnectionconfig);
       void newConnection(ConnectionData * pconnectiondata, ::remoting_rfb::ConnectionConfig * pconnectionconfig);
-      void startListening(int listeningPort);
+      void startListening(::i32 listeningPort);
       void stopListening();
 
       // Inherited from WindowsApplication
@@ -112,40 +112,40 @@ namespace remoting_rfb_client
       //static LRESULT CALLBACK wndProc(HWND hWnd, ::u32 msg, ::wparam wparam, ::lparam lparam);
       //virtual void createWindow(const ::scoped_string & scopedstrClassName);
       virtual void createApplicationMainTask() override;
-      //int processMessages();
+      //::i32 processMessages();
 void defer_check_dead_instance();
       //public:
       // this scopedstrMessage must sended after accepted new listening-connection
-      static const int _WM_USER_NEW_LISTENING = WM_USER + 1;
+      static const ::i32 _WM_USER_NEW_LISTENING = WM_USER + 1;
 
       // this scopedstrMessage need send if you need show login dialog
-      static const int _WM_USER_SHOW_LOGIN_DIALOG = WM_USER + 2;
+      static const ::i32 _WM_USER_SHOW_LOGIN_DIALOG = WM_USER + 2;
 
       // this scopedstrMessage need send if you need show configuration dialog
-      static const int _WM_USER_CONFIGURATION = WM_USER + 3;
+      static const ::i32 _WM_USER_CONFIGURATION = WM_USER + 3;
 
       // this scopedstrMessage need send if you need show about dialog
-      static const int _WM_USER_ABOUT = WM_USER + 4;
+      static const ::i32 _WM_USER_ABOUT = WM_USER + 4;
 
       // This scopedstrMessage need send if you need reconnect to host.
       // ::lparam contained pointer to ConnectionData.
-      static const int WM_USER_RECONNECT = WM_USER + 5;
+      static const ::i32 WM_USER_RECONNECT = WM_USER + 5;
 
       // This scopedstrMessage need send if config is changed.
-      static const int WM_USER_CONFIGURATION_RELOAD = WM_USER + 6;
+      static const ::i32 WM_USER_CONFIGURATION_RELOAD = WM_USER + 6;
 
       // This timer is used for deleting dead instances of viewer.
-      static const int TIMER_DELETE_DEAD_INSTANCE = 1;
-      static const int TIMER_DELETE_DEAD_INSTANCE_DELAY = 50;
+      static const ::i32 TIMER_DELETE_DEAD_INSTANCE = 1;
+      static const ::i32 TIMER_DELETE_DEAD_INSTANCE_DELAY = 50;
 
       //protected:
-      void startListeningServer(const int listeningPort);
+      void startListeningServer(const ::i32 listeningPort);
       void stopListeningServer();
       void restartListeningServer();
 
 
-      //void postStartDialog(int iStartDialogMessage);
-      //void startDialog(int iStartDialogMessage);
+      //void postStartDialog(::i32 iStartDialogMessage);
+      //void startDialog(::i32 iStartDialogMessage);
       void onMainThreadMessage(::u32 message, ::wparam wparam, ::lparam lparam) override;
       //void registerViewerWindowClass();
       //void unregisterViewerWindowClass();

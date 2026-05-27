@@ -78,7 +78,7 @@ namespace remoting_rfb_client
     void ConfigurationDialog::onLogLevelChange()
     {
         ::string text;
-        int logLevel;
+        ::i32 logLevel;
         text = m_textboxVerbLvl.getText();
         MainSubsystem().StringParser().parseInt(text, &logLevel);
         if (logLevel != 0) {
@@ -159,7 +159,7 @@ namespace remoting_rfb_client
         txt.format("{}", config->getListenPort());
         m_textboxReverseConn.setText(txt);
 
-        txt.format("{}", (int) config->getLogLevel());
+        txt.format("{}", (::i32) config->getLogLevel());
         m_textboxVerbLvl.setText(txt);
 
         txt.format("{}", config->getHistoryLimit());
@@ -220,7 +220,7 @@ namespace remoting_rfb_client
         auto config = m_premoting->m_pviewerconfig;
 
         ::string text;
-        int intVal;
+        ::i32 intVal;
 
         text = m_textboxReverseConn.getText();
         MainSubsystem().StringParser().parseInt(text, &intVal);
@@ -230,7 +230,7 @@ namespace remoting_rfb_client
         MainSubsystem().StringParser().parseInt(text, &intVal);
         config->setLogLevel((enum_trace_level)intVal);
 
-        int oldLimit = config->getHistoryLimit();
+        ::i32 oldLimit = config->getHistoryLimit();
         text=m_textboxNumberConn.getText();
         MainSubsystem().StringParser().parseInt(text, &intVal);
         config->setHistoryLimit(intVal);

@@ -32,7 +32,7 @@ namespace remoting_client
    ::string_literal ConnectionListener::DEFAULT_HOST = "0.0.0.0";
 
    ConnectionListener::ConnectionListener(::subsystem::OperatingSystemApplicationInterface   *application,
-                                          unsigned short port)
+                                          ::u16 port)
    : TcpServer(DEFAULT_HOST, port, true),
      m_poperatingsystemapplication(application)
    {
@@ -48,7 +48,7 @@ namespace remoting_client
       }
    }
 
-   unsigned short ConnectionListener::getBindPort() const
+   ::u16 ConnectionListener::getBindPort() const
    {
       return TcpServer::getBindPort();
    }

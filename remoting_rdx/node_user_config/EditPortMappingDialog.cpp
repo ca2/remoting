@@ -61,7 +61,7 @@ namespace remoting_rfb_node
       //
 
       PortMappingRect rectangle;
-      int port;
+      ::i32 port;
 
       ::string portStringStorage;
       ::string rectStringStorage;
@@ -102,7 +102,7 @@ namespace remoting_rfb_node
          return false;
       }
 
-      int port;
+      ::i32 port;
 
       MainSubsystem().StringParser().parseInt(portStringStorage, &port);
 

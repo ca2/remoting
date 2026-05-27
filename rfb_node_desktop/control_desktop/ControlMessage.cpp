@@ -97,7 +97,7 @@ namespace remoting_control_desktop
             } else {
                ControlAuthDialog authDialog;
 
-               int retCode = authDialog.showModal();
+               ::i32 retCode = authDialog.showModal();
                switch (retCode) {
                   case ::innate_subsystem::e_control_id_cancel:
                      throw ::remoting_rfb_node::ControlAuthException(MainSubsystem().StringTable().getString(IDS_USER_CANCEL_CONTROL_AUTH), true);
@@ -126,9 +126,9 @@ namespace remoting_control_desktop
       pfind =password.find('\n');
       if (pfind) password.truncate(pfind);
       // WinFile file(m_passwordFile, F_READ, FM_OPEN);
-      // char ansiBuff[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+      // ::i8 ansiBuff[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
       // file.read(ansiBuff, 8);
-      // for (int i = 0; i < 8; i++) {
+      // for (::i32 i = 0; i < 8; i++) {
       //    if (ansiBuff[i] == '\r' || ansiBuff[i] == '\n') {
       //       ansiBuff[i] = '\0';
       //    }
@@ -145,8 +145,8 @@ namespace remoting_control_desktop
       auto rootKey = m_forService ? MainSubsystem().Registry().getLocalMachineKey() : MainSubsystem().Registry().getCurrentUserKey();
       ::remoting_rfb::RegistrySettingsManager sm(rootKey, ::remoting_rfb_node::RegistryPaths::SERVER_PATH, 0);
 
-      unsigned char hidePassword[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-      unsigned char plainPassword[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+      ::u8 hidePassword[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+      ::u8 plainPassword[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
       memsize passSize = sizeof(hidePassword);
 
       if (sm.getBinaryData("ControlPassword",
@@ -154,7 +154,7 @@ namespace remoting_control_desktop
                            &passSize)) {
          ::subsystem::VncPassCrypt::getPlainPass(plainPassword, hidePassword);
 
-         ///::string plainAnsiString((char *)plainPassword);
+         ///::string plainAnsiString((char_pointer )plainPassword);
          ::string password;
          //plainAnsiString.toStringStorage(&password);
          password = ::str::to_ansi(plainPassword, sizeof(plainPassword));

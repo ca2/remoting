@@ -35,13 +35,13 @@ namespace remoting_control_desktop
    {
    public:
       ShareDisplayCommand(ControlProxy *serverControl,
-                          unsigned char displayNumber);
+                          ::u8 displayNumber);
       virtual ~ShareDisplayCommand();
 
       void onRunCommand() override;
    private:
       ::pointer < ControlProxy > m_pcontrolproxy;
-      unsigned char m_displayNumber;
+      ::u8 m_displayNumber;
    };
 } // namespace remoting_control_desktop
 

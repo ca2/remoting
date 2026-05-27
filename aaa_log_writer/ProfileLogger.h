@@ -34,8 +34,8 @@ namespace platform
 {
 
    struct ProcessorTimes {
-      double process;
-      double kernel;
+      ::f64 process;
+      ::f64 kernel;
       ULONG64 cycle;
       class ::time wall;
    };
@@ -58,7 +58,7 @@ namespace platform
       //::map<const ::scoped_string & scopedstr, ::array_base<ProcessorTimes>> m_checkPoints;
       ::string_map <::array_base<ProcessorTimes> > m_checkPoints;
       ProcessorTimes m_last;
-      double m_dropRate; // time interval in seconds to log statistics
+      ::f64 m_dropRate; // time interval in seconds to log statistics
       class ::time m_lastDrop;
 
    };

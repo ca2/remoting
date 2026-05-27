@@ -46,20 +46,20 @@ namespace remoting_rfb
       m_pdesktopsrvdispatcher->registerNewHandle(code, listener);
    }
 
-   void RfbCodeRegistrator::addSrvToClCap(::u32 code, const char *vendorSignature,
-                                          const char *nameSignature)
+   void RfbCodeRegistrator::addSrvToClCap(::u32 code, const_char_pointer vendorSignature,
+                                          const_char_pointer pszNameSignature)
    {
       m_srvToClCaps->addCap(code, vendorSignature, nameSignature);
    }
 
-   void RfbCodeRegistrator::addClToSrvCap(::u32 code, const char *vendorSignature,
-                                          const char *nameSignature)
+   void RfbCodeRegistrator::addClToSrvCap(::u32 code, const_char_pointer vendorSignature,
+                                          const_char_pointer pszNameSignature)
    {
       m_clToSrvCaps->addCap(code, vendorSignature, nameSignature);
    }
 
-   void RfbCodeRegistrator::addEncCap(::u32 code, const char *vendorSignature,
-                                      const char *nameSignature)
+   void RfbCodeRegistrator::addEncCap(::u32 code, const_char_pointer vendorSignature,
+                                      const_char_pointer pszNameSignature)
    {
       m_encCaps->addCap(code, vendorSignature, nameSignature);
    }

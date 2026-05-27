@@ -36,7 +36,7 @@ namespace remoting_control_desktop
       virtual ~ConnectStringParser();
 
       static bool parse(const ::scoped_string & scopedstrConnectString, ::string * pstrHost = nullptr,
-                        unsigned short * pushPort = nullptr);
+                        ::u16 * pushPort = nullptr);
    };
 } // namespace remoting_control_desktop
 

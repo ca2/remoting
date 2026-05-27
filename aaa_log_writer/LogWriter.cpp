@@ -26,7 +26,7 @@
 //#include aaa_<cstdarg>
 //#include aaa_<vector>
 
-// ::subsystem::LogWriter::::subsystem::LogWriter(::subsystem::LogWriter * plogwriter)
+// ::subsystem::LogWriter::subsystem::LogWriter(::subsystem::LogWriter * plogwriter)
 // : m_LogWriter(::subsystem::LogWriter)
 // {
 //   m_profiler = new ProfileLogWriter();
@@ -39,7 +39,7 @@
 //
 // void ::subsystem::LogWriter::interror(const ::scoped_string & scopedstrFmt, ...)
 // {
-//   int level = LOG_INTERR;
+//   ::i32 level = LOG_INTERR;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
 //     va_list vl;
 //     va_start(vl, fmt);
@@ -50,7 +50,7 @@
 //
 // void ::subsystem::LogWriter::error(const ::scoped_string & scopedstrFmt, ...)
 // {
-//   int level = LOG_ERR;
+//   ::i32 level = LOG_ERR;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
 //     va_list vl;
 //     va_start(vl, fmt);
@@ -61,7 +61,7 @@
 //
 // void ::subsystem::LogWriter::warning(const ::scoped_string & scopedstrFmt, ...)
 // {
-//   int level = LOG_WARN;
+//   ::i32 level = LOG_WARN;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
 //     va_list vl;
 //     va_start(vl, fmt);
@@ -72,7 +72,7 @@
 //
 // void ::subsystem::LogWriter::scopedstrMessage(const ::scoped_string & scopedstrFmt, ...)
 // {
-//   int level = LOG_MSG;
+//   ::i32 level = LOG_MSG;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
 //     va_list vl;
 //     va_start(vl, fmt);
@@ -83,7 +83,7 @@
 //
 // void ::subsystem::LogWriter::info(const ::scoped_string & scopedstrFmt, ...)
 // {
-//   int level = LOG_INFO;
+//   ::i32 level = LOG_INFO;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
 //     va_list vl;
 //     va_start(vl, fmt);
@@ -94,7 +94,7 @@
 //
 // void ::subsystem::LogWriter::detail(const ::scoped_string & scopedstrFmt, ...)
 // {
-//   int level = LOG_DETAIL;
+//   ::i32 level = LOG_DETAIL;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
 //     va_list vl;
 //     va_start(vl, fmt);
@@ -105,7 +105,7 @@
 //
 // void ::subsystem::LogWriter::debug(const ::scoped_string & scopedstrFmt, ...)
 // {
-//   int level = LOG_DEBUG;
+//   ::i32 level = LOG_DEBUG;
 //   if (m_LogWriter != 0 && m_LogWriter->acceptsLevel(level)) {
 //     va_list vl;
 //     va_start(vl, fmt);
@@ -127,11 +127,11 @@
 // #pragma warning(push)
 // #pragma warning(disable:4996)
 //
-// void ::subsystem::LogWriter::vprintLog(int logLevel, const ::scoped_string & scopedstrFmt, va_list argList)
+// void ::subsystem::LogWriter::vprintLog(::i32 logLevel, const ::scoped_string & scopedstrFmt, va_list argList)
 // {
 //   if (m_LogWriter != 0) {
 //     // Format the original string.
-//     int count = _vsctprintf(fmt, argList);
+//     ::i32 count = _vsctprintf(fmt, argList);
 //     ::array_base<TCHAR> formattedString(count + 1);
 //     _vstprintf(&formattedString.front(), fmt, argList);
 //

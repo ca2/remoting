@@ -45,12 +45,12 @@ namespace remoting_rtc_windows
       ::remoting_rtc::CursorShape *getCursorShapeForWriting();
 
       // threadOwner is a number of latest thread which call this function.
-      void setVisibility(bool value, int threadOwner);
+      void setVisibility(bool value, ::i32 threadOwner);
 
       bool getIsVisible() const;
 
    private:
-      int m_threadOwner;
+      ::i32 m_threadOwner;
 
       bool m_isVisible;
       ::remoting_rtc::CursorShape m_cursorshapeEmptyDimension;

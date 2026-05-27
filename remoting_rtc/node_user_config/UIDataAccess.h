@@ -43,9 +43,9 @@ namespace remoting_rtc_node
        * @param value [out, optional] value will contain output result.
        * @return true if text in textbox is valid.
        */
-      static bool queryValueAsInt(::innate_subsystem::TextBox *textBox, int *value);
+      static bool queryValueAsInt(::innate_subsystem::TextBox *textBox, ::i32 *value);
       /**
-       * Queries text box text value as unsigned integer.
+       * Queries text box text value as ::u32 integer.
        * @param textBox [in] text box to get text from.
        * @param value [out, optional] value will contain output result.
        * @return true if text in textbox is valid.

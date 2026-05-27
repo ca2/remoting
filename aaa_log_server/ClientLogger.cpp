@@ -78,7 +78,7 @@ void ClientLogWriter::connect()
     // Get log level by the m_levListenChan channel.
     DataInputStream m_levInput(m_levListenChan);
 
-    unsigned char logLevel = m_levInput.readUInt8();
+    ::u8 logLevel = m_levInput.readUInt8();
     setLogBarrier(logLevel);
   } catch (::exception &e) {
     if (svcChan != 0) delete svcChan;
@@ -93,7 +93,7 @@ void ClientLogWriter::connect()
   // A workaround to send first acummulated log lines even if log barrier is zero.
   // Log server must define their afterlife.
   // Maybe it can be more better coded.
-  int logLevel = getLogBarrier();
+  ::i32 logLevel = getLogBarrier();
   setLogBarrier(9);
   try {
     critical_section_lock al(&m_criticalsectionLogWriting);
@@ -107,25 +107,25 @@ void ClientLogWriter::connect()
   resume();
 }
 
-void ClientLogWriter::print(int logLevel, const ::scoped_string & scopedstrLine)
+void ClientLogWriter::print(::i32 logLevel, const ::scoped_string & scopedstrLine)
 {
-  unsigned int processId = GetCurrentProcessId();
-  unsigned int threadId = GetCurrentThreadId();
+  ::u32 processId = GetCurrentProcessId();
+  ::u32 threadId = GetCurrentThreadId();
 
   critical_section_lock al(&m_criticalsectionLogWriting);
   updateLogDumpLines(processId, threadId, class ::time::now(), logLevel, line);
   flush(processId, threadId, class ::time::now(), logLevel, line);
 }
 
-bool ClientLogWriter::acceptsLevel(int logLevel)
+bool ClientLogWriter::acceptsLevel(::i32 logLevel)
 {
   return logDumpEnabled() || m_logOutput != 0 && logLevel <= getLogBarrier();
 }
 
-void ClientLogWriter::flush(unsigned int processId,
-                         unsigned int threadId,
+void ClientLogWriter::flush(::u32 processId,
+                         ::u32 threadId,
                          const class ::time & dt,
-                         int level,
+                         ::i32 level,
                          const ::scoped_string & scopedstrMessage)
 {
   critical_section_lock al(&m_criticalsectionLogWriting);
@@ -144,13 +144,13 @@ void ClientLogWriter::flush(unsigned int processId,
   }
 }
 
-int ClientLogWriter::getLogBarrier()
+::i32 ClientLogWriter::getLogBarrier()
 {
   critical_section_lock al(&m_criticalsectionLogBar);
   return m_logBarrier;
 }
 
-void ClientLogWriter::setLogBarrier(int newLogBar)
+void ClientLogWriter::setLogBarrier(::i32 newLogBar)
 {
   critical_section_lock al(&m_criticalsectionLogBar);
   m_logBarrier = newLogBar & 0xf;

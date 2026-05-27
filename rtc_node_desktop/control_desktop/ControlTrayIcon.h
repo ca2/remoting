@@ -89,7 +89,7 @@ namespace remoting_control_desktop
       
       virtual void trackPopupMenu();
       
-      void onAction(int action);
+      void onAction(::i32 action);
 
    protected:
       /**

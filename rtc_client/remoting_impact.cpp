@@ -94,7 +94,7 @@ namespace remoting_client
       //WindowsSocket::cleanup();
    }
 
-   void remoting_impact::startListeningServer(const int listeningPort)
+   void remoting_impact::startListeningServer(const ::i32 listeningPort)
    {
       try {
          if (m_pconnectionlistener != 0) {
@@ -126,7 +126,7 @@ namespace remoting_client
    void remoting_impact::restartListeningServer()
    {
       if (m_isListening) {
-         unsigned short newListenPort = m_premoting->m_pviewerconfig->getListenPort();
+         ::u16 newListenPort = m_premoting->m_pviewerconfig->getListenPort();
          if (m_pconnectionlistener->getBindPort() != newListenPort) {
             stopListeningServer();
             // FIXME: remove this parameter.
@@ -135,7 +135,7 @@ namespace remoting_client
       }
    }
 
-   void remoting_impact::startListening(const int listeningPort)
+   void remoting_impact::startListening(const ::i32 listeningPort)
    {
       if (m_isListening) {
          ASSERT(true);
@@ -345,7 +345,7 @@ namespace remoting_client
       addModelessDialog(m_aboutDialog.operating_system_window());
    }
 
-   // int remoting_impact::processMessages()
+   // ::i32 remoting_impact::processMessages()
    // {
    //    MSG msg;
    //    bool ret;
@@ -365,7 +365,7 @@ namespace remoting_client
    //       }
    //    }
    //
-   //    return (int)msg.wParam;
+   //    return (::i32)msg.wParam;
    // }
 
    void remoting_impact::newListeningConnection()
@@ -433,7 +433,7 @@ namespace remoting_client
 
 
    //
-   // void remoting_impact::postStartDialog(int iStartDialogMessage)
+   // void remoting_impact::postStartDialog(::i32 iStartDialogMessage)
    // {
    //
    //    system()->acme_windowing()->post([this]()

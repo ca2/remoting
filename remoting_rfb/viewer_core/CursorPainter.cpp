@@ -51,9 +51,9 @@ namespace remoting_rfb_client
    }
 
    void CursorPainter::setNewCursor(const ::i32_point &pointHotspot,
-                                    unsigned short width, unsigned short height,
-                                    const ::array_base<unsigned char> *cursor,
-                                    const ::array_base<unsigned char> *bitmask)
+                                    ::u16 width, ::u16 height,
+                                    const ::array_base<::u8> *cursor,
+                                    const ::array_base<::u8> *bitmask)
    {
       critical_section_lock al(&m_lock);
       m_plogwriter->information("setNewCursor Cursor hot-spot is ({}, {})", pointHotspot.x, pointHotspot.y);
@@ -75,7 +75,7 @@ namespace remoting_rfb_client
             m_plogwriter->debug("Set image of cursor...");
             memcpy(m_cursor.getPixels()->getBuffer(), cursor->data(), cursorSize);
             m_plogwriter->debug("Set bitmask of cursor...");
-            m_cursor.assignMaskFromRfb(reinterpret_cast<const char *>(bitmask->data()));
+            m_cursor.assignMaskFromRfb(reinterpret_cast<const_char_pointer >(bitmask->data()));
          }
       }
    }
@@ -122,7 +122,7 @@ namespace remoting_rfb_client
       m_pointLastPosition = m_pointerPosition;
 
       if (m_isExist) {
-         m_plogwriter->error("Error in CursorPainter: painting double copy of cursor.");
+         m_plogwriter->error("Error in CursorPainter: painting ::f64 copy of cursor.");
          ASSERT(true);
       }
 

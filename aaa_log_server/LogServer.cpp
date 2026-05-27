@@ -60,7 +60,7 @@ LogServer::~LogServer()
 }
 
 void LogServer::start(const ::scoped_string & scopedstrLogDir,
-                      unsigned char logLevel, size_t headerLineCount)
+                      ::u8 logLevel, size_t headerLineCount)
 {
   m_headerLineCount = headerLineCount;
   m_logDir= logDir;
@@ -68,7 +68,7 @@ void LogServer::start(const ::scoped_string & scopedstrLogDir,
   m_listenLogServer = new ListenLogServer(m_publicPipeName, this);
 }
 
-void LogServer::changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
+void LogServer::changeLogProps(const ::scoped_string & scopedstrNewLogDir, ::u8 newLevel)
 {
   critical_section_lock al(&m_criticalsectionLogProps);
   m_logLevel = newLevel;
@@ -155,10 +155,10 @@ void LogServer::onDisconnect(LogConn *logConn)
 }
 
 void LogServer::onLog(FileAccountHandle handle,
-                      unsigned int processId,
-                      unsigned int threadId,
+                      ::u32 processId,
+                      ::u32 threadId,
                       const class ::time & dt,
-                      int level,
+                      ::i32 level,
                       const ::scoped_string & scopedstrMessage)
 {
   critical_section_lock al(&m_criticalsectionLogProps);

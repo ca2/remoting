@@ -59,14 +59,14 @@ namespace remoting_client
         // set listening mode
         void setListening(bool isListening);
 
-        static const int DEFAULT_PORT = 5900;
+        static const ::i32 DEFAULT_PORT = 5900;
 
         // this constant will be returned if user have pressed 'Connect...' button
-        static const int CANCEL_MODE = 0;
+        static const ::i32 CANCEL_MODE = 0;
         // this constant will be returned if user have pressed 'Cancel' button
-        static const int CONNECTION_MODE = 1;
+        static const ::i32 CONNECTION_MODE = 1;
         // this constant will be returned if user have pressed 'Listening' button
-        static const int LISTENING_MODE = 2;
+        static const ::i32 LISTENING_MODE = 2;
 
     public:
         bool onInitDialog() override;

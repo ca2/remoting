@@ -29,9 +29,9 @@
 #include "remoting/remoting/region/Region.h"
 
 // Pre-definition:
-LRESULT CALLBACK callWndRetProc(int nCode, ::wparam wParam, ::lparam lParam);
-LRESULT CALLBACK getMsgProc(int code, ::wparam wParam, ::lparam lParam);
-LRESULT CALLBACK sysMsgProc(int code, ::wparam wParam, ::lparam lParam);
+LRESULT CALLBACK callWndRetProc(::i32 nCode, ::wparam wParam, ::lparam lParam);
+LRESULT CALLBACK getMsgProc(::i32 code, ::wparam wParam, ::lparam lParam);
+LRESULT CALLBACK sysMsgProc(::i32 code, ::wparam wParam, ::lparam lParam);
 void processMessage(HWND hwnd, ::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam);
 void sendRect(const ::i32_rectangle &  rectangle);
 void sendClientRect(HWND hwnd);
@@ -95,7 +95,7 @@ __declspec(dllexport) bool unsetHook()
   return result;
 }
 
-LRESULT CALLBACK callWndRetProc(int nCode, ::wparam wParam, ::lparam lParam)
+LRESULT CALLBACK callWndRetProc(::i32 nCode, ::wparam wParam, ::lparam lParam)
 {
   if (nCode == HC_ACTION) {
     CWPRETSTRUCT *cpwS = (CWPRETSTRUCT *)lParam;
@@ -104,7 +104,7 @@ LRESULT CALLBACK callWndRetProc(int nCode, ::wparam wParam, ::lparam lParam)
   return CallNextHookEx(g_callWndProcH, nCode, wParam, lParam);
 }
 
-LRESULT CALLBACK getMsgProc(int code, ::wparam wParam, ::lparam lParam)
+LRESULT CALLBACK getMsgProc(::i32 code, ::wparam wParam, ::lparam lParam)
 {
   if (code == MSGF_DIALOGBOX || code == MSGF_MENU || code == MSGF_SCROLLBAR) {
     MSG *msg = (MSG *)lParam;
@@ -113,7 +113,7 @@ LRESULT CALLBACK getMsgProc(int code, ::wparam wParam, ::lparam lParam)
   return CallNextHookEx(g_getMessageH, code, wParam, lParam);
 }
 
-LRESULT CALLBACK sysMsgProc(int code, ::wparam wParam, ::lparam lParam)
+LRESULT CALLBACK sysMsgProc(::i32 code, ::wparam wParam, ::lparam lParam)
 {
   if (code == MSGF_DIALOGBOX || code == MSGF_MENU || code == MSGF_SCROLLBAR) {
     MSG *msg = (MSG *)lParam;
@@ -157,10 +157,10 @@ void processMessage(HWND hwnd, ::u32 scopedstrMessage, ::wparam wParam, ::lparam
 
 void sendRect(const ::i32_rectangle &  rectangle)
 {
-  short left   = (short)rectangle.left;
-  short top    = (short)rectangle.top;
-  short right  = (short)rectangle.right;
-  short bottom = (short)rectangle.bottom;
+  ::i16 left   = (::i16)rectangle.left;
+  ::i16 top    = (::i16)rectangle.top;
+  ::i16 right  = (::i16)rectangle.right;
+  ::i16 bottom = (::i16)rectangle.bottom;
   PostMessage(g_targetWinHwnd, HookDefinitions::SPEC_IPC_CODE,
               MAKEWPARAM(top, left),
               MAKELPARAM(bottom, right));

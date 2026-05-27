@@ -64,14 +64,14 @@ namespace remoting_rtc_windows
 
 
    // FIXME: refactor this horror.
-   void WindowsUserInput::setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag)
+   void WindowsUserInput::setMouseEvent(const ::i32_point pointNewPosition, ::u8 keyFlag)
    {
       m_plogwriter->debug("setMouseEvent ({},{}):{}", pointNewPosition.x, pointNewPosition.x, keyFlag);
       if (GetSystemMetrics(SM_SWAPBUTTON))
       {
          // read values of first and third bytes..
-         unsigned char left = keyFlag & 1;
-         unsigned char right = keyFlag & 4;
+         ::u8 left = keyFlag & 1;
+         ::u8 right = keyFlag & 4;
          // set them to zero..
          keyFlag &= 0xFA;
          // and set swapped values
@@ -148,12 +148,12 @@ namespace remoting_rtc_windows
       m_prevKeyFlag = keyFlag;
 
       // Normilize pointer pointPosition
-      unsigned short desktopWidth = GetSystemMetrics(SM_CXSCREEN);
-      unsigned short desktopHeight = GetSystemMetrics(SM_CYSCREEN);
-      int fbOffsetX = GetSystemMetrics(SM_XVIRTUALSCREEN);
-      int fbOffsetY = GetSystemMetrics(SM_YVIRTUALSCREEN);
-      int x = (int)((pointNewPosition.x + fbOffsetX) * 65535 / (desktopWidth - 1));
-      int y = (int)((pointNewPosition.y + fbOffsetY) * 65535 / (desktopHeight - 1));
+      ::u16 desktopWidth = GetSystemMetrics(SM_CXSCREEN);
+      ::u16 desktopHeight = GetSystemMetrics(SM_CYSCREEN);
+      ::i32 fbOffsetX = GetSystemMetrics(SM_XVIRTUALSCREEN);
+      ::i32 fbOffsetY = GetSystemMetrics(SM_YVIRTUALSCREEN);
+      ::i32 x = (::i32)((pointNewPosition.x + fbOffsetX) * 65535 / (desktopWidth - 1));
+      ::i32 y = (::i32)((pointNewPosition.y + fbOffsetY) * 65535 / (desktopHeight - 1));
 
       INPUT input;
       memset(&input, 0, sizeof(INPUT));
@@ -176,11 +176,11 @@ namespace remoting_rtc_windows
    {
       try
       {
-         m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (int)down);
+         m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (::i32)down);
          // Generate single key event.
-         //unsigned char vkCode;
+         //::u8 vkCode;
          ::user::enum_key euserkey = ::user::e_key_none;
-         int ch;
+         ::i32 ch;
          bool release = !down;
          bool extended;
 
@@ -225,7 +225,7 @@ namespace remoting_rtc_windows
       rectangle.offset(-GetSystemMetrics(SM_XVIRTUALSCREEN), -GetSystemMetrics(SM_YVIRTUALSCREEN));
    }
 
-   void WindowsUserInput::getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber)
+   void WindowsUserInput::getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber)
    {
       m_winDisplays.getDisplayCoordinates(dispNumber, rectangle);
    }

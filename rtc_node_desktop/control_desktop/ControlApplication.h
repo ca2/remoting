@@ -130,12 +130,12 @@ namespace remoting_control_desktop
        * @param showIcon determinates to show tray icon or not.
        * @return application exit code.
        */
-      int runControlInterface(bool showIcon);
+      ::i32 runControlInterface(bool showIcon);
       /**
        * Runs control command (mode of tvncontrol).
        * @return application exit code.
        */
-      int runControlCommand(::subsystem::Command *command);
+      ::i32 runControlCommand(::subsystem::Command *command);
       /**
        * Runs configuration dialog (mode of tvncontrol).
        * @param configService determinates if we gonna to configure service.
@@ -147,19 +147,19 @@ namespace remoting_control_desktop
        * @remark Call this function only to config in offline mode because it uses
        * the registry.
        */
-      int runConfigurator(bool configService, bool isRunAsRequested);
+      ::i32 runConfigurator(bool configService, bool isRunAsRequested);
 
       // Checks the rfb and administrator authentications. If one of them is empty
       // the function runs a dialog to prompt to enable the both authentication and
       // to set or to add passwords.
-      int checkServicePasswords(bool isRunAsRequested);
+      ::i32 checkServicePasswords(bool isRunAsRequested);
 
    private:
       /**
        * Converts plain text password to crypted password.
        * @fixme move in to remoting_rtc_node application as additional application.
        */
-      static void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & scopedstrPlainTextPass);
+      static void getCryptedPassword(::u8 cryptedPass[8], const ::scoped_string & scopedstrPlainTextPass);
 
       // Auxiliary function to the same name function. It does real work.
       void checkServicePasswords();

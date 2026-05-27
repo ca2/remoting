@@ -38,6 +38,6 @@ namespace remoting_client
                         const ::scoped_string & password);
 
       // TODO: removed duplicate code: ::remoting_rtc_node::ServerConfig.h
-      //static const int ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE = 8;
+      //static const ::i32 ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE = 8;
    };
 } // namespace remoting_client

@@ -24,10 +24,10 @@
 #include "framework.h"
 #include "LogDump.h"
 
-LogEntry::LogEntry(unsigned int processId,
-                   unsigned int threadId,
+LogEntry::LogEntry(::u32 processId,
+                   ::u32 threadId,
                    const class ::time & dt,
-                   int lineLevel,
+                   ::i32 lineLevel,
                    const ::scoped_string & scopedstrMessage)
 : m_processId(processId),
   m_threadId(threadId),
@@ -84,10 +84,10 @@ void LogDump::writeLogDump()
   }
 }
 
-void LogDump::updateLogHeaderLines(unsigned int processId,
-                                   unsigned int threadId,
+void LogDump::updateLogHeaderLines(::u32 processId,
+                                   ::u32 threadId,
                                    const class ::time & dt,
-                                   int level,
+                                   ::i32 level,
                                    const ::scoped_string & scopedstrMessage)
 {
   if (logHeadEnabled()) {
@@ -95,10 +95,10 @@ void LogDump::updateLogHeaderLines(unsigned int processId,
   }
 }
 
-void LogDump::updateLogDumpLines(unsigned int processId,
-                                 unsigned int threadId,
+void LogDump::updateLogDumpLines(::u32 processId,
+                                 ::u32 threadId,
                                  const class ::time & dt,
-                                 int level,
+                                 ::i32 level,
                                  const ::scoped_string & scopedstrMessage)
 {
   if (logDumpEnabled()) {

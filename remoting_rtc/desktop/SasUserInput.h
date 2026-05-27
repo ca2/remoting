@@ -45,11 +45,11 @@ namespace remoting
 
       void sendInit(BlockingGate *pblockinggate) override;
       void setNewClipboard(const ::scoped_string &newClipboard) override;
-      void setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag) override;
+      void setMouseEvent(const ::i32_point pointNewPosition, ::u8 keyFlag) override;
       void setKeyboardEvent(::u32 keySym, bool down) override;
       void getCurrentUserInfo(::string &desktopName, ::string &userName) override;
       void getPrimaryDisplayCoords(::i32_rectangle & rectangle) override;
-      void getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber) override;
+      void getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber) override;
       ::int_rectangle_array_base getDisplaysCoords() override;
       void getNormalizedRect(::i32_rectangle & rectangle) override;
       void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle) override;

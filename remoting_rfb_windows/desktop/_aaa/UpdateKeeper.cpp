@@ -28,9 +28,9 @@ namespace remoting_rfb_windows
 {
 
 
-   ::remoting_rfb::UpdateKeeper::::remoting_rfb::UpdateKeeper() {}
+   ::remoting_rfb::UpdateKeeper::remoting_rfb::UpdateKeeper() {}
 
-   ::remoting_rfb::UpdateKeeper::::remoting_rfb::UpdateKeeper(const ::i32_rectangle &borderRect) { m_rectangleBorder.set(borderRect); }
+   ::remoting_rfb::UpdateKeeper::remoting_rfb::UpdateKeeper(const ::i32_rectangle &borderRect) { m_rectangleBorder.set(borderRect); }
 
    ::remoting_rfb::UpdateKeeper::~::remoting_rfb::UpdateKeeper(void) {}
 

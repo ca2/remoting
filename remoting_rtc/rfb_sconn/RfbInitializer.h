@@ -101,7 +101,7 @@ namespace remoting_rfb
       // that the format is valid and that the major version number is 3. Returns
       // minor version number without checking its value. If the format is invalid
       // or major version number is not 3, an ::subsystem::Exception will be thrown.
-      ::u32 getProtocolMinorVersion(const char str[12]);
+      ::u32 getProtocolMinorVersion(const ::i8 str[12]);
 
    };
 

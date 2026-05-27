@@ -125,7 +125,7 @@ namespace remoting_rfb_node
    // }
    //
 
-   bool IpAccessControlDialog::_002OnSelectionChange(int iControl)
+   bool IpAccessControlDialog::_002OnSelectionChange(::i32 iControl)
    {
       if (iControl == IDC_IP_ACCESS_CONTROL_LIST) {
                onListViewSelChange();
@@ -134,7 +134,7 @@ namespace remoting_rfb_node
       return false;
    }
 
-   bool IpAccessControlDialog::_002OnAction(int controlID)
+   bool IpAccessControlDialog::_002OnAction(::i32 controlID)
 {
    if (controlID == IDC_IP_ACCESS_CONTROL_LIST) {
             onListViewSelChangeDblClick();
@@ -170,8 +170,8 @@ namespace remoting_rfb_node
       for (size_t i = 0; i < m_pipaccesscontrol->size(); i++) {
          IpAccessRule *ip = m_pipaccesscontrol->at(i);
          m_list.addItem(m_list.getCount(), "", (::lparam)ip);
-         ASSERT((int)i == i);
-         setListViewItemText((int)i, ip);
+         ASSERT((::i32)i == i);
+         setListViewItemText((::i32)i, ip);
       }
 
       m_allowLoopbackConnections.setChecked(m_pserverconfig->isLoopbackConnectionsAllowed());
@@ -194,7 +194,7 @@ namespace remoting_rfb_node
       ::string qtStringStorage;
       qtStringStorage = m_queryTimeout.getText();
 
-      int timeout = 0;
+      ::i32 timeout = 0;
       MainSubsystem().StringParser().parseInt(qtStringStorage, &timeout);
 
       AutoLock al(m_pserverconfig);
@@ -210,7 +210,7 @@ namespace remoting_rfb_node
 
       IpAccessControl *ipRules = m_pserverconfig->getAccessControl();
       ipRules->clear();
-      for (int i = 0; i < m_list.getCount(); i++) {
+      for (::i32 i = 0; i < m_list.getCount(); i++) {
          IpAccessRule *rule = m_list.getItemData(i).raw_cast <IpAccessRule *>();
          ipRules->add(rule);
       }
@@ -289,7 +289,7 @@ namespace remoting_rfb_node
 
    void IpAccessControlDialog::onRemoveButtonClick()
    {
-      int si = m_list.getSelectedIndex();
+      ::i32 si = m_list.getSelectedIndex();
       // If nothing selected
       if (si == -1) {
          return ;
@@ -321,7 +321,7 @@ namespace remoting_rfb_node
 
    void IpAccessControlDialog::onMoveUpButtonClick()
    {
-      int si = m_list.getSelectedIndex();
+      ::i32 si = m_list.getSelectedIndex();
       // If nothing selected
       if ((si == -1) || (si == 0)) {
          return ;
@@ -340,7 +340,7 @@ namespace remoting_rfb_node
 
    void IpAccessControlDialog::onMoveDownButtonClick()
    {
-      int si = m_list.getSelectedIndex();
+      ::i32 si = m_list.getSelectedIndex();
       // If nothing selected
       if ((si == -1) || (si == m_list.getCount() - 1)) {
          return ;
@@ -358,7 +358,7 @@ namespace remoting_rfb_node
 
    void IpAccessControlDialog::onListViewSelChange()
    {
-      int si = m_list.getSelectedIndex();
+      ::i32 si = m_list.getSelectedIndex();
       updateButtonsState();
    }
 
@@ -422,11 +422,11 @@ namespace remoting_rfb_node
       ::u32 addr = MainSubsystem().internet_address4(ipStorage);
 
       IpAccessRule::ActionType action = IpAccessRule::ACTION_TYPE_ALLOW;
-      int rulesCount = 0;
+      ::i32 rulesCount = 0;
       if (m_list.getCount() > 0) {
          rulesCount = m_list.getCount();
       }
-      for (int i = 0; i < rulesCount; i++) {
+      for (::i32 i = 0; i < rulesCount; i++) {
          IpAccessRule *rule = (IpAccessRule *)m_list.getItemData(i).raw_cast <IpAccessRule *>();
          if (rule->isIncludingAddress(addr)) {
             action = rule->getAction();
@@ -472,7 +472,7 @@ namespace remoting_rfb_node
         m_addButton.enableWindow(true);
       }*/
 
-      int si = m_list.getSelectedIndex();
+      ::i32 si = m_list.getSelectedIndex();
       if (si == -1) {
          m_editButton.enableWindow(false);
          m_removeButton.enableWindow(false);
@@ -506,7 +506,7 @@ namespace remoting_rfb_node
 
    void IpAccessControlDialog::onListViewSelChangeDblClick()
    {
-      int si = m_list.getSelectedIndex();
+      ::i32 si = m_list.getSelectedIndex();
       if (si == -1) {
          return ;
       } else {
@@ -514,7 +514,7 @@ namespace remoting_rfb_node
       }
    }
 
-   void IpAccessControlDialog::setListViewItemText(int index, IpAccessRule *control)
+   void IpAccessControlDialog::setListViewItemText(::i32 index, IpAccessRule *control)
    {
       ::string firstIp;
       ::string lastIp;

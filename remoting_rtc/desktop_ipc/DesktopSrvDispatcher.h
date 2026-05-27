@@ -55,7 +55,7 @@ namespace remoting
                            // AnEventListener *m_extTerminationListener,
                            const ::procedure &procedureDesktopSrvDispatcher, ::subsystem::LogWriter * plogwriter);
 
-      void registerNewHandle(unsigned char code, ClientListener *listener);
+      void registerNewHandle(::u8 code, ClientListener *listener);
 
    //protected:
       void onThreadMain() override;
@@ -64,7 +64,7 @@ namespace remoting
 
       BlockingGate *m_pcontrolgate;
 
-      ::map<unsigned char, ClientListener *> m_handlers;
+      ::map<::u8, ClientListener *> m_handlers;
 
       // AnEventListener *m_extErrorListener;
 

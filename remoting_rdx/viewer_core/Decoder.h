@@ -46,7 +46,7 @@ namespace remoting_rfb_client
       //
       // This method return encoding of this Decoder.
       //
-      virtual int getCode() const;
+      virtual ::i32 getCode() const;
 
       //
       // This method return true, if decoder responsible for pseudo encoding.
@@ -56,11 +56,11 @@ namespace remoting_rfb_client
       //
       // This static method return true, if "encoding" is pseudo encoding.
       //
-      static bool isPseudo(int encoding);
+      static bool isPseudo(::i32 encoding);
 
    protected:
      ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
-      int m_encoding;
+      ::i32 m_encoding;
    };
 } // namespace remoting_rfb_client

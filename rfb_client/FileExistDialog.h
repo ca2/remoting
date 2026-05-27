@@ -41,16 +41,16 @@ namespace remoting_rfb_client
         // Dialog result contants
         //
 
-        static const int OVERWRITE_RESULT = 0x0;
-        static const int SKIP_RESULT = 0x1;
-        static const int APPEND_RESULT = 0x2;
-        static const int CANCEL_RESULT = 0x3;
+        static const ::i32 OVERWRITE_RESULT = 0x0;
+        static const ::i32 SKIP_RESULT = 0x1;
+        static const ::i32 APPEND_RESULT = 0x2;
+        static const ::i32 CANCEL_RESULT = 0x3;
 
         FileExistDialog();
         ~FileExistDialog();
 
         // Override BaseDialog method
-        virtual int showModal();
+        virtual ::i32 showModal();
 
         void setFilesInfo(::remoting_rfb::file_transfer::FileInfo *existingFileInfo, ::remoting_rfb::file_transfer::FileInfo *newFileInfo,
                           const ::scoped_string & scopedstrPathToFileCaption);

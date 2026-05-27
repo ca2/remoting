@@ -57,8 +57,8 @@ namespace remoting_rfb_node
       virtual bool onDestroy() override { return true; }
 
 
-      bool _002OnSelectionChange(int iControl) override;
-      bool _002OnAction(int iControl) override;
+      bool _002OnSelectionChange(::i32 iControl) override;
+      bool _002OnAction(::i32 iControl) override;
       //
       // Helper methods
       //
@@ -94,7 +94,7 @@ namespace remoting_rfb_node
 
       void updateButtonsState();
       void updateCheckBoxesState();
-      void setListViewItemText(int index, IpAccessRule *control);
+      void setListViewItemText(::i32 index, IpAccessRule *control);
 
    private:
       // Configuration

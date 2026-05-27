@@ -64,7 +64,7 @@ namespace remoting_rtc_node
       return (size_t)-1;
    }
 
-   size_t PortMappingContainer::findByPort(int port) const
+   size_t PortMappingContainer::findByPort(::i32 port) const
    {
       for (size_t i = 0; i < count(); i++) {
          if (m_vector.at(i).getPort() == port) {

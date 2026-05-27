@@ -57,12 +57,12 @@ namespace remoting_rfb
       virtual void setNewClipboard(const ::scoped_string &newClipboard) = 0;
       // By the keyFlag argument will be set the mouse button state as described in
       // the rfb protocol.
-      virtual void setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag) = 0;
+      virtual void setMouseEvent(const ::i32_point pointNewPosition, ::u8 keyFlag) = 0;
       virtual void setKeyboardEvent(::u32 keySym, bool down) = 0;
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName) = 0;
 
       virtual void getPrimaryDisplayCoords(::i32_rectangle & rectangle) = 0;
-      virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber) = 0;
+      virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber) = 0;
       virtual ::int_rectangle_array_base getDisplaysCoords() = 0;
       virtual void getNormalizedRect(::i32_rectangle & rectangle) = 0;
 
@@ -72,7 +72,7 @@ namespace remoting_rfb
       virtual void getApplicationRegion(const ::process_identifier & processidentifier, ::remoting_rfb::Region & region) = 0;
       virtual bool isApplicationInFocus(const ::process_identifier & processidentifier) = 0;
 
-      virtual void initKeyFlag(unsigned char initValue);
+      virtual void initKeyFlag(::u8 initValue);
 
 
    };

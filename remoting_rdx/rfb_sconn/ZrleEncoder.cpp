@@ -43,7 +43,7 @@ namespace remoting_rfb
    {
    }
 
-   int ZrleEncoder::getCode() const
+   ::i32 ZrleEncoder::getCode() const
    {
       return EncodingDefs::ZRLE;
    }
@@ -105,9 +105,9 @@ namespace remoting_rfb
       m_fbWidth = clientFb->getDimension().cx;
       size_t bpp = clientFb->getBitsPerPixel();
       if (bpp == 8) {
-         sendRect<unsigned char>(rectangle, serverFb, clientFb, options);
+         sendRect<::u8>(rectangle, serverFb, clientFb, options);
       } else if (bpp == 16) {
-         sendRect<unsigned short>(rectangle, serverFb, clientFb, options);
+         sendRect<::u16>(rectangle, serverFb, clientFb, options);
       } else if (bpp == 32) {
          sendRect<::u32>(rectangle, serverFb, clientFb, options);
       } else {
@@ -140,7 +140,7 @@ namespace remoting_rfb
             m_plainRleTile.clear();
 
             fillPalette<PIXEL_T>(tileRect, clientFb);
-            int numColors = m_pal.getNumColors();
+            ::i32 numColors = m_pal.getNumColors();
             m_oldSize = m_rgbData.size();
 
             // If number of colors is 1 the tile with minimal size is solid.
@@ -206,7 +206,7 @@ namespace remoting_rfb
       if (m_rgbData.empty()) {
          m_pdataoutputstream->writeUInt32(0);
       } else {
-         m_deflater.setInput(reinterpret_cast<const char *>(m_rgbData.data()),
+         m_deflater.setInput(reinterpret_cast<const_char_pointer >(m_rgbData.data()),
                              m_rgbData.size());
          m_deflater.deflate();
 
@@ -243,9 +243,9 @@ namespace remoting_rfb
    void ZrleEncoder::writePackedPaletteTile(const ::i32_rectangle &  tileRect,
                                             const ::innate_subsystem::Framebuffer *pframebuffer)
    {
-      int numColors = m_pal.getNumColors();
+      ::i32 numColors = m_pal.getNumColors();
       m_oldSize = m_rgbData.size();
-      unsigned char deltaOffset;
+      ::u8 deltaOffset;
       if (numColors == 2) {
          deltaOffset = 1;
       } else if (numColors == 3 || numColors == 4) {
@@ -262,7 +262,7 @@ namespace remoting_rfb
       m_rgbData[m_oldSize] = numColors;
 
       // Write palette.
-      for (int i = 0; i < numColors; i++) {
+      for (::i32 i = 0; i < numColors; i++) {
          ::u32 buf = m_pal.getEntry(i);
          memcpy(&m_rgbData[m_oldSize + 1 + i * m_bytesPerPixel],
                   &buf + m_numberFirstByte,
@@ -271,15 +271,15 @@ namespace remoting_rfb
 
       // Pack pixels.
       const PIXEL_T *buffer = static_cast<const PIXEL_T *>(pframebuffer->getBuffer());
-      unsigned char packedByte = 0;
-      int indexOfM = 0;
-      int offset = 8;
+      ::u8 packedByte = 0;
+      ::i32 indexOfM = 0;
+      ::i32 offset = 8;
 
       ::i32_rectangle rectangle;
       for (rectangle.top = tileRect.top; rectangle.top < tileRect.bottom; rectangle.top++) {
          for (rectangle.left = tileRect.left; rectangle.left < tileRect.right; rectangle.left++) {
             PIXEL_T px = buffer[rectangle.top * m_fbWidth + rectangle.left];
-            unsigned char indexOfColor = m_pal.getIndex(px);
+            ::u8 indexOfColor = m_pal.getIndex(px);
             if (offset != 0) {
                packedByte = packedByte << deltaOffset;
                packedByte = packedByte | indexOfColor;
@@ -309,8 +309,8 @@ namespace remoting_rfb
       }
    }
 
-   void ZrleEncoder::pushRunLengthPaletteRle(int runLength,
-                                             ::array_base<unsigned char> *paletteRleData)
+   void ZrleEncoder::pushRunLengthPaletteRle(::i32 runLength,
+                                             ::array_base<::u8> *paletteRleData)
    {
       do {
          if (runLength > 255) {
@@ -326,15 +326,15 @@ namespace remoting_rfb
    void ZrleEncoder::writePaletteRleTile(const ::i32_rectangle &  tileRect,
                                          const ::innate_subsystem::Framebuffer *pframebuffer)
    {
-      int numColors = m_pal.getNumColors();
-      ::array_base<unsigned char> paletteRleData;
+      ::i32 numColors = m_pal.getNumColors();
+      ::array_base<::u8> paletteRleData;
       paletteRleData.resize(1 + numColors * m_bytesPerPixel);
 
       // Write type of subencoding.
       paletteRleData[0] = numColors + 128;
 
       // Write palette.
-      for (int i = 0; i < numColors; i++) {
+      for (::i32 i = 0; i < numColors; i++) {
          ::u32 buf = m_pal.getEntry(i);
          memcpy(&paletteRleData[1 + i * m_bytesPerPixel],
                   &buf + m_numberFirstByte,
@@ -346,18 +346,18 @@ namespace remoting_rfb
 
       // There is the first iteration of loop below.
       PIXEL_T px = buffer[tileRect.top * m_fbWidth + tileRect.left];
-      unsigned char indexOfColor = m_pal.getIndex(px);
+      ::u8 indexOfColor = m_pal.getIndex(px);
 
       // Processing of the first pixel.
       paletteRleData.add(indexOfColor);
-      unsigned char previousIndexOfColor = indexOfColor;
+      ::u8 previousIndexOfColor = indexOfColor;
 
-      int runLength = 0;
-      for (int i = 1; i < tileRect.area(); ++i) {
+      ::i32 runLength = 0;
+      for (::i32 i = 1; i < tileRect.area(); ++i) {
          // FIXME: This variant may be not the most optimal.
-         // One of the possible variant is double for loops.
-         int x = tileRect.left + i % tileRect.width();
-         int y = tileRect.top + i / tileRect.width();
+         // One of the possible variant is ::f64 for loops.
+         ::i32 x = tileRect.left + i % tileRect.width();
+         ::i32 y = tileRect.top + i / tileRect.width();
 
          px = buffer[y * m_fbWidth + x];
 
@@ -383,7 +383,7 @@ namespace remoting_rfb
       memcpy(&m_rgbData[m_oldSize], &paletteRleData[0], paletteRleData.size());
    }
 
-   void ZrleEncoder::pushRunLengthRle(int runLength)
+   void ZrleEncoder::pushRunLengthRle(::i32 runLength)
    {
       do {
          if (runLength > 255) {
@@ -415,7 +415,7 @@ namespace remoting_rfb
       // Clear the palette.
       m_pal.reset();
       m_pal.setMaxColors(MAX_NUMBER_OF_COLORS_IN_PALETTE);
-      int tryInsertPx = 1;
+      ::i32 tryInsertPx = 1;
 
       const PIXEL_T *buffer = (const PIXEL_T *)pframebuffer->getBuffer();
       ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
@@ -432,7 +432,7 @@ namespace remoting_rfb
 
       // Pixel for adding to palette
       PIXEL_T oldPixel = px;
-      int palLength = 1;
+      ::i32 palLength = 1;
 
       // Fill RLE tile ::array_base.
       px &= mask;
@@ -446,12 +446,12 @@ namespace remoting_rfb
       // Increase the size of palette RLE tile.
       m_paletteRleTileSize++;
 
-      int runLength = 0;
-      for (int i = 1; i < tileRect.area(); ++i) {
+      ::i32 runLength = 0;
+      for (::i32 i = 1; i < tileRect.area(); ++i) {
          // FIXME: This variant may be not the most optimal.
-         // One of the possible variant is double for loops.
-         int x = tileRect.left + i % tileRect.width();
-         int y = tileRect.top + i / tileRect.width();
+         // One of the possible variant is ::f64 for loops.
+         ::i32 x = tileRect.left + i % tileRect.width();
+         ::i32 y = tileRect.top + i / tileRect.width();
 
          px = buffer[y * m_fbWidth + x];
 
@@ -483,15 +483,15 @@ namespace remoting_rfb
    template <class PIXEL_T>
    void ZrleEncoder::copyPixels(const ::i32_rectangle &  rectangle,
                                 const ::innate_subsystem::Framebuffer *pframebuffer,
-                                unsigned char *dst)
+                                ::u8 *dst)
    {
-      const int rectHeight = rectangle.height();
-      const int rectWidth = rectangle.width();
+      const ::i32 rectHeight = rectangle.height();
+      const ::i32 rectWidth = rectangle.width();
       const PIXEL_T *src = static_cast<const PIXEL_T *>(pframebuffer->getBufferPtr(rectangle.left, rectangle.top));
-      const int fbStride = pframebuffer->getDimension().cx;
+      const ::i32 fbStride = pframebuffer->getDimension().cx;
       const size_t bytesPerRow = rectangle.width() * m_bytesPerPixel;
 
-      for (int y = 0; y < rectHeight; y++) {
+      for (::i32 y = 0; y < rectHeight; y++) {
          memcpy(dst, src, bytesPerRow);
          src += fbStride;
          dst += bytesPerRow;
@@ -500,15 +500,15 @@ namespace remoting_rfb
 
    void ZrleEncoder::copyCPixels(const ::i32_rectangle &  rectangle,
                                  const ::innate_subsystem::Framebuffer *pframebuffer,
-                                 unsigned char *dst)
+                                 ::u8 *dst)
    {
-      const int rectHeight = rectangle.height();
-      const int rectWidth = rectangle.width();
-      const unsigned char *src = static_cast<const unsigned char *>(pframebuffer->getBufferPtr(rectangle.left, rectangle.top));
-      const int fbStride = pframebuffer->getDimension().cx;
+      const ::i32 rectHeight = rectangle.height();
+      const ::i32 rectWidth = rectangle.width();
+      const ::u8 *src = static_cast<const ::u8 *>(pframebuffer->getBufferPtr(rectangle.left, rectangle.top));
+      const ::i32 fbStride = pframebuffer->getDimension().cx;
 
-      for (int y = 0; y < rectHeight; y++) {
-         for (int x = 0; x < rectWidth; x++) {
+      for (::i32 y = 0; y < rectHeight; y++) {
+         for (::i32 x = 0; x < rectWidth; x++) {
             memcpy(dst, src + m_numberFirstByte, 3);
             src += 4;
             dst += 3;

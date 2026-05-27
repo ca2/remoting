@@ -55,13 +55,13 @@ namespace remoting_rfb
       ::string errMess;
       if (pixelformat.bitsPerPixel != 16 && pixelformat.bitsPerPixel != 32)
       {
-         errMess.format("Wrong value of bits per pixel ({})", (int)pixelformat.bitsPerPixel);
+         errMess.format("Wrong value of bits per pixel ({})", (::i32)pixelformat.bitsPerPixel);
          throw ::subsystem::Exception(errMess);
       }
       if (pixelformat.colorDepth > pixelformat.bitsPerPixel)
       {
-         errMess.format("Wrong value (color depth ({}) > bits per pixel ({}))", (int)pixelformat.colorDepth,
-                         (int)pixelformat.bitsPerPixel);
+         errMess.format("Wrong value (color depth ({}) > bits per pixel ({}))", (::i32)pixelformat.colorDepth,
+                         (::i32)pixelformat.bitsPerPixel);
          throw ::subsystem::Exception(errMess);
       }
    }
@@ -229,7 +229,7 @@ namespace remoting_rfb
       newClipboard = pblockinggate->readUtf8();
    }
 
-   void DesktopServerProto::sendNewPointerPos(const ::i32_point pointNewPosition, unsigned char keyFlag, BlockingGate *pblockinggate)
+   void DesktopServerProto::sendNewPointerPos(const ::i32_point pointNewPosition, ::u8 keyFlag, BlockingGate *pblockinggate)
    {
       // Send pointer pointPosition
       pblockinggate->writeUInt16(pointNewPosition.x);
@@ -238,7 +238,7 @@ namespace remoting_rfb
       pblockinggate->writeUInt8(keyFlag);
    }
 
-   void DesktopServerProto::readNewPointerPos(::i32_point *pointNewPosition, unsigned char *keyFlag, BlockingGate *pblockinggate)
+   void DesktopServerProto::readNewPointerPos(::i32_point *pointNewPosition, ::u8 *keyFlag, BlockingGate *pblockinggate)
    {
       // Read pointer pointPosition
       pointNewPosition->x = pblockinggate->readUInt16();
@@ -250,7 +250,7 @@ namespace remoting_rfb
    void DesktopServerProto::sendKeyEvent(::u32 keySym, bool down, BlockingGate *pblockinggate)
    {
       pblockinggate->writeUInt32(keySym);
-      pblockinggate->writeUInt8((unsigned char)down);
+      pblockinggate->writeUInt8((::u8)down);
    }
 
    void DesktopServerProto::readKeyEvent(::u32 *keySym, bool *down, BlockingGate *pblockinggate)

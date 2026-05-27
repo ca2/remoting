@@ -50,7 +50,7 @@ namespace remoting_rfb
    public:
 
 
-      static const int RESOLVING_PERIOD = 3000;
+      static const ::i32 RESOLVING_PERIOD = 3000;
 
       ::pointer < Desktop > m_pdesktop;
 

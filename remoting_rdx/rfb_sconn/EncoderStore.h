@@ -66,7 +66,7 @@ namespace remoting_rfb
       // validateJpegEncoder().
       JpegEncoder *getJpegEncoder() const;
 
-      void selectEncoder(int encType);
+      void selectEncoder(::i32 encType);
       void validateJpegEncoder();
 
    //protected:
@@ -75,21 +75,21 @@ namespace remoting_rfb
       // existing encoder. If it's not there, it will be allocated, stored in
       // m_map and the pointer to it will be returned. If the encoding type is
       // unknown, Raw encoder will be assumed.
-      Encoder *validateEncoder(int encType);
+      Encoder *validateEncoder(::i32 encType);
 
       // Check if the encoding type code is supported.
-      static bool encodingSupported(int encType);
+      static bool encodingSupported(::i32 encType);
 
       // Allocates the specified encoder (using new) and returns the pointer.
       // If the encoding type is unknown, throws an ::subsystem::Exception.
-      Encoder *allocateEncoder(int encType) const;
+      Encoder *allocateEncoder(::i32 encType) const;
 
    //protected:
       // Map of encoders. Encoding codes are used as keys for dynamically
       // allocated objects derived from Encoder. Encoders are allocated by the
       // selectEncoder() function. Allocated encoders will not be deleted until
       // EncoderStore destruction.
-      ::map_to_pointer_base<int, Encoder> m_map;
+      ::map_to_pointer_base<::i32, Encoder> m_map;
 
       // Current encoder (preferred encoder). Initialized with a null pointer,
       // should point to the encoder selected by the most recent selectEncoder()

@@ -55,7 +55,7 @@ namespace remoting_control_desktop
 
       authRfb();
 
-      unsigned char result = m_pcontrolgate->readUInt32();
+      ::u8 result = m_pcontrolgate->readUInt32();
 
       switch (result) {
          case ControlProto::REPLY_ERROR:
@@ -81,8 +81,8 @@ namespace remoting_control_desktop
 
    void ControlAuth::authRfb()
    {
-      unsigned char challenge[16];
-      unsigned char response[16];
+      ::u8 challenge[16];
+      ::u8 response[16];
 
       m_pcontrolgate->readFully(challenge, sizeof(challenge));
 

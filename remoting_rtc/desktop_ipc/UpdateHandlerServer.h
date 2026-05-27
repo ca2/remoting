@@ -68,7 +68,7 @@ namespace remoting
                     const ::procedure &procedureTermination, ::subsystem::LogWriter * plogwriter);
 
       // Internal dispatcher
-      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
+      virtual void onRequest(::u8 reqCode, BlockingGate *pblockinggate);
 
    //protected:
       virtual void onUpdate();

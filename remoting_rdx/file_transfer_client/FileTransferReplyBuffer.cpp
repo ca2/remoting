@@ -74,7 +74,7 @@ namespace remoting_rfb
          return m_downloadBufferSize;
       }
 
-      unsigned char FileTransferReplyBuffer::getDownloadFileFlags()
+      ::u8 FileTransferReplyBuffer::getDownloadFileFlags()
       {
          return m_downloadFileFlags;
       }
@@ -89,7 +89,7 @@ namespace remoting_rfb
          return m_dirSize;
       }
 
-      ::array_base<unsigned char> FileTransferReplyBuffer::getDownloadBuffer()
+      ::array_base<::u8> FileTransferReplyBuffer::getDownloadBuffer()
       {
          return m_downloadBuffer;
       }
@@ -104,11 +104,11 @@ namespace remoting_rfb
 
       void FileTransferReplyBuffer::onFileListReply(::DataInputStream * pinput)
       {
-         unsigned char compressionLevel = 0;
+         ::u8 compressionLevel = 0;
          ::u32 compressedSize = 0;
          ::u32 uncompressedSize = 0;
 
-         ::array_base<unsigned char> buffer;
+         ::array_base<::u8> buffer;
 
          {
             compressionLevel = pinput->readUInt8();
@@ -200,7 +200,7 @@ namespace remoting_rfb
 
       void FileTransferReplyBuffer::onDownloadDataReply(::DataInputStream * pinput)
       {
-         unsigned char coLevel = pinput->readUInt8();
+         ::u8 coLevel = pinput->readUInt8();
          ::u32 coBufferSize = pinput->readUInt32();
          ::u32 uncoBufferSize = pinput->readUInt32();
 
@@ -259,10 +259,10 @@ namespace remoting_rfb
       }
 
 
-      ::array_base<unsigned char> FileTransferReplyBuffer::readCompressedDataBlock(::DataInputStream * pinput,
+      ::array_base<::u8> FileTransferReplyBuffer::readCompressedDataBlock(::DataInputStream * pinput,
                                                                      ::u32 compressedSize,
                                                                      ::u32 uncompressedSize,
-                                                                     unsigned char compressionLevel)
+                                                                     ::u8 compressionLevel)
       {
          //
          // Buffers with compressed and uncompressed data.
@@ -272,7 +272,7 @@ namespace remoting_rfb
          ::u32 coSize = compressedSize;
          ::u32 uncoSize = uncompressedSize;
 
-         ::array_base<unsigned char> coBuffer(coSize);
+         ::array_base<::u8> coBuffer(coSize);
 
          //
          // Read compressed data
@@ -288,11 +288,11 @@ namespace remoting_rfb
             return coBuffer;
          }
 
-         ::array_base<unsigned char> uncoBuffer(uncoSize);
+         ::array_base<::u8> uncoBuffer(uncoSize);
 
          m_inflater.setUnpackedSize(uncoSize);
          // FIXME: type conversion in C-style
-         m_inflater.setInput((const char*)coBuffer.data(), coSize);
+         m_inflater.setInput((const_char_pointer )coBuffer.data(), coSize);
 
          m_inflater.inflate();
 

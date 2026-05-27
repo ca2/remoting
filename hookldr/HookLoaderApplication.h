@@ -41,7 +41,7 @@ private:
   virtual void onParentTerminate();
 
   virtual void registerWindowClass(WNDCLASS *wndClass);
-  virtual int processMessages();
+  virtual ::i32 processMessages();
 
   static LRESULT CALLBACK hookLoaderWndProc(HWND hWnd, ::u32 msg,
                                             ::wparam wparam,

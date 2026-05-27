@@ -27,7 +27,7 @@
 namespace remoting_rfb_windows
 {
 
-   const int SLEEP_TIME = 100;
+   const ::i32 SLEEP_TIME = 100;
 
    CursorShapeDetector::CursorShapeDetector()
    {

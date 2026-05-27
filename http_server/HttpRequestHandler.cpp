@@ -95,7 +95,7 @@ void HttpRequestHandler::processRequest()
       ArgList *args = httpRequest.getArguments();
 
       for (size_t i = 0; i < args->getCount(); i++) {
-        const char *key = args->getKey(i);
+        const_char_pointer key = args->getKey(i);
 
         AppletParameter parameter(key, args->getValue(key));
 

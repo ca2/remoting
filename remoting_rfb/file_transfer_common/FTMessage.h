@@ -39,14 +39,14 @@
  *
  * Client to server messages have following format:
  *  ::u32 messageId 32 bit scopedstrMessage id.
- *  unsigned char[] messageBody scopedstrMessage body depends on messageId.
- * @remark rfb dispatcher in common case read first byte (unsigned char) as scopedstrMessage id,
+ *  ::u8[] messageBody scopedstrMessage body depends on messageId.
+ * @remark rfb dispatcher in common case read first byte (::u8) as scopedstrMessage id,
  * but if first byte is equal to 0xFC then it's Remoting extension scopedstrMessage and
  * must read next 3 bytes and create ::u32 scopedstrMessage id for processing.
  *
  * Server to client scopedstrMessage have following format:
  *  ::u32 scopedstrMessage id meaning like in client->server messages.
- *  unsigned char[] messageBody meaning like in client->server messages.
+ *  ::u8[] messageBody meaning like in client->server messages.
  *
  * -----------------------------------------------------------------------------
  *
@@ -55,7 +55,7 @@
  *
  *  struct StringUTF8 { string encoded in UTF8 encoding.
  *    ::u32 size;        // size of encoded string buffer in bytes;
- *    unsigned char buffer[size]; // buffer with encoded string data.
+ *    ::u8 buffer[size]; // buffer with encoded string data.
  *
  * -----------------------------------------------------------------------------
  *
@@ -78,7 +78,7 @@
  * -----------------------------------------------------------------------------
  *
  * @readme
- * ::file::item flags is unsigned char that can be conbination of following values: 0x1 - file is
+ * ::file::item flags is ::u8 that can be conbination of following values: 0x1 - file is
  * direction, 0x2 - executable file.
  *
  * Flags 0x1 and 0x2 cannot be set together.
@@ -99,10 +99,10 @@
  *
  * Data that can be compressed marked as "CompressedBlock:" in messages description.
  * "CompressedBlock:" has several mandatory fields:
- *   unsigned char compressionLevel compression level (0 - not compressed, [1..9] compressed).
+ *   ::u8 compressionLevel compression level (0 - not compressed, [1..9] compressed).
  *   ::u32 compressedSize size of compressed data.
  *   ::u32 uncompressedSize size of uncompressed data.
- *   unsigned char compressedData[compressedSize] compressed usefull data.
+ *   ::u8 compressedData[compressedSize] compressed usefull data.
  * @note that if compressionLevel is zero than compressedSize is equals to uncompressedSize and
  * compressedData is not compressed.
  *
@@ -127,7 +127,7 @@ public:
    * Reply to COMPRESSION_SUPPORT_REQUEST scopedstrMessage.
    *
    * @body:
-   *   unsigned char isCompressionSupported - 1 if compression supported, 0 otherwise.
+   *   ::u8 isCompressionSupported - 1 if compression supported, 0 otherwise.
    */
   const static ::u32 COMPRESSION_SUPPORT_REPLY = 0xFC000101;
 
@@ -137,7 +137,7 @@ public:
    * Get file ::list_base of specified folder on remote computer.
    *
    * @body:
-   *  unsigned char compressionLevel preffered compression level.
+   *  ::u8 compressionLevel preffered compression level.
    *  StringUTF8 pathToFolder absolute path to folder, file ::list_base of that needs to get.
    *
    * @reply FILE_LIST_REPLY on success, LAST_REQUEST_FAILED_REPLY on fail.
@@ -154,7 +154,7 @@ public:
    *    struct {
    *      ::u64 fileSize file size in bytes (0 if directory).
    *      ::u64 modTime file last modification time.
-   *      unsigned char fileFlags flags of file.
+   *      ::u8 fileFlags flags of file.
    *      StringUTF8 relFilename filename relative to parent folder without first "/" (sample "test.txt",
    *                             but not "/test.txt" and not "/a/test.txt")
    *    } fileInfo[filesCount] array of structures containing files info.
@@ -179,7 +179,7 @@ public:
    * Reply for MD5_REQUEST scopedstrMessage.
    *
    * @body
-   *   unsigned char md5[16] md5 hash of requested file chunk.
+   *   ::u8 md5[16] md5 hash of requested file chunk.
    */
   const static ::u32 MD5_REPLY = 0xFC000105;
 

@@ -181,7 +181,7 @@ namespace remoting_rtc_node
          m_openLogPathButton.enableWindow(false);
       }
 
-      for (int i = 0; i < 5; i++) {
+      for (::i32 i = 0; i < 5; i++) {
          m_shared[0].setChecked(false);
       }
 
@@ -205,7 +205,7 @@ namespace remoting_rtc_node
       // When last client disconnects
       //
 
-      for (int i = 0; i < 3; i++) {
+      for (::i32 i = 0; i < 3; i++) {
          m_disconnectAction[i].setChecked(false);
       }
       switch (m_pserverconfig->getDisconnectAction()) {
@@ -223,11 +223,11 @@ namespace remoting_rtc_node
       m_logForAllUsers.setChecked(m_pserverconfig->isSaveLogToAllUsersPathFlagEnabled());
 
       if (m_pserverconfig->hasControlPassword()) {
-         unsigned char cryptedPassword[8];
+         ::u8 cryptedPassword[8];
 
          m_pserverconfig->getControlPassword(cryptedPassword);
 
-         m_cpControl->setCryptedPassword((char *)cryptedPassword);
+         m_cpControl->setCryptedPassword((char_pointer )cryptedPassword);
       }
 
       m_cpControl->enableWindow(m_pserverconfig->isControlAuthEnabled());
@@ -238,7 +238,7 @@ namespace remoting_rtc_node
       ::string logLevelStringStorage;
       logLevelStringStorage = m_logLevel.getText();
 
-      int logLevel = 0;
+      ::i32 logLevel = 0;
 
       MainSubsystem().StringParser().parseInt(logLevelStringStorage, &logLevel);
 
@@ -274,7 +274,7 @@ namespace remoting_rtc_node
       m_pserverconfig->setControlAuthAlwaysChecking(m_repeatControlAuth.isChecked());
 
       if (m_cpControl->getState() == PasswordControl::NewPassword) {
-         m_pserverconfig->setControlPassword((const unsigned char *)m_cpControl->getCryptedPassword());
+         m_pserverconfig->setControlPassword((const ::u8 *)m_cpControl->getCryptedPassword());
       }
       if (m_cpControl->getState() == PasswordControl::ResetPassword) {
          m_pserverconfig->deleteControlPassword();
@@ -327,11 +327,11 @@ namespace remoting_rtc_node
       m_cpControl = new PasswordControl(&m_setControlPasswordButton, &m_unsetControlPasswordButton);
    }
 
-   void AdministrationConfigDialog::onShareRadioButtonClick(int number)
+   void AdministrationConfigDialog::onShareRadioButtonClick(::i32 number)
    {
       if (!m_shared[number].isChecked()) {
          m_shared[number].setChecked(true);
-         for (int i = 0; i < 5; i++) {
+         for (::i32 i = 0; i < 5; i++) {
             if (i != number) {
                m_shared[i].setChecked(false);
             } // if
@@ -363,11 +363,11 @@ namespace remoting_rtc_node
       }
    }
 
-   void AdministrationConfigDialog::onDARadioButtonClick(int number)
+   void AdministrationConfigDialog::onDARadioButtonClick(::i32 number)
    {
       if (!m_disconnectAction[number].isChecked()) {
          m_disconnectAction[number].setChecked(true);
-         for (int i = 0; i < 3; i++) {
+         for (::i32 i = 0; i < 3; i++) {
             if (i != number) {
                m_disconnectAction[i].setChecked(false);
             } // if

@@ -50,24 +50,24 @@ public:
   void connect();
 
   // Sends log line to the log server.
-  virtual void print(int logLevel, const ::scoped_string & scopedstrLine);
+  virtual void print(::i32 logLevel, const ::scoped_string & scopedstrLine);
 
-  virtual bool acceptsLevel(int logLevel);
+  virtual bool acceptsLevel(::i32 logLevel);
 
 private:
   // Writes a log scopedstrMessage.
-  virtual void flush(unsigned int processId,
-                     unsigned int threadId,
+  virtual void flush(::u32 processId,
+                     ::u32 threadId,
                      const class ::time & dt,
-                     int level,
+                     ::i32 level,
                      const ::scoped_string & scopedstrMessage);
 
   void freeResources();
 
   virtual void onThreadMain();
 
-  int getLogBarrier();
-  void setLogBarrier(int newLogBar);
+  ::i32 getLogBarrier();
+  void setLogBarrier(::i32 newLogBar);
 
   Channel *m_logSendingChan;
   DataInputStream *m_logInput;
@@ -76,7 +76,7 @@ private:
 
   Channel *m_levListenChan;
 
-  int m_logBarrier;
+  ::i32 m_logBarrier;
   lockable_critical_section m_criticalsectionLogBar;
 
   ::string m_logFileName;

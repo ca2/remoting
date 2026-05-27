@@ -28,9 +28,9 @@ namespace remoting_rtc_windows
 {
 
 
-   ::remoting_rtc::UpdateKeeper::::remoting_rtc::UpdateKeeper() {}
+   ::remoting_rtc::UpdateKeeper::remoting_rtc::UpdateKeeper() {}
 
-   ::remoting_rtc::UpdateKeeper::::remoting_rtc::UpdateKeeper(const ::i32_rectangle &borderRect) { m_rectangleBorder.set(borderRect); }
+   ::remoting_rtc::UpdateKeeper::remoting_rtc::UpdateKeeper(const ::i32_rectangle &borderRect) { m_rectangleBorder.set(borderRect); }
 
    ::remoting_rtc::UpdateKeeper::~::remoting_rtc::UpdateKeeper(void) {}
 

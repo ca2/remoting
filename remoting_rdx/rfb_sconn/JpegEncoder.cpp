@@ -36,7 +36,7 @@ namespace remoting_rfb
    {
    }
 
-   int JpegEncoder::getCode() const
+   ::i32 JpegEncoder::getCode() const
    {
       return m_tightEncoder->getCode();
    }
@@ -46,9 +46,9 @@ namespace remoting_rfb
                                     const ::innate_subsystem::Framebuffer *serverFb,
                                     const EncodeOptions *options)
    {
-      int maxWidth = 2048;
-      for (int x0 = rectangle.left; x0 < rectangle.right; x0 += maxWidth) {
-         int x1 = (x0 + maxWidth <= rectangle.right) ? x0 + maxWidth : rectangle.right;
+      ::i32 maxWidth = 2048;
+      for (::i32 x0 = rectangle.left; x0 < rectangle.right; x0 += maxWidth) {
+         ::i32 x1 = (x0 + maxWidth <= rectangle.right) ? x0 + maxWidth : rectangle.right;
          rectanglea.add(::i32_rectangle(x0, rectangle.top, x1, rectangle.bottom));
       }
    }

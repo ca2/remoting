@@ -26,7 +26,7 @@
 #include "remoting/thread/critical_section_lock.h"
 
 ConnectionTimer::ConnectionTimer(TimerListener *timerListener,
-                                 unsigned int timeOut)
+                                 ::u32 timeOut)
 : m_happeningTimerListener(timerListener),
   m_iTimeout(timeOut),
   m_signalEnabled(true)

@@ -43,7 +43,7 @@ namespace str
 
    CLASS_DECL_REMOTING_RFB ::string to_ansi(const ::scoped_string & scopedstr);
 
-   CLASS_DECL_REMOTING_RFB ::string to_ansi(unsigned char * puch, int iSize);
+   CLASS_DECL_REMOTING_RFB ::string to_ansi(::u8 * puch, ::i32 iSize);
 
    CLASS_DECL_REMOTING_RFB bool checkAnsiConversion(const ::scoped_string & scopedstr);
 

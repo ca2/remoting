@@ -47,8 +47,8 @@ namespace remoting
          // class members
          //
 
-         const static int DIRECTORY  = 0x1;
-         const static int EXECUTABLE = 0x2;
+         const static ::i32 DIRECTORY  = 0x1;
+         const static ::i32 EXECUTABLE = 0x2;
 
       public:
 
@@ -65,7 +65,7 @@ namespace remoting
          //
 
          FileInfo(::u64 size, ::u64 modTime,
-                  unsigned short flags, const ::scoped_string & scopedstrFileName);
+                  ::u16 flags, const ::scoped_string & scopedstrFileName);
 
          //
          // Creates FileInfo class with name, size, flags that will be
@@ -102,7 +102,7 @@ namespace remoting
          // Sets file flags (see static FileInfo constants)
          //
 
-         void setFlags(unsigned short flags);
+         void setFlags(::u16 flags);
 
          //
          // Sets relative (from parent folder) file name
@@ -126,7 +126,7 @@ namespace remoting
          // Returns file flags (see FileInfo static constants)
          //
 
-         unsigned short getFlags() const;
+         ::u16 getFlags() const;
 
          //
          // Returns file name
@@ -137,7 +137,7 @@ namespace remoting
          ///protected:
          ::u64 m_sizeInBytes;
          class ::time  m_lastModified;
-         unsigned short m_flags;
+         ::u16 m_flags;
          ::string m_strFileName;
       };
 

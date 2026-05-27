@@ -53,7 +53,7 @@ namespace remoting_rtc_windows
       return (size_t)m_mappedRect.Pitch;
    }
 
-   char *WinAutoMapDxgiSurface::getBuffer() const { return (char *)m_mappedRect.pBits; }
+   char_pointer WinAutoMapDxgiSurface::getBuffer() const { return (char_pointer )m_mappedRect.pBits; }
 
 
 } // namespace remoting_rtc_windows

@@ -33,12 +33,12 @@ namespace remoting_rfb_client
    class CLASS_DECL_REMOTING_RFB RfbSetEncodingsClientMessage : public RfbClientToServerMessage
    {
    public:
-      RfbSetEncodingsClientMessage(const ::array_base<int> & encodings);
+      RfbSetEncodingsClientMessage(const ::array_base<::i32> & encodings);
       ~RfbSetEncodingsClientMessage();
 
       void send(::remoting_rfb::RfbOutputGate *output);
 
    private:
-      ::array_base<int> m_encodings;
+      ::array_base<::i32> m_encodings;
    };
 } // namespace remoting_rfb_client

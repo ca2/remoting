@@ -39,12 +39,12 @@ HttpRequest::~HttpRequest()
   }
 }
 
-const char *HttpRequest::getRequest() const
+const_char_pointer HttpRequest::getRequest() const
 {
   return m_request;
 }
 
-const char *HttpRequest::getFilename() const
+const_char_pointer HttpRequest::getFilename() const
 {
   return m_filename;
 }
@@ -68,7 +68,7 @@ void HttpRequest::readHeader()
 
 void HttpRequest::skipHeader(bool lastWasEndLn)
 {
-  char c;
+  ::i8 c;
 
   for (;;) {
     m_dataInput->readFully(&c, 1);
@@ -124,11 +124,11 @@ bool HttpRequest::parseHeader()
   return true;
 }
 
-void HttpRequest::readLine(char endLnChar, char *buffer, size_t maxSize)
+void HttpRequest::readLine(::i8 endLnChar, char_pointer buffer, size_t maxSize)
 {
   size_t readTotal = 0;
 
-  char c = 0;
+  ::i8 c = 0;
 
   while (readTotal < maxSize) {
     try {
@@ -141,7 +141,7 @@ void HttpRequest::readLine(char endLnChar, char *buffer, size_t maxSize)
 
     if (c == endLnChar) {
       break;
-    } // if read char is delimitter.
+    } // if read ::i8 is delimitter.
   } // while
 
   buffer[readTotal] = '\0';

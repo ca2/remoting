@@ -62,7 +62,7 @@ namespace remoting_rfb_node_desktop
        * Returns specified log level.
        * @return specified log level.
        */
-      int getLogLevel();
+      ::i32 getLogLevel();
 
       /**
        * Puts specified shared memory name into output parameter.

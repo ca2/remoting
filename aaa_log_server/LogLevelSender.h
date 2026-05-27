@@ -40,7 +40,7 @@ public:
   void startSender(OutputStream *outStream);
 
   // Signals to the self thread for update available.
-  void updateLevel(unsigned char newLevel);
+  void updateLevel(::u8 newLevel);
 
 private:
   virtual void onThreadMain();
@@ -50,7 +50,7 @@ private:
 
   OutputStream *m_outStream;
   bool m_updateAvailable;
-  unsigned char m_logLevel;
+  ::u8 m_logLevel;
   lockable_critical_section m_criticalsectionUpdate;
 };
 

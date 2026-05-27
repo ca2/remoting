@@ -123,7 +123,7 @@ void WinEventLog::reportEvent(::u32 messageId,
   }
 
   // Format the original string.
-  int count = _vsctprintf(fmt, argList);
+  ::i32 count = _vsctprintf(fmt, argList);
   ASSERT(count >= 0);
   ::array_base<TCHAR> formattedStringBuff(count + 1);
   TCHAR *formattedString = &formattedStringBuff.front();

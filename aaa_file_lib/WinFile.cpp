@@ -140,7 +140,7 @@ bool WinFile::isValid()
   return m_path;
 }
 
-void WinFile::seek(long long n)
+void WinFile::seek(::i64 n)
 {
   LARGE_INTEGER fileSize;
   GetFileSizeEx(m_hFile, &fileSize);

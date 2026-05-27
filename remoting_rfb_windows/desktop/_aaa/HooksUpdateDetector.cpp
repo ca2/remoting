@@ -154,7 +154,7 @@ namespace remoting_rfb_windows
       }
    }
 
-   void HooksUpdateDetector::broadcastMessage(unsigned int scopedstrMessage)
+   void HooksUpdateDetector::broadcastMessage(::u32 scopedstrMessage)
    {
       HWND hwndFound = FindWindowEx(HWND_MESSAGE, 0, 0, 0);
       while (hwndFound)
@@ -222,8 +222,8 @@ namespace remoting_rfb_windows
          {
             if (msg.scopedstrMessage == HookDefinitions::SPEC_IPC_CODE)
             {
-               ::i32_rectangle rectangle((short)(msg.wParam >> 16), (short)(msg.wParam & 0xffff), (short)(msg.lParam >> 16),
-                                    (short)(msg.lParam & 0xffff));
+               ::i32_rectangle rectangle((::i16)(msg.wParam >> 16), (::i16)(msg.wParam & 0xffff), (::i16)(msg.lParam >> 16),
+                                    (::i16)(msg.lParam & 0xffff));
                if (rectangle.has_area())
                {
                   m_pupdatekeeper->addChangedRect(rectangle);

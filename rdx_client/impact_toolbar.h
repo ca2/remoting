@@ -60,8 +60,8 @@ namespace remoting_client
       bool m_bLButtonDown = false;
       //bool m_bPressed = false;
       bool m_bDrag = false;
-      int m_xCursorDragStart = -1;
-      int m_xWindowDragStart = -1;
+      ::i32 m_xCursorDragStart = -1;
+      ::i32 m_xWindowDragStart = -1;
 
       enum_control m_econtrol;
       enum_id m_eid;
@@ -84,9 +84,9 @@ namespace remoting_client
 void defer_repaint();
 virtual void on_hover_off();
 virtual void on_hover();
-virtual bool _000OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+virtual bool _000OnMouseEx(::u32 uMessage, ::i32 iButtonMask, const ::i32_point &pointRoot,
                            const ::i32_point &pointClient, bool &bDoDefaultProcessing);
-virtual bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+virtual bool _001OnMouseEx(::u32 uMessage, ::i32 iButtonMask, const ::i32_point &pointRoot,
                            const ::i32_point &pointClient, bool &bDoDefaultProcessing);
       //virtual bool _000OnMouse(bool bPress, const ::i32_point& pointRoot, const ::i32_point& pointClient);
       //virtual bool _001OnMouse(bool bPress, const ::i32_point& pointRoot, const ::i32_point& pointClient);
@@ -151,8 +151,8 @@ virtual bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &p
       //::pointer<impact_toolbar_button> m_pbuttonMinimize;
       //::pointer<impact_toolbar_button> m_pbuttonRestore;
       //::pointer<impact_toolbar_button> m_pbuttonClose;
-      //int m_iDesktopWidth = 1920;
-      //float m_fScale;
+      //::i32 m_iDesktopWidth = 1920;
+      //::f32 m_fScale;
       ::pointer < ::innate_subsystem::FontInterface > m_pfont001;
       ::pointer<toolbar_button> m_pbuttonMinimize;
       ::pointer<toolbar_button> m_pbuttonRestore;
@@ -169,7 +169,7 @@ virtual bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &p
       //bool on_mouse(bool bPress, const ::i32_point& pointPosition);
       void __001OnDraw(::innate_subsystem::GraphicsInterface *pgraphics, const ::i32_rectangle & rectangle) override;
       bool on_button_click(enum_id eid) override;
-      bool _001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+      bool _001OnMouseEx(::u32 uMessage, ::i32 iButtonMask, const ::i32_point &pointRoot,
                          const ::i32_point &pointClient, bool &bDoDefaultProcessing) override;
    };
 

@@ -33,7 +33,7 @@ public:
   KeySymTest(const ::scoped_string & scopedstrFileFrom, const ::scoped_string & scopedstrFileTo);
   virtual ~KeySymTest();
 
-  int onThreadMain();
+  ::i32 onThreadMain();
 
 private:
   virtual void onRfbKeySymEvent(::u32 rfbKeySym, bool down);

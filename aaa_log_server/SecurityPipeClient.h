@@ -38,7 +38,7 @@ public:
   // the getChannel() function to own.
   // @throw ::subsystem::Exception on an error, the security channel at this case will be
   // destroyed.
-  SecurityPipeClient(Channel *tempPublChan, unsigned int maxPortionSize);
+  SecurityPipeClient(Channel *tempPublChan, ::u32 maxPortionSize);
   virtual ~SecurityPipeClient();
 
   // Call this function at once to take the security channel. After calling

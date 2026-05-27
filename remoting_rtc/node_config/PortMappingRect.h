@@ -37,7 +37,7 @@ namespace remoting_rtc_node
       ::i32_rectangle m_rectangle;
 
 
-      PortMappingRect(int left, int right, int top, int bottom);
+      PortMappingRect(::i32 left, ::i32 right, ::i32 top, ::i32 bottom);
       PortMappingRect();
       ~PortMappingRect();
 
@@ -54,7 +54,7 @@ namespace remoting_rtc_node
 
       // Returns true if string can be parsed to rectangle object,
       // false otherwise.
-      static bool tryParse(const char * psz);
+      static bool tryParse(const_char_pointer psz);
 
       // Parsed string and sets parsed values to output rectangle.
       // Returns true if string is valid, false otherwise.

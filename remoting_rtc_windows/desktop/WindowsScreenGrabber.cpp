@@ -171,16 +171,16 @@ namespace remoting_rtc_windows
       m_screen.update();
 
       ::i32_rectangle screenRect = m_screen.getDesktopRect();
-      int width = screenRect.width();
-      int height = screenRect.height();
+      ::i32 width = screenRect.width();
+      ::i32 height = screenRect.height();
 
       if (width != m_rectangleFullScreen.width() || height != m_rectangleFullScreen.height())
       {
          return true;
       }
 
-      int left = screenRect.left;
-      int top = screenRect.top;
+      ::i32 left = screenRect.left;
+      ::i32 top = screenRect.top;
 
       if (left != m_rectangleFullScreen.left || top != m_rectangleFullScreen.top)
       {

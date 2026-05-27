@@ -35,7 +35,7 @@ namespace remoting_rfb
 
    // FIXME: Get rid of globals.
    // FIXME: Use UPPER_CASE for constants.
-   enum enum_hextile : int
+   enum enum_hextile : ::i32
    {
       e_hextile_none,
       e_hextile_raw = 1,
@@ -56,7 +56,7 @@ namespace remoting_rfb
       //
       // Initialize existing object instance with new tile data.
       //
-      void newTile(const PIXEL_T *src, int w, int h);
+      void newTile(const PIXEL_T *src, ::i32 w, ::i32 h);
 
       //
       // Flags can include: e_hextile_raw, e_hextile_any_subrects and
@@ -64,7 +64,7 @@ namespace remoting_rfb
       // flags make no sense. Also, e_hextile_subrects_coloured is meaningful
       // only when e_hextile_any_subrects is set as well.
       //
-      int getFlags() const { return m_flags; }
+      ::i32 getFlags() const { return m_flags; }
 
       //
       // Returns the size of encoded subrects data, including subrect count.
@@ -75,12 +75,12 @@ namespace remoting_rfb
       //
       // Return optimal background.
       //
-      int getBackground() const { return m_background; }
+      ::i32 getBackground() const { return m_background; }
 
       //
       // Return foreground if flags include e_hextile_subrects_coloured.
       //
-      int getForeground() const { return m_foreground; }
+      ::i32 getForeground() const { return m_foreground; }
 
       //
       // Encode subrects. This function may be called only if
@@ -88,7 +88,7 @@ namespace remoting_rfb
       // big enough to store at least the number of bytes returned by the
       // getSize() method.
       //
-      void encode(unsigned char *dst) const;
+      void encode(::u8 *dst) const;
 
    protected:
 
@@ -98,16 +98,16 @@ namespace remoting_rfb
       void analyze();
 
       const PIXEL_T *m_tile;
-      int m_width;
-      int m_height;
+      ::i32 m_width;
+      ::i32 m_height;
 
       size_t m_size;
-      int m_flags;
+      ::i32 m_flags;
       PIXEL_T m_background;
       PIXEL_T m_foreground;
 
-      int m_numSubrects;
-      unsigned char m_coords[256 * 2];
+      ::i32 m_numSubrects;
+      ::u8 m_coords[256 * 2];
       PIXEL_T m_colors[256];
 
    private:
@@ -129,7 +129,7 @@ namespace remoting_rfb
    }
 
    template<class PIXEL_T>
-   void HextileTile<PIXEL_T>::newTile(const PIXEL_T *src, int w, int h)
+   void HextileTile<PIXEL_T>::newTile(const PIXEL_T *src, ::i32 w, ::i32 h)
    {
       m_tile = src;
       m_width = w;
@@ -159,10 +159,10 @@ namespace remoting_rfb
       }
 
       // Compute number of complete rows of the same color, at the top
-      int y = (int)(ptr - m_tile) / m_width;
+      ::i32 y = (::i32)(ptr - m_tile) / m_width;
 
       PIXEL_T *colorsPtr = m_colors;
-      unsigned char *coordsPtr = m_coords;
+      ::u8 *coordsPtr = m_coords;
       m_pal.reset();
       m_numSubrects = 0;
 
@@ -171,14 +171,14 @@ namespace remoting_rfb
       {
          *colorsPtr++ = color;
          *coordsPtr++ = 0;
-         *coordsPtr++ = (unsigned char)(((m_width - 1) << 4) | ((y - 1) & 0x0F));
+         *coordsPtr++ = (::u8)(((m_width - 1) << 4) | ((y - 1) & 0x0F));
          m_pal.insert(color, 1);
          m_numSubrects++;
       }
 
       memset(m_processed, 0, 16 * 16 * sizeof(bool));
 
-      int x, sx, sy, sw, sh, max_x;
+      ::i32 x, sx, sy, sw, sh, max_x;
 
       for (; y < m_height; y++)
       {
@@ -211,8 +211,8 @@ namespace remoting_rfb
 
             // Save properties of this subrect
             *colorsPtr++ = color;
-            *coordsPtr++ = (unsigned char)((x << 4) | (y & 0x0F));
-            *coordsPtr++ = (unsigned char)(((sw - 1) << 4) | ((sh - 1) & 0x0F));
+            *coordsPtr++ = (::u8)((x << 4) | (y & 0x0F));
+            *coordsPtr++ = (::u8)(((sw - 1) << 4) | ((sh - 1) & 0x0F));
 
             if (m_pal.insert(color, 1) == 0)
             {
@@ -237,12 +237,12 @@ namespace remoting_rfb
       }
 
       // Save number of colors in this tile (should be no less than 2)
-      int numColors = m_pal.getNumColors();
+      ::i32 numColors = m_pal.getNumColors();
       ASSERT(numColors >= 2);
 
       m_background = (PIXEL_T)m_pal.getEntry(0);
       m_flags = e_hextile_any_subrects;
-      int numSubrects = m_numSubrects - m_pal.getCount(0);
+      ::i32 numSubrects = m_numSubrects - m_pal.getCount(0);
 
       if (numColors == 2)
       {
@@ -259,15 +259,15 @@ namespace remoting_rfb
    }
 
    template<class PIXEL_T>
-   void HextileTile<PIXEL_T>::encode(unsigned char *dst) const
+   void HextileTile<PIXEL_T>::encode(::u8 *dst) const
    {
       ASSERT(m_numSubrects && (m_flags & e_hextile_any_subrects));
 
       // Zero subrects counter
-      unsigned char *numSubrectsPtr = dst;
+      ::u8 *numSubrectsPtr = dst;
       *dst++ = 0;
 
-      for (int i = 0; i < m_numSubrects; i++)
+      for (::i32 i = 0; i < m_numSubrects; i++)
       {
          if (m_colors[i] == m_background)
          {

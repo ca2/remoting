@@ -102,7 +102,7 @@ namespace remoting_rfb
       }
    }
 
-   void Region::translate(int dx, int dy)
+   void Region::translate(::i32 dx, ::i32 dy)
    {
       miTranslateRegion(&m_reg, dx, dy);
    }
@@ -138,7 +138,7 @@ namespace remoting_rfb
       return (miRegionNotEmpty((RegionPtr)&m_reg) == false);
    }
 
-   bool Region::isPointInside(int x, int y) const
+   bool Region::isPointInside(::i32 x, ::i32 y) const
    {
       BoxRec stubBox; // Ignore returning rectangle.
       return !!miPointInRegion((RegionPtr)&m_reg, x, y, &stubBox);

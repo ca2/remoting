@@ -39,9 +39,9 @@ namespace remoting_notify_node
          bool                                m_bRunMainLoop;
          bool                                m_bAdmin;
          
-         double                              m_dProgress;
-         double                              m_dProgress1;
-         double                              m_dProgress2;
+         ::f64                              m_dProgress;
+         ::f64                              m_dProgress1;
+         ::f64                              m_dProgress2;
          
          string                              m_strInstallId;
          string                              m_strInstallConfiguration;
@@ -76,13 +76,13 @@ namespace remoting_notify_node
          //
          //
          //      virtual void     start_app(const ::scoped_string & scopedstr);
-         //      //virtual int start_installation(const ::scoped_string & scopedstrCommand);
+         //      //virtual ::i32 start_installation(const ::scoped_string & scopedstrCommand);
          //
          //      void get_temp_file_name_template(string & strRet, const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrExtension, const ::scoped_string & scopedstrTemplate) override;
          //      void get_temp_file_name(string & strRet, const ::scoped_string & scopedstrName, const ::scoped_string & scopedstrExtension) override;
          //
          //      void install_trace(const ::scoped_string & scopedstr) override;
-         //      void install_trace(double dRate) override;
+         //      void install_trace(::f64 dRate) override;
          
          void init_instance() override;
          
@@ -112,11 +112,11 @@ namespace remoting_notify_node
          //
          //      virtual string install_get_build();
          //
-         //      virtual int check_soon_launch(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
-         //      virtual int check_soon_file_launch(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
-         //      virtual int check_soon_app_id(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
-         //      virtual int check_soon_app_id1(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
-         //      virtual int check_soon_app_id2(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
+         //      virtual ::i32 check_soon_launch(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
+         //      virtual ::i32 check_soon_file_launch(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
+         //      virtual ::i32 check_soon_app_id(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
+         //      virtual ::i32 check_soon_app_id1(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
+         //      virtual ::i32 check_soon_app_id2(const ::scoped_string & scopedstrAppId, bool bLaunch, ::u32 & dwGoodToCheckAgain);
          //
          //
          //      virtual string get_install_configuration();

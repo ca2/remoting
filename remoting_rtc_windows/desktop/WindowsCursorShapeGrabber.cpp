@@ -97,15 +97,15 @@ namespace remoting_rtc_windows
 
       m_cursorshape.setHotSpot(iconInfo.xHotspot, iconInfo.yHotspot);
 
-      int width = bmMask.bmWidth;
-      int height = isColorShape ? bmMask.bmHeight : bmMask.bmHeight / 2;
-      int widthBytes = bmMask.bmWidthBytes;
+      ::i32 width = bmMask.bmWidth;
+      ::i32 height = isColorShape ? bmMask.bmHeight : bmMask.bmHeight / 2;
+      ::i32 widthBytes = bmMask.bmWidthBytes;
 
       const ::innate_subsystem::Framebuffer *pixels = m_cursorshape.getPixels();
 
       m_cursorshape.setProperties({width, height}, pixelFormat);
 
-      ::array_base<char> maskBuff(widthBytes * bmMask.bmHeight);
+      ::array_base<::i8> maskBuff(widthBytes * bmMask.bmHeight);
       if (maskBuff.empty())
       {
          DeleteObject(iconInfo.hbmMask);
@@ -115,7 +115,7 @@ namespace remoting_rtc_windows
          }
          return true;
       }
-      char *mask = maskBuff.data();
+      char_pointer mask = maskBuff.data();
 
       // FIXME: Use try-catch block to escape code duplication
       // and free resources on an error.
@@ -195,7 +195,7 @@ namespace remoting_rtc_windows
          }
          else if (pixels->getBitsPerPixel() == 16)
          {
-            WinCursorShapeUtils::winColorShapeToRfb<unsigned short>(pixels, mask, widthBytes);
+            WinCursorShapeUtils::winColorShapeToRfb<::u16>(pixels, mask, widthBytes);
          }
       }
 

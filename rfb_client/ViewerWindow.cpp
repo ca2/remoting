@@ -232,7 +232,7 @@ namespace remoting_rfb_client
             m_menu.checkedMenuItem(IDS_TB_CTRL, false);
         }
 
-        int scale = m_pconnectionconfig->getScaleNumerator() * 100 / m_pconnectionconfig->getScaleDenominator();
+        ::i32 scale = m_pconnectionconfig->getScaleNumerator() * 100 / m_pconnectionconfig->getScaleDenominator();
         m_toolbar.enableButton(IDS_TB_SCALEOUT, scale > m_standardScale[0]);
         m_toolbar.enableButton(IDS_TB_SCALEIN, scale < m_standardScale[m_standardScale.size() - 1]);
         if (m_pconnectionconfig->isFitWindowEnabled()) {
@@ -277,13 +277,13 @@ namespace remoting_rfb_client
 
     void ViewerWindow::applySettings()
     {
-        int scale;
+        ::i32 scale;
 
         if (m_pconnectionconfig->isFitWindowEnabled()) {
             scale = -1;
         } else {
-            int iNum = m_pconnectionconfig->getScaleNumerator();
-            int iDenom = m_pconnectionconfig->getScaleDenominator();
+            ::i32 iNum = m_pconnectionconfig->getScaleNumerator();
+            ::i32 iDenom = m_pconnectionconfig->getScaleDenominator();
             scale = (iNum * 100) / iDenom;
         }
 
@@ -304,7 +304,7 @@ namespace remoting_rfb_client
         viewerCoreSettings();
     }
 
-    void ViewerWindow::changeCursor(int type)
+    void ViewerWindow::changeCursor(::i32 type)
     {
         ::pointer < ::innate_subsystem::CursorInterface > pcursor;
 
@@ -485,7 +485,7 @@ bool ViewerWindow::on_user_system_command(::user::enum_system_command esystemcom
       ::string kbdName = InnateSubsystem().getKeyboardLayoutName();
 
         ::i32_rectangle geometry;
-        int pixelSize = 0;
+        ::i32 pixelSize = 0;
         m_pdesktopwindow->getServerGeometry(&geometry, &pixelSize);
         ::string str;
         str.runtime_format(MainSubsystem().StringTable().getString(IDS_CONNECTION_INFO_FORMAT),
@@ -681,7 +681,7 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
              sm.setUINT("port", m_pconnectiondata->getPort());
 
              if (m_pconnectiondata->isSetPassword()) {
-                int whetherToSavePass = MainSubsystem().message_box(operating_system_window(),
+                ::i32 whetherToSavePass = MainSubsystem().message_box(operating_system_window(),
                   MainSubsystem().StringTable().getString(IDS_QUESTION_SAVE_PASSWORD),
                   MainSubsystem().StringTable().getString(IDS_SECURITY_WARNING_CAPTION),
                   ::user::e_message_box_yes_no);
@@ -710,7 +710,7 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
             return;
         }
 
-        int scale = m_pconnectionconfig->getScaleNumerator() * 100 / m_pconnectionconfig->getScaleDenominator();
+        ::i32 scale = m_pconnectionconfig->getScaleNumerator() * 100 / m_pconnectionconfig->getScaleDenominator();
         size_t indexNewScale = 0;
         while (indexNewScale < m_standardScale.size() && m_standardScale[indexNewScale] <= scale + 5)
             indexNewScale++;
@@ -735,7 +735,7 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
             return;
         }
 
-        int scale = m_pconnectionconfig->getScaleNumerator() * 100 / m_pconnectionconfig->getScaleDenominator();
+        ::i32 scale = m_pconnectionconfig->getScaleNumerator() * 100 / m_pconnectionconfig->getScaleDenominator();
         size_t indexNewScale = m_standardScale.size();
         do {
             indexNewScale--;
@@ -770,8 +770,8 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
                 m_toolbar.checkButton(IDS_TB_SCALEAUTO, false);
 
                 auto rcWindow = m_pdesktopwindow->getClientRect();
-                int wndWidth = rcWindow.width() - 1;
-                int wndHeight = rcWindow.height();
+                ::i32 wndWidth = rcWindow.width() - 1;
+                ::i32 wndHeight = rcWindow.height();
 
                 ::i32_rectangle screen = m_pdesktopwindow->getFramebufferGeometry();
 
@@ -787,9 +787,9 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
         }
     }
 
-    int ViewerWindow::translateAccelToTB(int val)
+    ::i32 ViewerWindow::translateAccelToTB(::i32 val)
     {
-        static const ::pair<int, int> accelerators[] = {
+        static const ::pair<::i32, ::i32> accelerators[] = {
             {ID_CONN_OPTIONS,    IDS_TB_CONNOPTIONS},
             {ID_CONN_INFO,       IDS_TB_CONNINFO},
             {ID_SHOW_TOOLBAR,    IDS_TB_TOOLBAR},
@@ -799,7 +799,7 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
             {ID_TRANSF_FILES,    IDS_TB_TRANSFER}
         };
 
-        for (int i = 0; i < sizeof(accelerators) / sizeof(::pair<int, int>); i++) {
+        for (::i32 i = 0; i < sizeof(accelerators) / sizeof(::pair<::i32, ::i32>); i++) {
             if (accelerators[i].m_element1 == val) {
                 m_plogwriter->debug("accelerator pressed: {}", val);
                 return accelerators[i].m_element2;
@@ -819,7 +819,7 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
 
 
         if (notificationID == 1) {
-            int transl = translateAccelToTB(controlID);
+            ::i32 transl = translateAccelToTB(controlID);
 
             if (transl != -1) {
                 controlID = transl;
@@ -1046,11 +1046,11 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
    }
 
 
-   bool ViewerWindow::onGetTooltip(int iControl, ::string & strTooltip)
+   bool ViewerWindow::onGetTooltip(::i32 iControl, ::string & strTooltip)
    {
 
        auto presourceloader = MainSubsystem().ResourceLoader();
-       int resId = static_cast<int>(iControl);
+       ::i32 resId = static_cast<::i32>(iControl);
        //::string strToolTip;
        presourceloader->loadString(resId, strTooltip);
 
@@ -1210,7 +1210,7 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
     //     m_pdesktopwindow->setWinKeyIgnore(true);
     // }
 
-    // bool ViewerWindow::onNotify(int idCtrl, LPNMHDR pnmh)
+    // bool ViewerWindow::onNotify(::i32 idCtrl, LPNMHDR pnmh)
     // {
     //     return true;
     // }
@@ -1242,7 +1242,7 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
     void ViewerWindow::onSize()
     {
         //RECT rc;
-        int x, y;
+        ::i32 x, y;
 
         auto rc = getClientRect();
         m_plogwriter->debug("client rectangle: {}, {}; {}, {}",
@@ -1255,13 +1255,13 @@ auto iState = m_toolbar.getState(IDS_TB_CTRLESC);
         }
         if (m_pdesktopwindow->isWindow()) {
 
-            int h = rc.bottom - rc.top;
-            int w = rc.right - rc.left;
+            ::i32 h = rc.bottom - rc.top;
+            ::i32 w = rc.right - rc.left;
 
             m_plogwriter->debug("Desktop-window. (x, y): ({}, {}); (w, h): ({}, {})",
                               x, y, w, h);
             if (h > 0 && w > 0) {
-                m_pdesktopwindow->setPlacement(::int_rectangle_dimension(x, y, w, h));
+                m_pdesktopwindow->setPlacement(::i32_rectangle_dimension(x, y, w, h));
                 //m_pdesktopwindow->setSize(w, h);
             }
         }
@@ -1310,7 +1310,7 @@ system()->acme_windowing()->post([this]()
         // If authentication is canceled, then do quiet exit, else show error-scopedstrMessage.
         if (wParam != ::remoting_rfb_client::AuthException::AUTH_CANCELED) {
             ::string error = m_error.get_message();
-            int result = MainSubsystem().message_box({},
+            ::i32 result = MainSubsystem().message_box({},
                                     error,
                                     formatWindowName(),
                                     ::user::e_message_box_retry_cancel | ::user::e_message_box_icon_error);
@@ -1351,7 +1351,7 @@ system()->acme_windowing()->post([this]()
     {
         auto pfullscreenwarningdialog = allocateø FullscreenWarningDialog(m_premoting);
        pfullscreenwarningdialog->setParent(this);
-       pfullscreenwarningdialog->doAttachedModal([this](int iResult)
+       pfullscreenwarningdialog->doAttachedModal([this](::i32 iResult)
                                  {
           
           information("got response from Fs Warning dialog {}", iResult);
@@ -1385,18 +1385,18 @@ system()->acme_windowing()->post([this]()
 
        defaultRect = getScreenWorkArea();
 
-        int widthDesktop  = defaultRect.width();
-        int heightDesktop = defaultRect.height();
+        ::i32 widthDesktop  = defaultRect.width();
+        ::i32 heightDesktop = defaultRect.height();
 
         ::i32_rectangle viewerRect = m_pdesktopwindow->getViewerGeometry();
-        int serverWidth = viewerRect.width();
-        int serverHeight = viewerRect.height();
+        ::i32 serverWidth = viewerRect.width();
+        ::i32 serverHeight = viewerRect.height();
 
         if (serverWidth < widthDesktop && serverHeight < heightDesktop) {
-            //int borderWidth, borderHeight;
+            //::i32 borderWidth, borderHeight;
             auto sizeBorder = getBorderSize();
-            int totalWidth     = serverWidth  + sizeBorder.cx;
-            int totalHeight    = serverHeight + sizeBorder.cy + 1;
+            ::i32 totalWidth     = serverWidth  + sizeBorder.cx;
+            ::i32 totalHeight    = serverHeight + sizeBorder.cy + 1;
             if (m_toolbar.isVisible()) {
                 totalHeight += m_toolbar.getHeight();
             }
@@ -1412,7 +1412,7 @@ system()->acme_windowing()->post([this]()
     }
 
 
-    void ViewerWindow::onConnecting(int iPhase)
+    void ViewerWindow::onConnecting(::i32 iPhase)
     {
 
         m_papplication->handle_direct_id(id_remoting_connecting, iPhase, 0);
@@ -1491,7 +1491,7 @@ system()->acme_windowing()->post([this]()
     {
         m_plogwriter->information("onAuthError ({}): {}",
                          exception->getAuthCode(), exception->get_message());
-        int authCode = exception->getAuthCode();
+        ::i32 authCode = exception->getAuthCode();
         m_error = *exception;
         postMessage(WM_USER_AUTH_ERROR, authCode);
     }
@@ -1519,7 +1519,7 @@ system()->acme_windowing()->post([this]()
         m_pdesktopwindow->setClipboardData(cutText);
     }
 
-    void ViewerWindow::doCommand(int iCommand)
+    void ViewerWindow::doCommand(::i32 iCommand)
     {
         postMessage(::user::e_message_command, iCommand);
     }
@@ -1594,7 +1594,7 @@ system()->acme_windowing()->post([this]()
         return windowName;
     }
 
-    bool ViewerWindow::operating_system_hook_on_keyboard_message(::lresult & lresult, ::user::enum_message emessage, int iVkCode, ::lparam lparam)
+    bool ViewerWindow::operating_system_hook_on_keyboard_message(::lresult & lresult, ::user::enum_message emessage, ::i32 iVkCode, ::lparam lparam)
     {
 
        //KBDLLHOOKSTRUCT *str = (KBDLLHOOKSTRUCT*) lParam;

@@ -44,9 +44,9 @@ public:
   bool parseHeader();
 
   // Returns read request.
-  const char *getRequest() const;
+  const_char_pointer getRequest() const;
   // Returns requested filename.
-  const char *getFilename() const;
+  const_char_pointer getFilename() const;
   // Return true if request has at least one argument specified.
   bool hasArguments() const;
   // Returns request arguments container.
@@ -59,7 +59,7 @@ protected:
   // and storage it output buffer parameter.
   // If line is more than specified max size that string will be trunkated to
   // maxSize.
-  void readLine(char endLnChar, char *buffer, size_t maxSize);
+  void readLine(::i8 endLnChar, char_pointer buffer, size_t maxSize);
 
 protected:
   static const size_t REQUEST_BUFFER_SIZE = 2048;
@@ -68,11 +68,11 @@ protected:
   // Stream for reading data.
   DataInputStream *m_dataInput;
   // Read request.
-  char m_request[REQUEST_BUFFER_SIZE];
+  ::i8 m_request[REQUEST_BUFFER_SIZE];
   // Requested filename.
-  char m_filename[REQUEST_BUFFER_SIZE];
+  ::i8 m_filename[REQUEST_BUFFER_SIZE];
   // Arguments string.
-  char m_args[REQUEST_BUFFER_SIZE];
+  ::i8 m_args[REQUEST_BUFFER_SIZE];
   // Arguments ::list_base.
   ArgList *m_argList;
 };

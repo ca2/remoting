@@ -186,7 +186,7 @@ namespace remoting_notify_node
       
       //         synchronous_lock synchronouslock(papp->m_plibraryFromInternet->synchronization(), DEFAULT_SYNCHRONOUS_LOCK_SUFFIX);
       
-      //         //for (int i = papp->installer().m_iRequest +
+      //         //for (::i32 i = papp->installer().m_iRequest +
       //         //             (papp->installer().m_bInstalling ? 1: 0);
       //         //      i < papp->m_plibrary->m_itema.count(); i++)
       //         //{
@@ -247,7 +247,7 @@ namespace remoting_notify_node
       //      {
       //         //         outheader("Cache-control") = "public";
       //         //         outheader("Pragma") = "public";
-      //         //         int iPathCount;
+      //         //         ::i32 iPathCount;
       //         //         outheader("Expires") = http()->gmdate(papp->datetime().strtotime(nullptr, "+1 day", 0, iPathCount));
       //         //#ifdef WINDOWS
       //         //         simple_file_server(::file::path("Z:\\") / m_request.m_strRequestUri);
@@ -292,7 +292,7 @@ namespace remoting_notify_node
       //         string strMessage = "yes_account_com";
       //         m.set_size(strMessage.length() + 2);
       //         m.data()[0] = 0x81;
-      //         m.data()[1] = (unsigned char)(strMessage.length());
+      //         m.data()[1] = (::u8)(strMessage.length());
       //         ::memory_copy(&m.data()[2], strMessage.c_str(), strMessage.length());
       //         write(m.data(), m.size());
       //         return;

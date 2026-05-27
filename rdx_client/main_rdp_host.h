@@ -7,7 +7,7 @@
 // class main_rdp_host
 // {
 // public:
-//    static int main();
+//    static ::i32 main();
 // };
 //
 //

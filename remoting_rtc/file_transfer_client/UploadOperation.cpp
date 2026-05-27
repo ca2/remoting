@@ -377,7 +377,7 @@ namespace remoting
                // Copy listener must decide what to do with this situation
                //
 
-               int action = m_copyListener->targetFileExists(localFileInfo,
+               ::i32 action = m_copyListener->targetFileExists(localFileInfo,
                                                              remoteFileInfo,
                                                              m_pathToTargetFile);
 
@@ -441,7 +441,7 @@ namespace remoting
          }
          m_timeLastRequest.Now();
 
-         ::array_base<char> buffer(m_bufferSize);
+         ::array_base<::i8> buffer(m_bufferSize);
          ::u32 read = 0;
          try {
             size_t portion = m_preadable->read(buffer.data(), m_bufferSize);

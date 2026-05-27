@@ -58,9 +58,9 @@ namespace remoting_rfb
             break;
          case ClientMsgDefs::POINTER_EVENT:
          {
-            unsigned char buttonMask = prfbinputgate->readUInt8();
-            unsigned short x = prfbinputgate->readUInt16();
-            unsigned short y = prfbinputgate->readUInt16();
+            ::u8 buttonMask = prfbinputgate->readUInt8();
+            ::u16 x = prfbinputgate->readUInt16();
+            ::u16 y = prfbinputgate->readUInt16();
             if (!m_viewOnly) {
                m_extEventListener->onMouseEvent(x, y, buttonMask);
             }
@@ -68,7 +68,7 @@ namespace remoting_rfb
             break;
          default:
             ::string errMess;
-            errMess.format("Unknown {} protocol code received", (int)reqCode);
+            errMess.format("Unknown {} protocol code received", (::i32)reqCode);
             throw ::subsystem::Exception(errMess);
             break;
       }

@@ -653,7 +653,7 @@ LRESULT CALLBACK WndProc(
 // WinMain
 // ============================================================================
 
-int main()
+::i32 main()
 {
 
    auto hInstance = (HINSTANCE) ::system()->m_hinstanceThis;

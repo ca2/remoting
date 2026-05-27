@@ -39,7 +39,7 @@ namespace remoting_rfb
       ClientListener();
        ~ClientListener() override;
 
-      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate) = 0;
+      virtual void onRequest(::u8 reqCode, BlockingGate *pblockinggate) = 0;
    };
 
 

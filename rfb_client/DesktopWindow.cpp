@@ -311,7 +311,7 @@ namespace remoting_rfb_client
     }
 
 
-   bool DesktopWindow::onMouseEx(::u32 uMessage, int iButtonMask, unsigned short wheelSpeed,
+   bool DesktopWindow::onMouseEx(::u32 uMessage, ::i32 iButtonMask, ::u16 wheelSpeed,
                                   const ::i32_point &point, bool &bDoDefaultProcessing)
    {
        
@@ -416,7 +416,7 @@ namespace remoting_rfb_client
    }
 
    
-   bool DesktopWindow::onMouse(unsigned char mouseButtons, unsigned short wheelSpeed, const ::i32_point & pointPosition)
+   bool DesktopWindow::onMouse(::u8 mouseButtons, ::u16 wheelSpeed, const ::i32_point & pointPosition)
    {
         if (m_pviewerwindow->isMinimized())
         {
@@ -474,12 +474,12 @@ namespace remoting_rfb_client
         // If coordinats of point is invalid, then skip event.
         if (pos.x >= 0 && pos.y >= 0)
         {
-            unsigned char buttons = mouseButtons;
+            ::u8 buttons = mouseButtons;
 
             // If posititon of mouse isn't change, then don't send event to server.
             if (buttons != m_previousMouseState || pos != m_previousMousePos)
             {
-                int wheelMask = ::innate_subsystem::e_mouse_wheel_up | ::innate_subsystem::e_mouse_wheel_down;
+                ::i32 wheelMask = ::innate_subsystem::e_mouse_wheel_up | ::innate_subsystem::e_mouse_wheel_down;
 
                 // Update previously pointPosition of mouse.
                 m_previousMouseState = buttons & ~wheelMask;
@@ -493,7 +493,7 @@ namespace remoting_rfb_client
                 else
                 {
                     // Send pointPosition of cursor and state of buttons wheelSpeed times.
-                    for (int i = 0; i < wheelSpeed; i++)
+                    for (::i32 i = 0; i < wheelSpeed; i++)
                     {
                         sendPointerEvent(buttons, pos);
                         sendPointerEvent(buttons & ~wheelMask, pos);
@@ -524,7 +524,7 @@ namespace remoting_rfb_client
            keyhappening.m_bDown = emessage == ::user::e_message_key_down
            || emessage == ::user::e_message_sys_key_down;
            
-//            unsigned short virtualKey = static_cast<unsigned short>(wParam);
+//            ::u16 virtualKey = static_cast<::u16>(wParam);
 //            ::u32 additionalInfo = static_cast<::u32>(lParam);
 //            static const ::u32 DOWN_FLAG = 0x80000000;
 //            bool isDown = (additionalInfo & DOWN_FLAG) == 0;
@@ -569,7 +569,7 @@ namespace remoting_rfb_client
 //       
 //       auto keyhappening = InnateSubsystem().keyHappeningFromKeyMessage(emessage, wParam, lParam);
 //       
-////            unsigned short virtualKey = static_cast<unsigned short>(wParam);
+////            ::u16 virtualKey = static_cast<::u16>(wParam);
 ////            ::u32 additionalInfo = static_cast<::u32>(lParam);
 ////            static const ::u32 DOWN_FLAG = 0x80000000;
 ////            bool isDown = (additionalInfo & DOWN_FLAG) == 0;
@@ -660,8 +660,8 @@ namespace remoting_rfb_client
    void DesktopWindow::onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle)
     {
         critical_section_lock al(&m_criticalsectionBuffer);
-        int fbWidth = m_framebuffer.getDimension().cx;
-        int fbHeight = m_framebuffer.getDimension().cy;
+        ::i32 fbWidth = m_framebuffer.getDimension().cx;
+        ::i32 fbHeight = m_framebuffer.getDimension().cy;
 
         if (!fbWidth || !fbHeight)
         {
@@ -671,7 +671,7 @@ namespace remoting_rfb_client
             return;
         }
 
-        //int iDivisor = m_iDivisor;
+        //::i32 iDivisor = m_iDivisor;
 
         //if (iDivisor <= 0)
         //{
@@ -683,8 +683,8 @@ namespace remoting_rfb_client
         //scrollProcessing(fbWidth/iDivisor, fbHeight/iDivisor);
         scrollProcessing(fbWidth, fbHeight);
 
-        int iHorzPos = 0;
-        int iVertPos = 0;
+        ::i32 iHorzPos = 0;
+        ::i32 iVertPos = 0;
 
         if (m_showHorz)
         {
@@ -702,8 +702,8 @@ namespace remoting_rfb_client
         m_scManager.getSourceRect(src);
         m_scManager.getDestinationRect(dst);
 
-        int iWidth = m_clientArea.width() - dst.width();
-        int iHeight = m_clientArea.height() - dst.height();
+        ::i32 iWidth = m_clientArea.width() - dst.width();
+        ::i32 iHeight = m_clientArea.height() - dst.height();
 
         if (iWidth || iHeight)
         {
@@ -728,7 +728,7 @@ namespace remoting_rfb_client
       
     }
 
-    void DesktopWindow::applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight)
+    void DesktopWindow::applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, ::i32 wndWidth, ::i32 wndHeight)
     {
         if (m_showVert != isVert)
         {
@@ -772,8 +772,8 @@ namespace remoting_rfb_client
             hScroll = m_sbar.getHorizontalSize();
         }
 
-        int wndWidth = vScroll + m_clientArea.width();
-        int wndHeight = hScroll + m_clientArea.height();
+        ::i32 wndWidth = vScroll + m_clientArea.width();
+        ::i32 wndHeight = hScroll + m_clientArea.height();
         bool isVert = m_scManager.getVertPages(wndHeight);
         bool isHorz = m_scManager.getHorzPages(wndWidth);
 
@@ -803,7 +803,7 @@ namespace remoting_rfb_client
         applyScrollbarChanges(isChanged, isVert, isHorz, wndWidth, wndHeight);
     }
 
-    void DesktopWindow::scrollProcessing(int fbWidth, int fbHeight)
+    void DesktopWindow::scrollProcessing(::i32 fbWidth, ::i32 fbHeight)
     {
         bool bChanged = false;
 
@@ -865,7 +865,7 @@ namespace remoting_rfb_client
         m_framebuffer.setTargetDeviceContext(pgraphics->device_context());
         ::i32_rectangle rSource = rectangleSource;
 
-        //int iDivisor = m_iDivisor;
+        //::i32 iDivisor = m_iDivisor;
 
         //if (iDivisor <= 0)
         //{
@@ -990,9 +990,9 @@ namespace remoting_rfb_client
             if (!dimension.is_empty())
             {
                 // the width and height should be aligned to 4
-                int alignWidth = (dimension.cx + 3) / 4;
+                ::i32 alignWidth = (dimension.cx + 3) / 4;
                 dimension.cx = alignWidth * 4;
-                int alignHeight = (dimension.cy + 3) / 4;
+                ::i32 alignHeight = (dimension.cy + 3) / 4;
                 dimension.cy = alignHeight * 4;
                 m_framebuffer.setProperties(dimension, pframebuffer->getPixelFormat(), operating_system_window());
                 m_framebuffer.setColor(0, 0, 0);
@@ -1060,7 +1060,7 @@ namespace remoting_rfb_client
         redraw(wnd);
     }
 
-    void DesktopWindow::setScale(int scale)
+    void DesktopWindow::setScale(::i32 scale)
     {
         critical_section_lock al(&m_criticalsectionBuffer);
         m_scManager.setScale(scale);
@@ -1108,7 +1108,7 @@ namespace remoting_rfb_client
         return m_framebuffer.getDimension();
     }
 
-    void DesktopWindow::getServerGeometry(::i32_rectangle * prectangle, int *piPixelsize)
+    void DesktopWindow::getServerGeometry(::i32_rectangle * prectangle, ::i32 *piPixelsize)
     {
         critical_section_lock al(&m_criticalsectionBuffer);
         if (prectangle)
@@ -1131,7 +1131,7 @@ namespace remoting_rfb_client
 
     bool DesktopWindow::getAltState() const { return m_altDown; }
 
-    void DesktopWindow::sendKey(int key, bool pressed)
+    void DesktopWindow::sendKey(::i32 key, bool pressed)
     {
         m_rfbKeySym->sendModifier((::user::enum_key)(::u8)(key), pressed);
     }
@@ -1162,7 +1162,7 @@ namespace remoting_rfb_client
         }
     }
 
-    void DesktopWindow::sendPointerEvent(unsigned char buttonMask, const ::i32_point &pointPosition)
+    void DesktopWindow::sendPointerEvent(::u8 buttonMask, const ::i32_point &pointPosition)
     {
         if (m_pconnectionconfig->isViewOnly())
         {

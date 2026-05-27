@@ -36,7 +36,7 @@ namespace remoting_rfb_client
    {
    }
 
-   void CapsContainer::add(::u32 code, const char *vendor, const char *name,
+   void CapsContainer::add(::u32 code, const_char_pointer vendor, const_char_pointer pszName,
                            const ::string desc)
    {
       // Fill in an RfbCapabilityInfo structure and pass it to the overloaded
@@ -129,7 +129,7 @@ namespace remoting_rfb_client
       return (descMap.find(code) != descMap.end());
    }
 
-   bool RfbCapabilityInfo::isEqual(const char *vendor, const char *signature) const
+   bool RfbCapabilityInfo::isEqual(const_char_pointer vendor, const_char_pointer signature) const
    {
       if (memcmp(vendorSignature, vendor, vendorSigSize) != 0 ||
           memcmp(nameSignature, signature, nameSigSize) != 0 ) {

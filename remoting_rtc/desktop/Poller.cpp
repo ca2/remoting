@@ -108,15 +108,15 @@ void Poller::initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pu
                m_plogwriter->information("end of grabbing screen for polling");
 
                // Polling
-               int pollingWidth = m_rectanglePolling.width();
-               int pollingHeight = m_rectanglePolling.height();
-               int screenWidth = pframebufferScreen->getDimension().cx;
-               int screenHeight = pframebufferScreen->getDimension().cy;
+               ::i32 pollingWidth = m_rectanglePolling.width();
+               ::i32 pollingHeight = m_rectanglePolling.height();
+               ::i32 screenWidth = pframebufferScreen->getDimension().cx;
+               ::i32 screenHeight = pframebufferScreen->getDimension().cy;
 
                ::i32_rectangle scanRect;
-               for (int iRow = 0; iRow < screenHeight; iRow += pollingHeight)
+               for (::i32 iRow = 0; iRow < screenHeight; iRow += pollingHeight)
                {
-                  for (int iCol = 0; iCol < screenWidth; iCol += pollingWidth)
+                  for (::i32 iCol = 0; iCol < screenWidth; iCol += pollingWidth)
                   {
                      scanRect.set(iCol, iRow, minimum(iCol + pollingWidth, screenWidth),
                                       minimum(iRow + pollingHeight, screenHeight));

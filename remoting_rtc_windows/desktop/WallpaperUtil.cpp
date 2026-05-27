@@ -102,7 +102,7 @@ namespace remoting_rtc_windows
       ::subsystem::Impersonator impersonator;
       impersonator.initialize_impersonator(m_plogwriter);
       ::subsystem::AutoImpersonator autoimpersonator(&impersonator, m_plogwriter);
-      int result;
+      ::i32 result;
 
       if (m_strWallpaperPath.length() == 0)
       {

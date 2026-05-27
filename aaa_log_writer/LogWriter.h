@@ -71,16 +71,16 @@ public:
 //   ProcessorTimes checkPoint(const ::scoped_string & scopedstrTag);
 //
 // protected:
-//   static const int LOG_INTERR = 0;
-//   static const int LOG_ERR = 1;
-//   static const int LOG_WARN = 2;
-//   static const int LOG_MSG = 3;
-//   static const int LOG_INFO = 4;
-//   static const int LOG_DETAIL = 5;
-//   static const int LOG_DEBUG = 9;
+//   static const ::i32 LOG_INTERR = 0;
+//   static const ::i32 LOG_ERR = 1;
+//   static const ::i32 LOG_WARN = 2;
+//   static const ::i32 LOG_MSG = 3;
+//   static const ::i32 LOG_INFO = 4;
+//   static const ::i32 LOG_DETAIL = 5;
+//   static const ::i32 LOG_DEBUG = 9;
 //
 // private:
-//   void vprintLog(int logLevel, const ::scoped_string & scopedstrFmt, va_list argList);
+//   void vprintLog(::i32 logLevel, const ::scoped_string & scopedstrFmt, va_list argList);
 //
 //   ::subsystem::LogWriter *m_LogWriter;
 //   ProfileLogWriter *m_profiler;

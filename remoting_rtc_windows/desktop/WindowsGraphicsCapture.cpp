@@ -38,7 +38,7 @@ IDirect3DDevice CreateDirect3DDevice(IDXGIDevice *dxgiDevice)
    return inspectable.as<IDirect3DDevice>();
 }
 //
-//int main()
+//::i32 main()
 //{
 //   
 //

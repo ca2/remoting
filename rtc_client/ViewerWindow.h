@@ -94,7 +94,7 @@ namespace remoting_client
        // Flag is set, if toolbar is visible.
        bool m_bToolBar;
        // It is scale of viewer window in percent.
-       int m_scale;
+       ::i32 m_scale;
 
        // Flag is set after onConnected().
        bool m_isConnected;
@@ -106,7 +106,7 @@ namespace remoting_client
        // Destructor of ViewerWindow may be called, if this flag is true.
        bool m_stopped;
        // private:
-       ::array_base<int> m_standardScale;
+       ::array_base<::i32> m_standardScale;
 
        ::subsystem::OperatingSystemHook m_operatingsystemhook;
        bool m_hooksEnabledFirstTime;
@@ -139,17 +139,17 @@ namespace remoting_client
         //
         bool isStopped() const;
 
-        static const int WM_USER_ERROR = WM_USER + 1;
-        static const int WM_USER_STOP = WM_USER + 2;
-        static const int WM_USER_DISCONNECT = WM_USER + 3;
-        static const int WM_USER_AUTH_ERROR = WM_USER + 4;
-        static const int WM_USER_FS_WARNING = WM_USER + 5;
-      static const int WM_USER_DISCONNECT_NO_CONFIRM = WM_USER + 6;
-        static const int WM_USER_SWITCH_FULL_SCREEN_MODE = WM_USER + 1005;
+        static const ::i32 WM_USER_ERROR = WM_USER + 1;
+        static const ::i32 WM_USER_STOP = WM_USER + 2;
+        static const ::i32 WM_USER_DISCONNECT = WM_USER + 3;
+        static const ::i32 WM_USER_AUTH_ERROR = WM_USER + 4;
+        static const ::i32 WM_USER_FS_WARNING = WM_USER + 5;
+      static const ::i32 WM_USER_DISCONNECT_NO_CONFIRM = WM_USER + 6;
+        static const ::i32 WM_USER_SWITCH_FULL_SCREEN_MODE = WM_USER + 1005;
         class ::time m_timeStart;
         //protected:
-        static const int TIMER_DESKTOP_STATE = 1;
-        static const int TIMER_DESKTOP_STATE_DELAY = 50;
+        static const ::i32 TIMER_DESKTOP_STATE = 1;
+        static const ::i32 TIMER_DESKTOP_STATE_DELAY = 50;
 
         bool onMessage(::user::enum_message emessage, ::wparam wParam, ::lparam lParam) override;
         //bool onEraseBackground(HDC hdc);
@@ -165,7 +165,7 @@ namespace remoting_client
         //bool onCreate(LPCREATESTRUCT lps);
        bool onCreate(void *pCreateStruct) override;
         bool onCommand(::u32 controlID, ::u32 notificationID) override;
-        //bool onNotify(int idCtrl, LPNMHDR pnmh);
+        //bool onNotify(::i32 idCtrl, LPNMHDR pnmh);
         //bool onSysCommand(::wparam wParam, ::lparam lParam) override;
       bool on_user_system_command(::user::enum_system_command esystemcommand) override;
         bool onClose();
@@ -193,7 +193,7 @@ namespace remoting_client
         // It is implementation of CoreEventsAdapter functions.
         //
         void onBell() override;
-        void onConnecting(int iPhase) override;
+        void onConnecting(::i32 iPhase) override;
         void onConnected(::remoting_rtc::RfbOutputGate *output) override;
         void onDisconnect(const ::scoped_string & scopedstrMessage) override;
         void onAuthError(const ::remoting_client::AuthException *exception) override;
@@ -202,7 +202,7 @@ namespace remoting_client
         void onFramebufferPropChange(const ::innate_subsystem::Framebuffer *pframebuffer) override;
         void onCutText(const ::scoped_string & cutText) override;
 
-        int translateAccelToTB(int val);
+        ::i32 translateAccelToTB(::i32 val);
         //void applyScreenChanges(bool isFullScreen);
 
        ::innate_subsystem::ControlInterface * getControl();
@@ -212,7 +212,7 @@ namespace remoting_client
         // else return rectangle of remote screen + border
         bool onCalculateDefaultSize(::i32_rectangle & rectangleDefaultSize) override;
 
-        void changeCursor(int type);
+        void changeCursor(::i32 type);
         void applySettings();
         //::i32_rectangle getFullScreenRect();
 
@@ -220,7 +220,7 @@ namespace remoting_client
        void onAfterFullScreen(bool bRestore) override;
        void onBeforeUnFullScreen(bool bMinimizing) override;
        void onAfterUnFullScreen(bool bMinimizing) override;
-       bool onGetTooltip(int iControl, ::string & strTooltip) override;
+       bool onGetTooltip(::i32 iControl, ::string & strTooltip) override;
         //void setSizeFullScreenWindow();
         //void doFullScr();
         //void doRestoreToFullScreen();
@@ -228,7 +228,7 @@ namespace remoting_client
         //void doMinimizeFromFullScreen();
 
         void doSize();
-        void doCommand(int iCommand);
+        void doCommand(::i32 iCommand);
         void showFileTransferDialog();
         void showWindow();
         void enableUserElements();
@@ -242,11 +242,11 @@ namespace remoting_client
         void updateKeyState();
 
         // onHookProc function implementation of HookEventListener base abstract class.
-        //virtual LRESULT onHookProc(int code, ::wparam wParam, ::lparam lParam);
+        //virtual LRESULT onHookProc(::i32 code, ::wparam wParam, ::lparam lParam);
 
        //bool on_keyboard_message()
 
-        bool operating_system_hook_on_keyboard_message(::lresult & lresult, ::user::enum_message emessage, int iVkCode, ::lparam lparam) override;
+        bool operating_system_hook_on_keyboard_message(::lresult & lresult, ::user::enum_message emessage, ::i32 iVkCode, ::lparam lparam) override;
 
 
 

@@ -179,9 +179,9 @@ namespace remoting_rfb_node_desktop
       {
          
 #ifdef WINDOWS
-         action = pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
+         action = pserverconfig->getActionByAddress((ulong)addr_in.sin_addr.S_un.S_addr);
 #else
-         action = pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.s_addr);
+         action = pserverconfig->getActionByAddress((ulong)addr_in.sin_addr.s_addr);
 #endif
       }
       else
@@ -201,7 +201,7 @@ namespace remoting_rfb_node_desktop
 
          auto queryRetVal = papp->run_synchronously(peerHost, pserverconfig->isDefaultActionAccept(), pserverconfig->getQueryTimeout());
 
-         // int queryRetVal = QueryConnectionApplication::onThreadMain(
+         // ::i32 queryRetVal = QueryConnectionApplication::onThreadMain(
          //    peerHost,
          //    pserverconfig->isDefaultActionAccept(),
          //    pserverconfig->getQueryTimeout());
@@ -453,7 +453,7 @@ namespace remoting_rfb_node_desktop
       critical_section_lock al(&m_clientListLocker);
 
       ::remoting_rfb_node::ServerConfig * pserverconfig = m_pconfigurator->getServerConfig();
-      int timeout = 1000 * pserverconfig->getIdleTimeout();
+      ::i32 timeout = 1000 * pserverconfig->getIdleTimeout();
 
       m_plogwriter->error("Set socket idle timeout, {} ms", timeout);
 

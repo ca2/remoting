@@ -39,7 +39,7 @@ namespace remoting_rfb
       virtual ~JpegEncoder();
 
       // Overloaded function calls TightEncoder::getCode().
-      virtual int getCode() const;
+      virtual ::i32 getCode() const;
 
       // JpegEncoder implements its own splitRectangle() which just makes sure all
       // rectangles are no wider than 2048 pixels.

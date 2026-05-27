@@ -46,7 +46,7 @@ public:
   virtual void readFromClipBoard(::string & clipDest) const;
 
 protected:
-  virtual bool wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam);
+  virtual bool wndProc(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam);
 
   virtual void onThreadMain();
   virtual void onTermThread();

@@ -42,10 +42,10 @@ namespace remoting_rfb_client
       critical_section_lock al(prfboutputgate);
       prfboutputgate->writeUInt8(::remoting_rfb::ClientMsgDefs::FB_UPDATE_REQUEST);
       prfboutputgate->writeUInt8(m_incremental);
-      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_rect.left));
-      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_rect.top));
-      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_rect.width()));
-      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_rect.height()));
+      prfboutputgate->writeUInt16(static_cast<::u16>(m_rect.left));
+      prfboutputgate->writeUInt16(static_cast<::u16>(m_rect.top));
+      prfboutputgate->writeUInt16(static_cast<::u16>(m_rect.width()));
+      prfboutputgate->writeUInt16(static_cast<::u16>(m_rect.height()));
       prfboutputgate->flush();
    }
 } //namespace remoting_rfb_client

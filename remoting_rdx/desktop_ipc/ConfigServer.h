@@ -48,7 +48,7 @@ namespace remoting_rfb
 
    //protected:
       // Internal dispatcher
-      void onRequest(unsigned char reqCode, BlockingGate *pblockinggate) override;
+      void onRequest(::u8 reqCode, BlockingGate *pblockinggate) override;
 
       void reloadSettings(BlockingGate *pblockinggate);
       void answerOnSoftInputEnablingReq(BlockingGate *pblockinggate);

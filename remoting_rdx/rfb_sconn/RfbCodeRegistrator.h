@@ -40,9 +40,9 @@ namespace remoting_rfb
       virtual ~RfbCodeRegistrator();
 
       void regCode(::u32 code, RfbDispatcherListener *listener);
-      void addSrvToClCap(::u32 code, const char *vendorSignature, const char *nameSignature);
-      void addClToSrvCap(::u32 code, const char *vendorSignature, const char *nameSignature);
-      void addEncCap(::u32 code, const char *vendorSignature, const char *nameSignature);
+      void addSrvToClCap(::u32 code, const_char_pointer vendorSignature, const_char_pointer pszNameSignature);
+      void addClToSrvCap(::u32 code, const_char_pointer vendorSignature, const_char_pointer pszNameSignature);
+      void addEncCap(::u32 code, const_char_pointer vendorSignature, const_char_pointer pszNameSignature);
 
    private:
       RfbDispatcher *m_pdesktopsrvdispatcher;

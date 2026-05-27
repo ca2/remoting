@@ -45,9 +45,9 @@ namespace remoting_rfb
       if (m_convertMode == NO_CONVERT) {
          pframebufferTarget->copyFrom(rectangle, pframebufferSource, rectangle.left, rectangle.top);
       } else {
-         int rectHeight = rectangle.height();
-         int rectWidth = rectangle.width();
-         int fbWidth = pframebufferTarget->getDimension().cx;
+         ::i32 rectHeight = rectangle.height();
+         ::i32 rectWidth = rectangle.width();
+         ::i32 fbWidth = pframebufferTarget->getDimension().cx;
          ::innate_subsystem::PixelFormat pixelformatTarget = pframebufferTarget->getPixelFormat();
          ::innate_subsystem::PixelFormat pixelformatSource = pframebufferSource->getPixelFormat();
 
@@ -55,24 +55,24 @@ namespace remoting_rfb
          ::u32 srcPixelSize = pixelformatSource.bitsPerPixel / 8;
 
          // FIXME: Make ::innate_subsystem::Framebuffer do the math.
-         unsigned char *dstPixP = (unsigned char *)pframebufferTarget->getBuffer() +
+         ::u8 *dstPixP = (::u8 *)pframebufferTarget->getBuffer() +
                           (fbWidth * rectangle.top + rectangle.left) * dstPixelSize;
-         unsigned char *srcPixP = (unsigned char *)pframebufferSource->getBuffer() +
+         ::u8 *srcPixP = (::u8 *)pframebufferSource->getBuffer() +
                           (fbWidth * rectangle.top + rectangle.left) * srcPixelSize;
          if (m_convertMode == CONVERT_FROM_16) {
-            for (int i = 0; i < rectHeight; i++,
+            for (::i32 i = 0; i < rectHeight; i++,
                  dstPixP += (fbWidth - rectWidth) * dstPixelSize,
                  srcPixP += (fbWidth - rectWidth) * srcPixelSize) {
-               for (int j = 0; j < rectWidth; j++,
+               for (::i32 j = 0; j < rectWidth; j++,
                                               dstPixP += dstPixelSize,
                                               srcPixP += srcPixelSize) {
-                  ::u32 dstPixel = m_hexBitsTable[*(unsigned short *)srcPixP];
+                  ::u32 dstPixel = m_hexBitsTable[*(::u16 *)srcPixP];
                   if (dstPixelSize == 4) {
                      *(::u32 *)dstPixP = (::u32)dstPixel;
                   } else if (dstPixelSize == 2) {
-                     *(unsigned short *)dstPixP = (unsigned short)dstPixel;
+                     *(::u16 *)dstPixP = (::u16)dstPixel;
                   } else if (dstPixelSize == 1) {
-                     *(unsigned char *)dstPixP = (unsigned char)dstPixel;
+                     *(::u8 *)dstPixP = (::u8)dstPixel;
                   }
                                               }
                  }
@@ -82,10 +82,10 @@ namespace remoting_rfb
             ::u32 srcGrnMax = pixelformatSource.greenMax;
             ::u32 srcBluMax = pixelformatSource.blueMax;
 
-            for (int i = 0; i < rectHeight; i++,
+            for (::i32 i = 0; i < rectHeight; i++,
                  dstPixP += (fbWidth - rectWidth) * dstPixelSize,
                  srcPixP += (fbWidth - rectWidth) * srcPixelSize) {
-               for (int j = 0; j < rectWidth; j++,
+               for (::i32 j = 0; j < rectWidth; j++,
                                               dstPixP += dstPixelSize,
                                               srcPixP += srcPixelSize) {
                   ::u32 dstPixel = m_redTable[*(::u32 *)srcPixP >>
@@ -100,13 +100,13 @@ namespace remoting_rfb
                         *(::u32 *)dstPixP = rotateUint32(*(::u32 *)dstPixP);
                      }
                   } else if (dstPixelSize == 2) {
-                     *(unsigned short *)dstPixP = dstPixel;
+                     *(::u16 *)dstPixP = dstPixel;
                      if (bigEndianDiffs) {
-                        *(unsigned short *)dstPixP = *(unsigned short *)dstPixP << 8 |
-                                             *(unsigned short *)dstPixP >> 8;
+                        *(::u16 *)dstPixP = *(::u16 *)dstPixP << 8 |
+                                             *(::u16 *)dstPixP >> 8;
                      }
                   } else if (dstPixelSize == 1) {
-                     *(unsigned char *)dstPixP = dstPixel;
+                     *(::u8 *)dstPixP = dstPixel;
                   }
                                               }
                  }
@@ -258,8 +258,8 @@ namespace remoting_rfb
    ::u32 PixelConverter::rotateUint32(::u32 value) const
    {
       ::u32 result;
-      char *src = (char *)&value;
-      char *dst = (char *)&result;
+      char_pointer src = (char_pointer )&value;
+      char_pointer dst = (char_pointer )&result;
       dst[0] = src[3];
       dst[1] = src[2];
       dst[2] = src[1];

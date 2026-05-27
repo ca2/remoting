@@ -50,7 +50,7 @@ namespace remoting_rfb
                         bool isOutgoing, ::u32 id,
                         const ViewPortState & viewportstateConst,
                         const ViewPortState & viewportstateDynamic,
-                        int idleTimeout,
+                        ::i32 idleTimeout,
                         ::subsystem::LogWriter * plogwriter)
    :m_pconfigurator(pconfigurator),
    m_psocket(psocket), // now we own the socket
@@ -291,16 +291,16 @@ void RfbClient::destroy()
             m_plogwriter->debug("RFB initialization phase 1 completed");
 
             m_shared = m_prun->m_prfbinitializer->getSharedFlag();
-            m_plogwriter->debug("Shared flag = {}", (int)m_shared);
+            m_plogwriter->debug("Shared flag = {}", (::i32)m_shared);
             m_viewOnlyAuth = m_prun->m_prfbinitializer->getViewOnlyAuth();
-            m_plogwriter->debug("Initial view-only state = {}", (int)m_viewOnly);
-            m_plogwriter->debug("Authenticated with view-only password = {}", (int)m_viewOnlyAuth);
+            m_plogwriter->debug("Initial view-only state = {}", (::i32)m_viewOnly);
+            m_plogwriter->debug("Authenticated with view-only password = {}", (::i32)m_viewOnlyAuth);
             m_viewOnly = m_viewOnly || m_viewOnlyAuth;
 
             // Let RfbClientManager handle new authenticated connection.
             m_pdesktop = m_pclientauthlistener->onClientAuth(this);
 
-            m_plogwriter->information("View only = {}", (int)m_viewOnly);
+            m_plogwriter->information("View only = {}", (::i32)m_viewOnly);
          } catch (::exception &e) {
             m_plogwriter->error("Error during RFB initialization: {}", e.get_message());
             throw;
@@ -428,7 +428,7 @@ void RfbClient::destroy()
       }
    }
 
-   void RfbClient::onMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask)
+   void RfbClient::onMouseEvent(::u16 x, ::u16 y, ::u8 buttonMask)
    {
       // FIXME: Too much extra work. Typically we would share the whole desktop and would not need
       //        to compute regions on each mouse move.

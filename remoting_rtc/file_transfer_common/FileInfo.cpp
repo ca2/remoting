@@ -36,7 +36,7 @@ namespace remoting_rtc
       }
 
       FileInfo::FileInfo(::u64 size, ::u64 modTime,
-                         unsigned short flags, const ::scoped_string & scopedstrFileName)
+                         ::u16 flags, const ::scoped_string & scopedstrFileName)
       : m_sizeInBytes(size), m_lastModified(modTime), m_flags(flags)
       {
          m_strFileName= scopedstrFileName;
@@ -83,7 +83,7 @@ namespace remoting_rtc
          m_sizeInBytes = size;
       }
 
-      void FileInfo::setFlags(unsigned short flags)
+      void FileInfo::setFlags(::u16 flags)
       {
          m_flags = flags;
       }
@@ -103,7 +103,7 @@ namespace remoting_rtc
          return m_sizeInBytes;
       }
 
-      unsigned short FileInfo::getFlags() const
+      ::u16 FileInfo::getFlags() const
       {
          return m_flags;
       }

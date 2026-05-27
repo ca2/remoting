@@ -105,7 +105,7 @@ namespace remoting
       }
    }
 
-   void DesktopBaseImpl::getDisplayNumberCoords(::i32_rectangle rectangle, unsigned char dispNumber)
+   void DesktopBaseImpl::getDisplayNumberCoords(::i32_rectangle rectangle, ::u8 dispNumber)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -239,7 +239,7 @@ namespace remoting
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
 
-      m_plogwriter->information("set keyboard event (keySym = %u, down = {})", keySym, (int)down);
+      m_plogwriter->information("set keyboard event (keySym = %u, down = {})", keySym, (::i32)down);
       try
       {
          if (isRemoteInputAllowed())
@@ -254,7 +254,7 @@ namespace remoting
       }
    }
 
-   void DesktopBaseImpl::setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask)
+   void DesktopBaseImpl::setMouseEvent(::u16 x, ::u16 y, ::u8 buttonMask)
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);

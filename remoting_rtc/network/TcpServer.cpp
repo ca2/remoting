@@ -29,7 +29,7 @@
 
 namespace remoting
 {
-   TcpServer::TcpServer(const ::scoped_string & scopedstrBindHost, unsigned short bindPort,
+   TcpServer::TcpServer(const ::scoped_string & scopedstrBindHost, ::u16 bindPort,
                         bool autoStart,
                         bool lockAddr)
    : m_bindHost(scopedstrBindHost), m_bindPort(bindPort)
@@ -75,7 +75,7 @@ void TcpServer::destroy()
       return m_bindHost;
    }
 
-   unsigned short TcpServer::getBindPort() const
+   ::u16 TcpServer::getBindPort() const
    {
       return m_bindPort;
    }

@@ -177,7 +177,7 @@ namespace remoting_node_desktop
         pcommandlinearguments);
 
       desktopServerApp.onOperatingSystemApplicationMain();
-       int retCode = desktopServerApp.getExitCode();
+       ::i32 retCode = desktopServerApp.getExitCode();
        m_iExitCode = retCode;
       return ;
     } catch (...) {
@@ -240,8 +240,8 @@ namespace remoting_node_desktop
 
 
 
-// int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-//                        LPTSTR lpCmdLine, int nCmdShow)
+// ::i32 APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+//                        LPTSTR lpCmdLine, ::i32 nCmdShow)
 // {
 //   ::subsystem::LogWriter preLog(0);
 //
@@ -341,7 +341,7 @@ namespace remoting_node_desktop
 //         WindowNames::WINDOW_CLASS_NAME,
 //         &args);
 //
-//       int retCode = desktopServerApp.onThreadMain();
+//       ::i32 retCode = desktopServerApp.onThreadMain();
 //       return retCode;
 //     } catch (...) {
 //       return 1;

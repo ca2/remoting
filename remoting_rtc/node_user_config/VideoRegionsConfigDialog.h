@@ -54,7 +54,7 @@ namespace remoting_rtc_node
       // Helper methods
       //
 
-      bool _002OnUpDown(int iControl, int iPos, int iDelta) override;
+      bool _002OnUpDown(::i32 iControl, ::i32 iPos, ::i32 iDelta) override;
 
       bool validateInput();
       void updateUI();
@@ -68,7 +68,7 @@ namespace remoting_rtc_node
       // ::innate_subsystem::Control event handlers
       //
 
-      void onRecognitionIntervalSpinChangePos(int iControlID, int iPos, int iDelta);
+      void onRecognitionIntervalSpinChangePos(::i32 iControlID, ::i32 iPos, ::i32 iDelta);
       void onRecognitionIntervalUpdate();
       void onVideoRegionsUpdate();
 

@@ -40,7 +40,7 @@ void UpdateRequestSender::destroy()
       m_bWasUpdateReceived = true;
    }
 
-   void UpdateRequestSender::setTimeout(int miliseconds)
+   void UpdateRequestSender::setTimeout(::i32 miliseconds)
    {
       critical_section_lock al(&m_criticalsectionTimeout);
       m_timeTimeout = miliseconds;

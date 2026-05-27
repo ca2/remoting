@@ -36,8 +36,8 @@ namespace remoting_node_desktop
    class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP QueryConnectionDialog : public ::innate_subsystem::Dialog
    {
    public:
-      static const int ACCEPT_CHOISE = 0x0;
-      static const int REJECT_CHOISE = 0x1;
+      static const ::i32 ACCEPT_CHOISE = 0x0;
+      static const ::i32 REJECT_CHOISE = 0x1;
 
    public:
       QueryConnectionDialog(const ::scoped_string &scopedstrPeerAddress, bool acceptByDefault, DWORD timeOutInSec);

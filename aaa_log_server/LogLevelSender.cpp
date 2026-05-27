@@ -50,7 +50,7 @@ void LogLevelSender::onTermThread()
   m_happeningSleeper.notify();
 }
 
-void LogLevelSender::updateLevel(unsigned char newLevel)
+void LogLevelSender::updateLevel(::u8 newLevel)
 {
   critical_section_lock al(&m_criticalsectionUpdate);
   m_updateAvailable = true;
@@ -68,7 +68,7 @@ void LogLevelSender::onThreadMain()
       m_happeningSleeper.waitForEvent();
       OutputStream *outStream;
       bool updateAvailable;
-      unsigned char logLevel;
+      ::u8 logLevel;
       {
         critical_section_lock al(&m_criticalsectionUpdate);
         outStream = m_outStream;

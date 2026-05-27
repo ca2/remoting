@@ -41,7 +41,7 @@ namespace remoting_rfb_node
    {
       bool validationOk = true;
 
-      int parsedPortValue = 0;
+      ::i32 parsedPortValue = 0;
 
       if (!UIDataAccess::queryValueAsInt(textBox, &parsedPortValue)) {
          validationOk = false;

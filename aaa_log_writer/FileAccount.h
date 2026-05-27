@@ -46,7 +46,7 @@ public:
   // immediately the accumulation will be happening parallelly to writing to the file.
   // If the storeHeader() function will be forgotten the accumulation will be stopped
   // at a maximum log header value automatically.
-  FileAccount(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel, bool logHeadEnabled);
+  FileAccount(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, ::u8 logLevel, bool logHeadEnabled);
 
   // This constructor is a constructor with postponed initialization.
   // This constructor can be used when the log parameters are still unknown.
@@ -63,7 +63,7 @@ public:
   // Between the constructor and this function calling all log lines stores in
   // the dump. The init() function flushes the dump to the log file and disables
   // further dumping.
-  void init(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel);
+  void init(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, ::u8 logLevel);
 
   // Allows change log directory and/or logLevel.
   // If log level changes from zero at first time the function will make
@@ -72,7 +72,7 @@ public:
   // If log directory has been changed the function will do like as level
   // changes from zero at first time but in new directory. If level changes to
   // zero the function closes the log file.
-  void changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel);
+  void changeLogProps(const ::scoped_string & scopedstrNewLogDir, ::u8 newLevel);
 
   // Puts the clear file name to the *fileName argument.
   void getFileName(::string & fileName);
@@ -83,19 +83,19 @@ public:
 
   // Stores a log scopedstrMessage to the log file if level is less or equal than
   // the log verbosity level.
-  virtual void print(unsigned int processId,
-                     unsigned int threadId,
+  virtual void print(::u32 processId,
+                     ::u32 threadId,
                      const class ::time & dt,
-                     int level,
+                     ::i32 level,
                      const ::scoped_string & scopedstrMessage);
 
-  virtual bool acceptsLevel(int logLevel);
+  virtual bool acceptsLevel(::i32 logLevel);
 
 protected:
-  virtual void flush(unsigned int processId,
-                     unsigned int threadId,
+  virtual void flush(::u32 processId,
+                     ::u32 threadId,
                      const class ::time & dt,
-                     int level,
+                     ::i32 level,
                      const ::scoped_string & scopedstrMessage);
 
 private:
@@ -103,7 +103,7 @@ private:
   // log directory. If no changes detected then function return without
   // doing.
   // @throw ::subsystem::Exception on an error.
-  void setNewFile(unsigned char newLevel, const ::scoped_string & scopedstrNewDir);
+  void setNewFile(::u8 newLevel, const ::scoped_string & scopedstrNewDir);
 
   // Opens a log file if backup supported or replaces/created if not.
   // If directory after twice changes is the same and level > 0 then
@@ -118,25 +118,25 @@ private:
   void addUnicodeSignature();
 
   // Creates backup files
-  void createBackup(unsigned int backupLimit);
+  void createBackup(::u32 backupLimit);
 
   // Formates the scopedstrMessage and stores it to the file.
-  void format(unsigned int processId,
-              unsigned int threadId,
+  void format(::u32 processId,
+              ::u32 threadId,
               const class ::time & dt,
-              int level,
+              ::i32 level,
               const ::scoped_string & scopedstrMessage);
 
   // Prints self scopedstrMessage the same log file (if it's possible)
-  void print(int level, const ::scoped_string & scopedstrMessage);
+  void print(::i32 level, const ::scoped_string & scopedstrMessage);
 
-  bool printsLine(int level);
+  bool printsLine(::i32 level);
 
   void updateLogDirPath();
 
   ::string m_logDir;
   ::string m_strFileName;
-  unsigned char m_level;
+  ::u8 m_level;
   bool m_asFirstOpen;
   ::file_pointer m_pfile;
 

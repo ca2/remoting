@@ -95,8 +95,8 @@ namespace remoting_rtc_node
 
       for (size_t i = 0; i < m_extraPorts->count(); i++) {
          mappingString = m_extraPorts->at(i)->toString();
-         ASSERT((int)i == i);
-         m_exPortsListBox.insertString((int)i, mappingString);
+         ASSERT((::i32)i == i);
+         m_exPortsListBox.insertString((::i32)i, mappingString);
       }
 
       return true;
@@ -104,7 +104,7 @@ namespace remoting_rtc_node
 
    void PortMappingDialog::onExPortsListBoxSelChange()
    {
-      int selectedIndex = m_exPortsListBox.getSelectedIndex();
+      ::i32 selectedIndex = m_exPortsListBox.getSelectedIndex();
 
       m_editButton.enableWindow(selectedIndex >= 0);
       m_removeButton.enableWindow(selectedIndex >= 0);
@@ -138,7 +138,7 @@ namespace remoting_rtc_node
 
    void PortMappingDialog::onEditButtonClick()
    {
-      int selectedIndex = m_exPortsListBox.getSelectedIndex();
+      ::i32 selectedIndex = m_exPortsListBox.getSelectedIndex();
 
       if (selectedIndex == -1) {
          return ;
@@ -164,7 +164,7 @@ namespace remoting_rtc_node
 
    void PortMappingDialog::onRemoveButtonClick()
    {
-      int selectedIndex = m_exPortsListBox.getSelectedIndex();
+      ::i32 selectedIndex = m_exPortsListBox.getSelectedIndex();
 
       if (selectedIndex == -1) {
          return ;

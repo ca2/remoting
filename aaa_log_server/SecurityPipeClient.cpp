@@ -27,7 +27,7 @@
 #include "remoting/io/DataOutputStream.h"
 #include "remoting/win_system/NamedPipe.h"
 
-SecurityPipeClient::SecurityPipeClient(Channel *tempPublChan, unsigned int maxPortionSize)
+SecurityPipeClient::SecurityPipeClient(Channel *tempPublChan, ::u32 maxPortionSize)
 : m_secChannel(0)
 {
   try {

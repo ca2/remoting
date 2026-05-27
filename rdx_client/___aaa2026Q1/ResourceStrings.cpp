@@ -33,13 +33,13 @@ namespace remoting_client
     {
     }
 
-    ResourceStrings::ResourceStrings(int min, int max)
+    ResourceStrings::ResourceStrings(::i32 min, ::i32 max)
     {
         m_min = min;
         m_max = max;
     }
 
-    bool ResourceStrings::isValid(int res)
+    bool ResourceStrings::isValid(::i32 res)
     {
         if (res >= m_min && res <= m_max) {
             return true;
@@ -47,7 +47,7 @@ namespace remoting_client
         return false;
     }
 
-    ::string ResourceStrings::getStrRes(int iRes)
+    ::string ResourceStrings::getStrRes(::i32 iRes)
     {
        auto presourceloader = MainSubsystem().ResourceLoader();
 
@@ -62,7 +62,7 @@ namespace remoting_client
         return str;
     }
 
-    ::string ResourceStrings::getStrPureRes(int strRes)
+    ::string ResourceStrings::getStrPureRes(::i32 strRes)
     {
         ::string strTemp = getStrRes(strRes);
         auto p = strTemp.find_first_character('\t');

@@ -301,7 +301,7 @@ namespace remoting
             // Copy listener must decide what to do with this situation
             //
 
-            int action = m_copyListener->targetFileExists(sourceFileInfo,
+            ::i32 action = m_copyListener->targetFileExists(sourceFileInfo,
                                                           &targetFileInfo,
                                                           m_pathToTargetFile);
             switch (action) {

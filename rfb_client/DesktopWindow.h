@@ -51,7 +51,7 @@ namespace remoting_rfb_client
        
        ::pointer < ViewerWindow > m_pviewerwindow;
         ::string m_strHost;
-        //   int m_iDivisor = 1;
+        //   ::i32 m_iDivisor = 1;
         ::pointer< ::remoting_rfb_client::toolbar > m_premotingtoolbar;
         ::pointer< ::remoting_rfb_client::style > m_premotingstyle;
         bool m_bShowCursor = false;
@@ -70,13 +70,13 @@ namespace remoting_rfb_client
         void setNewFramebuffer(const ::innate_subsystem::Framebuffer * pframebuffer);
 
         // set scale of image, can -1 = Auto, in percent
-        void setScale(int scale);
+        void setScale(::i32 scale);
         // it returns the image width and height considering scale
         ::i32_rectangle getViewerGeometry();
         // it returns the image width and height.
         ::i32_rectangle getFramebufferGeometry();
         // it return size of server frame buffer and pixelsize.
-        void getServerGeometry(::i32_rectangle * prectangle, int * piPixelsize);
+        void getServerGeometry(::i32_rectangle * prectangle, ::i32 * piPixelsize);
 
         void setConnected();
         void setViewerCore(::remoting_rfb_client::RemoteViewerCore *viewerCore);
@@ -92,7 +92,7 @@ namespace remoting_rfb_client
 
         // this function sends to remote viewer core
         // key what is pressed or unpressed
-        void sendKey(int key, bool pressed);
+        void sendKey(::i32 key, bool pressed);
         // this function sends to remote viewer core the combination
         // Ctrl + Alt + Del
         void sendCtrlAltDel();
@@ -123,8 +123,8 @@ namespace remoting_rfb_client
         //bool onKey(::user::enum_message emessage, ::wparam wParam, ::lparam lParam);
        bool onKey(::user::enum_message eusermessage, ::user::enum_key euserkey) override;
         bool onChar(::wparam wParam, ::lparam lParam);
-        bool onMouse(unsigned char mouseKeys, unsigned short wheelSpeed, const ::i32_point & pointPosition) override;
-        bool onMouseEx(::u32 message, int iButtonMask, unsigned short wspeed, const ::i32_point &pointPosition,
+        bool onMouse(::u8 mouseKeys, ::u16 wheelSpeed, const ::i32_point & pointPosition) override;
+        bool onMouseEx(::u32 message, ::i32 iButtonMask, ::u16 wspeed, const ::i32_point &pointPosition,
                        bool &bDoDefaultProcessing) override;
         //bool onSize(::wparam wParam, ::lparam lParam);
         void onSize() override;
@@ -134,13 +134,13 @@ namespace remoting_rfb_client
 
         ::i32_point getViewerCoord(long xPos, long yPos);
         void calculateWndSize(bool isChanged);
-        void applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, int wndWidth, int wndHeight);
+        void applyScrollbarChanges(bool isChanged, bool isVert, bool isHorz, ::i32 wndWidth, ::i32 wndHeight);
 
         // This function check pointer to viewer core and send event.
         // If into viewer core throwing exception ::subsystem::Exception, then it catching
         // in this function and logged.
         void sendKeyboardEvent(bool downFlag, ::u32 key);
-        void sendPointerEvent(unsigned char buttonMask, const ::i32_point &pointPosition);
+        void sendPointerEvent(::u8 buttonMask, const ::i32_point &pointPosition);
         void sendCutTextEvent(const ::scoped_string & cutText);
 
         ::pointer < ::subsystem::LogWriter > m_plogwriter;
@@ -152,7 +152,7 @@ namespace remoting_rfb_client
         ::remoting_rfb::RfbKeySym * m_rfbKeySym;
 
         // This variable contained previously state of mouse-button and pointPosition of cursor.
-        unsigned char m_previousMouseState;
+        ::u8 m_previousMouseState;
         ::i32_point m_previousMousePos;
 
         // scroll bars: vertical and horizontal
@@ -166,8 +166,8 @@ namespace remoting_rfb_client
         // for scaling
         ScaleManager m_scManager;
         ::i32_rectangle m_clientArea;
-        int m_fbWidth;
-        int m_fbHeight;
+        ::i32 m_fbWidth;
+        ::i32 m_fbHeight;
         ::innate_subsystem::SolidBrush m_brush;
 
         // frame buffer
@@ -192,7 +192,7 @@ namespace remoting_rfb_client
         //void doDraw(DeviceContext *dc);
         void onDraw(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle) override;
        //void onPaint(::innate_subsystem::DeviceContextInterface *pgraphics, const ::i32_rectangle & rectangle) override;
-        void scrollProcessing(int fbWidth, int fbHeight);
+        void scrollProcessing(::i32 fbWidth, ::i32 fbHeight);
         void drawBackground(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rcMain, const ::i32_rectangle & rcImage);
         void drawImage(::innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & src, const ::i32_rectangle & dst);
         void repaint(const ::i32_rectangle &  repaintRect);

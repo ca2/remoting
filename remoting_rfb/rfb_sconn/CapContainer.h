@@ -36,8 +36,8 @@ namespace remoting_rfb
    struct Cap
    {
       ::u32 code;
-      char vendorSignature[4];
-      char nameSignature[8];
+      ::i8 vendorSignature[4];
+      ::i8 nameSignature[8];
    };
 
    typedef ::array_base<Cap> CapVector;
@@ -49,7 +49,7 @@ namespace remoting_rfb
       CapContainer();
       virtual ~CapContainer();
 
-      void addCap(::u32 code, const char *vendorSignature, const char *nameSignature);
+      void addCap(::u32 code, const_char_pointer vendorSignature, const_char_pointer pszNameSignature);
 
       ::u32 getCapCount() const;
       void sendCaps(DataOutputStream * pdataoutputstream) const;

@@ -145,7 +145,7 @@ namespace remoting_control_desktop
       msg->send();
    }
 
-   void ControlProxy::shareDisplay(unsigned char displayNumber)
+   void ControlProxy::shareDisplay(::u8 displayNumber)
    {
       critical_section_lock l(m_pcontrolgate);
       ::pointer < ControlMessage > msg = createMessage(ControlProto::SHARE_DISPLAY_MSG_ID);

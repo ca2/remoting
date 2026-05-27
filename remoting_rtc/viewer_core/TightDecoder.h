@@ -47,71 +47,71 @@ namespace remoting_client
 
    private:
       void reset();
-      void resetDecoders(unsigned char compControl);
-      ::u32 readTightPixel(::remoting_rtc::RfbInputGate *input, int bytesPerCPixel);
-      int readCompactSize(::remoting_rtc::RfbInputGate *input);
+      void resetDecoders(::u8 compControl);
+      ::u32 readTightPixel(::remoting_rtc::RfbInputGate *input, ::i32 bytesPerCPixel);
+      ::i32 readCompactSize(::remoting_rtc::RfbInputGate *input);
       ::array_base<::u32> readPalette(::remoting_rtc::RfbInputGate *input,
-                              int paletteSize,
-                              int bytesPerCPixel);
+                              ::i32 paletteSize,
+                              ::i32 bytesPerCPixel);
       void processJpeg(::remoting_rtc::RfbInputGate *input,
                        ::innate_subsystem::Framebuffer *pframebuffer,
                        const ::i32_rectangle &  rectangleTarget);
       void processBasicTypes(::remoting_rtc::RfbInputGate *input,
                              ::innate_subsystem::Framebuffer *pframebuffer,
                              const ::i32_rectangle &  rectangleTarget,
-                             unsigned char compControl);
+                             ::u8 compControl);
       void readTightData(::remoting_rtc::RfbInputGate *input,
-                         ::array_base<unsigned char> &buffer,
+                         ::array_base<::u8> &buffer,
                          size_t expectedLength,
-                         const int decoderId);
+                         const ::i32 decoderId);
       void readCompressedData(::remoting_rtc::RfbInputGate *input,
-                              ::array_base<unsigned char> &buffer,
+                              ::array_base<::u8> &buffer,
                               size_t expectedLength,
-                              const int decoderId);
+                              const ::i32 decoderId);
       void drawPalette(::innate_subsystem::Framebuffer *pframebuffer,
                        const ::array_base<::u32> &palette,
-                       const ::array_base<unsigned char> &pixels,
+                       const ::array_base<::u8> &pixels,
                        const ::i32_rectangle &  rectangleTarget);
       void drawGradient(::innate_subsystem::Framebuffer *pframebuffer,
-                        const ::array_base<unsigned char> &pixels,
+                        const ::array_base<::u8> &pixels,
                         const ::i32_rectangle &  rectangleTarget);
       void drawTightBytes(::innate_subsystem::Framebuffer *pframebuffer,
-                         const ::array_base<unsigned char> *pixels,
+                         const ::array_base<::u8> *pixels,
                          const ::i32_rectangle &  rectangleTarget);
       void drawJpegBytes(::innate_subsystem::Framebuffer *pframebuffer,
-                         const ::array_base<unsigned char> *pixels,
+                         const ::array_base<::u8> *pixels,
                          const ::i32_rectangle &  rectangleTarget);
 
       ::u32 getRawTightColor(const ::innate_subsystem::PixelFormat & pixelformat,
-                              const ::array_base<unsigned char> &pixels,
+                              const ::array_base<::u8> &pixels,
                               size_t offset);
       void fillRawComponents(const ::innate_subsystem::PixelFormat & pixelformat,
-                             unsigned char components[],
-                             const ::array_base<unsigned char> &pixels,
+                             ::u8 components[],
+                             const ::array_base<::u8> &pixels,
                              size_t pixelOffset);
 
       ::u32 transformPixelToTight(::u32 color);
-      ::array_base<unsigned char> transformArray(const ::array_base<unsigned char> &buffer);
+      ::array_base<::u8> transformArray(const ::array_base<::u8> &buffer);
 
       ::pointer_array_base<::subsystem::Inflater > m_inflater;
       JpegDecompressor m_jpeg;
 
       bool m_isCPixel;
    private:
-      static const int MAX_SUBENCODING = 0x09;
-      static const int JPEG_TYPE = 0x09;
-      static const int FILL_TYPE = 0x08;
+      static const ::i32 MAX_SUBENCODING = 0x09;
+      static const ::i32 JPEG_TYPE = 0x09;
+      static const ::i32 FILL_TYPE = 0x08;
 
-      static const int FILTER_ID_MASK = 0x40;
+      static const ::i32 FILTER_ID_MASK = 0x40;
       // TODO: removed 0x30 constant?
-      static const int STREAM_ID_MASK = 0x30;
+      static const ::i32 STREAM_ID_MASK = 0x30;
 
-      static const int COPY_FILTER = 0x00;
-      static const int PALETTE_FILTER = 0x01;
-      static const int GRADIENT_FILTER = 0x02;
+      static const ::i32 COPY_FILTER = 0x00;
+      static const ::i32 PALETTE_FILTER = 0x01;
+      static const ::i32 GRADIENT_FILTER = 0x02;
 
-      static const int DECODERS_NUM = 4;
+      static const ::i32 DECODERS_NUM = 4;
 
-      static const int MIN_SIZE_TO_COMPRESS = 12;
+      static const ::i32 MIN_SIZE_TO_COMPRESS = 12;
    };
 } //namespace remoting_client

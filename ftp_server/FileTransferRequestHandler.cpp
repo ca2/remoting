@@ -198,7 +198,7 @@ void FileTransferRequestHandler::compressionSupportRequested()
   //     or 1 - compression is supported by server
   //
 
-  unsigned char compressionSupport = 1;
+  ::u8 compressionSupport = 1;
 
   m_plogwriter->debug("sending compression support reply: {}"), (compressionSupport == 1) ? "supported") : _T("not supported";
 
@@ -214,7 +214,7 @@ void FileTransferRequestHandler::compressionSupportRequested()
 
 void FileTransferRequestHandler::fileListRequested()
 {
-  unsigned char requestedCompressionLevel;
+  ::u8 requestedCompressionLevel;
   WinFilePath fullPathName;
 
   //
@@ -232,7 +232,7 @@ void FileTransferRequestHandler::fileListRequested()
 
   checkAccess();
 
-  unsigned char compressionLevel = requestedCompressionLevel;
+  ::u8 compressionLevel = requestedCompressionLevel;
   ::u32 compressedSize = 0;
   ::u32 uncompressedSize = 0;
   ::u32 filesCount = 0;
@@ -475,7 +475,7 @@ void FileTransferRequestHandler::md5Requested()
     bytesToRead = (DWORD)dataLen;
   }
 
-  ::array_base<unsigned char> buffer(bytesToRead);
+  ::array_base<::u8> buffer(bytesToRead);
 
   while (bytesToReadTotal > 0) {
     bytesRead = fileInputStream.read(&buffer.front(), bytesToRead);
@@ -495,7 +495,7 @@ void FileTransferRequestHandler::md5Requested()
     critical_section_lock l(m_output);
 
     m_output->writeUInt32(FTMessage::MD5_REPLY);
-    m_output->writeFully((const char *)md5calculator.getHash(), 16);
+    m_output->writeFully((const_char_pointer )md5calculator.getHash(), 16);
 
     m_output->flush();
   }
@@ -508,7 +508,7 @@ void FileTransferRequestHandler::uploadStartRequested()
   //
 
   WinFilePath fullPathName;
-  unsigned char uploadFlags;
+  ::u8 uploadFlags;
   ::u64 initialOffset;
 
   {
@@ -575,14 +575,14 @@ void FileTransferRequestHandler::uploadDataRequested()
   // Request input variables.
   //
 
-  unsigned char compressionLevel;
+  ::u8 compressionLevel;
   ::u32 compressedSize;
   ::u32 uncompressedSize;
 
   compressionLevel = m_input->readUInt8();
   compressedSize = m_input->readUInt32();
   uncompressedSize = m_input->readUInt32();
-  ::array_base<char> buffer(compressedSize);
+  ::array_base<::i8> buffer(compressedSize);
   if (compressedSize != 0) {
     m_input->readFully(&buffer.front(), compressedSize);
   }
@@ -621,7 +621,7 @@ void FileTransferRequestHandler::uploadDataRequested()
 
 void FileTransferRequestHandler::uploadEndRequested()
 {
-  unsigned short fileFlags;
+  ::u16 fileFlags;
   ::u64 modificationTime;
 
   {
@@ -748,7 +748,7 @@ void FileTransferRequestHandler::downloadDataRequested()
   // Request input variables.
   //
 
-  unsigned char requestedCompressionLevel;
+  ::u8 requestedCompressionLevel;
   ::u32 dataSize;
 
   {
@@ -764,7 +764,7 @@ void FileTransferRequestHandler::downloadDataRequested()
   // Data download reply variables.
   //
 
-  unsigned char compressionLevel = requestedCompressionLevel;
+  ::u8 compressionLevel = requestedCompressionLevel;
   ::u32 compressedSize;
   ::u32 uncompressedSize;
 
@@ -777,7 +777,7 @@ void FileTransferRequestHandler::downloadDataRequested()
     throw FileTransferException("No active download at the moment");
   }
 
-  ::array_base<char> buffer(dataSize);
+  ::array_base<::i8> buffer(dataSize);
 
   DWORD read = 0;
 
@@ -795,7 +795,7 @@ void FileTransferRequestHandler::downloadDataRequested()
 
     try { m_fileInputStream->close(); } catch (...) { }
 
-    unsigned char fileFlags = 0;
+    ::u8 fileFlags = 0;
 
     {
       critical_section_lock l(m_output);
@@ -849,7 +849,7 @@ void FileTransferRequestHandler::downloadDataRequested()
       m_output->writeFully(&buffer.front(), uncompressedSize);
     }
   } else {
-    m_output->writeFully((const char *)m_deflater.getOutput(), compressedSize);
+    m_output->writeFully((const_char_pointer )m_deflater.getOutput(), compressedSize);
   }
 
   m_output->flush();

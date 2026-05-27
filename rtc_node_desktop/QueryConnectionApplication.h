@@ -66,7 +66,7 @@ namespace remoting_node_desktop
        *
        * @return 0 when user chooses "accept", 1 when user chooses "reject".
        */
-      //virtual int onThreadMain();
+      //virtual ::i32 onThreadMain();
       virtual void onOperatingSystemApplicationMain() override;
 
       /**
@@ -78,7 +78,7 @@ namespace remoting_node_desktop
        * @return application exit code (0 means accept connection, 1 means reject connection).
        * @throws ::subsystem::Exception on fail.
        */
-      virtual int run_synchronously(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, ::u32 timeOutSec);
+      virtual ::i32 run_synchronously(const ::scoped_string & scopedstrPeerAddr, bool acceptByDefault, ::u32 timeOutSec);
 
       //private:
       ::string m_cmdLine;

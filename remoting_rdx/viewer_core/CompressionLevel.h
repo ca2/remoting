@@ -32,13 +32,13 @@ namespace remoting_rfb_client
    class CLASS_DECL_REMOTING_RDX CompressionLevel : public PseudoDecoder
    {
    public:
-      CompressionLevel(::subsystem::LogWriter * plogwriter, int compression);
+      CompressionLevel(::subsystem::LogWriter * plogwriter, ::i32 compression);
       virtual ~CompressionLevel();
 
    public:
-      static int levelToEncoding(int compressionLevel);
+      static ::i32 levelToEncoding(::i32 compressionLevel);
 
-      static const int COMPRESSION_LEVEL_MIN = 0;
-      static const int COMPRESSION_LEVEL_MAX = 9;
+      static const ::i32 COMPRESSION_LEVEL_MIN = 0;
+      static const ::i32 COMPRESSION_LEVEL_MAX = 9;
    };
 } // namespace remoting_rfb_client

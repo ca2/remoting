@@ -130,7 +130,7 @@ namespace remoting_rfb
             releaseModifiers();
          }
 
-         for (int i = 0; i < chars.size(); i++) {
+         for (::i32 i = 0; i < chars.size(); i++) {
             if (m_keyMap.unicodeCharToKeySym(chars[i], &rfbSym)) {
                sendKeySymEvent(rfbSym, down);
             } else {
@@ -146,7 +146,7 @@ namespace remoting_rfb
       }
    }
 
-   /*int RfbKeySym::GettingCharFromCtrlSymbol(int ch)
+   /*::i32 RfbKeySym::GettingCharFromCtrlSymbol(::i32 ch)
    {
       bool ctrlPressed = m_keyboardstate.isPressed(VK_LCONTROL) ||
                          m_keyboardstate.isPressed(VK_RCONTROL);
@@ -162,21 +162,21 @@ namespace remoting_rfb
          else {
             ch += 64;
          }
-         m_plogwriter->debug("The %u char is a control symbol then"
+         m_plogwriter->debug("The %u ::i8 is a control symbol then"
            " it will be increased to %u",
            oldCh, (::u32)ch);
       }
       return ch;
    }*/
 
-   // bool RfbKeySym::TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL currentLayout, WCHAR *unicodeChar)
+   // bool RfbKeySym::TryTranslateNotPrintableToUnicode(::u16 virtKey, HKL currentLayout, WCHAR *unicodeChar)
    // {
    //    WCHAR outBuff[20];
    //    m_plogwriter->debug("Was get a not printable symbol then try get a printable"
    //      " with turned off the ctrl and alt modifiers");
    //    // E.g if pressed Ctrl + Alt + A
-   //    // Try found char without modificators
-   //    unsigned char withoutCtrlAltKbdState[256];
+   //    // Try found ::i8 without modificators
+   //    ::u8 withoutCtrlAltKbdState[256];
    //    memcpy(withoutCtrlAltKbdState, m_viewerKeyState, sizeof(withoutCtrlAltKbdState));
    //    withoutCtrlAltKbdState[VK_LCONTROL] = 0;
    //    withoutCtrlAltKbdState[VK_RCONTROL] = 0;
@@ -184,7 +184,7 @@ namespace remoting_rfb
    //    withoutCtrlAltKbdState[VK_LMENU] = 0;
    //    withoutCtrlAltKbdState[VK_RMENU] = 0;
    //    withoutCtrlAltKbdState[VK_MENU] = 0;
-   //    int count = ToUnicodeEx(virtKey, 0, withoutCtrlAltKbdState, outBuff,
+   //    ::i32 count = ToUnicodeEx(virtKey, 0, withoutCtrlAltKbdState, outBuff,
    //      sizeof(outBuff) / sizeof(WCHAR),
    //      0, currentLayout);
    //    if (count > 0) {
@@ -211,22 +211,22 @@ namespace remoting_rfb
 
       // HKL currentLayout = GetKeyboardLayout(0);
       //
-      // int count = ToUnicodeEx(virtKey, 0, m_viewerKeyState, outBuff,
+      // ::i32 count = ToUnicodeEx(virtKey, 0, m_viewerKeyState, outBuff,
       //     sizeof(outBuff) / sizeof(WCHAR),
       //     0, currentLayout);
       //
       // // For keyboards with dead keys
       // if (m_doubleDeadCatched && !down && !m_allowProcessDoubleChar) {
-      //    m_plogwriter->debug("Disable process char event");
+      //    m_plogwriter->debug("Disable process ::i8 event");
       //    m_allowProcessCharEvent = false;
       //    m_doubleDeadCatched = false;
       // }
       //
       // // For keyboards with dead keys
       // if (count == 2 && (isDoubleDeadCharacters(outBuff))) {
-      //    m_plogwriter->debug("Extra double dead key catched.");
+      //    m_plogwriter->debug("Extra ::f64 dead key catched.");
       //    if (down) {
-      //       m_plogwriter->debug("Enable process char event. Enable process double char.");
+      //       m_plogwriter->debug("Enable process ::i8 event. Enable process ::f64 ::i8.");
       //       m_allowProcessDoubleChar = true;
       //       m_allowProcessCharEvent = true;
       //       m_doubleDeadCatched = true;
@@ -266,7 +266,7 @@ namespace remoting_rfb
       // }
       // // Two or more (only two of them is relevant?)
       // else if (count > 1) {
-      //    for (int i = 0; i < count; i++) {
+      //    for (::i32 i = 0; i < count; i++) {
       //       res->add(GettingCharFromCtrlSymbol(outBuff[i]));
       //    }
       //    needReleaseModifiers = true;
@@ -276,13 +276,13 @@ namespace remoting_rfb
       //       res->add(unicodeChar);
       //    }
       // } else if (count == -1 && down) {
-      //    m_plogwriter->debug("Dead key pressed, waitThreadToFinish for a char event");
+      //    m_plogwriter->debug("Dead key pressed, waitThreadToFinish for a ::i8 event");
       //    m_allowProcessCharEvent = true;
       // }
       //return needReleaseModifiers;
    }
 
-   void RfbKeySym::processCharEvent(int charCode,
+   void RfbKeySym::processCharEvent(::i32 charCode,
                                     ::u32 addKeyData)
    {
       if (m_keyboardstate.m_allowProcessCharEvent) {
@@ -320,12 +320,12 @@ namespace remoting_rfb
       m_plogwriter->information("Process focus restoration in the RfbKeySym class");
 
       // // Send a modifier key state based on physical keyboard state, not thread key scopedstrMessage queue.
-      // unsigned char keys[9] = {VK_CONTROL, VK_RCONTROL, VK_LCONTROL,
+      // ::u8 keys[9] = {VK_CONTROL, VK_RCONTROL, VK_LCONTROL,
       //                          VK_MENU, VK_RMENU, VK_LMENU,
       //                          VK_SHIFT, VK_RSHIFT, VK_LSHIFT};
-      // for (int i = 0; i < 9 ; i++) {
-      //    unsigned char key = keys[i];
-      //    unsigned char state = GetAsyncKeyState(key) >> 8;
+      // for (::i32 i = 0; i < 9 ; i++) {
+      //    ::u8 key = keys[i];
+      //    ::u8 state = GetAsyncKeyState(key) >> 8;
       //    checkAndSendDiff(key, state);
       // }
    }
@@ -437,7 +437,7 @@ namespace remoting_rfb
       }
    }
 
-   void RfbKeySym::checkAndSendDiff(::user::enum_key ekey, unsigned char state)
+   void RfbKeySym::checkAndSendDiff(::user::enum_key ekey, ::u8 state)
    {
       bool testedState = (state & 128) != 0;
       m_keyboardstate.m_viewerKeyState[ekey] = testedState ? 128 : 0;

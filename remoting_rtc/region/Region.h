@@ -94,7 +94,7 @@ namespace remoting
        * @param dx horizontal offset to add.
        * @param dy vertical offset to add.
        */
-      void translate(int dx, int dy);
+      void translate(::i32 dx, ::i32 dy);
       template < prototype_point POINT >
       Region & operator-=(const POINT & point){this->translate(point.x, point.y); return *this;}
 
@@ -131,7 +131,7 @@ namespace remoting
        * Tests point location relative of the region.
        * @return true if this point locates inside the region, false otherwise.
        */
-      bool isPointInside(int x, int y) const;
+      bool isPointInside(::i32 x, ::i32 y) const;
       template < prototype_point POINT >
       bool isPointInside(const POINT & point) const {return this->isPointInside(point.x, point.y); }
 

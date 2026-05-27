@@ -39,8 +39,8 @@ namespace remoting_rfb_client
 
 
       typedef ::array_base<::u32> Palette;
-      ::array_base<char> m_pixels;
-      ::array_base<char> m_zlibDataReadAndInflate;
+      ::array_base<::i8> m_pixels;
+      ::array_base<::i8> m_zlibDataReadAndInflate;
       ::memory m_unpackedData;
       ::subsystem::Inflater m_inflater;
       size_t m_bytesPerPixel;
@@ -60,44 +60,44 @@ namespace remoting_rfb_client
 
       void readAndInflate(::remoting_rfb::RfbInputGate *input, size_t maximalUnpackedSize);
 
-      int readType(::DataInputStream * pinput);
+      ::i32 readType(::DataInputStream * pinput);
 
       size_t readRunLength(::DataInputStream * pinput);
 
       void readPalette(::DataInputStream * pinput,
-                       const int paletteSize,
+                       const ::i32 paletteSize,
                        Palette *palette);
 
       void readRawTile(::DataInputStream * pinput,
-                       ::array_base<char> &pixels,
+                       ::array_base<::i8> &pixels,
                        const ::i32_rectangle &  tileRect);
 
       void readSolidTile(::DataInputStream * pinput,
-                         ::array_base<char> &pixels,
+                         ::array_base<::i8> &pixels,
                          const ::i32_rectangle &  tileRect);
 
       void readPackedPaletteTile(::DataInputStream * pinput,
-                                 ::array_base<char> &pixels,
+                                 ::array_base<::i8> &pixels,
                                  const ::i32_rectangle &  tileRect,
-                                 const int type);
+                                 const ::i32 type);
 
       void readPlainRleTile(::DataInputStream * pinput,
-                            ::array_base<char> &pixels,
+                            ::array_base<::i8> &pixels,
                             const ::i32_rectangle &  tileRect);
 
       void readPaletteRleTile(::DataInputStream * pinput,
-                              ::array_base<char> &pixels,
+                              ::array_base<::i8> &pixels,
                               const ::i32_rectangle &  tileRect,
-                              const int type);
+                              const ::i32 type);
 
 
       void drawTile(::innate_subsystem::Framebuffer *pframebuffer,
                     const ::i32_rectangle &  tileRect,
-                    const ::array_base<char> *pixels);
+                    const ::array_base<::i8> *pixels);
 
 
    private:
-      static const int TILE_SIZE = 64;
+      static const ::i32 TILE_SIZE = 64;
 
       // maximal size of tile (64x64) is max value from follow:
       // 1. size of raw: subenc + data:

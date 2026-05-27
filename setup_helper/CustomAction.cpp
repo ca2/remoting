@@ -43,7 +43,7 @@ void allowSas()
   RegistryKey regKey(HKEY_LOCAL_MACHINE,
                      SAS_REG_ENTRY,
                      true);
-  int sasValue = 0;
+  ::i32 sasValue = 0;
   regKey.getValueAsInt32(SAS_REG_KEY, &sasValue);
   sasValue |= 1;
   regKey.setValueAsInt32(SAS_REG_KEY, sasValue);
@@ -56,17 +56,17 @@ void allowSas()
 }
 
 // FIXME: Code duplication: see the ControlApplication class.
-void getCryptedPassword(unsigned char cryptedPass[8], const ::scoped_string & plainPass)
+void getCryptedPassword(::u8 cryptedPass[8], const ::scoped_string & plainPass)
 {
   // Get a copy of the password truncated at 8 characters.
   ::string copyOfPlainPass;
   plainPass->getSubstring(&copyOfPlainPass, 0, 7);
-  // Convert from TCHAR[] to char[].
+  // Convert from TCHAR[] to ::i8[].
   // FIXME: Check exception catching.
   ::string ansiPass(&copyOfPlainPass);
 
   // Convert to a byte array.
-  unsigned char byteArray[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+  ::u8 byteArray[8] = {0, 0, 0, 0, 0, 0, 0, 0};
   size_t len = ::minimum(ansiPass.length(), (size_t)8);
   memcpy(byteArray, ansiPass, len);
 
@@ -83,7 +83,7 @@ void writePasswordToRegistry(MSIHANDLE hInstall,
     ::string plainPass;
     msiProp.getString("CustomActionData", &plainPass);
 
-    unsigned char cryptedPass[8];
+    ::u8 cryptedPass[8];
     getCryptedPassword(cryptedPass, &plainPass);
 
     RegistrySecurityAttributes registrySA;

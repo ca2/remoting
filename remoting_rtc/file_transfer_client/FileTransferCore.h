@@ -95,7 +95,7 @@ namespace remoting
          bool isNothingState();
 
          void onOperationFinished();
-         void onUpdateState(int state, int result);
+         void onUpdateState(::i32 state, ::i32 result);
 
          // FIXME: Debug.
          void updateSupportedOperations(const ::array_base<::u32> *clientCaps,
@@ -108,7 +108,7 @@ namespace remoting
 
          virtual void dataChunkCopied(::u64 totalBytesCopied, ::u64 totalBytesToCopy);
 
-         virtual int targetFileExists(FileInfo *sourceFileInfo,
+         virtual ::i32 targetFileExists(FileInfo *sourceFileInfo,
                                       FileInfo *targetFileInfo,
                                       const ::file::path & pathToTargetFile);
 
@@ -134,7 +134,7 @@ namespace remoting
          // delete, upload, download etc).
          //
 
-         int m_state;
+         ::i32 m_state;
 
          //
          // Current file transfer operation.
@@ -194,16 +194,16 @@ namespace remoting
          // FIXME: Maybe make m_state enumeration?
          //
 
-         static const int NOTHING_STATE      = 0x0;
-         static const int FILE_LIST_STATE    = 0x1;
-         static const int REMOVE_STATE       = 0x2;
-         static const int MKDIR_STATE        = 0x3;
-         static const int RENAME_STATE       = 0x4;
+         static const ::i32 NOTHING_STATE      = 0x0;
+         static const ::i32 FILE_LIST_STATE    = 0x1;
+         static const ::i32 REMOVE_STATE       = 0x2;
+         static const ::i32 MKDIR_STATE        = 0x3;
+         static const ::i32 RENAME_STATE       = 0x4;
 
-         static const int LOCAL_REMOVE_STATE = 0x5;
+         static const ::i32 LOCAL_REMOVE_STATE = 0x5;
 
-         static const int UPLOAD_STATE       = 0x6;
-         static const int DOWNLOAD_STATE     = 0x7;
+         static const ::i32 UPLOAD_STATE       = 0x6;
+         static const ::i32 DOWNLOAD_STATE     = 0x7;
 
       };
    }

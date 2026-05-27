@@ -83,11 +83,11 @@ namespace remoting_rfb_client
         //::innate_subsystem::Control::replaceWindowProc(FileInfoListView::s_newWndProc);
     }
 
-    void FileInfoListView::addItem(int index, ::remoting_rfb::file_transfer::FileInfo *fileInfo)
+    void FileInfoListView::addItem(::i32 index, ::remoting_rfb::file_transfer::FileInfo *fileInfo)
     {
         auto strFilename = fileInfo->getFileName();
 
-        int imageIndex = IMAGE_FILE_INDEX;
+        ::i32 imageIndex = IMAGE_FILE_INDEX;
 
         if (wcscmp(wstring(fileInfo->getFileName()), L".") == 0) {
             imageIndex = IMAGE_FOLDER_UP_INDEX;
@@ -110,9 +110,9 @@ namespace remoting_rfb_client
             if (fileSize <= 1024) {
                 sizeString.format("{} B", fileSize);
             } else if ((fileSize > 1024) && (fileSize <= 1024 * 1024)) {
-                sizeString.format("%4.2f KB", static_cast<double>(fileSize) / 1024.0);
+                sizeString.format("%4.2f KB", static_cast<::f64>(fileSize) / 1024.0);
             } else if (fileSize > 1024 * 1024) {
-                sizeString.format("%4.2f MB", static_cast<double>(fileSize) / (1024.0 * 1024));
+                sizeString.format("%4.2f MB", static_cast<::f64>(fileSize) / (1024.0 * 1024));
             }
 
             //
@@ -131,7 +131,7 @@ namespace remoting_rfb_client
     //void FileInfoListView::addRange(::remoting_rfb::file_transfer::FileInfo **filesInfo, size_t count)
     void FileInfoListView::addRange(const ::pointer_array < ::remoting_rfb::file_transfer::FileInfo > & fileinfoa)
     {
-        //int index = maximum(0, (getCount() - 1));
+        //::i32 index = maximum(0, (getCount() - 1));
         auto i = maximum(0, getCount() - 1);
         //size_t i = 0;
         //::remoting_rfb::file_transfer::FileInfo *arr = *filesInfo;
@@ -157,7 +157,7 @@ namespace remoting_rfb_client
 
     ::pointer<::remoting_rfb::file_transfer::FileInfo > FileInfoListView::getSelectedFileInfo()
     {
-        int si = getSelectedIndex();
+        ::i32 si = getSelectedIndex();
         if (si == -1) {
             return {};
         }
@@ -205,21 +205,21 @@ namespace remoting_rfb_client
 //        DestroyIcon(icon);
     }
 
-    void FileInfoListView::set_sort(int columnIndex)
+    void FileInfoListView::set_sort(::i32 columnIndex)
     {
-        ListView::set_sort(columnIndex, [this](::lparam lparam1, ::lparam lparam2)->int
+        ListView::set_sort(columnIndex, [this](::lparam lparam1, ::lparam lparam2)->::i32
         {
 
            auto lParamSort = lparam_sort();
 
-           int iCompare = compareItem(lparam1, lparam2, lParamSort);
+           ::i32 iCompare = compareItem(lparam1, lparam2, lParamSort);
 
            return iCompare;
 
         });
     }
 
-    int FileInfoListView::compareUInt64(::u64 first, ::u64 second)
+    ::i32 FileInfoListView::compareUInt64(::u64 first, ::u64 second)
     {
         if (first < second) {
             return -1;
@@ -230,18 +230,18 @@ namespace remoting_rfb_client
         return 0;
     }
 
-   // int  FileInfoListView::s_compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort)
+   // ::i32  FileInfoListView::s_compareItem(::lparam lParam1, ::lparam lParam2, ::lparam lParamSort)
    //  {
    //
    //     auto pcompare = (compare_t *) lParamSort.m_lparam;
    //
-   //     int iCompare= pcompare->m_pfileinfolistview->compareItem(lParam1, lParam2, pcompare);
+   //     ::i32 iCompare= pcompare->m_pfileinfolistview->compareItem(lParam1, lParam2, pcompare);
    //
    //     return iCompare;
    //
    //  }
    //
-    int FileInfoListView::compareItem(::lparam lParam1,
+    ::i32 FileInfoListView::compareItem(::lparam lParam1,
                                        ::lparam lParam2,
                                        ::lparam lParamSort)
     {
@@ -304,7 +304,7 @@ namespace remoting_rfb_client
                 if (firstItem->isDirectory()) {
                     return compareItem(lParam1, lParam2, 1);
                 }
-                int compareSize = compareUInt64(firstItem->getSize(), secondItem->getSize());
+                ::i32 compareSize = compareUInt64(firstItem->getSize(), secondItem->getSize());
                 // Sort by name, if sizes is equal.
                 if (compareSize == 0) {
                     return compareItem(lParam1, lParam2, 1);
@@ -314,7 +314,7 @@ namespace remoting_rfb_client
                 // It's column "Last modified".
             case 2:
             {
-                int compareTime = compareUInt64(firstItem->lastModified(), secondItem->lastModified());
+                ::i32 compareTime = compareUInt64(firstItem->lastModified(), secondItem->lastModified());
                 // Sort by name, if time stamps is equal.
                 if (compareTime == 0) {
                     return compareItem(lParam1, lParam2, 1);

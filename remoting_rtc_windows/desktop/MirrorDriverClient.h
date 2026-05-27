@@ -76,10 +76,10 @@ namespace remoting_rtc_windows
    private:
       static ::string_literal MINIPORT_REGISTRY_PATH;
 
-      static const int EXT_DEVMODE_SIZE_MAX = 3072;
+      static const ::i32 EXT_DEVMODE_SIZE_MAX = 3072;
       struct DFEXT_DEVMODE : DEVMODE
       {
-         char extension[EXT_DEVMODE_SIZE_MAX];
+         ::i8 extension[EXT_DEVMODE_SIZE_MAX];
       };
 
    private:
@@ -90,8 +90,8 @@ namespace remoting_rtc_windows
 
       void dispose();
 
-      void extractDeviceInfo(const char *driverName);
-      void openDeviceRegKey(const char *miniportName);
+      void extractDeviceInfo(const_char_pointer driverName);
+      void openDeviceRegKey(const_char_pointer miniportName);
 
       void initScreenPropertiesByCurrent();
       // value - true to attach, false to detach.

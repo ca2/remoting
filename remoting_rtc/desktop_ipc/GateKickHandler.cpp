@@ -38,7 +38,7 @@ namespace remoting
    }
 
 
-   void GateKickHandler::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
+   void GateKickHandler::onRequest(::u8 reqCode, BlockingGate *pblockinggate)
    {
       // Do nothing
    }

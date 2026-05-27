@@ -130,7 +130,7 @@ namespace remoting_rtc
          // Sets absolute filename (calculated by parent files) associated
          // with hold file info in this ::list_base to storage variable.
          //
-         // directorySeparator is char that used to split directories strings.
+         // directorySeparator is ::i8 that used to split directories strings.
          //
 
          //void getAbsolutePath(::string & storage, TCHAR directorySeparator);

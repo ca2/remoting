@@ -119,7 +119,7 @@ namespace remoting_rfb_client
 
          //::string strHost;
          auto strHost = m_pconnectiondata->getReducedHost();
-         unsigned short portVal = m_pconnectiondata->getPort();
+         ::u16 portVal = m_pconnectiondata->getPort();
          m_pviewercore->start(strHost, portVal, m_pviewerwindow, m_pconnectionconfig->getSharedFlag());
       }
    }

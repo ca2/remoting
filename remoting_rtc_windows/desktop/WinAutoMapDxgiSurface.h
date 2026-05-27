@@ -48,7 +48,7 @@ namespace remoting_rtc_windows
       virtual ~WinAutoMapDxgiSurface();
 
       size_t getStride() const;
-      char *getBuffer() const;
+      char_pointer getBuffer() const;
 
    private:
       ::comptr < IDXGISurface > m_pdxgisurface;

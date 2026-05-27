@@ -50,11 +50,11 @@ namespace remoting
 
       virtual void sendInit(BlockingGate *pblockinggate)  override;
       virtual void setNewClipboard(const ::scoped_string &newClipboard)  override;
-      virtual void setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag)  override;
+      virtual void setMouseEvent(const ::i32_point pointNewPosition, ::u8 keyFlag)  override;
       virtual void setKeyboardEvent(::u32 keySym, bool down)  override;
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName)  override;
       virtual void getPrimaryDisplayCoords(::i32_rectangle & rectangle)  override;
-      virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber)  override;
+      virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber)  override;
       virtual ::int_rectangle_array_base getDisplaysCoords()  override;
       virtual void getNormalizedRect(::i32_rectangle & rectangle)  override;
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle)  override;
@@ -63,12 +63,12 @@ namespace remoting
       virtual bool isApplicationInFocus(const ::process_identifier & processidentifier)  override;
 
       // To catch a new clipboard
-      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate)  override;
+      virtual void onRequest(::u8 reqCode, BlockingGate *pblockinggate)  override;
 
    ///protected:
 
 
-      unsigned char m_sendMouseFlags;
+      ::u8 m_sendMouseFlags;
       ::pointer < ::subsystem::ClipboardListener > m_pclipboardlistener;
 
 

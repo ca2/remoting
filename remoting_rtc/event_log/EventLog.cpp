@@ -96,7 +96,7 @@ namespace remoting
    //    }
    // }
 
-   void EventLog::reportInfo(::u32 messageId, const char *fmt, ...)
+   void EventLog::reportInfo(::u32 messageId, const_char_pointer fmt, ...)
    {
       va_list vl;
       va_start(vl, fmt);
@@ -104,7 +104,7 @@ namespace remoting
       va_end(vl);
    }
 
-   void EventLog::reportWarning(::u32 messageId, const char *fmt, ...)
+   void EventLog::reportWarning(::u32 messageId, const_char_pointer fmt, ...)
    {
       va_list vl;
       va_start(vl, fmt);
@@ -112,7 +112,7 @@ namespace remoting
       va_end(vl);
    }
 
-   void EventLog::reportError(::u32 messageId, const char *fmt, ...)
+   void EventLog::reportError(::u32 messageId, const_char_pointer fmt, ...)
    {
       va_list vl;
       va_start(vl, fmt);
@@ -124,8 +124,8 @@ namespace remoting
 // #pragma warning(disable:4996)
 
    void EventLog::reportEvent(::u32 messageId,
-   int eventType,
-                               const char *fmt,
+   ::i32 eventType,
+                               const_char_pointer fmt,
                                va_list argList)
    {
       // HANDLE hEventLog = getLogHandle();
@@ -140,7 +140,7 @@ namespace remoting
       m_plogwriter->trace((enum_trace_level) eventType, str);
 
       // // Format the original string.
-      // int count = _vsctprintf(fmt, argList);
+      // ::i32 count = _vsctprintf(fmt, argList);
       // ASSERT(count >= 0);
       // std::vector<TCHAR> formattedStringBuff(count + 1);
       // TCHAR *formattedString = &formattedStringBuff.front();

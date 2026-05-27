@@ -52,7 +52,7 @@ namespace remoting_rfb
       pdispatcher->registerNewHandle(SOFT_INPUT_ENABLING_REQ, this);
    }
 
-   void ConfigServer::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
+   void ConfigServer::onRequest(::u8 reqCode, BlockingGate *pblockinggate)
    {
       switch (reqCode)
       {
@@ -64,7 +64,7 @@ namespace remoting_rfb
             break;
          default:
             ::string errMess;
-            errMess.format("Unknown {} protocol code received from a pipe client", (int)reqCode);
+            errMess.format("Unknown {} protocol code received from a pipe client", (::i32)reqCode);
             throw ::subsystem::Exception(errMess);
             break;
       }

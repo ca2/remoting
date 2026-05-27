@@ -55,14 +55,14 @@ namespace remoting
       // before that all report will be ignored.
       void enable();
 
-      virtual void reportInfo(::u32 messageId, const char *fmt, ...);
-      virtual void reportWarning(::u32 messageId, const char *fmt, ...);
-      virtual void reportError(::u32 messageId, const char *fmt, ...);
+      virtual void reportInfo(::u32 messageId, const_char_pointer fmt, ...);
+      virtual void reportWarning(::u32 messageId, const_char_pointer fmt, ...);
+      virtual void reportError(::u32 messageId, const_char_pointer fmt, ...);
 
    //private:
       void reportEvent(::u32 messageId,
-                       int eventType,
-                       const char *fmt,
+                       ::i32 eventType,
+                       const_char_pointer fmt,
                      va_list argList);
 
       //void registerEventSource();

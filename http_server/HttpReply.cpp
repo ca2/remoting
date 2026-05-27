@@ -36,14 +36,14 @@ HttpReply::~HttpReply()
 
 void HttpReply::send200()
 {
-  const char HTTP_200[] = "HTTP/1.0 200 OK\r\n\r\n";
+  const ::i8 HTTP_200[] = "HTTP/1.0 200 OK\r\n\r\n";
 
   m_dataOutput->writeFully(HTTP_200, strlen(HTTP_200));
 }
 
 void HttpReply::send404()
 {
-  const char HTTP_404 [] = "HTTP/1.0 404 Not Found\r\n\r\n"
+  const ::i8 HTTP_404 [] = "HTTP/1.0 404 Not Found\r\n\r\n"
                            "<HTML>\n"
                            "  <HEAD><TITLE>404 Not Found</TITLE></HEAD>\n"
                            "  <BODY>\n"

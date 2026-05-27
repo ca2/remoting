@@ -42,23 +42,23 @@ namespace remoting_rfb
       }
    }
 
-   void CursorShape::assignMaskFromRfb(const char *srcMask)
+   void CursorShape::assignMaskFromRfb(const_char_pointer srcMask)
    {
       if (!m_mask.empty()) {
-         int height = m_pixels.getDimension().cy;
+         ::i32 height = m_pixels.getDimension().cy;
          size_t rfbWidthInBytes = getMaskWidthInBytes();
          size_t maskLen = height * rfbWidthInBytes;
          memcpy(m_mask.data(), srcMask, maskLen);
       }
    }
 
-   void CursorShape::assignMaskFromWindows(const char *srcMask)
+   void CursorShape::assignMaskFromWindows(const_char_pointer srcMask)
    {
       if (!m_mask.empty()) {
-         int height = m_pixels.getDimension().cy;
-         int winWidthInBytes = ((m_pixels.getDimension().cx + 15) / 16) * 2;
-         int rfbWidthInBytes = getMaskWidthInBytes();
-         for (int i = 0; i < height; i++) {
+         ::i32 height = m_pixels.getDimension().cy;
+         ::i32 winWidthInBytes = ((m_pixels.getDimension().cx + 15) / 16) * 2;
+         ::i32 rfbWidthInBytes = getMaskWidthInBytes();
+         for (::i32 i = 0; i < height; i++) {
             memcpy(&m_mask[i * rfbWidthInBytes],
                    &srcMask[i * winWidthInBytes],
                    rfbWidthInBytes);
@@ -98,12 +98,12 @@ namespace remoting_rfb
       return true;
    }
 
-   int CursorShape::getMaskSize() const
+   ::i32 CursorShape::getMaskSize() const
    {
       return getMaskWidthInBytes() * m_pixels.getDimension().cy;
    }
 
-   int CursorShape::getMaskWidthInBytes() const
+   ::i32 CursorShape::getMaskWidthInBytes() const
    {
       return (m_pixels.getDimension().cx + 7) / 8;
    }

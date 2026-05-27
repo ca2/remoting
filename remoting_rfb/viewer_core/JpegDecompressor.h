@@ -63,9 +63,9 @@ namespace remoting_rfb_client
        * format is an array of bytes where each pixel is represented by three bytes
        * for red, green and blue components, in that order.
        */
-      void decompress(::array_base<unsigned char> &buffer,
+      void decompress(::array_base<::u8> &buffer,
                       size_t jpegBufLen,
-                      ::array_base<unsigned char> &pixels,
+                      ::array_base<::u8> &pixels,
                       const ::i32_rectangle &  rectangleTarget);
 
    private:

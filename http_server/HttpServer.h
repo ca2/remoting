@@ -44,7 +44,7 @@ public:
    * @throws ::subsystem::Exception on fail.
    */
   HttpServer(const ::scoped_string & scopedstrBindHost,
-             unsigned short bindPort,
+             ::u16 bindPort,
              bool lockAddr,
              ::subsystem::LogWriter * plogwriter);
   /**

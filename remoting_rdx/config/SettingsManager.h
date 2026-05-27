@@ -53,11 +53,11 @@ namespace remoting_rfb
       virtual bool getUINT(const ::scoped_string & scopedstrName, ::u32 *value) = 0;
       virtual bool setUINT(const ::scoped_string & scopedstrName, ::u32 value) = 0;
 
-      virtual bool getInt(const ::scoped_string & scopedstrName, int *value) = 0;
-      virtual bool setInt(const ::scoped_string & scopedstrName, int value) = 0;
+      virtual bool getInt(const ::scoped_string & scopedstrName, ::i32 *value) = 0;
+      virtual bool setInt(const ::scoped_string & scopedstrName, ::i32 value) = 0;
 
-      virtual bool getByte(const ::scoped_string & scopedstrName, char *value) = 0;
-      virtual bool setByte(const ::scoped_string & scopedstrName, char value) = 0;
+      virtual bool getByte(const ::scoped_string & scopedstrName, char_pointer value) = 0;
+      virtual bool setByte(const ::scoped_string & scopedstrName, ::i8 value) = 0;
 
       virtual bool getBinaryData(const ::scoped_string & scopedstrName, void *value, memsize *size) = 0;
       virtual bool setBinaryData(const ::scoped_string & scopedstrName, const void *value, memsize size) = 0;

@@ -42,7 +42,7 @@ namespace remoting_macos
       ::subsystem::Keymap m_keyMap;
       ::subsystem::InputInjector m_inputInjector;
 
-      unsigned char m_prevKeyFlag;
+      ::u8 m_prevKeyFlag;
 
       ::pointer < ::subsystem::LogWriter > m_plogwriter;
 
@@ -53,11 +53,11 @@ namespace remoting_macos
                  ::subsystem::LogWriter * plogwriter) override;
 
       void setNewClipboard(const ::scoped_string &newClipboard) override;
-      void setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag) override;
+      void setMouseEvent(const ::i32_point pointNewPosition, ::u8 keyFlag) override;
       void setKeyboardEvent(::u32 keySym, bool down) override;
 
       void getCurrentUserInfo(::string &desktopName, ::string &userName) override;
-      void getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber) override;
+      void getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber) override;
       ::int_rectangle_array_base getDisplaysCoords() override;
       void getNormalizedRect(::i32_rectangle & rectangle) override;
       void getPrimaryDisplayCoords(::i32_rectangle & rectangle) override;
@@ -66,7 +66,7 @@ namespace remoting_macos
       void getApplicationRegion(const ::process_identifier & processidentifier, ::remoting_rfb::Region & region) override;
       bool isApplicationInFocus(const ::process_identifier & processidentifier) override;
 
-      void initKeyFlag(unsigned char initValue) override { m_prevKeyFlag = initValue; }
+      void initKeyFlag(::u8 initValue) override { m_prevKeyFlag = initValue; }
 
       void toFbCoordinates(::i32_rectangle & rectangle);
 

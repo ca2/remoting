@@ -49,7 +49,7 @@ namespace remoting
       virtual ~UserInputServer();
 
       // Internal dispatcher
-      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
+      virtual void onRequest(::u8 reqCode, BlockingGate *pblockinggate);
 
       virtual void onClipboardUpdate(const ::scoped_string &newClipboard);
 

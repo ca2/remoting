@@ -28,7 +28,7 @@
 
 //#include aaa_<crtdbg.h>
 
-AppletParameter::AppletParameter(const char *name, const char *value)
+AppletParameter::AppletParameter(const_char_pointer pszName, const_char_pointer value)
 : m_isValid(false)
 {
   ASSERT(name != NULL);
@@ -37,7 +37,7 @@ AppletParameter::AppletParameter(const char *name, const char *value)
   m_isValid = isStringValid(name) && isStringValid(value);
 
   if (isValid()) {
-    char format[] = "<PARAM NAME=\"{}\" VALUE=\"{}\" >\n";
+    ::i8 format[] = "<PARAM NAME=\"{}\" VALUE=\"{}\" >\n";
     m_formattedString.format(format, name, value);
   }
 }
@@ -46,7 +46,7 @@ AppletParameter::~AppletParameter()
 {
 }
 
-const char *AppletParameter::getFormattedString() const
+const_char_pointer AppletParameter::getFormattedString() const
 {
   return m_formattedString;
 }
@@ -56,7 +56,7 @@ bool AppletParameter::isValid() const
   return m_isValid;
 }
 
-bool AppletParameter::isStringValid(const char *str) const
+bool AppletParameter::isStringValid(const_char_pointer str) const
 {
   // Applet argument can contain alnum, '_', '.', ' ' characters.
   for (size_t i = 0; i < strlen(str); i++) {

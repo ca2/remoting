@@ -286,9 +286,6 @@
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\innate_ui_win32\innate_ui_win32.vcxproj">
       <Project>{1f20cf93-ae0b-4a16-a786-56a623c8726a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\nano_graphics_gdi\nano_graphics_gdi.vcxproj">
-      <Project>{01c37e3e-ea56-4af4-bf1a-28ac282d9885}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\subsystem_windows\subsystem_windows.vcxproj">
       <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
     </ProjectReference>

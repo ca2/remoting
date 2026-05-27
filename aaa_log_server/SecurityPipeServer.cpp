@@ -32,7 +32,7 @@
 #include "ConnectionTimer.h"
 //#include aaa_<time.h>
 
-SecurityPipeServer::SecurityPipeServer(Channel *tempPublChan, unsigned int bufferSize)
+SecurityPipeServer::SecurityPipeServer(Channel *tempPublChan, ::u32 bufferSize)
 : m_secChannel(0),
   m_bufferSize(bufferSize)
 {
@@ -64,7 +64,7 @@ void SecurityPipeServer::generateSecConnection(Channel *tempPublChan)
     DataInputStream svcInput(tempPublChan);
     DataOutputStream svcOutput(tempPublChan);
 
-    unsigned int procId = svcInput.readUInt32();
+    ::u32 procId = svcInput.readUInt32();
     // Check the id. If it is "right" process then generate
     // transport handles specially for it.
     if (!Environment::isItTheSamePathAsCurrent(procId)) {
@@ -74,8 +74,8 @@ void SecurityPipeServer::generateSecConnection(Channel *tempPublChan)
 
     // Give to process exclusive pipe handles
     ::string randomName;
-    srand((unsigned)time(0));
-    for (int i = 0; i < 20; i++) {
+    srand((::u32)time(0));
+    for (::i32 i = 0; i < 20; i++) {
       randomName.appendChar('a' + rand() % ('z' - 'a'));
     }
     PipeServer pipeServer(randomName, m_bufferSize, 0, 1000);
@@ -83,7 +83,7 @@ void SecurityPipeServer::generateSecConnection(Channel *tempPublChan)
     m_secChannel = pipeServer.accept();
 
     HANDLE otherSideHandle = otherSideChannel->getHandle();
-    svcOutput.writeUInt64((unsigned long long)WinHandles::assignHandleFor(otherSideHandle, procId, false, false));
+    svcOutput.writeUInt64((::u64)WinHandles::assignHandleFor(otherSideHandle, procId, false, false));
   } catch (...) {
     if (otherSideChannel != 0) delete otherSideChannel;
     throw;
@@ -101,7 +101,7 @@ void SecurityPipeServer::makeSure()
   DataInputStream inputGate(m_secChannel);
   DataOutputStream outputGate(m_secChannel);
   // Acknowledgement of the receipt
-  unsigned int timeOut = 10000; // milliseconds
+  ::u32 timeOut = 10000; // milliseconds
   ConnectionTimer connTimer(this, timeOut);
   // If no byte received during time out interval connTimer has break
   // read operation and the make sure throws an ::subsystem::Exception.

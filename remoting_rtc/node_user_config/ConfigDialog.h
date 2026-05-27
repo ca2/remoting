@@ -75,8 +75,8 @@ namespace remoting_rtc_node
       void onOKButtonClick();
       void onApplyButtonClick();
       // Tab handlers
-      bool _002OnTabChanged(int iControl) override;
-      bool _002OnTabChanging(int iControl, bool & bOk) override;
+      bool _002OnTabChanged(::i32 iControl) override;
+      bool _002OnTabChanging(::i32 iControl, bool & bOk) override;
 
    private:
       //void moveDialogToTabControl(::innate_subsystem::DialogInterface * pdialog);;
@@ -99,7 +99,7 @@ namespace remoting_rtc_node
 
       ::pointer < ::remoting_rtc_node::ControlCommand > m_pcontrolcommandReloadConfig;
 
-      int m_lastSelectedTabIndex;
+      ::i32 m_lastSelectedTabIndex;
    };
 } // namespace remoting_rtc_node
 

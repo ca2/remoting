@@ -58,15 +58,15 @@ namespace remoting_rfb
    class CLASS_DECL_REMOTING_RFB Utf8CutTextDefs
    {
    public:
-      static const char *const CLIENT_CUT_TEXT_UTF8_SIG;
-      static const char *const SERVER_CUT_TEXT_UTF8_SIG;
-      static const char *const ENABLE_CUT_TEXT_UTF8_SIG;
+      static const_char_pointer const CLIENT_CUT_TEXT_UTF8_SIG;
+      static const_char_pointer const SERVER_CUT_TEXT_UTF8_SIG;
+      static const_char_pointer const ENABLE_CUT_TEXT_UTF8_SIG;
    };
    class CLASS_DECL_REMOTING_RFB EchoExtensionDefs
    {
    public:
-      static const char *const ECHO_REQUEST_SIG;
-      static const char *const ECHO_RESPONSE_SIG;
+      static const_char_pointer const ECHO_REQUEST_SIG;
+      static const_char_pointer const ECHO_RESPONSE_SIG;
    };
    //// __RFB_MSG_DEFS_H_INCLUDED__
 } // namespace remoting_rfb

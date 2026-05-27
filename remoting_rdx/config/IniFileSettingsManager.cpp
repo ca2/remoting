@@ -115,7 +115,7 @@ namespace remoting_rfb
 
    bool IniFileSettingsManager::getBoolean(const ::scoped_string &scopedstrName, bool *value)
    {
-      int intVal;
+      ::i32 intVal;
       if (!getInt(scopedstrName, &intVal))
       {
          return false;
@@ -142,7 +142,7 @@ namespace remoting_rfb
       return setString(scopedstrName, stringVal);
    }
 
-   bool IniFileSettingsManager::getInt(const ::scoped_string &scopedstrName, int *value)
+   bool IniFileSettingsManager::getInt(const ::scoped_string &scopedstrName, ::i32 *value)
    {
       // We really cannot determinate result of GetPrivateProfileInt,
       // so use this trick, if returning value is defVal, than key does not
@@ -155,12 +155,12 @@ namespace remoting_rfb
          return false;
       }
 
-      *value = (int)ret;
+      *value = (::i32)ret;
 
       return true;
    }
 
-   bool IniFileSettingsManager::setInt(const ::scoped_string &scopedstrName, int value)
+   bool IniFileSettingsManager::setInt(const ::scoped_string &scopedstrName, ::i32 value)
    {
       ::string stringVal;
       stringVal.format("{}", value);
@@ -168,12 +168,12 @@ namespace remoting_rfb
       return setString(scopedstrName, stringVal);
    }
 
-   bool IniFileSettingsManager::getByte(const ::scoped_string &scopedstrName, char *value)
+   bool IniFileSettingsManager::getByte(const ::scoped_string &scopedstrName, char_pointer value)
    {
-      return getIntAndCastTo<char>(scopedstrName, value);
+      return getIntAndCastTo<::i8>(scopedstrName, value);
    }
 
-   bool IniFileSettingsManager::setByte(const ::scoped_string &scopedstrName, char value)
+   bool IniFileSettingsManager::setByte(const ::scoped_string &scopedstrName, ::i8 value)
    {
       return setInt(scopedstrName, value);
    }
@@ -212,7 +212,7 @@ namespace remoting_rfb
          // Try to get string value from storage
          ::u32 ret =
             ::acme::GetPrivateProfileString(::string(m_appName), ::string(scopedstrName), ::string(scopedstrDefaultValue),
-                                    (char*) buffer.data(), bufferSize, m_path);
+                                    (char_pointer ) buffer.data(), bufferSize, m_path);
 
          // This mean that output buffer size is too small
          tooSmall = (ret == bufferSize - 1);

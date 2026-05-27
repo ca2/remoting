@@ -39,7 +39,7 @@ namespace remoting_control_desktop
    // FIXME: Optimize this method.
    void ControlGate::skipBytes(::u32 length)
    {
-      char one;
+      ::i8 one;
       for (size_t i = 0; i < length; i++) {
          readFully(&one, 1);
       }

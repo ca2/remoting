@@ -136,7 +136,7 @@ namespace remoting_rfb_windows
       //::array_base<HWND>::iterator hwndIter;
       ::remoting_rfb::Region vidRegion;
 
-      for (int i = 0; i < classNames.size(); ++i)
+      for (::i32 i = 0; i < classNames.size(); ++i)
       {
          m_plogwriter->debug("WinVideoRegionUpdaterImpl: getRectsByClass : classname: {} ", classNames[i]);
       }

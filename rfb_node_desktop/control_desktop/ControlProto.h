@@ -45,7 +45,7 @@ namespace remoting_control_desktop
     * Server to client messages (eq replies to client requests) have following format:
     * ::u32 reply code (REPLY_OK - no error, REPLY_ERROR - error during request processing,
     * REPLY_AUTH_NEEDED - authorization needed for this request).
-    * unsigned char[] body (reply body with unknown length (i mean body is individual for every reply,
+    * ::u8[] body (reply body with unknown length (i mean body is individual for every reply,
     * some replies can have no body).
     */
    class ControlProto
@@ -109,7 +109,7 @@ namespace remoting_control_desktop
        * Make outgoing (reverse) rfb connection from server.
        * Request body:
        *   StringUTF8 connectString.
-       *   unsigned char viewOnlyFlag.
+       *   ::u8 viewOnlyFlag.
        * Reply body: [empty].
        */
       static const ::u32 ADD_CLIENT_MSG_ID = 0x8;
@@ -135,8 +135,8 @@ namespace remoting_control_desktop
        *
        * Request body: [empty].
        * Reply body:
-       *   unsigned char connectionAcceptFlag.
-       *   unsigned char isServiceFlag.
+       *   ::u8 connectionAcceptFlag.
+       *   ::u8 isServiceFlag.
        *   StringUTF8 logFilePath.
        *   StringUTF8 serverStatusText.
        */
@@ -170,7 +170,7 @@ namespace remoting_control_desktop
        *
        * Request body: [empty].
        * Reply body:
-       *   unsigned char runTvnControlFlag.
+       *   ::u8 runTvnControlFlag.
        */
       static const ::u32 GET_SHOW_TRAY_ICON_FLAG = 0x14;
 

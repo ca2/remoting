@@ -30,7 +30,7 @@
 
 namespace remoting_rfb
 {
-   TightPalette::TightPalette(int maxColors)
+   TightPalette::TightPalette(::i32 maxColors)
    {
       setMaxColors(maxColors);
       reset();
@@ -42,7 +42,7 @@ namespace remoting_rfb
       memset(m_hash, 0, 256 * sizeof(TightColorList *));
    }
 
-   void TightPalette::setMaxColors(int maxColors)
+   void TightPalette::setMaxColors(::i32 maxColors)
    {
       m_maxColors = maxColors;
       if (m_maxColors < 0) {
@@ -52,11 +52,11 @@ namespace remoting_rfb
       }
    }
 
-   int TightPalette::insert(::u32 rgb, int numPixels)
+   ::i32 TightPalette::insert(::u32 rgb, ::i32 numPixels)
    {
       TightColorList *pnode;
       TightColorList *prev_pnode = NULL;
-      int hash_key, idx, new_idx, count;
+      ::i32 hash_key, idx, new_idx, count;
 
       hash_key = hashFunc(rgb);
 

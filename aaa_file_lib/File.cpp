@@ -29,12 +29,12 @@
 
 TCHAR ::file::item::s_separatorChar = _T('\\');
 
-::file::item::::file::item(const ::file::path & path)
+::file::item::file::item(const ::file::path & path)
 {
   m_path = path;
 }
 
-::file::item::::file::item(const ::scoped_string & scopedstrFolder, const ::scoped_string & scopedstrN)
+::file::item::file::item(const ::scoped_string & scopedstrFolder, const ::scoped_string & scopedstrN)
 {
   m_path = scopedstrFolder/scopedstrN;
   //
@@ -104,7 +104,7 @@ bool ::file::item::exists() const
   //   if (buffer[i - 1] == ::file::item::s_separatorChar) {
   //     break;
   //   } // if found separator
-  // } // for every char in string
+  // } // for every ::i8 in string
   //
   // m_path.getSubstring(name, i, m_path.length() - 1);
 }
@@ -150,7 +150,7 @@ bool ::file::item::isDirectory() const
    return m_path;
 }
 
-unsigned long long ::file::item::lastModified() const
+::u64 ::file::item::lastModified() const
 {
   WIN32_FIND_DATA fileInfo;
 
@@ -165,7 +165,7 @@ unsigned long long ::file::item::lastModified() const
   return dt.m_iSecond;
 }
 
-unsigned long long ::file::item::length() const
+::u64 ::file::item::length() const
 {
   WIN32_FIND_DATA fileInfo;
 
@@ -173,7 +173,7 @@ unsigned long long ::file::item::length() const
     return 0;
   }
 
-  long long maxDWORDPlusOne = 1 + (long long)MAXDWORD;
+  ::i64 maxDWORDPlusOne = 1 + (::i64)MAXDWORD;
 
   return fileInfo.nFileSizeHigh * maxDWORDPlusOne + fileInfo.nFileSizeLow;
 }
@@ -184,7 +184,7 @@ unsigned long long ::file::item::length() const
    auto pathPattern = m_path/"*";
   //folderPath.appendString("\\*");
 
-  //unsigned int index = 0;
+  //::u32 index = 0;
 
   HANDLE hfile;
   WIN32_FIND_DATA findFileData;
@@ -194,7 +194,7 @@ unsigned long long ::file::item::length() const
   // when we attemt to find first file on unmounted device
   //
 
-  unsigned int savedErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
+  ::u32 savedErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
 
   hfile = FindFirstFile(pathPattern.windows_path(), &findFileData);
 
@@ -246,7 +246,7 @@ return stra;
     return stra;
   }
 
-  //unsigned int count = 0;
+  //::u32 count = 0;
   size_t i = 0;
 
   while (drivesList[i] != '\0') {
@@ -311,7 +311,7 @@ bool ::file::item::renameTo(const ::file::path & pathTarget, const ::file::path 
   return true;
 }
 
-bool ::file::item::setLastModified(long long time)
+bool ::file::item::setLastModified(::i64 time)
 {
   ASSERT(time >= 0);
 
@@ -332,7 +332,7 @@ bool ::file::item::setLastModified(long long time)
 
   FILETIME ft;
 
-  class ::time dt((unsigned long long)time);
+  class ::time dt((::u64)time);
 
   dt.toFileTime(&ft);
 
@@ -365,7 +365,7 @@ bool ::file::item::getFileInfo(WIN32_FIND_DATA *fileInfo) const
   // when we attemt to find first file on unmounted device
   //
 
-  unsigned int savedErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
+  ::u32 savedErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
 
   fileHandle = FindFirstFile(m_path.windows_path(), fileInfo);
 

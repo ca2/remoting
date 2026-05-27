@@ -102,9 +102,9 @@ namespace remoting_rtc_windows
          croppedRect = rectangleFramebuffer;
       }
 
-      char *dstPtr = (char *)m_pframebuffer->getBufferPtr(croppedRect.left, croppedRect.top);
-      size_t offset = dstPtr - (char *)m_pframebuffer->getBuffer();
-      char *srcPtr = (char *)m_pmirrordriverclient->getBuffer();
+      char_pointer dstPtr = (char_pointer )m_pframebuffer->getBufferPtr(croppedRect.left, croppedRect.top);
+      size_t offset = dstPtr - (char_pointer )m_pframebuffer->getBuffer();
+      char_pointer srcPtr = (char_pointer )m_pmirrordriverclient->getBuffer();
       if (srcPtr == 0)
       {
          return false;
@@ -169,7 +169,7 @@ namespace remoting_rtc_windows
    {
       ::remoting_rtc::Region m_regionChanged;
       ::i32_rectangle rectangleChanged;
-      unsigned long currentCounter = 0;
+      ulong currentCounter = 0;
 
       while (!isThreadTerminating())
       {
@@ -183,7 +183,7 @@ namespace remoting_rtc_windows
                if (changesBuf != 0)
                {
                   currentCounter = changesBuf->counter;
-                  for (unsigned long i = m_lastCounter; i != currentCounter; i++, i %= MAXCHANGES_BUF)
+                  for (ulong i = m_lastCounter; i != currentCounter; i++, i %= MAXCHANGES_BUF)
                   {
                      rectangleChanged = changesBuf->pointrect[i].rect;
                      if (rectangleChanged.is_null_or_positive())

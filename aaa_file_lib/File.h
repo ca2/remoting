@@ -33,8 +33,8 @@ class ::file::item
 {
 public:
 
-  const static int MODE_READ  = 1;
-  const static int MODE_WRITE = 2;
+  const static ::i32 MODE_READ  = 1;
+  const static ::i32 MODE_WRITE = 2;
 
   ::file::item(const ::file::path & path);
   ::file::item(const ::scoped_string & scopedstrFolder, const ::scoped_string & scopedstrSon);
@@ -108,13 +108,13 @@ public:
    * @return count of milliseconds since unix epoch or 0 on fail.
    * @fixme raise exception on fail.
    */
-  unsigned long long lastModified() const;
+  ::u64 lastModified() const;
 
   /**
    * Returns the length of the file (in bytes) denoted by this pathname.
    * @fixme raise exception on fail.
    */
-  unsigned long long length() const;
+  ::u64 length() const;
 
   //
   // Fills fileList array of strings naming the files and directories
@@ -164,7 +164,7 @@ public:
    * @return true if ok, false if fail.
    */
 
-  bool setLastModified(long long time);
+  bool setLastModified(::i64 time);
 
   //
   // Truncates file, removes file if it exists and creates new file with same pathname

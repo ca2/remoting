@@ -47,7 +47,7 @@ namespace remoting_rfb
       //void processKeyEvent(::user::enum_key ekey, ::u32 addKeyData);
       void processKeyHappening(::user::key_happening ekeyhappening);
       bool vkCodeToString(::user::enum_key ekey, bool isKeyDown, ::wstring *res);
-      void processCharEvent(int charCode, ::u32 addKeyData);
+      void processCharEvent(::i32 charCode, ::u32 addKeyData);
       // Checks a new modifiers state after focus restoration and sends difference
       void processFocusRestoration();
       // This function release all modifiers unconditionally.
@@ -70,7 +70,7 @@ namespace remoting_rfb
                                                  bool isRightHint);
 
       // Checks virtKey state with the server side state and sends difference
-      void checkAndSendDiff(::user::enum_key ekey, unsigned char state);
+      void checkAndSendDiff(::user::enum_key ekey, ::u8 state);
 
       // Send one key event (Alt translated to Meta if Scroll Lock is on).
       virtual void sendKeySymEvent(::u32 rfbKeySym, bool down);
@@ -79,11 +79,11 @@ namespace remoting_rfb
       virtual void sendVerbatimKeySymEvent(::u32 rfbKeySym, bool down);
 
       // helper functions
-      //int GettingCharFromCtrlSymbol(int ctrlSymbol);
+      //::i32 GettingCharFromCtrlSymbol(::i32 ctrlSymbol);
       // E.g if pressed Ctrl + Alt + A
-      // Try found char without modificators
+      // Try found ::i8 without modificators
       // #ifdef WINDOWS
-      //   bool TryTranslateNotPrintableToUnicode(unsigned short virtKey, HKL currentLayout, WCHAR *unicodeChar);
+      //   bool TryTranslateNotPrintableToUnicode(::u16 virtKey, HKL currentLayout, WCHAR *unicodeChar);
       //
       // #endif
       void releaseMeta();

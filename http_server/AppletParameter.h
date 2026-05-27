@@ -30,19 +30,19 @@
 class CLASS_DECL_REMOTING AppletParameter
 {
 public:
-  AppletParameter(const char *name, const char *value);
+  AppletParameter(const_char_pointer pszName, const_char_pointer value);
   virtual ~AppletParameter();
 
   // Returns formatted string for HTML output or NULL is arguments is not valid.
   // Remark: string format is "<PARAM NAME="{}" VALUE="{}">".
-  const char *getFormattedString() const;
+  const_char_pointer getFormattedString() const;
 
   // Returns true if applet parameter is valid, false otherwise.
   bool isValid() const;
 
 protected:
   // Returns true if str is valid, false otherwise.
-  bool isStringValid(const char *str) const;
+  bool isStringValid(const_char_pointer str) const;
 
 protected:
   ::string m_formattedString;

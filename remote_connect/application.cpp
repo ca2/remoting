@@ -49,12 +49,12 @@ bool LoadCredentials(const std::wstring& target, std::string& user, std::string&
 
     if (cred->UserName)
     {
-        int len = WideCharToMultiByte(CP_UTF8, 0, cred->UserName, -1, NULL, 0, NULL, NULL);
+        ::i32 len = WideCharToMultiByte(CP_UTF8, 0, cred->UserName, -1, NULL, 0, NULL, NULL);
         user.resize(len);
         WideCharToMultiByte(CP_UTF8, 0, cred->UserName, -1, user.data(), len, NULL, NULL);
     }
 
-    pass.assign((char*)cred->CredentialBlob, cred->CredentialBlobSize);
+    pass.assign((char_pointer )cred->CredentialBlob, cred->CredentialBlobSize);
 
     CredFree(cred);
     return true;
@@ -153,7 +153,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
         if (g_instance && g_instance->input)
         {
-            short delta = GET_WHEEL_DELTA_WPARAM(wParam);
+            ::i16 delta = GET_WHEEL_DELTA_WPARAM(wParam);
             ::u16 flags = PTR_FLAGS_WHEEL | (delta < 0 ? PTR_FLAGS_WHEEL_NEGATIVE : 0);
             flags |= (abs(delta) & 0xFF);
 
@@ -202,7 +202,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 // -------------------- Main --------------------
 
-int main_freerdp()
+::i32 main_freerdp()
 {
     std::string user, pass;
 

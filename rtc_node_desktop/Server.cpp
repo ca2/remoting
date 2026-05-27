@@ -91,7 +91,7 @@ namespace remoting_node_desktop
    //   try {
    //      ::string logDir;
    //      m_pserverconfig->getLogFileDir(logDir);
-   //      unsigned char logLevel = m_pserverconfig->getLogLevel();
+   //      ::u8 logLevel = m_pserverconfig->getLogLevel();
    //      // FIXME: Use correct log name.
    //      m_ploginitlistener->onLogInit(logDir, LogNames::SERVER_LOG_FILE_STUB_NAME, logLevel);
 
@@ -207,7 +207,7 @@ namespace remoting_node_desktop
       {
          ::string logDir;
          m_pserverconfig->getLogFileDir(logDir);
-         unsigned char logLevel = m_pserverconfig->getLogLevel();
+         ::u8 logLevel = m_pserverconfig->getLogLevel();
          // FIXME: Use correct log name.
          m_ploginitlistener->onLogInit(logDir, ::remoting_rtc_node::LogNames::SERVER_LOG_FILE_STUB_NAME, logLevel);
       }
@@ -272,7 +272,7 @@ namespace remoting_node_desktop
          bool toggleMainRfbServer =
            m_pserverconfig->isAcceptingRfbConnections() != (m_prfbserver != 0);
          bool changeMainRfbPort = m_prfbserver != 0 &&
-           (m_pserverconfig->getRfbPort() != (int)m_prfbserver->getBindPort());
+           (m_pserverconfig->getRfbPort() != (::i32)m_prfbserver->getBindPort());
 
          ::string strBindHost =
            m_pserverconfig->isOnlyLoopbackConnectionsAllowed() ? "localhost" : "0.0.0.0";
@@ -299,7 +299,7 @@ namespace remoting_node_desktop
       //    bool toggleHttp =
       //      m_pserverconfig->isAcceptingHttpConnections() != (m_httpServer != 0);
       //    bool changePort = m_httpServer != 0 &&
-      //      (m_pserverconfig->getHttpPort() != (int)m_httpServer->getBindPort());
+      //      (m_pserverconfig->getHttpPort() != (::i32)m_httpServer->getBindPort());
       //
       //    if (toggleHttp || changePort) {
       //       restartHttpServer();
@@ -410,7 +410,7 @@ namespace remoting_node_desktop
       // Choose how to start process.
       ::string thisModulePath;
       thisModulePath = MainSubsystem().OperatingSystem().getCurrentModuleFolderPath();
-      thisModulePath.double_quote();
+      thisModulePath.f64_quote();
       if (isRunningAsService()) {
          bool connectToRdp = m_pserverconfig->getConnectToRdpFlag();
          auto pprocessNew = createø <subsystem::CurrentConsoleProcess>();
@@ -495,7 +495,7 @@ namespace remoting_node_desktop
       }
 
       ::string strBindHost = m_pserverconfig->isOnlyLoopbackConnectionsAllowed() ? "localhost" : "0.0.0.0";
-      unsigned short bindPort = m_pserverconfig->getRfbPort();
+      ::u16 bindPort = m_pserverconfig->getRfbPort();
 
       m_plogwriter->debug("Starting main RFB server");
 
@@ -554,7 +554,7 @@ namespace remoting_node_desktop
    void Server::changeLogProps()
    {
       ::string logDir;
-      unsigned char logLevel;
+      ::u8 logLevel;
       {
          critical_section_lock al(&m_mutex);
          m_pserverconfig->getLogFileDir(logDir);

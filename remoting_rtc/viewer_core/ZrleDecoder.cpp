@@ -59,7 +59,7 @@ namespace remoting_client
 
       auto & unpackedData = m_unpackedData;
       //unpackedData.setresize(unpackedDataSize);
-      unpackedData.assign((unsigned char *) m_inflater.getOutput(),  unpackedDataSize);
+      unpackedData.assign((::u8 *) m_inflater.getOutput(),  unpackedDataSize);
       //auto p =  m_inflater.getOutput();
       //auto p1 =  unpackedData.data();
 
@@ -90,8 +90,8 @@ namespace remoting_client
          }
       }
 
-      for (int y = rectangleTarget.top; y < rectangleTarget.bottom; y += TILE_SIZE) {
-         for (int x = rectangleTarget.left; x < rectangleTarget.right; x += TILE_SIZE) {
+      for (::i32 y = rectangleTarget.top; y < rectangleTarget.bottom; y += TILE_SIZE) {
+         for (::i32 x = rectangleTarget.left; x < rectangleTarget.right; x += TILE_SIZE) {
             ::i32_rectangle tileRect(x, y,
                           ::minimum(x + TILE_SIZE, rectangleTarget.right),
                           ::minimum(y + TILE_SIZE, rectangleTarget.bottom));
@@ -109,7 +109,7 @@ namespace remoting_client
             auto & pixels = m_pixels;
             pixels.resize(tileBytesLength);
 
-            int type = readType(&unpackedDataStream);
+            ::i32 type = readType(&unpackedDataStream);
 
             if (type == 0) {
                // raw pixel data
@@ -143,7 +143,7 @@ namespace remoting_client
    void ZrleDecoder::readAndInflate(::remoting_rtc::RfbInputGate *pinput, size_t maximalUnpackedSize)
    {
       ::u32 length = pinput->readUInt32();
-      //::array_base<char> zlibData;
+      //::array_base<::i8> zlibData;
       auto& zlibData = m_zlibDataReadAndInflate;
       zlibData.resize(length);
       if (length == 0) {
@@ -164,16 +164,16 @@ namespace remoting_client
       return TILE_LENGTH_SIZE + MAXIMAL_TILE_SIZE * tileCount;
    }
 
-   int ZrleDecoder::readType(::DataInputStream * pinput)
+   ::i32 ZrleDecoder::readType(::DataInputStream * pinput)
    {
-      int type = pinput->readUInt8();
+      ::i32 type = pinput->readUInt8();
       return type;
    }
 
    size_t ZrleDecoder::readRunLength(::DataInputStream * pinput)
    {
       size_t runLength = 0;
-      unsigned char delta;
+      ::u8 delta;
       do {
          delta = pinput->readUInt8();
          runLength += delta;
@@ -182,18 +182,18 @@ namespace remoting_client
    }
 
    void ZrleDecoder::readPalette(::DataInputStream * pinput,
-                                 const int paletteSize,
+                                 const ::i32 paletteSize,
                                  Palette *palette)
    {
       palette->resize(paletteSize);
 
-      for (int i = 0; i < paletteSize; i++) {
+      for (::i32 i = 0; i < paletteSize; i++) {
          pinput->readFully(&(*palette)[i] + m_numberFirstByte, m_bytesPerPixel);
       }
    }
 
    void ZrleDecoder::readRawTile(::DataInputStream * pinput,
-                                 ::array_base<char> &pixels,
+                                 ::array_base<::i8> &pixels,
                                  const ::i32_rectangle &  tileRect)
    {
       size_t tileBytesLength = tileRect.area() * m_bytesPerPixel;
@@ -201,15 +201,15 @@ namespace remoting_client
    }
 
    void ZrleDecoder::readSolidTile(::DataInputStream * pinput,
-                                   ::array_base<char> &pixels,
+                                   ::array_base<::i8> &pixels,
                                    const ::i32_rectangle &  tileRect)
    {
       size_t tileLength = tileRect.area();
-      char solid[4] = {0, 0, 0, 0};
+      ::i8 solid[4] = {0, 0, 0, 0};
 
       pinput->readFully(solid + m_numberFirstByte, m_bytesPerPixel);
 
-      char *pixelsPtr = pixels.data();
+      char_pointer pixelsPtr = pixels.data();
       // TODO: Can we optimize this?
       for (size_t i = 0; i < tileLength; i++) {
          memcpy(pixelsPtr + m_numberFirstByte, solid, m_bytesPerPixel);
@@ -218,21 +218,21 @@ namespace remoting_client
    }
 
    void ZrleDecoder::readPackedPaletteTile(::DataInputStream * pinput,
-                                           ::array_base<char> &pixels,
+                                           ::array_base<::i8> &pixels,
                                            const ::i32_rectangle &  tileRect,
-                                           const int type)
+                                           const ::i32 type)
    {
-      int width = tileRect.width();
-      int height = tileRect.height();
+      ::i32 width = tileRect.width();
+      ::i32 height = tileRect.height();
 
       // type and palette size is equal
-      int paletteSize = type;
+      ::i32 paletteSize = type;
       Palette palette;
       readPalette(pinput, paletteSize, &palette);
 
-      int m = 0;
-      unsigned char mask = 0;
-      unsigned char deltaOffset = 0;
+      ::i32 m = 0;
+      ::u8 mask = 0;
+      ::u8 deltaOffset = 0;
       if (paletteSize == 2) {
          m = (width + 7) / 8;
          mask = 0x01;
@@ -247,16 +247,16 @@ namespace remoting_client
          deltaOffset = 4;
       }
 
-      for (int y = 0; y < height; y++) {
-         // bit lenght of unsigned char
-         unsigned char offset = 8;
-         int index = 0;
+      for (::i32 y = 0; y < height; y++) {
+         // bit lenght of ::u8
+         ::u8 offset = 8;
+         ::i32 index = 0;
          // FIXME: optimization. Read by line.
-         int entryByIndex = pinput->readUInt8();
+         ::i32 entryByIndex = pinput->readUInt8();
 
-         for (int x = 0; x < width; x++) {
+         for (::i32 x = 0; x < width; x++) {
             offset -= deltaOffset;
-            int color = (entryByIndex >> offset) & mask;
+            ::i32 color = (entryByIndex >> offset) & mask;
             if (offset == 0) {
                offset = 8;
                // Don't read next entry, if it's last pixel in tile.
@@ -272,12 +272,12 @@ namespace remoting_client
    }
 
    void ZrleDecoder::readPlainRleTile(::DataInputStream * pinput,
-                                      ::array_base<char> &pixels,
+                                      ::array_base<::i8> &pixels,
                                       const ::i32_rectangle &  tileRect)
    {
       size_t tileLength = tileRect.area();
       for (size_t indexByte = 0; indexByte < tileLength * m_bytesPerPixel;) {
-         char color[4] = {0, 0, 0, 0};
+         ::i8 color[4] = {0, 0, 0, 0};
          pinput->readFully(color + m_numberFirstByte, m_bytesPerPixel);
 
          size_t runLength = readRunLength(pinput);
@@ -293,18 +293,18 @@ namespace remoting_client
    }
 
    void ZrleDecoder::readPaletteRleTile(::DataInputStream * pinput,
-                                        ::array_base<char> &pixels,
+                                        ::array_base<::i8> &pixels,
                                         const ::i32_rectangle &  tileRect,
-                                        const int type)
+                                        const ::i32 type)
    {
       size_t tileLength = tileRect.area();
 
-      int paletteSize = type - 128;
+      ::i32 paletteSize = type - 128;
       Palette palette;
       readPalette(pinput, paletteSize, &palette);
 
       for (size_t indexPixel = 0; indexPixel < tileLength;) {
-         unsigned char color = pinput->readUInt8();
+         ::u8 color = pinput->readUInt8();
 
          size_t runLength = 1;
          if (color >= 128) {
@@ -315,7 +315,7 @@ namespace remoting_client
             }
          }
 
-         char * pixelsPtr = &pixels[indexPixel * m_bytesPerPixel];
+         char_pointer pixelsPtr = &pixels[indexPixel * m_bytesPerPixel];
          for(size_t i = 0; i < runLength; i++) {
             memcpy(pixelsPtr, &palette[color], m_bytesPerPixel);
             pixelsPtr += m_bytesPerPixel;

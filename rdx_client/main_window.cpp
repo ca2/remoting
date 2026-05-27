@@ -13,7 +13,7 @@
 #include "application.h"
 #include "acme/windowing/windowing.h"
 #include "acme/nano/graphics/brush.h"
-#include "acme/nano/graphics/device.h"
+#include "acme/nano/graphics/context.h"
 // #include "main_window.h"
 #include "rdp_host.h"
 #include "toolbar.h"
@@ -257,7 +257,7 @@ namespace remoting_rdx_client
    // }
    //
    //
-   // bool main_window::on_window_activate(int iActivate, bool bMinimized,
+   // bool main_window::on_window_activate(::i32 iActivate, bool bMinimized,
    //                                      const operating_system::window &operatingsystemwindow)
    // {
    //
@@ -270,7 +270,7 @@ namespace remoting_rdx_client
    // }
    //
    //
-   // bool main_window::on_window_mouse_activate(int &iResult, const operating_system::window &operatingsystemwindowTop, int iHitTest, int iMessage)
+   // bool main_window::on_window_mouse_activate(::i32 &iResult, const operating_system::window &operatingsystemwindowTop, ::i32 iHitTest, ::i32 iMessage)
    // {
    //
    //    iResult = MA_ACTIVATE;
@@ -383,7 +383,7 @@ namespace remoting_rdx_client
 
             GetScrollInfo(hwnd, SB_HORZ, &si);
 
-            int xOld = si.nPos;
+            ::i32 xOld = si.nPos;
 
             switch(wparam.loword())
             {
@@ -439,7 +439,7 @@ namespace remoting_rdx_client
 
             GetScrollInfo(hwnd, SB_VERT, &si);
 
-            int yOld = si.nPos;
+            ::i32 yOld = si.nPos;
 
             switch(wparam.loword())
             {
@@ -598,8 +598,8 @@ namespace remoting_rdx_client
             if (wparam == GWL_STYLE)
             {
 
-               int iStyleOld =pstylestruct->styleNew;
-               int iStyleNew =pstylestruct->styleNew;
+               ::i32 iStyleOld =pstylestruct->styleNew;
+               ::i32 iStyleNew =pstylestruct->styleNew;
 
                information("old style {} new style {}", iStyleOld, iStyleNew);
 
@@ -607,8 +607,8 @@ namespace remoting_rdx_client
             else if (wparam == GWL_EXSTYLE)
             {
 
-               int iExStyleOld =pstylestruct->styleNew;
-               int iExStyleNew =pstylestruct->styleNew;
+               ::i32 iExStyleOld =pstylestruct->styleNew;
+               ::i32 iExStyleNew =pstylestruct->styleNew;
 
                information("old ex style {} new ex style {}", iExStyleOld, iExStyleNew);
 
@@ -670,7 +670,7 @@ namespace remoting_rdx_client
          case WM_APP + 100:
          {
 
-            int iCmd = wparam.raw_cast<int>();
+            ::i32 iCmd = wparam.raw_cast<::i32>();
 
             switch (iCmd)
             {
@@ -1003,9 +1003,9 @@ namespace remoting_rdx_client
 
       defer_update_rdp_host_size();
 
-  //     int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+  //     ::i32 screenWidth = GetSystemMetrics(SM_CXSCREEN);
   //
-  //     int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+  //     ::i32 screenHeight = GetSystemMetrics(SM_CYSCREEN);
   //
   //     m_pinternal->m_prdpclient->put_DesktopWidth(screenWidth);
   //
@@ -1053,7 +1053,7 @@ namespace remoting_rdx_client
    }
 
 
-   void main_window::on_window_paint(nano::graphics::device *pnanographicsdevice)
+   void main_window::on_window_paint(::nano::graphics::context *pgraphicscontext)
    {
 
 
@@ -1063,7 +1063,7 @@ namespace remoting_rdx_client
       //
       // pnanobrush->m_color = argb(160, 100, 180, 240);
       //
-      // pnanographicsdevice->rectangle(rectangle, pnanobrush, nullptr);
+      // pgraphicscontext->rectangle(rectangle, pnanobrush, nullptr);
 
 
    }
@@ -1241,8 +1241,8 @@ namespace remoting_rdx_client
 // //   return DefWindowProc(hwnd, msg, wParam, lParam);
 // //}
 // //
-// ////int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
-// //int rdx_client_main()
+// ////::i32 WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, ::i32)
+// //::i32 rdx_client_main()
 // //{
 // //   CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
 // //   HINSTANCE hInst = (HINSTANCE)::system()->m_hinstanceThis;
@@ -1657,8 +1657,8 @@ namespace remoting_rdx_client
    i32_size main_window::get_main_screen_size()
    {
 
-      int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-      int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+      ::i32 screenWidth = GetSystemMetrics(SM_CXSCREEN);
+      ::i32 screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
       return {screenWidth, screenHeight};
 

@@ -78,7 +78,7 @@ namespace remoting_rfb_client
       //
       // FIXME: document it.
       // Output need for capability, e.g. FT.
-      virtual void onConnecting(int iPhase);
+      virtual void onConnecting(::i32 iPhase);
       virtual void onConnected(::remoting_rfb::RfbOutputGate *output);
 
 

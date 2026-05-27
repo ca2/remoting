@@ -53,24 +53,24 @@ namespace remoting_rfb
       // the preferred encoding so this function will return EncodingDefs::RAW.
       // Similarly, if there was no suitable encoding in the ::list_base passed in the
       // most recent setEncodings() call, EncodingDefs::RAW will be returned.
-      int getPreferredEncoding() const;
+      ::i32 getPreferredEncoding() const;
 
       // Return true is a particular encoding was enabled via setEncodings(),
       // false otherwise. This function always returns true for the Raw encoding.
       // It should be used only for "normal" encodings (currently, that's Raw,
       // Hextile and Tight). It will return false for CopyRect and all
       // pseudo-encodings.
-      bool encodingEnabled(int code) const;
+      bool encodingEnabled(::i32 code) const;
 
       // Return the compression level in the range 0..9 if it was previously set
       // via setEncodings(). If it was not set, return the value of the
       // defaultLevel argument (which defaults to -1).
-      int getCompressionLevel(int defaultLevel = EO_DEFAULT) const;
+      ::i32 getCompressionLevel(::i32 defaultLevel = EO_DEFAULT) const;
 
       // Return the JPEG quality level in the range 0..9 if it was previously set
       // via setEncodings(). If it was not set, return the value of the
       // defaultLevel argument (which defaults to -1).
-      int getJpegQualityLevel(int defaultLevel = EO_DEFAULT) const;
+      ::i32 getJpegQualityLevel(::i32 defaultLevel = EO_DEFAULT) const;
 
       // Return true if JPEG quality level was previously set via setEncodings(),
       // false otherwise.
@@ -95,11 +95,11 @@ namespace remoting_rfb
       // preferred one, false otherwise. This function returns true only for
       // "normal" encodings (currently, that's Raw, Hextile and Tight). It will
       // return false for CopyRect, pseudo-encodings and unknown codes.
-      static bool normalEncoding(int code);
+      static bool normalEncoding(::i32 code);
 
-      static const int EO_DEFAULT = -1;
+      static const ::i32 EO_DEFAULT = -1;
 
-      int m_preferredEncoding;
+      ::i32 m_preferredEncoding;
 
       // FIXME: Use something like ::map instead of individual variables.
       bool m_enableRRE;
@@ -107,8 +107,8 @@ namespace remoting_rfb
       bool m_enableZrle;
       bool m_enableTight;
 
-      int m_compressionLevel;
-      int m_jpegQualityLevel;
+      ::i32 m_compressionLevel;
+      ::i32 m_jpegQualityLevel;
 
       bool m_enableCopyRect;
       bool m_enableRichCursor;

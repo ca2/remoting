@@ -62,14 +62,14 @@ public:
   // should check logLevel and decide either to accept or to decline the log
   // scopedstrMessage.
   //
-  virtual void print(int logLevel, const ::scoped_string & scopedstrLine) = 0;
+  virtual void print(::i32 logLevel, const ::scoped_string & scopedstrLine) = 0;
 
   //
   // Implementations of this abstract function should return true if they ready
   // to process a scopedstrMessage with this logLevel. That is you can test messages for
   // for accepting or declining before calling the print() function.
   //
-  virtual bool acceptsLevel(int logLevel) = 0;
+  virtual bool acceptsLevel(::i32 logLevel) = 0;
 };
 
 //// _LogWriter_H_

@@ -74,8 +74,8 @@ namespace remoting_rfb_node_desktop
       // FIXME: Make these constants of the base class, or better make the
       //        function return bool and make the caller care about the proper
       //        return values for WinMain().
-      const int RET_OK = 0;
-      const int RET_ERR = 1;
+      const ::i32 RET_OK = 0;
+      const ::i32 RET_ERR = 1;
 
       // FIXME: Make this a member variable, parse in a separate function.
       ServiceControlCommandLine cmdLine;

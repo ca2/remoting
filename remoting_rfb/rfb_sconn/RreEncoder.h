@@ -37,7 +37,7 @@ namespace remoting_rfb
       RreEncoder(PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream);
       virtual ~RreEncoder();
 
-      virtual int getCode() const;
+      virtual ::i32 getCode() const;
 
       virtual void splitRectangle(const ::i32_rectangle & rectangle, ::int_rectangle_array_base & rectanglea,
                                   const ::innate_subsystem::Framebuffer *serverFb, const EncodeOptions *options);
@@ -55,7 +55,7 @@ namespace remoting_rfb
       // All rectangles are devided (in splitRectangle() function)
       // into new rectangles with maximum size == 64.
       // ::i32_rectangle size == 64 for a better performance and less memory consumption.
-      static const int RECT_SIZE = 64;
+      static const ::i32 RECT_SIZE = 64;
    };
 
 

@@ -141,7 +141,7 @@ namespace remoting_rfb_windows
       m_isDriverOpened = true;
    }
 
-   void MirrorDriverClient::extractDeviceInfo(const char *driverName)
+   void MirrorDriverClient::extractDeviceInfo(const_char_pointer driverName)
    {
       memset(&m_deviceInfo, 0, sizeof(m_deviceInfo));
       m_deviceInfo.cb = sizeof(m_deviceInfo);
@@ -170,7 +170,7 @@ namespace remoting_rfb_windows
       }
    }
 
-   void MirrorDriverClient::openDeviceRegKey(const char *miniportName)
+   void MirrorDriverClient::openDeviceRegKey(const_char_pointer miniportName)
    {
       ::string deviceKey(m_deviceInfo.DeviceKey);
       deviceKey.make_upper();
@@ -268,7 +268,7 @@ namespace remoting_rfb_windows
 
    void MirrorDriverClient::setAttachToDesktop(bool value)
    {
-      if (!m_regkeyDevice.setValueAsInt32("Attach.ToDesktop", (int)value))
+      if (!m_regkeyDevice.setValueAsInt32("Attach.ToDesktop", (::i32)value))
       {
          throw ::subsystem::Exception("Can't set the Attach.ToDesktop.");
       }
@@ -297,7 +297,7 @@ namespace remoting_rfb_windows
          if (code < 0)
          {
             ::string errMess;
-            errMess.format("1st ChangeDisplaySettingsEx() failed with code {}", (int)code);
+            errMess.format("1st ChangeDisplaySettingsEx() failed with code {}", (::i32)code);
             throw ::subsystem::Exception(errMess);
          }
          m_plogwriter->information("CommitDisplayChanges(2): \"{}\"", ::string(m_deviceInfo.DeviceName));
@@ -305,7 +305,7 @@ namespace remoting_rfb_windows
          if (code < 0)
          {
             ::string errMess;
-            errMess.format("2nd ChangeDisplaySettingsEx() failed with code {}", (int)code);
+            errMess.format("2nd ChangeDisplaySettingsEx() failed with code {}", (::i32)code);
             throw ::subsystem::Exception(errMess);
          }
       }
@@ -315,7 +315,7 @@ namespace remoting_rfb_windows
          if (code < 0)
          {
             ::string errMess;
-            errMess.format("ChangeDisplaySettingsEx() failed with code {}", (int)code);
+            errMess.format("ChangeDisplaySettingsEx() failed with code {}", (::i32)code);
             throw ::subsystem::Exception(errMess);
          }
       }
@@ -372,7 +372,7 @@ namespace remoting_rfb_windows
       if (!m_isDriverConnected)
       {
          GETCHANGESBUF buf = {0};
-         int res = ExtEscape(m_driverDC, dmf_esc_usm_pipe_map, 0, 0, sizeof(buf), (LPSTR)&buf);
+         ::i32 res = ExtEscape(m_driverDC, dmf_esc_usm_pipe_map, 0, 0, sizeof(buf), (LPSTR)&buf);
          if (res <= 0)
          {
             ::string errMess;
@@ -398,7 +398,7 @@ namespace remoting_rfb_windows
          buf.buffer = m_changesBuffer;
          buf.Userbuffer = m_screenBuffer;
 
-         int res = ExtEscape(m_driverDC, dmf_esc_usm_pipe_unmap, sizeof(buf), (LPSTR)&buf, 0, 0);
+         ::i32 res = ExtEscape(m_driverDC, dmf_esc_usm_pipe_unmap, sizeof(buf), (LPSTR)&buf, 0, 0);
          if (res <= 0)
          {
             m_plogwriter->error("Can't unmap buffer: error code = {}", res);

@@ -60,16 +60,16 @@ namespace remoting_rfb_client
       prfboutputgate->writeUInt8(0);
 
       // send pixel format
-      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.bitsPerPixel));
-      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.colorDepth));
+      prfboutputgate->writeUInt8(static_cast<::u8>(m_pixelformat.bitsPerPixel));
+      prfboutputgate->writeUInt8(static_cast<::u8>(m_pixelformat.colorDepth));
       prfboutputgate->writeUInt8(m_pixelformat.bigEndian);
       prfboutputgate->writeUInt8(true); // true color is always true
       prfboutputgate->writeUInt16(m_pixelformat.redMax);
       prfboutputgate->writeUInt16(m_pixelformat.greenMax);
       prfboutputgate->writeUInt16(m_pixelformat.blueMax);
-      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.redShift));
-      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.greenShift));
-      prfboutputgate->writeUInt8(static_cast<unsigned char>(m_pixelformat.blueShift));
+      prfboutputgate->writeUInt8(static_cast<::u8>(m_pixelformat.redShift));
+      prfboutputgate->writeUInt8(static_cast<::u8>(m_pixelformat.greenShift));
+      prfboutputgate->writeUInt8(static_cast<::u8>(m_pixelformat.blueShift));
       prfboutputgate->writeUInt8(0); // padding bytes (3)
       prfboutputgate->writeUInt8(0);
       prfboutputgate->writeUInt8(0);

@@ -27,7 +27,7 @@
 
 namespace remoting_client
 {
-   JpegQualityLevel::JpegQualityLevel(::subsystem::LogWriter * plogwriter, int quality)
+   JpegQualityLevel::JpegQualityLevel(::subsystem::LogWriter * plogwriter, ::i32 quality)
    : PseudoDecoder(plogwriter)
    {
       m_encoding = qualityToEncoding(quality);
@@ -37,7 +37,7 @@ namespace remoting_client
    {
    }
 
-   int JpegQualityLevel::qualityToEncoding(int qualityLevel)
+   ::i32 JpegQualityLevel::qualityToEncoding(::i32 qualityLevel)
    {
       switch (qualityLevel) {
          case 0: return ::remoting_rtc::PseudoEncDefs::QUALITY_LEVEL_0;

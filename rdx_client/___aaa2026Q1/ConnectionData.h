@@ -41,7 +41,7 @@ namespace remoting_client
 
       // protected:
       ::remoting_rtc::HostPath m_hostPath;
-      int m_iDivisor;
+      ::i32 m_iDivisor;
 
       // This flag is true, if host isn't set.
       bool m_isEmpty;
@@ -69,8 +69,8 @@ namespace remoting_client
       void setHost(const ::scoped_string & host);
       ::string getHost() const;
 
-      //void setDivisor(int iDivisor);
-      //int getDivisor() const;
+      //void setDivisor(::i32 iDivisor);
+      //::i32 getDivisor() const;
 
       //
       // This method return hostname without port.
@@ -80,7 +80,7 @@ namespace remoting_client
       //
       // This method return port.
       //
-      int getPort() const;
+      ::i32 getPort() const;
 
       //
       // This method return true, if hostname isn't set.

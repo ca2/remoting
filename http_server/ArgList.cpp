@@ -27,16 +27,16 @@
 #include "subsystem/_common_header.h"
 //#include aaa_<vector>
 
-ArgList::ArgList(const char *argString)
+ArgList::ArgList(const_char_pointer argString)
 {
   size_t len = strlen(argString);
 
-  const char *src = argString;
+  const_char_pointer src = argString;
 
-  ::array_base<char> pairBuff(len + 1);
-  char *::pair = &pairBuff.front();
-  ::array_base<char> leftBuff(len + 1);
-  char *left = &leftBuff.front();
+  ::array_base<::i8> pairBuff(len + 1);
+  char_pointer ::pair = &pairBuff.front();
+  ::array_base<::i8> leftBuff(len + 1);
+  char_pointer left = &leftBuff.front();
 
   while (true) {
     splitPair(src, '&', ::pair, left);
@@ -47,9 +47,9 @@ ArgList::ArgList(const char *argString)
 
     size_t pairLen = strlen(::pair);
 
-    ::array_base<char> keyBuff(pairLen + 1);
-    char *key = &keyBuff.front();
-    char *val = new char[pairLen + 1];
+    ::array_base<::i8> keyBuff(pairLen + 1);
+    char_pointer key = &keyBuff.front();
+    char_pointer val = new ::i8[pairLen + 1];
 
     splitPair(::pair, '=', key, val);
 
@@ -64,7 +64,7 @@ ArgList::ArgList(const char *argString)
 
 ArgList::~ArgList()
 {
-  for (::map<string, char *>::iterator it = m_args.begin(); it != m_args.end(); it++) {
+  for (::map<string, char_pointer >::iterator it = m_args.begin(); it != m_args.end(); it++) {
     delete it->second;
   }
   m_args.clear();
@@ -75,13 +75,13 @@ size_t ArgList::getCount() const
   return m_args.size();
 }
 
-const char *ArgList::getKey(size_t index)
+const_char_pointer ArgList::getKey(size_t index)
 {
   if (index >= getCount()) {
     return NULL;
   }
 
-  ::map<string, char *>::iterator it = m_args.begin();
+  ::map<string, char_pointer >::iterator it = m_args.begin();
 
   for (size_t i = 0; i < index; i++) {
     it++;
@@ -90,7 +90,7 @@ const char *ArgList::getKey(size_t index)
   return it->first.c_str();
 }
 
-const char *ArgList::getValue(const char *key)
+const_char_pointer ArgList::getValue(const_char_pointer key)
 {
   string stdStr = key;
 
@@ -101,7 +101,7 @@ const char *ArgList::getValue(const char *key)
   return m_args[stdStr];
 }
 
-void ArgList::splitPair(const char *par, char delimitter, char *key, char *value)
+void ArgList::splitPair(const_char_pointer par, ::i8 delimitter, char_pointer key, char_pointer value)
 {
   bool delimiterFound = false;
 
@@ -127,7 +127,7 @@ void ArgList::splitPair(const char *par, char delimitter, char *key, char *value
   value[vi] = '\0';
 }
 
-void ArgList::htmlDecode(char *value) const
+void ArgList::htmlDecode(char_pointer value) const
 {
   // Replace '+' characaters with spaces.
   for (size_t i = 0; i < strlen(value); i++) {

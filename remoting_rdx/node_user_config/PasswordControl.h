@@ -83,7 +83,7 @@ namespace remoting_rfb_node
       Updates password value inside this control.
       @param cryptedPass crypted password.
       */
-      void setCryptedPassword(const char *cryptedPass);
+      void setCryptedPassword(const_char_pointer cryptedPass);
 
       State getState() { return m_state; };
 
@@ -91,7 +91,7 @@ namespace remoting_rfb_node
       Returns password, specified by user.
       @return crypted VNC-style password or 0 if no password specified.
       */
-      const char *getCryptedPassword() const;
+      const_char_pointer getCryptedPassword() const;
 
       /**
       Shows change password modal dialog and stores result to this password control object.
@@ -108,7 +108,7 @@ namespace remoting_rfb_node
       ::pointer < ::innate_subsystem::Control > m_changeButton;
       ::pointer < ::innate_subsystem::Control > m_unsetButton;
 
-      ::array_base<char> m_cryptedPassword;
+      ::array_base<::i8> m_cryptedPassword;
 
       bool m_enabled;
       State m_state;

@@ -27,7 +27,7 @@ namespace remoting_client
       void destroy() override;
       
       void setWasUpdated();
-      void setTimeout(int miliseconds);
+      void setTimeout(::i32 miliseconds);
       void setIsIncremental(bool isIncremental);
       void setOutput(::remoting_rtc::RfbOutputGate* output);
 

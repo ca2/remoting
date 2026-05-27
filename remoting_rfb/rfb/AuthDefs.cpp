@@ -27,9 +27,9 @@
 
 namespace remoting_rfb
 {
-   const char *const AuthDefs::SIG_NONE = "NOAUTH__";
-   const char *const AuthDefs::SIG_VNC = "VNCAUTH_";
-   const char *const AuthDefs::SIG_EXTERNAL = "XTRNAUTH";
+   const_char_pointer const AuthDefs::SIG_NONE = "NOAUTH__";
+   const_char_pointer const AuthDefs::SIG_VNC = "VNCAUTH_";
+   const_char_pointer const AuthDefs::SIG_EXTERNAL = "XTRNAUTH";
 
 
    ::u32 SecurityDefs::convertFromAuthType(::u32 authType)

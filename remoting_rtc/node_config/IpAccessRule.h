@@ -55,10 +55,10 @@ namespace remoting_rtc_node
 
       void toString(::string & output) const;
 
-      static bool parse(const char * pszString, IpAccessRule *rule);
-      static bool parseIp(const char * pszString, IpAccessRule *rule);
-      static bool parseIpRange(const char * pszString, IpAccessRule *rule);
-      static bool parseSubnet(const char * pszString, IpAccessRule *rule);
+      static bool parse(const_char_pointer pszString, IpAccessRule *rule);
+      static bool parseIp(const_char_pointer pszString, IpAccessRule *rule);
+      static bool parseIpRange(const_char_pointer pszString, IpAccessRule *rule);
+      static bool parseSubnet(const_char_pointer pszString, IpAccessRule *rule);
 
       //
       // Method to access protected members
@@ -83,8 +83,8 @@ namespace remoting_rtc_node
       void getFirstIp(::string & firstIp) const;
       void getLastIp(::string & lastIp) const;
 
-      void setFirstIp(const char * pszFirstIp);
-      void setLastIp(const char * pszLastIp);
+      void setFirstIp(const_char_pointer pszFirstIp);
+      void setLastIp(const_char_pointer pszLastIp);
 
       //
       // Helper methods
@@ -97,8 +97,8 @@ namespace remoting_rtc_node
       // with this IpAccessRule instanse or not.
       //
 
-      bool isIncludingAddress(unsigned long ip) const;
-      static bool isIpAddressStringValid(const char * pszString);
+      bool isIncludingAddress(ulong ip) const;
+      static bool isIpAddressStringValid(const_char_pointer pszString);
 
       //
       // Return values:
@@ -107,11 +107,11 @@ namespace remoting_rtc_node
       // 1  - ip1 > ip2
       //
 
-      static int compareIp(unsigned long ip1, unsigned long ip2);
+      static ::i32 compareIp(ulong ip1, ulong ip2);
 
    protected:
-      static bool tryParseIPPart(const char * pszString);
-      static void getIpRange(const char * pszip, const char * pszNetmask,
+      static bool tryParseIPPart(const_char_pointer pszString);
+      static void getIpRange(const_char_pointer pszip, const_char_pointer pszNetmask,
                              ::string * firstIp, ::string * lastIp);
    protected:
       ActionType m_action;

@@ -63,7 +63,7 @@ namespace remoting_rfb_windows
       ::subsystem::Process m_hookLoader32;
 
    //private:
-      void broadcastMessage(unsigned int scopedstrMessage);
+      void broadcastMessage(::u32 scopedstrMessage);
 
       static ::string_literal HOOK_LOADER_NAME;
 

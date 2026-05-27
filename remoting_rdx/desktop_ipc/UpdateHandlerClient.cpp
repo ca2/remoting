@@ -91,7 +91,7 @@ namespace remoting_rfb
    }
 
 
-   void UpdateHandlerClient::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
+   void UpdateHandlerClient::onRequest(::u8 reqCode, BlockingGate *pblockinggate)
    {
       switch (reqCode)
       {
@@ -102,7 +102,7 @@ namespace remoting_rfb
             ::string errMess;
             errMess.format("Unknown {} protocol code received from a pipe "
                              "update detector",
-                             (int)reqCode);
+                             (::i32)reqCode);
             throw ::subsystem::Exception(errMess);
             break;
       }
@@ -141,9 +141,9 @@ namespace remoting_rfb
                m_plogwriter->information("UpdateHandlerClient: new screen size: %dx{}", sizeNew.cx, sizeNew.cy);
                m_plogwriter->information("UpdateHandlerClient: new pixel format: "
                                          "{}, {}, {}, {}, {}, {}, {}, {}",
-                                         (int)pixelformatNew.bigEndian, (int)pixelformatNew.bitsPerPixel, (int)pixelformatNew.redMax,
-                                         (int)pixelformatNew.greenMax, (int)pixelformatNew.blueMax, (int)pixelformatNew.redShift,
-                                         (int)pixelformatNew.greenShift, (int)pixelformatNew.blueShift);
+                                         (::i32)pixelformatNew.bigEndian, (::i32)pixelformatNew.bitsPerPixel, (::i32)pixelformatNew.redMax,
+                                         (::i32)pixelformatNew.greenMax, (::i32)pixelformatNew.blueMax, (::i32)pixelformatNew.redShift,
+                                         (::i32)pixelformatNew.greenShift, (::i32)pixelformatNew.blueShift);
                critical_section_lock al(&m_criticalsectionFramebuffer);
                m_pframebufferBackup->setProperties(sizeNew, pixelformatNew);
             }
@@ -166,7 +166,7 @@ namespace remoting_rfb
          }
 
          // Get "copyrect"
-         unsigned char hasCopyRect = m_pcontrolgate->readUInt8();
+         ::u8 hasCopyRect = m_pcontrolgate->readUInt8();
          if (hasCopyRect)
          {
             m_plogwriter->information("UpdateHandlerClient: has \"CopyRect\"");

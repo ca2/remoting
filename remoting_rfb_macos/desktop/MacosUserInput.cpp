@@ -42,10 +42,10 @@ namespace remoting_macos
       ::i32_rectangle cg_display_rect_to_remoting_rect(const CGRect & rect, const ::i32_rectangle & rectangleVirtual)
       {
          ::i32_rectangle rectangle;
-         rectangle.left = (int) std::lround(rect.origin.x) - rectangleVirtual.left;
-         rectangle.top = (int) std::lround(rect.origin.y) - rectangleVirtual.top;
-         rectangle.right = rectangle.left + (int) std::lround(rect.size.width);
-         rectangle.bottom = rectangle.top + (int) std::lround(rect.size.height);
+         rectangle.left = (::i32) std::lround(rect.origin.x) - rectangleVirtual.left;
+         rectangle.top = (::i32) std::lround(rect.origin.y) - rectangleVirtual.top;
+         rectangle.right = rectangle.left + (::i32) std::lround(rect.size.width);
+         rectangle.bottom = rectangle.top + (::i32) std::lround(rect.size.height);
          return rectangle;
       }
 
@@ -72,10 +72,10 @@ namespace remoting_macos
          {
             const auto rect = CGDisplayBounds(displays[i]);
             ::i32_rectangle displayRectangle;
-            displayRectangle.left = (int) std::lround(rect.origin.x);
-            displayRectangle.top = (int) std::lround(rect.origin.y);
-            displayRectangle.right = displayRectangle.left + (int) std::lround(rect.size.width);
-            displayRectangle.bottom = displayRectangle.top + (int) std::lround(rect.size.height);
+            displayRectangle.left = (::i32) std::lround(rect.origin.x);
+            displayRectangle.top = (::i32) std::lround(rect.origin.y);
+            displayRectangle.right = displayRectangle.left + (::i32) std::lround(rect.size.width);
+            displayRectangle.bottom = displayRectangle.top + (::i32) std::lround(rect.size.height);
 
             if (first)
             {
@@ -107,7 +107,7 @@ namespace remoting_macos
          }
       }
 
-      void post_scroll_event(int delta)
+      void post_scroll_event(::i32 delta)
       {
          auto event = CGEventCreateScrollWheelEvent(nullptr, kCGScrollEventUnitLine, 1, delta);
          if (event)
@@ -140,10 +140,10 @@ namespace remoting_macos
             return false;
          }
 
-         rectangle.left = (int) std::lround(rect.origin.x);
-         rectangle.top = (int) std::lround(rect.origin.y);
-         rectangle.right = rectangle.left + (int) std::lround(rect.size.width);
-         rectangle.bottom = rectangle.top + (int) std::lround(rect.size.height);
+         rectangle.left = (::i32) std::lround(rect.origin.x);
+         rectangle.top = (::i32) std::lround(rect.origin.y);
+         rectangle.right = rectangle.left + (::i32) std::lround(rect.size.width);
+         rectangle.bottom = rectangle.top + (::i32) std::lround(rect.size.height);
          return true;
       }
 
@@ -171,7 +171,7 @@ namespace remoting_macos
             return false;
          }
 
-         char buffer[1024] = {};
+         ::i8 buffer[1024] = {};
          if (!CFStringGetCString(name, buffer, sizeof(buffer), kCFStringEncodingUTF8))
          {
             return false;
@@ -204,7 +204,7 @@ namespace remoting_macos
    }
 
 
-   void MacosUserInput::setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag)
+   void MacosUserInput::setMouseEvent(const ::i32_point pointNewPosition, ::u8 keyFlag)
    {
       m_plogwriter->debug("setMouseEvent ({},{}):{}", pointNewPosition.x, pointNewPosition.x, keyFlag);
       const auto point = to_cg_point(pointNewPosition);
@@ -269,9 +269,9 @@ namespace remoting_macos
    {
       try
       {
-         m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (int)down);
+         m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (::i32)down);
          ::user::enum_key euserkey;
-         int ch;
+         ::i32 ch;
          bool release = !down;
          bool extended;
 
@@ -313,7 +313,7 @@ namespace remoting_macos
       rectangle = cg_display_rect_to_remoting_rect(CGDisplayBounds(CGMainDisplayID()), rectangleVirtual);
    }
 
-   void MacosUserInput::getDisplayNumberCoords(::i32_rectangle & rectangle, unsigned char dispNumber)
+   void MacosUserInput::getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber)
    {
       rectangle.clear();
       CGDirectDisplayID displays[64] = {};
@@ -413,7 +413,7 @@ namespace remoting_macos
       {
          auto dictionary = (CFDictionaryRef) CFArrayGetValueAtIndex(windowList, i);
          auto layer = (CFNumberRef) CFDictionaryGetValue(dictionary, kCGWindowLayer);
-         int layerValue = 0;
+         ::i32 layerValue = 0;
          if (layer && CFNumberGetValue(layer, kCFNumberIntType, &layerValue) && layerValue != 0)
          {
             continue;
@@ -433,10 +433,10 @@ namespace remoting_macos
          }
 
          ::i32_rectangle rectangle;
-         rectangle.left = (int) std::lround(rect.origin.x);
-         rectangle.top = (int) std::lround(rect.origin.y);
-         rectangle.right = rectangle.left + (int) std::lround(rect.size.width);
-         rectangle.bottom = rectangle.top + (int) std::lround(rect.size.height);
+         rectangle.left = (::i32) std::lround(rect.origin.x);
+         rectangle.top = (::i32) std::lround(rect.origin.y);
+         rectangle.right = rectangle.left + (::i32) std::lround(rect.size.width);
+         rectangle.bottom = rectangle.top + (::i32) std::lround(rect.size.height);
 
          if (windowProcessIdentifier == processidentifier)
          {
@@ -468,7 +468,7 @@ namespace remoting_macos
       {
          auto dictionary = (CFDictionaryRef) CFArrayGetValueAtIndex(windowList, i);
          auto layer = (CFNumberRef) CFDictionaryGetValue(dictionary, kCGWindowLayer);
-         int layerValue = 0;
+         ::i32 layerValue = 0;
          if (layer && CFNumberGetValue(layer, kCFNumberIntType, &layerValue) && layerValue != 0)
          {
             continue;

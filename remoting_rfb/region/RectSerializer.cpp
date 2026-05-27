@@ -41,10 +41,10 @@ namespace remoting_rfb
 
    ::i32_rectangle RectSerializer::toRect(const ::scoped_string & strIn)
    {
-      int width, height, x, y;
-      char c;
+      ::i32 width, height, x, y;
+      ::i8 c;
       if (sscanf(::string(strIn).c_str(),
-                   (char *)"%dx%d+%d+%d%c", &width, &height, &x, &y, &c) != 4 ||
+                   (char_pointer )"%dx%d+%d+%d%c", &width, &height, &x, &y, &c) != 4 ||
           width < 0 || height < 0) {
          ::string errMess;
          errMess.format("Invalid string format to convert it to a rectangle"

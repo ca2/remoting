@@ -33,7 +33,7 @@ namespace remoting_rfb
    {
    public:
       static const ::u32 NOTUNNEL = 0;
-      static const char *const SIG_NONE;
+      static const_char_pointer const SIG_NONE;
    private:
    };
 

@@ -26,7 +26,7 @@
 #include "subsystem/platform/Exception.h"
 // #include aaa_<stdio.h>
 
-int _tmain(int argc, TCHAR *argv[])
+::i32 _tmain(::i32 argc, TCHAR *argv[])
 {
   if (argc != 3) {
     _ftprintf(stderr, "Not enough parameters\n");

@@ -69,7 +69,7 @@ namespace remoting_rfb_node_desktop
          // Prepare path to executable.
          ::string pathToBin;
          pathToBin = MainSubsystem().OperatingSystem().getCurrentModulePath();
-         pathToBin.double_quote();
+         pathToBin.f64_quote();
          // Prepare arguments.
          ::string args;
          args.format("{} {}",

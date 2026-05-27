@@ -585,7 +585,7 @@
 // // WinMain
 // // ============================================================================
 //
-// int main_rdp_host::main()
+// ::i32 main_rdp_host::main()
 // {
 //
 //    //auto hInstance = (HINSTANCE) ::system()->m_hinstanceThis;

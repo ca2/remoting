@@ -266,8 +266,8 @@ void HooksUpdateDetector::destroy()
          {
             if (msg.message == message_SPEC_IPC_CODE)
             {
-               ::i32_rectangle rectangle((short)(msg.wParam >> 16), (short)(msg.wParam & 0xffff), (short)(msg.lParam >> 16),
-                                    (short)(msg.lParam & 0xffff));
+               ::i32_rectangle rectangle((::i16)(msg.wParam >> 16), (::i16)(msg.wParam & 0xffff), (::i16)(msg.lParam >> 16),
+                                    (::i16)(msg.lParam & 0xffff));
                if (rectangle.has_area())
                {
                   m_pupdatekeeper->addChangedRect(rectangle);

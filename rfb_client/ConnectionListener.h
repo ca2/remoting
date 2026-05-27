@@ -36,18 +36,18 @@ namespace remoting_rfb_client
    {
    public:
       static ::string_literal DEFAULT_HOST;
-      static const unsigned short DEFAULT_PORT = 5500;
+      static const ::u16 DEFAULT_PORT = 5500;
 
       // HWND mainWindow is handle of main window of program.
       // this window received and processing messages "WM_USER_NEW_LISTENING"
-      ConnectionListener(::subsystem::OperatingSystemApplicationInterface *application, unsigned short port = DEFAULT_PORT);
+      ConnectionListener(::subsystem::OperatingSystemApplicationInterface *application, ::u16 port = DEFAULT_PORT);
 
       virtual ~ConnectionListener();
 
       // this method return pointer to new listening connection, if him is exist, and 0 if isn't
       ::pointer< ::subsystem::SocketIPv4Interface > getNewConnection();
 
-      unsigned short getBindPort() const;
+      ::u16 getBindPort() const;
    protected:
       void onAcceptConnection(::subsystem::SocketIPv4Interface *socket);
 

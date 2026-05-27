@@ -28,7 +28,7 @@
 namespace remoting_control_desktop
 {
    ShareDisplayCommand::ShareDisplayCommand(ControlProxy *serverControl,
-                                            unsigned char displayNumber)
+                                            ::u8 displayNumber)
    : m_pcontrolproxy(serverControl),
      m_displayNumber(displayNumber)
    {

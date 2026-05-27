@@ -38,7 +38,7 @@ public:
   // @throw ::subsystem::Exception on an error.
   // After successful creating this object take the security channel by
   // the getChannel() function to own.
-  SecurityPipeServer(Channel *tempPublChan, unsigned int bufferSize);
+  SecurityPipeServer(Channel *tempPublChan, ::u32 bufferSize);
   virtual ~SecurityPipeServer();
 
   // Call this function at once to take the security channel. After calling
@@ -52,7 +52,7 @@ private:
   void makeSure();
 
   Channel *m_secChannel;
-  unsigned int m_bufferSize;
+  ::u32 m_bufferSize;
 };
 
 //// __SECURITYPIPESERVER_H__

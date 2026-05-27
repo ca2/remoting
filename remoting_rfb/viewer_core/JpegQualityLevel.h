@@ -32,14 +32,14 @@ namespace remoting_rfb_client
    class CLASS_DECL_REMOTING_RFB JpegQualityLevel : public PseudoDecoder
    {
    public:
-      JpegQualityLevel(::subsystem::LogWriter * plogwriter, int quality);
+      JpegQualityLevel(::subsystem::LogWriter * plogwriter, ::i32 quality);
       virtual ~JpegQualityLevel();
 
    public:
-      static int qualityToEncoding(int qualityLevel);
+      static ::i32 qualityToEncoding(::i32 qualityLevel);
 
-      static const int JPEG_QUALITY_LEVEL_MIN = 0;
-      static const int JPEG_QUALITY_LEVEL_MAX = 9;
+      static const ::i32 JPEG_QUALITY_LEVEL_MIN = 0;
+      static const ::i32 JPEG_QUALITY_LEVEL_MAX = 9;
    };
 } // namespace remoting_rfb_client
 

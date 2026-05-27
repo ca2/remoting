@@ -46,8 +46,8 @@ namespace remoting_rfb_client
       ::i32_rectangle m_currentFramebufferRect;
 
 
-      int m_height;
-      int m_width;
+      ::i32 m_height;
+      ::i32 m_width;
 
       WatermarksController(void);
 

@@ -7,7 +7,7 @@
 namespace rdp_host5
 {
 
-   int main();
+   ::i32 main();
 
 
 } // namespace rdp_host2

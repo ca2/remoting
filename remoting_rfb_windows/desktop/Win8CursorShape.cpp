@@ -46,7 +46,7 @@ namespace remoting_rfb_windows
 
    ::remoting_rfb::CursorShape *Win8CursorShape::getCursorShapeForWriting() { return &m_cursorshape; }
 
-   void Win8CursorShape::setVisibility(bool value, int threadOwner)
+   void Win8CursorShape::setVisibility(bool value, ::i32 threadOwner)
    {
       // Set to false is allowed only for a thread owner. Else, a not owner thread can
       // set the false value after owner thread and then cursor shape will disappear.

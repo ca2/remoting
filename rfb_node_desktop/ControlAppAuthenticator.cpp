@@ -38,8 +38,8 @@ namespace remoting_rfb_node_desktop
 
    ControlAppAuthenticator::~ControlAppAuthenticator() { breakAndDisableAuthentications(); }
 
-   bool ControlAppAuthenticator::authenticate(const unsigned char cryptPassword[8], const unsigned char challenge[8],
-                                              const unsigned char response[8])
+   bool ControlAppAuthenticator::authenticate(const ::u8 cryptPassword[8], const ::u8 challenge[8],
+                                              const ::u8 response[8])
    {
       critical_section_lock al(&m_authMutex);
 

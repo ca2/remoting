@@ -91,7 +91,7 @@ void RfbDispatcher::destroy()
             if (iter == m_handlers.end()) {
                ::string errMess;
                errMess.format("unhandled {} code has been received from a client",
-                              (int)code);
+                              (::i32)code);
                throw ::subsystem::Exception(errMess);
             }
             (*iter).m_element2->onRequest(code, m_prfbinputgate);

@@ -27,7 +27,7 @@
 
 // The header including of this cpp file must be at last place to avoid build conflicts.
 #include "remoting/remoting_rfb_windows/desktop/D3D11Device.h"
-   const char *FeatureLevelToString(D3D_FEATURE_LEVEL fl);
+   const_char_pointer FeatureLevelToString(D3D_FEATURE_LEVEL fl);
 
 
 namespace remoting_rfb_windows
@@ -249,7 +249,7 @@ namespace remoting_rfb_windows
 
    ID3D11DeviceContext *D3D11Device::getContext() { return m_pd3d11devicecontext; }
 
-   void D3D11Device::copySubresourceRegion(ID3D11Texture2D *dstTexture2D, int dstX, int dstY,
+   void D3D11Device::copySubresourceRegion(ID3D11Texture2D *dstTexture2D, ::i32 dstX, ::i32 dstY,
                                               ID3D11Texture2D *srcTexture2D, const ::i32_rectangle &rectangleSource,
                                               ::u32 front, ::u32 back)
    {

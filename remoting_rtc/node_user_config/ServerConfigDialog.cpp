@@ -71,7 +71,7 @@ namespace remoting_rtc_node
    // }
 
 
-   bool ServerConfigDialog::_002OnUpDown(int iControl, int iPos, int iDelta)
+   bool ServerConfigDialog::_002OnUpDown(::i32 iControl, ::i32 iPos, ::i32 iDelta)
    {
 
       if (iControl == IDC_POLLING_INTERVAL_SPIN)
@@ -178,7 +178,7 @@ namespace remoting_rtc_node
          return false;
       }
 
-      int httpPort, rfbPort;
+      ::i32 httpPort, rfbPort;
 
       UIDataAccess::queryValueAsInt(&m_rfbPort, &rfbPort);
       UIDataAccess::queryValueAsInt(&m_httpPort, &httpPort);
@@ -276,7 +276,7 @@ namespace remoting_rtc_node
       httpPortText = m_httpPort.getText();
       pollingIntervalText = m_pollingInterval.getText();
 
-      int intVal = 0;
+      ::i32 intVal = 0;
 
       MainSubsystem().StringParser().parseInt(rfbPortText, &intVal);
       m_config->setRfbPort(intVal);
@@ -299,7 +299,7 @@ namespace remoting_rtc_node
       //
 
       if (m_ppControl->getState() == PasswordControl::NewPassword) {
-         m_config->setPrimaryPassword((const unsigned char *)m_ppControl->getCryptedPassword());
+         m_config->setPrimaryPassword((const ::u8 *)m_ppControl->getCryptedPassword());
       }
       if (m_ppControl->getState() == PasswordControl::ResetPassword) {
          m_config->deletePrimaryPassword();
@@ -310,7 +310,7 @@ namespace remoting_rtc_node
       //
 
       if (m_vpControl->getState() == PasswordControl::NewPassword) {
-         m_config->setReadOnlyPassword((const unsigned char *)m_vpControl->getCryptedPassword());
+         m_config->setReadOnlyPassword((const ::u8 *)m_vpControl->getCryptedPassword());
       }
       if (m_vpControl->getState() == PasswordControl::ResetPassword) {
          m_config->deleteReadOnlyPassword();
@@ -319,7 +319,7 @@ namespace remoting_rtc_node
       // Local input priority timeout string storage
       ::string liptStringStorage;
       liptStringStorage = m_localInputPriorityTimeout.getText();
-      int timeout = 0;
+      ::i32 timeout = 0;
 
       m_config->setLocalInputPriority(m_localInputPriority.isChecked());
       if (MainSubsystem().StringParser().parseInt(liptStringStorage, &timeout)) {
@@ -367,8 +367,8 @@ namespace remoting_rtc_node
       m_httpPortSpin.setAccel(0, 1);
       m_httpPortSpin.setRange32(1, 65535);
 
-      ::array_base<int> limitters{50, 200};
-      ::array_base<int> deltas{5, 10};
+      ::array_base<::i32> limitters{50, 200};
+      ::array_base<::i32> deltas{5, 10};
 
       m_pollingIntervalSpin.setBuddy(&m_pollingInterval);
       m_pollingIntervalSpin.setAccel(0, 1);
@@ -498,7 +498,7 @@ auto pconfigdialog = m_pdialogParent->get_callback<ConfigDialog>();
       pconfigdialog->updateApplyButtonState();
    }
 
-   void ServerConfigDialog::onPollingIntervalSpinChangePos(int iControl, int iPos, int iDelta)
+   void ServerConfigDialog::onPollingIntervalSpinChangePos(::i32 iControl, ::i32 iPos, ::i32 iDelta)
    {
       if (iControl == IDC_POLLING_INTERVAL_SPIN)
       {

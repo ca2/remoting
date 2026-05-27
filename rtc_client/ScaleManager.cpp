@@ -40,12 +40,12 @@ namespace remoting_client
     {
     }
 
-    int ScaleManager::sDiv(int x, int y) const
+    ::i32 ScaleManager::sDiv(::i32 x, ::i32 y) const
     {
         return (x + y - 1) / y;
     }
 
-    void ScaleManager::setScreenResolution(int maxWidth, int maxHeight)
+    void ScaleManager::setScreenResolution(::i32 maxWidth, ::i32 maxHeight)
     {
         m_scrWidth = maxWidth;
         m_scrHeight = maxHeight;
@@ -68,14 +68,14 @@ namespace remoting_client
 
     void ScaleManager::keepAspectRatio(::i32_rectangle &rectangle) const
     {
-        int iHeight = rectangle.height() / m_scrHScale;
-        int iWidth = rectangle.width() / m_scrWScale;
-        int iBar = minimum(iHeight, iWidth);
+        ::i32 iHeight = rectangle.height() / m_scrHScale;
+        ::i32 iWidth = rectangle.width() / m_scrWScale;
+        ::i32 iBar = minimum(iHeight, iWidth);
         rectangle.right = rectangle.left + iBar * m_scrWScale;
         rectangle.bottom = rectangle.top + iBar * m_scrHScale;
     }
 
-    void ScaleManager::setScale(int scale)
+    void ScaleManager::setScale(::i32 scale)
     {
         m_scale = scale;
         setStartPoint(m_xStart, m_yStart);
@@ -87,10 +87,10 @@ namespace remoting_client
         setStartPoint(m_xStart, m_yStart);
     }
 
-    float ScaleManager::getScale() const
+    ::f32 ScaleManager::getScale() const
     {
 
-        return (float) m_scale / (float) DEFAULT_SCALE_DENOMERATOR;
+        return (::f32) m_scale / (::f32) DEFAULT_SCALE_DENOMERATOR;
 
     }
 
@@ -99,8 +99,8 @@ namespace remoting_client
         ::i32_rectangle rcScaled;
         // calculate scaled window from viewed
         rcScaled = rcViewed;
-        int scale = m_scale;
-        int denomeratorScale = DEFAULT_SCALE_DENOMERATOR;
+        ::i32 scale = m_scale;
+        ::i32 denomeratorScale = DEFAULT_SCALE_DENOMERATOR;
         if (m_scale == -1) {
             if (m_rcWindow.width() * m_scrHeight <= m_rcWindow.height() * m_scrWidth) {
                 scale = m_rcWindow.width();
@@ -130,33 +130,33 @@ namespace remoting_client
         return rcScaled;
     }
 
-    bool ScaleManager::getVertPages(int iHeight) const
+    bool ScaleManager::getVertPages(::i32 iHeight) const
     {
         if (m_scale == -1) {
             return false;
         }
-        int lenScr = sDiv(m_scrHeight * m_scale, DEFAULT_SCALE_DENOMERATOR);
-        int result = sDiv(lenScr, iHeight);
+        ::i32 lenScr = sDiv(m_scrHeight * m_scale, DEFAULT_SCALE_DENOMERATOR);
+        ::i32 result = sDiv(lenScr, iHeight);
         if (result > 1) {
             return true;
         }
         return false;
     }
 
-    bool ScaleManager::getHorzPages(int iWidth) const
+    bool ScaleManager::getHorzPages(::i32 iWidth) const
     {
         if (m_scale == -1) {
             return false;
         }
-        int lenScr = sDiv(m_scrWidth * m_scale, DEFAULT_SCALE_DENOMERATOR);
-        int result = sDiv(lenScr, iWidth);
+        ::i32 lenScr = sDiv(m_scrWidth * m_scale, DEFAULT_SCALE_DENOMERATOR);
+        ::i32 result = sDiv(lenScr, iWidth);
         if (result > 1) {
             return true;
         }
         return false;
     }
 
-    int ScaleManager::getVertPoints() const
+    ::i32 ScaleManager::getVertPoints() const
     {
         if (m_scale == -1) {
             return 0;
@@ -164,7 +164,7 @@ namespace remoting_client
         return sDiv(m_scrHeight * m_scale, DEFAULT_SCALE_DENOMERATOR);
     }
 
-    int ScaleManager::getHorzPoints() const
+    ::i32 ScaleManager::getHorzPoints() const
     {
         if (m_scale == -1) {
             return 0;
@@ -172,10 +172,10 @@ namespace remoting_client
         return sDiv(m_scrWidth * m_scale, DEFAULT_SCALE_DENOMERATOR);
     }
 
-    void ScaleManager::setStartPoint(int x, int y)
+    void ScaleManager::setStartPoint(::i32 x, ::i32 y)
     {
-        int wndWidth = m_rcWindow.width();
-        int wndHeight = m_rcWindow.height();
+        ::i32 wndWidth = m_rcWindow.width();
+        ::i32 wndHeight = m_rcWindow.height();
 
         if (m_scale != -1) {
             x = x * DEFAULT_SCALE_DENOMERATOR / m_scale;
@@ -258,13 +258,13 @@ namespace remoting_client
         rectangleWnd.offset(m_iCentX, m_iCentY);
     }
 
-    ::i32_point ScaleManager::transformDispToScr(int xPoint, int yPoint) const
+    ::i32_point ScaleManager::transformDispToScr(::i32 xPoint, ::i32 yPoint) const
     {
         xPoint -= m_iCentX;
         yPoint -= m_iCentY;
 
-        int scale = m_scale;
-        int denomeratorScale = DEFAULT_SCALE_DENOMERATOR;
+        ::i32 scale = m_scale;
+        ::i32 denomeratorScale = DEFAULT_SCALE_DENOMERATOR;
         if (m_scale == -1) {
             if (m_rcWindow.width() * m_scrHeight <= m_rcWindow.height() * m_scrWidth) {
                 scale = m_rcWindow.width();
@@ -279,8 +279,8 @@ namespace remoting_client
         yPoint = yPoint * denomeratorScale / scale;
 
         ::i32_point point;
-        point.x = static_cast<short>(xPoint + m_rcViewed.left);
-        point.y = static_cast<short>(yPoint + m_rcViewed.top);
+        point.x = static_cast<::i16>(xPoint + m_rcViewed.left);
+        point.y = static_cast<::i16>(yPoint + m_rcViewed.top);
 
         return point;
     }

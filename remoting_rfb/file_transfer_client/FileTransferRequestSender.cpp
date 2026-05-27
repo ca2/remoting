@@ -62,7 +62,7 @@ namespace remoting_rfb
          critical_section_lock al(m_output);
 
          ::u32 messageId = FTMessage::FILE_LIST_REQUEST;
-         unsigned char compressionLevel = useCompression ? (unsigned char)1 : (unsigned char)0;
+         ::u8 compressionLevel = useCompression ? (::u8)1 : (::u8)0;
 
          m_plogwriter->information("Sending file ::list_base request with parameters:\n"
                            "\tpath = {}\n"
@@ -97,7 +97,7 @@ namespace remoting_rfb
       {
          critical_section_lock al(m_output);
 
-         unsigned char compressionLevel = useCompression ? (unsigned char)1 : (unsigned char)0;
+         ::u8 compressionLevel = useCompression ? (::u8)1 : (::u8)0;
 
          m_plogwriter->information("Sending download data request with parameters:\n"
                            "\tsize = {}\n"
@@ -158,7 +158,7 @@ namespace remoting_rfb
       {
          critical_section_lock al(m_output);
 
-         unsigned char flags = 0;
+         ::u8 flags = 0;
          if (overwrite) {
             flags = 0x1;
          }
@@ -178,7 +178,7 @@ namespace remoting_rfb
          m_output->flush();
       }
 
-      void FileTransferRequestSender::sendUploadDataRequest(const char *buffer,
+      void FileTransferRequestSender::sendUploadDataRequest(const_char_pointer pszBuffer,
                                                             ::u32 size,
                                                             bool useCompression)
       {
@@ -195,7 +195,7 @@ namespace remoting_rfb
             throw ::io_exception(error_io, "Compression is not supported yet.");
          }
 
-         unsigned char compressionLevel = useCompression ? (short)1 : (short)0;
+         ::u8 compressionLevel = useCompression ? (::i16)1 : (::i16)0;
 
          m_plogwriter->information("Sending upload data request with parameters:\n"
                            "\tsize = {}\n"
@@ -210,7 +210,7 @@ namespace remoting_rfb
          m_output->flush();
       }
 
-      void FileTransferRequestSender::sendUploadEndRequest(unsigned char fileFlags,
+      void FileTransferRequestSender::sendUploadEndRequest(::u8 fileFlags,
                                                            ::u64 modificationTime)
       {
          critical_section_lock al(m_output);

@@ -58,7 +58,7 @@ namespace remoting_rtc_windows
       m_pinputblocker->setMouseBlocking(hardBlocking);
 
       bool softBlocking = pserverconfig->isLocalInputPriorityEnabled();
-      unsigned int interval = pserverconfig->getLocalInputPriorityTimeout() * 1000;
+      ::u32 interval = pserverconfig->getLocalInputPriorityTimeout() * 1000;
       m_pinputblocker->setSoftKeyboardBlocking(softBlocking, interval);
       m_pinputblocker->setSoftMouseBlocking(softBlocking, interval);
    }

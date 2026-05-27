@@ -32,7 +32,7 @@ namespace remoting_rfb_node
    {
    }
 
-   bool UIDataAccess::queryValueAsInt(::innate_subsystem::TextBox *textBox, int *value)
+   bool UIDataAccess::queryValueAsInt(::innate_subsystem::TextBox *textBox, ::i32 *value)
    {
       ASSERT(textBox != 0);
 

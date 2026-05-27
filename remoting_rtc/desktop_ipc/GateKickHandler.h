@@ -39,7 +39,7 @@ namespace remoting
 
       virtual void initialize_gate_kick_handler(DesktopSrvDispatcher * pdispatcher);
    //protected:
-      virtual void onRequest(unsigned char reqCode, BlockingGate *pblockinggate);
+      virtual void onRequest(::u8 reqCode, BlockingGate *pblockinggate);
    };
 
 } // namespace remoting

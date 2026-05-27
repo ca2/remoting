@@ -37,7 +37,7 @@ namespace remoting_client
    {
    }
 
-   int AuthException::getAuthCode() const
+   ::i32 AuthException::getAuthCode() const
    {
       return m_authErrorCode;
    }
@@ -62,7 +62,7 @@ namespace remoting_client
    {
    }
 
-   AuthHandler::AuthHandler(int authType)
+   AuthHandler::AuthHandler(::i32 authType)
    : m_id(authType)
    {
    }
@@ -71,7 +71,7 @@ namespace remoting_client
    {
    }
 
-   int AuthHandler::getType() const
+   ::i32 AuthHandler::getType() const
    {
       return m_id;
    }

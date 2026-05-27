@@ -28,7 +28,7 @@
 namespace remoting_rfb_windows
 {
 
-   const int MOUSE_SLEEP_TIME = 10;
+   const ::i32 MOUSE_SLEEP_TIME = 10;
 
    // CursorPositionDetector::CursorPositionDetector(::remoting_rfb::UpdateKeeper * pupdatekeeper, ::remoting_rfb::UpdateListener * pupdatelistener,
    //                                                ::subsystem::LogWriter * plogwriter) :

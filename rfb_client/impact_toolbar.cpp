@@ -201,7 +201,7 @@ namespace remoting_rfb_client
 
    }
 
-   bool control::_001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+   bool control::_001OnMouseEx(::u32 uMessage, ::i32 iButtonMask, const ::i32_point &pointRoot,
                                const ::i32_point &pointClient, bool &bDoDefaultProcessing)
    {
 
@@ -309,7 +309,7 @@ namespace remoting_rfb_client
    }
 
 
-   bool control::_000OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point &pointRoot,
+   bool control::_000OnMouseEx(::u32 uMessage, ::i32 iButtonMask, const ::i32_point &pointRoot,
                                const ::i32_point &pointClientParam, bool &bDoDefaultProcessing)
    {
 
@@ -516,24 +516,24 @@ namespace remoting_rfb_client
          throw ::exception(error_failed);
 
       }
-      int iDesktopWidth = pdesktopwindow->m_scManager.getScaledRect().width();
+      ::i32 iDesktopWidth = pdesktopwindow->m_scManager.getScaledRect().width();
       if (iDesktopWidth < 100)
       {
 
          return;
 
       }
-      //int iToolbarWidth = 400 * iDesktopWidth / (1920 * iDivisor);
-      //int iButtonSize = 24 * iDesktopWidth / (1920 * iDivisor);
-      int iToolbarWidth = 400;
-      int iButtonSize = 24;
+      //::i32 iToolbarWidth = 400 * iDesktopWidth / (1920 * iDivisor);
+      //::i32 iButtonSize = 24 * iDesktopWidth / (1920 * iDivisor);
+      ::i32 iToolbarWidth = 400;
+      ::i32 iButtonSize = 24;
       m_rectangle = { ((iDesktopWidth - iToolbarWidth) / 2), 0, ((iDesktopWidth + iToolbarWidth) / 2), iButtonSize };
 
       //m_brushBackgroundMinimizeDash(RGB(255, 255, 255))
 
-      int iButtonCount = 3;
-      int iMarginRight = iButtonSize / 3;
-      int iButton = 0;
+      ::i32 iButtonCount = 3;
+      ::i32 iMarginRight = iButtonSize / 3;
+      ::i32 iButton = 0;
       {
          if (!m_pbuttonMinimize)
          {
@@ -690,7 +690,7 @@ namespace remoting_rfb_client
    }
 
 
-   bool toolbar::_001OnMouseEx(::u32 uMessage, int iButtonMask, const ::i32_point& pointRoot, const ::i32_point& pointClient, bool & bDoDefaultProcessing)
+   bool toolbar::_001OnMouseEx(::u32 uMessage, ::i32 iButtonMask, const ::i32_point& pointRoot, const ::i32_point& pointClient, bool & bDoDefaultProcessing)
    {
 
       //auto pointClient = pointClientParameter * m_pdesktopwindow->m_scManager.getScale();
@@ -806,7 +806,7 @@ namespace remoting_rfb_client
       //Gdiplus::Graphics g(hdc);
 
       auto size = m_rectangle.size();
-      //int h = m_rectangle.height();
+      //::i32 h = m_rectangle.height();
 
       //auto sizeBitmap = m_pbitmapBuffer->GetBit
 
@@ -1019,7 +1019,7 @@ namespace remoting_rfb_client
       pgraphics->setAntiAliasOn(false);
 
 
-      int iAlpha = 180;
+      ::i32 iAlpha = 180;
 
       if (m_bHover)
       {
@@ -1035,22 +1035,22 @@ namespace remoting_rfb_client
 
       pgraphics->fillRect(r, colorDark);
 
-      int x = r.left;
-      int y = r.top;
-      int w = r.width();
-      int h = 1;
+      ::i32 x = r.left;
+      ::i32 y = r.top;
+      ::i32 w = r.width();
+      ::i32 h = 1;
       ::color::color color;
 
-      float fOpacity = 1.0f;
+      ::f32 fOpacity = 1.0f;
       
-      for (int i = 0; i < 10; i++)
+      for (::i32 i = 0; i < 10; i++)
       {
          
          color=colorDark;
          
          color.blend(colorLite, fOpacity);
          
-         pgraphics->fillRect(::int_rectangle_dimension(x, y, w, h), color);
+         pgraphics->fillRect(::i32_rectangle_dimension(x, y, w, h), color);
 
          y+= h;
          
@@ -1142,17 +1142,17 @@ namespace remoting_rfb_client
       //pgraphics->m_pgraphics->DrawString(wstr, wstr.size(),)
       // color=colorDark;
       // color.blend(colorLite, 0.6);
-      // pgraphics->fill_solid_rectangle(::int_rectangle_dimension(x, y, w, h), color);
+      // pgraphics->fill_solid_rectangle(::i32_rectangle_dimension(x, y, w, h), color);
       //
       // y+= h;
       // color=colorDark;
       // color.blend(colorLite, 0.4);
-      // pgraphics->fill_solid_rectangle(::int_rectangle_dimension(x, y, w, h), color);
+      // pgraphics->fill_solid_rectangle(::i32_rectangle_dimension(x, y, w, h), color);
       //
       // y+= h;
       // color=colorDark;
       // color.blend(colorLite, 0.2);
-      // pgraphics->fill_solid_rectangle(::int_rectangle_dimension(x, y, w, h), color);
+      // pgraphics->fill_solid_rectangle(::i32_rectangle_dimension(x, y, w, h), color);
       //
 
    }

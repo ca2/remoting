@@ -53,7 +53,7 @@ SOFTWARE.
  * tables in client code.
  */
 
-#define XK_BackSpace		0xFF08	/* back space, back char */
+#define XK_BackSpace		0xFF08	/* back space, back char_pointer /
 #define XK_Tab			0xFF09
 #define XK_Linefeed		0xFF0A	/* Linefeed, LF */
 #define XK_Clear		0xFF0B

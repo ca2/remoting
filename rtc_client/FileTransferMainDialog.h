@@ -60,15 +60,15 @@ namespace remoting_client
         //
         // Inherited from FtInterface
         //
-        int onFtTargetFileExists(::remoting_rtc::file_transfer::FileInfo *sourceFileInfo,
+        ::i32 onFtTargetFileExists(::remoting_rtc::file_transfer::FileInfo *sourceFileInfo,
                                  ::remoting_rtc::file_transfer::FileInfo *targetFileInfo,
                                  const ::file::path & pathToTargetFile) override;
-        void setProgress(double progress) override;
+        void setProgress(::f64 progress) override;
 
         void onFtOpError(const ::scoped_string & scopedstrMessage) override;
         void onFtOpInfo(const ::scoped_string & scopedstrMessage) override;
         void onFtOpStarted() override;
-        void onFtOpFinished(int state, int result) override;
+        void onFtOpFinished(::i32 state, ::i32 result) override;
 
         //
         // filetransfer's operation is finished. Need update of control
@@ -100,10 +100,10 @@ namespace remoting_client
         bool onCommand(::u32 controlID, ::u32 notificationID) override;
         bool onDestroy() override;
 
-         bool _002OnAction(int iControl) override;
-         bool _002OnKeyDownNotification(int iControl, ::user::enum_key ekey) override;
-         bool _002OnColumnClick(int iControl, int iColumn) override;
-         bool _002OnSelectionChange(int iControl) override;
+         bool _002OnAction(::i32 iControl) override;
+         bool _002OnKeyDownNotification(::i32 iControl, ::user::enum_key ekey) override;
+         bool _002OnColumnClick(::i32 iControl, ::i32 iColumn) override;
+         bool _002OnSelectionChange(::i32 iControl) override;
 
 
         void onMessageReceived(::u32 uMsg, ::wparam wParam, ::lparam lParam) override;

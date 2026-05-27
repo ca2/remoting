@@ -60,7 +60,7 @@ namespace remoting_rfb
 
    void ViewPortState::setPrimaryDisplay() { m_mode = PRIMARY_DISPLAY; }
 
-   void ViewPortState::setDisplayNumber(unsigned char displayNumber)
+   void ViewPortState::setDisplayNumber(::u8 displayNumber)
    {
       m_mode = DISPLAY_NUMBER;
       m_displayNumber = displayNumber;

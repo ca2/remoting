@@ -85,9 +85,9 @@ void WindowsClipboard::readFromClipBoard(::string & clipDest) const
 // NOTE: In non-Unicode version, conversion correctness may depend on current
 //       input language. We should always use Unicode in all programs.
 #ifdef _UNICODE
-  const unsigned int CF_TCTEXT = CF_UNICODETEXT;
+  const ::u32 CF_TCTEXT = CF_UNICODETEXT;
 #else
-  const unsigned int CF_TCTEXT = CF_TEXT;
+  const ::u32 CF_TCTEXT = CF_TEXT;
 #endif
 
   clipDest-= "";
@@ -106,9 +106,9 @@ void WindowsClipboard::readFromClipBoard(::string & clipDest) const
   CloseClipboard();
 }
 
-bool WindowsClipboard::wndProc(unsigned int scopedstrMessage, ::wparam wParam, ::lparam lParam)
+bool WindowsClipboard::wndProc(::u32 scopedstrMessage, ::wparam wParam, ::lparam lParam)
 {
-  int fake = 3;
+  ::i32 fake = 3;
   switch (scopedstrMessage)
   {
   case WM_CREATE:
@@ -207,7 +207,7 @@ void WindowsClipboard::convertFromRfbFormat(const ::scoped_string & scopedstrSou
 
   size_t destLen = sourceLen + lfCount;
   TCHAR *destText = new TCHAR[destLen + 1];
-  int j = 0;
+  ::i32 j = 0;
   for (size_t i = 0; i < sourceLen; i++) {
     if (source[i] == 0x0a) {
       destText[j] = 0x0d;

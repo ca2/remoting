@@ -52,8 +52,8 @@ namespace remoting
          void sendMkDirRequest(const ::scoped_string & scopedstrFullPathName);
          void sendMvFileRequest(const ::scoped_string & scopedstroldFileName, const ::scoped_string & scopedstrNewFileName);
          void sendUploadRequest(const ::scoped_string & scopedstrFullPathName, bool overwrite, ::u64 offset);
-         void sendUploadDataRequest(const char *buffer, ::u32 size, bool useCompression);
-         void sendUploadEndRequest(unsigned char fileFlags, ::u64 modificationTime);
+         void sendUploadDataRequest(const_char_pointer pszBuffer, ::u32 size, bool useCompression);
+         void sendUploadEndRequest(::u8 fileFlags, ::u64 modificationTime);
          void sendFolderSizeRequest(const ::scoped_string & scopedstrFullPath);
 
       protected:

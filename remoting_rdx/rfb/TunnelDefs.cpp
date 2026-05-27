@@ -26,5 +26,5 @@
 
 namespace remoting_rfb
 {
-   const char *const TunnelDefs::SIG_NONE = "NOTUNNEL";
+   const_char_pointer const TunnelDefs::SIG_NONE = "NOTUNNEL";
 } // namespace remoting_rfb

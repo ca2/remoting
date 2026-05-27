@@ -92,8 +92,8 @@ void ConsolePoller::destroy()
          ::i32_rectangle conRect = getConsoleRect();
          if (!conRect.is_empty())
          {
-            int pollHeight = m_rectanglePolling.height();
-            int pollWidth = m_rectanglePolling.width();
+            ::i32 pollHeight = m_rectanglePolling.height();
+            ::i32 pollWidth = m_rectanglePolling.width();
 
             {
                critical_section_lock al(m_pcriticalsectionFramebuffer);
@@ -103,9 +103,9 @@ void ConsolePoller::destroy()
                if (pframebufferScreen->isEqualTo(m_pframebufferBackup))
                {
                   m_pscreengrabber->grab(conRect);
-                  for (int iRow = conRect.top; iRow < conRect.bottom; iRow += pollHeight)
+                  for (::i32 iRow = conRect.top; iRow < conRect.bottom; iRow += pollHeight)
                   {
-                     for (int iCol = conRect.left; iCol < conRect.right; iCol += pollWidth)
+                     for (::i32 iCol = conRect.left; iCol < conRect.right; iCol += pollWidth)
                      {
                         scanRect.set(iCol, iRow, minimum(iCol + pollWidth, conRect.right),
                                          minimum(iRow + pollHeight, conRect.bottom));

@@ -45,9 +45,9 @@ namespace remoting_rfb
       inline static const ::u32 VNC = 2;
       inline static const ::u32 EXTERNAL = 130;
 
-      static const char *const SIG_NONE;
-      static const char *const SIG_VNC;
-      static const char *const SIG_EXTERNAL;
+      static const_char_pointer const SIG_NONE;
+      static const_char_pointer const SIG_VNC;
+      static const_char_pointer const SIG_EXTERNAL;
 
       // Return Remoting authentication method corresponding to a VNC-style
       // security type. Returns 0 if the specified security type does not ::map

@@ -19,7 +19,7 @@ __IMPLEMENT_APPLICATION_RELEASE_TIME(remoting_rfb_node_desktop);
 IMPLEMENT_APPLICATION_FACTORY(remoting_rfb_node_desktop);
 
 
-//int remoting_impact_main(::particle * pparticle, const ::file::path & path);
+//::i32 remoting_impact_main(::particle * pparticle, const ::file::path & path);
 //CLASS_DECL_ACME HMODULE GetModuleFromFunction(void* pFunc);
 
 

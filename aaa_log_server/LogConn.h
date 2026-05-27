@@ -37,14 +37,14 @@ class LogConn : public Thread
 {
 public:
   LogConn(Channel *channel, LogConnAuthListener *pclientauthlistener,
-          LogListener *extLogListener, unsigned char logLevel);
+          LogListener *extLogListener, ::u8 logLevel);
   virtual ~LogConn();
 
   // This function closes the connection that brings to object
   // termination.
   virtual void close();
 
-  void changeLogLevel(unsigned char newLevel);
+  void changeLogLevel(::u8 newLevel);
 
 private:
   virtual void onThreadMain();
@@ -62,7 +62,7 @@ private:
   FileAccountHandle m_handle;
   lockable_critical_section m_criticalsectionChannel;
 
-  unsigned char m_logLevel;
+  ::u8 m_logLevel;
   lockable_critical_section m_criticalsectionLogLevel;
 
   LogLevelSender m_logLevelSender;

@@ -58,7 +58,7 @@ namespace remoting_rfb
       virtual ~JpegCompressor() {}
 
       // Set JPEG quality level (0..100)
-      virtual void setQuality(int level) = 0;
+      virtual void setQuality(::i32 level) = 0;
       virtual void resetQuality() = 0;
 
       // Actually compress a rectangle of a given pixel buffer referenced by buf.
@@ -67,13 +67,13 @@ namespace remoting_rfb
       // flag must correspond to the native byte order. The stride value specifies
       // the number of bytes (not pixels!) occupied by one row of the buffer,
       // including padding if any.
-      virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat &fmt, int w, int h, int stride) = 0;
+      virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat &fmt, ::i32 w, ::i32 h, ::i32 stride) = 0;
 
       // Get the length of the output data, in bytes.
       virtual size_t getOutputLength() = 0;
 
       // Access the actual output of the compressor.
-      virtual const char *getOutputData() = 0;
+      virtual const_char_pointer getOutputData() = 0;
    };
 
    //
@@ -90,13 +90,13 @@ namespace remoting_rfb
       StandardJpegCompressor();
       virtual ~StandardJpegCompressor();
 
-      virtual void setQuality(int level);
+      virtual void setQuality(::i32 level);
       virtual void resetQuality();
 
-      virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat &fmt, int w, int h, int stride);
+      virtual void compress(const void *buf, const ::innate_subsystem::PixelFormat &fmt, ::i32 w, ::i32 h, ::i32 stride);
 
       virtual size_t getOutputLength();
-      virtual const char *getOutputData();
+      virtual const_char_pointer getOutputData();
 
    public:
       // Our implementation of JPEG destination manager. These three
@@ -108,25 +108,25 @@ namespace remoting_rfb
       void termDestination();
 
    protected:
-      static const int ALLOC_CHUNK_SIZE;
-      static const int DEFAULT_JPEG_QUALITY;
+      static const ::i32 ALLOC_CHUNK_SIZE;
+      static const ::i32 DEFAULT_JPEG_QUALITY;
 
-      int m_quality;
-      int m_newQuality;
+      ::i32 m_quality;
+      ::i32 m_newQuality;
 
-      unsigned char *m_outputBuffer;
+      ::u8 *m_outputBuffer;
       size_t m_numBytesAllocated;
       size_t m_numBytesReady;
 
       // Convert one row (scanline) from the specified pixel format to the format
       // supported by the IJG JPEG library (one byte per one color component).
-      void convertRow(JSAMPLE *dst, const void *src, const ::innate_subsystem::PixelFormat &fmt, int numPixels);
+      void convertRow(JSAMPLE *dst, const void *src, const ::innate_subsystem::PixelFormat &fmt, ::i32 numPixels);
 
       // Convert one row (scanline) from the specified pixel format to the format
       // supported by the IJG JPEG library (one byte per one color component).
       // This is a faster version assuming that source pixels are 32-bit values
       // with actual color depth of 24 (redMax, greenMax and blueMax are all 255).
-      void convertRow24(JSAMPLE *dst, const void *src, const ::innate_subsystem::PixelFormat &fmt, int numPixels);
+      void convertRow24(JSAMPLE *dst, const void *src, const ::innate_subsystem::PixelFormat &fmt, ::i32 numPixels);
 
    private:
       METHODDEF(::string) get_message(j_common_ptr cinfo);

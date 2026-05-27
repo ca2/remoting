@@ -55,15 +55,15 @@ namespace remoting_rfb_client
       delete m_fakeMoveUpFolder;
    }
 
-   void FileTransferMainDialog::setProgress(double progress)
+   void FileTransferMainDialog::setProgress(::f64 progress)
    {
-      unsigned short pt = 1000;
-      unsigned short pc = static_cast<unsigned short>(progress * pt);
+      ::u16 pt = 1000;
+      ::u16 pc = static_cast<::u16>(progress * pt);
 
       m_copyProgressBar.setPos(pc);
    }
 
-   int FileTransferMainDialog::onFtTargetFileExists(::remoting_rfb::file_transfer::FileInfo *sourceFileInfo,
+   ::i32 FileTransferMainDialog::onFtTargetFileExists(::remoting_rfb::file_transfer::FileInfo *sourceFileInfo,
                                                     ::remoting_rfb::file_transfer::FileInfo *targetFileInfo,
                                                     const ::file::path & pathToTargetFile)
    {
@@ -71,7 +71,7 @@ namespace remoting_rfb_client
                                      sourceFileInfo,
                                      pathToTargetFile);
 
-      int reasonOfDialog = m_fileExistDialog.showModal();
+      ::i32 reasonOfDialog = m_fileExistDialog.showModal();
       switch (reasonOfDialog) {
          case FileExistDialog::SKIP_RESULT:
             return ::remoting_rfb::file_transfer::CopyFileEventListener::TFE_SKIP;
@@ -100,7 +100,7 @@ namespace remoting_rfb_client
 //          onRemoteListViewDoubleClick();
 //       });
 //
-//       setChildListViewKeyDown(IDC_REMOTE_FILE_LIST, [this](int iKey)->bool
+//       setChildListViewKeyDown(IDC_REMOTE_FILE_LIST, [this](::i32 iKey)->bool
 // {
 //          onRemoteListViewKeyDown(iKey);
 //
@@ -111,7 +111,7 @@ namespace remoting_rfb_client
    }
 
 
-   bool FileTransferMainDialog::_002OnAction(int iControl)
+   bool FileTransferMainDialog::_002OnAction(::i32 iControl)
    {
       switch (iControl)
       {
@@ -128,7 +128,7 @@ namespace remoting_rfb_client
    }
 
 
-   bool FileTransferMainDialog::_002OnKeyDownNotification(int iControl, ::user::enum_key euserkey)
+   bool FileTransferMainDialog::_002OnKeyDownNotification(::i32 iControl, ::user::enum_key euserkey)
    {
       switch (iControl)
       {
@@ -144,7 +144,7 @@ namespace remoting_rfb_client
       return false;
    }
 
-   bool FileTransferMainDialog::_002OnColumnClick(int iControl, int iColumn)
+   bool FileTransferMainDialog::_002OnColumnClick(::i32 iControl, ::i32 iColumn)
    {
       switch (iControl) {
          case IDC_REMOTE_FILE_LIST:
@@ -159,7 +159,7 @@ namespace remoting_rfb_client
 
    }
 
-   bool FileTransferMainDialog::_002OnSelectionChange(int iControl)
+   bool FileTransferMainDialog::_002OnSelectionChange(::i32 iControl)
    {
       switch (iControl) {
          case IDC_REMOTE_FILE_LIST:
@@ -291,8 +291,8 @@ namespace remoting_rfb_client
                 m_ftCore->onOperationFinished();
 
                 if (!m_isClosing) {
-                    int state = static_cast<int>(wParam);
-                    int result = static_cast<int>(lParam);
+                    ::i32 state = static_cast<::i32>(wParam);
+                    ::i32 result = static_cast<::i32>(lParam);
                     m_ftCore->onUpdateState(state, result);
 
                     setProgress(0.0);
@@ -405,7 +405,7 @@ namespace remoting_rfb_client
             return ;
         }
 
-        //int *indexes = new int[siCount];
+        //::i32 *indexes = new ::i32[siCount];
         //::remoting_rfb::file_transfer::FileInfo *filesInfo = new ::remoting_rfb::file_transfer::FileInfo[siCount];
 
         ::pointer_array< ::remoting_rfb::file_transfer::FileInfo> fileinfoa;
@@ -565,7 +565,7 @@ namespace remoting_rfb_client
             return ;
         }
 
-        //int *indexes = new int[siCount];
+        //::i32 *indexes = new ::i32[siCount];
         //::remoting_rfb::file_transfer::FileInfo *filesInfo = new ::remoting_rfb::file_transfer::FileInfo[siCount];
         ::pointer_array<::remoting_rfb::file_transfer::FileInfo> fileinfoa;
 
@@ -613,7 +613,7 @@ namespace remoting_rfb_client
             return ;
         }
 
-        ///int *indexes = new int[siCount];
+        ///::i32 *indexes = new ::i32[siCount];
         //FileInfo *filesInfo = new FileInfo[siCount];
 
         for (::u32 i = 0; i < indexes.size(); i++) {
@@ -659,7 +659,7 @@ namespace remoting_rfb_client
             return ;
         }
 
-        //int *indexes = new int[siCount];
+        //::i32 *indexes = new ::i32[siCount];
         //FileInfo *filesInfo = new FileInfo[siCount];
 
         ::pointer_array<::remoting_rfb::file_transfer::FileInfo> fileinfoa;
@@ -718,7 +718,7 @@ namespace remoting_rfb_client
         if (!selFileInfo->isDirectory())
             return;
 
-        int si = m_remoteFileListView.getSelectedIndex();
+        ::i32 si = m_remoteFileListView.getSelectedIndex();
 
         // Fake ".." folder - move one folder up
         if ((si == 0) && (selFileInfo != 0) && selFileInfo->getFileName() ==  "..")
@@ -745,7 +745,7 @@ namespace remoting_rfb_client
         if (!selFileInfo->isDirectory())
             return;
 
-        int si = m_localFileListView.getSelectedIndex();
+        ::i32 si = m_localFileListView.getSelectedIndex();
 
         // Fake ".." folder - move one folder up
         if ((si == 0) && (selFileInfo != 0) && selFileInfo->getFileName() == "..") {
@@ -1090,7 +1090,7 @@ namespace remoting_rfb_client
         enableControls(false);
     }
 
-    void FileTransferMainDialog::onFtOpFinished(int state, int result)
+    void FileTransferMainDialog::onFtOpFinished(::i32 state, ::i32 result)
     {
         postMessage(WM_OPERATION_FINISHED, state, result);
     }

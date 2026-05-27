@@ -1,7 +1,7 @@
 #pragma onceINCLUDED__
 INCLUDED__
 
-const unsigned char VNC_VIEWER_JAR_BODY[] = {
+const ::u8 VNC_VIEWER_JAR_BODY[] = {
  80,  75,   3,   4,  20,   0,   8,   8,   8,   0,  88, 147,  47,  73,   0,   0, 
   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  20,   0,   0,   0,  77,  69, 
  84,  65,  45,  73,  78,  70,  47,  77,  65,  78,  73,  70,  69,  83,  84,  46, 

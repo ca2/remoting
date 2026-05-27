@@ -43,7 +43,7 @@ namespace remoting_control_desktop
            ;
       } else {
 
-         int iActiveConsoleSessionId = MainSubsystem().OperatingSystem().getActiveConsoleSessionId(plogwriter);
+         ::i32 iActiveConsoleSessionId = MainSubsystem().OperatingSystem().getActiveConsoleSessionId(plogwriter);
          pipeName.format("{}_On_Session_{}",
            //ServerApplicationNames::FOR_APP_CONTROL_APP_SERVICE_PIPE_NAME,
            "Remoting_Application_Control",

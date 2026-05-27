@@ -59,7 +59,7 @@ namespace remoting_rfb
 
       // After calling this function the update() function will set the view
       // port rectangle by the display coordinates with a number.
-      void setDisplayNumber(unsigned char displayNumber);
+      void setDisplayNumber(::u8 displayNumber);
 
       // After calling this function the update() function will set the view
       // port rectangle by a window that own the hwnd argument.
@@ -79,19 +79,19 @@ namespace remoting_rfb
       void setProcessId(::u32 processId);
 
    private:
-      static const int FULL_DESKTOP = 0;
-      static const int PRIMARY_DISPLAY = 1;
-      static const int ARBITRARY_RECT = 2;
-      static const int WINDOW_RECT = 3;
-      static const int DISPLAY_NUMBER = 4;
-      static const int APPLICATION = 5;
+      static const ::i32 FULL_DESKTOP = 0;
+      static const ::i32 PRIMARY_DISPLAY = 1;
+      static const ::i32 ARBITRARY_RECT = 2;
+      static const ::i32 WINDOW_RECT = 3;
+      static const ::i32 DISPLAY_NUMBER = 4;
+      static const ::i32 APPLICATION = 5;
 
-      int m_mode;
+      ::i32 m_mode;
       ::i32_rectangle m_arbitraryRect;
       ::operating_system::window m_operatingsystemwindow;
       ::string m_windowName;
       bool m_windowIsResolved;
-      unsigned char m_displayNumber;
+      ::u8 m_displayNumber;
       ::u32 m_processId;
 
       friend class CLASS_DECL_REMOTING_RFB  Viewport;

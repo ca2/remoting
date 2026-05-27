@@ -35,8 +35,8 @@ namespace remoting_rfb
    {
    }
 
-   void CapContainer::addCap(::u32 code, const char *vendorSignature,
-                             const char *nameSignature)
+   void CapContainer::addCap(::u32 code, const_char_pointer vendorSignature,
+                             const_char_pointer pszNameSignature)
    {
       ASSERT(strlen(vendorSignature) == 4);
       ASSERT(strlen(nameSignature) == 8);

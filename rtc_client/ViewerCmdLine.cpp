@@ -82,7 +82,7 @@ namespace remoting_client
     bool ViewerCmdLine::processCmdLine(const CmdLineOption *cmdLines, size_t lenCmdLineOption)
     {
         if (m_pprocesscommandlineOperatingSystem->getOptionsCount()) {
-            int countRecog = 0;
+            ::i32 countRecog = 0;
 
             for (size_t i = 0; i < lenCmdLineOption; i++) {
                 ::string strOut;
@@ -255,7 +255,7 @@ namespace remoting_client
     void ViewerCmdLine::parseEncoding()
     {
         if (isPresent(ENCODING)) {
-            int iEncoding = ::remoting_rtc::EncodingDefs::RAW;
+            ::i32 iEncoding = ::remoting_rtc::EncodingDefs::RAW;
 
             if (m_options[ENCODING] == HEXTILE) {
                 iEncoding = ::remoting_rtc::EncodingDefs::HEXTILE;
@@ -276,7 +276,7 @@ namespace remoting_client
     void ViewerCmdLine::parseMouseShape()
     {
         if (isPresent(MOUSE_LOCAL)) {
-            int localCursorShape = ::remoting_rtc::ConnectionConfig::DOT_CURSOR;
+            ::i32 localCursorShape = ::remoting_rtc::ConnectionConfig::DOT_CURSOR;
 
             if (m_options[MOUSE_LOCAL] == NO) {
                 localCursorShape = ::remoting_rtc::ConnectionConfig::NO_CURSOR;
@@ -313,7 +313,7 @@ namespace remoting_client
             if (m_options[SCALE] == AUTO) {
                 m_pconnectionconfig->fitWindow(true);
             } else {
-                int scale = atoi(m_options[SCALE]);
+                ::i32 scale = atoi(m_options[SCALE]);
 
                 if (scale < 1) {
                     scale = 1;
@@ -414,7 +414,7 @@ namespace remoting_client
     void ViewerCmdLine::parseJpegImageQuality()
     {
         if (isPresent(JPEG_IMAGE_QUALITY)) {
-            int iJpegQuality = atoi(m_options[JPEG_IMAGE_QUALITY]);
+            ::i32 iJpegQuality = atoi(m_options[JPEG_IMAGE_QUALITY]);
             m_pconnectionconfig->setJpegCompressionLevel(iJpegQuality);
         }
     }
@@ -422,7 +422,7 @@ namespace remoting_client
     void ViewerCmdLine::parseCompressionLevel()
     {
         if (isPresent(COMPRESSION_LEVEL)) {
-            int iCompLvl = atoi(m_options[COMPRESSION_LEVEL]);
+            ::i32 iCompLvl = atoi(m_options[COMPRESSION_LEVEL]);
             m_pconnectionconfig->setCustomCompressionLevel(iCompLvl);
         }
     }

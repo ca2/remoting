@@ -120,8 +120,8 @@ namespace remoting_rfb_windows
       // Cursor pointPosition must always be present.
       updatecontainer.m_pointCursorPos = m_pscreendriver->getCursorPosition();
       {
-         int x = updatecontainer.m_pointCursorPos.x;
-         int y = updatecontainer.m_pointCursorPos.y;
+         ::i32 x = updatecontainer.m_pointCursorPos.x;
+         ::i32 y = updatecontainer.m_pointCursorPos.y;
          m_plogwriter->debug("UpdateHandlerImpl::extract : update cursor pointPosition ({},{})", x, y);
       }
       // Checking for mouse shape changing
@@ -139,7 +139,7 @@ namespace remoting_rfb_windows
 
    void UpdateHandlerImpl::applyNewScreenProperties()
    {
-      int applyTryCount = 3;
+      ::i32 applyTryCount = 3;
       bool applyResult = true;
       do
       {

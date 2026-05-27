@@ -99,14 +99,14 @@ void DummyScreenDriver::initialize_dummy_screen_driver(UpdateKeeper * pupdatekee
             try
             {
                ::i32_size size = m_pframebufferWork->getDimension();
-               int w = size.cx;
-               int h = size.cy;
-               int x = rand() % (w / 50) + (w / 50);
-               int y = rand() % (h / 50) + (h / 50);
+               ::i32 w = size.cx;
+               ::i32 h = size.cy;
+               ::i32 x = rand() % (w / 50) + (w / 50);
+               ::i32 y = rand() % (h / 50) + (h / 50);
 
                ::i32_rectangle r(0, 0, x, y);
                r.offset(rand() % w, rand() % h);
-               int m = 0xffffff / RAND_MAX;
+               ::i32 m = 0xffffff / RAND_MAX;
                ::u32 color = rand() * m + rand() % m;
                ::i32_rectangle rectangle(0, 0, w, h);
                Region region(rectangle);

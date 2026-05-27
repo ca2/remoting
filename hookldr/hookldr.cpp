@@ -27,8 +27,8 @@
 #include "HookLoaderApplication.h"
 #include "remoting/node_desktop/NamingDefs.h"
 
-int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-                       LPTSTR lpCmdLine, int nCmdShow)
+::i32 APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+                       LPTSTR lpCmdLine, ::i32 nCmdShow)
 {
   try {
     HookLoaderApplication application(hInstance,

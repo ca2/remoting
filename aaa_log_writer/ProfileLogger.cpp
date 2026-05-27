@@ -18,7 +18,7 @@ namespace platform
 
 
 
-   ProfileLogger(double rate = 5.)
+   ProfileLogger(::f64 rate = 5.)
       : m_dropRate(rate)
    {
       if (g_pprofilerlogger)
@@ -77,13 +77,13 @@ namespace platform
       return firstElem.first.cycle < secondElem.first.cycle;
    }
 
-   ::array_base<TCHAR> printVectorStats(const ::scoped_string & scopedstrHeader, const ::scoped_string & scopedstrTag1, const ::scoped_string & scopedstrTag2, ::array_base<double> v) {
-      double min = *std::min_element(v.begin(), v.end());
-      double max = *std::max_element(v.begin(), v.end());
-      int num = v.size();
-      double avg = std::accumulate(v.begin(), v.end(), 0.) / num;
+   ::array_base<TCHAR> printVectorStats(const ::scoped_string & scopedstrHeader, const ::scoped_string & scopedstrTag1, const ::scoped_string & scopedstrTag2, ::array_base<::f64> v) {
+      ::f64 min = *std::min_element(v.begin(), v.end());
+      ::f64 max = *std::max_element(v.begin(), v.end());
+      ::i32 num = v.size();
+      ::f64 avg = std::accumulate(v.begin(), v.end(), 0.) / num;
       const ::scoped_string & scopedstrFmt = L"{} for {} - {} distance: avg: %f, min: %f, max: %f, executed {} times\n";
-      int count = _sctprintf(fmt, header, tag1, tag2, avg, min, max, num);
+      ::i32 count = _sctprintf(fmt, header, tag1, tag2, avg, min, max, num);
       count++;
       ::array_base<TCHAR> formattedString(count);
       _stprintf_s(&formattedString.front(), count, fmt, header, tag1, tag2, avg, min, max, num);
@@ -119,9 +119,9 @@ namespace platform
 
       // calc deltas for consequent points
       struct ProcessorTimesDeltas {
-         ::array_base<double> deltac; // CPU cycles deltas
-         ::array_base<double> deltap; // Process time deltas
-         ::array_base<double> deltak; // Kernel time deltas
+         ::array_base<::f64> deltac; // CPU cycles deltas
+         ::array_base<::f64> deltap; // Process time deltas
+         ::array_base<::f64> deltak; // Kernel time deltas
       };
       ::map<STRINGPAIR, ProcessorTimesDeltas> deltas;
       ::array_base<CHECKPPOINTPAIR>::iterator p = checkPointPairs.begin();
@@ -134,7 +134,7 @@ namespace platform
          ProcessorTimes pt2 = (*p).first;
          const ::scoped_string & scopedstrTag2 = (*p).second;
          STRINGPAIR sp = STRINGPAIR(tag1, tag2);
-         deltas[sp].deltac.add(double(pt2.cycle - pt1.cycle) / 1000000.);
+         deltas[sp].deltac.add(::f64(pt2.cycle - pt1.cycle) / 1000000.);
          deltas[sp].deltap.add(pt2.process - pt1.process);
          deltas[sp].deltak.add(pt2.kernel - pt1.kernel);
       }

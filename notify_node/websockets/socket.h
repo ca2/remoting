@@ -35,7 +35,7 @@ namespace remoting_notify_node
          
          virtual bool on_send_response() override;
          
-         void on_keyboard_layout_change(const char * pszKeyboardLayoutId) override;
+         void on_keyboard_layout_change(const_char_pointer pszKeyboardLayoutId) override;
          
          
          void on_websocket_text(const ::scoped_string & scopedstr) override;

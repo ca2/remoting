@@ -47,8 +47,8 @@ namespace remoting_rtc_windows
       virtual void setMouseBlocking(bool block) = 0;
       // This functions set/unset blocks on a local keyboard and mouse on the
       // timeInterval interval from a last software event generation.
-      virtual void setSoftKeyboardBlocking(bool block, unsigned int timeInterval) = 0;
-      virtual void setSoftMouseBlocking(bool block, unsigned int timeInterval) = 0;
+      virtual void setSoftKeyboardBlocking(bool block, ::u32 timeInterval) = 0;
+      virtual void setSoftMouseBlocking(bool block, ::u32 timeInterval) = 0;
 
       virtual class ::time getLastInputTime() const = 0;
       virtual void correctLastTime(const class ::time & time) = 0;

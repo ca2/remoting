@@ -67,7 +67,7 @@ void UserInputClient::initialize_user_input_client(::remoting_rtc_node::Configur
   pdispatcher->registerNewHandle(CLIPBOARD_CHANGED, this);
 }
 
-void UserInputClient::onRequest(unsigned char reqCode, BlockingGate *pblockinggate)
+void UserInputClient::onRequest(::u8 reqCode, BlockingGate *pblockinggate)
 {
   switch (reqCode) {
   case CLIPBOARD_CHANGED:
@@ -80,7 +80,7 @@ void UserInputClient::onRequest(unsigned char reqCode, BlockingGate *pblockingga
   default:
     ::string errMess;
     errMess.format("Unknown {} protocol code received from a pipe "
-                   "UserInputServer", (int)reqCode);
+                   "UserInputServer", (::i32)reqCode);
     throw ::subsystem::Exception(errMess);
     break;
   }
@@ -93,7 +93,7 @@ void UserInputClient::sendInit(BlockingGate *pblockinggate)
   pblockinggate->writeUInt8(m_sendMouseFlags);
 }
 
-void UserInputClient::setMouseEvent(const ::i32_point pointNewPosition, unsigned char keyFlag)
+void UserInputClient::setMouseEvent(const ::i32_point pointNewPosition, ::u8 keyFlag)
 {
   critical_section_lock al(m_pcontrolgate);
   try {
@@ -155,7 +155,7 @@ void UserInputClient::getPrimaryDisplayCoords(::i32_rectangle & rectangle)
 }
 
 void UserInputClient::getDisplayNumberCoords(::i32_rectangle & rectangle,
-                                             unsigned char dispNumber)
+                                             ::u8 dispNumber)
 {
   critical_section_lock al(m_pcontrolgate);
   bool success = false;
@@ -176,7 +176,7 @@ void UserInputClient::getDisplayNumberCoords(::i32_rectangle & rectangle,
   ::int_rectangle_array_base res;
   critical_section_lock al(m_pcontrolgate);
   bool success = false;
-  unsigned char number;
+  ::u8 number;
   do {
     try {
       res.resize(0);

@@ -184,7 +184,7 @@ namespace remoting_notify_node
       //}
       
       
-      //int application::start_installation(const ::scoped_string & scopedstrCommand)
+      //::i32 application::start_installation(const ::scoped_string & scopedstrCommand)
       //{
       
       //   return install().start(scopedstrCommand);
@@ -520,9 +520,9 @@ namespace remoting_notify_node
       //
       //      }
       //
-      //      int cx = 800;
+      //      ::i32 cx = 800;
       //
-      //      int cy = cx * 9 / 16;
+      //      ::i32 cy = cx * 9 / 16;
       //
       //      m_pwindow->_001Emphasize(cx, cy);
       //
@@ -651,7 +651,7 @@ namespace remoting_notify_node
 //         //         {
 //         //
 //         //
-//         //            int iErrorCode = m_bootstrap[strPlatform]->install();
+//         //            ::i32 iErrorCode = m_bootstrap[strPlatform]->install();
 //         //
 //         //            if(iErrorCode != 0)
 //         //            {
@@ -845,7 +845,7 @@ namespace remoting_notify_node
       
       //   }
       
-      //   int iRetry = 0;
+      //   ::i32 iRetry = 0;
       
       //RetryBuildNumber:
       
@@ -881,7 +881,7 @@ namespace remoting_notify_node
          
          string strMessage(scopedstrUri);
          
-         int iRet = 0;
+         ::i32 iRet = 0;
          
          if (strMessage.case_insensitive_begins_eat("appinstall:"))
          {
@@ -1058,7 +1058,7 @@ namespace remoting_notify_node
 //         
 //      }
 //      
-//      int application::check_soon_launch(const ::scoped_string & scopedstrCommandLine, bool bLaunch, ::u32 & dwGoodToCheckAgain)
+//      ::i32 application::check_soon_launch(const ::scoped_string & scopedstrCommandLine, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         string strId;
@@ -1136,7 +1136,7 @@ namespace remoting_notify_node
 //         
 //      }
 //      
-//      int application::check_soon_file_launch(const ::scoped_string & scopedstr, bool bLaunch, ::u32 & dwGoodToCheckAgain)
+//      ::i32 application::check_soon_file_launch(const ::scoped_string & scopedstr, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         return check_soon_app_id(get_app_id(scopedstr), bLaunch, dwGoodToCheckAgain);
@@ -1144,7 +1144,7 @@ namespace remoting_notify_node
 //      }
 //      
 //      
-//      int application::check_soon_app_id(const ::scoped_string & scopedstrId, bool bLaunch, ::u32 & dwGoodToCheckAgain)
+//      ::i32 application::check_soon_app_id(const ::scoped_string & scopedstrId, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         if (check_soon_app_id1(scopedstrId, bLaunch, dwGoodToCheckAgain))
@@ -1166,7 +1166,7 @@ namespace remoting_notify_node
 //      }
 //      
 //      
-//      int application::check_soon_app_id1(const ::scoped_string & scopedstrId, bool bLaunch, ::u32 & dwGoodToCheckAgain)
+//      ::i32 application::check_soon_app_id1(const ::scoped_string & scopedstrId, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         if (scopedstrId.length() <= 0)
@@ -1261,7 +1261,7 @@ namespace remoting_notify_node
 //      }
 //      
 //      
-//      int application::check_soon_app_id2(const ::scoped_string & scopedstrId, bool bLaunch, ::u32 & dwGoodToCheckAgain)
+//      ::i32 application::check_soon_app_id2(const ::scoped_string & scopedstrId, bool bLaunch, ::u32 & dwGoodToCheckAgain)
 //      {
 //         
 //         if (scopedstrId.length() <= 0)
@@ -1393,7 +1393,7 @@ namespace remoting_notify_node
 //      }
 //      
 //      
-//      void application::install_trace(double dRate)
+//      void application::install_trace(::f64 dRate)
 //      {
 //         
 //         synchronous_lock synchronouslock(this->synchronization(), DEFAULT_SYNCHRONOUS_LOCK_SUFFIX);
@@ -1419,7 +1419,7 @@ namespace remoting_notify_node
 //         
 //   #else
 //         
-//         //      char lpPathBuffer[MAX_PATH * 4];
+//         //      ::i8 lpPathBuffer[MAX_PATH * 4];
 //         //
 //         //      ::u32 dwRetVal = //GetTempPath(sizeof(lpPathBuffer), lpPathBuffer);
 //         //
@@ -1436,7 +1436,7 @@ namespace remoting_notify_node
 //         
 //   #endif
 //         
-//         char bufItem[64];
+//         ::i8 bufItem[64];
 //         
 //         string strRelative;
 //         
@@ -1475,7 +1475,7 @@ namespace remoting_notify_node
 //         strRelative += "-";
 //         strRelative += bufItem;
 //         
-//         for (int i = 0; i < (1024 * 1024); i++)
+//         for (::i32 i = 0; i < (1024 * 1024); i++)
 //         {
 //            
 //            strRet = ::file::path(str) / (strRelative + "-" + hex::lower_case_from(i + 1)) / (string(scopedstrName) + string(".") + scopedstrExtension);
@@ -1647,7 +1647,7 @@ namespace remoting_notify_node
          
          //strResponse = http()->get(strGet, set);
          
-         //::::property_set setResponse;
+         //::property_set setResponse;
          
          //setResponse.parse_network_payload(strResponse);
          

@@ -32,10 +32,10 @@ class LogListener
 {
 public:
   virtual void onLog(FileAccountHandle handle,
-                     unsigned int processId,
-                     unsigned int threadId,
+                     ::u32 processId,
+                     ::u32 threadId,
                      const class ::time & dt,
-                     int level,
+                     ::i32 level,
                      const ::scoped_string & scopedstrMessage) = 0;
   virtual void onAnErrorFromLogConn(const ::scoped_string & scopedstrMessage) = 0;
 };

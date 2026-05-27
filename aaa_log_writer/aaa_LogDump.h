@@ -29,16 +29,16 @@
 //
 // struct LogEntry
 // {
-//   LogEntry(unsigned int processId,
-//            unsigned int threadId,
+//   LogEntry(::u32 processId,
+//            ::u32 threadId,
 //            const class ::time & dt,
-//            int lineLevel,
+//            ::i32 lineLevel,
 //            const ::scoped_string & scopedstrMessage);
 //
-//   unsigned int m_processId;
-//   unsigned int m_threadId;
+//   ::u32 m_processId;
+//   ::u32 m_threadId;
 //   class ::time m_dt;
-//   int m_lineLevel;
+//   ::i32 m_lineLevel;
 //   ::string m_pcontrolmessage;
 // };
 //
@@ -50,10 +50,10 @@
 //   virtual ~LogDump();
 //
 //   // Writes a log scopedstrMessage.
-//   virtual void flush(unsigned int processId,
-//                      unsigned int threadId,
+//   virtual void flush(::u32 processId,
+//                      ::u32 threadId,
 //                      const class ::time & dt,
-//                      int level,
+//                      ::i32 level,
 //                      const ::scoped_string & scopedstrMessage) = 0;
 //
 //   // Stores all printed lines as a log header and stops it accumulation.
@@ -65,19 +65,19 @@
 //   // This function checks that writing to header is not stopped and
 //   // then store the log line information.
 //   // This function must be calling under the log mutex from derived classes.
-//   void updateLogHeaderLines(unsigned int processId,
-//                             unsigned int threadId,
+//   void updateLogHeaderLines(::u32 processId,
+//                             ::u32 threadId,
 //                             const class ::time & dt,
-//                             int level,
+//                             ::i32 level,
 //                             const ::scoped_string & scopedstrMessage);
 //
 //   // This function checks that writing to the log dump is not stopped and
 //   // then store the log line information.
 //   // This function must be calling under the log mutex from derived classes.
-//   void updateLogDumpLines(unsigned int processId,
-//                           unsigned int threadId,
+//   void updateLogDumpLines(::u32 processId,
+//                           ::u32 threadId,
 //                           const class ::time & dt,
-//                           int level,
+//                           ::i32 level,
 //                           const ::scoped_string & scopedstrMessage);
 //
 //   // Terminaties to write log lines to the memory buffer and clear the buffer.

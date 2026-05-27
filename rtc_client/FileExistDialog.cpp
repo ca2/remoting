@@ -46,7 +46,7 @@ namespace remoting_client
     {
     }
 
-    int FileExistDialog::showModal()
+    ::i32 FileExistDialog::showModal()
     {
         if (m_skipAll) {
             return SKIP_RESULT;
@@ -172,7 +172,7 @@ namespace remoting_client
 
     void FileExistDialog::updateGui(::remoting_rtc::file_transfer::FileInfo *fileInfo, ::innate_subsystem::Control *sizeLabel, ::innate_subsystem::Control * modTimeLabel)
     {
-        char buffer[255];
+        ::i8 buffer[255];
         #ifdef WINDOWS
         sprintf_s(&buffer[0], 255, "%lld bytes", fileInfo->getSize());
         #else

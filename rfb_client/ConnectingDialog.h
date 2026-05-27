@@ -44,16 +44,16 @@ namespace remoting_rfb_client
     public:
 
         innate_subsystem::ProgressBar m_bar;
-        double m_dStart = 0.0;
-        double m_dEnd = 0.0;
-        double m_d;
+        ::f64 m_dStart = 0.0;
+        ::f64 m_dEnd = 0.0;
+        ::f64 m_f64;
         class ::time m_time;
         bool m_bRunning = false;
 
         progress_bar_animation();
         ~progress_bar_animation();
 
-        void set_animation_range(double dStart, double dEnd);
+        void set_animation_range(::f64 dStart, ::f64 dEnd);
 
         void run() override;
 
@@ -78,9 +78,9 @@ namespace remoting_rfb_client
         // this function returns sets the name of host in dialog
         void set_host(const ::scoped_string & scopedstrHost);
         void set_status(const ::scoped_string &scopedstrStatus);
-        void _start_animating_progress_range(double dStart, double dEnd);
+        void _start_animating_progress_range(::f64 dStart, ::f64 dEnd);
         void set_phase1();
-        void set_connecting(int iPhase);
+        void set_connecting(::i32 iPhase);
 
         //protected:
         bool onCommand(::u32 controlID, ::u32 notificationID) override;

@@ -139,7 +139,7 @@ namespace remoting_rfb_windows
       // Log all display coordinates
       WindowsDisplays m_winDisp;
       ::int_rectangle_array_base displays = m_winDisp.getDisplays();
-      m_plogwriter->debug("The console desktop has {} displays", (int)displays.size());
+      m_plogwriter->debug("The console desktop has {} displays", (::i32)displays.size());
       for (size_t i = 0; i < displays.size(); i++)
       {
          m_plogwriter->debug("Display {} placed at the {}, {}, %dx{} coordinates", i + 1, displays[i].left,

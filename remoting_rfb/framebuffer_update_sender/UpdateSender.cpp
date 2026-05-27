@@ -40,7 +40,7 @@ namespace remoting_rfb
 
    // UpdateSender::UpdateSender(RfbCodeRegistrator *m_prfbcoderegistrator, UpdateRequestListener *updReqListener,
    //                            SenderControlInformationInterface *senderControlInformation, ::remoting_rfb::RfbOutputGate *output,
-   //                            int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter) :
+   //                            ::i32 id, Desktop *desktop, ::subsystem::LogWriter * plogwriter) :
    //     m_pupdaterequestlistener(updReqListener), m_pdesktop(desktop), m_senderControlInformation(senderControlInformation),
    //     m_busy(false), m_incrUpdIsReq(false), m_fullUpdIsReq(false), m_setColorMapEntr(false), m_prfboutputgate(output),
    //     m_enbox(&m_ppixelconverter, m_prfboutputgate), m_id(id), m_videoFrozen(false), m_shareOnlyApp(false), m_plogwriter = plogwriter;,
@@ -101,7 +101,7 @@ void UpdateSender::destroy()
 
     void  UpdateSender::initialize_update_sender(RfbCodeRegistrator *m_prfbcoderegistrator, UpdateRequestListener *updReqListener,
                               SenderControlInformationInterface *senderControlInformation, ::remoting_rfb::RfbOutputGate *prfboutputgate,
-                              int id, Desktop *desktop, ::subsystem::LogWriter * plogwriter) //:
+                              ::i32 id, Desktop *desktop, ::subsystem::LogWriter * plogwriter) //:
        // , , ,
        // ,
        // , m_id(id), m_videoFrozen(false), m_shareOnlyApp(false), m_plogwriter = plogwriter;,
@@ -166,7 +166,7 @@ void UpdateSender::destroy()
             break;
          default:
             ::string errMess;
-            errMess.format("Unknown {} protocol code received", (int)reqCode);
+            errMess.format("Unknown {} protocol code received", (::i32)reqCode);
             throw ::subsystem::Exception(errMess);
             break;
       }
@@ -225,7 +225,7 @@ void UpdateSender::destroy()
       return (m_incrUpdIsReq || m_fullUpdIsReq) && !m_busy;
    }
 
-   void UpdateSender::sendRectHeader(const ::i32_rectangle & rectangle, int encodingType)
+   void UpdateSender::sendRectHeader(const ::i32_rectangle & rectangle, ::i32 encodingType)
    {
       // FIXME: Why no warnings on passing bigger integer types?
       m_prfboutputgate->writeUInt16(rectangle.left);
@@ -235,8 +235,8 @@ void UpdateSender::destroy()
       m_prfboutputgate->writeInt32(encodingType);
    }
 
-   void UpdateSender::sendRectHeader(unsigned short x, unsigned short y, unsigned short w, unsigned short h,
-                                     int encodingType)
+   void UpdateSender::sendRectHeader(::u16 x, ::u16 y, ::u16 w, ::u16 h,
+                                     ::i32 encodingType)
    {
       m_prfboutputgate->writeUInt16(x);
       m_prfboutputgate->writeUInt16(y);
@@ -266,7 +266,7 @@ void UpdateSender::destroy()
          }
          sendRectHeader(r, PseudoEncDefs::DESKTOP_CONFIGURATION);
 
-         m_prfboutputgate->writeUInt8((unsigned char)screens.size()); // number-of-screens
+         m_prfboutputgate->writeUInt8((::u8)screens.size()); // number-of-screens
          m_prfboutputgate->writeUInt8(0); // padding
          m_prfboutputgate->writeUInt16(0); // padding
 
@@ -300,7 +300,7 @@ void UpdateSender::destroy()
       // Header
       m_prfboutputgate->writeUInt8(0); // scopedstrMessage type
       m_prfboutputgate->writeUInt8(0); // padding
-      unsigned short numRects = (unsigned short)rectanglea.size();
+      ::u16 numRects = (::u16)rectanglea.size();
       ASSERT(numRects == rectanglea.size());
       m_prfboutputgate->writeUInt16(numRects);
       sendRectangles(m_pencoderstore->getEncoder(), rectanglea, &blankFramebuffer, encodeOptions);
@@ -387,8 +387,8 @@ void UpdateSender::destroy()
       m_plogwriter->debug("Time between request and a point after extractReqRegions (in milliseconds): %u",
                           (::u32)timeReqPoint.elapsed().integral_millisecond());
       m_plogwriter->debug("A request has been made, continuing");
-      m_plogwriter->debug("The incremental region has {} rectangles", (int)regionRequestedIncremental.getCount());
-      m_plogwriter->debug("The full region has {} rectangles", (int)regionRequestedFull.getCount());
+      m_plogwriter->debug("The incremental region has {} rectangles", (::i32)regionRequestedIncremental.getCount());
+      m_plogwriter->debug("The full region has {} rectangles", (::i32)regionRequestedFull.getCount());
 
       //UpdateContainer updatecontainer;
       auto updatecontainer = ::transfer(extractUpdates());
@@ -565,7 +565,7 @@ void UpdateSender::destroy()
          }
          // Add some lossless data to every update but no more than 1/100 part of pframebuffer->
          // So at 20 fps full screen will be sent in 5 sec.
-         int screenArea = framebufferRect.area();
+         ::i32 screenArea = framebufferRect.area();
          Region regionLossless = takePartFromRegion(m_regionLosslessClean, screenArea / 100);
          if (losslessEnabled)
          {
@@ -642,7 +642,7 @@ void UpdateSender::destroy()
             m_plogwriter->debug("Sending FramebufferUpdate scopedstrMessage header");
             m_prfboutputgate->writeUInt8(ServerMsgDefs::FB_UPDATE); // scopedstrMessage type
             m_prfboutputgate->writeUInt8(0); // padding
-            m_prfboutputgate->writeUInt16((unsigned short)numTotalRects);
+            m_prfboutputgate->writeUInt16((::u16)numTotalRects);
 
             if (updatecontainer.m_bCursorPosChanged)
             {
@@ -664,7 +664,7 @@ void UpdateSender::destroy()
             m_plogwriter->debug("Sending video rectangles");
             sendRectangles(m_pencoderstore->getJpegEncoder(), rectangleaVideo, pframebuffer, &encodeOptions);
             m_plogwriter->debug("Sending normal rectangles");
-            double area = rectangleaNormal.total_area() / 1'000'000.; // in millions of pixels
+            ::f64 area = rectangleaNormal.total_area() / 1'000'000.; // in millions of pixels
             auto processortimes1 = ProfileLogger().checkPoint("Before Sending normal rectangles");
 
             sendRectangles(m_pencoderstore->getEncoder(), rectangleaNormal, pframebuffer, &encodeOptions);
@@ -674,8 +674,8 @@ void UpdateSender::destroy()
             auto processortimes2 = ProfileLogger().checkPoint("After Sending normal rectangles");
             m_plogwriter->debugf("Before Sending normal rectangles %f processor Mcycles, %f process time, %f kernel "
                                 "time, %f wall clock time",
-                                processortimes1.m_cycle / 1000000., processortimes1.m_process, processortimes1.m_kernel, (double)(processortimes1.m_time.floating_second()));
-            double dt = (double)(processortimes2.m_time.floating_second());
+                                processortimes1.m_cycle / 1000000., processortimes1.m_process, processortimes1.m_kernel, (::f64)(processortimes1.m_time.floating_second()));
+            ::f64 dt = (::f64)(processortimes2.m_time.floating_second());
             m_plogwriter->debugf("After Sending normal rectangles Mpoint encoded and send: %f for %f processor Mcycles",
                                 area, processortimes2.m_cycle / 1000000.);
             m_plogwriter->debugf("After Sending normal rectangles %f process time, %f kernel time, %f wall clock time",
@@ -803,7 +803,7 @@ void UpdateSender::destroy()
 
       m_plogwriter->information("update requested ({}, {}, {}x{}, incremental = {})"
                                 " by client (client #{})",
-                                reqRect.left, reqRect.top, reqRect.width(), reqRect.height(), (int)incremental, m_id);
+                                reqRect.left, reqRect.top, reqRect.width(), reqRect.height(), (::i32)incremental, m_id);
 
       ASSERT(m_pupdaterequestlistener != 0);
 
@@ -827,7 +827,7 @@ void UpdateSender::destroy()
       io->readUInt8();
 
       // Read pixel format
-      int bpp = io->readUInt8();
+      ::i32 bpp = io->readUInt8();
       if (bpp == 8 || bpp == 16 || bpp == 32)
       {
          pixelformat.bitsPerPixel = bpp;
@@ -878,13 +878,13 @@ void UpdateSender::destroy()
    void UpdateSender::readSetEncodings(::remoting_rfb::RfbInputGate *io)
    {
       io->readUInt8(); // padding
-      int numCodes = io->readUInt16();
+      ::i32 numCodes = io->readUInt16();
 
       i32_array ia;
       ia.set_size(numCodes);
-      for (int i = 0; i < numCodes; i++)
+      for (::i32 i = 0; i < numCodes; i++)
       {
-         int code = (int)io->readUInt32();
+         ::i32 code = (::i32)io->readUInt32();
          ia[i] = code;
       }
 
@@ -970,8 +970,8 @@ void UpdateSender::destroy()
             // Then see the same at source coordinates.
             Region m_regionCopied = updatecontainer.m_regionCopied;
             ::i32_rectangle dstBounds = m_regionCopied.getBounds();
-            int dx = updatecontainer.m_pointCopySource.x - dstBounds.left;
-            int dy = updatecontainer.m_pointCopySource.y - dstBounds.top;
+            ::i32 dx = updatecontainer.m_pointCopySource.x - dstBounds.left;
+            ::i32 dy = updatecontainer.m_pointCopySource.y - dstBounds.top;
             m_regionCopied.translate(dx, dy);
             m_regionCopied.subtract(requestRegion);
             copiedRegionFullyInscribed = m_regionCopied.is_empty();
@@ -1057,16 +1057,16 @@ defer_construct_newø(m_pframebuffer);
 
    // Returns part of region with total area no more than area
    // and removes this part form source reg
-   Region UpdateSender::takePartFromRegion(Region & region, int area)
+   Region UpdateSender::takePartFromRegion(Region & region, ::i32 area)
    {
       Region out;
       //::int_rectangle_array_base rectanglea;
       auto rectanglea = region.getRects();
       // process region rectanglea form last one, I hope it can reduce allocation number for region structure
-      for (int i = rectanglea.size() - 1; i >= 0 && area > 0; i--)
+      for (::i32 i = rectanglea.size() - 1; i >= 0 && area > 0; i--)
       {
          ::i32_rectangle r = rectanglea[i];
-         int a = r.area();
+         ::i32 a = r.area();
          if (a > area)
          {
             r.set_width(r.width() * area / a + 1);
@@ -1080,9 +1080,9 @@ defer_construct_newø(m_pframebuffer);
       return out;
    }
 
-   int UpdateSender::calcAreas(::int_rectangle_array_base rectanglea)
+   ::i32 UpdateSender::calcAreas(::int_rectangle_array_base rectanglea)
    {
-      int sum = 0;
+      ::i32 sum = 0;
       for (size_t i = 0; i < rectanglea.size(); i++)
       {
          sum += rectanglea[i].area();

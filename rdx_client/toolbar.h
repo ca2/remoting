@@ -4,9 +4,9 @@
 #pragma once
 
 
-#include <Gdiplus.h>
+//#include <Gdiplus.h>
 
-using namespace Gdiplus;
+//using namespace Gdiplus;
 
 #include "acme/user/user/interaction.h"
 
@@ -36,7 +36,7 @@ namespace remoting_rdx_client
 
       ::pointer < main_window > m_pmainwindow;
 
-      int m_iMainScreenWidth;
+      ::i32 m_iMainScreenWidth;
 
       bool m_bControlDeactivated;
 
@@ -47,22 +47,22 @@ namespace remoting_rdx_client
 
       ::string m_strTitle;
 
-      //int m_x{};
-      //int m_y{};
-      //int m_width{};
-      //int m_height{};
+      //::i32 m_x{};
+      //::i32 m_y{};
+      //::i32 m_width{};
+      //::i32 m_height{};
 
       //::i32_rectangle m_rectangle;
       ::i32_point m_point;
       ::i32_size m_size;
-      const float m_btnSize = 18.f;
-      const float m_btnSpacing = 2.f;
+      const ::f32 m_btnSize = 18.f;
+      const ::f32 m_btnSpacing = 2.f;
 
       bool m_bMouseEnable = true;
-      RectF m_titleRect;
-      RectF m_rcMin;
-      RectF m_rcRestore;
-      RectF m_rcClose;
+      ::i32_rectangle m_titleRect;
+      ::i32_rectangle m_rcMin;
+      ::i32_rectangle m_rcRestore;
+      ::i32_rectangle m_rcClose;
 
       static HHOOK s_mouseHook;
       static toolbar* s_instance;
@@ -80,7 +80,7 @@ namespace remoting_rdx_client
 
       //bool m_mouseDown = false;
 
-      ULONG_PTR m_gdiplusToken{};
+      //ULONG_PTR m_gdiplusToken{};
 
 
       toolbar();
@@ -90,7 +90,7 @@ namespace remoting_rdx_client
 
 
 
-      static LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam);
+      static LRESULT CALLBACK MouseProc(::i32 nCode, WPARAM wParam, LPARAM lParam);
 
       ::windows::window_class _get_window_class() override;
 
@@ -104,23 +104,23 @@ namespace remoting_rdx_client
       void InstallMouseHook();
       void UninstallMouseHook();
 
-   //   virtual float get_window_scale();
+   //   virtual ::f32 get_window_scale();
 
-      //bool Create(::windows::com_window * pcomwindowParent, int x, int y, int width, int height);
+      //bool Create(::windows::com_window * pcomwindowParent, ::i32 x, ::i32 y, ::i32 width, ::i32 height);
       void Destroy();
 
       //void Show(bool show);
-      void Move(int x, int y);
-      void Place(int x, int y, int width, int height);
+      void Move(::i32 x, ::i32 y);
+      void Place(::i32 x, ::i32 y, ::i32 width, ::i32 height);
 
       void Redraw();
 
       //HWND GetHwnd() const { return m_hwnd; }
-      virtual void PostToHost(int cmd);
+      virtual void PostToHost(::i32 cmd);
 
 
-      bool InitGdiplus();
-      void ShutdownGdiplus();
+      //bool InitGdiplus();
+      //void ShutdownGdiplus();
 
       bool RegisterClass();
 
@@ -140,7 +140,8 @@ namespace remoting_rdx_client
       //
       virtual void RenderLayered();
 
-      virtual void _on_draw(::Gdiplus::Graphics * pgraphics);
+      //virtual void _on_draw(::Gdiplus::Graphics * pgraphics);
+      virtual void _on_draw(::nano::graphics::context * pgraphicscontext);
 
    };
 

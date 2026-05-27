@@ -121,13 +121,13 @@ namespace remoting_rfb_windows
          try
          {
             ::string shMemName("Global\\");
-            srand((unsigned)time(0));
-            for (int i = 0; i < 20; i++)
+            srand((::u32)time(0));
+            for (::i32 i = 0; i < 20; i++)
             {
                shMemName.appendChar('a' + rand() % ('z' - 'a'));
             }
             SharedMemory sharedMemory(shMemName, 72);
-            unsigned long long *mem = (unsigned long long *)sharedMemory.getMemPointer();
+            ::u64 *mem = (::u64 *)sharedMemory.getMemPointer();
 
             // Sets memory ready flag to false.
             mem[0] = 0;
@@ -155,12 +155,12 @@ namespace remoting_rfb_windows
             otherSidePipeChanFrom->assignHandlesFor(m_pprocess->getProcessHandle(), false);
 
             // Transfer other side handles by the memory channel
-            mem[1] = (unsigned long long)otherSidePipeChanTo->getWriteHandle();
-            mem[2] = (unsigned long long)otherSidePipeChanTo->getReadHandle();
-            mem[3] = (unsigned long long)otherSidePipeChanTo->getMaxPortionSize();
-            mem[4] = (unsigned long long)otherSidePipeChanFrom->getWriteHandle();
-            mem[5] = (unsigned long long)otherSidePipeChanFrom->getReadHandle();
-            mem[6] = (unsigned long long)otherSidePipeChanFrom->getMaxPortionSize();
+            mem[1] = (::u64)otherSidePipeChanTo->getWriteHandle();
+            mem[2] = (::u64)otherSidePipeChanTo->getReadHandle();
+            mem[3] = (::u64)otherSidePipeChanTo->getMaxPortionSize();
+            mem[4] = (::u64)otherSidePipeChanFrom->getWriteHandle();
+            mem[5] = (::u64)otherSidePipeChanFrom->getReadHandle();
+            mem[6] = (::u64)otherSidePipeChanFrom->getMaxPortionSize();
 
             // Sets memory ready flag to true.
             mem[0] = 1;
@@ -200,9 +200,9 @@ namespace remoting_rfb_windows
 
    void DesktopServerWatcher::start()
    {
-      int pipeNotConnectedErrorCount = 0;
+      ::i32 pipeNotConnectedErrorCount = 0;
 
-      for (int i = 0; i < 5; i++)
+      for (::i32 i = 0; i < 5; i++)
       {
          try
          {

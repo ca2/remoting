@@ -148,8 +148,8 @@ namespace remoting_client
     void OptionsDialog::updateControlValues()
     {
         // Preferred encoding
-        for (int i = 0; i < m_comboboxUseEnc.getItemsCount(); i++) {
-            int enc = (int)(::iptr)m_comboboxUseEnc.getItemData(i);
+        for (::i32 i = 0; i < m_comboboxUseEnc.getItemsCount(); i++) {
+            ::i32 enc = (::i32)(::iptr)m_comboboxUseEnc.getItemData(i);
             if (enc == m_pconnectionconfig->getPreferredEncoding()) {
                 m_comboboxUseEnc.setSelectedItem(i);
                 break;
@@ -179,10 +179,10 @@ namespace remoting_client
             // FIXME: replace literal to named constant
             m_checkboxScale.setSelectedItem(7);
         } else {
-            int n = m_pconnectionconfig->getScaleNumerator();
-            int d = m_pconnectionconfig->getScaleDenominator();
+            ::i32 n = m_pconnectionconfig->getScaleNumerator();
+            ::i32 d = m_pconnectionconfig->getScaleDenominator();
 
-            int percent = (n * 100) / d;
+            ::i32 percent = (n * 100) / d;
 
             ::string text;
             text.format("{}", percent);
@@ -200,8 +200,8 @@ namespace remoting_client
 
         ::string labelText;
         {
-            const int DEFAULT_COMPRESSION_LEVEL = 6;
-            int level = DEFAULT_COMPRESSION_LEVEL;
+            const ::i32 DEFAULT_COMPRESSION_LEVEL = 6;
+            ::i32 level = DEFAULT_COMPRESSION_LEVEL;
             if (m_pconnectionconfig->isCustomCompressionEnabled())
                 level = m_pconnectionconfig->getCustomCompressionLevel();
             m_trackbarCompressionLevel.setPos(level);
@@ -210,8 +210,8 @@ namespace remoting_client
         }
 
         {
-            const int DEFAULT_JPEG_COMPRESSION_LEVEL = 6;
-            int level = DEFAULT_JPEG_COMPRESSION_LEVEL;
+            const ::i32 DEFAULT_JPEG_COMPRESSION_LEVEL = 6;
+            ::i32 level = DEFAULT_JPEG_COMPRESSION_LEVEL;
             if (m_pconnectionconfig->isJpegCompressionEnabled())
                 level = m_pconnectionconfig->getJpegCompressionLevel();
             m_trackbarJpeg.setPos(level);
@@ -297,11 +297,11 @@ namespace remoting_client
 
     void OptionsDialog::onPreferredEncodingSelectionChange()
     {
-        int index = m_comboboxUseEnc.getSelectedItemIndex();
+        ::i32 index = m_comboboxUseEnc.getSelectedItemIndex();
         if (index < 0) {
             return ;
         }
-        int encoding = (int)(::iptr)m_comboboxUseEnc.getItemData(index);
+        ::i32 encoding = (::i32)(::iptr)m_comboboxUseEnc.getItemData(index);
         switch (encoding) {
             case ::remoting_rtc::EncodingDefs::TIGHT:
                 enableCustomCompression(m_checkboxCompressionLevel.isChecked());
@@ -347,7 +347,7 @@ namespace remoting_client
         //::string scaleText;
         auto scaleText = m_checkboxScale.getText();
 
-        int scale;
+        ::i32 scale;
 
         if (!MainSubsystem().StringParser().parseInt(scaleText, &scale)) {
             if (scaleText == "Auto") {
@@ -368,7 +368,7 @@ namespace remoting_client
 
     bool OptionsDialog::isInputValid()
     {
-        int scaleInt;
+        ::i32 scaleInt;
         //::string scaleText;
 
         auto scaleText = m_checkboxScale.getText();
@@ -413,9 +413,9 @@ namespace remoting_client
     void OptionsDialog::apply()
     {
         // Preferred encoding
-        int pesii = m_comboboxUseEnc.getSelectedItemIndex();
+        ::i32 pesii = m_comboboxUseEnc.getSelectedItemIndex();
         if (pesii >= 0) {
-            int preferredEncoding = (int)(::iptr)m_comboboxUseEnc.getItemData(pesii);
+            ::i32 preferredEncoding = (::i32)(::iptr)m_comboboxUseEnc.getItemData(pesii);
             m_pconnectionconfig->setPreferredEncoding(preferredEncoding);
         } else {
             ASSERT(pesii >= 0);
@@ -423,14 +423,14 @@ namespace remoting_client
         }
 
         if (m_checkboxCompressionLevel.isChecked()) {
-            int level = static_cast<int>(m_trackbarCompressionLevel.getPos());
+            ::i32 level = static_cast<::i32>(m_trackbarCompressionLevel.getPos());
             m_pconnectionconfig->setCustomCompressionLevel(level);
         } else {
             m_pconnectionconfig->disableCustomCompression();
         }
 
         if (m_checkboxJpeg.isChecked()) {
-            int level = static_cast<int>(m_trackbarJpeg.getPos());
+            ::i32 level = static_cast<::i32>(m_trackbarJpeg.getPos());
             m_pconnectionconfig->setJpegCompressionLevel(level);
         } else {
             m_pconnectionconfig->disableJpegCompression();
@@ -449,7 +449,7 @@ namespace remoting_client
 
         scaleText = m_checkboxScale.getText();
 
-        int scaleInt = 0;
+        ::i32 scaleInt = 0;
 
         if (MainSubsystem().StringParser().parseInt(scaleText, &scaleInt)) {
             m_pconnectionconfig->setScale(scaleInt, 100);
@@ -473,7 +473,7 @@ namespace remoting_client
             m_pconnectionconfig->ignoreShapeUpdates(true);
         }
 
-        int localCursorShape = ::remoting_rtc::ConnectionConfig::DOT_CURSOR;
+        ::i32 localCursorShape = ::remoting_rtc::ConnectionConfig::DOT_CURSOR;
         if (m_checkboxSmalldot.isChecked()) {
             localCursorShape = ::remoting_rtc::ConnectionConfig::SMALL_CURSOR;
         } else if (m_checkboxArrow.isChecked()) {

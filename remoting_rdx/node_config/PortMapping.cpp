@@ -35,7 +35,7 @@ namespace remoting_rfb_node
    {
    }
 
-   PortMapping::PortMapping(int nport, PortMappingRect nrect)
+   PortMapping::PortMapping(::i32 nport, PortMappingRect nrect)
    : m_port(nport), m_rect(nrect)
    {
    }
@@ -61,7 +61,7 @@ namespace remoting_rfb_node
       return other->m_port == m_port && other->m_rect.m_rectangle == m_rect.m_rectangle;
    }
 
-   void PortMapping::setPort(int nport)
+   void PortMapping::setPort(::i32 nport)
    {
       m_port = nport;
    }
@@ -71,7 +71,7 @@ namespace remoting_rfb_node
       m_rect = nrect;
    }
 
-   int PortMapping::getPort() const
+   ::i32 PortMapping::getPort() const
    {
       return m_port;
    }
@@ -106,10 +106,10 @@ namespace remoting_rfb_node
 
    }
 
-   bool PortMapping::parse(const char * psz, PortMapping *mapping)
+   bool PortMapping::parse(const_char_pointer psz, PortMapping *mapping)
    {
-      int port;
-      char c;
+      ::i32 port;
+      ::i8 c;
       PortMappingRect portmappingrect;
       auto pszRectString = strchr(psz, ':') + 1;
       if (pszRectString == NULL)

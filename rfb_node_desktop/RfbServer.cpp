@@ -33,7 +33,7 @@ namespace remoting_rfb_node_desktop
    RfbServer::RfbServer(
       const ::scoped_string &scopedstrBindHost, 
       ::remoting_rfb_node::Configurator *pconfigurator,
-                        unsigned short bindPort,
+                        ::u16 bindPort,
                         RfbClientManager *clientManager, bool lockAddr, ::subsystem::LogWriter * plogwriter,
                         const ::i32_rectangle &rectangleViewport) :
        TcpServer(scopedstrBindHost, bindPort, false, lockAddr), m_pconfigurator(pconfigurator),
@@ -50,16 +50,16 @@ namespace remoting_rfb_node_desktop
 
       if (rectangleViewport == 0)
       {
-         m_plogwriter->debug("Rfb server started at {}:{}", scopedstrBindHost, (int)bindPort);
+         m_plogwriter->debug("Rfb server started at {}:{}", scopedstrBindHost, (::i32)bindPort);
       }
       else
       {
          m_plogwriter->debug("Rfb server started at {}:{} with [{} {} {} {}] view port specified", scopedstrBindHost,
-                             (int)bindPort, rectangleViewport.left, rectangleViewport.right, rectangleViewport.top, rectangleViewport.bottom);
+                             (::i32)bindPort, rectangleViewport.left, rectangleViewport.right, rectangleViewport.top, rectangleViewport.bottom);
       }
    }
 
-   RfbServer::~RfbServer() { m_plogwriter->debug("Rfb server at {}:{} stopped", getBindHost(), (int)getBindPort()); }
+   RfbServer::~RfbServer() { m_plogwriter->debug("Rfb server at {}:{} stopped", getBindHost(), (::i32)getBindPort()); }
 
    void RfbServer::onAcceptConnection(::subsystem::SocketIPv4Interface *socket)
    {
@@ -81,10 +81,10 @@ namespace remoting_rfb_node_desktop
          auto pserverconfig = m_pconfigurator->getServerConfig();
 #ifdef WINDOWS
          ::remoting_rfb_node::IpAccessRule::ActionType action =
-            pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
+            pserverconfig->getActionByAddress((ulong)addr_in.sin_addr.S_un.S_addr);
 #else
          ::remoting_rfb_node::IpAccessRule::ActionType action =
-            pserverconfig->getActionByAddress((unsigned long)addr_in.sin_addr.s_addr);
+            pserverconfig->getActionByAddress((ulong)addr_in.sin_addr.s_addr);
 #endif
 
          if (action == ::remoting_rfb_node::IpAccessRule::ACTION_TYPE_DENY)

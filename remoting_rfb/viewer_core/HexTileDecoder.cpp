@@ -44,15 +44,15 @@ namespace remoting_rfb_client
                                const ::i32_rectangle &  rectangleTarget)
    {
       // shorcut
-      const int bytesPerPixel = pframebuffer->getBytesPerPixel();
+      const ::i32 bytesPerPixel = pframebuffer->getBytesPerPixel();
 
       ::u32 background = 0;
       ::u32 foreground = 0;
 
       bool backgroundAccepted = false;
 
-      for (int y = rectangleTarget.top; y < rectangleTarget.bottom; y += TILE_SIZE) {
-         for (int x = rectangleTarget.left; x < rectangleTarget.right; x += TILE_SIZE) {
+      for (::i32 y = rectangleTarget.top; y < rectangleTarget.bottom; y += TILE_SIZE) {
+         for (::i32 x = rectangleTarget.left; x < rectangleTarget.right; x += TILE_SIZE) {
             ::i32_rectangle tileRect(x,
                           y,
                           ::minimum(x + TILE_SIZE, rectangleTarget.right),
@@ -61,10 +61,10 @@ namespace remoting_rfb_client
             if (::i32_rectangle(pframebuffer->getDimension()).intersection(tileRect) != tileRect)
                throw ::subsystem::Exception("Error in protocol: incorrect size of tile in hextile-decoder");
 
-            unsigned char flags = pinput->readUInt8();
+            ::u8 flags = pinput->readUInt8();
             // If tile-coding is RAW.
             if (flags & 0x1) {
-               for (int y = tileRect.top; y < tileRect.bottom; y++)
+               for (::i32 y = tileRect.top; y < tileRect.bottom; y++)
                   pinput->readFully(pframebuffer->getBufferPtr(tileRect.left, y),
                                    tileRect.width() * bytesPerPixel);
             } else {
@@ -80,19 +80,19 @@ namespace remoting_rfb_client
                   pinput->readFully(&foreground, bytesPerPixel);
 
                if (flags & 0x8) {
-                  unsigned char numberOfSubrectangles = pinput->readUInt8();
+                  ::u8 numberOfSubrectangles = pinput->readUInt8();
 
-                  for (int i = 0; i < numberOfSubrectangles; i++) {
+                  for (::i32 i = 0; i < numberOfSubrectangles; i++) {
 
                      if (flags & 0x10 && !(flags & 0x4))
                         pinput->readFully(&foreground, bytesPerPixel);
 
-                     unsigned char xy = pinput->readUInt8();
-                     unsigned char wh = pinput->readUInt8();
-                     int x = (xy >> 4) & 0xF;
-                     int y = xy & 0xF;
-                     int w = ((wh >> 4) & 0xF) + 1;
-                     int h = (wh & 0xF) + 1;
+                     ::u8 xy = pinput->readUInt8();
+                     ::u8 wh = pinput->readUInt8();
+                     ::i32 x = (xy >> 4) & 0xF;
+                     ::i32 y = xy & 0xF;
+                     ::i32 w = ((wh >> 4) & 0xF) + 1;
+                     ::i32 h = (wh & 0xF) + 1;
                      ::i32_rectangle subRect(x, y, x + w, y + h);
 
                      subRect.offset(tileRect.left, tileRect.top);

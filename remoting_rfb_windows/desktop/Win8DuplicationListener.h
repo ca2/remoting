@@ -38,9 +38,9 @@ namespace remoting_rfb_windows
       // m_regionChanged in target ::innate_subsystem::Framebuffer coordinates.
       virtual void onFramebufferUpdate(const ::remoting_rfb::Region & regionChanged) = 0;
       // rectangleTarget, srcX, srcY in target ::innate_subsystem::Framebuffer coordinates.
-      virtual void onCopyRect(const ::i32_rectangle &rectangleTarget, int srcX, int srcY) = 0;
+      virtual void onCopyRect(const ::i32_rectangle &rectangleTarget, ::i32 srcX, ::i32 srcY) = 0;
 
-      virtual void onCursorPositionChanged(int x, int y) = 0;
+      virtual void onCursorPositionChanged(::i32 x, ::i32 y) = 0;
       virtual void onCursorShapeChanged() = 0;
 
       // Calls when an error occurred which can be recover by object recreating.

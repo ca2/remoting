@@ -65,14 +65,14 @@ namespace remoting_rfb
          }
 
          if (totalBytesToCopy != 0) {
-            double progress = 1.0 * totalBytesCopied / totalBytesToCopy;
+            ::f64 progress = 1.0 * totalBytesCopied / totalBytesToCopy;
 
             // event set pos to progress bar
             m_ftInterface->setProgress(progress);
          }
       }
 
-      int FileTransferCore::targetFileExists(FileInfo *sourceFileInfo,
+      ::i32 FileTransferCore::targetFileExists(FileInfo *sourceFileInfo,
                                              FileInfo *targetFileInfo,
                                              const ::file::path & pathToTargetFile)
       {
@@ -153,7 +153,7 @@ namespace remoting_rfb
             } // if no error during file ::list_base operation
 
             // Notify dialog than operation is finished
-            int result = fileListOp->isOk() ? 1 : 0;
+            ::i32 result = fileListOp->isOk() ? 1 : 0;
             m_ftInterface->onFtOpFinished(m_state, result);
             return ;
          } // if last executed operation was file ::list_base opearation
@@ -171,7 +171,7 @@ namespace remoting_rfb
          //
          // And as result: deadlock.
          //
-         // In short:
+         // In ::i16:
          // ft scopedstrMessage processor lock operation
          // locked operation call this dialog as ft events listener with op finished notification
          // this dialog calls ft scopedstrMessage processor to remove operation from listeners ::list_base
@@ -302,7 +302,7 @@ namespace remoting_rfb
          m_currentOperation->setThreadToFinish();
       }
 
-      void FileTransferCore::onUpdateState(int state, int result)
+      void FileTransferCore::onUpdateState(::i32 state, ::i32 result)
       {
          switch (state) {
             case FILE_LIST_STATE:

@@ -40,10 +40,10 @@ namespace remoting
          friend class UploadOperation;
          friend class DownloadOperation;
 
-         static const int TFE_OVERWRITE = 0x0;
-         static const int TFE_SKIP      = 0x1;
-         static const int TFE_APPEND    = 0x2;
-         static const int TFE_CANCEL    = 0x3;
+         static const ::i32 TFE_OVERWRITE = 0x0;
+         static const ::i32 TFE_SKIP      = 0x1;
+         static const ::i32 TFE_APPEND    = 0x2;
+         static const ::i32 TFE_CANCEL    = 0x3;
 
       protected:
 
@@ -80,7 +80,7 @@ namespace remoting
          // fail.
          //
 
-         virtual int targetFileExists(FileInfo *sourceFileInfo,
+         virtual ::i32 targetFileExists(FileInfo *sourceFileInfo,
                                       FileInfo *targetFileInfo,
                                       const ::file::path & pathToTargetFile) = 0;
       };

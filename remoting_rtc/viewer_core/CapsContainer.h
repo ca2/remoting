@@ -40,14 +40,14 @@ namespace remoting_client
 
    public:
       ::u32 code;                            // numeric identifier
-      char vendorSignature[vendorSigSize];    // vendor identification
-      char nameSignature[nameSigSize];        // abbreviated option name
+      ::i8 vendorSignature[vendorSigSize];    // vendor identification
+      ::i8 nameSignature[nameSigSize];        // abbreviated option name
 
    public:
       //
       // Returns true if capability vendor and signature are equal to args
       //
-      bool isEqual(const char *vendor, const char *signature) const;
+      bool isEqual(const_char_pointer vendor, const_char_pointer signature) const;
    };
 
    // This class is thread-safe.
@@ -63,7 +63,7 @@ namespace remoting_client
       // records with the same code.
       //
       void add(const RfbCapabilityInfo *capinfo, const ::string desc = "");
-      void add(::u32 code, const char *vendor, const char *name,
+      void add(::u32 code, const_char_pointer vendor, const_char_pointer pszName,
                ::string desc = "");
 
       //

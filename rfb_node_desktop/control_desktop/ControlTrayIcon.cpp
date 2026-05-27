@@ -170,7 +170,7 @@ void ControlTrayIcon::trackPopupMenu()
 
    auto pmenu = system()->innate_ui()->load_menu_from_resource(IDR_TRAYMENU);
    
-   pmenu->track_popup_menu(operating_system_window(), [this](int iActionId)
+   pmenu->track_popup_menu(operating_system_window(), [this](::i32 iActionId)
       {
 
          onAction(iActionId);
@@ -196,7 +196,7 @@ void ControlTrayIcon::trackPopupMenu()
 ////   ///
 ////   setForegroundWindow();
 ////
-////   int action = TrackPopupMenu(hMenu,
+////   ::i32 action = TrackPopupMenu(hMenu,
 ////                               TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
 ////                               pos.x, pos.y, 0, ::as_HWND(operating_system_window()), NULL);
 ////
@@ -211,7 +211,7 @@ void ControlTrayIcon::trackPopupMenu()
 
    }
 
-void ControlTrayIcon::onAction(int action)
+void ControlTrayIcon::onAction(::i32 action)
 {
    
    switch (action) {

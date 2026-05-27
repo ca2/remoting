@@ -143,20 +143,20 @@ namespace remoting_rfb_client
    {
       // Transform password from hex-string to raw data.
       ::string ansiHidePassword(m_defaultPassword);
-      unsigned char encPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      ::u8 encPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
       for (size_t i = 0; i < ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE; ++i) {
          std::stringstream passwordStream;
          passwordStream << ansiHidePassword[i * 2]
                         << ansiHidePassword[i * 2 + 1];
-         int ordOfSymbol = 0;
+         ::i32 ordOfSymbol = 0;
          passwordStream >> std::hex >> ordOfSymbol;
-         encPassword[i] = static_cast<unsigned char>(ordOfSymbol);
+         encPassword[i] = static_cast<::u8>(ordOfSymbol);
       }
       // Decrypt password.
-      unsigned char plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      ::u8 plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
       ::subsystem::VncPassCrypt::getPlainPass(plainPassword, encPassword);
 
-      ::string ansiPlainPassword((const char * )plainPassword, sizeof(plainPassword));
+      ::string ansiPlainPassword((const_char_pointer )plainPassword, sizeof(plainPassword));
       ::string password;
       password = ansiPlainPassword;
       return password;
@@ -165,22 +165,22 @@ namespace remoting_rfb_client
    void ConnectionData::setPlainPassword(const ::scoped_string & password)
    {
       ::string ansiPlainPassword(password);
-      unsigned char plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
-      unsigned char encryptedPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      ::u8 plainPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      ::u8 encryptedPassword[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
       memset(plainPassword, 0, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
       memcpy(plainPassword,
              ansiPlainPassword,
              minimum(::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE, ansiPlainPassword.length()));
       ::subsystem::VncPassCrypt::getEncryptedPass(encryptedPassword, plainPassword);
-      unsigned char hidePasswordChars[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE * 2 + 1];
+      ::u8 hidePasswordChars[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE * 2 + 1];
       hidePasswordChars[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE * 2] = 0;
       for (size_t i = 0; i < ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE; ++i) {
          std::stringstream passwordStream;
-         int ordOfSymbol = encryptedPassword[i];
+         ::i32 ordOfSymbol = encryptedPassword[i];
          passwordStream << std::hex << std::setw(2) << std::setfill('0') << ordOfSymbol;
          passwordStream >> hidePasswordChars[i * 2] >> hidePasswordChars[i * 2 + 1];
       }
-      ::string ansiHidePassword(reinterpret_cast<char *>(hidePasswordChars));
+      ::string ansiHidePassword(reinterpret_cast<char_pointer >(hidePasswordChars));
 
       // save password
       m_defaultPassword = ansiHidePassword;
@@ -196,13 +196,13 @@ namespace remoting_rfb_client
    }
 
 
-   //void ConnectionData::setDivisor(int iDivisor)
+   //void ConnectionData::setDivisor(::i32 iDivisor)
    //{
    //   m_iDivisor = iDivisor;
    //}
    //
    //
-   //int ConnectionData::getDivisor() const
+   //::i32 ConnectionData::getDivisor() const
    //{
    //   return m_iDivisor;
    //}
@@ -213,7 +213,7 @@ namespace remoting_rfb_client
       return ansiStr;
    }
 
-   int ConnectionData::getPort() const
+   ::i32 ConnectionData::getPort() const
    {
       return m_hostPath.getVncPort();
    }

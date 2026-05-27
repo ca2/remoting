@@ -136,10 +136,10 @@ namespace remoting_node_desktop
          // -----------------------------
          void setupEvents()
          {
-            pc.onStateChange([](PeerConnection::State state) { std::cout << "State: " << (int)state << std::endl; });
+            pc.onStateChange([](PeerConnection::State state) { std::cout << "State: " << (::i32)state << std::endl; });
 
             pc.onGatheringStateChange([](PeerConnection::GatheringState state)
-                                      { std::cout << "ICE Gathering: " << (int)state << std::endl; });
+                                      { std::cout << "ICE Gathering: " << (::i32)state << std::endl; });
 
             pc.onLocalDescription([](const Description &desc) { std::cout << "SDP OFFER:\n" << desc << std::endl; });
 
@@ -205,7 +205,7 @@ namespace remoting_node_desktop
          // -----------------------------
          // Send input to remote side
          // -----------------------------
-         void sendMouseMove(int x, int y)
+         void sendMouseMove(::i32 x, ::i32 y)
          {
             InputMessage msg{};
             msg.type = MOUSE_MOVE;
@@ -229,7 +229,7 @@ namespace remoting_node_desktop
       // -----------------------------
       // Example usage
       // -----------------------------
-      virtual int transmit_remoting();
+      virtual ::i32 transmit_remoting();
 
    };
 

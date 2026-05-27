@@ -48,7 +48,7 @@ namespace remoting_client
 
        // This variable contain count of instance, when need to reconnect.
        // If this count isn't 0, shutdown application is denied.
-       int m_countToReconnect;
+       ::i32 m_countToReconnect;
 
 
         ViewerCollector();

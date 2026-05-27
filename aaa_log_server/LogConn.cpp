@@ -31,7 +31,7 @@
 //#include "subsystem/platform/class ::time.h"
 
 LogConn::LogConn(Channel *channel, LogConnAuthListener *pclientauthlistener,
-                 LogListener *extLogListener, unsigned char logLevel)
+                 LogListener *extLogListener, ::u8 logLevel)
 : m_serviceChannel(channel),
   m_extAuthListener(pclientauthlistener),
   m_extLogListener(extLogListener),
@@ -76,7 +76,7 @@ void LogConn::close()
   setThreadToFinish();
 }
 
-void LogConn::changeLogLevel(unsigned char newLevel)
+void LogConn::changeLogLevel(::u8 newLevel)
 {
   {
     critical_section_lock al(&m_criticalsectionLogLevel);
@@ -89,8 +89,8 @@ void LogConn::changeLogLevel(unsigned char newLevel)
 void LogConn::assignConnection()
 {
   try {
-    const unsigned int maxLogLineLength = 0x10000;
-    const unsigned int maxChangeLevelMessageLength = 0x10;
+    const ::u32 maxLogLineLength = 0x10000;
+    const ::u32 maxChangeLevelMessageLength = 0x10;
 
     SecurityPipeServer secLogPipeServer(m_serviceChannel, maxLogLineLength);
     SecurityPipeServer secLevelPipeServer(m_serviceChannel, maxChangeLevelMessageLength);
@@ -116,10 +116,10 @@ void LogConn::dispatch()
   // Simple dispatcher (normal phase)
   ::string logMess;
   while (!isThreadTerminating()) {
-    unsigned int processId = input.readUInt32();
-    unsigned int threadId = input.readUInt32();
+    ::u32 processId = input.readUInt32();
+    ::u32 threadId = input.readUInt32();
     class ::time dt(input.readUInt64());
-    unsigned char level = input.readUInt8();
+    ::u8 level = input.readUInt8();
     // Receive log scopedstrMessage
     input.readUTF8(&logMess);
 

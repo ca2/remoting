@@ -331,8 +331,8 @@ namespace remoting_rdx_client
 //   return DefWindowProc(hwnd, msg, wParam, lParam);
 //}
 //
-////int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
-//int rdx_client_main()
+////::i32 WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, ::i32)
+//::i32 rdx_client_main()
 //{
 //   CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
 //   HINSTANCE hInst = (HINSTANCE)::system()->m_hinstanceThis;

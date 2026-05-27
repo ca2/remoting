@@ -25,7 +25,7 @@
 #include "FileLogWriter.h"
 
 FileLogWriter::FileLogWriter(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName,
-                       unsigned char logLevel, bool logHeadEnabled)
+                       ::u8 logLevel, bool logHeadEnabled)
 : m_fileAccount(scopedstrLogDir, scopedstrFileName, logLevel, logHeadEnabled)
 {
 }
@@ -39,7 +39,7 @@ FileLogWriter::~FileLogWriter()
 {
 }
 
-void FileLogWriter::init(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel)
+void FileLogWriter::init(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, ::u8 logLevel)
 {
   m_fileAccount.init(scopedstrLogDir, scopedstrFileName, logLevel);
 }
@@ -49,11 +49,11 @@ void FileLogWriter::storeHeader()
   m_fileAccount.storeHeader();
 }
 
-void FileLogWriter::print(int logLevel, const ::scoped_string & scopedstrLine)
+void FileLogWriter::print(::i32 logLevel, const ::scoped_string & scopedstrLine)
 {
   try {
-    unsigned int processId = GetCurrentProcessId();
-    unsigned int threadId = GetCurrentThreadId();
+    ::u32 processId = GetCurrentProcessId();
+    ::u32 threadId = GetCurrentThreadId();
     class ::time currTime = class ::time::now();
 
     m_fileAccount.print(processId, threadId, currTime, logLevel, scopedstrLine);
@@ -61,12 +61,12 @@ void FileLogWriter::print(int logLevel, const ::scoped_string & scopedstrLine)
   }
 }
 
-bool FileLogWriter::acceptsLevel(int logLevel)
+bool FileLogWriter::acceptsLevel(::i32 logLevel)
 {
   return m_fileAccount.acceptsLevel(logLevel);
 }
 
-void FileLogWriter::changeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
+void FileLogWriter::changeLogProps(const ::scoped_string & scopedstrNewLogDir, ::u8 newLevel)
 {
   m_fileAccount.changeLogProps(scopedstrNewLogDir, newLevel);
 }

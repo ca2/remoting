@@ -39,11 +39,11 @@ namespace remoting_rfb
          FileTransferInterface(FileTransferCore *core);
          virtual ~FileTransferInterface();
 
-         virtual int onFtTargetFileExists(FileInfo *sourceFileInfo,
+         virtual ::i32 onFtTargetFileExists(FileInfo *sourceFileInfo,
                                           FileInfo *targetFileInfo,
                                           const ::file::path & pathToTargetFile) = 0;
          // Progress is in interval [0.0, 1.0].
-         virtual void setProgress(double progress) = 0;
+         virtual void setProgress(::f64 progress) = 0;
 
          //
          // This function inform user about error.
@@ -57,7 +57,7 @@ namespace remoting_rfb
          //
          virtual void onFtOpInfo(const ::scoped_string & scopedstrMessage) = 0;
          virtual void onFtOpStarted() = 0;
-         virtual void onFtOpFinished(int state, int result) = 0;
+         virtual void onFtOpFinished(::i32 state, ::i32 result) = 0;
 
          //
          // filetransfer's operation is finished. Need update of control

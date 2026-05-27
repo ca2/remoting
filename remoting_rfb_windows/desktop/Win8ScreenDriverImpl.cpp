@@ -87,8 +87,8 @@ namespace remoting_rfb_windows
 
       terminateDetection();
       //setThreadToFinish();
-      int activeResult = (int)isThreadActive();
-      //int waitResult = (int)waitThreadToFinish();
+      ::i32 activeResult = (::i32)isThreadActive();
+      //::i32 waitResult = (::i32)waitThreadToFinish();
       //waitThreadToFinish();
       m_plogwriter->debug("Win8ScreenDriverImpl::activeResult = {}", activeResult);
       //m_plogwriter->debug("Win8ScreenDriverImpl::waitResult = {}", waitResult);
@@ -274,13 +274,13 @@ namespace remoting_rfb_windows
       catch (WinDxRecoverableException &e)
       {
          m_plogwriter->error("Win8ScreenDriverImpl:: Catched WinDxRecoverableException: {}, (%x)", e.get_message(),
-                             (int)e.getErrorCode());
+                             (::i32)e.getErrorCode());
          m_hasRecoverableError = true;
       }
       catch (WinDxCriticalException &e)
       {
          m_plogwriter->error("Win8ScreenDriverImpl:: Catched WinDxCriticalException: {}, (%x)", e.get_message(),
-                             (int)e.getErrorCode());
+                             (::i32)e.getErrorCode());
          m_hasCriticalError = true;
       }
       catch (::exception &e)
@@ -321,7 +321,7 @@ namespace remoting_rfb_windows
       }
    }
 
-   void Win8ScreenDriverImpl::onCopyRect(const ::i32_rectangle &rectangleTarget, int srcX, int srcY)
+   void Win8ScreenDriverImpl::onCopyRect(const ::i32_rectangle &rectangleTarget, ::i32 srcX, ::i32 srcY)
    {
       if (m_detectionEnabled)
       {
@@ -331,7 +331,7 @@ namespace remoting_rfb_windows
       }
    }
 
-   void Win8ScreenDriverImpl::onCursorPositionChanged(int x, int y)
+   void Win8ScreenDriverImpl::onCursorPositionChanged(::i32 x, ::i32 y)
    {
       critical_section_lock al(&m_cursorMutex);
       ::i32_point pointNewPosition(x, y);

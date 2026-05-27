@@ -6,12 +6,12 @@
 // //remoting_notify_node::application g_app_simple_notify_drawing_application;
 
 
-// //int __implement()
+// //::i32 __implement()
 // //{
 // //
 // //   auto papp = ___new remoting_notify_node::application();
 // //
-// //   int iExitCode = papp->__implement();
+// //   ::i32 iExitCode = papp->__implement();
 // //
 // //   return iExitCode;
 // //

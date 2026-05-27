@@ -108,8 +108,8 @@ namespace remoting_rfb
 
    void RfbInitializer::initVersion()
    {
-      char initVersionMsg[] = "RFB 003.008\n";
-      char clientVersionMsg[13];
+      ::i8 initVersionMsg[] = "RFB 003.008\n";
+      ::i8 clientVersionMsg[13];
       size_t msgLen = 12;
       m_pdataoutputstream->write(initVersionMsg, msgLen);
       m_pdatainputstream->readFully(clientVersionMsg, msgLen);
@@ -195,14 +195,14 @@ namespace remoting_rfb
 
    void RfbInitializer::doVncAuth()
    {
-      unsigned char challenge[16];
-      srand((unsigned)time(0));
-      for (int i = 0; i < sizeof(challenge); i++) {
+      ::u8 challenge[16];
+      srand((::u32)time(0));
+      for (::i32 i = 0; i < sizeof(challenge); i++) {
          challenge[i] = rand() & 0xff;
       }
 
       m_pdataoutputstream->write(challenge, sizeof(challenge));
-      unsigned char response[16];
+      ::u8 response[16];
       m_pdatainputstream->readFully(response, sizeof(response));
       // Checking for a ban after auth.
       checkForBan();
@@ -217,7 +217,7 @@ namespace remoting_rfb
       }
 
       if (hasPrim) {
-         unsigned char crypPrimPass[8];
+         ::u8 crypPrimPass[8];
          pserverconfig->getPrimaryPassword(crypPrimPass);
          ::subsystem::VncPassCrypt passCrypt;
          passCrypt.updatePlain(crypPrimPass);
@@ -226,7 +226,7 @@ namespace remoting_rfb
          }
       }
       if (hasRdly) {
-         unsigned char crypReadOnlyPass[8];
+         ::u8 crypReadOnlyPass[8];
          pserverconfig->getReadOnlyPassword(crypReadOnlyPass);
          ::subsystem::VncPassCrypt passCrypt;
          passCrypt.updatePlain(crypReadOnlyPass);
@@ -267,7 +267,7 @@ namespace remoting_rfb
             m_pdataoutputstream->writeUInt8(primSecType);
             m_pdataoutputstream->writeUInt8(SecurityDefs::TIGHT);
             // Read what the client has actually selected.
-            unsigned char clientSecType = m_pdatainputstream->readUInt8();
+            ::u8 clientSecType = m_pdatainputstream->readUInt8();
             if (clientSecType == SecurityDefs::TIGHT) {
                m_tightEnabled = true;
                doTightAuth();
@@ -306,19 +306,19 @@ namespace remoting_rfb
    void RfbInitializer::sendServerInit(const ::i32_size & size,
                                        const ::innate_subsystem::PixelFormat & pixelformat)
    {
-      m_pdataoutputstream->writeUInt16((unsigned short)size.cx);
-      m_pdataoutputstream->writeUInt16((unsigned short)size.cy);
+      m_pdataoutputstream->writeUInt16((::u16)size.cx);
+      m_pdataoutputstream->writeUInt16((::u16)size.cy);
       // Pixel format
-      m_pdataoutputstream->writeUInt8((unsigned char)pixelformat.bitsPerPixel);
-      m_pdataoutputstream->writeUInt8((unsigned char)pixelformat.colorDepth);
-      m_pdataoutputstream->writeUInt8((unsigned char)pixelformat.bigEndian);
+      m_pdataoutputstream->writeUInt8((::u8)pixelformat.bitsPerPixel);
+      m_pdataoutputstream->writeUInt8((::u8)pixelformat.colorDepth);
+      m_pdataoutputstream->writeUInt8((::u8)pixelformat.bigEndian);
       m_pdataoutputstream->writeUInt8(1);
-      m_pdataoutputstream->writeUInt16((unsigned short)pixelformat.redMax);
-      m_pdataoutputstream->writeUInt16((unsigned short)pixelformat.greenMax);
-      m_pdataoutputstream->writeUInt16((unsigned short)pixelformat.blueMax);
-      m_pdataoutputstream->writeUInt8((unsigned char)pixelformat.redShift);
-      m_pdataoutputstream->writeUInt8((unsigned char)pixelformat.greenShift);
-      m_pdataoutputstream->writeUInt8((unsigned char)pixelformat.blueShift);
+      m_pdataoutputstream->writeUInt16((::u16)pixelformat.redMax);
+      m_pdataoutputstream->writeUInt16((::u16)pixelformat.greenMax);
+      m_pdataoutputstream->writeUInt16((::u16)pixelformat.blueMax);
+      m_pdataoutputstream->writeUInt8((::u8)pixelformat.redShift);
+      m_pdataoutputstream->writeUInt8((::u8)pixelformat.greenShift);
+      m_pdataoutputstream->writeUInt8((::u8)pixelformat.blueShift);
       // Padding
       m_pdataoutputstream->writeUInt8(0);
       m_pdataoutputstream->writeUInt16(0);
@@ -359,7 +359,7 @@ namespace remoting_rfb
       encCaps->sendCaps(m_pdataoutputstream);
    }
 
-   ::u32 RfbInitializer::getProtocolMinorVersion(const char str[12])
+   ::u32 RfbInitializer::getProtocolMinorVersion(const ::i8 str[12])
    {
       if ( str[0] != 'R' || str[1] != 'F' || str[2] != 'B' || str[3] != ' ' ||
            !isdigit(str[4]) || !isdigit(str[5]) || !isdigit(str[6]) ||

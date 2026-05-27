@@ -140,7 +140,7 @@ namespace remoting_client
     {
 
 
-       m_menu.trackPopupMenuOnCursorPosition(this, [this](int iCommand)
+       m_menu.trackPopupMenuOnCursorPosition(this, [this](::i32 iCommand)
        {
 
           switch (iCommand) {
@@ -173,7 +173,7 @@ namespace remoting_client
         // HWND notifyWnd = ::as_HWND(this->operating_system_window());
         // SetForegroundWindow(notifyWnd);
         //
-        // // int action = TrackPopupMenu(m_menu.getMenu(),
+        // // ::i32 action = TrackPopupMenu(m_menu.getMenu(),
         // //                             TPM_NONOTIFY | TPM_RETURNCMD | TPM_RIGHTBUTTON,
         // //                             pos.x, pos.y, 0, notifyWnd, NULL);
         // //

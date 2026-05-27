@@ -74,7 +74,7 @@ namespace str
    }
 } // namespace str
 
-const char *FeatureLevelToString(D3D_FEATURE_LEVEL fl)
+const_char_pointer FeatureLevelToString(D3D_FEATURE_LEVEL fl)
 {
    switch (fl)
    {
@@ -333,7 +333,7 @@ namespace remoting_rfb_windows
 
 
       //retry:
-      int iTry = 0;
+      ::i32 iTry = 0;
       //auto pdxgiOutput = dxgiOutput;
 
       //auto pdxgiOutput1 = dxgiOutput->getDxgiOutput1();
@@ -403,7 +403,7 @@ namespace remoting_rfb_windows
    size_t DXGIOutputDuplication::getFrameMoveRects(::array_base<DXGI_OUTDUPL_MOVE_RECT> *moveRects)
    {
       // Get move rectangle buffer size.
-      char stub;
+      ::i8 stub;
       ::u32 reqBufSize = 0;
       HRESULT hr;
       hr = m_poutputduplication->GetFrameMoveRects(reqBufSize, reinterpret_cast<DXGI_OUTDUPL_MOVE_RECT *>(&stub), &reqBufSize);
@@ -436,7 +436,7 @@ namespace remoting_rfb_windows
    size_t DXGIOutputDuplication::getFrameDirtyRects(::array_base<RECT> *dirtyRects)
    {
       // Get dirty rectangle buffer size.
-      char stub;
+      ::i8 stub;
       ::u32 reqBufSize = 0;
       HRESULT hr;
       hr = m_poutputduplication->GetFrameDirtyRects(reqBufSize, reinterpret_cast<RECT *>(&stub), &reqBufSize);
@@ -478,7 +478,7 @@ namespace remoting_rfb_windows
       }
       HRESULT hr;
       ::u32 reqSize = 0;
-      ::array_base<char> buffer(pointerShapeBufferSize);
+      ::array_base<::i8> buffer(pointerShapeBufferSize);
       DXGI_OUTDUPL_POINTER_SHAPE_INFO shapeInfo;
       hr = m_poutputduplication->GetFramePointerShape((::u32)buffer.size(), buffer.data(), &reqSize, &shapeInfo);
       plogwriter->debug("CursorShapeInfo: pounter info buffer size: {}, required: {}", pointerShapeBufferSize, reqSize);
@@ -547,14 +547,14 @@ namespace remoting_rfb_windows
          throw ::subsystem::Exception("Invalid buffer size for color cursor.");
       }
       memcpy(newCursorShape.getPixels()->getBuffer(), buffer.data(), shapeSize);
-      int maskPitch = ((size.cx + 15) / 16) * 2;
+      ::i32 maskPitch = ((size.cx + 15) / 16) * 2;
       ::memory mask;
       mask.set_size(maskPitch * size.cy);
       mask.zero();
       bool maskedColor = shapeInfo.Type == DXGI_OUTDUPL_POINTER_SHAPE_TYPE_MASKED_COLOR;
-      WinCursorShapeUtils::winColorShapeToRfb<::u32>(newCursorShape.getPixels(), (char*)mask.data(), maskPitch);
-      WinCursorShapeUtils::fixAlphaChannel(newCursorShape.getPixels(), (char*)mask.data(), maskedColor, maskPitch);
-      newCursorShape.assignMaskFromWindows((char*)mask.data()); // assumes width is aligned to 2 bytes
+      WinCursorShapeUtils::winColorShapeToRfb<::u32>(newCursorShape.getPixels(), (char_pointer )mask.data(), maskPitch);
+      WinCursorShapeUtils::fixAlphaChannel(newCursorShape.getPixels(), (char_pointer )mask.data(), maskedColor, maskPitch);
+      newCursorShape.assignMaskFromWindows((char_pointer )mask.data()); // assumes width is aligned to 2 bytes
       cursorShape->clone(&newCursorShape);
    }
 

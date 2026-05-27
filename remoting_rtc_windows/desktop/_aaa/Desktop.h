@@ -52,16 +52,16 @@ namespace remoting_rtc_windows
       virtual void getPrimaryDesktopCoords(::i32_rectangle rectangle) = 0;
       // Returns a rectangle that is normilized from "virtual desktop" to frame buffer coordinates.
       virtual void getNormalizedRect(::i32_rectangle rectangle) = 0;
-      virtual void getDisplayNumberCoords(::i32_rectangle rectangle, unsigned char dispNumber) = 0;
+      virtual void getDisplayNumberCoords(::i32_rectangle rectangle, ::u8 dispNumber) = 0;
       virtual ::int_rectangle_array_base getDisplaysCoords() = 0;
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle rectangle) = 0;
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) = 0;
 
-      virtual void getApplicationRegion(unsigned int procId, ::remoting_rtc::Region & region) = 0;
-      virtual bool isApplicationInFocus(unsigned int procId) = 0;
+      virtual void getApplicationRegion(::u32 procId, ::remoting_rtc::Region & region) = 0;
+      virtual bool isApplicationInFocus(::u32 procId) = 0;
 
-      virtual void setKeyboardEvent(unsigned int keySym, bool down) = 0;
-      virtual void setMouseEvent(unsigned short x, unsigned short y, unsigned char buttonMask) = 0;
+      virtual void setKeyboardEvent(::u32 keySym, bool down) = 0;
+      virtual void setMouseEvent(::u16 x, ::u16 y, ::u8 buttonMask) = 0;
       virtual void setNewClipText(const ::scoped_string &newClipboard) = 0;
 
       // Updates external frame buffer pixels only for the region from view port

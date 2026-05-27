@@ -234,14 +234,14 @@ struct	Esc_dmf_Qvi_OUT
 
 // MIRAGE
 // QUASAR
-	char	prod_name[esc_qvi_prod_name_max];
+	::i8	prod_name[esc_qvi_prod_name_max];
 };
 
 //dmf_esc_pointer_shape_get
 struct	Esc_dmf_pointer_shape_get_IN
 {
 	ULONG	cbSize;
-	char *	pDstBmBuf;
+	char_pointer pDstBmBuf;
 	ULONG	nDstBmBufSize;		// (64* 64)* (33/ 8)+ 256* 4 = 17920
 };
 
@@ -260,15 +260,15 @@ struct	Esc_dmf_pointer_shape_get_OUT
 	ULONG	cbSize;
 	POINTL	BmSize;		// XxY
 
-	char *	pMaskBm;
+	char_pointer pMaskBm;
 	ULONG	nMaskBmSize;
 
-	char *	pColorBm;
+	char_pointer pColorBm;
 	ULONG	nColorBmSize;
 // if nBitmapSize is more than Esc_dmf_pointer_shape_get_IN::nDstBmBufSize,
 // than bitmap is not copied and a larger buffer is required
 
-	char *	pColorBmPal;
+	char_pointer pColorBmPal;
 	ULONG	nColorBmPalEntries;
 };
 

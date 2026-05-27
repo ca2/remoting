@@ -107,7 +107,7 @@ bool CopyRectDetector::checkWindowMovements(
     if (!windowIdNumber)
         return true;
 
-    int windowId = 0;
+    ::i32 windowId = 0;
 
     CFNumberGetValue(
         windowIdNumber,
@@ -153,15 +153,15 @@ bool CopyRectDetector::checkWindowMovements(
             oldPos.x != newPos.x ||
             oldPos.y != newPos.y;
 
-        double oldArea =
+        ::f64 oldArea =
             oldRect.size.width *
             oldRect.size.height;
 
-        double newArea =
+        ::f64 newArea =
             currentRect.size.width *
             currentRect.size.height;
 
-        double currentBestArea =
+        ::f64 currentBestArea =
             m_rectCopy.size.width *
             m_rectCopy.size.height;
 

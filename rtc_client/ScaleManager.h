@@ -37,25 +37,25 @@ namespace remoting_client
         ScaleManager();
 
         // set resolution of the screen
-        void setScreenResolution(int maxWidth, int maxHeight);
+        void setScreenResolution(::i32 maxWidth, ::i32 maxHeight);
         // set the scale of image, for example, 10 - it means 10% from original
-        void setScale(int scale);
+        void setScale(::i32 scale);
         // set the rectangle of window
         void setWindow(const ::i32_rectangle & rectangleWnd);
-        float getScale() const;
+        ::f32 getScale() const;
         // need to know for scrolling
         // false -> single page
         // true -> multiple pages
-        bool getVertPages(int iHeight) const;
-        bool getHorzPages(int iWidth) const;
+        bool getVertPages(::i32 iHeight) const;
+        bool getHorzPages(::i32 iWidth) const;
 
         // how much to scroll
-        int getVertPoints() const;
-        int getHorzPoints() const;
+        ::i32 getVertPoints() const;
+        ::i32 getHorzPoints() const;
 
         // set the current starting point
         // point is scaled
-        void setStartPoint(int x, int y);
+        void setStartPoint(::i32 x, ::i32 y);
 
         // get viewed rectangle
         void getViewedRect(::i32_rectangle & prectangleViewed) const;
@@ -74,12 +74,12 @@ namespace remoting_client
         void getWndFromScreen(const ::i32_rectangle &  screen, ::i32_rectangle &wnd);
 
         // transform display coordinate to screen
-        ::i32_point transformDispToScr(int xPoint, int yPoint) const;
+        ::i32_point transformDispToScr(::i32 xPoint, ::i32 yPoint) const;
 
-        static const int DEFAULT_SCALE_DENOMERATOR = 100;
+        static const ::i32 DEFAULT_SCALE_DENOMERATOR = 100;
     //protected:
         // This method return round to up of (x/y).
-        int sDiv(int x, int y) const;
+        ::i32 sDiv(::i32 x, ::i32 y) const;
 
         // size of window with frame buffer
         ::i32_rectangle m_rcWindow;
@@ -87,20 +87,20 @@ namespace remoting_client
         ::i32_rectangle m_rcViewed;
 
         // pointPosition of m_rcViewer
-        int m_iCentX;
-        int m_iCentY;
+        ::i32 m_iCentX;
+        ::i32 m_iCentY;
 
-        int m_xStart;
-        int m_yStart;
+        ::i32 m_xStart;
+        ::i32 m_yStart;
 
         // size of frame buffer
-        int m_scrWidth;
-        int m_scrHeight;
+        ::i32 m_scrWidth;
+        ::i32 m_scrHeight;
 
-        int m_scrWScale;
-        int m_scrHScale;
+        ::i32 m_scrWScale;
+        ::i32 m_scrHScale;
 
-        int m_scale;
+        ::i32 m_scale;
 
     private:
         ::i32_rectangle calcScaled(const ::i32_rectangle &  rcViewed, bool bCent);

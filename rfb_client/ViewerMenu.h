@@ -35,19 +35,19 @@ namespace remoting_rfb_client
         void loadMenu();
 
     protected:
-        int m_startIndex;
+        ::i32 m_startIndex;
 
-        static const int SEPARATOR = 0;
-        static const int MENU_ITEM = 1;
+        static const ::i32 SEPARATOR = 0;
+        static const ::i32 MENU_ITEM = 1;
 
         typedef struct {
-            int menu_id;
-            int menu_param;
+            ::i32 menu_id;
+            ::i32 menu_param;
         } menu_item;
 
     private:
         void makeSeparator();
-        void menuItem(int id);
+        void menuItem(::i32 id);
         void findStartIndex();
     };
 } // namespace remoting_rfb_client

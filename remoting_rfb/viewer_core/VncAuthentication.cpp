@@ -45,13 +45,13 @@ namespace remoting_rfb_client
 
       ::string passwordAnsi(truncatedPass);
 
-      unsigned char m_password[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
+      ::u8 m_password[::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE];
       memset(m_password, 0, sizeof(m_password));
       memcpy(m_password, passwordAnsi,
              ::minimum(passwordAnsi.length(), sizeof(m_password)));
 
-      unsigned char challenge[16];
-      unsigned char response[16];
+      ::u8 challenge[16];
+      ::u8 response[16];
 
       pinput->readFully(challenge, sizeof(challenge));
       

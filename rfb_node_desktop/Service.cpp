@@ -174,15 +174,15 @@ namespace remoting_rfb_node_desktop
    }
 
    void Service::onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName,
-                              unsigned char logLevel)
+                              ::u8 logLevel)
    {
       //  size_t headerLineCount = m_clientLogWriter.getLogDumpSize();
-      int headerLineCount = 0;
+      ::i32 headerLineCount = 0;
       //m_logServer.start(scopedstrLogDir, logLevel, headerLineCount);
       //m_clientLogWriter.connect();
    }
 
-   void Service::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
+   void Service::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, ::u8 newLevel)
    {
       //m_logServer.changeLogProps(newLogDir, newLevel);
    }

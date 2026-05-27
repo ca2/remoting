@@ -31,21 +31,21 @@ namespace remoting_rfb
    TightEncoder::TightEncoder(PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream)
    : Encoder(ppixelconverter, pdataoutputstream)
    {
-      for (int i = 0; i < NUM_ZLIB_STREAMS; i++) {
+      for (::i32 i = 0; i < NUM_ZLIB_STREAMS; i++) {
          m_zsActive[i] = false;
       }
    }
 
    TightEncoder::~TightEncoder()
    {
-      for (int i = 0; i < NUM_ZLIB_STREAMS; i++) {
+      for (::i32 i = 0; i < NUM_ZLIB_STREAMS; i++) {
          if (m_zsActive[i]) {
             deflateEnd(&m_zsStruct[i]);
          }
       }
    }
 
-   int TightEncoder::getCode() const
+   ::i32 TightEncoder::getCode() const
    {
       return EncodingDefs::TIGHT;
    }
@@ -55,8 +55,8 @@ namespace remoting_rfb
                                      const ::innate_subsystem::Framebuffer *serverFb,
                                      const EncodeOptions *options)
    {
-      int maxSize = getConf(options).maxRectSize;
-      int rectWidth = rectangle.width();
+      ::i32 maxSize = getConf(options).maxRectSize;
+      ::i32 rectWidth = rectangle.width();
 
       // Handle a special case -- don't ever split a rectangle while its area does
       // not exceed 1/4 of maximum allowed area and width does not exceed 2048.
@@ -65,17 +65,17 @@ namespace remoting_rfb
          return;
       }
 
-      int maxWidth = getConf(options).maxRectWidth;
+      ::i32 maxWidth = getConf(options).maxRectWidth;
       if (maxWidth > rectWidth) {
          maxWidth = rectWidth;
       }
 
-      int maxHeight = maxSize / maxWidth;
+      ::i32 maxHeight = maxSize / maxWidth;
 
-      for (int y0 = rectangle.top; y0 < rectangle.bottom; y0 += maxHeight) {
-         int y1 = minimum(y0 + maxHeight, rectangle.bottom);
-         for (int x0 = rectangle.left; x0 < rectangle.right; x0 += maxWidth) {
-            int x1 = minimum(x0 + maxWidth, rectangle.right);
+      for (::i32 y0 = rectangle.top; y0 < rectangle.bottom; y0 += maxHeight) {
+         ::i32 y1 = minimum(y0 + maxHeight, rectangle.bottom);
+         for (::i32 x0 = rectangle.left; x0 < rectangle.right; x0 += maxWidth) {
+            ::i32 x1 = minimum(x0 + maxWidth, rectangle.right);
             rectanglea.add(::i32_rectangle(x0, y0, x1, y1));
          }
       }
@@ -92,10 +92,10 @@ namespace remoting_rfb
       size_t bpp = clientFb->getBitsPerPixel();
       switch (bpp) {
          case 8:
-            sendAnyRect<unsigned char>(rectangle, serverFb, clientFb, options);
+            sendAnyRect<::u8>(rectangle, serverFb, clientFb, options);
             break;
          case 16:
-            sendAnyRect<unsigned short>(rectangle, serverFb, clientFb, options);
+            sendAnyRect<::u16>(rectangle, serverFb, clientFb, options);
             break;
          case 32:
             sendAnyRect<::u32>(rectangle, serverFb, clientFb, options);
@@ -108,7 +108,7 @@ namespace remoting_rfb
    //--------------------------------------------------------------------------//
 
    // FIXME: Is it really necessary to pass both frame buffers in arguments?
-   // FIXME: Make a special version for the case when PIXEL_T is unsigned char.
+   // FIXME: Make a special version for the case when PIXEL_T is ::u8.
    template <class PIXEL_T>
    void TightEncoder::sendAnyRect(const ::i32_rectangle &  rectangle,
                                   const ::innate_subsystem::Framebuffer *serverFb,
@@ -116,7 +116,7 @@ namespace remoting_rfb
                                   const EncodeOptions *options)
    {
       // Compute maximum number of colors to be allowed in the palette.
-      int maxColors = rectangle.area() / getConf(options).idxMaxColorsDivisor;
+      ::i32 maxColors = rectangle.area() / getConf(options).idxMaxColorsDivisor;
       if (maxColors < 2) {
          if (rectangle.area() >= getConf(options).monoMinRectSize) {
             maxColors = 2;
@@ -130,7 +130,7 @@ namespace remoting_rfb
       fillPalette<PIXEL_T>(rectangle, clientFb, maxColors);
 
       // If that was a solid-color rectangle, sent it.
-      int numColors = m_pal.getNumColors();
+      ::i32 numColors = m_pal.getNumColors();
       if (numColors == 1) {
          sendSolidRect(rectangle, clientFb);
       } else if (numColors == 2) {
@@ -155,7 +155,7 @@ namespace remoting_rfb
       size_t pixelSize = pixelformat.bitsPerPixel / 8;
 
       // Copy the leftmost upper pixel of the rectangle into a buffer.
-      unsigned char buf[4];
+      ::u8 buf[4];
       memcpy(buf, pframebuffer->getBufferPtr(r.left, r.top), pixelSize);
       // FIXME: Call packPixels() unconditionally, make it return length in bytes?
       if (shouldPackPixels(pixelformat)) {
@@ -173,15 +173,15 @@ namespace remoting_rfb
                                    const EncodeOptions *options)
    {
       // Send control info.
-      const int zlibStreamId = ZLIB_STREAM_MONO;
+      const ::i32 zlibStreamId = ZLIB_STREAM_MONO;
       m_pdataoutputstream->writeUInt8(EXPLICIT_FILTER | zlibStreamId << 4);
       m_pdataoutputstream->writeUInt8(FILTER_PALETTE);
       m_pdataoutputstream->writeUInt8(1); // the number of colors minus 1
 
       // Prepare output buffer.
-      int dataLen = (rectangle.width() + 7) / 8;
+      ::i32 dataLen = (rectangle.width() + 7) / 8;
       dataLen *= rectangle.height();
-      // FIXME: Optimize, use char[] instead of ByteArrayOutputStream.
+      // FIXME: Optimize, use ::i8[] instead of ByteArrayOutputStream.
       ByteArrayOutputStream encoded(this, dataLen);
       //encoded.initialize_byte_array_output_stream(dataLen);
       DataOutputStream encodedData(&encoded);
@@ -195,7 +195,7 @@ namespace remoting_rfb
       ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
       size_t pixelSize = sizeof(PIXEL_T);
       if (shouldPackPixels(pixelformat)) {
-         packPixels((unsigned char *)palette, 2, pixelformat);
+         packPixels((::u8 *)palette, 2, pixelformat);
          pixelSize = 3;
       }
       m_pdataoutputstream->write(palette, pixelSize * 2);
@@ -205,7 +205,7 @@ namespace remoting_rfb
       ASSERT(encoded.size() == dataLen);
 
       // Compress and send.
-      int zlibLevel = getConf(options).monoZlibLevel;
+      ::i32 zlibLevel = getConf(options).monoZlibLevel;
       sendCompressed(encoded.toByteArray(), dataLen, zlibStreamId, zlibLevel);
    }
 
@@ -215,15 +215,15 @@ namespace remoting_rfb
                                       const EncodeOptions *options)
    {
       // Send control info.
-      const int zlibStreamId = ZLIB_STREAM_IDX;
+      const ::i32 zlibStreamId = ZLIB_STREAM_IDX;
       m_pdataoutputstream->writeUInt8(EXPLICIT_FILTER | zlibStreamId << 4);
       m_pdataoutputstream->writeUInt8(FILTER_PALETTE);
-      int numColors = m_pal.getNumColors();
-      m_pdataoutputstream->writeUInt8((unsigned char)(numColors - 1));
+      ::i32 numColors = m_pal.getNumColors();
+      m_pdataoutputstream->writeUInt8((::u8)(numColors - 1));
 
       // Prepare output buffer.
-      int dataLen = rectangle.width() * rectangle.height();
-      // FIXME: Optimize, use char[] instead of ByteArrayOutputStream.
+      ::i32 dataLen = rectangle.width() * rectangle.height();
+      // FIXME: Optimize, use ::i8[] instead of ByteArrayOutputStream.
       ByteArrayOutputStream encoded(this, dataLen);
       //encoded.initialize_byte_array_output_stream(dataLen);
       DataOutputStream encodedData(&encoded);
@@ -231,13 +231,13 @@ namespace remoting_rfb
 
       // Send the palette.
       PIXEL_T palette[256];
-      for (int i = 0; i < numColors; i++) {
+      for (::i32 i = 0; i < numColors; i++) {
          palette[i] = (PIXEL_T)m_pal.getEntry(i);
       }
       ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
       size_t pixelSize = sizeof(PIXEL_T);
       if (shouldPackPixels(pixelformat)) {
-         packPixels((unsigned char *)palette, numColors, pixelformat);
+         packPixels((::u8 *)palette, numColors, pixelformat);
          pixelSize = 3;
       }
       m_pdataoutputstream->write(palette, pixelSize * numColors);
@@ -247,7 +247,7 @@ namespace remoting_rfb
       ASSERT(encoded.size() == dataLen);
 
       // Compress and send.
-      int zlibLevel = getConf(options).idxZlibLevel;
+      ::i32 zlibLevel = getConf(options).idxZlibLevel;
       sendCompressed(encoded.toByteArray(), dataLen, zlibStreamId, zlibLevel);
    }
 
@@ -257,13 +257,13 @@ namespace remoting_rfb
                                         const EncodeOptions *options)
    {
       // Send control info.
-      const int zlibStreamId = ZLIB_STREAM_RAW;
+      const ::i32 zlibStreamId = ZLIB_STREAM_RAW;
       m_pdataoutputstream->writeUInt8(zlibStreamId << 4);
 
       // Prepare output buffer.
-      int dataLen = rectangle.area() * sizeof(PIXEL_T);
-      // FIXME: Use char[] instead?
-      ::array_base<unsigned char> rgbData(dataLen);
+      ::i32 dataLen = rectangle.area() * sizeof(PIXEL_T);
+      // FIXME: Use ::i8[] instead?
+      ::array_base<::u8> rgbData(dataLen);
 
       // Get pixels from the frame buffer.
       copyPixels<PIXEL_T>(rectangle, pframebuffer, rgbData.data());
@@ -277,9 +277,9 @@ namespace remoting_rfb
       }
 
       // Compress and send.
-      int zlibLevel = getConf(options).rawZlibLevel;
+      ::i32 zlibLevel = getConf(options).rawZlibLevel;
       // FIXME: Get rid of explicit conversions between chars and bytes.
-      sendCompressed((const char *)rgbData.data(), rgbData.size(),
+      sendCompressed((const_char_pointer )rgbData.data(), rgbData.size(),
                      zlibStreamId, zlibLevel);
    }
 
@@ -292,15 +292,15 @@ namespace remoting_rfb
       // Set proper JPEG quality level in the compressor. The default value 6
       // below does not mean anything, it will not be used because we assume
       // valid JPEG quality level was set in the options object.
-      int quality = options->getJpegQualityLevel(6);
+      ::i32 quality = options->getJpegQualityLevel(6);
       m_compressor.setQuality(quality * 10 + 5);
 
       // Shortcuts.
       const void *ptr = serverFb->getBufferPtr(rectangle.left, rectangle.top);
       ::innate_subsystem::PixelFormat fmt = serverFb->getPixelFormat();
-      int width = rectangle.width();
-      int height = rectangle.height();
-      int stride = serverFb->getBytesPerRow();
+      ::i32 width = rectangle.width();
+      ::i32 height = rectangle.height();
+      ::i32 stride = serverFb->getBytesPerRow();
 
       // Compress pixels.
       m_compressor.compress(ptr, fmt, width, height, stride);
@@ -323,9 +323,9 @@ namespace remoting_rfb
               pixelformat.bitsPerPixel == 32);
    }
 
-   void TightEncoder::packPixels(unsigned char *buf, int count, const ::innate_subsystem::PixelFormat & pixelformat)
+   void TightEncoder::packPixels(::u8 *buf, ::i32 count, const ::innate_subsystem::PixelFormat & pixelformat)
    {
-      unsigned char *dst = buf;
+      ::u8 *dst = buf;
       ::u32 pix;
 
       while (count--) {
@@ -341,14 +341,14 @@ namespace remoting_rfb
                   (::u32)buf[3];
          }
          buf += 4;
-         *dst++ = (unsigned char)(pix >> pixelformat.redShift);
-         *dst++ = (unsigned char)(pix >> pixelformat.greenShift);
-         *dst++ = (unsigned char)(pix >> pixelformat.blueShift);
+         *dst++ = (::u8)(pix >> pixelformat.redShift);
+         *dst++ = (::u8)(pix >> pixelformat.greenShift);
+         *dst++ = (::u8)(pix >> pixelformat.blueShift);
       }
    }
 
    template <class PIXEL_T>
-   void TightEncoder::fillPalette(const ::i32_rectangle &  r, const ::innate_subsystem::Framebuffer *pframebuffer, int maxColors)
+   void TightEncoder::fillPalette(const ::i32_rectangle &  r, const ::innate_subsystem::Framebuffer *pframebuffer, ::i32 maxColors)
    {
       // Clear the palette.
       m_pal.reset();
@@ -356,13 +356,13 @@ namespace remoting_rfb
 
       // Shortcuts.
       const PIXEL_T *pixels = (const PIXEL_T *)pframebuffer->getBuffer();
-      int stride = pframebuffer->getDimension().cx;
+      ::i32 stride = pframebuffer->getDimension().cx;
       ::u32 pixel = pixels[r.top * stride + r.left];
       ::u32 oldPixel = 0;
       ::u32 runLength = 0;
 
-      for (int y = r.top; y < r.bottom; y++) {
-         for (int x = r.left; x < r.right; x++) {
+      for (::i32 y = r.top; y < r.bottom; y++) {
+         for (::i32 x = r.left; x < r.right; x++) {
             pixel = pixels[y * stride + x];
 
             if (oldPixel != pixel) {
@@ -383,16 +383,16 @@ namespace remoting_rfb
 
    template <class PIXEL_T>
    void TightEncoder::copyPixels(const ::i32_rectangle &  rectangle, const ::innate_subsystem::Framebuffer *pframebuffer,
-                                 unsigned char *dst)
+                                 ::u8 *dst)
    {
-      const int rectWidth = rectangle.width();
-      const int rectHeight = rectangle.height();
+      const ::i32 rectWidth = rectangle.width();
+      const ::i32 rectHeight = rectangle.height();
 
       const PIXEL_T *src = (const PIXEL_T *)pframebuffer->getBufferPtr(rectangle.left, rectangle.top);
-      const int fbStride = pframebuffer->getDimension().cx;
-      const int bytesPerRow = rectWidth * sizeof(PIXEL_T);
+      const ::i32 fbStride = pframebuffer->getDimension().cx;
+      const ::i32 bytesPerRow = rectWidth * sizeof(PIXEL_T);
 
-      for (int y = 0; y < rectHeight; y++) {
+      for (::i32 y = 0; y < rectHeight; y++) {
          memcpy(dst, src, bytesPerRow);
          src += fbStride;
          dst += bytesPerRow;
@@ -404,14 +404,14 @@ namespace remoting_rfb
                                      DataOutputStream *out)
    {
       const PIXEL_T *src = (const PIXEL_T *)pframebuffer->getBufferPtr(rectangle.left, rectangle.top);
-      const int w = rectangle.width();
-      const int h = rectangle.height();
+      const ::i32 w = rectangle.width();
+      const ::i32 h = rectangle.height();
       const PIXEL_T bg = (PIXEL_T)m_pal.getEntry(0);
 
       ::u32 value, mask;
-      int x, y, bits;
-      const int alignedWidth = w - w % 8;
-      const int skipPixels = pframebuffer->getDimension().cx - w;
+      ::i32 x, y, bits;
+      const ::i32 alignedWidth = w - w % 8;
+      const ::i32 skipPixels = pframebuffer->getDimension().cx - w;
 
       for (y = 0; y < h; y++) {
          for (x = 0; x < alignedWidth; x += 8) {
@@ -431,7 +431,7 @@ namespace remoting_rfb
                   value |= mask;
                }
             }
-            out->writeUInt8((unsigned char)value);
+            out->writeUInt8((::u8)value);
          }
          if (x < w) {
             mask = 0x80;
@@ -442,7 +442,7 @@ namespace remoting_rfb
                }
                mask >>= 1;
             } while (++x < w);
-            out->writeUInt8((unsigned char)value);
+            out->writeUInt8((::u8)value);
          }
          src += skipPixels;
       }
@@ -453,14 +453,14 @@ namespace remoting_rfb
                                         DataOutputStream *out)
    {
       const PIXEL_T *src = (const PIXEL_T *)pframebuffer->getBufferPtr(rectangle.left, rectangle.top);
-      const int w = rectangle.width();
-      const int h = rectangle.height();
-      const int skipPixels = pframebuffer->getDimension().cx - w;
+      const ::i32 w = rectangle.width();
+      const ::i32 h = rectangle.height();
+      const ::i32 skipPixels = pframebuffer->getDimension().cx - w;
 
-      unsigned char index = m_pal.getIndex(*src);
+      ::u8 index = m_pal.getIndex(*src);
       PIXEL_T oldColor = 0;
-      for (int y = 0; y < h; y++) {
-         for (int x = 0; x < w; x++) {
+      for (::i32 y = 0; y < h; y++) {
+         for (::i32 x = 0; x < w; x++) {
             if (oldColor != *src) {
                index = m_pal.getIndex(*src);
                oldColor = *src;
@@ -472,8 +472,8 @@ namespace remoting_rfb
       }
    }
 
-   void TightEncoder::sendCompressed(const char *data, size_t dataLen,
-                                     int streamId, int zlibLevel)
+   void TightEncoder::sendCompressed(const_char_pointer data, size_t dataLen,
+                                     ::i32 streamId, ::i32 zlibLevel)
    {
       if (dataLen < TIGHT_MIN_TO_COMPRESS) {
          m_pdataoutputstream->write(data, dataLen);
@@ -488,7 +488,7 @@ namespace remoting_rfb
          pz->zfree = Z_NULL;
          pz->opaque = Z_NULL;
 
-         int err = deflateInit2(pz, zlibLevel, Z_DEFLATED, MAX_WBITS,
+         ::i32 err = deflateInit2(pz, zlibLevel, Z_DEFLATED, MAX_WBITS,
                                 MAX_MEM_LEVEL, Z_DEFAULT_STRATEGY);
          if (err != Z_OK) {
             throw ::io_exception(error_io, "Zlib stream initialization failed in Tight encoder");
@@ -501,9 +501,9 @@ namespace remoting_rfb
       // Prepare buffers.
       size_t compressedBufferSize = dataLen + dataLen / 100 + 16;
 
-      ::array_base<char> charBuff;
+      ::array_base<::i8> charBuff;
       charBuff.set_size(compressedBufferSize);
-      char *compressedData = charBuff.data();
+      char_pointer compressedData = charBuff.data();
 
       ASSERT((::u32)dataLen == dataLen);
       ASSERT((::u32)compressedBufferSize == compressedBufferSize);
@@ -514,7 +514,7 @@ namespace remoting_rfb
 
       // Change compression parameters if needed.
       if (zlibLevel != m_zsLevel[streamId]) {
-         int err = deflateParams(pz, zlibLevel, Z_DEFAULT_STRATEGY);
+         ::i32 err = deflateParams(pz, zlibLevel, Z_DEFAULT_STRATEGY);
          if (err != Z_OK) {
             throw ::io_exception(error_io, "Error configuring Zlib stream in Tight encoder");
          }
@@ -522,7 +522,7 @@ namespace remoting_rfb
       }
 
       // Actual compression.
-      int err = deflate(pz, Z_SYNC_FLUSH);
+      ::i32 err = deflate(pz, Z_SYNC_FLUSH);
       if (err != Z_OK || pz->avail_in != 0 || pz->avail_out == 0) {
          throw ::io_exception(error_io, "Zlib compression failed in Tight encoder");
       }
@@ -540,7 +540,7 @@ namespace remoting_rfb
    {
       ASSERT(dataLen <= 0x3FFFFF);
 
-      unsigned char buffer[4];
+      ::u8 buffer[4];
       size_t numBytes = 0;
 
       buffer[numBytes++] = dataLen & 0x7F;
@@ -577,7 +577,7 @@ namespace remoting_rfb
    const TightEncoder::Conf &
    TightEncoder::getConf(const EncodeOptions *options)
    {
-      int level = options->getCompressionLevel(DEFAULT_COMPRESSION_LEVEL);
+      ::i32 level = options->getCompressionLevel(DEFAULT_COMPRESSION_LEVEL);
       ASSERT(level >= 0 && level <= 9);
       return m_conf[level];
    }

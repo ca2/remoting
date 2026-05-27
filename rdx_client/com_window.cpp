@@ -26,11 +26,11 @@ namespace windows
    }
 
    //
-   // float com_window::get_window_scale()
+   // ::f32 com_window::get_window_scale()
    // {
    //    auto hwnd = ::as_HWND(this->operating_system_window());
    //    UINT dpi = GetDpiForWindow(hwnd);
-   //    return (float)dpi / 96.0f;
+   //    return (::f32)dpi / 96.0f;
    // }
    //
 
@@ -141,7 +141,7 @@ namespace windows
     rc.right - rc.left,
     rc.bottom - rc.top);
 
-      int iStyle = get_window_style();
+      ::i32 iStyle = get_window_style();
 
       strMessage.append_formatf(" style=%08x;", iStyle);
 
@@ -295,7 +295,7 @@ namespace windows
    }
 
 
-   bool com_window::on_window_activate(int iActivate, bool bMinimized,
+   bool com_window::on_window_activate(::i32 iActivate, bool bMinimized,
                                         const operating_system::window &operatingsystemwindow)
    {
 
@@ -308,7 +308,7 @@ namespace windows
    }
 
 
-   bool com_window::on_window_mouse_activate(int &iResult, const operating_system::window &operatingsystemwindowTop, int iHitTest, int iMessage)
+   bool com_window::on_window_mouse_activate(::i32 &iResult, const operating_system::window &operatingsystemwindowTop, ::i32 iHitTest, ::i32 iMessage)
    {
 
       iResult = MA_ACTIVATE;

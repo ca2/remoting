@@ -43,7 +43,7 @@ namespace remoting_rfb_windows
 
 
       ::pointer < MirrorDriverClient > m_pmirrordriverclient;
-      unsigned long m_lastCounter;
+      ulong m_lastCounter;
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebuffer;
       // TO THINK: One may use a self mutex here, because do not
       // use external objects here.

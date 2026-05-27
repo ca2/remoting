@@ -44,7 +44,7 @@ namespace remoting_rfb
       TightEncoder(::remoting_rfb::PixelConverter * ppixelconverter, DataOutputStream * pdataoutputstream);
       virtual ~TightEncoder();
 
-      virtual int getCode() const;
+      virtual ::i32 getCode() const;
 
       // Splits big rectangles according to the configuration setings (m_conf)
       // corresponding to the compression level set in EncodeOptions.
@@ -89,18 +89,18 @@ namespace remoting_rfb
       // Convert 32-bit color samples into 24-bit sequences, in place. It should
       // be called only when bpp is 32; color depth is 24; and redMax, greenMax
       // and blueMax are all 255.
-      static void packPixels(unsigned char *buf, int count, const ::innate_subsystem::PixelFormat & pixelformat);
+      static void packPixels(::u8 *buf, ::i32 count, const ::innate_subsystem::PixelFormat & pixelformat);
 
       // Fill in the palette (m_pal) assuming that pixels have the type PIXEL_T
-      // (where PIXEL_T can be unsigned char, unsigned short or ::u32). Do not allow more than
+      // (where PIXEL_T can be ::u8, ::u16 or ::u32). Do not allow more than
       // maxColors in the palette, reset the palette size to 0 if actual number of
       // colors exceeds this limitation.
       template<class PIXEL_T>
-      void fillPalette(const ::i32_rectangle &r, const ::innate_subsystem::Framebuffer *pframebuffer, int maxColors);
+      void fillPalette(const ::i32_rectangle &r, const ::innate_subsystem::Framebuffer *pframebuffer, ::i32 maxColors);
 
       // Copy pixel data from the frame buffer to a byte array.
       template<class PIXEL_T>
-      void copyPixels(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *pframebuffer, unsigned char *dst);
+      void copyPixels(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *pframebuffer, ::u8 *dst);
 
       // Encode a two-color rectangle using m_pal as a palette, produce a bitmap
       // where one pixel is represented by one bit. Each line is padded with
@@ -118,7 +118,7 @@ namespace remoting_rfb
                              DataOutputStream *out);
 
       // FIXME: Throw ZlibException instead.
-      void sendCompressed(const char *data, size_t dataLen, int streamId, int zlibLevel);
+      void sendCompressed(const_char_pointer data, size_t dataLen, ::i32 streamId, ::i32 zlibLevel);
 
       // Send the number of the compressed bytes following. The number (dataLen)
       // is represented by a variable-length code (1..3 bytes).
@@ -128,13 +128,13 @@ namespace remoting_rfb
       // directly, use getConf() method instead.
       static const struct Conf
       {
-         int maxRectSize;
-         int maxRectWidth;
-         int monoMinRectSize;
-         int idxZlibLevel;
-         int monoZlibLevel;
-         int rawZlibLevel;
-         int idxMaxColorsDivisor;
+         ::i32 maxRectSize;
+         ::i32 maxRectWidth;
+         ::i32 monoMinRectSize;
+         ::i32 idxZlibLevel;
+         ::i32 monoZlibLevel;
+         ::i32 rawZlibLevel;
+         ::i32 idxMaxColorsDivisor;
       } m_conf[10];
 
       // Select a record from the m_conf array which corresponds to the
@@ -142,27 +142,27 @@ namespace remoting_rfb
       static const Conf &getConf(const EncodeOptions *options);
 
       // Codes used in Tight-encoded data.
-      static const unsigned char SUBENCODING_FILL = 0x80;
-      static const unsigned char SUBENCODING_JPEG = 0x90;
-      static const unsigned char EXPLICIT_FILTER = 0x40;
-      static const unsigned char FILTER_PALETTE = 0x01;
+      static const ::u8 SUBENCODING_FILL = 0x80;
+      static const ::u8 SUBENCODING_JPEG = 0x90;
+      static const ::u8 EXPLICIT_FILTER = 0x40;
+      static const ::u8 FILTER_PALETTE = 0x01;
 
       // Changing this will break compatibility with Tight decoders.
-      static const int TIGHT_MIN_TO_COMPRESS = 12;
+      static const ::i32 TIGHT_MIN_TO_COMPRESS = 12;
 
       // The parameters below may be adjusted.
-      static const int DEFAULT_COMPRESSION_LEVEL = 6;
-      static const int JPEG_MIN_RECT_SIZE = 4096;
-      static const int JPEG_MIN_RECT_WIDTH = 8;
-      static const int JPEG_MIN_RECT_HEIGHT = 8;
+      static const ::i32 DEFAULT_COMPRESSION_LEVEL = 6;
+      static const ::i32 JPEG_MIN_RECT_SIZE = 4096;
+      static const ::i32 JPEG_MIN_RECT_WIDTH = 8;
+      static const ::i32 JPEG_MIN_RECT_HEIGHT = 8;
 
       // The number of zlib streams used by TightEncoder (it cannot exceed 4).
-      static const int NUM_ZLIB_STREAMS = 3;
+      static const ::i32 NUM_ZLIB_STREAMS = 3;
 
       // Indexes of individual zlib streams.
-      static const int ZLIB_STREAM_RAW = 0;
-      static const int ZLIB_STREAM_MONO = 1;
-      static const int ZLIB_STREAM_IDX = 2;
+      static const ::i32 ZLIB_STREAM_RAW = 0;
+      static const ::i32 ZLIB_STREAM_MONO = 1;
+      static const ::i32 ZLIB_STREAM_IDX = 2;
 
       // The array of zlib stream structures.
       z_stream m_zsStruct[NUM_ZLIB_STREAMS];
@@ -170,7 +170,7 @@ namespace remoting_rfb
       // The array of flags indicating if corresponding zlib streams were
       // initialized.
       bool m_zsActive[NUM_ZLIB_STREAMS];
-      int m_zsLevel[NUM_ZLIB_STREAMS];
+      ::i32 m_zsLevel[NUM_ZLIB_STREAMS];
 
       // Color palette which maps color samples to color indexes and keeps track
       // of the number of colors allocated.

@@ -40,6 +40,6 @@ namespace remoting_rfb_client
                           ::innate_subsystem::Framebuffer *pframebuffer,
                           const ::i32_rectangle &  rectangleTarget);
    private:
-      static const int TILE_SIZE = 16;
+      static const ::i32 TILE_SIZE = 16;
    };
 } // namespace remoting_rfb_client

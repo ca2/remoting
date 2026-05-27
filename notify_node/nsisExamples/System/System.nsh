@@ -11,10 +11,10 @@
 
 ; ------------- Functions --------------
 
-; LRESULT CALLBACK WndProc(HWND hwnd, unsigned int uMsg, ::wparam wParam, ::lparam lParam);
+; LRESULT CALLBACK WndProc(HWND hwnd, ::u32 uMsg, ::wparam wParam, ::lparam lParam);
 !define sysWNDPROC "(p.s, i.s, p.s, p.s) pss"
 
-; LRESULT DefWindowProc(HWND hWnd, unsigned int Msg, ::wparam wParam, ::lparam lParam);
+; LRESULT DefWindowProc(HWND hWnd, ::u32 Msg, ::wparam wParam, ::lparam lParam);
 !define sysDefWindowProc "user32::DefWindowProc(p, i, p, p) p"
 
 !define sysMessageBox "user32::MessageBox(p, t, t, i) i"
@@ -38,8 +38,8 @@
 ; ATOM RegisterClass(CONST WNDCLASS *lpWndClass);
 !define sysRegisterClass "user32::RegisterClass(p) i"
 
-; HANDLE LoadImage(HINSTANCE hinst, LPCTSTR lpszName, unsigned int uType,
-;       int cxDesired, int cyDesired, unsigned int fuLoad);
+; HANDLE LoadImage(HINSTANCE hinst, LPCTSTR lpszName, ::u32 uType,
+;       int cxDesired, int cyDesired, ::u32 fuLoad);
 !define sysLoadImage "user32::LoadImage(p, t, i, i, i, i) p"
 
 ; bool PlaySound(LPCSTR pszSound, HMODULE hmod, DWORD fdwSound);
@@ -56,7 +56,7 @@
 ; LONG SetWindowLong(HWND hWnd, int nIndex, LONG dwNewLong);
 !define sysSetWindowLong "user32::SetWindowLong(p, i, p) p"
 
-; bool SetWindowPos(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, unsigned int uFlags);
+; bool SetWindowPos(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, ::u32 uFlags);
 !define sysSetWindowPos "user32::SetWindowPos(p, p, i, i, i, i, i) i"
 
 ; bool ShowWindow(HWND hWnd, int nCmdShow);
@@ -68,7 +68,7 @@
 ; bool GetClientRect(HWND hWnd, LPRECT lpRect);
 !define sysGetClientRect "user32::GetClientRect(p, p) i"
 
-; bool GetMessage(LPMSG lpMsg, HWND hWnd, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax);
+; bool GetMessage(LPMSG lpMsg, HWND hWnd, ::u32 wMsgFilterMin, ::u32 wMsgFilterMax);
 !define sysGetMessage "user32::GetMessage(p, p, i, i) i"
 
 ; LRESULT DispatchMessage(CONST MSG *lpmsg);
@@ -103,10 +103,10 @@
 ; bool EndPaint(HWND hWnd, CONST PAINTSTRUCT *lpPaint);
 !define sysEndPaint "user32::EndPaint(p, p) i"
 
-; bool SystemParametersInfo(::u32 uAction, ::u32 uParam, PVOID pvParam, unsigned int fWinIni);
+; bool SystemParametersInfo(::u32 uAction, ::u32 uParam, PVOID pvParam, ::u32 fWinIni);
 !define sysSystemParametersInfo "user32::SystemParametersInfo(i, i, p, i) i"
 
-; UINT_PTR SetTimer(HWND hWnd, UINT_PTR uEvent, unsigned int uElapse, TIMERPROC lpTimerFunc);
+; UINT_PTR SetTimer(HWND hWnd, UINT_PTR uEvent, ::u32 uElapse, TIMERPROC lpTimerFunc);
 !define sysSetTimer "user32::SetTimer(p, p, i, k) i"
 
 ; DWORD GetLogicalDriveStrings(DWORD nBufferLength, char * LpBuffer);
@@ -114,7 +114,7 @@
 
 !define sysGetDiskFreeSpaceEx 'kernel32::GetDiskFreeSpaceEx(t, *l, *l, *l) i'
 
-; unsigned int GetDriveType(LPCTSTR lpRootPathName);
+; ::u32 GetDriveType(LPCTSTR lpRootPathName);
 !define sysGetDriveType 'kernel32::GetDriveType(t) i'
 
 ; HANDLE FindFirstFile(LPCTSTR lpFileName,LPWIN32_FIND_DATA lpFindFileData);
@@ -144,7 +144,7 @@
 ; ------------- Structures --------------
 
 ; typedef struct _WNDCLASS { 
-;               unsigned int       style; 
+;               ::u32       style; 
 ;               WNDPROC    lpfnWndProc; 
 ;               int        cbClsExtra; 
 ;               int        cbWndExtra; 
@@ -159,7 +159,7 @@
 
 ; typedef struct tagMSG {
 ;   HWND   hwnd; 
-;   unsigned int   message; 
+;   ::u32   message; 
 ;   ::wparam wParam; 
 ;   ::lparam lParam; 
 ;   DWORD  time; 
@@ -197,7 +197,7 @@
 !define stPAINTSTRUCT "(p, i, i, i, i, i, i, i, &v32) p"
 
 ; typedef struct { 
-;  unsigned int      cbSize; 
+;  ::u32      cbSize; 
 ;  HWND      hwndOwner; 
 ;  HINSTANCE hInstance; 
 ;  LPCTSTR   lpszText; 

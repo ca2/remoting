@@ -58,7 +58,7 @@ namespace remoting_rtc_node
    {
       initControls();
 
-      for (int i = 0; i < 3; i++) {
+      for (::i32 i = 0; i < 3; i++) {
          m_access[i].setChecked(false);
       }
 
@@ -152,11 +152,11 @@ namespace remoting_rtc_node
       closeDialog(::innate_subsystem::e_control_id_cancel);
    }
 
-   void EditIpAccessRuleDialog::onAccessTypeRadioClick(int num)
+   void EditIpAccessRuleDialog::onAccessTypeRadioClick(::i32 num)
    {
       if (!m_access[num].isChecked()) {
          m_access[num].setChecked(true);
-         for (int i = 0; i < 3; i++) {
+         for (::i32 i = 0; i < 3; i++) {
             if (i != num) {
                m_access[i].setChecked(false);
             } // if
@@ -203,8 +203,8 @@ namespace remoting_rtc_node
       ::string firstIpAnsi(&firstIp);
       ::string lastIpAnsi(&lastIp);
 
-      unsigned long firstIpAddr = MainSubsystem().internet_address4(firstIpAnsi);
-      unsigned long lastIpAddr = MainSubsystem().internet_address4(lastIpAnsi);
+      ulong firstIpAddr = MainSubsystem().internet_address4(firstIpAnsi);
+      ulong lastIpAddr = MainSubsystem().internet_address4(lastIpAnsi);
 
       if (IpAccessRule::compareIp(firstIpAddr, lastIpAddr) == 1) {
          m_lastIp.setFocus();

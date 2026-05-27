@@ -38,7 +38,7 @@ public:
   ~WinFileChannel();
 
   // Inherited from FileChannel.
-  virtual void seek(long long n);
+  virtual void seek(::i64 n);
 
   // Inherited from Channel.
   virtual size_t read(void *buffer, size_t len);

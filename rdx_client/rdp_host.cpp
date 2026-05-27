@@ -10,7 +10,7 @@
 #include "application.h"
 #include "acme/windowing/windowing.h"
 #include "acme/nano/graphics/brush.h"
-#include "acme/nano/graphics/device.h"
+#include "acme/nano/graphics/context.h"
 //#include "rdp_host.h"
 #include "toolbar.h"
 
@@ -150,7 +150,7 @@ namespace remoting_rdx_client
 
    // HHOOK g_mouseHook;
    //
-   // LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam)
+   // LRESULT CALLBACK MouseProc(::i32 nCode, WPARAM wParam, LPARAM lParam)
    // {
    //    if (nCode == HC_ACTION)
    //    {
@@ -236,8 +236,8 @@ namespace remoting_rdx_client
             if (wparam == GWL_STYLE)
             {
 
-               int iStyleOld =pstylestruct->styleNew;
-               int iStyleNew =pstylestruct->styleNew;
+               ::i32 iStyleOld =pstylestruct->styleNew;
+               ::i32 iStyleNew =pstylestruct->styleNew;
 
                information("old style {} new style {}", iStyleOld, iStyleNew);
 
@@ -245,8 +245,8 @@ namespace remoting_rdx_client
             else if (wparam == GWL_EXSTYLE)
             {
 
-               int iExStyleOld =pstylestruct->styleNew;
-               int iExStyleNew =pstylestruct->styleNew;
+               ::i32 iExStyleOld =pstylestruct->styleNew;
+               ::i32 iExStyleNew =pstylestruct->styleNew;
 
                information("old ex style {} new ex style {}", iExStyleOld, iExStyleNew);
 
@@ -337,7 +337,7 @@ namespace remoting_rdx_client
          case WM_APP + 100:
          {
 
-            int iCmd = wparam.raw_cast<int>();
+            ::i32 iCmd = wparam.raw_cast<::i32>();
 
             switch (iCmd)
             {
@@ -477,7 +477,7 @@ namespace remoting_rdx_client
       if (m_pinternal &&
           m_pinternal->m_prdpclient)
       {
-         short connected = 0;
+         ::i16 connected = 0;
 
          m_pinternal->m_prdpclient->get_Connected(&connected);
 
@@ -620,9 +620,9 @@ namespace remoting_rdx_client
 
       m_pinternal->m_prdpclient->put_ColorDepth(32);
 
-      int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+      ::i32 screenWidth = GetSystemMetrics(SM_CXSCREEN);
 
-      int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+      ::i32 screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
       m_pinternal->m_prdpclient->put_DesktopWidth(screenWidth);
 
@@ -633,7 +633,7 @@ namespace remoting_rdx_client
    }
 
 
-   void rdp_host::on_window_paint(nano::graphics::device *pnanographicsdevice)
+   void rdp_host::on_window_paint(::nano::graphics::context *pgraphicscontext)
    {
 
 
@@ -782,7 +782,7 @@ namespace remoting_rdx_client
        rc.right - rc.left,
        rc.bottom - rc.top);
 
-         int iStyle = get_window_style();
+         ::i32 iStyle = get_window_style();
 
          strMessage.append_formatf(" style=%08x;", iStyle);
 

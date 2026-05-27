@@ -53,7 +53,7 @@ namespace remoting
        * @throws ::subsystem::Exception if fail to create tcp server.
        */
       TcpServer(const ::scoped_string & scopedstrBindHost,
-                unsigned short bindPort,
+                ::u16 bindPort,
                 bool autoStart = false,
                 bool lockAddr = false);
       /**
@@ -70,7 +70,7 @@ namespace remoting
       /**
        * Returns bind port.
        */
-      unsigned short getBindPort() const;
+      ::u16 getBindPort() const;
 
    protected:
       /**
@@ -104,6 +104,6 @@ namespace remoting
       /**
        * Port to bind.
        */
-      unsigned short m_bindPort;
+      ::u16 m_bindPort;
    };
 } // namespace remoting

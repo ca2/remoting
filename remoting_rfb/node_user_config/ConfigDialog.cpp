@@ -269,12 +269,12 @@ namespace remoting_rfb_node
         ::user::e_message_box_ok | ::user::e_message_box_icon_information);
    }
 
-   bool ConfigDialog::_002OnTabChanged(int iControl)
+   bool ConfigDialog::_002OnTabChanged(::i32 iControl)
    {
 
       if (iControl == IDC_CONFIG_TAB)
       {
-         int currentTabIndex = m_tabControl.getSelectedTabIndex();
+         ::i32 currentTabIndex = m_tabControl.getSelectedTabIndex();
          auto ptab = m_tabControl.getTab(currentTabIndex);
          ptab->setVisible(true);
          return true;
@@ -284,12 +284,12 @@ namespace remoting_rfb_node
 
    }
 
-   bool ConfigDialog::_002OnTabChanging(int iControl, bool & bOk)
+   bool ConfigDialog::_002OnTabChanging(::i32 iControl, bool & bOk)
    {
 
       if (iControl == IDC_CONFIG_TAB)
       {
-         int currentTabIndex = m_tabControl.getSelectedTabIndex();
+         ::i32 currentTabIndex = m_tabControl.getSelectedTabIndex();
          auto ptab = m_tabControl.getTab(currentTabIndex);
          ptab->setVisible(false);
          bOk = true;

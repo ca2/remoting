@@ -45,7 +45,7 @@ namespace remoting_rfb_client
 
    ::string JpegDecompressor::get_message(j_common_ptr cinfo)
    {
-      char buffer[JMSG_LENGTH_MAX];
+      ::i8 buffer[JMSG_LENGTH_MAX];
       // Create the scopedstrMessage
       (*cinfo->err->format_message) (cinfo, buffer);
 
@@ -68,9 +68,9 @@ namespace remoting_rfb_client
       return;
    }
 
-   void JpegDecompressor::decompress(::array_base<unsigned char> &buffer,
+   void JpegDecompressor::decompress(::array_base<::u8> &buffer,
                                      size_t jpegBufLen,
-                                     ::array_base<unsigned char> &pixels,
+                                     ::array_base<::u8> &pixels,
                                      const ::i32_rectangle &  rectangleTarget)
    {
       if (rectangleTarget.is_empty())
@@ -78,7 +78,7 @@ namespace remoting_rfb_client
 
       if (buffer.size() == 0 || buffer.size() < jpegBufLen)
          throw ::subsystem::Exception("incorrect size of buffer in jpeg-decompressor");
-      unsigned char *src_buf = buffer.data();
+      ::u8 *src_buf = buffer.data();
       size_t src_buf_size = jpegBufLen;
 
       size_t width = rectangleTarget.width();
@@ -86,11 +86,11 @@ namespace remoting_rfb_client
       size_t pixelBufferCount =  width * height * BYTES_PER_PIXEL;
       if (pixels.size() == 0 || pixels.size() < pixelBufferCount)
          throw ::subsystem::Exception("incorrect size of pixels-buffer in jpeg-decompressor");
-      unsigned char *dst_buf = pixels.data();
+      ::u8 *dst_buf = pixels.data();
 
       try {
          /* Initialize data source and read the header. */
-         jpeg_mem_src(&m_jpeg.cinfo, src_buf, static_cast<unsigned long>(src_buf_size));
+         jpeg_mem_src(&m_jpeg.cinfo, src_buf, static_cast<ulong>(src_buf_size));
          if (jpeg_read_header(&m_jpeg.cinfo, true) != JPEG_HEADER_OK) {
             throw ::subsystem::Exception("possible, bad JPEG header");
          }

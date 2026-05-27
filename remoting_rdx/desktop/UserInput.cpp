@@ -41,7 +41,7 @@ namespace remoting_rfb
 
    }
 
-   void UserInput::initKeyFlag(unsigned char initValue)
+   void UserInput::initKeyFlag(::u8 initValue)
    {
 
 

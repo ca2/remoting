@@ -125,7 +125,7 @@ namespace remoting_control_desktop
       void sharePrimary();
 
       // Share only the display for all clients.
-      void shareDisplay(unsigned char displayNumber);
+      void shareDisplay(::u8 displayNumber);
 
       // Share a rectangle that constrained by a window form.
       // shareWindowName - is a part of the window header name.

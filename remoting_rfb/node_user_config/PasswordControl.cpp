@@ -77,31 +77,31 @@ namespace remoting_rfb_node
 
    void PasswordControl::setPassword(const ::scoped_string & scopedstrPlainText)
    {
-      char plainTextInANSI[9];
+      ::i8 plainTextInANSI[9];
       memset(plainTextInANSI, 0, sizeof(plainTextInANSI));
       ::string plainTextInUTF16(scopedstrPlainText);
       ::string ansiPlainTextStorage(&plainTextInUTF16);
       memcpy(plainTextInANSI, ansiPlainTextStorage,
              minimum(ansiPlainTextStorage.length(), sizeof(plainTextInANSI)));
 
-      unsigned char cryptedPassword[8];
+      ::u8 cryptedPassword[8];
       memset(cryptedPassword, 0, 8);
 
-      ::subsystem::VncPassCrypt::getEncryptedPass(cryptedPassword, (const unsigned char *)plainTextInANSI);
+      ::subsystem::VncPassCrypt::getEncryptedPass(cryptedPassword, (const ::u8 *)plainTextInANSI);
 
-      setCryptedPassword((char *)cryptedPassword);
+      setCryptedPassword((char_pointer )cryptedPassword);
 
       updateControlsState();
    }
 
-   void PasswordControl::setCryptedPassword(const char *cryptedPass)
+   void PasswordControl::setCryptedPassword(const_char_pointer cryptedPass)
    {
       m_cryptedPassword.resize(8);
       memcpy(m_cryptedPassword.data(), cryptedPass, m_cryptedPassword.size());
       m_state = NewPassword;
    }
 
-   const char *PasswordControl::getCryptedPassword() const
+   const_char_pointer PasswordControl::getCryptedPassword() const
    {
       if (m_cryptedPassword.empty()) {
          return 0;

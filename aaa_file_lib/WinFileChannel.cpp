@@ -52,7 +52,7 @@ void WinFileChannel::close()
   m_winFile.close();
 }
 
-void WinFileChannel::seek(long long n)
+void WinFileChannel::seek(::i64 n)
 {
   try {
     m_winFile.seek(n);

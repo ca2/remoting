@@ -37,7 +37,7 @@ namespace remoting_rfb
    {
    }
 
-   int Encoder::getCode() const
+   ::i32 Encoder::getCode() const
    {
       return EncodingDefs::RAW;
    }
@@ -55,19 +55,19 @@ namespace remoting_rfb
                                const EncodeOptions *options)
    {
       const ::innate_subsystem::Framebuffer *pframebuffer = m_ppixelconverter->convert(rectangle, serverFb);
-      int pixelSize = (int)pframebuffer->getBytesPerPixel();
+      ::i32 pixelSize = (::i32)pframebuffer->getBytesPerPixel();
       ASSERT(pixelSize == pframebuffer->getBytesPerPixel());
 
-      unsigned char *buffer = (unsigned char *)pframebuffer->getBuffer();
-      int lineWidth = rectangle.width();
-      int fbWidth = pframebuffer->getDimension().cx;
-      int lineSizeInBytes = lineWidth * pixelSize;
-      int stride = fbWidth * pixelSize;
-      unsigned char *lineP = &buffer[(rectangle.top * fbWidth + rectangle.left) * pixelSize];
+      ::u8 *buffer = (::u8 *)pframebuffer->getBuffer();
+      ::i32 lineWidth = rectangle.width();
+      ::i32 fbWidth = pframebuffer->getDimension().cx;
+      ::i32 lineSizeInBytes = lineWidth * pixelSize;
+      ::i32 stride = fbWidth * pixelSize;
+      ::u8 *lineP = &buffer[(rectangle.top * fbWidth + rectangle.left) * pixelSize];
 
       // Send the rectangle as is, line by line.
-      for (int i = rectangle.top; i < rectangle.bottom; i++, lineP += stride) {
-         m_pdataoutputstream->write((char *)lineP, lineSizeInBytes);
+      for (::i32 i = rectangle.top; i < rectangle.bottom; i++, lineP += stride) {
+         m_pdataoutputstream->write((char_pointer )lineP, lineSizeInBytes);
       }
    }
 } // namespace remoting_rfb

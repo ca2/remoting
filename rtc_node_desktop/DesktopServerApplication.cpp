@@ -86,7 +86,7 @@ namespace remoting_node_desktop
 #ifdef WINDOWS
          HANDLE readPipeHandle, writePipeHandle;
 #else
-         int readPipeHandle, writePipeHandle;
+         ::i32 readPipeHandle, writePipeHandle;
 #endif
          ::u32 maxPortionSize;
 
@@ -94,8 +94,8 @@ namespace remoting_node_desktop
          readPipeHandle = (HANDLE)mem[1];
          writePipeHandle = (HANDLE)mem[2];
 #else
-         readPipeHandle = (int)mem[1];
-         writePipeHandle = (int)mem[2];
+         readPipeHandle = (::i32)mem[1];
+         writePipeHandle = (::i32)mem[2];
 #endif
          maxPortionSize = (::u32)mem[3];
          auto ppipeClient = create_newø<::subsystem::AnonymousPipe>();
@@ -120,8 +120,8 @@ namespace remoting_node_desktop
          writePipeHandle = (HANDLE)mem[5];
 #else
 
-         readPipeHandle = (int)mem[4];
-         writePipeHandle = (int)mem[5];
+         readPipeHandle = (::i32)mem[4];
+         writePipeHandle = (::i32)mem[5];
 
 #endif
          maxPortionSize = (::u32)mem[6];
@@ -247,7 +247,7 @@ namespace remoting_node_desktop
          
          pwallpaperutil->initialize_wallpaper_util(m_pconfigurator, m_plogwriter);
 
-         // int retCode = OperatingSystemApplication::onThreadMain();
+         // ::i32 retCode = OperatingSystemApplication::onThreadMain();
          OperatingSystemApplication::onOperatingSystemApplicationMain();
          m_plogwriter->information("Desktop server terminated with return code = {}", this->getExitCode());
          // return retCode;

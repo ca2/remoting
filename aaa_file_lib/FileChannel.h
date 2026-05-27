@@ -32,7 +32,7 @@ class FileChannel : public Channel
 public:
   // Set file pointer to specified pointPosition starting from current
   // file pointer pointPosition. Can move forward and backward.
-  virtual void seek(long long n) = 0;
+  virtual void seek(::i64 n) = 0;
 };
 
 //// __FILECHANNEL_H__

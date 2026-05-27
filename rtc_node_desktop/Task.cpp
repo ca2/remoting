@@ -221,13 +221,13 @@ namespace remoting_node_desktop
    }
 
    void Task::onLogInit(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName,
-                                        unsigned char logLevel)
+                                        ::u8 logLevel)
    {
       //m_fileLogWriter.init(logDir, fileName, logLevel);
       //m_fileLogWriter.storeHeader();
    }
 
-   void Task::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, unsigned char newLevel)
+   void Task::onChangeLogProps(const ::scoped_string & scopedstrNewLogDir, ::u8 newLevel)
    {
       //m_fileLogWriter.changeLogProps(newLogDir, newLevel);
    }

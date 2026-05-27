@@ -27,7 +27,7 @@
 
 namespace remoting_rfb_client
 {
-   RfbSetEncodingsClientMessage::RfbSetEncodingsClientMessage(const ::array_base<int> & encodings)
+   RfbSetEncodingsClientMessage::RfbSetEncodingsClientMessage(const ::array_base<::i32> & encodings)
    {
       m_encodings = encodings;
    }
@@ -43,9 +43,9 @@ namespace remoting_rfb_client
       prfboutputgate->writeUInt8(0); // padding 1 byte
 
       // prfboutputgate count of encoding and out code of all encodings
-      prfboutputgate->writeUInt16(static_cast<unsigned short>(m_encodings.size()));
+      prfboutputgate->writeUInt16(static_cast<::u16>(m_encodings.size()));
 
-      for (::array_base<int>::iterator i = m_encodings.begin();
+      for (::array_base<::i32>::iterator i = m_encodings.begin();
            i != m_encodings.end();
            i++) {
          prfboutputgate->writeInt32(*i);

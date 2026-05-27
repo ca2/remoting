@@ -50,8 +50,8 @@ namespace remoting_node_desktop
       // the breakAndDisableAuthentications() function.
       // The function may be blocked as described above then if it will
       // be called again the caller will waitThreadToFinish other callers in order.
-      bool authenticate(const unsigned char cryptPassword[8], const unsigned char challenge[8],
-                        const unsigned char response[8]);
+      bool authenticate(const ::u8 cryptPassword[8], const ::u8 challenge[8],
+                        const ::u8 response[8]);
 
       // Breaks all waitThreadToFinish operations for this authenticator. Also if some
       // caller calls the authenticate() function it immediately return the

@@ -90,8 +90,8 @@ namespace remoting_rfb_node_desktop
       getConfiguration(&newConf);
       bool noConfigChanges = newConf.equals(&m_effectiveConf);
       bool enoughServers = (newConf.extraPorts.count() == m_servers.size());
-      m_plogwriter->debug("Same Extra Ports configuration = {}, enough servers = {}", (int)noConfigChanges,
-                          (int)enoughServers);
+      m_plogwriter->debug("Same Extra Ports configuration = {}, enough servers = {}", (::i32)noConfigChanges,
+                          (::i32)enoughServers);
 
       if (noConfigChanges && enoughServers)
       {
@@ -112,7 +112,7 @@ namespace remoting_rfb_node_desktop
 
       for (auto i = m_servers.begin(); i != m_servers.end(); i++)
       {
-         int port = (*i)->getBindPort();
+         ::i32 port = (*i)->getBindPort();
          m_plogwriter->debug("Stopping extra RFB server at port {}", port);
          delete *i;
          m_plogwriter->debug("Stopped extra RFB server at port {}", port);
@@ -136,13 +136,13 @@ namespace remoting_rfb_node_desktop
 
       if (newConf.acceptConnections)
       {
-         const char *pszBindHost = newConf.loopbackOnly ? "localhost" : "0.0.0.0";
+         const_char_pointer pszBindHost = newConf.loopbackOnly ? "localhost" : "0.0.0.0";
 
          for (size_t i = 0; i < newConf.extraPorts.count(); i++)
          {
             ::remoting_rfb_node::PortMapping pm = *newConf.extraPorts.at(i);
             ::remoting_rfb_node::PortMappingRect rectangle = pm.getRect();
-            int port = pm.getPort();
+            ::i32 port = pm.getPort();
 
             m_plogwriter->debug("Starting extra RFB server at port {}", port);
 

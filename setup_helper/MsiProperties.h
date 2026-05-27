@@ -35,8 +35,8 @@ public:
   MsiProperties(MSIHANDLE handle);
   ~MsiProperties();
 
-  int getInt32(const ::scoped_string & scopedstrName);
-  void setInt32(const ::scoped_string & scopedstrName, int value);
+  ::i32 getInt32(const ::scoped_string & scopedstrName);
+  void setInt32(const ::scoped_string & scopedstrName, ::i32 value);
 
   void getString(const ::scoped_string & scopedstrName, ::string & out);
   void= const ::scoped_string & scopedstrName, const ::scoped_string & value;

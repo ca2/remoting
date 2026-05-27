@@ -35,14 +35,14 @@ namespace remoting_client
       m_encoding = ::remoting_rtc::EncodingDefs::TIGHT;
 
       m_inflater.resize(DECODERS_NUM);
-      for (int i = 0; i < DECODERS_NUM; i++)
+      for (::i32 i = 0; i < DECODERS_NUM; i++)
          m_inflater[i] = allocateø ::subsystem::Inflater;
       reset();
    }
 
    TightDecoder::~TightDecoder()
    {
-//      for (int i = 0; i < DECODERS_NUM; i++) {
+//      for (::i32 i = 0; i < DECODERS_NUM; i++) {
 //         try {
 //            delete m_inflater[i];
 //         } catch (...) {
@@ -65,11 +65,11 @@ namespace remoting_client
          m_isCPixel = true;
           }
 
-      unsigned char compressionControl = pinput->readUInt8();
+      ::u8 compressionControl = pinput->readUInt8();
       resetDecoders(compressionControl);
-      unsigned char compressionType = (compressionControl >> 4) & 0x0F;
+      ::u8 compressionType = (compressionControl >> 4) & 0x0F;
 
-      int bytesPerCPixel = pframebuffer->getBytesPerPixel();
+      ::i32 bytesPerCPixel = pframebuffer->getBytesPerPixel();
 
       if (compressionType > MAX_SUBENCODING) {
          throw ::subsystem::Exception("Sub-encoding in Tight-encoder are not valid");
@@ -95,9 +95,9 @@ namespace remoting_client
       return result;
    }
 
-   ::array_base<unsigned char> TightDecoder::transformArray(const ::array_base<unsigned char> &buffer)
+   ::array_base<::u8> TightDecoder::transformArray(const ::array_base<::u8> &buffer)
    {
-      ::array_base<unsigned char> result(buffer.size() * 4 / 3);
+      ::array_base<::u8> result(buffer.size() * 4 / 3);
       for (size_t bi = 0, ri = 0; bi < buffer.size(); bi += 3, ri += 4) {
          result[ri] = buffer[bi + 2];
          result[ri + 1] = buffer[bi + 1];
@@ -108,15 +108,15 @@ namespace remoting_client
       return result;
    }
 
-   ::u32 TightDecoder::readTightPixel(::remoting_rtc::RfbInputGate *pinput, int bytesPerCPixel)
+   ::u32 TightDecoder::readTightPixel(::remoting_rtc::RfbInputGate *pinput, ::i32 bytesPerCPixel)
    {
       ::u32 color = 0;
-      unsigned char buffer[sizeof(color)];
+      ::u8 buffer[sizeof(color)];
       if (!m_isCPixel) {
          pinput->readFully(buffer, bytesPerCPixel);
       } else {
          pinput->readFully(buffer, 3);
-         unsigned char t = buffer[2];
+         ::u8 t = buffer[2];
          buffer[2] = buffer[0];
          buffer[0] = t;
          //buffer[3] = 0;
@@ -128,25 +128,25 @@ namespace remoting_client
 
    void TightDecoder::reset()
    {
-      for (int i = 0; i < DECODERS_NUM; i++) {
+      for (::i32 i = 0; i < DECODERS_NUM; i++) {
          //delete m_inflater[i];
          m_inflater[i] = allocateø ::subsystem::Inflater;
       }
    }
 
-   void TightDecoder::resetDecoders(unsigned char compressionControl)
+   void TightDecoder::resetDecoders(::u8 compressionControl)
    {
-      for (int i = 0; i < DECODERS_NUM; i++)
+      for (::i32 i = 0; i < DECODERS_NUM; i++)
          if (compressionControl & (0x01 << i)) {
             //delete m_inflater[i];
             m_inflater[i] = allocateø ::subsystem::Inflater;
          }
    }
 
-   int TightDecoder::readCompactSize(::remoting_rtc::RfbInputGate *pinput)
+   ::i32 TightDecoder::readCompactSize(::remoting_rtc::RfbInputGate *pinput)
    {
-      int b = pinput->readUInt8();
-      int size = b & 0x7F;
+      ::i32 b = pinput->readUInt8();
+      ::i32 size = b & 0x7F;
       if ((b & 0x80) != 0) {
          b = pinput->readUInt8();
          size += (b & 0x7F) << 7;
@@ -164,12 +164,12 @@ namespace remoting_client
       ::u32 jpegBufLen = readCompactSize(pinput);
       if (jpegBufLen == 0)
          throw ::subsystem::Exception("Error in protocol: empty byffer of jpeg (tight-decoder)");
-      ::array_base<unsigned char> buffer;
+      ::array_base<::u8> buffer;
       buffer.resize(jpegBufLen);
       pinput->readFully(buffer.data(), jpegBufLen);
 
       if (rectangleTarget.area() != 0) {
-         ::array_base<unsigned char> pixels;
+         ::array_base<::u8> pixels;
          pixels.resize(rectangleTarget.area() * JpegDecompressor::BYTES_PER_PIXEL);
 
          try {
@@ -192,21 +192,21 @@ namespace remoting_client
    void TightDecoder::processBasicTypes(::remoting_rtc::RfbInputGate *pinput,
                                         ::innate_subsystem::Framebuffer *pframebuffer,
                                         const ::i32_rectangle &  rectangleTarget,
-                                        unsigned char compressionControl)
+                                        ::u8 compressionControl)
    {
-      int decoderId = (compressionControl & STREAM_ID_MASK) >> 4;
-      int filterId = COPY_FILTER;
+      ::i32 decoderId = (compressionControl & STREAM_ID_MASK) >> 4;
+      ::i32 filterId = COPY_FILTER;
       if ((compressionControl & FILTER_ID_MASK) != 0) {
          filterId = pinput->readUInt8();
       }
 
-      int bytesPerCPixel = pframebuffer->getBytesPerPixel();
+      ::i32 bytesPerCPixel = pframebuffer->getBytesPerPixel();
       size_t lengthCurrentBpp = rectangleTarget.area() * bytesPerCPixel;
       if (m_isCPixel) {
          lengthCurrentBpp = rectangleTarget.area() * 3;
       }
 
-      ::array_base<unsigned char> buffer;
+      ::array_base<::u8> buffer;
 
       switch (filterId) {
          case COPY_FILTER:
@@ -227,7 +227,7 @@ namespace remoting_client
          case PALETTE_FILTER:
          {
             information("PALETTE_FILTER");
-            int paletteSize = pinput->readUInt8() + 1;
+            ::i32 paletteSize = pinput->readUInt8() + 1;
             ::array_base<::u32> palette = readPalette(pinput, paletteSize, bytesPerCPixel);
             size_t dataLength = rectangleTarget.area();
             if (paletteSize == 2) {
@@ -250,20 +250,20 @@ namespace remoting_client
    }
 
    ::array_base<::u32> TightDecoder::readPalette(::remoting_rtc::RfbInputGate *pinput,
-                                         int paletteSize,
-                                         int bytesPerCPixel)
+                                         ::i32 paletteSize,
+                                         ::i32 bytesPerCPixel)
    {
       ::array_base<::u32> palette(paletteSize);
-      for (int i = 0; i < paletteSize; i++) {
+      for (::i32 i = 0; i < paletteSize; i++) {
          palette[i] = readTightPixel(pinput, bytesPerCPixel);
       }
       return palette;
    }
 
    void TightDecoder::readTightData(::remoting_rtc::RfbInputGate *pinput,
-                                    ::array_base<unsigned char> &buffer,
+                                    ::array_base<::u8> &buffer,
                                     size_t expectedLength,
-                                    const int decoderId)
+                                    const ::i32 decoderId)
    {
       if (expectedLength < MIN_SIZE_TO_COMPRESS) {
          buffer.resize(expectedLength);
@@ -276,13 +276,13 @@ namespace remoting_client
    }
 
    void TightDecoder::readCompressedData(::remoting_rtc::RfbInputGate *pinput,
-                                         ::array_base<unsigned char> &buffer,
+                                         ::array_base<::u8> &buffer,
                                          size_t expectedLength,
-                                         const int decoderId)
+                                         const ::i32 decoderId)
    {
       size_t rawDataLength = readCompactSize(pinput);
 
-      ::array_base<char> compressed(rawDataLength);
+      ::array_base<::i8> compressed(rawDataLength);
 
       // read compressed (raw) data behind space allocated for decompressed data
       if (rawDataLength != 0) {
@@ -296,9 +296,9 @@ namespace remoting_client
          
 
          size_t size = decoder->getOutputSize();
-         const char *output = decoder->getOutput();
+         const_char_pointer output = decoder->getOutput();
          //buffer.resize(size);
-         buffer.assign((unsigned char *) output, size);
+         buffer.assign((::u8 *) output, size);
       } else {
          ASSERT(rawDataLength != 0);
          m_plogwriter->debug("Tight decoder: Length of Raw compressed data is 0");
@@ -308,25 +308,25 @@ namespace remoting_client
 
    void TightDecoder::drawPalette(::innate_subsystem::Framebuffer *pframebuffer,
                                   const ::array_base<::u32> &palette,
-                                  const ::array_base<unsigned char> &pixels,
+                                  const ::array_base<::u8> &pixels,
                                   const ::i32_rectangle &  rectangleTarget)
    {
       // TODO: removed duplicate code (draw Tight bytes)
-      int width = rectangleTarget.width();
-      int height = rectangleTarget.height();
+      ::i32 width = rectangleTarget.width();
+      ::i32 height = rectangleTarget.height();
 
-      int bytesPerPixel = pframebuffer->getBytesPerPixel();
+      ::i32 bytesPerPixel = pframebuffer->getBytesPerPixel();
 
-      int dstLength = rectangleTarget.area();
+      ::i32 dstLength = rectangleTarget.area();
 
-      int x = rectangleTarget.left;
-      int y = rectangleTarget.top;
-      int stride = pframebuffer->getBytesPerRow();
-      char *basePtr = (char*)pframebuffer->getBufferPtr(x, y);
+      ::i32 x = rectangleTarget.left;
+      ::i32 y = rectangleTarget.top;
+      ::i32 stride = pframebuffer->getBytesPerRow();
+      char_pointer basePtr = (char_pointer )pframebuffer->getBufferPtr(x, y);
       if (palette.size() == 2) {
-         int offset = 8;
-         int index = -1;
-         for (int i = 0; i < dstLength; i++) {
+         ::i32 offset = 8;
+         ::i32 index = -1;
+         for (::i32 i = 0; i < dstLength; i++) {
             void *pixelPtr = basePtr + bytesPerPixel * (i % width) + stride * (i / width);
             if (offset == 0 || i % width == 0) {
                offset = 8;
@@ -336,7 +336,7 @@ namespace remoting_client
             memcpy(pixelPtr, &palette[(pixels[index] >> offset) & 0x01], bytesPerPixel);
          }
       } else { // size of palette != 2
-         for (int i = 0; i < dstLength; i++) {
+         for (::i32 i = 0; i < dstLength; i++) {
             void *pixelPtr = basePtr + bytesPerPixel * (i % width) + stride * (i / width);
             if (pixels[i] < palette.size()) {
                memcpy(pixelPtr, &palette[pixels[i]], bytesPerPixel);
@@ -348,22 +348,22 @@ namespace remoting_client
    }
 
    void TightDecoder::drawTightBytes(::innate_subsystem::Framebuffer *pframebuffer,
-                                     const ::array_base<unsigned char> *pixels,
+                                     const ::array_base<::u8> *pixels,
                                      const ::i32_rectangle &  rectangleTarget)
    {
       // TODO: removed duplicate code (zrle)
-      int width = rectangleTarget.width();
-      int height = rectangleTarget.height();
+      ::i32 width = rectangleTarget.width();
+      ::i32 height = rectangleTarget.height();
 
-      int bytesPerPixel = pframebuffer->getBytesPerPixel();
+      ::i32 bytesPerPixel = pframebuffer->getBytesPerPixel();
 
-      int dstLength = rectangleTarget.area();
+      ::i32 dstLength = rectangleTarget.area();
 
-      int x = rectangleTarget.left;
-      int y = rectangleTarget.top;
-      int iBlackArea = 0;
-      int iBlackArea1 = 0;
-      for (int i = 0; i < dstLength; i++) {
+      ::i32 x = rectangleTarget.left;
+      ::i32 y = rectangleTarget.top;
+      ::i32 iBlackArea = 0;
+      ::i32 iBlackArea1 = 0;
+      for (::i32 i = 0; i < dstLength; i++) {
          auto pixelPtr = (::u8*) pframebuffer->getBufferPtr(x + i % width, y + i / width);
          auto pixelSrc = (::u8*) (pixels->data() + (i * bytesPerPixel));
          auto r = pixelPtr[0];
@@ -437,23 +437,23 @@ namespace remoting_client
    }
 
    void TightDecoder::drawJpegBytes(::innate_subsystem::Framebuffer *pframebuffer,
-                                    const ::array_base<unsigned char> *pixels,
+                                    const ::array_base<::u8> *pixels,
                                     const ::i32_rectangle &  rectangleTarget)
    {
       // TODO: removed duplicate code (draw tight bytes)
-      int width = rectangleTarget.width();
-      int height = rectangleTarget.height();
+      ::i32 width = rectangleTarget.width();
+      ::i32 height = rectangleTarget.height();
 
-      int fbBytesPerPixel = pframebuffer->getBytesPerPixel();
-      int bytesPerCPixel = 3;
+      ::i32 fbBytesPerPixel = pframebuffer->getBytesPerPixel();
+      ::i32 bytesPerCPixel = 3;
       ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
 
-      int dstLength = rectangleTarget.area();
+      ::i32 dstLength = rectangleTarget.area();
 
-      int x = rectangleTarget.left;
-      int y = rectangleTarget.top;
-      for (int i = 0; i < dstLength; i++) {
-         unsigned char color[4] = {0, 0, 0, 0};
+      ::i32 x = rectangleTarget.left;
+      ::i32 y = rectangleTarget.top;
+      for (::i32 i = 0; i < dstLength; i++) {
+         ::u8 color[4] = {0, 0, 0, 0};
          memcpy(color, &pixels->operator [](i * bytesPerCPixel), bytesPerCPixel);
          ::u32 pixel = (((::u32)color[0] * pixelformat.redMax + 127) / 255 << pixelformat.redShift |
                         ((::u32)color[1] * pixelformat.greenMax + 127) / 255 << pixelformat.greenShift |
@@ -482,49 +482,49 @@ namespace remoting_client
     */
 
    void TightDecoder::drawGradient(::innate_subsystem::Framebuffer *pframebuffer,
-                                   const ::array_base<unsigned char> &pixels,
+                                   const ::array_base<::u8> &pixels,
                                    const ::i32_rectangle &  rectangleTarget)
    {
-      typedef ::array_base<unsigned short> RowType;
+      typedef ::array_base<::u16> RowType;
       size_t opRowLength = rectangleTarget.width() * 3 + 3;
 
       ::array_base<RowType> opRows(2);
       opRows[0].resize(opRowLength);
       opRows[1].resize(opRowLength);
 
-      memset(opRows[0].data(), 0, opRowLength * sizeof(unsigned short));
-      memset(opRows[1].data(), 0, opRowLength * sizeof(unsigned short));
+      memset(opRows[0].data(), 0, opRowLength * sizeof(::u16));
+      memset(opRows[1].data(), 0, opRowLength * sizeof(::u16));
 
       ::innate_subsystem::PixelFormat pixelformat = pframebuffer->getPixelFormat();
-      int fbBytesPerPixel = pframebuffer->getBytesPerPixel();
-      int bytesPerCPixel = fbBytesPerPixel;
+      ::i32 fbBytesPerPixel = pframebuffer->getBytesPerPixel();
+      ::i32 bytesPerCPixel = fbBytesPerPixel;
       if (m_isCPixel) {
          bytesPerCPixel = 3;
       }
 
-      int opRowIndex = 0;
-      unsigned short max[3] = {pixelformat.redMax, pixelformat.greenMax, pixelformat.blueMax};
-      unsigned short shift[3] = {pixelformat.redShift, pixelformat.greenShift, pixelformat.blueShift};
+      ::i32 opRowIndex = 0;
+      ::u16 max[3] = {pixelformat.redMax, pixelformat.greenMax, pixelformat.blueMax};
+      ::u16 shift[3] = {pixelformat.redShift, pixelformat.greenShift, pixelformat.blueShift};
       size_t pixelOffset = 0;
 
-      for (int i = 0; i < rectangleTarget.height(); ++i) {
+      for (::i32 i = 0; i < rectangleTarget.height(); ++i) {
          // exchange thisRow and prevRow:
          RowType &thisRow = opRows[opRowIndex];
          RowType &prevRow = opRows[opRowIndex = (opRowIndex + 1) % 2];
 
          for (size_t j = 3; j < opRowLength; j += 3, pixelOffset += bytesPerCPixel) {
-            unsigned char rawColor[3];
+            ::u8 rawColor[3];
             fillRawComponents(pixelformat, rawColor, pixels, pixelOffset);
             ::u32 color = 0;
-            for (int index = 0; index < 3; index++) {
-               int d = prevRow[j + index] +      // "upper" pixel (from prev row)
+            for (::i32 index = 0; index < 3; index++) {
+               ::i32 d = prevRow[j + index] +      // "upper" pixel (from prev row)
                          thisRow[j + index - 3] -  // prev pixel
                          prevRow[j + index - 3];   // "diagonal" prev pixel
-               unsigned short converted = d < 0 ? 0 : d > max[index] ? max[index] : d;
+               ::u16 converted = d < 0 ? 0 : d > max[index] ? max[index] : d;
                thisRow[j + index] = (converted + rawColor[index]) & max[index];
                color |= (thisRow[j + index] & max[index]) << shift[index];
             }
-            void *pixelPtr = pframebuffer->getBufferPtr(static_cast<int>(rectangleTarget.left + j/3 - 1),
+            void *pixelPtr = pframebuffer->getBufferPtr(static_cast<::i32>(rectangleTarget.left + j/3 - 1),
                                               rectangleTarget.top + i);
             memcpy(pixelPtr, &color, fbBytesPerPixel);
          }
@@ -532,7 +532,7 @@ namespace remoting_client
    }
 
    ::u32 TightDecoder::getRawTightColor(const ::innate_subsystem::PixelFormat & pixelformat,
-                                         const ::array_base<unsigned char> &pixels,
+                                         const ::array_base<::u8> &pixels,
                                          const size_t offset)
    {
       if (m_isCPixel) {
@@ -546,11 +546,11 @@ namespace remoting_client
    }
 
    void TightDecoder::fillRawComponents(const ::innate_subsystem::PixelFormat & pixelformat,
-                                        unsigned char components[],
-                                        const ::array_base<unsigned char> &pixels,
+                                        ::u8 components[],
+                                        const ::array_base<::u8> &pixels,
                                         const size_t pixelOffset)
    {
-      int rawColor = getRawTightColor(pixelformat, pixels, pixelOffset);
+      ::i32 rawColor = getRawTightColor(pixelformat, pixels, pixelOffset);
       components[0] = rawColor >> pixelformat.redShift & pixelformat.redMax;
       components[1] = rawColor >> pixelformat.greenShift & pixelformat.greenMax;
       components[2] = rawColor >> pixelformat.blueShift & pixelformat.blueMax;

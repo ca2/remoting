@@ -32,19 +32,19 @@ namespace remoting_rfb
    class CLASS_DECL_REMOTING_RFB HostPath {
    public:
       HostPath();
-      HostPath(const char *path, int defaultPort = 5900);
+      HostPath(const_char_pointer pszPath, ::i32 defaultPort = 5900);
       virtual ~HostPath();
 
-      bool set(const char *path);
+      bool set(const_char_pointer pszPath);
 
       bool isValid() const               { return (m_path != 0); }
       bool isSshHostSpecified() const    { return (m_sshHost != 0); }
 
-      const char* get() const            { return m_path; }
-      const char* getSshHost() const     { return m_sshHost; }
-      const int getSshPort() const       { return m_sshPort; }
-      const char* getVncHost() const     { return m_vncHost; }
-      const int getVncPort() const       { return m_vncPort; }
+      const_char_pointer get() const            { return m_path; }
+      const_char_pointer getSshHost() const     { return m_sshHost; }
+      const ::i32 getSshPort() const       { return m_sshPort; }
+      const_char_pointer getVncHost() const     { return m_vncHost; }
+      const ::i32 getVncPort() const       { return m_vncPort; }
 
    private:
       static const size_t m_SSH_USER_MAX_CHARS;
@@ -54,11 +54,11 @@ namespace remoting_rfb
       static const size_t m_VNC_PORT_MAX_CHARS;
       static const size_t m_MAX_PATH_LEN;
 
-      char* m_path;
-      char* m_sshHost;
-      int m_sshPort;
-      char* m_vncHost;
-      int m_vncPort;
+      char_pointer m_path;
+      char_pointer m_sshHost;
+      ::i32 m_sshPort;
+      char_pointer m_vncHost;
+      ::i32 m_vncPort;
 
       //
       // Reset the object to its initial state (no path set).
@@ -89,7 +89,7 @@ namespace remoting_rfb
       //
       bool validateHostNames() const;
 
-      int m_defaultPort;
+      ::i32 m_defaultPort;
    };
 
    //// __RFB_HOST_PATH_H_INCLUDED__

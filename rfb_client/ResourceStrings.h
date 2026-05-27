@@ -34,15 +34,15 @@ namespace remoting_rfb_client
     {
     public:
         ResourceStrings();
-        ResourceStrings(int min, int max);
+        ResourceStrings(::i32 min, ::i32 max);
 
-        bool isValid(int res);
+        bool isValid(::i32 res);
         // this function returns string as it is stored
-        ::string getStrRes(int strRes);
+        ::string getStrRes(::i32 strRes);
         // this function returns the string without '\t' and '&'
-        ::string getStrPureRes(int strRes);
+        ::string getStrPureRes(::i32 strRes);
 
     protected:
-        int m_min, m_max;
+        ::i32 m_min, m_max;
     };
 } // namespace remoting_rfb_client

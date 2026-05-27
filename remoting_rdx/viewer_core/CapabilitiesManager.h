@@ -45,8 +45,8 @@ namespace remoting_rfb_client
       //
       virtual void addAuthCapability(AuthHandler *authHandler,
                                      ::u32 code,
-                                     const char *vendorSignature,
-                                     const char *nameSignature,
+                                     const_char_pointer vendorSignature,
+                                     const_char_pointer pszNameSignature,
                                      const ::string description = "") = 0;
 
       //
@@ -54,16 +54,16 @@ namespace remoting_rfb_client
       //
       virtual void addServerMsgCapability(ServerMessageListener *listener,
                                           ::u32 code,
-                                          const char *vendorSignature,
-                                          const char *nameSignature,
+                                          const_char_pointer vendorSignature,
+                                          const_char_pointer pszNameSignature,
                                           const ::string description = "") = 0;
 
       //
       // This function add capability, to process client-to-server messages.
       //
       virtual void addClientMsgCapability(::u32 code,
-                                          const char *vendorSignature,
-                                          const char *nameSignature,
+                                          const_char_pointer vendorSignature,
+                                          const_char_pointer pszNameSignature,
                                           const ::string description = "") = 0;
 
       //
@@ -72,10 +72,10 @@ namespace remoting_rfb_client
       // Encoding send to order in decrease of priority.
       //
       virtual void addEncodingCapability(Decoder *decoder,
-                                         int priorityEncoding,
+                                         ::i32 priorityEncoding,
                                          ::u32 code,
-                                         const char *vendorSignature,
-                                         const char *nameSignature,
+                                         const_char_pointer vendorSignature,
+                                         const_char_pointer pszNameSignature,
                                          const ::string description = "") = 0;
 
       //

@@ -56,7 +56,7 @@ namespace remoting_rtc_node
       size_t find(PortMapping searchElement) const;
 
       // Returns index of element with specified port.
-      size_t findByPort(int port) const;
+      size_t findByPort(::i32 port) const;
 
       // Removes element with specified index from container.
       void remove(size_t index);

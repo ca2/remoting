@@ -29,7 +29,7 @@ namespace remoting_rtc_windows
 {
 
 
-   static const int BLOCK_SIZE = 32;
+   static const ::i32 BLOCK_SIZE = 32;
 
    UpdateFilter::UpdateFilter(::remoting_rtc::ScreenDriver *screenDriver, ::innate_subsystem::Framebuffer *pframebuffer,
                               lockable_critical_section *framebufferCriticalSection, ::subsystem::LogWriter * plogwriter) :
@@ -73,7 +73,7 @@ namespace remoting_rtc_windows
 
       toCheck.getRects(&rectanglea);
       // Grabbing
-      m_plogwriter->debug("grabbing region, {} rectangles", (int)rectanglea.size());
+      m_plogwriter->debug("grabbing region, {} rectangles", (::i32)rectanglea.size());
       ProcessorTimes pt1 = m_plogwriter->checkPoint("grabbing region");
       try
       {
@@ -86,13 +86,13 @@ namespace remoting_rtc_windows
       ProcessorTimes pt2 = m_plogwriter->checkPoint("end of grabbing region");
 
       toCheck.getRects(&rectanglea);
-      double area = 0.0;
+      ::f64 area = 0.0;
       for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++)
       {
          area += (*iRect).area();
       }
       area /= 1000000.0; // in millions of pixels
-      double dt = pt2.wall.getTime(); // in milliseconds
+      ::f64 dt = pt2.wall.getTime(); // in milliseconds
       m_plogwriter->debug(
          "Before grabbing region %f processor Mcycles, %f process time, %f kernel time, %f wall clock time ",
          pt1.cycle / 1000000., pt1.process, pt1.kernel, pt1.wall.getTime());
@@ -134,20 +134,20 @@ namespace remoting_rtc_windows
    void UpdateFilter::getChangedRegion(Region & rgn, const ::i32_rectangle & rectangle)
    {
 
-      const unsigned int bytesPerPixel = m_pframebuffer->getBytesPerPixel();
-      const int bytes_per_scanline = (rectangle.right - rectangle.left) * bytesPerPixel;
+      const ::u32 bytesPerPixel = m_pframebuffer->getBytesPerPixel();
+      const ::i32 bytes_per_scanline = (rectangle.right - rectangle.left) * bytesPerPixel;
 
-      const int bytesPerRow = m_pframebuffer->getBytesPerRow();
-      const int offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
-      unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
-      unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
+      const ::i32 bytesPerRow = m_pframebuffer->getBytesPerRow();
+      const ::i32 offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
+      ::u8 *o_ptr = (::u8 *)m_pframebuffer->getBuffer() + offset;
+      ::u8 *n_ptr = (::u8 *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
 
       ::i32_rectangle new_rect = rectangle;
 
       // Fast processing for small rectangles
       if (rectangle.right - rectangle.left <= BLOCK_SIZE && rectangle.bottom - rectangle.top <= BLOCK_SIZE)
       {
-         for (int y = rectangle.top; y < rectangle.bottom; y++)
+         for (::i32 y = rectangle.top; y < rectangle.bottom; y++)
          {
             if (memcmp(o_ptr, n_ptr, bytes_per_scanline) != 0)
             {
@@ -163,7 +163,7 @@ namespace remoting_rtc_windows
 
       // Process bigger rectangles
       new_rect.top = -1;
-      for (int y = rectangle.top; y < rectangle.bottom; y++)
+      for (::i32 y = rectangle.top; y < rectangle.bottom; y++)
       {
          if (memcmp(o_ptr, n_ptr, bytes_per_scanline) != 0)
          {
@@ -172,7 +172,7 @@ namespace remoting_rtc_windows
                new_rect.top = y;
             }
             // Skip a number of lines after a non-matched one
-            int n = BLOCK_SIZE / 2 - 1;
+            ::i32 n = BLOCK_SIZE / 2 - 1;
             y += n;
             o_ptr += n * bytesPerRow;
             n_ptr += n * bytesPerRow;
@@ -205,35 +205,35 @@ namespace remoting_rtc_windows
          return;
       }
 
-      const unsigned int bytesPerPixel = m_pframebuffer->getBytesPerPixel();
+      const ::u32 bytesPerPixel = m_pframebuffer->getBytesPerPixel();
 
       ::i32_rectangle new_rect;
-      int x, y, ay;
+      ::i32 x, y, ay;
 
       // Scan down the rectangle
-      const int bytesPerRow = m_pframebuffer->getBytesPerRow();
-      const int offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
-      unsigned char *o_topleft_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
-      unsigned char *n_topleft_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
+      const ::i32 bytesPerRow = m_pframebuffer->getBytesPerRow();
+      const ::i32 offset = rectangle.top * bytesPerRow + rectangle.left * bytesPerPixel;
+      ::u8 *o_topleft_ptr = (::u8 *)m_pframebuffer->getBuffer() + offset;
+      ::u8 *n_topleft_ptr = (::u8 *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
 
       for (y = rectangle.top; y < rectangle.bottom; y += BLOCK_SIZE)
       {
          // Work out way down the bitmap
-         unsigned char *o_row_ptr = o_topleft_ptr;
-         unsigned char *n_row_ptr = n_topleft_ptr;
+         ::u8 *o_row_ptr = o_topleft_ptr;
+         ::u8 *n_row_ptr = n_topleft_ptr;
 
-         const int blockbottom = min(y + BLOCK_SIZE, rectangle.bottom);
+         const ::i32 blockbottom = min(y + BLOCK_SIZE, rectangle.bottom);
          new_rect.bottom = blockbottom;
          new_rect.left = -1;
 
          for (x = rectangle.left; x < rectangle.right; x += BLOCK_SIZE)
          {
             // Work our way across the row
-            unsigned char *n_block_ptr = n_row_ptr;
-            unsigned char *o_block_ptr = o_row_ptr;
+            ::u8 *n_block_ptr = n_row_ptr;
+            ::u8 *o_block_ptr = o_row_ptr;
 
-            const unsigned int blockright = min(x + BLOCK_SIZE, rectangle.right);
-            const unsigned int bytesPerBlockRow = (blockright - x) * bytesPerPixel;
+            const ::u32 blockright = min(x + BLOCK_SIZE, rectangle.right);
+            const ::u32 bytesPerBlockRow = (blockright - x) * bytesPerPixel;
 
             // Scan this block
             for (ay = y; ay < blockbottom; ay++)
@@ -284,15 +284,15 @@ namespace remoting_rtc_windows
 
    void UpdateFilter::updateChangedSubRect(Region & rgn, const ::i32_rectangle & rectangle)
    {
-      const unsigned int bytesPerPixel = m_pframebuffer->getBytesPerPixel();
-      int bytes_in_row = (rectangle.right - rectangle.left) * bytesPerPixel;
-      int y, i;
+      const ::u32 bytesPerPixel = m_pframebuffer->getBytesPerPixel();
+      ::i32 bytes_in_row = (rectangle.right - rectangle.left) * bytesPerPixel;
+      ::i32 y, i;
 
       // Exclude unchanged scan lines at the bottom
-      const int bytesPerRow = m_pframebuffer->getBytesPerRow();
-      int offset = (rectangle.bottom - 1) * bytesPerRow + rectangle.left * bytesPerPixel;
-      unsigned char *o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
-      unsigned char *n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
+      const ::i32 bytesPerRow = m_pframebuffer->getBytesPerRow();
+      ::i32 offset = (rectangle.bottom - 1) * bytesPerRow + rectangle.left * bytesPerPixel;
+      ::u8 *o_ptr = (::u8 *)m_pframebuffer->getBuffer() + offset;
+      ::u8 *n_ptr = (::u8 *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
       ::i32_rectangle rectangleFinal = rectangle;
       rectangleFinal.bottom = rectangle.top + 1;
       for (y = rectangle.bottom - 1; y > rectangle.top; y--)
@@ -308,10 +308,10 @@ namespace remoting_rtc_windows
 
       // Exclude unchanged pixels at left and right sides
       offset = rectangleFinal.top * bytesPerRow + rectangleFinal.left * bytesPerPixel;
-      o_ptr = (unsigned char *)m_pframebuffer->getBuffer() + offset;
-      n_ptr = (unsigned char *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
-      int left_delta = bytes_in_row - 1;
-      int right_delta = 0;
+      o_ptr = (::u8 *)m_pframebuffer->getBuffer() + offset;
+      n_ptr = (::u8 *)m_pscreendriver->getScreenBuffer()->getBuffer() + offset;
+      ::i32 left_delta = bytes_in_row - 1;
+      ::i32 right_delta = 0;
       for (y = rectangleFinal.top; y < rectangleFinal.bottom; y++)
       {
          for (i = 0; i < bytes_in_row - 1; i++)

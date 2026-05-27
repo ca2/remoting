@@ -165,13 +165,13 @@ namespace remoting_rfb
          //
 
          void lastRequestFailed(::string & str);
-         void lastRequestFailed(const char *description);
+         void lastRequestFailed(const_char_pointer description);
 
          //
          // Helper methods
          //
 
-         bool getDirectorySize(const char *pathname, filesize *dirSize);
+         bool getDirectorySize(const_char_pointer pszPathname, filesize *dirSize);
 
          //protected:
          /**

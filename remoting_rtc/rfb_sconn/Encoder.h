@@ -85,7 +85,7 @@ namespace remoting_rfb
 
       // Return the "encoding type" code for this encoder, as defined in the RFB
       // protocol specification.
-      virtual int getCode() const;
+      virtual ::i32 getCode() const;
 
       // splitRectangle() is used to let the encoder split one big rectangle to a
       // number of smaller ones for efficient encoding or for satisfying the

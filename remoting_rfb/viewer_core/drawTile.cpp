@@ -33,44 +33,44 @@ namespace remoting_rfb_client
 {
    void ZrleDecoder::drawTile(::innate_subsystem::Framebuffer* pframebuffer,
        const ::i32_rectangle& tileRect,
-       const ::array_base<char>* pixels)
+       const ::array_base<::i8>* pixels)
    {
-      int width = tileRect.width();
+      ::i32 width = tileRect.width();
       size_t fbBytesPerPixel = m_bytesPerPixel;
 
       if (fbBytesPerPixel == 3) {
          fbBytesPerPixel = 4;
       }
 
-      int tileLength = tileRect.area();
+      ::i32 tileLength = tileRect.area();
 
-      int x = tileRect.left;
-      int y = tileRect.top;
+      ::i32 x = tileRect.left;
+      ::i32 y = tileRect.top;
 
-      const char* pixelsPtr = pixels->data();
-      char* bufferPtr = 0;
-      int h = tileLength / width;
+      const_char_pointer pixelsPtr = pixels->data();
+      char_pointer bufferPtr = 0;
+      ::i32 h = tileLength / width;
 
       if (fbBytesPerPixel == 4 && m_bytesPerPixel == 3)
       {
 
-         auto ptr = (char*)pframebuffer->getBuffer();
+         auto ptr = (char_pointer )pframebuffer->getBuffer();
          auto bytesPerPixel = pframebuffer->getBytesPerPixel();
          if (bytesPerPixel == 3)
          {
-            //void* getBufferPtr(int x, int y) const
+            //void* getBufferPtr(::i32 x, ::i32 y) const
             //{
-            //    char* ptr = (char*)m_buffer;
+            //    char_pointer ptr = (char_pointer )m_buffer;
             //    ptr += (y * m_size.cx + x) * getBytesPerPixel();
 
             //    return (void*)ptr;
             //}
 
-            for (int j = 0; j < h; j++) {
+            for (::i32 j = 0; j < h; j++) {
                auto p = ptr + ((y + j) * pframebuffer->m_size.cx + x) * 3;
-               for (int i = 0; i < width; i++) {
+               for (::i32 i = 0; i < width; i++) {
 
-                  bufferPtr = (char*)p;
+                  bufferPtr = (char_pointer )p;
                   bufferPtr[0] = pixelsPtr[0];
                   bufferPtr[1] = pixelsPtr[1];
                   bufferPtr[2] = pixelsPtr[2];
@@ -86,11 +86,11 @@ namespace remoting_rfb_client
             if (width == pframebuffer->m_size.cx and x == 0)
             {
 
-               const int count = width * h;
+               const ::i32 count = width * h;
                uint8_t* dst = (uint8_t * )ptr + y * pframebuffer->m_size.cx * 4 + x * 4;
                const uint8_t* src = (const uint8_t * )pixelsPtr;
 
-               for (int i = 0; i < count; ++i) {
+               for (::i32 i = 0; i < count; ++i) {
                   *reinterpret_cast<uint32_t*>(dst) =
                       (uint32_t(src[0])) |
                       (uint32_t(src[1]) << 8) |
@@ -104,9 +104,9 @@ namespace remoting_rfb_client
             {
                //auto cx4 = pframebuffer->m_size.cx * 4;
                //auto p1 = ptr + (y + 0) * cx4 + (x * 4);
-               //for (int j = 0; j < h; j++) {
+               //for (::i32 j = 0; j < h; j++) {
                //    auto p = p1;
-               //    for (int i = 0; i < width; i++) {
+               //    for (::i32 i = 0; i < width; i++) {
 
                //        p[0] = pixelsPtr[0];
                //        p[1] = pixelsPtr[1];
@@ -118,14 +118,14 @@ namespace remoting_rfb_client
                //    p1 += cx4;
                //}
 
-               const int dstStride = pframebuffer->m_size.cx * 4;
+               const ::i32 dstStride = pframebuffer->m_size.cx * 4;
                uint8_t* dstRow = (uint8_t *) ptr + y * dstStride + x * 4;
                const uint8_t* __restrict src = (const uint8_t * ) pixelsPtr;
 
-               for (int j = 0; j < h; ++j) {
+               for (::i32 j = 0; j < h; ++j) {
                   uint8_t* __restrict dst = dstRow;
 
-                  for (int i = 0; i < width; ++i) {
+                  for (::i32 i = 0; i < width; ++i) {
                      *reinterpret_cast<uint32_t*>(dst) =
                          (uint32_t(src[0])) |
                          (uint32_t(src[1]) << 8) |
@@ -143,11 +143,11 @@ namespace remoting_rfb_client
          }
          else
          {
-            for (int j = 0; j < h; j++) {
+            for (::i32 j = 0; j < h; j++) {
                auto p = ptr + ((y + j) * pframebuffer->m_size.cx + x) * bytesPerPixel;
-               for (int i = 0; i < width; i++) {
+               for (::i32 i = 0; i < width; i++) {
 
-                  bufferPtr = (char*)p;
+                  bufferPtr = (char_pointer )p;
                   bufferPtr[0] = pixelsPtr[0];
                   bufferPtr[1] = pixelsPtr[1];
                   bufferPtr[2] = pixelsPtr[2];
@@ -162,10 +162,10 @@ namespace remoting_rfb_client
       else
       {
 
-         for (int j = 0; j < h; j++) {
-            for (int i = 0; i < width; i++) {
+         for (::i32 j = 0; j < h; j++) {
+            for (::i32 i = 0; i < width; i++) {
 
-               bufferPtr = (char*)pframebuffer->getBufferPtr(x + i, y + j);
+               bufferPtr = (char_pointer )pframebuffer->getBufferPtr(x + i, y + j);
                memset(bufferPtr, 0, fbBytesPerPixel);
                memcpy(bufferPtr, pixelsPtr, m_bytesPerPixel);
                pixelsPtr += m_bytesPerPixel;

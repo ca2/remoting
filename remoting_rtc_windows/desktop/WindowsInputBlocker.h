@@ -90,16 +90,16 @@ namespace remoting_rtc_windows
       bool setMouseFilterHook(bool block);
       bool setSoftMouseFilterHook(bool block);
 
-      static LRESULT CALLBACK lowLevelKeyboardFilterProc(int nCode,
+      static LRESULT CALLBACK lowLevelKeyboardFilterProc(::i32 nCode,
                                                          WPARAM wParam,
                                                          LPARAM lParam);
-      static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(int nCode,
+      static LRESULT CALLBACK lowLevelSoftKeyboardFilterProc(::i32 nCode,
                                                              WPARAM wParam,
                                                              LPARAM lParam);
-      static  LRESULT CALLBACK lowLevelMouseFilterProc(int nCode,
+      static  LRESULT CALLBACK lowLevelMouseFilterProc(::i32 nCode,
                                                       WPARAM wParam,
                                                       LPARAM lParam);
-      static LRESULT CALLBACK lowLevelSoftMouseFilterProc(int nCode,
+      static LRESULT CALLBACK lowLevelSoftMouseFilterProc(::i32 nCode,
                                                           WPARAM wParam,
                                                           LPARAM lParam);
 

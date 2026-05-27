@@ -51,7 +51,7 @@ namespace remoting_rfb
       //}
       m_pjpegencoder.defer_destroy_and_release();
       // Remove all allocated encoders referenced in m_map.
-      //::map<int, Encoder *>::iterator it;
+      //::map<::i32, Encoder *>::iterator it;
       //for (it = m_map.begin(); it != m_map.end(); it++) {
         // delete it->second;
       //}
@@ -76,7 +76,7 @@ namespace remoting_rfb
       return m_pjpegencoder;
    }
 
-   void EncoderStore::selectEncoder(int encType)
+   void EncoderStore::selectEncoder(::i32 encType)
    {
       m_pencoder = validateEncoder(encType);
    }
@@ -91,7 +91,7 @@ namespace remoting_rfb
 
    //---------------------------- Internal methods ----------------------------//
 
-   Encoder *EncoderStore::validateEncoder(int encType)
+   Encoder *EncoderStore::validateEncoder(::i32 encType)
    {
       // Use Raw encoding instead of unknown codes.
       if (!encodingSupported(encType)) {
@@ -119,7 +119,7 @@ namespace remoting_rfb
    //        able to create encoder instances corresponding to the given codes.
    //        Such EncoderFactory would be useful for EncodeOptions as well.
 
-   bool EncoderStore::encodingSupported(int encType)
+   bool EncoderStore::encodingSupported(::i32 encType)
    {
       return (encType == EncodingDefs::RAW ||
               encType == EncodingDefs::RRE ||
@@ -128,7 +128,7 @@ namespace remoting_rfb
               encType == EncodingDefs::TIGHT);
    }
 
-   Encoder *EncoderStore::allocateEncoder(int encType) const
+   Encoder *EncoderStore::allocateEncoder(::i32 encType) const
    {
       switch (encType) {
          case EncodingDefs::TIGHT:

@@ -58,9 +58,9 @@ namespace remoting
       bool saveToStorage(SettingsManager *storage) const;
 
       // Sets port for incoming connection when client runs in daemoon mode
-      void setListenPort(int listenPort);
+      void setListenPort(::i32 listenPort);
       // Returns listen port value
-      int getListenPort() const;
+      ::i32 getListenPort() const;
 
       // Changes log level in 0 - 9 range
       void setLogLevel(enum_trace_level etracelevel);
@@ -80,9 +80,9 @@ namespace remoting
       ::subsystem::LogWriter *getLogWriter();
 
       // Sets number of connections to remember
-      void setHistoryLimit(int historyLimit);
+      void setHistoryLimit(::i32 historyLimit);
       // Returns number of connections to remember
-      int getHistoryLimit() const;
+      ::i32 getHistoryLimit() const;
 
       // Sets "show toolbar" flag
       void showToolbar(bool show);
@@ -104,11 +104,11 @@ namespace remoting
       //protected:
       // TCP port for accepting incoming connection
       // when client runs in daemon mode
-      int m_listenPort;
+      ::i32 m_listenPort;
       // Current level of logging
       enum_trace_level m_etracelevel;
       // Number of connections to remember
-      int m_historyLimit;
+      ::i32 m_historyLimit;
       // If set then toolbar is shown, otherwise not shown
       bool m_showToolbar;
       // If set then app must show promt dialog when viewer window

@@ -39,13 +39,13 @@ namespace remoting_rtc_windows
    {
    public:
       //DummyScreenDriver(::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener, const ::i32_size & size,
-        //                unsigned int interval, ::subsystem::LogWriter * plogwriter);
+        //                ::u32 interval, ::subsystem::LogWriter * plogwriter);
 
       DummyScreenDriver();
       virtual ~DummyScreenDriver();
 
       virtual void initialize_dummy_screen_driver(::remoting_rtc::UpdateKeeper * pupdatekeeper, ::remoting_rtc::UpdateListener * pupdatelistener, const ::i32_size & size,
-                        unsigned int interval, ::subsystem::LogWriter * plogwriter);
+                        ::u32 interval, ::subsystem::LogWriter * plogwriter);
       // Starts screen update detection if it not started yet.
       virtual void executeDetection();
 
@@ -75,7 +75,7 @@ namespace remoting_rtc_windows
       ::pointer < ::remoting_rtc::UpdateKeeper  > m_pupdatekeeper;
       ::pointer < ::remoting_rtc::UpdateListener  > m_pupdatelistener;
       ::happening m_happeningSleeper;
-      unsigned int m_interval;
+      ::u32 m_interval;
       bool m_detectionEnabled;
    };
 

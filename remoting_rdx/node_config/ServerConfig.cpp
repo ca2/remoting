@@ -276,7 +276,7 @@ namespace remoting_rfb_node
       m_logFilePath = scopedstrLogFilePath;
    }
 
-   IpAccessRule::ActionType ServerConfig::getActionByAddress(unsigned long ip)
+   IpAccessRule::ActionType ServerConfig::getActionByAddress(ulong ip)
    {
       AutoLock l(this);
 
@@ -322,7 +322,7 @@ namespace remoting_rfb_node
       m_controlAuthAlwaysChecking = value;
    }
 
-   void ServerConfig::setRfbPort(int port)
+   void ServerConfig::setRfbPort(::i32 port)
    {
       AutoLock lock(&m_objectCS);
       if (port > 65535) {
@@ -334,13 +334,13 @@ namespace remoting_rfb_node
       }
    }
 
-   int ServerConfig::getRfbPort()
+   ::i32 ServerConfig::getRfbPort()
    {
       AutoLock lock(&m_objectCS);
       return m_rfbPort;
    }
 
-   void ServerConfig::setHttpPort(int port)
+   void ServerConfig::setHttpPort(::i32 port)
    {
       AutoLock lock(&m_objectCS);
       if (port > 65535) {
@@ -352,7 +352,7 @@ namespace remoting_rfb_node
       }
    }
 
-   int ServerConfig::getHttpPort()
+   ::i32 ServerConfig::getHttpPort()
    {
       AutoLock lock(&m_objectCS);
       return m_httpPort;
@@ -430,14 +430,14 @@ namespace remoting_rfb_node
       m_acceptRfbConnections = accept;
    }
 
-   void ServerConfig::getPrimaryPassword(unsigned char *password)
+   void ServerConfig::getPrimaryPassword(::u8 *password)
    {
       AutoLock lock(&m_objectCS);
 
       memcpy(password, m_primaryPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
-   void ServerConfig::setPrimaryPassword(const unsigned char *value)
+   void ServerConfig::setPrimaryPassword(const ::u8 *value)
    {
       AutoLock lock(&m_objectCS);
 
@@ -446,14 +446,14 @@ namespace remoting_rfb_node
       memcpy((void *)&m_primaryPassword[0], (void *)value, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
-   void ServerConfig::getReadOnlyPassword(unsigned char *password)
+   void ServerConfig::getReadOnlyPassword(::u8 *password)
    {
       AutoLock lock(&m_objectCS);
 
       memcpy(password, m_readonlyPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
-   void ServerConfig::setReadOnlyPassword(const unsigned char *value)
+   void ServerConfig::setReadOnlyPassword(const ::u8 *value)
    {
       AutoLock lock(&m_objectCS);
 
@@ -462,14 +462,14 @@ namespace remoting_rfb_node
       memcpy((void *)&m_readonlyPassword[0], (void *)value, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
-   void ServerConfig::getControlPassword(unsigned char *password)
+   void ServerConfig::getControlPassword(::u8 *password)
    {
       AutoLock lock(&m_objectCS);
 
       memcpy(password, m_controlPassword, ::subsystem::VncPassCrypt::VNC_PASSWORD_SIZE);
    }
 
-   void ServerConfig::setControlPassword(const unsigned char *password)
+   void ServerConfig::setControlPassword(const ::u8 *password)
    {
       AutoLock lock(&m_objectCS);
 
@@ -568,13 +568,13 @@ namespace remoting_rfb_node
       m_enableAppletParamInUrl = enabled;
    }
 
-   int ServerConfig::getLogLevel()
+   ::i32 ServerConfig::getLogLevel()
    {
       AutoLock lock(&m_objectCS);
       return m_logLevel;
    }
 
-   void ServerConfig::setLogLevel(int logLevel)
+   void ServerConfig::setLogLevel(::i32 logLevel)
    {
       AutoLock lock(&m_objectCS);
       if (logLevel < 0) {
@@ -768,13 +768,13 @@ namespace remoting_rfb_node
       return &m_videoRects;
    }
 
-   int ServerConfig::getIdleTimeout()
+   ::i32 ServerConfig::getIdleTimeout()
    {
       AutoLock lock(&m_objectCS);
       return m_idleTimeout;
    }
 
-   void ServerConfig::setIdleTimeout(int timeout)
+   void ServerConfig::setIdleTimeout(::i32 timeout)
    {
       AutoLock lock(&m_objectCS);
       m_idleTimeout = timeout;

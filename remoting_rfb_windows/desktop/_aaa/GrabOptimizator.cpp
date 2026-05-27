@@ -53,7 +53,7 @@ namespace remoting_rfb_windows
       ::int_rectangle_array_base rectanglea;
       regionGrab.getRects(rectanglea);
       ::i32_rectangle rectangleBounds = regionGrab.getBounds();
-      int boundsRectS = rectangleBounds.area();
+      ::i32 boundsRectS = rectangleBounds.area();
       size_t n = rectanglea.size();
 
       if (n == 0 || boundsRectS == 0)
@@ -69,13 +69,13 @@ namespace remoting_rfb_windows
          ASSERT(m_gElements.size() != 0);
 
          // Get estimated time for grab by each rectangle.
-         int fragS = getArea(rectanglea);
-         double avgWholeT = (double)m_wholeTSum / m_wholeTElements.size();
-         double boundsRectT = avgWholeT * boundsRectS / m_wholeS; // Estimated time to
+         ::i32 fragS = getArea(rectanglea);
+         ::f64 avgWholeT = (::f64)m_wholeTSum / m_wholeTElements.size();
+         ::f64 boundsRectT = avgWholeT * boundsRectS / m_wholeS; // Estimated time to
                                                                   // grab by one rectangle
-         double grabF = (double)avgWholeT / m_wholeS; // Grab frequency
-         double avgG = m_gSum / m_gElements.size();
-         double estimatedFragTime = fragS * grabF + avgG * n;
+         ::f64 grabF = (::f64)avgWholeT / m_wholeS; // Grab frequency
+         ::f64 avgG = m_gSum / m_gElements.size();
+         ::f64 estimatedFragTime = fragS * grabF + avgG * n;
          boundsRectT += avgG;
 
          if (boundsRectT <= estimatedFragTime)
@@ -85,10 +85,10 @@ namespace remoting_rfb_windows
                                 " bounds rectangle time = {},"
                                 " estimated fragment time = {},"
                                 " estimated bounds rectangle time = {}",
-                                (int)realBoundsRectTime, (int)estimatedFragTime, (int)boundsRectT);
+                                (::i32)realBoundsRectTime, (::i32)estimatedFragTime, (::i32)boundsRectT);
             // TEST:
             // m_plogwriter->debug("Test: fragment grab time = {}",
-            //           (int)grabFragments(&rectanglea, grabber));
+            //           (::i32)grabFragments(&rectanglea, grabber));
          }
          else
          {
@@ -96,10 +96,10 @@ namespace remoting_rfb_windows
             m_plogwriter->debug("Fragment grab has been preferred:"
                                 " fragment time = {}, estimated fragment time = {},"
                                 " estimated bounds rectangle time = {}",
-                                (int)realFragTime, (int)estimatedFragTime, (int)boundsRectT);
+                                (::i32)realFragTime, (::i32)estimatedFragTime, (::i32)boundsRectT);
             // TEST:
             // m_plogwriter->debug("Test: bounds rectangle time = {}",
-            //           (int)grabOneRect(&rectangleBounds, grabber));
+            //           (::i32)grabOneRect(&rectangleBounds, grabber));
          }
       }
       else
@@ -130,7 +130,7 @@ namespace remoting_rfb_windows
 
    bool GrabOptimizator::getOptimizationAvailable(::remoting_rfb::ScreenDriver *grabber)
    {
-      int sCurrent = grabber->getScreenBuffer()->getDimension().area();
+      ::i32 sCurrent = grabber->getScreenBuffer()->getDimension().area();
       if (m_wholeS != sCurrent)
       {
          // Reset all coefficients, and calculate it again.
@@ -169,9 +169,9 @@ namespace remoting_rfb_windows
       }
    }
 
-   int GrabOptimizator::getArea(const ::int_rectangle_array_base & rectanglea)
+   ::i32 GrabOptimizator::getArea(const ::int_rectangle_array_base & rectanglea)
    {
-      int result = 0;
+      ::i32 result = 0;
       for (size_t i = 0; i < rectanglea.size(); i++)
       {
          result += rectanglea[i].area();
@@ -181,7 +181,7 @@ namespace remoting_rfb_windows
 
    bool GrabOptimizator::isAlikeToWhole(const ::int_rectangle_array_base & rectanglea)
    {
-      int area = getArea(rectanglea);
+      ::i32 area = getArea(rectanglea);
       if (area < 1)
       {
          return false;
@@ -191,7 +191,7 @@ namespace remoting_rfb_windows
 
    bool GrabOptimizator::isEnoughForWholeStats(const ::i32_rectangle & rectangle)
    {
-      int area = rectangle.area();
+      ::i32 area = rectangle.area();
       if (area < 1)
       {
          return false;
@@ -226,7 +226,7 @@ namespace remoting_rfb_windows
 
    __int64 GrabOptimizator::grabOneRect(const ::i32_rectangle & rectangle, ::remoting_rfb::ScreenDriver *grabber)
    {
-      int rectS = rectangle.area();
+      ::i32 rectS = rectangle.area();
       ASSERT(rectS != 0);
       // FIXME: WARNING!!! The microsoft API usage!!!
       LARGE_INTEGER timeBegin, timeEnd;
@@ -245,7 +245,7 @@ namespace remoting_rfb_windows
          if (isEnoughForWholeStats(rectangle))
          {
             // Scale the time as the whole grabbing.
-            double wholeT = (double)realOneRectTime * m_wholeS / rectS;
+            ::f64 wholeT = (::f64)realOneRectTime * m_wholeS / rectS;
             addWholeTElement(wholeT);
             logStatistic();
          }
@@ -257,7 +257,7 @@ namespace remoting_rfb_windows
       }
    }
 
-   void GrabOptimizator::addWholeTElement(double wholeT)
+   void GrabOptimizator::addWholeTElement(::f64 wholeT)
    {
       m_wholeTElements.add(wholeT);
       m_wholeTSum += wholeT;
@@ -277,8 +277,8 @@ namespace remoting_rfb_windows
 
    void GrabOptimizator::removeFirstWholeTElement()
    {
-      ::list_base<double>::iterator iter = m_wholeTElements.begin();
-      double wholeT = *iter;
+      ::list_base<::f64>::iterator iter = m_wholeTElements.begin();
+      ::f64 wholeT = *iter;
       m_wholeTSum -= wholeT;
       m_wholeTElements.erase(iter);
    }
@@ -307,9 +307,9 @@ namespace remoting_rfb_windows
          // To update the statistic wholeT must be calculated at least once.
          if (isAlikeToFragments(rectanglea) && m_wholeTElements.size() > 0)
          {
-            int s = getArea(rectanglea);
+            ::i32 s = getArea(rectanglea);
             size_t n = rectanglea.size();
-            double g = (fragT - (double)m_wholeTSum / m_wholeTElements.size() * s / m_wholeS) / n;
+            ::f64 g = (fragT - (::f64)m_wholeTSum / m_wholeTElements.size() * s / m_wholeS) / n;
             addFragmentStats(g);
 
             logStatistic();
@@ -323,7 +323,7 @@ namespace remoting_rfb_windows
       }
    }
 
-   void GrabOptimizator::addFragmentStats(double g)
+   void GrabOptimizator::addFragmentStats(::f64 g)
    {
       m_gElements.add(g);
       m_gSum += g;
@@ -343,8 +343,8 @@ namespace remoting_rfb_windows
 
    void GrabOptimizator::removeFirstElementsFromFragmentStats()
    {
-      ::list_base<double>::iterator iterG = m_gElements.begin();
-      double g = *iterG;
+      ::list_base<::f64>::iterator iterG = m_gElements.begin();
+      ::f64 g = *iterG;
       m_gSum -= g;
       m_gElements.erase(iterG);
    }
@@ -355,24 +355,24 @@ namespace remoting_rfb_windows
 
       ::string value;
       ::string statString;
-      for (::list_base<double>::iterator iter = m_wholeTElements.begin(); iter != m_wholeTElements.end(); iter++)
+      for (::list_base<::f64>::iterator iter = m_wholeTElements.begin(); iter != m_wholeTElements.end(); iter++)
       {
          value.format(" %.2f;", *iter);
          statString+=value;
       }
-      double avgWholeT = m_wholeTElements.size() != 0 ? m_wholeTSum / m_wholeTElements.size() : 0;
+      ::f64 avgWholeT = m_wholeTElements.size() != 0 ? m_wholeTSum / m_wholeTElements.size() : 0;
       m_plogwriter->debug("GrabOptimizator::m_wholeT average: %.2f;"
                           " GrabOptimizator::m_wholeTSum: %.2f;"
                           " GrabOptimizator::m_wholeTElements: {}",
                           avgWholeT, m_wholeTSum, statString);
 
       statString = "";
-      for (::list_base<double>::iterator iter = m_gElements.begin(); iter != m_gElements.end(); iter++)
+      for (::list_base<::f64>::iterator iter = m_gElements.begin(); iter != m_gElements.end(); iter++)
       {
          value.format(" %.2f;", *iter);
          statString+=value;
       }
-      double avgG = m_gElements.size() != 0 ? m_gSum / m_gElements.size() : 0;
+      ::f64 avgG = m_gElements.size() != 0 ? m_gSum / m_gElements.size() : 0;
       m_plogwriter->debug("GrabOptimizator::m_g average: %.2f;"
                           " GrabOptimizator::m_gSum: %.2f;"
                           " GrabOptimizator::m_gElements: {};",

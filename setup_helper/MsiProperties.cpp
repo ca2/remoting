@@ -84,21 +84,21 @@ void MsiProperties::setString(const ::scoped_string & scopedstrName, const ::sco
   }
 }
 
-int MsiProperties::getInt32(const ::scoped_string & scopedstrName)
+::i32 MsiProperties::getInt32(const ::scoped_string & scopedstrName)
 {
   ::string strValue;
   getValue(name, &strValue);
-  int retValue = 0;
+  ::i32 retValue = 0;
   if (!MainSubsystem().StringParser().parseInt(strValue, &retValue)) {
     ::string errMess;
-    errMess.format("Can't convert the {} string value to int of the"
+    errMess.format("Can't convert the {} string value to ::i32 of the"
                    " {} property", strValue, name);
     throw ::subsystem::Exception(errMess);
   }
   return retValue;
 }
 
-void MsiProperties::setInt32(const ::scoped_string & scopedstrName, int value)
+void MsiProperties::setInt32(const ::scoped_string & scopedstrName, ::i32 value)
 {
   try {
     ::string valueStr;
@@ -106,7 +106,7 @@ void MsiProperties::setInt32(const ::scoped_string & scopedstrName, int value)
     setValue(name, &valueStr);
   } catch (...) {
     ::string errMess;
-    errMess.format("Cant't set the (int){} value to the {} property",
+    errMess.format("Cant't set the (::i32){} value to the {} property",
                    value,
                    name);
     throw ::subsystem::Exception(errMess);

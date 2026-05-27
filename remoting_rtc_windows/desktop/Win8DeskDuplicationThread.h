@@ -55,7 +55,7 @@ namespace remoting_rtc_windows
 
       bool isValid();
 
-         ::array_base<int> timeouts;
+         ::array_base<::i32> timeouts;
          ::array_base<class ::time> begins;
 
                HRESULT hrErrorRecoverable = S_OK;

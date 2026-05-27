@@ -30,7 +30,7 @@
 
 FileAccount::FileAccount(const ::scoped_string & scopedstrLogDir,
                          const ::scoped_string & scopedstrFileName,
-                         unsigned char logLevel,
+                         ::u8 logLevel,
                          bool logHeadEnabled)
 : LogDump(logHeadEnabled, false),
   m_strFileName(scopedstrFileName),
@@ -54,7 +54,7 @@ FileAccount::~FileAccount()
   closeFile();
 }
 
-void FileAccount::init(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, unsigned char logLevel)
+void FileAccount::init(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName, ::u8 logLevel)
 {
   m_strFileName= fileName;
 
@@ -65,7 +65,7 @@ void FileAccount::init(const ::scoped_string & scopedstrLogDir, const ::scoped_s
 }
 
 void FileAccount::changeLogProps(const ::scoped_string & scopedstrNewLogDir,
-                                 unsigned char newLevel)
+                                 ::u8 newLevel)
 {
   try {
     setNewFile(newLevel, newLogDir);
@@ -83,10 +83,10 @@ bool FileAccount::isTheOurFileName(const ::scoped_string & scopedstrFileName)
   return m_strFileName.isEqualTo(fileName);
 }
 
-void FileAccount::print(unsigned int processId,
-                        unsigned int threadId,
+void FileAccount::print(::u32 processId,
+                        ::u32 threadId,
                         const class ::time & dt,
-                        int level,
+                        ::i32 level,
                         const ::scoped_string & scopedstrMessage)
 {
   critical_section_lock al(&m_criticalsectionLog);
@@ -96,20 +96,20 @@ void FileAccount::print(unsigned int processId,
   flush(processId, threadId, dt, level, scopedstrMessage);
 }
 
-bool FileAccount::acceptsLevel(int logLevel)
+bool FileAccount::acceptsLevel(::i32 logLevel)
 {
   return logDumpEnabled() || logHeadEnabled() || printsLine(logLevel);
 }
 
-bool FileAccount::printsLine(int level)
+bool FileAccount::printsLine(::i32 level)
 {
   return m_file != 0 && level <= m_level;
 }
 
-void FileAccount::flush(unsigned int processId,
-                        unsigned int threadId,
+void FileAccount::flush(::u32 processId,
+                        ::u32 threadId,
                         const class ::time & dt,
-                        int level,
+                        ::i32 level,
                         const ::scoped_string & scopedstrMessage)
 {
   critical_section_lock al(&m_criticalsectionLog);
@@ -119,18 +119,18 @@ void FileAccount::flush(unsigned int processId,
   }
 }
 
-void FileAccount::print(int level, const ::scoped_string & scopedstrMessage)
+void FileAccount::print(::i32 level, const ::scoped_string & scopedstrMessage)
 {
-  unsigned int processId = GetCurrentProcessId();
-  unsigned int threadId = GetCurrentThreadId();
+  ::u32 processId = GetCurrentProcessId();
+  ::u32 threadId = GetCurrentThreadId();
   class ::time dt = class ::time::now();
   print(processId, threadId, dt, level, scopedstrMessage);
 }
 
-void FileAccount::format(unsigned int processId,
-                         unsigned int threadId,
+void FileAccount::format(::u32 processId,
+                         ::u32 threadId,
                          const class ::time & dt,
-                         int level,
+                         ::i32 level,
                          const ::scoped_string & scopedstrMessage)
 {
   // FIXME: Remove windows dependence.
@@ -138,7 +138,7 @@ void FileAccount::format(unsigned int processId,
   ::string timeString("[Temporary unavaliable]");
   SYSTEMTIME st;
   dt.toUtcSystemTime(&st);
-  unsigned char logBarrier;
+  ::u8 logBarrier;
   {
     critical_section_lock al(&m_criticalsectionLog);
     logBarrier = m_level;
@@ -180,7 +180,7 @@ void FileAccount::format(unsigned int processId,
   }
 }
 
-void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & scopedstrNewDir)
+void FileAccount::setNewFile(::u8 newLevel, const ::scoped_string & scopedstrNewDir)
 {
   critical_section_lock al(&m_criticalsectionLog);
   bool levelChanged = newLevel != m_level;
@@ -193,7 +193,7 @@ void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & sco
   if (levelChanged && !m_asFirstOpen) {
     ::string strMessage;
     strMessage.format("Log verbosity level has been changed from {} to {}",
-                   (int)m_level, (int) newLevel);
+                   (::i32)m_level, (::i32) newLevel);
     print(1, strMessage);
   }
   if (logDirChanged && !m_asFirstOpen) {
@@ -226,7 +226,7 @@ void FileAccount::setNewFile(unsigned char newLevel, const ::scoped_string & sco
     if (levelChangedFromZero && !asFirstOpen) {
       ::string strMessage;
       strMessage.format("Log verbosity level has been changed from 0 to {}",
-                     (int)m_level, (int) newLevel);
+                     (::i32)m_level, (::i32) newLevel);
       print(1, strMessage);
     }
     return;
@@ -282,7 +282,7 @@ void FileAccount::closeFile()
 
 void FileAccount::addUnicodeSignature()
 {
-  unsigned short firstTwoBytes = 0;
+  ::u16 firstTwoBytes = 0;
   try {
     m_file->read(&firstTwoBytes, sizeof(firstTwoBytes));
   } catch (EOFException &) {
@@ -293,12 +293,12 @@ void FileAccount::addUnicodeSignature()
   }
 }
 
-void FileAccount::createBackup(unsigned int backupLimit)
+void FileAccount::createBackup(::u32 backupLimit)
 {
   ::string oldName, newName;
   TCHAR fmt[] = "{}\\{}.{}.log";
   // Shift backup files
-  for (int i = backupLimit - 1; i > 0; i--) {
+  for (::i32 i = backupLimit - 1; i > 0; i--) {
     // Generate valid backup names
     oldName.format(fmt, m_logDir, m_strFileName, i);
     newName.format(fmt, m_logDir, m_strFileName, i + 1);
