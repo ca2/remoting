@@ -121,7 +121,7 @@ namespace remoting_rfb_client
         bool onHScroll(::wparam wParam, ::lparam lParam);
         bool onVScroll(::wparam wParam, ::lparam lParam);
         //bool onKey(::user::enum_message emessage, ::wparam wParam, ::lparam lParam);
-       bool onKey(::user::enum_message eusermessage, ::user::enum_key euserkey) override;
+       bool onKey(::user::enum_message eusermessage, const ::user::e_key & euserkey) override;
         bool onChar(::wparam wParam, ::lparam lParam);
         bool onMouse(::u8 mouseKeys, ::u16 wheelSpeed, const ::i32_point & pointPosition) override;
         bool onMouseEx(::u32 message, ::i32 iButtonMask, ::u16 wspeed, const ::i32_point &pointPosition,

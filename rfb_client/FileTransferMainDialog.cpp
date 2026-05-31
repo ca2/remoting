@@ -128,7 +128,7 @@ namespace remoting_rfb_client
    }
 
 
-   bool FileTransferMainDialog::_002OnKeyDownNotification(::i32 iControl, ::user::enum_key euserkey)
+   bool FileTransferMainDialog::_002OnKeyDownNotification(::i32 iControl, const ::user::e_key & euserkey)
    {
       switch (iControl)
       {

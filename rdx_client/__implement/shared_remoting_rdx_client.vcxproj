@@ -286,6 +286,9 @@
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\innate_ui_win32\innate_ui_win32.vcxproj">
       <Project>{1f20cf93-ae0b-4a16-a786-56a623c8726a}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\nano_graphics_gdiplus\nano_graphics_gdiplus.vcxproj">
+      <Project>{0031efca-4f29-4246-a014-9553e587a31f}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\subsystem_windows\subsystem_windows.vcxproj">
       <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
     </ProjectReference>
@@ -294,6 +297,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows_common\apex_windows_common\apex_windows_common.vcxproj">
       <Project>{a094e038-d195-4400-82ce-44a7edf91b78}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows_common\nano_idn_windows_common\nano_idn_windows_common.vcxproj">
+      <Project>{d13c126b-d461-46f6-8161-20f92811d2bc}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>

@@ -11,6 +11,8 @@
 #include "acme/windowing/windowing.h"
 #include "acme/nano/graphics/brush.h"
 #include "acme/nano/graphics/context.h"
+#include "acme/nano/idn/idn.h"
+#include "acme/nano/nano.h"
 //#include "rdp_host.h"
 #include "toolbar.h"
 
@@ -574,7 +576,24 @@ namespace remoting_rdx_client
        
       ::cast<::remoting_rdx_client::application> papp = m_papplication;
 
-      ::wstring wstrHost = papp->m_strHost;
+      auto strParse = papp->m_strHost;
+
+      auto strName = strParse.get_word(":");
+
+      ::string strPort(strParse);
+
+      int iPort = -1;
+
+      if (strPort.has_character())
+      {
+
+         iPort = atoi(strPort);
+
+      }
+
+      auto strPunycode = nano()->idn()->idn_to_punycode(strName);
+
+      ::wstring wstrHost(strPunycode);
 
       m_pinternal->m_prdpclient->put_Server(_bstr_t(wstrHost));
 
@@ -606,6 +625,11 @@ namespace remoting_rdx_client
          ///padvancedsettings->put_PerformanceFlags(0);
 
          //padvancedsettings->put_ConnectionBarShowMinimizeButton(VARIANT_FALSE);
+         if (iPort > 0)
+         {
+            m_pinternal->m_padvancedsettings->put_RDPPort(iPort);
+         }
+
 
       }
 

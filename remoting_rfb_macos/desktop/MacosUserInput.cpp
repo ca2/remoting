@@ -270,7 +270,7 @@ namespace remoting_macos
       try
       {
          m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (::i32)down);
-         ::user::enum_key euserkey;
+         const ::user::e_key & euserkey;
          ::i32 ch;
          bool release = !down;
          bool extended;

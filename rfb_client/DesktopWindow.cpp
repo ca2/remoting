@@ -504,7 +504,7 @@ namespace remoting_rfb_client
         return true;
     }
 
-    bool DesktopWindow::onKey(::user::enum_message emessage, ::user::enum_key euserkey)
+    bool DesktopWindow::onKey(::user::enum_message emessage, const ::user::e_key & euserkey)
     {
        if (m_pviewerwindow->isIconic())
        {

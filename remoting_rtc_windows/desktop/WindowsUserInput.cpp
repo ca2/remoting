@@ -179,7 +179,7 @@ namespace remoting_rtc_windows
          m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (::i32)down);
          // Generate single key event.
          //::u8 vkCode;
-         ::user::enum_key euserkey = ::user::e_key_none;
+         const ::user::e_key & euserkey = ::user::e_key_none;
          ::i32 ch;
          bool release = !down;
          bool extended;
