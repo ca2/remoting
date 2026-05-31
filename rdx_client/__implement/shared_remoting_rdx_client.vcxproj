@@ -289,6 +289,9 @@
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\nano_graphics_gdiplus\nano_graphics_gdiplus.vcxproj">
       <Project>{0031efca-4f29-4246-a014-9553e587a31f}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\nano_http_wininet\nano_http_wininet.vcxproj">
+      <Project>{561d6a90-ab6b-485f-9fc9-128bda62c48c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows\subsystem_windows\subsystem_windows.vcxproj">
       <Project>{f46e1b15-7a8a-4bbd-8dfa-85c7074e2daa}</Project>
     </ProjectReference>
@@ -297,6 +300,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows_common\apex_windows_common\apex_windows_common.vcxproj">
       <Project>{a094e038-d195-4400-82ce-44a7edf91b78}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows_common\nano_compress_windows\nano_compress_windows.vcxproj">
+      <Project>{fda73feb-b96a-42bc-a83a-95881ed1f040}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\operating_system\operating_system-windows_common\nano_idn_windows_common\nano_idn_windows_common.vcxproj">
       <Project>{d13c126b-d461-46f6-8161-20f92811d2bc}</Project>
