@@ -11,8 +11,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>C:\Users\camilo\Desktop\eddie.camilothomas.com.remoting_rdx</LocalDebuggerCommandArguments>
-    <LocalDebuggerCommandArgumentsHistory>C:\Users\camilo\Desktop\fox.remoting|C:\Users\camilo\Desktop\canada5.camilothomas.com.rdx_client|C:\Users\camilo\Desktop\canada5.camilothomas.com.remoting_rdx_client|C:\Users\camilo\Desktop\canada5.camilothomas.com.remoting_rdx|C:\Users\camilo\Desktop\eddie.camilothomas.com.remoting_rdx|</LocalDebuggerCommandArgumentsHistory>
+    <LocalDebuggerCommandArguments>C:\Users\camilo\Desktop\canada5.camilothomas.com.remoting_rdx</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArgumentsHistory>C:\Users\camilo\Desktop\fox.remoting|C:\Users\camilo\Desktop\canada5.camilothomas.com.rdx_client|C:\Users\camilo\Desktop\canada5.camilothomas.com.remoting_rdx_client|C:\Users\camilo\Desktop\eddie.camilothomas.com.remoting_rdx|C:\Users\camilo\Desktop\canada5.camilothomas.com.remoting_rdx|</LocalDebuggerCommandArgumentsHistory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
