@@ -61,7 +61,7 @@ namespace remoting_rfb
       // Returns a rectangle that is normilized from "virtual desktop" to frame buffer coordinates.
       virtual void getNormalizedRect(::i32_rectangle rectangle) = 0;
       virtual void getDisplayNumberCoords(::i32_rectangle rectangle, ::u8 dispNumber) = 0;
-      virtual ::int_rectangle_array_base getDisplaysCoords() = 0;
+      virtual ::i32_rectangle_array_base getDisplaysCoords() = 0;
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle rectangle) = 0;
       virtual ::operating_system::window getWindowHandleByName(const ::scoped_string &windowName) = 0;
 

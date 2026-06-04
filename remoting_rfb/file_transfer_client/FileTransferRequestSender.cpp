@@ -206,7 +206,7 @@ namespace remoting_rfb
          m_output->writeUInt8(compressionLevel);
          m_output->writeUInt32(size);
          m_output->writeUInt32(size);
-         m_output->write(buffer, size);
+         m_output->write(pszBuffer, size);
          m_output->flush();
       }
 

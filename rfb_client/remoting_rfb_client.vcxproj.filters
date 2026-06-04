@@ -117,6 +117,9 @@
     <ClCompile Include="remoting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OperatingSystemApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AuthenticationDialog.h">
@@ -225,6 +228,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="remoting_impact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OperatingSystemApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

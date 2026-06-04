@@ -763,7 +763,7 @@ namespace remoting_rfb_node
       m_videoRecognitionInterval = interval;
    }
 
-   ::int_rectangle_array_base *ServerConfig::getVideoRects()
+   ::i32_rectangle_array_base *ServerConfig::getVideoRects()
    {
       return &m_videoRects;
    }

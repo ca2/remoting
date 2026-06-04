@@ -60,6 +60,13 @@ namespace remoting_rfb_client
    }
 
 
+   ::f32 control::get_window_scale()
+   {
+
+      return m_pdesktopwindow->getWindowScale();
+   }
+
+
    ::i32_rectangle control::get_client_rectangle()
    {
 
@@ -525,8 +532,8 @@ namespace remoting_rfb_client
       }
       //::i32 iToolbarWidth = 400 * iDesktopWidth / (1920 * iDivisor);
       //::i32 iButtonSize = 24 * iDesktopWidth / (1920 * iDivisor);
-      ::i32 iToolbarWidth = 400;
-      ::i32 iButtonSize = 24;
+      ::i32 iToolbarWidth = 400 * get_window_scale();
+      ::i32 iButtonSize = 24 * get_window_scale();
       m_rectangle = { ((iDesktopWidth - iToolbarWidth) / 2), 0, ((iDesktopWidth + iToolbarWidth) / 2), iButtonSize };
 
       //m_brushBackgroundMinimizeDash(RGB(255, 255, 255))
@@ -950,7 +957,7 @@ namespace remoting_rfb_client
 
       }
 
-
+      auto fWindowScale = get_window_scale();
 
       if (m_eid == id_minimize)
       {
@@ -958,12 +965,12 @@ namespace remoting_rfb_client
 
          auto r = get_paint_rectangle();
 
-         ::i32_rectangle rDash;
+         ::f64_rectangle rDash;
 
-         rDash.left = r.left + 7;
-         rDash.right = r.right - 7;
-         rDash.top = r.top + 5;
-         rDash.bottom = rDash.top + 2;
+         rDash.left = r.left + 7.0 * fWindowScale;
+         rDash.right = r.right - 7 * fWindowScale;
+         rDash.top = r.top + 5.0 * fWindowScale;
+         rDash.bottom = rDash.top + 2.0 * fWindowScale;
 
          pgraphics->fillRect(rDash, colorPaint);
 
@@ -974,14 +981,22 @@ namespace remoting_rfb_client
 
          auto r = get_paint_rectangle();
 
-         ::i32_rectangle rDeflate = r;
+         ::f64_rectangle rDeflate = r;
 
-         rDeflate.deflate(7, 5, 7, 9);
+         rDeflate.deflate(7.0 * fWindowScale, 5.0 * fWindowScale, 7.0 * fWindowScale, 9.0 * fWindowScale);
 
-         pgraphics->fillRect(::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2), colorPaint);
-         pgraphics->fillRect(::i32_rectangle(rDeflate.right - 2, rDeflate.top, rDeflate.right, rDeflate.bottom), colorPaint);
-         pgraphics->fillRect(::i32_rectangle(rDeflate.left, rDeflate.bottom-2, rDeflate.right, rDeflate.bottom), colorPaint);
-         pgraphics->fillRect(::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.left+2, rDeflate.bottom), colorPaint);
+         pgraphics->fillRect(
+            ::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2.0 * fWindowScale),
+            colorPaint);
+         pgraphics->fillRect(
+            ::i32_rectangle(rDeflate.right - 2.0 * fWindowScale, rDeflate.top, rDeflate.right, rDeflate.bottom),
+            colorPaint);
+         pgraphics->fillRect(
+            ::i32_rectangle(rDeflate.left, rDeflate.bottom - 2.0 * fWindowScale, rDeflate.right, rDeflate.bottom),
+            colorPaint);
+         pgraphics->fillRect(
+            ::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.left + 2.0 * fWindowScale, rDeflate.bottom),
+            colorPaint);
 
       }
       else if (m_eid == id_close)
@@ -990,15 +1005,15 @@ namespace remoting_rfb_client
 
          auto r = get_paint_rectangle();
 
-         ::i32_rectangle rDeflate = r;
+         ::f64_rectangle rDeflate = r;
 
-         rDeflate.deflate(7, 5, 7, 9);
+         rDeflate.deflate(7.0 * fWindowScale, 5.0 * fWindowScale, 7.0 * fWindowScale, 9.0 * fWindowScale);
 
          //pgraphics->setPen(m_pstyle->m_ppenPaint);
          if (!m_ppen001)
          {
             constructø(m_ppen001);
-            m_ppen001->initialize_pen(innate_subsystem::e_pen_solid, 2, colorPaint);
+            m_ppen001->initialize_pen(innate_subsystem::e_pen_solid, 2.0 * fWindowScale, colorPaint);
          }
          //pgraphics->setPen(2.0f, colorPaint);
          pgraphics->setPen(m_ppen001);
@@ -1030,20 +1045,33 @@ namespace remoting_rfb_client
 
       ::color::color colorLite = argb(iAlpha, 200, 240, 255);
       ::color::color colorDark = argb(iAlpha, 50, 80, 160);
-      auto r = get_paint_rectangle();
+      ::f64_rectangle r = get_paint_rectangle();
+
+
+            auto fW = (::f64)r.width();
+      auto fH = (::f64)r.height();
+
+      // auto wForDraw = fW - 2.0f;
+      // auto hForDraw = fH - 2.0f;
+
+      auto wForDraw = fW - 1.0;
+      auto hForDraw = fH - 1.0;
+
 
 
       pgraphics->fillRect(r, colorDark);
 
-      ::i32 x = r.left;
-      ::i32 y = r.top;
-      ::i32 w = r.width();
-      ::i32 h = 1;
+      ::f64 x = r.left;
+      ::f64 y = r.top;
+      ::f64 w = r.width();
+      ::f64 h = 1;
       ::color::color color;
 
       ::f32 fOpacity = 1.0f;
+
+      int iH = 10 * get_window_scale();
       
-      for (::i32 i = 0; i < 10; i++)
+      for (::i32 i = 0; i < iH; i++)
       {
          
          color=colorDark;
@@ -1054,7 +1082,7 @@ namespace remoting_rfb_client
 
          y+= h;
          
-         fOpacity -= 0.1f;
+         fOpacity -= 0.1f / get_window_scale();
          
       }
       

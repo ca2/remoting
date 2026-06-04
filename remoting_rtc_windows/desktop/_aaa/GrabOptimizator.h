@@ -79,14 +79,14 @@ namespace remoting_rtc_windows
       void refreshStatistic(::remoting_rtc::ScreenDriver *grabber);
 
       // Returns absolute sum area of rectangle ::array_base.
-      ::i32 getArea(const ::int_rectangle_array_base & rectanglea);
+      ::i32 getArea(const ::i32_rectangle_array_base & rectanglea);
 
       // If the grab region is alike to whole desktop the function return true.
-      bool isAlikeToWhole(const ::int_rectangle_array_base & rectanglea);
+      bool isAlikeToWhole(const ::i32_rectangle_array_base & rectanglea);
       bool isEnoughForWholeStats(const ::i32_rectangle & rectangle);
       // If the grab region is alike to separate fragments the function
       // return true.
-      bool isAlikeToFragments(const ::int_rectangle_array_base & rectanglea);
+      bool isAlikeToFragments(const ::i32_rectangle_array_base & rectanglea);
 
       // This functions store to the log all statistic data.
       void logStatistic();
@@ -96,7 +96,7 @@ namespace remoting_rtc_windows
 
       __int64 grabWhole(::remoting_rtc::ScreenDriver *grabber);
       __int64 grabOneRect(const ::i32_rectangle & rectangle, ::remoting_rtc::ScreenDriver *grabber);
-      __int64 grabFragments(const ::int_rectangle_array_base & rectanglea, ::remoting_rtc::ScreenDriver *grabber);
+      __int64 grabFragments(const ::i32_rectangle_array_base & rectanglea, ::remoting_rtc::ScreenDriver *grabber);
 
       void addWholeTElement(::f64 wholeT);
       void removeObsoleteWholeTElements();

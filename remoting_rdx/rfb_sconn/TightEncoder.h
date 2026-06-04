@@ -48,7 +48,7 @@ namespace remoting_rfb
 
       // Splits big rectangles according to the configuration setings (m_conf)
       // corresponding to the compression level set in EncodeOptions.
-      virtual void splitRectangle(const ::i32_rectangle & rectangle, ::int_rectangle_array_base & rectanglea,
+      virtual void splitRectangle(const ::i32_rectangle & rectangle, ::i32_rectangle_array_base & rectanglea,
                                   const ::innate_subsystem::Framebuffer *serverFb, const EncodeOptions *options);
 
       virtual void sendRectangle(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,

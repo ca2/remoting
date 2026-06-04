@@ -179,8 +179,8 @@ void sendNClientRegion(HWND hwnd)
 
   ncRegion.subtract(&cRegion);
 
-  ::int_rectangle_array_base rectanglea;
-  ::int_rectangle_array_base::iterator iRect;
+  ::i32_rectangle_array_base rectanglea;
+  ::i32_rectangle_array_base::iterator iRect;
   ncRegion.getRects(&rectanglea);
   for (iRect = rectanglea.begin(); iRect < rectanglea.end(); iRect++) {
     sendRect(&(*iRect));

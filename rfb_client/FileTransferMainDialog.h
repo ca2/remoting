@@ -101,7 +101,7 @@ namespace remoting_rfb_client
         bool onDestroy() override;
 
          bool _002OnAction(::i32 iControl) override;
-         bool _002OnKeyDownNotification(::i32 iControl, ::user::enum_key ekey) override;
+         bool _002OnKeyDownNotification(::i32 iControl, const ::user::e_key & ekey) override;
          bool _002OnColumnClick(::i32 iControl, ::i32 iColumn) override;
          bool _002OnSelectionChange(::i32 iControl) override;
 
@@ -138,8 +138,8 @@ namespace remoting_rfb_client
         void onRemoteListViewDoubleClick();
         void onLocalListViewDoubleClick();
 
-        void onRemoteListViewKeyDown(::user::enum_key ekey);
-        void onLocalListViewKeyDown(::user::enum_key ekey);
+        void onRemoteListViewKeyDown(const ::user::e_key & ekey);
+        void onLocalListViewKeyDown(const ::user::e_key & ekey);
 
         //
         // Enables or disables rename and delete buttons

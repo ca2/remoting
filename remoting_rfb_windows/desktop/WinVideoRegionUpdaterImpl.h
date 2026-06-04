@@ -68,10 +68,10 @@ namespace remoting_rfb_windows
    //private:
       virtual ::remoting_rfb::Region getVideoRegion();
       void updateVideoRegion();
-      void getClassNamesAndRectsFromConfig(::string_array &classNames, ::int_rectangle_array_base &rectanglea);
+      void getClassNamesAndRectsFromConfig(::string_array &classNames, ::i32_rectangle_array_base &rectanglea);
       ::u32 getInterval();
       ::remoting_rfb::Region getRectsByClass(::string_array classNames);
-      ::remoting_rfb::Region getRectsByCoords(::int_rectangle_array_base &rectanglea);
+      ::remoting_rfb::Region getRectsByCoords(::i32_rectangle_array_base &rectanglea);
 
    };
 

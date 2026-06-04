@@ -171,9 +171,9 @@ void UserInputClient::getDisplayNumberCoords(::i32_rectangle & rectangle,
   } while (!success);
 }
 
-::int_rectangle_array_base UserInputClient::getDisplaysCoords()
+::i32_rectangle_array_base UserInputClient::getDisplaysCoords()
 {
-  ::int_rectangle_array_base res;
+  ::i32_rectangle_array_base res;
   critical_section_lock al(m_pcontrolgate);
   bool success = false;
   ::u8 number;

@@ -31,7 +31,7 @@ namespace remoting_rfb_client
 
    };
 
-   class CLASS_DECL_REMOTING_CLIENT style :
+   class CLASS_DECL_REMOTING_RFB_CLIENT style :
       virtual public ::particle
    {
    public:
@@ -47,7 +47,7 @@ namespace remoting_rfb_client
 
    };
 
-   class CLASS_DECL_REMOTING_CLIENT control :
+   class CLASS_DECL_REMOTING_RFB_CLIENT control :
    virtual public ::particle
    {
    public:
@@ -79,6 +79,7 @@ namespace remoting_rfb_client
       ~control();
 
       control * get_paint_window();
+      virtual ::f32 get_window_scale();
       void add_repaint(const ::i32_rectangle & rectangle);
       void _add_repaint(const ::i32_rectangle & rectangle);
 void defer_repaint();
@@ -104,7 +105,7 @@ virtual bool _001OnMouseEx(::u32 uMessage, ::i32 iButtonMask, const ::i32_point 
    };
 
 
-   class CLASS_DECL_REMOTING_CLIENT toolbar_button :
+   class CLASS_DECL_REMOTING_RFB_CLIENT toolbar_button :
    virtual public control
    {
    public:
@@ -142,7 +143,7 @@ virtual bool _001OnMouseEx(::u32 uMessage, ::i32 iButtonMask, const ::i32_point 
    };
 
 
-   class CLASS_DECL_REMOTING_CLIENT toolbar :
+   class CLASS_DECL_REMOTING_RFB_CLIENT toolbar :
    virtual public control
    {
    public:

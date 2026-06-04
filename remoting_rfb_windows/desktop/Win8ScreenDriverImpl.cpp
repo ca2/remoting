@@ -166,7 +166,7 @@ namespace remoting_rfb_windows
       ::remoting_rfb::Region virtDeskRegion;
       m_plogwriter->debug("Try to enumerate dxgi outputs");
       ::array_base<::comptr<IDXGIOutput > > dxgioutputa;
-      ::int_rectangle_array_base deskCoordArray;
+      ::i32_rectangle_array_base deskCoordArray;
       ::u32 iOutput = 0;
       //try
       //{

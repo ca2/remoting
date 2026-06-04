@@ -242,10 +242,10 @@ namespace remoting
       void sendCursorShapeUpdate(const ::innate_subsystem::PixelFormat &fmt,
                                  const ::remoting_rtc::CursorShape *cursorShape);
       void sendCursorPosUpdate();
-      void sendCopyRect(const ::int_rectangle_array_base & rectanglea, const ::i32_point & pointSource);
+      void sendCopyRect(const ::i32_rectangle_array_base & rectanglea, const ::i32_point & pointSource);
 
       // Encode and send a ::list_base of rectangles via the specified encoder.
-      void sendRectangles(Encoder *encoder, const ::int_rectangle_array_base & rectanglea,
+      void sendRectangles(Encoder *encoder, const ::i32_rectangle_array_base & rectanglea,
                           const ::innate_subsystem::Framebuffer *pframebuffer, const EncodeOptions *encodeOptions);
 
       // This function paints black region in pframebuffer->
@@ -255,14 +255,14 @@ namespace remoting
       // where actual splitting is performed by the specified encoder object.
       // We do not use m_pencoder because this function may be used for the video
       // encoder as well.
-      void splitRegion(Encoder *encoder, const ::remoting_rtc::Region & region, ::int_rectangle_array_base & rectanglea,
+      void splitRegion(Encoder *encoder, const ::remoting_rtc::Region & region, ::i32_rectangle_array_base & rectanglea,
                        const ::innate_subsystem::Framebuffer *pframebuffer, const EncodeOptions *encodeOptions);
 
       // Returns part of region with total area not much more than area
       // and removes this part form source reg
       ::remoting_rtc::Region takePartFromRegion(::remoting_rtc::Region & region, ::i32 area);
       // calculate total area of rectanglea in pixels
-      ::i32 calcAreas(::int_rectangle_array_base rectanglea);
+      ::i32 calcAreas(::i32_rectangle_array_base rectanglea);
 
    };
 

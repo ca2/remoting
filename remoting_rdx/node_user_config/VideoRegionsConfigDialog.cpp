@@ -110,7 +110,7 @@ namespace remoting_rfb_node
    void VideoRegionsConfigDialog::updateUI()
    {
       ::string_array *videoClasses = m_pserverconfig->getVideoClassNames();
-      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig->getVideoRects();
+      ::i32_rectangle_array_base *rectangleaVideo = m_pserverconfig->getVideoRects();
       ::string textAreaData;
       ::i8 endLine[3] = {13, 10, 0};
       {
@@ -153,7 +153,7 @@ namespace remoting_rfb_node
 
       ::string_array *videoClasses = m_pserverconfig->getVideoClassNames();
       videoClasses->clear();
-      ::int_rectangle_array_base *rectangleaVideo = m_pserverconfig->getVideoRects();
+      ::i32_rectangle_array_base *rectangleaVideo = m_pserverconfig->getVideoRects();
       rectangleaVideo->clear();
 
       //

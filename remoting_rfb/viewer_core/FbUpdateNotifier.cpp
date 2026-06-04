@@ -160,12 +160,12 @@ void FbUpdateNotifier::setAdapter(CoreEventsAdapter *adapter)
             }
 #endif
 
-            //::int_rectangle_array_base rectangleaUpdate;
+            //::i32_rectangle_array_base rectangleaUpdate;
             auto rectangleaUpdate = update.getRects();
             m_plogwriter->debug("FbUpdateNotifier (event): {} updates", rectangleaUpdate.size());
 
             try {
-               for (::int_rectangle_array_base::iterator i = rectangleaUpdate.begin(); i != rectangleaUpdate.end(); ++i) {
+               for (::i32_rectangle_array_base::iterator i = rectangleaUpdate.begin(); i != rectangleaUpdate.end(); ++i) {
                   m_pcoreeventsadapter->onFramebufferUpdate(m_pframebuffer, *i);
                }
             } catch (...) {

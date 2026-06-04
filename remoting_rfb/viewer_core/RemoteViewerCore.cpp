@@ -603,7 +603,7 @@ defer_construct_newø(m_pframebuffer);
    void RemoteViewerCore::connectToHost()
    {
       m_tcpConnection.connect();
-      m_tcpConnection.m_psocket->setRcvTimeO(1_s);
+      //m_tcpConnection.m_psocket->setRcvTimeO(1_s);
       m_input = m_tcpConnection.getInput();
       m_output = m_tcpConnection.getOutput();
 
@@ -1506,7 +1506,7 @@ defer_construct_newø(m_pframebuffer);
                                             const_char_pointer pszNameSignature,
                                             const ::string description)
    {
-      m_authCaps.add(code, vendorSignature, nameSignature, description);
+      m_authCaps.add(code, vendorSignature, pszNameSignature, description);
       registerAuthHandler(code, authHandler);
    }
 
@@ -1516,7 +1516,7 @@ defer_construct_newø(m_pframebuffer);
                                                  const_char_pointer pszNameSignature,
                                                  const ::string description)
    {
-      m_serverMsgCaps.add(code, vendorSignature, nameSignature, description);
+      m_serverMsgCaps.add(code, vendorSignature, pszNameSignature, description);
       registerMessageListener(code, listener);
    }
 
@@ -1525,7 +1525,7 @@ defer_construct_newø(m_pframebuffer);
                                                  const_char_pointer pszNameSignature,
                                                  const ::string description)
    {
-      m_clientMsgCaps.add(code, vendorSignature, nameSignature, description);
+      m_clientMsgCaps.add(code, vendorSignature, pszNameSignature, description);
    }
 
    void RemoteViewerCore::addEncodingCapability(Decoder *decoder,
@@ -1535,7 +1535,7 @@ defer_construct_newø(m_pframebuffer);
                                                 const_char_pointer pszNameSignature,
                                                 const ::string description)
    {
-      m_encodingCaps.add(code, vendorSignature, nameSignature, description);
+      m_encodingCaps.add(code, vendorSignature, pszNameSignature, description);
       registerDecoderHandler(code, decoder, priorityEncoding);
    }
 
@@ -1582,7 +1582,7 @@ defer_construct_newø(m_pframebuffer);
       encodingsMessage.send(m_output);
    }
 
-   ::int_rectangle_array_base RemoteViewerCore::getDesktops()
+   ::i32_rectangle_array_base RemoteViewerCore::getDesktops()
    {
       return m_desktops;
    }

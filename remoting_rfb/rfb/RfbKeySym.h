@@ -42,11 +42,11 @@ namespace remoting_rfb
       virtual ~RfbKeySym();
 
       // This function doesn't distinguish between left and right modifiers.
-      void sendModifier(::user::enum_key ekeyModifier, bool down);
+      void sendModifier(const ::user::e_key & ekeyModifier, bool down);
 
       //void processKeyEvent(::user::enum_key ekey, ::u32 addKeyData);
       void processKeyHappening(::user::key_happening ekeyhappening);
-      bool vkCodeToString(::user::enum_key ekey, bool isKeyDown, ::wstring *res);
+      bool vkCodeToString(const ::user::e_key & ekey, bool isKeyDown, ::wstring *res);
       void processCharEvent(::i32 charCode, ::u32 addKeyData);
       // Checks a new modifiers state after focus restoration and sends difference
       void processFocusRestoration();
@@ -66,11 +66,11 @@ namespace remoting_rfb
       // by taking into account the isRightHint flag.
       // If virtKey is not a modifier, the function returns virtKey value without
       // changing.
-      ::user::enum_key distinguishLeftRightModifier(::user::enum_key ekeyModifier,
+      ::user::e_key distinguishLeftRightModifier(const ::user::e_key & ekeyModifier,
                                                  bool isRightHint);
 
       // Checks virtKey state with the server side state and sends difference
-      void checkAndSendDiff(::user::enum_key ekey, ::u8 state);
+      void checkAndSendDiff(const ::user::e_key & ekey, ::u8 state);
 
       // Send one key event (Alt translated to Meta if Scroll Lock is on).
       virtual void sendKeySymEvent(::u32 rfbKeySym, bool down);
@@ -88,8 +88,8 @@ namespace remoting_rfb
       // #endif
       void releaseMeta();
       void restoreMeta();
-      void releaseModifier(::user::enum_key ekeyModifier);
-      void restoreModifier(::user::enum_key ekeyModifier);
+      void releaseModifier(const ::user::e_key & ekeyModifier);
+      void restoreModifier(const ::user::e_key & ekeyModifier);
       void releaseModifiers();
       void restoreModifiers();
 

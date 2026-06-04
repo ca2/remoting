@@ -761,9 +761,9 @@ namespace remoting_rfb_client
         tryListLocalFolder(pathToFile);
     }
 
-    void FileTransferMainDialog::onRemoteListViewKeyDown(::user::enum_key ekey)
+    void FileTransferMainDialog::onRemoteListViewKeyDown(const ::user::e_key & ekey)
     {
-        switch (ekey) {
+        switch (ekey.m_eenum) {
            case ::user::e_key_return:
                 onRemoteListViewDoubleClick();
                 break;
@@ -776,10 +776,10 @@ namespace remoting_rfb_client
         }
     }
 
-    void FileTransferMainDialog::onLocalListViewKeyDown(::user::enum_key ekey)
+    void FileTransferMainDialog::onLocalListViewKeyDown(const ::user::e_key & ekey)
     {
         // FIXME: removed duplicate code (see onRemoteListViewKeyDown)
-        switch (ekey) {
+        switch (ekey.m_eenum) {
             case ::user::e_key_return:
                 onLocalListViewDoubleClick();
                 break;

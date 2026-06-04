@@ -233,7 +233,7 @@ namespace remoting_rfb_windows
 
       // Log all display coordinates
       ::subsystem::Displays displays;
-      ::int_rectangle_array_base rectangleaDisplays = displays.getDisplays();
+      ::i32_rectangle_array_base rectangleaDisplays = displays.getDisplays();
       m_plogwriter->debug("The console desktop has {} displays", (::i32)rectangleaDisplays.size());
       ::i32 i = 1;
       for (auto & rectangleDisplay : rectangleaDisplays)

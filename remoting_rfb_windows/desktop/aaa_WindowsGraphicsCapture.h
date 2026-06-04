@@ -60,7 +60,7 @@ namespace remoting_rfb_windows
       ::winrt::Windows::Graphics::DirectX::Direct3D11::IDirect3DDevice m_d3device;
 
 
-      WindowsGraphicsCapture(::innate_subsystem::Framebuffer *targetFb, ::int_rectangle_array_base &targetRect,
+      WindowsGraphicsCapture(::innate_subsystem::Framebuffer *targetFb, ::i32_rectangle_array_base &targetRect,
                           Win8CursorShape *targetCurShape, LONGLONG *cursorTimeStamp,
                           lockable_critical_section *cursorMutex, Win8DuplicationListener *duplListener,
                           D3D11Device *pd3d11device, const ::array_base<::comptr<IDXGIOutput>> &dxgioutputa,

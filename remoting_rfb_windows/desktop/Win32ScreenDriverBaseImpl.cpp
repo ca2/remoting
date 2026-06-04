@@ -62,7 +62,7 @@ namespace remoting_rfb_windows
       WinVideoRegionUpdaterImpl::initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
       emplace_newø(m_pcursorpositiondetector);
       m_pcursorpositiondetector->initialize_cursor_position_detector(pupdatekeeper, pupdatelistener, plogwriter);
-      m_pcursorshapedetector = allocateø WindowsCursorShapeGrabber();
+      construct_newø(m_pcursorshapedetector);
       m_pcursorshapedetector->initialize_cursor_shape_detector(pupdatekeeper, pupdatelistener, m_pcursorshapegrabber, pcriticalsectionFramebuffer, plogwriter);
 
       //}

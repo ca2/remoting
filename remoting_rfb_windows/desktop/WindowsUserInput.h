@@ -67,7 +67,7 @@ namespace remoting_rfb_windows
 
       virtual void getCurrentUserInfo(::string &desktopName, ::string &userName);
       virtual void getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber);
-      virtual ::int_rectangle_array_base getDisplaysCoords();
+      virtual ::i32_rectangle_array_base getDisplaysCoords();
       virtual void getNormalizedRect(::i32_rectangle & rectangle);
       virtual void getPrimaryDisplayCoords(::i32_rectangle & rectangle);
       virtual void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle);

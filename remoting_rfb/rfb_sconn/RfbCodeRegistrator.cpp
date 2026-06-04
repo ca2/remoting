@@ -49,18 +49,18 @@ namespace remoting_rfb
    void RfbCodeRegistrator::addSrvToClCap(::u32 code, const_char_pointer vendorSignature,
                                           const_char_pointer pszNameSignature)
    {
-      m_srvToClCaps->addCap(code, vendorSignature, nameSignature);
+      m_srvToClCaps->addCap(code, vendorSignature, pszNameSignature);
    }
 
    void RfbCodeRegistrator::addClToSrvCap(::u32 code, const_char_pointer vendorSignature,
                                           const_char_pointer pszNameSignature)
    {
-      m_clToSrvCaps->addCap(code, vendorSignature, nameSignature);
+      m_clToSrvCaps->addCap(code, vendorSignature, pszNameSignature);
    }
 
    void RfbCodeRegistrator::addEncCap(::u32 code, const_char_pointer vendorSignature,
                                       const_char_pointer pszNameSignature)
    {
-      m_encCaps->addCap(code, vendorSignature, nameSignature);
+      m_encCaps->addCap(code, vendorSignature, pszNameSignature);
    }
 } // namespace remoting_rfb

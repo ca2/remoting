@@ -1582,7 +1582,7 @@ defer_construct_newø(m_pframebuffer);
       encodingsMessage.send(m_output);
    }
 
-   ::int_rectangle_array_base RemoteViewerCore::getDesktops()
+   ::i32_rectangle_array_base RemoteViewerCore::getDesktops()
    {
       return m_desktops;
    }

@@ -39,11 +39,11 @@ namespace remoting_rfb
                              const_char_pointer pszNameSignature)
    {
       ASSERT(strlen(vendorSignature) == 4);
-      ASSERT(strlen(nameSignature) == 8);
+      ASSERT(strlen(pszNameSignature) == 8);
       Cap cap;
       cap.code = code;
       memcpy(cap.vendorSignature, vendorSignature, 4);
-      memcpy(cap.nameSignature, nameSignature, 8);
+      memcpy(cap.nameSignature, pszNameSignature, 8);
       m_caps.add(cap);
    }
 

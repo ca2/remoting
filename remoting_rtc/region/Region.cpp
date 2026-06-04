@@ -157,7 +157,7 @@ namespace remoting
    }
 
    // FIXME: Optimize, make BoxRec and ::i32_rectangle identical to get rid of conversions.
-   void Region::_getRects(::int_rectangle_array_base & rectanglea) const
+   void Region::_getRects(::i32_rectangle_array_base & rectanglea) const
    {
 
       rectanglea.clear();
@@ -173,10 +173,10 @@ namespace remoting
    }
 
    // FIXME: Optimize, make BoxRec and ::i32_rectangle identical to get rid of conversions.
-   ::int_rectangle_array_base Region::getRects() const
+   ::i32_rectangle_array_base Region::getRects() const
    {
 
-      ::int_rectangle_array_base recta;
+      ::i32_rectangle_array_base recta;
       //dst->clear();
 
       const BoxRec *boxPtr = REGION_RECTS(&m_reg);

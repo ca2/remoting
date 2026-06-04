@@ -49,7 +49,7 @@ namespace remoting_rfb_client
 {
 
    
-   class CLASS_DECL_REMOTING_CLIENT ViewerWindow : 
+   class CLASS_DECL_REMOTING_RFB_CLIENT ViewerWindow : 
       //public ::innate_subsystem::Window,
       public ::innate_subsystem::Control,
       public ::remoting_rfb_client::CoreEventsAdapter,

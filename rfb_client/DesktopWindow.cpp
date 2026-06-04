@@ -26,6 +26,7 @@
 //#include "acme/operating_system/windows/geometry2d.h"
 #include "impact_toolbar.h"
 #include "ViewerWindow.h"
+#include "acme/constant/user_key.h"
 #include "innate_subsystem/platform/subsystem.h"
 // #include aaa_<dwmapi.h>
 
@@ -208,9 +209,15 @@ namespace remoting_rfb_client
            case ::user::e_message_sys_key_down:
            case ::user::e_message_sys_key_up:
             {
-               throw "todo";
+               ///throw "todo";
+
+              auto iVkCode = wParam.raw_cast<::i32>();
+
+              auto euserkey = vk_code_to_e_user_key(iVkCode);
+
+              return onKey(emessage, euserkey);
                 //return onKey(emessage, wParam, lParam);
-               return false;
+               //return false;
             }
             // case WM_SETCURSOR:
             //     if (m_bShowCursor || m_timeStartDesktopWindow.elapsed() < 8_s)

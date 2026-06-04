@@ -166,8 +166,8 @@ namespace remoting_rfb
 
       // FIXME: Use addCopyRegion instead of addCopyRect
       // Add copied region
-      //::int_rectangle_array_base rectanglea;
-      ::int_rectangle_array_base::iterator iRect;
+      //::i32_rectangle_array_base rectanglea;
+      ::i32_rectangle_array_base::iterator iRect;
       auto rectanglea = updatecontainer.m_regionCopied.getRects();
       size_t numRects = rectanglea.size();
       if (numRects > 0)

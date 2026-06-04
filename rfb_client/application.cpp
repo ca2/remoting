@@ -3,6 +3,7 @@
 //
 #include "framework.h"
 #include "application.h"
+#include "OperatingSystemApplication.h"
 #include "acme/constant/id.h"
 #include "acme/handler/request.h"
 #include "acme/platform/system.h"
@@ -42,6 +43,9 @@ namespace remoting_rfb_client
       m_bNetworking = true;
 
       m_strAppId = "remoting/client";
+
+            SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+
    }
 
    application::~application()
@@ -80,7 +84,7 @@ namespace remoting_rfb_client
 
          ::remoting_rfb::defer_initialize_remoting();
 
-         constructø(m_poperatingsystemapplication);
+         construct_newø(m_poperatingsystemapplication);
 
          m_poperatingsystemapplication->initialize_operating_system_application();
 

@@ -62,8 +62,8 @@ namespace remoting_rfb_windows
          return false;
       }
 
-      ::int_rectangle_array_base rectanglea;
-      ::int_rectangle_array_base::iterator iRect;
+      ::i32_rectangle_array_base rectanglea;
+      ::i32_rectangle_array_base::iterator iRect;
       pregion->getRects(rectanglea);
 
       for (auto & rectangle : rectanglea)

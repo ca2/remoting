@@ -2,9 +2,9 @@
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
-// This file is part of the T i g h t V N C software.  Please visit our Web site:
+// This file is part of the TightVNC software.  Please visit our Web site:
 //
-//                       http://www.t i g h t v n c.com/
+//                       http://www.tightvnc.com/
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,16 +26,16 @@
 #define __X11REGION_INTTYPES_H__
 
 
-// Defines ::u32 types
-typedef ::u8 X11REGION_UINT8;
-typedef ::u16 X11REGION_UINT16;
-typedef ::u32 X11REGION_UINT32;
-typedef ::u64 X11REGION_UINT64;
+// Defines unsigned types
+typedef unsigned char X11REGION_UINT8;
+typedef unsigned short X11REGION_UINT16;
+typedef unsigned int X11REGION_UINT32;
+typedef unsigned long long X11REGION_UINT64;
 
 // Defines signed types
-typedef signed ::i8 X11REGION_INT8;
-typedef ::i16 X11REGION_INT16;
-typedef signed ::i32 X11REGION_INT32;
-typedef signed ::i64 X11REGION_INT64;
+typedef signed char X11REGION_INT8;
+typedef signed short X11REGION_INT16;
+typedef signed int X11REGION_INT32;
+typedef signed long long X11REGION_INT64;
 
 #endif // __X11REGION_INTTYPES_H__

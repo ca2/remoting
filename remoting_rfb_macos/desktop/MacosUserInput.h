@@ -58,7 +58,7 @@ namespace remoting_macos
 
       void getCurrentUserInfo(::string &desktopName, ::string &userName) override;
       void getDisplayNumberCoords(::i32_rectangle & rectangle, ::u8 dispNumber) override;
-      ::int_rectangle_array_base getDisplaysCoords() override;
+      ::i32_rectangle_array_base getDisplaysCoords() override;
       void getNormalizedRect(::i32_rectangle & rectangle) override;
       void getPrimaryDisplayCoords(::i32_rectangle & rectangle) override;
       void getWindowCoords(const ::operating_system::window & operatingsystemwindow, ::i32_rectangle & rectangle) override;

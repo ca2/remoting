@@ -59,7 +59,7 @@ namespace remoting_rfb
        m_vncPort(0),
        m_defaultPort(defaultPort)
    {
-      set(path);
+      set(pszPath);
    }
 
    HostPath::~HostPath()
@@ -74,15 +74,15 @@ namespace remoting_rfb
       clear();
 
       // Check the path length and save a copy for this object.
-      if (path == 0) {
+      if (pszPath == 0) {
          return false;
       }
-      size_t pathLen = strnlen(path, m_MAX_PATH_LEN);
+      size_t pathLen = strnlen(pszPath, m_MAX_PATH_LEN);
       if (pathLen < 1 || pathLen > m_MAX_PATH_LEN) {
          return false;
       }
       m_path = new ::i8[pathLen + 1];
-      memcpy(m_path, path, pathLen);
+      memcpy(m_path, pszPath, pathLen);
       m_path[pathLen] = '\0';
 
       // Perform initial parsing and checking of the path.

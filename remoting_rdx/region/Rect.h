@@ -173,9 +173,9 @@
 //       inline bool is_empty() const { return getWidth() <= 0 || getHeight() <= 0; }
 //       inline ::i32 area() const { return is_empty() ? 0 : getWidth() * getHeight(); }
 //
-//       static ::i32 totalArea(::int_rectangle_array_base &v) {
+//       static ::i32 totalArea(::i32_rectangle_array_base &v) {
 //          ::i32 area = 0;
-//          for (::int_rectangle_array_base::iterator i = v.begin(); i < v.end(); i++)
+//          for (::i32_rectangle_array_base::iterator i = v.begin(); i < v.end(); i++)
 //             area += i.area();
 //          return area;
 //       }

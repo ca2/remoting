@@ -176,7 +176,7 @@ namespace remoting_rfb_node
       // Defined by window class CLASS_DECL_REMOTING_RFB name
       ::string_array m_videoClassNames;
       // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
-      ::int_rectangle_array_base m_videoRects;
+      ::i32_rectangle_array_base m_videoRects;
 
       //
       // Other
@@ -414,7 +414,7 @@ namespace remoting_rfb_node
       // to lock and unlock server configuration.
       ::string_array *getVideoClassNames();
 
-      ::int_rectangle_array_base *getVideoRects();
+      ::i32_rectangle_array_base *getVideoRects();
 
       //
       // Other
@@ -554,7 +554,7 @@ namespace remoting_rfb_node
    //    // Defined by window class CLASS_DECL_REMOTING_RFB name
    //    ::string_array m_videoClassNames;
    //    // Defined by rectangle coords in "dXxdY+X0+Y0" format, as in -sharerect command line option
-   //    ::int_rectangle_array_base m_videoRects;
+   //    ::i32_rectangle_array_base m_videoRects;
    //
    //    //
    //    // Other

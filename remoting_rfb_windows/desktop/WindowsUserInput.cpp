@@ -179,7 +179,7 @@ namespace remoting_rfb_windows
          m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (::i32)down);
          // Generate single key event.
          //::u8 vkCode;
-         const ::user::e_key & euserkey = ::user::e_key_none;
+         ::user::e_key euserkey = ::user::e_key_none;
          ::i32 ch;
          bool release = !down;
          bool extended;
@@ -230,7 +230,7 @@ namespace remoting_rfb_windows
       m_winDisplays.getDisplayCoordinates(dispNumber, rectangle);
    }
 
-   ::int_rectangle_array_base WindowsUserInput::getDisplaysCoords() { return m_winDisplays.getDisplaysCoords(); }
+   ::i32_rectangle_array_base WindowsUserInput::getDisplaysCoords() { return m_winDisplays.getDisplaysCoords(); }
 
    void WindowsUserInput::getNormalizedRect(::i32_rectangle & rectangle) { toFbCoordinates(rectangle); }
 

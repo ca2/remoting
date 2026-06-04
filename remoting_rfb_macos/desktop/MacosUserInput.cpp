@@ -327,9 +327,9 @@ namespace remoting_macos
       rectangle = cg_display_rect_to_remoting_rect(CGDisplayBounds(displays[dispNumber - 1]), rectangleVirtual);
    }
 
-   ::int_rectangle_array_base MacosUserInput::getDisplaysCoords()
+   ::i32_rectangle_array_base MacosUserInput::getDisplaysCoords()
    {
-      ::int_rectangle_array_base rectangles;
+      ::i32_rectangle_array_base rectangles;
       CGDirectDisplayID displays[64] = {};
       uint32_t count = 0;
       if (!get_active_displays(displays, count))

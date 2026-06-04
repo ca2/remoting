@@ -6,10 +6,10 @@
 #include "remoting/remoting_rfb/_.h"
 
 
-#if defined(_remoting_client_project)
-#define CLASS_DECL_REMOTING_CLIENT  CLASS_DECL_EXPORT
+#if defined(_remoting_rfb_client_project)
+#define CLASS_DECL_REMOTING_RFB_CLIENT  CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_REMOTING_CLIENT  CLASS_DECL_IMPORT
+#define CLASS_DECL_REMOTING_RFB_CLIENT  CLASS_DECL_IMPORT
 #endif
 
 
@@ -24,6 +24,9 @@ namespace remoting_rfb_client
    class ViewerWindow;
 
    class DesktopWindow;
+
+
+   class OperatingSystemApplication;
 
 
 } // namespace remoting_rfb_client

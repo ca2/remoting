@@ -95,7 +95,7 @@ namespace remoting_rtc_windows
    }
 
    void WinVideoRegionUpdaterImpl::getClassNamesAndRectsFromConfig(::string_array &classNames,
-                                                                   ::int_rectangle_array_base &rectanglea)
+                                                                   ::i32_rectangle_array_base &rectanglea)
    {
       ::remoting_rtc_node::ServerConfig *pserverconfig = m_pconfigurator->getServerConfig();
       AutoLock al(pserverconfig);
@@ -106,7 +106,7 @@ namespace remoting_rtc_windows
    void WinVideoRegionUpdaterImpl::updateVideoRegion()
    {
       ::string_array classNames;
-      ::int_rectangle_array_base rectanglea;
+      ::i32_rectangle_array_base rectanglea;
       getClassNamesAndRectsFromConfig(classNames, rectanglea);
       ::remoting_rtc::Region tmpRegion;
       m_plogwriter->debug("WinVideoRegionUpdaterImpl: ClassNames {}, Rects {}", classNames.size(),
@@ -168,9 +168,9 @@ namespace remoting_rtc_windows
       return vidRegion;
    }
 
-   ::remoting_rtc::Region WinVideoRegionUpdaterImpl::getRectsByCoords(::int_rectangle_array_base &rectanglea)
+   ::remoting_rtc::Region WinVideoRegionUpdaterImpl::getRectsByCoords(::i32_rectangle_array_base &rectanglea)
    {
-      ::int_rectangle_array_base::iterator rIter;
+      ::i32_rectangle_array_base::iterator rIter;
       ::i32_rectangle rectangleVideo;
       ::remoting_rtc::Region vidRegion;
       for (rIter = rectanglea.begin(); rIter != rectanglea.end(); rIter++)

@@ -62,8 +62,8 @@ namespace remoting
          return false;
       }
 
-      //::int_rectangle_array_base rectanglea;
-      //::int_rectangle_array_base::iterator iRect;
+      //::i32_rectangle_array_base rectanglea;
+      //::i32_rectangle_array_base::iterator iRect;
       auto rectanglea = region.getRects();
 
       for (auto & rectangle : rectanglea)

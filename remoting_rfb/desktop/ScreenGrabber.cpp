@@ -46,6 +46,7 @@ namespace remoting_rfb
    {
       m_pointFramebufferOffset = rectangleWork.top_left();
       //m_pointFramebufferOffset.y = rectangleWork->top;
+      defer_construct_newø(m_pframebufferWork);
       m_pframebufferWork->setEmptyDimension(rectangleWork);
    }
 

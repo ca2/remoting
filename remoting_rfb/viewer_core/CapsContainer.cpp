@@ -44,7 +44,7 @@ namespace remoting_rfb_client
       RfbCapabilityInfo capinfo;
       capinfo.code = code;
       memcpy(capinfo.vendorSignature, vendor, RfbCapabilityInfo::vendorSigSize);
-      memcpy(capinfo.nameSignature, name, RfbCapabilityInfo::nameSigSize);
+      memcpy(capinfo.nameSignature, pszName, RfbCapabilityInfo::nameSigSize);
       add(&capinfo, desc);
    }
 

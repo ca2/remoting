@@ -46,16 +46,16 @@ namespace remoting_rfb
    {
    }
 
-   void RfbKeySym::sendModifier(::user::enum_key ekeyModifier, bool down)
+   void RfbKeySym::sendModifier(const ::user::e_key & ekeyModifier, bool down)
    {
       ::u32 rfbSym;
       bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, ekeyModifier);
       ASSERT(success);
       sendKeySymEvent(rfbSym, down);
 
-      m_keyboardstate.m_viewerKeyState[ekeyModifier] = down ? 128 : 0;
-      ekeyModifier = distinguishLeftRightModifier(ekeyModifier, false);
-      m_keyboardstate.m_serverKeyState[ekeyModifier] = down ? 128 : 0;
+      m_keyboardstate.m_viewerKeyState[ekeyModifier.m_eenum] = down ? 128 : 0;
+      auto ekeyModifier2 = distinguishLeftRightModifier(ekeyModifier, false);
+      m_keyboardstate.m_serverKeyState[ekeyModifier2.m_eenum] = down ? 128 : 0;
    }
 
    void RfbKeySym::processKeyHappening(::user::key_happening keyhappening)
@@ -101,7 +101,7 @@ namespace remoting_rfb
         (::u32)capsToggled);
 
       // Without distinguishing between left and right modifiers.
-      m_keyboardstate.m_viewerKeyState[constrain(euserkey, ::user::e_key_none, ::user::e_key_count)] = down ? 128 : 0;
+      m_keyboardstate.m_viewerKeyState[minimum_maximum(euserkey, ::user::e_key_none, ::user::e_key_count).m_eenum] = down ? 128 : 0;
       m_keyboardstate.m_viewerKeyState[::user::e_key_capslock] = capsToggled ? 1 : 0;
 
       //bool extended = (addKeyData & 0x1000000) != 0; // 24 bit
@@ -109,9 +109,9 @@ namespace remoting_rfb
       euserkey = distinguishLeftRightModifier(euserkey, extended);
 
       // With distinguishing between left and right modifiers.
-      m_keyboardstate.m_serverKeyState[constrain(euserkey, ::user::e_key_none, ::user::e_key_count)] = down ? 128 : 0;
+      m_keyboardstate.m_serverKeyState[minimum_maximum(euserkey, ::user::e_key_none, ::user::e_key_count).m_eenum] = down ? 128 : 0;
       ::u32 rfbSym;
-      if (m_keyMap.virtualCodeToKeySym(&rfbSym, constrain(euserkey, ::user::e_key_none, ::user::e_key_count))) {
+      if (m_keyMap.virtualCodeToKeySym(&rfbSym, minimum_maximum(euserkey, ::user::e_key_none, ::user::e_key_count))) {
          // Special case for VK_RETURN that have no self numpad code.
          // FIXME: May be replace this code to the virtualCodeToKeySym() function?
          if (rfbSym == XK_Return && extended) {
@@ -202,7 +202,7 @@ namespace remoting_rfb
    //    return false;
    // }
 
-   bool RfbKeySym::vkCodeToString(::user::enum_key ekey, bool down, ::wstring *res)
+   bool RfbKeySym::vkCodeToString(const ::user::e_key & ekey, bool down, ::wstring *res)
    {
 
       auto pkeyboardlayout = InnateSubsystem().keyboard_layout();
@@ -392,7 +392,7 @@ namespace remoting_rfb
       restoreModifier(::user::e_key_right_alt);
    }
 
-   void RfbKeySym::releaseModifier(::user::enum_key ekeyModifier)
+   void RfbKeySym::releaseModifier(const ::user::e_key & ekeyModifier)
    {
       ::u32 rfbSym;
       if (m_keyboardstate.isPressed(ekeyModifier)) {
@@ -426,7 +426,7 @@ namespace remoting_rfb
       }
    }
 
-   void RfbKeySym::restoreModifier(::user::enum_key ekeyModifier)
+   void RfbKeySym::restoreModifier(const ::user::e_key & ekeyModifier)
    {
       ::u32 rfbSym;
       if (m_keyboardstate.isPressed(ekeyModifier))
@@ -437,18 +437,18 @@ namespace remoting_rfb
       }
    }
 
-   void RfbKeySym::checkAndSendDiff(::user::enum_key ekey, ::u8 state)
+   void RfbKeySym::checkAndSendDiff(const ::user::e_key & ekey, ::u8 state)
    {
       bool testedState = (state & 128) != 0;
-      m_keyboardstate.m_viewerKeyState[ekey] = testedState ? 128 : 0;
-      ekey = distinguishLeftRightModifier(ekey, false);
+      m_keyboardstate.m_viewerKeyState[ekey.m_eenum] = testedState ? 128 : 0;
+      auto ekey2 = distinguishLeftRightModifier(ekey, false);
 
-      bool srvState = (m_keyboardstate.m_serverKeyState[ekey] & 128) != 0;
-      m_keyboardstate.m_serverKeyState[ekey] = testedState ? 128 : 0;
+      bool srvState = (m_keyboardstate.m_serverKeyState[ekey2.m_eenum] & 128) != 0;
+      m_keyboardstate.m_serverKeyState[ekey2.m_eenum] = testedState ? 128 : 0;
 
       if (testedState != srvState) {
          ::u32 rfbSym;
-         bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, ekey);
+         bool success = m_keyMap.virtualCodeToKeySym(&rfbSym, ekey2);
          ASSERT(success);
          sendKeySymEvent(rfbSym, testedState);
       }
@@ -480,10 +480,10 @@ namespace remoting_rfb
       m_extKeySymListener->onRfbKeySymEvent(rfbKeySym, down);
    }
 
-::user::enum_key RfbKeySym::distinguishLeftRightModifier(::user::enum_key ekeyModifier,
+::user::e_key RfbKeySym::distinguishLeftRightModifier(const ::user::e_key & ekeyModifier,
                                                          bool isRightHint)
    {
-      ::user::enum_key ekey = ekeyModifier;
+      auto ekey = ekeyModifier;
       if (ekeyModifier == ::user::e_key_control) {
          ekey = isRightHint ? ::user::e_key_right_control : ::user::e_key_left_control;
       }

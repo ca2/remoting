@@ -41,7 +41,7 @@ namespace remoting_rfb
       // Follow methods were inherited from the Encoder.
       virtual ::i32 getCode() const;
 
-      virtual void splitRectangle(const ::i32_rectangle & rectangle, ::int_rectangle_array_base & rectanglea,
+      virtual void splitRectangle(const ::i32_rectangle & rectangle, ::i32_rectangle_array_base & rectanglea,
                                   const ::innate_subsystem::Framebuffer *serverFb, const EncodeOptions *options);
 
       virtual void sendRectangle(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,

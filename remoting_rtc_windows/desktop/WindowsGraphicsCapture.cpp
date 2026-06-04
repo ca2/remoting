@@ -165,7 +165,7 @@ namespace remoting_rtc_windows
 
 
    WindowsGraphicsCapture::WindowsGraphicsCapture(
-      ::innate_subsystem::Framebuffer *targetFb, ::int_rectangle_array_base &targetRect,
+      ::innate_subsystem::Framebuffer *targetFb, ::i32_rectangle_array_base &targetRect,
       Win8CursorShape *targetCurShape, LONGLONG *cursorTimeStamp, lockable_critical_section *cursorMutex,
       Win8DuplicationListener *duplListener, D3D11Device *pd3d11device,
       const ::array_base<::comptr<IDXGIOutput>> &dxgioutputa, ::subsystem::LogWriter *plogwriter) :

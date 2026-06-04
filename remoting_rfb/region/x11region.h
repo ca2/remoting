@@ -80,11 +80,11 @@ SOFTWARE.
 #define FALSE 0
 #define TRUE 1
 #endif
-typedef ::i32 Bool;
+typedef int Bool;
 
 typedef struct _Box
 {
-   ::i16 x1, y1, x2, y2;
+   X11REGION_INT16 x1, y1, x2, y2;
 } BoxRec, *BoxPtr;
 
 typedef struct _xPoint
@@ -237,8 +237,8 @@ extern RegDataRec miBrokenData;
 
 /* moved from mi.h */
 
-extern RegionPtr miRegionCreate(BoxPtr rect, ::i32 size);
-extern void miRegionInit(RegionPtr pReg, BoxPtr rect, ::i32 size);
+extern RegionPtr miRegionCreate(BoxPtr rect, int size);
+extern void miRegionInit(RegionPtr pReg, BoxPtr rect, int size);
 extern void miRegionDestroy(RegionPtr pReg);
 extern void miRegionUninit(RegionPtr pReg);
 extern Bool miRegionCopy(RegionPtr dst, RegionPtr src);
@@ -248,14 +248,14 @@ extern Bool miIntersect(RegionPtr newReg, RegionPtr reg1, RegionPtr reg2);
 extern Bool miUnion(RegionPtr newReg, RegionPtr reg1, RegionPtr reg2);
 extern Bool miRegionAppend(RegionPtr dstrgn, RegionPtr rgn);
 extern Bool miRegionValidate(RegionPtr badreg, Bool *pOverlap);
-extern RegionPtr miRectsToRegion(::i32 nrects, xRectanglePtr prect, ::i32 ctype);
+extern RegionPtr miRectsToRegion(int nrects, xRectanglePtr prect, int ctype);
 extern Bool miSubtract(RegionPtr regD, RegionPtr regM, RegionPtr regS);
 extern Bool miInverse(RegionPtr newReg, RegionPtr reg1, BoxPtr invRect);
-extern ::i32 miRectIn(RegionPtr region, BoxPtr prect);
-extern void miTranslateRegion(RegionPtr pReg, ::i32 x, ::i32 y);
+extern int miRectIn(RegionPtr region, BoxPtr prect);
+extern void miTranslateRegion(RegionPtr pReg, int x, int y);
 extern void miRegionReset(RegionPtr pReg, BoxPtr pBox);
 extern Bool miRegionBreak(RegionPtr pReg);
-extern Bool miPointInRegion(RegionPtr pReg, ::i32 x, ::i32 y, BoxPtr box);
+extern Bool miPointInRegion(RegionPtr pReg, int x, int y, BoxPtr box);
 extern Bool miRegionNotEmpty(RegionPtr pReg);
 extern void miRegionEmpty(RegionPtr pReg);
 extern BoxPtr miRegionExtents(RegionPtr pReg);
@@ -263,7 +263,7 @@ extern Bool miRegionsEqual(RegionPtr reg1, RegionPtr reg2);
 extern Bool miValidRegion(RegionPtr reg);
 
 #ifdef DEBUG
-extern ::i32 miPrintRegion(RegionPtr rgn);
+extern int miPrintRegion(RegionPtr rgn);
 #endif
 
 #endif /* REGIONSTRUCT_H */

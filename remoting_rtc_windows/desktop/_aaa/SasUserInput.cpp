@@ -106,7 +106,7 @@ namespace remoting_rtc_windows
 
    void SasUserInput::getPrimaryDisplayCoords(::i32_rectangle rectangle) { m_client->getPrimaryDisplayCoords(rectangle); }
 
-   ::int_rectangle_array_base SasUserInput::getDisplaysCoords() { return m_client->getDisplaysCoords(); }
+   ::i32_rectangle_array_base SasUserInput::getDisplaysCoords() { return m_client->getDisplaysCoords(); }
 
    void SasUserInput::getDisplayNumberCoords(::i32_rectangle rectangle, ::u8 dispNumber)
    {

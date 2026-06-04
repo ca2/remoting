@@ -83,8 +83,8 @@ if (defer_construct_newø(m_pgraboptimizator))
       toCheck.add(updatecontainer.m_regionCopied);
       toCheck.add(updatecontainer.m_regionVideo);
 
-      //::int_rectangle_array_base rectanglea;
-      //::int_rectangle_array_base::iterator iRect;
+      //::i32_rectangle_array_base rectanglea;
+      //::i32_rectangle_array_base::iterator iRect;
 
       // Reproduce CopyRect operations in m_pframebuffer->
       m_plogwriter->debug("UpdateFilter::filter : Reproduce CopyRect operations in m_pframebuffer");

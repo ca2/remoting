@@ -35,7 +35,7 @@ namespace remoting_rfb_client
 {
    
 
-   class CLASS_DECL_REMOTING_CLIENT ViewerInstance :
+   class CLASS_DECL_REMOTING_RFB_CLIENT ViewerInstance :
       virtual public ::particle
    {
    public:

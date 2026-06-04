@@ -163,8 +163,8 @@ namespace remoting_rfb
 
    void DesktopServerProto::sendRegion(const Region & region, BlockingGate *pblockinggate)
    {
-      //::int_rectangle_array_base rectanglea;
-      ::int_rectangle_array_base::iterator iRect;
+      //::i32_rectangle_array_base rectanglea;
+      ::i32_rectangle_array_base::iterator iRect;
       auto rectanglea = region.getRects();
 
       ::u32 numRects = (::u32)rectanglea.size();
@@ -301,7 +301,7 @@ namespace remoting_rfb
          pblockinggate->writeUTF8((*iter));
       }
       // Send video rectanglea
-      ::int_rectangle_array_base *Rects = pserverconfig->getVideoRects();
+      ::i32_rectangle_array_base *Rects = pserverconfig->getVideoRects();
       size_t size = Rects->size();
       pblockinggate->writeUInt32((::u32)size);
       for (size_t i = 0; i < size; i++)

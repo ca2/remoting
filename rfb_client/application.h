@@ -15,7 +15,7 @@ namespace remoting_rfb_client
 
    class remoting;
 
-   class CLASS_DECL_REMOTING_CLIENT application :
+   class CLASS_DECL_REMOTING_RFB_CLIENT application :
    virtual public ::apex::application
    {
    public:
@@ -23,7 +23,7 @@ namespace remoting_rfb_client
       bool m_bOpenFile = false;
 
       ::pointer<remoting> m_premoting;
-      ::pointer < ::subsystem::OperatingSystemApplicationInterface > m_poperatingsystemapplication;
+      ::pointer < OperatingSystemApplication > m_poperatingsystemapplication;
 
       __DECLARE_APPLICATION_RELEASE_TIME();
 

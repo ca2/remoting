@@ -120,7 +120,7 @@ namespace remoting_rtc_windows
       }
    }
 
-   ::int_rectangle_array_base DesktopBaseImpl::getDisplaysCoords()
+   ::i32_rectangle_array_base DesktopBaseImpl::getDisplaysCoords()
    {
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
@@ -134,7 +134,7 @@ namespace remoting_rtc_windows
          m_plogwriter->error("::subsystem::Exception in DesktopBaseImpl::getDisplayCoords: {}", e.get_message());
          m_pdesktermlistenerExternal->onAbnormalDesktopTerminate();
       }
-      return ::int_rectangle_array_base();
+      return ::i32_rectangle_array_base();
    }
 
 

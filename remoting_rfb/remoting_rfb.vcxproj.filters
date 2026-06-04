@@ -1306,6 +1306,9 @@
     <ClInclude Include="node_config\_.h">
       <Filter>Header Files\node_config</Filter>
     </ClInclude>
+    <ClInclude Include="_.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="remoting_rfb.def">

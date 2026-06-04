@@ -39,7 +39,7 @@ namespace remoting_rfb
 
       virtual ::i32 getCode() const;
 
-      virtual void splitRectangle(const ::i32_rectangle & rectangle, ::int_rectangle_array_base & rectanglea,
+      virtual void splitRectangle(const ::i32_rectangle & rectangle, ::i32_rectangle_array_base & rectanglea,
                                   const ::innate_subsystem::Framebuffer *serverFb, const EncodeOptions *options);
 
       virtual void sendRectangle(const ::i32_rectangle & rectangle, const ::innate_subsystem::Framebuffer *serverFb,
@@ -50,7 +50,7 @@ namespace remoting_rfb
       void rreEncode(const ::i32_rectangle &r, const ::innate_subsystem::Framebuffer *pframebuffer);
 
       // Coordinates of subrectangles.
-      ::int_rectangle_array_base m_rects;
+      ::i32_rectangle_array_base m_rects;
 
       // All rectangles are devided (in splitRectangle() function)
       // into new rectangles with maximum size == 64.

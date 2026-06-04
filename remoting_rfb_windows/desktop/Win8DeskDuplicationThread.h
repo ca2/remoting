@@ -47,7 +47,7 @@ namespace remoting_rfb_windows
    public:
       // The WinDxgiOutput *dxgiOutput passed object can be destroyed right after the constructor calling.
       // The WinD3D11Device *device passed object can be destroyed right after the constructor calling.
-      Win8DeskDuplication(::innate_subsystem::Framebuffer *targetFb, ::int_rectangle_array_base &targetRect,
+      Win8DeskDuplication(::innate_subsystem::Framebuffer *targetFb, ::i32_rectangle_array_base &targetRect,
                           Win8CursorShape *targetCurShape, LONGLONG *cursorTimeStamp, lockable_critical_section *cursorMutex,
                           Win8DuplicationListener *duplListener, D3D11Device *pd3d11device, const ::array_base< ::comptr < IDXGIOutput > > & dxgioutputa,
                           ::subsystem::LogWriter * plogwriter);
@@ -82,7 +82,7 @@ namespace remoting_rfb_windows
 
       ::innate_subsystem::Framebuffer *m_targetFb;
 
-      ::int_rectangle_array_base m_targetRects;
+      ::i32_rectangle_array_base m_targetRects;
       Win8CursorShape *m_targetCurShape;
       LONGLONG *m_cursorTimeStamp;
       lockable_critical_section *m_cursorMutex;

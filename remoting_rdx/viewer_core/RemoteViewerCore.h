@@ -457,7 +457,7 @@ namespace remoting_rfb_client
       void getEnabledEncodingCapabilities(::array_base<::u32> *codes) const override;
 
       // returns ::list_base of server displays offsets and dimensions
-      ::int_rectangle_array_base getDesktops();
+      ::i32_rectangle_array_base getDesktops();
       ::i32_size getDesktopSize();
 
       //private:
@@ -648,7 +648,7 @@ namespace remoting_rfb_client
       ::pointer < ::innate_subsystem::Framebuffer > m_pframebuffer;
 
       // ::list_base of server dispalys
-      ::int_rectangle_array_base m_desktops;
+      ::i32_rectangle_array_base m_desktops;
       ::i32_size m_desktopSize;
 
       // Decoder work with this pframebuffer-> It is not actual frame buffer,

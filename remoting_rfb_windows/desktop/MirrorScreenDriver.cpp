@@ -55,6 +55,7 @@ namespace remoting_rfb_windows
                                        lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter)// :
     //UpdateDetector(pupdatekeeper, pupdatelistener), m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer), m_lastCounter(0), m_plogwriter(plogwriter)
    {
+      m_plogwriter = plogwriter;
       initialize_update_detector(pupdatekeeper, pupdatelistener);
       m_pcriticalsectionFramebuffer = pcriticalsectionFramebuffer;
       m_pmirrordriverclient = new MirrorDriverClient(m_plogwriter);
