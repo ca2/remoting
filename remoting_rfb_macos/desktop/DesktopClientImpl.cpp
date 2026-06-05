@@ -291,7 +291,7 @@ namespace remoting_macos
 
       while (!isThreadTerminating())
       {
-         m_happeningNewUpdate.waitThreadToFinish();
+         m_happeningNewUpdate.wait();
          if (!isThreadTerminating())
          {
             sendUpdate();

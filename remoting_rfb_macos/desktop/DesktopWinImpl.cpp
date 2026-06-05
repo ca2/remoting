@@ -194,7 +194,7 @@ namespace remoting_macos
 
       while (!isThreadTerminating())
       {
-         m_happeningNewUpdate.waitThreadToFinish();
+         m_happeningNewUpdate.wait();
          if (!isThreadTerminating())
          {
             m_plogwriter->debug("DesktopWinImpl sendUpdate()");
