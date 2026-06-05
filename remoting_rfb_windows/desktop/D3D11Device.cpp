@@ -117,12 +117,12 @@ namespace remoting_rfb_windows
          // Enumerate outputs
          //
          UINT outputIndex = 0;
-         ::comptr < IDXGIOutput > output;
+         ::comptr < IDXGIOutput > pdxgioutput;
 
-         while (adapter1->EnumOutputs(outputIndex, &output) != DXGI_ERROR_NOT_FOUND)
+         while (adapter1->EnumOutputs(outputIndex, &pdxgioutput) != DXGI_ERROR_NOT_FOUND)
          {
             DXGI_OUTPUT_DESC outDesc{};
-            output->GetDesc(&outDesc);
+            pdxgioutput->GetDesc(&outDesc);
 
             information() << "\n";
             information() << "  Output #" << outputIndex << "\n";
@@ -145,6 +145,8 @@ namespace remoting_rfb_windows
                return;
             }
          }
+
+         adapterIndex++;
 
       }
 

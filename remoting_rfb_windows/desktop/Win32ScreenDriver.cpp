@@ -59,7 +59,7 @@ namespace remoting_rfb_windows
       m_pconfigurator = pconfigurator;
       m_screengrabber.initialize_screen_grabber(m_pconfigurator);
       Win32ScreenDriverBaseImpl::initialize_screen_driver(pconfigurator, pupdatekeeper, pupdatelistener, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
-      m_poller.initialize_poller(pupdatekeeper, pupdatelistener, &m_screengrabber, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
+      m_poller.initialize_poller(pconfigurator, pupdatekeeper, pupdatelistener, &m_screengrabber, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
       m_consolePoller.initialize_console_poller(pupdatekeeper, pupdatelistener, &m_screengrabber, pframebuffer, pcriticalsectionFramebuffer, plogwriter);
       m_hooks.initialize_hooks_update_detector(pupdatekeeper, pupdatelistener, plogwriter);
       // At this point the screen driver has valid screen properties (provides by screen grabber).

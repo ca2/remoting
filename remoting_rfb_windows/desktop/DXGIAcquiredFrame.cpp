@@ -45,6 +45,11 @@ namespace remoting_rfb_windows
       {
          throw WinDxRecoverableException("Can't AcquireNextFrame()", hr);
       }
+      else
+      {
+         information("Acquired a Frame");
+
+      }
    }
 
    DXGIAcquiredFrame::~DXGIAcquiredFrame()

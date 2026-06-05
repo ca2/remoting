@@ -42,6 +42,16 @@ namespace remoting_rfb_windows
       virtual public WinVideoRegionUpdaterImpl
    {
    public:
+
+      lockable_critical_section *m_pcriticalsectionFramebuffer;
+
+      ::pointer<::remoting_rfb::CursorPositionDetector> m_pcursorpositiondetector;
+      ::pointer<WindowsCursorShapeGrabber> m_pcursorshapegrabber;
+      ::pointer<::remoting_rfb::CursorShapeDetector> m_pcursorshapedetector;
+
+      ::pointer<::remoting_rfb::CopyRectDetector> m_pcopyrectdetector;
+
+
       //Win32ScreenDriverBaseImpl(::remoting_rfb::UpdateKeeper * pupdatekeeper, ::remoting_rfb::UpdateListener * pupdatelistener,
         //                        lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter);
 
@@ -70,14 +80,14 @@ namespace remoting_rfb_windows
    protected:
       lockable_critical_section *framebuffer_critical_section();
 
-   private:
-      lockable_critical_section *m_pcriticalsectionFramebuffer;
+//   private:
+      //lockable_critical_section *m_pcriticalsectionFramebuffer;
 
-      ::pointer < ::remoting_rfb::CursorPositionDetector >  m_pcursorpositiondetector;
-      ::pointer < WindowsCursorShapeGrabber > m_pcursorshapegrabber;
-      ::pointer < ::remoting_rfb::CursorShapeDetector > m_pcursorshapedetector;
+      //::pointer < ::remoting_rfb::CursorPositionDetector >  m_pcursorpositiondetector;
+      //::pointer < WindowsCursorShapeGrabber > m_pcursorshapegrabber;
+      //::pointer < ::remoting_rfb::CursorShapeDetector > m_pcursorshapedetector;
 
-      ::pointer < ::remoting_rfb::CopyRectDetector > m_pcopyrectdetector;
+      //::pointer < ::remoting_rfb::CopyRectDetector > m_pcopyrectdetector;
    };
 
    //// __WIN32SCREENDRIVERBASEIMPL_H__

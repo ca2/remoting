@@ -139,7 +139,7 @@ void HooksUpdateDetector::destroy()
       //auto hinst = (HINSTANCE) windows::hinstance_from_function(::windows::window::s_window_procedure);
       //m_pmessagewindowTarget = new MessageWindow(hinst, "HookTargetWinClassName");
       construct_newø(m_pmessagewindowTarget);
-      m_pmessagewindowTarget->createMessageWindow("HookTargetWinClassName");
+      //m_pmessagewindowTarget->createMessageWindow("HookTargetWinClassName");
 #endif
    }
 
@@ -165,7 +165,7 @@ void HooksUpdateDetector::destroy()
          path.format("{}\\{}", folder, "hookdlr.exe");
          m_hookLoader32.setFilename(path);
          ::string hwndStr;
-         hwndStr.format("%I64u", (DWORD64)m_pmessagewindowTarget->_HWND());
+         hwndStr.formatf("%I64u", (DWORD64)m_pmessagewindowTarget->_HWND());
          m_hookLoader32.setArguments(hwndStr);
          try
          {
@@ -208,7 +208,7 @@ void HooksUpdateDetector::destroy()
 #ifdef WINDOWS
       if (!isThreadTerminating() && m_pmessagewindowTarget != 0)
       {
-         m_pmessagewindowTarget->createMessageWindow();
+         m_pmessagewindowTarget->createMessageWindow("HookTargetWinClassName");
          m_plogwriter->information("Hooks target window has been created (hwnd = {})", (::iptr)m_pmessagewindowTarget->_HWND());
       }
 #endif

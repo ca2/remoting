@@ -106,7 +106,7 @@ namespace remoting_rfb_windows
        //m_pupdatekeeper(pupdatekeeper), m_pupdatelistener = pupdatelistener;, m_plogwriter(plogwriter), m_curTimeStamp(0),
        //m_hasCriticalError(false), m_hasRecoverableError(false), m_detectionEnabled(detectionEnabled)
 
-          resumeThread();
+      resumeThread();
        m_plogwriter->debug("Win8ScreenDriverImpl:: waiting for DXGI init");
        m_happeningInit.wait();
 
@@ -155,6 +155,14 @@ namespace remoting_rfb_windows
       m_plogwriter->debug("Creating of D3D11Device");
       //WinD3D11Device d3D11Device(m_plogwriter);
       m_pd3d11device = allocateø D3D11Device(m_plogwriter);
+
+      if (!m_pd3d11device->m_pdxgiadapter1)
+      {
+         
+         throw ::subsystem::Exception("No screens to get DXGI output from");
+
+      }
+
       m_plogwriter->debug("Quering Interface for IDXGIDevice");
       //WinDxgiDevice dxgiDevice(&d3D11Device);
       //m_pd3d11device->m_pd3d11device.as(m_pdxgidevice);

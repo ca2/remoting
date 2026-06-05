@@ -1,4 +1,4 @@
-// Copyright (C) 2008,2009,2010,2011,2012 GlavSoft LLC.
+   // Copyright (C) 2008,2009,2010,2011,2012 GlavSoft LLC.
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
@@ -30,7 +30,12 @@ namespace remoting_rfb_windows
 {
 
 
-   WindowsCursorShapeGrabber::WindowsCursorShapeGrabber(void) : m_lastHCursor(0) {}
+   WindowsCursorShapeGrabber::WindowsCursorShapeGrabber(void) :
+      m_lastHCursor(0)
+   {
+   
+   
+   }
 
    WindowsCursorShapeGrabber::~WindowsCursorShapeGrabber(void) {}
 

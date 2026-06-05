@@ -38,9 +38,9 @@ namespace remoting_rfb_windows
    // {
    // }
 
-   Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl()
+   Win32ScreenDriverBaseImpl::Win32ScreenDriverBaseImpl() :
+       m_pcriticalsectionFramebuffer(nullptr)
    {
-
 
    }
 

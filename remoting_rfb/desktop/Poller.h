@@ -60,7 +60,8 @@ namespace remoting_rfb
       void destroy() override;
 
 
-      virtual void initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+      virtual void initialize_poller(::remoting_rfb_node::Configurator * pconfigurator, UpdateKeeper *pupdatekeeper,
+                                     UpdateListener *pupdatelistener, ScreenGrabber *pscreengrabber,
        ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
        ::subsystem::LogWriter * plogwriter);
 

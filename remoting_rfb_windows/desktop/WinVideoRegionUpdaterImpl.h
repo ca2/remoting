@@ -34,8 +34,10 @@
 #include "subsystem/thread/Thread.h"
 #include "acme/parallelization/happening.h"
 
+
 namespace remoting_rfb_windows
 {
+
 
    class CLASS_DECL_REMOTING_RFB_WINDOWS WinVideoRegionUpdaterImpl :
       virtual public ::remoting_rfb::ScreenDriver,

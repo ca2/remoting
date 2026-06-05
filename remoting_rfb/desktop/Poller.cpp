@@ -60,11 +60,12 @@ void Poller::destroy()
 }
 
 
-void Poller::initialize_poller(UpdateKeeper * pupdatekeeper, UpdateListener * pupdatelistener, ScreenGrabber *pscreengrabber,
+void Poller::initialize_poller(::remoting_rfb_node::Configurator * pconfigurator, UpdateKeeper *pupdatekeeper,
+                               UpdateListener *pupdatelistener, ScreenGrabber *pscreengrabber,
                ::innate_subsystem::Framebuffer *backupFramebuffer, lockable_critical_section *framebufferCriticalSection,
                ::subsystem::LogWriter * plogwriter)
    {
-
+   m_pconfigurator = pconfigurator;
       initialize_update_detector(pupdatekeeper, pupdatelistener);
       m_pscreengrabber = pscreengrabber;
       m_pframebufferBackup = backupFramebuffer;
