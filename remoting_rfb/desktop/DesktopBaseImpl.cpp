@@ -259,7 +259,7 @@ namespace remoting_rfb
       ASSERT(m_puserinput != 0);
       ASSERT(m_pdesktermlistenerExternal != 0);
 
-      m_plogwriter->information("set mouse event (x = %u, y = %u, mask = %u)", (::u32)x, (::u32)y,
+      m_plogwriter->informationf("set mouse event (x = %u, y = %u, mask = %u)", (::u32)x, (::u32)y,
                                 (::u32)buttonMask);
       ::i32_point point(x, y);
       try

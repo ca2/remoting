@@ -8,6 +8,7 @@
 
 #include "innate_subsystem/drawing/Bitmap.h"
 #include "innate_subsystem/drawing/Font.h"
+#include "innate_subsystem/drawing/Path.h"
 // // #include aaa_<dwmapi.h>
 // // Link with dwmapi.lib
 // #pragma comment (lib, "dwmapi.lib")
@@ -538,6 +539,18 @@ namespace remoting_rfb_client
 
       //m_brushBackgroundMinimizeDash(RGB(255, 255, 255))
 
+                  const ::f64 btnSize = m_btnSize * get_window_scale();
+      const ::f64 btnSpce = m_btnSpacing * get_window_scale();
+
+                  ::f64 closeX = (::f64)iToolbarWidth - btnSize - 10.f;
+
+      ::f64 restoreX = closeX - btnSize - btnSpce;
+
+      ::f64 minimizeX = restoreX - btnSize - btnSpce;
+
+      ::f64 topY = ((::f64)iButtonSize - btnSize) * 0.5f;
+
+
       ::i32 iButtonCount = 3;
       ::i32 iMarginRight = iButtonSize / 3;
       ::i32 iButton = 0;
@@ -551,11 +564,13 @@ namespace remoting_rfb_client
             m_pbuttonMinimize->m_pdesktopwindow = pdesktopwindow;
             m_pbuttonMinimize->m_pcontrolParent = this;
             m_pbuttonMinimize->m_eid = id_minimize;
+            m_pbuttonMinimize->m_colorEllipseHover = ::argb(120, 255, 255, 255);
+            m_pbuttonMinimize->m_colorEllipse = ::argb(60, 255, 255, 255);
             //m_pbuttonMinimize->m_pbrushBackground = m_pbrushButtonBackground;
             m_controlaChildren.add(m_pbuttonMinimize);
          }
-         m_pbuttonMinimize->m_rectangle.set_top_left(iToolbarWidth - iMarginRight + iButtonSize * (iButton - iButtonCount), 0);
-         m_pbuttonMinimize->m_rectangle.set_size(iButtonSize, iButtonSize);
+         m_pbuttonMinimize->m_rectangle.set_top_left(minimizeX, topY);
+         m_pbuttonMinimize->m_rectangle.set_size(btnSize, btnSize);
          
       }
       iButton++;
@@ -567,12 +582,15 @@ namespace remoting_rfb_client
             m_pbuttonRestore->m_pdesktopwindow = pdesktopwindow;
             m_pbuttonRestore->m_pcontrolParent = this;
             m_pbuttonRestore->m_eid = id_restore;
+            m_pbuttonRestore->m_colorEllipseHover = ::argb(120, 255, 255, 255);
+            m_pbuttonRestore->m_colorEllipse = ::argb(60, 255, 255, 255);
+
             //m_pbuttonRestore->m_pbrushBackground = m_pbrushButtonBackground;
             m_controlaChildren.add(m_pbuttonRestore);
 
          }
-         m_pbuttonRestore->m_rectangle.set_top_left(iToolbarWidth - iMarginRight + iButtonSize * (iButton - iButtonCount), 0);
-         m_pbuttonRestore->m_rectangle.set_size(iButtonSize, iButtonSize);
+         m_pbuttonRestore->m_rectangle.set_top_left(restoreX, topY);
+         m_pbuttonRestore->m_rectangle.set_size(btnSize, btnSize);
       }
          
       iButton++;
@@ -584,12 +602,14 @@ namespace remoting_rfb_client
             m_pbuttonClose->m_pdesktopwindow = pdesktopwindow;
             m_pbuttonClose->m_pcontrolParent = this;
             m_pbuttonClose->m_eid = id_close;
-            //m_pbuttonClose->m_pbrushBackground = m_pbrushButtonBackground;
+            m_pbuttonClose->m_colorEllipseHover = ::argb(200, 255, 80, 80);
+            m_pbuttonClose->m_colorEllipse = ::argb(120, 220, 60, 60);
+            // m_pbuttonClose->m_pbrushBackground = m_pbrushButtonBackground;
             m_controlaChildren.add(m_pbuttonClose);
 
          }
-         m_pbuttonClose->m_rectangle.set_top_left(iToolbarWidth - iMarginRight + iButtonSize * (iButton - iButtonCount), 0);
-         m_pbuttonClose->m_rectangle.set_size(iButtonSize, iButtonSize);
+         m_pbuttonClose->m_rectangle.set_top_left(closeX, topY);
+         m_pbuttonClose->m_rectangle.set_size(btnSize, btnSize);
       }
 
 
@@ -936,20 +956,40 @@ namespace remoting_rfb_client
          // else
          // {
 
-            if (m_bHover)
-            {
-               auto r = get_paint_rectangle();
-//               ::Gdiplus::Graphics g(pgraphics->m_dc->m_dc);
-  //             g.SetCompositingMode(Gdiplus::CompositingModeSourceOver);
-    ///;;           g.SetCompositingQuality(Gdiplus::CompositingQualityHighQuality);
+          ::color::color colorEllipse = m_bHover ? 
+             m_colorEllipseHover : m_colorEllipse;
 
-               r.bottom -= 3;
-               //r.deflate(2, 2);
-               //Gdiplus::Rect gdiplusr;
-               //::copy(gdiplusr, r);
-               auto color = ::argb(20, 255, 255, 255);
-               pgraphics->fillRect(r, color);
-            }
+         auto pbrushEllipse = createø<innate_subsystem::SolidBrushInterface>();
+
+         pbrushEllipse->initialize_solid_brush(colorEllipse);
+
+         // SolidBrush minBrush(minColor);
+
+         // pgraphicscontext->FillEllipse(
+         //     &minBrush,
+         //     rcMin);
+
+         pgraphics->setBrush(pbrushEllipse);
+         pgraphics->setPen(nullptr);
+         auto r = get_paint_rectangle();
+         pgraphics->ellipse(r);
+
+
+
+//            if (m_bHover)
+//            {
+//               auto r = get_paint_rectangle();
+////               ::Gdiplus::Graphics g(pgraphics->m_dc->m_dc);
+//  //             g.SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+//    ///;;           g.SetCompositingQuality(Gdiplus::CompositingQualityHighQuality);
+//
+//               r.bottom -= 3;
+//               //r.deflate(2, 2);
+//               //Gdiplus::Rect gdiplusr;
+//               //::copy(gdiplusr, r);
+//               auto color = ::argb(20, 255, 255, 255);
+//               pgraphics->fillRect(r, color);
+//            }
 
 
          //}
@@ -959,70 +999,200 @@ namespace remoting_rfb_client
 
       auto fWindowScale = get_window_scale();
 
-      if (m_eid == id_minimize)
+      int iStyle = 1;
+
+      if (iStyle == 2)
       {
 
-
-         auto r = get_paint_rectangle();
-
-         ::f64_rectangle rDash;
-
-         rDash.left = r.left + 7.0 * fWindowScale;
-         rDash.right = r.right - 7 * fWindowScale;
-         rDash.top = r.top + 5.0 * fWindowScale;
-         rDash.bottom = rDash.top + 2.0 * fWindowScale;
-
-         pgraphics->fillRect(rDash, colorPaint);
-
-      }
-      else if (m_eid == id_restore)
-      {
-
-
-         auto r = get_paint_rectangle();
-
-         ::f64_rectangle rDeflate = r;
-
-         rDeflate.deflate(7.0 * fWindowScale, 5.0 * fWindowScale, 7.0 * fWindowScale, 9.0 * fWindowScale);
-
-         pgraphics->fillRect(
-            ::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2.0 * fWindowScale),
-            colorPaint);
-         pgraphics->fillRect(
-            ::i32_rectangle(rDeflate.right - 2.0 * fWindowScale, rDeflate.top, rDeflate.right, rDeflate.bottom),
-            colorPaint);
-         pgraphics->fillRect(
-            ::i32_rectangle(rDeflate.left, rDeflate.bottom - 2.0 * fWindowScale, rDeflate.right, rDeflate.bottom),
-            colorPaint);
-         pgraphics->fillRect(
-            ::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.left + 2.0 * fWindowScale, rDeflate.bottom),
-            colorPaint);
-
-      }
-      else if (m_eid == id_close)
-      {
-
-
-         auto r = get_paint_rectangle();
-
-         ::f64_rectangle rDeflate = r;
-
-         rDeflate.deflate(7.0 * fWindowScale, 5.0 * fWindowScale, 7.0 * fWindowScale, 9.0 * fWindowScale);
-
-         //pgraphics->setPen(m_pstyle->m_ppenPaint);
-         if (!m_ppen001)
+         if (m_eid == id_minimize)
          {
-            constructø(m_ppen001);
-            m_ppen001->initialize_pen(innate_subsystem::e_pen_solid, 2.0 * fWindowScale, colorPaint);
+
+
+            auto r = get_paint_rectangle();
+
+            ::f64_rectangle rDash;
+
+            rDash.left = r.left + 7.0 * fWindowScale;
+            rDash.right = r.right - 7 * fWindowScale;
+            rDash.top = r.top + 5.0 * fWindowScale;
+            rDash.bottom = rDash.top + 2.0 * fWindowScale;
+
+            pgraphics->fillRect(rDash, colorPaint);
          }
-         //pgraphics->setPen(2.0f, colorPaint);
-         pgraphics->setPen(m_ppen001);
+         else if (m_eid == id_restore)
+         {
 
-         pgraphics->moveTo(rDeflate.top_left());
-         pgraphics->lineTo(rDeflate.bottom_right());
-         pgraphics->moveTo(rDeflate.top_right());
-         pgraphics->lineTo(rDeflate.bottom_left());
 
+            auto r = get_paint_rectangle();
+
+            ::f64_rectangle rDeflate = r;
+
+            rDeflate.deflate(7.0 * fWindowScale, 5.0 * fWindowScale, 7.0 * fWindowScale, 9.0 * fWindowScale);
+
+            pgraphics->fillRect(
+               ::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2.0 * fWindowScale),
+               colorPaint);
+            pgraphics->fillRect(
+               ::i32_rectangle(rDeflate.right - 2.0 * fWindowScale, rDeflate.top, rDeflate.right, rDeflate.bottom),
+               colorPaint);
+            pgraphics->fillRect(
+               ::i32_rectangle(rDeflate.left, rDeflate.bottom - 2.0 * fWindowScale, rDeflate.right, rDeflate.bottom),
+               colorPaint);
+            pgraphics->fillRect(
+               ::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.left + 2.0 * fWindowScale, rDeflate.bottom),
+               colorPaint);
+         }
+         else if (m_eid == id_close)
+         {
+
+
+            auto r = get_paint_rectangle();
+
+            ::f64_rectangle rDeflate = r;
+
+            rDeflate.deflate(7.0 * fWindowScale, 5.0 * fWindowScale, 7.0 * fWindowScale, 9.0 * fWindowScale);
+
+            // pgraphics->setPen(m_pstyle->m_ppenPaint);
+            if (!m_ppen001)
+            {
+               constructø(m_ppen001);
+               m_ppen001->initialize_pen(innate_subsystem::e_pen_solid, 2.0 * fWindowScale, colorPaint);
+            }
+            // pgraphics->setPen(2.0f, colorPaint);
+            pgraphics->setPen(m_ppen001);
+
+            pgraphics->moveTo(rDeflate.top_left());
+            pgraphics->lineTo(rDeflate.bottom_right());
+            pgraphics->moveTo(rDeflate.top_right());
+            pgraphics->lineTo(rDeflate.bottom_left());
+         }
+      }
+      else if (iStyle == 1)
+      {
+
+           if (m_eid == id_minimize)
+         {
+
+
+              ::f64 fSmaller = 6 * get_window_scale();
+
+            auto r = get_paint_rectangle();
+
+                      ::f64 midY = r.top + r.height() * 0.62;
+
+                       auto ppenGlyph = createø<::innate_subsystem::PenInterface>();
+                      
+                       
+                       ppenGlyph->initialize_pen(::innate_subsystem::e_pen_solid, 1.2 * get_window_scale(), ::argb(240, 255, 255, 255));
+
+                                   ppenGlyph->setStartCap(::innate_subsystem::e_line_cap_round);
+                       ppenGlyph->setEndCap(::innate_subsystem::e_line_cap_round);
+
+                       pgraphics->setPen(ppenGlyph);
+            // pgraphicscontext->DrawLine(
+            //     &glyphPen,
+            //     rcMin.X + fSmaller,
+            //     midY,
+            //     rcMin.X + rcMin.Width - fSmaller,
+            //     midY);
+                      pgraphics->moveTo({r.left + fSmaller, midY});
+            pgraphics->lineTo({r.left + r.width() - fSmaller, midY});
+
+         }
+         else if (m_eid == id_restore)
+         {
+
+
+              ::f64 fSmaller = 6 * get_window_scale();
+
+            auto r = get_paint_rectangle();
+
+              auto rectangleRestoreInner = ::f64_rectangle_dimension(
+               r.left + fSmaller, r.top + fSmaller,
+               r.width() - fSmaller * 2., r.height() - fSmaller * 2.);
+
+
+                    auto ppenGlyph = createø<::innate_subsystem::PenInterface>();
+
+
+              ppenGlyph->initialize_pen(::innate_subsystem::e_pen_solid, 1.2 * get_window_scale(),
+                                        ::argb(240, 255, 255, 255));
+
+              ppenGlyph->setStartCap(::innate_subsystem::e_line_cap_round);
+              ppenGlyph->setEndCap(::innate_subsystem::e_line_cap_round);
+
+              pgraphics->setPen(ppenGlyph);
+              pgraphics->setBrush(nullptr);
+            // pgraphicscontext->DrawRectangle(
+            //     &glyphPen,
+            //     restoreInner);
+
+            pgraphics->rectangle(rectangleRestoreInner);
+     /*       ::f64_rectangle rDeflate = r;
+
+            rDeflate.deflate(7.0 * fWindowScale, 5.0 * fWindowScale, 7.0 * fWindowScale, 9.0 * fWindowScale);
+
+            pgraphics->fillRect(
+               ::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.right, rDeflate.top + 2.0 * fWindowScale),
+               colorPaint);
+            pgraphics->fillRect(
+               ::i32_rectangle(rDeflate.right - 2.0 * fWindowScale, rDeflate.top, rDeflate.right, rDeflate.bottom),
+               colorPaint);
+            pgraphics->fillRect(
+               ::i32_rectangle(rDeflate.left, rDeflate.bottom - 2.0 * fWindowScale, rDeflate.right, rDeflate.bottom),
+               colorPaint);
+            pgraphics->fillRect(
+               ::i32_rectangle(rDeflate.left, rDeflate.top, rDeflate.left + 2.0 * fWindowScale, rDeflate.bottom),
+               colorPaint);*/
+         }
+         else if (m_eid == id_close)
+         {
+
+              ::f64 fSmaller = 6 * get_window_scale();
+
+            auto r = get_paint_rectangle();
+
+            ::f64_rectangle rectangleClose = r;
+
+
+            auto ppenGlyph = createø<::innate_subsystem::PenInterface>();
+
+
+            ppenGlyph->initialize_pen(::innate_subsystem::e_pen_solid, 1.2 * get_window_scale(),
+                                      ::argb(240, 255, 255, 255));
+
+            ppenGlyph->setStartCap(::innate_subsystem::e_line_cap_round);
+            ppenGlyph->setEndCap(::innate_subsystem::e_line_cap_round);
+
+            pgraphics->setPen(ppenGlyph);
+
+            //rDeflate.deflate(7.0 * fWindowScale, 5.0 * fWindowScale, 7.0 * fWindowScale, 9.0 * fWindowScale);
+
+            //// pgraphics->setPen(m_pstyle->m_ppenPaint);
+            //if (!m_ppen001)
+            //{
+            //   constructø(m_ppen001);
+            //   m_ppen001->initialize_pen(innate_subsystem::e_pen_solid, 2.0 * fWindowScale, colorPaint);
+            //}
+            //// pgraphics->setPen(2.0f, colorPaint);
+            //pgraphics->setPen(m_ppen001);
+
+            //pgraphics->moveTo(rDeflate.top_left());
+            //pgraphics->lineTo(rDeflate.bottom_right());
+            //pgraphics->moveTo(rDeflate.top_right());
+            //pgraphics->lineTo(rDeflate.bottom_left());
+
+                        pgraphics->moveTo({rectangleClose.left + fSmaller, rectangleClose.top + fSmaller});
+
+                        pgraphics->lineTo({rectangleClose.right - fSmaller, rectangleClose.bottom - fSmaller});
+
+            pgraphics->moveTo({rectangleClose.right - fSmaller, rectangleClose.top + fSmaller});
+
+            pgraphics->lineTo({rectangleClose.left + fSmaller, rectangleClose.bottom - fSmaller});
+
+
+
+         }
       }
    }
 
@@ -1030,8 +1200,8 @@ namespace remoting_rfb_client
    void toolbar::__001OnDraw(innate_subsystem::GraphicsInterface * pgraphics, const ::i32_rectangle & rectangle)
    {
 
-      pgraphics->setBlendModeOn(false);
-      pgraphics->setAntiAliasOn(false);
+      pgraphics->setBlendModeOn(true);
+      pgraphics->setAntiAliasOn(true);
 
 
       ::i32 iAlpha = 180;
@@ -1057,35 +1227,195 @@ namespace remoting_rfb_client
       auto wForDraw = fW - 1.0;
       auto hForDraw = fH - 1.0;
 
+      auto pgraphicscontext = pgraphics;
+      //auto fW = (::f64)m_size.width();
+      //auto fH = (::f64)m_size.height();
 
+      //// auto wForDraw = fW - 2.0f;
+      //// auto hForDraw = fH - 2.0f;
 
-      pgraphics->fillRect(r, colorDark);
+      //auto wForDraw = fW - 1.0;
+      //auto hForDraw = fH - 1.0;
 
-      ::f64 x = r.left;
-      ::f64 y = r.top;
-      ::f64 w = r.width();
-      ::f64 h = 1;
-      ::color::color color;
+      //auto pnanographics = nano()->graphics();
 
-      ::f32 fOpacity = 1.0f;
-
-      int iH = 10 * get_window_scale();
-      
-      for (::i32 i = 0; i < iH; i++)
       {
-         
-         color=colorDark;
-         
-         color.blend(colorLite, fOpacity);
-         
-         pgraphics->fillRect(::i32_rectangle_dimension(x, y, w, h), color);
 
-         y+= h;
-         
-         fOpacity -= 0.1f / get_window_scale();
-         
+         // pgraphicscontext->SetSmoothingMode(
+         //     SmoothingModeHighQuality);
+
+         //pgraphicscontext->set_smoothing_mode(::nano::graphics::e_smoothing_mode_high_quality);
+
+         // pgraphicscontext->SetTextRenderingHint(
+         //     TextRenderingHintClearTypeGridFit);
+
+         ///pgraphicscontext->set_text_rendering_hint(::nano::graphics::e_text_rendering_hint_clear_type_grid_fit);
+
+         // pgraphicscontext->Clear(Color(0,0,0,0));
+         //pgraphicscontext->clear(::color::transparent);
+
+         // Toolbar background
+         auto rectangleBackground = ::f64_rectangle_dimension(0., 0., wForDraw, hForDraw);
+
+         auto ppath = createø<::innate_subsystem::PathInterface>();
+
+         //            Gdiplus::GraphicsPath path;
+
+         const ::f64 radius = (hForDraw / 2.);
+
+         /*   path.AddArc(
+                (::f32) (wForDraw - radius),
+                0.f,
+                radius,
+                radius,
+                270.f,
+                90.f);
+
+            path.AddArc(
+                (::f32) (wForDraw - radius),
+                (::f32) (hForDraw - radius),
+                radius,
+                radius,
+                0.f,
+                90.f);
+
+            path.AddArc(
+                0.f,
+                (::f32) (hForDraw - radius),
+                radius,
+                radius,
+                90.f,
+                90.f);*/
+         // ppath->AddArc(0.f, 0.f, radius, radius, 180.f, 90.f);
+         ppath->addArc(0., 0., radius, radius, 180_degree, 90_degree);
+
+
+         ppath->addArc(wForDraw - radius, 0., radius, radius, 270_degrees, 90_degrees);
+
+         ppath->addArc(wForDraw - radius, hForDraw - radius, radius, radius, 0_degrees, 90_degrees);
+
+         ppath->addArc(0., hForDraw - radius, radius, radius, 90_degrees, 90_degrees);
+
+
+         ppath->closeFigure();
+         // path.CloseFigure();
+
+         auto pbrushBackground = createø<::innate_subsystem::SolidBrushInterface>();
+
+         pbrushBackground->initialize_solid_brush(::argb(120, 30, 230, 130));
+
+         // SolidBrush bgBrush(
+         //   Color(120, 30, 130, 230));
+
+
+         // pgraphicscontext->FillPath(&bgBrush, &path);
+
+         auto ppenBorder = createø<::innate_subsystem::PenInterface>();
+
+         ppenBorder->initialize_pen(::innate_subsystem::e_pen_solid, 1.5 , ::argb(180, 255, 255, 255));
+         // Pen border(
+         //     Color(180, 255, 255, 255),
+         //     1.5f);
+
+         pgraphicscontext->doPath(ppath, pbrushBackground, ppenBorder);
+
+         // pgraphicscontext->DrawPath(&border, &path);
+
+         //   pgraphicscontext->draw_path(ppath, ppenBorder);
+
+         // Buttons
+         //auto pbrushButton = pnanographics->create_solid_brush(::argb(220, 0, 120, 215));
+
+         // SolidBrush buttonBrush(
+         //   Color(220, 0, 120, 215));
+
+         //auto pbrushText = pnanographics->create_solid_brush(::color::white);
+
+         // SolidBrush textBrush(
+         //  Color(255,255,255,255));
+
+         // FontFamily ff(L"Segoe UI");
+         // Gdiplus::Font font(
+         //     &ff,
+         //     12.f,
+         //     FontStyleRegular,
+         //     UnitPixel);
+         //
+         // StringFormat sf;
+         // sf.SetAlignment(
+         //     StringAlignmentCenter);
+         //
+         // sf.SetLineAlignment(
+         //     StringAlignmentCenter);
+         //
+         // RectF btn1(12.f, 8.f, 80.f, 32.f);
+         // RectF btn2(100.f, 8.f, 80.f, 32.f);
+         // RectF btn3(188.f, 8.f, 80.f, 32.f);
+         //
+         // pgraphicscontext->FillRectangle(
+         //     &buttonBrush,
+         //     btn1);
+         //
+         // pgraphicscontext->FillRectangle(
+         //     &buttonBrush,
+         //     btn2);
+         //
+         // pgraphicscontext->FillRectangle(
+         //     &buttonBrush,
+         //     btn3);
+         //
+         // pgraphicscontext->DrawString(
+         //     L"CTRL",
+         //     -1,
+         //     &font,
+         //     btn1,
+         //     &sf,
+         //     &textBrush);
+         //
+         // pgraphicscontext->DrawString(
+         //     L"ALT",
+         //     -1,
+         //     &font,
+         //     btn2,
+         //     &sf,
+         //     &textBrush);
+         //
+         // pgraphicscontext->DrawString(
+         //     L"DEL",
+         //     -1,
+         //     &font,
+         //     btn3,
+         //     &sf,
+         //     &textBrush);
       }
-      
+
+      //pgraphics->fillRect(r, colorDark);
+
+      //::f64 x = r.left;
+      //::f64 y = r.top;
+      //::f64 w = r.width();
+      //::f64 h = 1;
+      //::color::color color;
+
+      //::f32 fOpacity = 1.0f;
+
+      //int iH = 10 * get_window_scale();
+      //
+      //for (::i32 i = 0; i < iH; i++)
+      //{
+      //   
+      //   color=colorDark;
+      //   
+      //   color.blend(colorLite, fOpacity);
+      //   
+      //   pgraphics->fillRect(::i32_rectangle_dimension(x, y, w, h), color);
+
+      //   y+= h;
+      //   
+      //   fOpacity -= 0.1f / get_window_scale();
+      //   
+      //}
+      //
       pgraphics->setBlendModeOn(true);
       pgraphics->setAntiAliasOn(true);
 
@@ -1095,7 +1425,7 @@ namespace remoting_rfb_client
 
          constructø(m_pfont001);
 
-         m_pfont001->initialize_font("Segoe UI", 14, 400);
+         m_pfont001->initialize_pixel_font("Segoe UI", 12. * get_window_scale(), 400);
 
       }
 
@@ -1165,8 +1495,12 @@ namespace remoting_rfb_client
 
       pgraphics->setFont(m_pfont001);
 
+      auto rTitle = r;
+
+      rTitle.left += 10. * get_window_scale();
+
       pgraphics->drawText(m_pdesktopwindow->m_strHost,
-         r, 0, e_align_center);
+         rTitle, 0, e_align_left_center);
       //pgraphics->m_pgraphics->DrawString(wstr, wstr.size(),)
       // color=colorDark;
       // color.blend(colorLite, 0.6);

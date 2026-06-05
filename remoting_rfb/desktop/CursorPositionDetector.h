@@ -40,6 +40,12 @@ namespace remoting_rfb
    public:
 
 
+      ::subsystem::Cursor m_cursor;
+      ::happening m_sleepTimer;
+      ::i32_point m_lastCursorPos;
+      ::pointer<::subsystem::LogWriter> m_plogwriter;
+
+
       CursorPositionDetector();
       ~CursorPositionDetector() override;
 
@@ -55,10 +61,6 @@ namespace remoting_rfb
       void onTermThread() override;
 
    //private:
-      ::subsystem::Cursor m_cursor;
-      ::happening m_sleepTimer;
-      ::i32_point m_lastCursorPos;
-      ::pointer < ::subsystem::LogWriter > m_plogwriter;
    };
 
 

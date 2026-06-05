@@ -37,10 +37,10 @@ namespace remoting_rfb
    {
       initialize(pupdatelistenerExternal);
       construct_newø(m_pupdatekeeperProperty);
+      construct_newø(m_pframebufferBackup);
       m_pscreendriver =
          pscreendriverfactory->createScreenDriver(pconfigurator, m_pupdatekeeperProperty, this, m_pframebufferBackup, &m_criticalsectionFramebuffer, plogwriter);
       // At this point the screen driver must contain valid screen properties.
-      construct_newø(m_pframebufferBackup);
       m_pframebufferBackup->assignProperties(m_pscreendriver->getScreenBuffer());
       m_pupdatekeeperProperty->setBorderRect(m_pscreendriver->getScreenDimension());
       construct_newø(m_pupdatefilter);

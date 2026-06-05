@@ -942,8 +942,7 @@ void toolbar::RenderLayered()
             //leftAlign.SetLineAlignment(
             //    StringAlignmentCenter);
 
-            auto rectangleTitle = ::f64_rectangle_dimension(
-                14.,
+            auto rectangleTitle = ::f64_rectangle_dimension(10. * get_window_scale(),
                 0.,
                 300. * get_window_scale(),
                 (::f64) m_size.height());
@@ -1054,7 +1053,7 @@ void toolbar::RenderLayered()
             // Glyph pen
             //
 
-            auto ppenGlyph = pnanographics->create_pen(::argb(240, 255, 255, 255), 1.8);
+            auto ppenGlyph = pnanographics->create_pen(::argb(240, 255, 255, 255), 1.2 * get_window_scale());
             //Pen glyphPen(
             //    Color(240,255,255,255),
             //    1.8f);

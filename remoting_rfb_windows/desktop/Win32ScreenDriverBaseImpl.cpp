@@ -63,6 +63,7 @@ namespace remoting_rfb_windows
       emplace_newø(m_pcursorpositiondetector);
       m_pcursorpositiondetector->initialize_cursor_position_detector(pupdatekeeper, pupdatelistener, plogwriter);
       construct_newø(m_pcursorshapedetector);
+      construct_newø(m_pcursorshapegrabber);
       m_pcursorshapedetector->initialize_cursor_shape_detector(pupdatekeeper, pupdatelistener, m_pcursorshapegrabber, pcriticalsectionFramebuffer, plogwriter);
 
       //}

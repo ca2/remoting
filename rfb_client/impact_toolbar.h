@@ -73,6 +73,9 @@ namespace remoting_rfb_client
       bool m_bNewRepaintRectangle;
       ::i32_rectangle m_rectangleRepaint;
 
+      ::color::color m_colorEllipseHover;
+      ::color::color m_colorEllipse;
+
       ::pointer_array < control > m_controlaChildren;
 
       control();
@@ -148,6 +151,9 @@ virtual bool _001OnMouseEx(::u32 uMessage, ::i32 iButtonMask, const ::i32_point 
    {
    public:
        
+            const ::f32 m_btnSize = 18.f;
+      const ::f32 m_btnSpacing = 2.f;
+
       //SolidBrush m_brushBackgroundMinimizeDash;
       //::pointer<impact_toolbar_button> m_pbuttonMinimize;
       //::pointer<impact_toolbar_button> m_pbuttonRestore;
