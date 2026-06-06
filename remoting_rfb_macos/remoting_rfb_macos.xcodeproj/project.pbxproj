@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A4A00012FBB000100000001 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4A00002FBB000100000001 /* AppKit.framework */; };
 		9A0B95902FB31B1700EEAAE1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0B958F2FB31B1700EEAAE1 /* CoreFoundation.framework */; };
 		9A1906822FB296A400A3C985 /* CopyRectDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1906802FB2969B00A3C985 /* CopyRectDetector.cpp */; };
 		9A1906892FB296C900A3C985 /* _.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1906832FB296C900A3C985 /* _.h */; };
@@ -16,6 +15,7 @@
 		9A19068C2FB296C900A3C985 /* _factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1906882FB296C900A3C985 /* _factory.cpp */; };
 		9A282EAB2FB31B3C00B79BB5 /* libinnate_subsystem_macos.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A282EA82FB31B2C00B79BB5 /* libinnate_subsystem_macos.dylib */; };
 		9A282EAD2FB31BA200B79BB5 /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A282EAC2FB31BA200B79BB5 /* libacme.dylib */; };
+		9A4A00012FBB000100000001 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4A00002FBB000100000001 /* AppKit.framework */; };
 		9A6552F92FBA8F120073C202 /* CopyRectDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6552F52FBA8F120073C202 /* CopyRectDetector.h */; };
 		9A6552FC2FBA8F680073C202 /* DesktopFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6552FB2FBA8F680073C202 /* DesktopFactory.cpp */; };
 		9A6552FD2FBA8F680073C202 /* DesktopFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6552FA2FBA8F680073C202 /* DesktopFactory.h */; };
@@ -30,7 +30,7 @@
 		9A6553112FBA9B2A0073C202 /* libsubsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6553102FBA9B2A0073C202 /* libsubsystem.dylib */; };
 		9A6553132FBA9B460073C202 /* libappkit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6553122FBA9B460073C202 /* libappkit.dylib */; };
 		9A6A2C282FB3E4E4004C0ACF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */; };
-		9A9A1F982FB3E53B002D39AB /* libremoting.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F952FB3E526002D39AB /* libremoting.dylib */; };
+		9AE47A7D2FD2C65E003088D6 /* libremoting_rfb.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE47A722FD2AFD4003088D6 /* libremoting_rfb.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,27 +48,26 @@
 			remoteGlobalIDString = 9A1906A62FB29AF200A3C985;
 			remoteInfo = innate_subsystem_macos;
 		};
-		9A9A1F942FB3E526002D39AB /* PBXContainerItemProxy */ = {
+		9AE47A712FD2AFD4003088D6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */;
+			containerPortal = 9A59408C2FD2AF80007C6F56 /* remoting_rfb.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 9A373EFE2F81647000E892B1;
-			remoteInfo = remoting;
+			remoteInfo = remoting_rfb;
 		};
-		9A9A1F962FB3E52F002D39AB /* PBXContainerItemProxy */ = {
+		9AE47A732FD2AFDF003088D6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */;
+			containerPortal = 9A59408C2FD2AF80007C6F56 /* remoting_rfb.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 9A373EFD2F81647000E892B1;
-			remoteInfo = remoting;
+			remoteInfo = remoting_rfb;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9A4A00002FBB000100000001 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9A0B95822FB31ADC00EEAAE1 /* innate_subsystem_macos.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = innate_subsystem_macos.xcodeproj; path = "../../../operating_system/operating_system-macos/innate_subsystem_macos/innate_subsystem_macos.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		9A0B958F2FB31B1700EEAAE1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		9A1906442FB278ED00A3C985 /* libremoting_macos.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_macos.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A1906442FB278ED00A3C985 /* libremoting_rfb_macos.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_rfb_macos.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A19067F2FB2969B00A3C985 /* CopyRectDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyRectDetector.h; sourceTree = "<group>"; };
 		9A1906802FB2969B00A3C985 /* CopyRectDetector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CopyRectDetector.cpp; sourceTree = "<group>"; };
 		9A1906832FB296C900A3C985 /* _.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _.h; sourceTree = "<group>"; };
@@ -78,6 +77,8 @@
 		9A1906872FB296C900A3C985 /* _common_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _common_header.h; sourceTree = "<group>"; };
 		9A1906882FB296C900A3C985 /* _factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _factory.cpp; sourceTree = "<group>"; };
 		9A282EAC2FB31BA200B79BB5 /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A4A00002FBB000100000001 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		9A59408C2FD2AF80007C6F56 /* remoting_rfb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_rfb.xcodeproj; path = ../remoting_rfb/remoting_rfb.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9A6552F52FBA8F120073C202 /* CopyRectDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyRectDetector.h; sourceTree = "<group>"; };
 		9A6552F62FBA8F120073C202 /* CopyRectDetector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CopyRectDetector.cpp; sourceTree = "<group>"; };
 		9A6552FA2FBA8F680073C202 /* DesktopFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesktopFactory.h; sourceTree = "<group>"; };
@@ -93,7 +94,6 @@
 		9A6553102FBA9B2A0073C202 /* libsubsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libsubsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6553122FBA9B460073C202 /* libappkit.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libappkit.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting.xcodeproj; path = ../remoting/remoting.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +101,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE47A7D2FD2C65E003088D6 /* libremoting_rfb.dylib in Frameworks */,
 				9A4A00012FBB000100000001 /* AppKit.framework in Frameworks */,
 				9A6553132FBA9B460073C202 /* libappkit.dylib in Frameworks */,
 				9A6553112FBA9B2A0073C202 /* libsubsystem.dylib in Frameworks */,
-				9A9A1F982FB3E53B002D39AB /* libremoting.dylib in Frameworks */,
 				9A6A2C282FB3E4E4004C0ACF /* CoreGraphics.framework in Frameworks */,
 				9A282EAD2FB31BA200B79BB5 /* libacme.dylib in Frameworks */,
 				9A282EAB2FB31B3C00B79BB5 /* libinnate_subsystem_macos.dylib in Frameworks */,
@@ -132,7 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				9A0B95822FB31ADC00EEAAE1 /* innate_subsystem_macos.xcodeproj */,
-				9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */,
+				9A59408C2FD2AF80007C6F56 /* remoting_rfb.xcodeproj */,
 				9A19067E2FB2967A00A3C985 /* remoting_macos */,
 				9A1906452FB278ED00A3C985 /* Products */,
 				9A0B958D2FB31B0100EEAAE1 /* Frameworks */,
@@ -142,7 +142,7 @@
 		9A1906452FB278ED00A3C985 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A1906442FB278ED00A3C985 /* libremoting_macos.dylib */,
+				9A1906442FB278ED00A3C985 /* libremoting_rfb_macos.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,10 +198,10 @@
 			path = desktop;
 			sourceTree = "<group>";
 		};
-		9A9A1F912FB3E525002D39AB /* Products */ = {
+		9AE47A6E2FD2AFD2003088D6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A9A1F952FB3E526002D39AB /* libremoting.dylib */,
+				9AE47A722FD2AFD4003088D6 /* libremoting_rfb.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -227,9 +227,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		9A1906432FB278ED00A3C985 /* remoting_macos */ = {
+		9A1906432FB278ED00A3C985 /* remoting_rfb_macos */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A1906482FB278ED00A3C985 /* Build configuration list for PBXNativeTarget "remoting_macos" */;
+			buildConfigurationList = 9A1906482FB278ED00A3C985 /* Build configuration list for PBXNativeTarget "remoting_rfb_macos" */;
 			buildPhases = (
 				9A1906402FB278ED00A3C985 /* Headers */,
 				9A1906412FB278ED00A3C985 /* Sources */,
@@ -238,14 +238,14 @@
 			buildRules = (
 			);
 			dependencies = (
-				9A9A1F972FB3E52F002D39AB /* PBXTargetDependency */,
+				9AE47A742FD2AFDF003088D6 /* PBXTargetDependency */,
 				9A282EAA2FB31B3500B79BB5 /* PBXTargetDependency */,
 			);
-			name = remoting_macos;
+			name = remoting_rfb_macos;
 			packageProductDependencies = (
 			);
 			productName = remoting_macos;
-			productReference = 9A1906442FB278ED00A3C985 /* libremoting_macos.dylib */;
+			productReference = 9A1906442FB278ED00A3C985 /* libremoting_rfb_macos.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -262,7 +262,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9A19063F2FB278ED00A3C985 /* Build configuration list for PBXProject "remoting_macos" */;
+			buildConfigurationList = 9A19063F2FB278ED00A3C985 /* Build configuration list for PBXProject "remoting_rfb_macos" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -280,13 +280,13 @@
 					ProjectRef = 9A0B95822FB31ADC00EEAAE1 /* innate_subsystem_macos.xcodeproj */;
 				},
 				{
-					ProductGroup = 9A9A1F912FB3E525002D39AB /* Products */;
-					ProjectRef = 9A6A2C292FB3E509004C0ACF /* remoting.xcodeproj */;
+					ProductGroup = 9AE47A6E2FD2AFD2003088D6 /* Products */;
+					ProjectRef = 9A59408C2FD2AF80007C6F56 /* remoting_rfb.xcodeproj */;
 				},
 			);
 			projectRoot = "";
 			targets = (
-				9A1906432FB278ED00A3C985 /* remoting_macos */,
+				9A1906432FB278ED00A3C985 /* remoting_rfb_macos */,
 			);
 		};
 /* End PBXProject section */
@@ -299,11 +299,11 @@
 			remoteRef = 9A282EA72FB31B2C00B79BB5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A9A1F952FB3E526002D39AB /* libremoting.dylib */ = {
+		9AE47A722FD2AFD4003088D6 /* libremoting_rfb.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libremoting.dylib;
-			remoteRef = 9A9A1F942FB3E526002D39AB /* PBXContainerItemProxy */;
+			path = libremoting_rfb.dylib;
+			remoteRef = 9AE47A712FD2AFD4003088D6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -332,10 +332,10 @@
 			name = innate_subsystem_macos;
 			targetProxy = 9A282EA92FB31B3500B79BB5 /* PBXContainerItemProxy */;
 		};
-		9A9A1F972FB3E52F002D39AB /* PBXTargetDependency */ = {
+		9AE47A742FD2AFDF003088D6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = remoting;
-			targetProxy = 9A9A1F962FB3E52F002D39AB /* PBXContainerItemProxy */;
+			name = remoting_rfb;
+			targetProxy = 9AE47A732FD2AFDF003088D6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -614,7 +614,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9A19063F2FB278ED00A3C985 /* Build configuration list for PBXProject "remoting_macos" */ = {
+		9A19063F2FB278ED00A3C985 /* Build configuration list for PBXProject "remoting_rfb_macos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A1906462FB278ED00A3C985 /* Debug */,
@@ -623,7 +623,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A1906482FB278ED00A3C985 /* Build configuration list for PBXNativeTarget "remoting_macos" */ = {
+		9A1906482FB278ED00A3C985 /* Build configuration list for PBXNativeTarget "remoting_rfb_macos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A1906492FB278ED00A3C985 /* Debug */,

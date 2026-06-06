@@ -44,7 +44,10 @@ namespace remoting_rfb_client
 
       m_strAppId = "remoting/client";
 
+#if defined(WINDOWS)
             SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+      
+#endif
 
    }
 

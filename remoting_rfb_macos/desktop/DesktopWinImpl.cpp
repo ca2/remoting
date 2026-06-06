@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopWinImpl.h"
-#include "remoting/remoting_macos/desktop/MacosUserInput.h"
+#include "remoting/remoting_rfb_macos/desktop/MacosUserInput.h"
 #include "remoting/remoting_rfb/node_config/Configurator.h"
 #include "remoting/remoting_rfb/desktop_ipc/UpdateHandlerClient.h"
 #include "remoting/remoting_rfb/desktop/UpdateHandlerImpl.h"

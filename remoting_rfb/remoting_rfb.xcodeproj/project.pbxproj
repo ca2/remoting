@@ -672,7 +672,7 @@
 		9A1906722FB2952800A3C985 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		9A3615802FBA70E7005F1383 /* EventLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventLog.h; sourceTree = "<group>"; };
 		9A3615812FBA70E7005F1383 /* EventLog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EventLog.cpp; sourceTree = "<group>"; };
-		9A373EFE2F81647000E892B1 /* libremoting.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A373EFE2F81647000E892B1 /* libremoting_rfb.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_rfb.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A373F172F81656200E892B1 /* _.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _.h; sourceTree = "<group>"; };
 		9A373F182F81656200E892B1 /* _.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _.cpp; sourceTree = "<group>"; };
 		9A373F1F2F81656200E892B1 /* ConnectionConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionConfig.h; sourceTree = "<group>"; };
@@ -1230,7 +1230,7 @@
 		9A373EFF2F81647000E892B1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A373EFE2F81647000E892B1 /* libremoting.dylib */,
+				9A373EFE2F81647000E892B1 /* libremoting_rfb.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1641,9 +1641,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		9A373EFD2F81647000E892B1 /* remoting */ = {
+		9A373EFD2F81647000E892B1 /* remoting_rfb */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A373F022F81647000E892B1 /* Build configuration list for PBXNativeTarget "remoting" */;
+			buildConfigurationList = 9A373F022F81647000E892B1 /* Build configuration list for PBXNativeTarget "remoting_rfb" */;
 			buildPhases = (
 				9A373EFA2F81647000E892B1 /* Headers */,
 				9A373EFB2F81647000E892B1 /* Sources */,
@@ -1656,11 +1656,11 @@
 				9A1904C12FB253E700A3C985 /* PBXTargetDependency */,
 				9A1903642FB20C2F00A3C985 /* PBXTargetDependency */,
 			);
-			name = remoting;
+			name = remoting_rfb;
 			packageProductDependencies = (
 			);
 			productName = remoting_common;
-			productReference = 9A373EFE2F81647000E892B1 /* libremoting.dylib */;
+			productReference = 9A373EFE2F81647000E892B1 /* libremoting_rfb.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -1677,7 +1677,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9A373EF92F81647000E892B1 /* Build configuration list for PBXProject "remoting" */;
+			buildConfigurationList = 9A373EF92F81647000E892B1 /* Build configuration list for PBXProject "remoting_rfb" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1705,7 +1705,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				9A373EFD2F81647000E892B1 /* remoting */,
+				9A373EFD2F81647000E892B1 /* remoting_rfb */,
 			);
 		};
 /* End PBXProject section */
@@ -2241,7 +2241,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9A373EF92F81647000E892B1 /* Build configuration list for PBXProject "remoting" */ = {
+		9A373EF92F81647000E892B1 /* Build configuration list for PBXProject "remoting_rfb" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A373F002F81647000E892B1 /* Debug */,
@@ -2250,7 +2250,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A373F022F81647000E892B1 /* Build configuration list for PBXNativeTarget "remoting" */ = {
+		9A373F022F81647000E892B1 /* Build configuration list for PBXNativeTarget "remoting_rfb" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A373F032F81647000E892B1 /* Debug */,

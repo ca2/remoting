@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "remoting/remoting_macos/_common_header.h"
+#include "remoting/remoting_rfb_macos/_common_header.h"
 #include "remoting/remoting_rfb/desktop/DesktopFactory.h"
 
 namespace remoting_macos

@@ -136,8 +136,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		070B8EEA1B6E53F900D26137 /* _remoting_node_desktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = _remoting_node_desktop.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		070B8EFD1B6E53FA00D26137 /* _remoting_node_desktop_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = _remoting_node_desktop_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		070B8EEA1B6E53F900D26137 /* _remoting_rfb_node_desktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = _remoting_rfb_node_desktop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		070B8EFD1B6E53FA00D26137 /* _remoting_rfb_node_desktop_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = _remoting_rfb_node_desktop_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1CC41B2CF2E999004A00CB /* liboperating_ambient_macos.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = liboperating_ambient_macos.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1CF4F9276161C900802DB8 /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1CF4FA276161C900802DB8 /* libapex.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libapex.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,8 +240,8 @@
 		070B8EEB1B6E53F900D26137 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				070B8EEA1B6E53F900D26137 /* _remoting_node_desktop.app */,
-				070B8EFD1B6E53FA00D26137 /* _remoting_node_desktop_Tests.xctest */,
+				070B8EEA1B6E53F900D26137 /* _remoting_rfb_node_desktop.app */,
+				070B8EFD1B6E53FA00D26137 /* _remoting_rfb_node_desktop_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -374,9 +374,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		070B8EE91B6E53F900D26137 /* _remoting_node_desktop */ = {
+		070B8EE91B6E53F900D26137 /* _remoting_rfb_node_desktop */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 070B8F071B6E53FA00D26137 /* Build configuration list for PBXNativeTarget "_remoting_node_desktop" */;
+			buildConfigurationList = 070B8F071B6E53FA00D26137 /* Build configuration list for PBXNativeTarget "_remoting_rfb_node_desktop" */;
 			buildPhases = (
 				9A9306F42D6DA02D006557FC /* ShellScript */,
 				070B8EE61B6E53F900D26137 /* Sources */,
@@ -392,14 +392,14 @@
 				9A3614682FBA326E005F1383 /* PBXTargetDependency */,
 				9AD3F18E2FB1922600CB9A78 /* PBXTargetDependency */,
 			);
-			name = _remoting_node_desktop;
+			name = _remoting_rfb_node_desktop;
 			productName = "Hello Multiverse!!";
-			productReference = 070B8EEA1B6E53F900D26137 /* _remoting_node_desktop.app */;
+			productReference = 070B8EEA1B6E53F900D26137 /* _remoting_rfb_node_desktop.app */;
 			productType = "com.apple.product-type.application";
 		};
-		070B8EFC1B6E53FA00D26137 /* _remoting_node_desktop_Tests */ = {
+		070B8EFC1B6E53FA00D26137 /* _remoting_rfb_node_desktop_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 070B8F0A1B6E53FA00D26137 /* Build configuration list for PBXNativeTarget "_remoting_node_desktop_Tests" */;
+			buildConfigurationList = 070B8F0A1B6E53FA00D26137 /* Build configuration list for PBXNativeTarget "_remoting_rfb_node_desktop_Tests" */;
 			buildPhases = (
 				070B8EF91B6E53FA00D26137 /* Sources */,
 				070B8EFA1B6E53FA00D26137 /* Frameworks */,
@@ -410,9 +410,9 @@
 			dependencies = (
 				070B8EFF1B6E53FA00D26137 /* PBXTargetDependency */,
 			);
-			name = _remoting_node_desktop_Tests;
+			name = _remoting_rfb_node_desktop_Tests;
 			productName = "Hello Multiverse!!Tests";
-			productReference = 070B8EFD1B6E53FA00D26137 /* _remoting_node_desktop_Tests.xctest */;
+			productReference = 070B8EFD1B6E53FA00D26137 /* _remoting_rfb_node_desktop_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -435,7 +435,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 070B8EE51B6E53F900D26137 /* Build configuration list for PBXProject "_remoting_node_desktop" */;
+			buildConfigurationList = 070B8EE51B6E53F900D26137 /* Build configuration list for PBXProject "_remoting_rfb_node_desktop" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -462,8 +462,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				070B8EE91B6E53F900D26137 /* _remoting_node_desktop */,
-				070B8EFC1B6E53FA00D26137 /* _remoting_node_desktop_Tests */,
+				070B8EE91B6E53F900D26137 /* _remoting_rfb_node_desktop */,
+				070B8EFC1B6E53FA00D26137 /* _remoting_rfb_node_desktop_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -590,7 +590,7 @@
 /* Begin PBXTargetDependency section */
 		070B8EFF1B6E53FA00D26137 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 070B8EE91B6E53F900D26137 /* _remoting_node_desktop */;
+			target = 070B8EE91B6E53F900D26137 /* _remoting_rfb_node_desktop */;
 			targetProxy = 070B8EFE1B6E53FA00D26137 /* PBXContainerItemProxy */;
 		};
 		9A3614682FBA326E005F1383 /* PBXTargetDependency */ = {
@@ -862,7 +862,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		070B8EE51B6E53F900D26137 /* Build configuration list for PBXProject "_remoting_node_desktop" */ = {
+		070B8EE51B6E53F900D26137 /* Build configuration list for PBXProject "_remoting_rfb_node_desktop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				070B8F051B6E53FA00D26137 /* Debug */,
@@ -871,7 +871,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		070B8F071B6E53FA00D26137 /* Build configuration list for PBXNativeTarget "_remoting_node_desktop" */ = {
+		070B8F071B6E53FA00D26137 /* Build configuration list for PBXNativeTarget "_remoting_rfb_node_desktop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				070B8F081B6E53FA00D26137 /* Debug */,
@@ -880,7 +880,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		070B8F0A1B6E53FA00D26137 /* Build configuration list for PBXNativeTarget "_remoting_node_desktop_Tests" */ = {
+		070B8F0A1B6E53FA00D26137 /* Build configuration list for PBXNativeTarget "_remoting_rfb_node_desktop_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				070B8F0B1B6E53FA00D26137 /* Debug */,

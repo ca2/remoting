@@ -204,21 +204,21 @@ namespace remoting_rfb_client
            case ::user::e_message_char:
            case ::user::e_message_sys_char:
                 return onChar(wParam, lParam);
-           case ::user::e_message_key_down:
-           case ::user::e_message_key_up:
-           case ::user::e_message_sys_key_down:
-           case ::user::e_message_sys_key_up:
-            {
-               ///throw "todo";
-
-              auto iVkCode = wParam.raw_cast<::i32>();
-
-              auto euserkey = vk_code_to_e_user_key(iVkCode);
-
-              return onKey(emessage, euserkey);
-                //return onKey(emessage, wParam, lParam);
-               //return false;
-            }
+//           case ::user::e_message_key_down:
+//           case ::user::e_message_key_up:
+//           case ::user::e_message_sys_key_down:
+//           case ::user::e_message_sys_key_up:
+//            {
+//               ///throw "todo";
+//
+//              auto iVkCode = wParam.raw_cast<::i32>();
+//
+//              auto euserkey = vk_code_to_e_user_key(iVkCode);
+//
+//              return onKey(emessage, euserkey);
+//                //return onKey(emessage, wParam, lParam);
+//               //return false;
+//            }
             // case WM_SETCURSOR:
             //     if (m_bShowCursor || m_timeStartDesktopWindow.elapsed() < 8_s)
             //     {

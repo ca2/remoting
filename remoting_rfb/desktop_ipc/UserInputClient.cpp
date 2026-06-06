@@ -25,7 +25,9 @@
 #include "UserInputClient.h"
 //#include "subsystem/thread/lockable_critical_section.h"
 #include "ReconnectException.h"
+#if defined(WINDOWS_DESKTOP)
 #include "acme/operating_system/windows/_.h"
+#endif
 #include "subsystem/platform/BrokenHandleException.h"
 
 namespace remoting_rfb

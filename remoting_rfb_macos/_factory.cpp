@@ -2,9 +2,9 @@
 // Created by camilo on 2026-04-04.
 //
 #include "framework.h"
-#include "remoting/remoting_macos/desktop/MacosUserInput.h"
-#include "remoting/remoting_macos/desktop/DesktopFactory.h"
-#include "remoting/remoting_macos/desktop/WallpaperUtil.h"
+#include "remoting/remoting_rfb_macos/desktop/MacosUserInput.h"
+#include "remoting/remoting_rfb_macos/desktop/DesktopFactory.h"
+#include "remoting/remoting_rfb_macos/desktop/WallpaperUtil.h"
 
 
 IMPLEMENT_FACTORY(remoting_macos)

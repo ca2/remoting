@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_macos/desktop/MacosUserInput.h"
+#include "remoting/remoting_rfb_macos/desktop/MacosUserInput.h"
 #include "subsystem/thread/DesktopSelector.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem/node/Keyboard.h"
@@ -270,7 +270,7 @@ namespace remoting_macos
       try
       {
          m_plogwriter->information("Received the %#4.4x keysym, down = {}", keySym, (::i32)down);
-         const ::user::e_key & euserkey;
+         ::user::e_key euserkey;
          ::i32 ch;
          bool release = !down;
          bool extended;

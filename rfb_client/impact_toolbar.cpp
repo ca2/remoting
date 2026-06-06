@@ -490,7 +490,7 @@ namespace remoting_rfb_client
       m_brushButtonBackground.initialize_solid_brush(argb(255, 40, 120, 180));
       m_brushButtonBackgroundHover.initialize_solid_brush(argb(255, 50, 130, 230));
       m_brushButtonPaint.initialize_solid_brush(argb(255, 255, 255, 255));
-      m_penPaint.initialize_pen(::innate_subsystem::e_pen_solid, 2, argb(255, 255, 255, 255));
+      m_penPaint.initialize_pen(::nano::graphics::e_pen_solid, 2, argb(255, 255, 255, 255));
 
    }
 
@@ -1056,7 +1056,7 @@ namespace remoting_rfb_client
             if (!m_ppen001)
             {
                constructø(m_ppen001);
-               m_ppen001->initialize_pen(innate_subsystem::e_pen_solid, 2.0 * fWindowScale, colorPaint);
+               m_ppen001->initialize_pen(::nano::graphics::e_pen_solid, 2.0 * fWindowScale, colorPaint);
             }
             // pgraphics->setPen(2.0f, colorPaint);
             pgraphics->setPen(m_ppen001);
@@ -1083,10 +1083,10 @@ namespace remoting_rfb_client
                        auto ppenGlyph = createø<::innate_subsystem::PenInterface>();
                       
                        
-                       ppenGlyph->initialize_pen(::innate_subsystem::e_pen_solid, 1.2 * get_window_scale(), ::argb(240, 255, 255, 255));
+                       ppenGlyph->initialize_pen(::nano::graphics::e_pen_solid, 1.2 * get_window_scale(), ::argb(240, 255, 255, 255));
 
-                                   ppenGlyph->setStartCap(::innate_subsystem::e_line_cap_round);
-                       ppenGlyph->setEndCap(::innate_subsystem::e_line_cap_round);
+                                   ppenGlyph->setStartCap(::nano::graphics::e_line_cap_round);
+                       ppenGlyph->setEndCap(::nano::graphics::e_line_cap_round);
 
                        pgraphics->setPen(ppenGlyph);
             // pgraphicscontext->DrawLine(
@@ -1115,11 +1115,11 @@ namespace remoting_rfb_client
                     auto ppenGlyph = createø<::innate_subsystem::PenInterface>();
 
 
-              ppenGlyph->initialize_pen(::innate_subsystem::e_pen_solid, 1.2 * get_window_scale(),
+              ppenGlyph->initialize_pen(::nano::graphics::e_pen_solid, 1.2 * get_window_scale(),
                                         ::argb(240, 255, 255, 255));
 
-              ppenGlyph->setStartCap(::innate_subsystem::e_line_cap_round);
-              ppenGlyph->setEndCap(::innate_subsystem::e_line_cap_round);
+              ppenGlyph->setStartCap(::nano::graphics::e_line_cap_round);
+              ppenGlyph->setEndCap(::nano::graphics::e_line_cap_round);
 
               pgraphics->setPen(ppenGlyph);
               pgraphics->setBrush(nullptr);
@@ -1158,11 +1158,11 @@ namespace remoting_rfb_client
             auto ppenGlyph = createø<::innate_subsystem::PenInterface>();
 
 
-            ppenGlyph->initialize_pen(::innate_subsystem::e_pen_solid, 1.2 * get_window_scale(),
+            ppenGlyph->initialize_pen(::nano::graphics::e_pen_solid, 1.2 * get_window_scale(),
                                       ::argb(240, 255, 255, 255));
 
-            ppenGlyph->setStartCap(::innate_subsystem::e_line_cap_round);
-            ppenGlyph->setEndCap(::innate_subsystem::e_line_cap_round);
+            ppenGlyph->setStartCap(::nano::graphics::e_line_cap_round);
+            ppenGlyph->setEndCap(::nano::graphics::e_line_cap_round);
 
             pgraphics->setPen(ppenGlyph);
 
@@ -1312,7 +1312,7 @@ namespace remoting_rfb_client
 
          auto ppenBorder = createø<::innate_subsystem::PenInterface>();
 
-         ppenBorder->initialize_pen(::innate_subsystem::e_pen_solid, 1.5 , ::argb(180, 255, 255, 255));
+         ppenBorder->initialize_pen(::nano::graphics::e_pen_solid, 1.5 , ::argb(180, 255, 255, 255));
          // Pen border(
          //     Color(180, 255, 255, 255),
          //     1.5f);
