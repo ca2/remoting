@@ -1316,8 +1316,12 @@ namespace remoting_rfb_client
          // Pen border(
          //     Color(180, 255, 255, 255),
          //     1.5f);
+         
+         pgraphicscontext->setBrush(pbrushBackground);
+         
+         pgraphicscontext->setPen(ppenBorder);
 
-         pgraphicscontext->doPath(ppath, pbrushBackground, ppenBorder);
+         pgraphicscontext->doPath(ppath);
 
          // pgraphicscontext->DrawPath(&border, &path);
 
@@ -1500,7 +1504,7 @@ namespace remoting_rfb_client
       rTitle.left += 10. * get_window_scale();
 
       pgraphics->drawText(m_pdesktopwindow->m_strHost,
-         rTitle, 0, e_align_left_center);
+         rTitle, e_draw_text_none, e_align_left_center);
       //pgraphics->m_pgraphics->DrawString(wstr, wstr.size(),)
       // color=colorDark;
       // color.blend(colorLite, 0.6);
