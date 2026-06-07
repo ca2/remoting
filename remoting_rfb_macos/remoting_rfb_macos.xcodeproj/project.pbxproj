@@ -16,6 +16,7 @@
 		9A282EAB2FB31B3C00B79BB5 /* libinnate_subsystem_macos.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A282EA82FB31B2C00B79BB5 /* libinnate_subsystem_macos.dylib */; };
 		9A282EAD2FB31BA200B79BB5 /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A282EAC2FB31BA200B79BB5 /* libacme.dylib */; };
 		9A4A00012FBB000100000001 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4A00002FBB000100000001 /* AppKit.framework */; };
+		9A4A00032FBB000100000001 /* libinnate_subsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4A00022FBB000100000001 /* libinnate_subsystem.dylib */; };
 		9A6552F92FBA8F120073C202 /* CopyRectDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6552F52FBA8F120073C202 /* CopyRectDetector.h */; };
 		9A6552FC2FBA8F680073C202 /* DesktopFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A6552FB2FBA8F680073C202 /* DesktopFactory.cpp */; };
 		9A6552FD2FBA8F680073C202 /* DesktopFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A6552FA2FBA8F680073C202 /* DesktopFactory.h */; };
@@ -30,6 +31,14 @@
 		9A6553112FBA9B2A0073C202 /* libsubsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6553102FBA9B2A0073C202 /* libsubsystem.dylib */; };
 		9A6553132FBA9B460073C202 /* libappkit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6553122FBA9B460073C202 /* libappkit.dylib */; };
 		9A6A2C282FB3E4E4004C0ACF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */; };
+		9ABC00012FDC000100000001 /* MacosScreenGrabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC00112FDC000100000001 /* MacosScreenGrabber.cpp */; };
+		9ABC00022FDC000100000001 /* MacosScreenGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ABC00122FDC000100000001 /* MacosScreenGrabber.h */; };
+		9ABC00032FDC000100000001 /* MacosScreenDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC00132FDC000100000001 /* MacosScreenDriver.cpp */; };
+		9ABC00042FDC000100000001 /* MacosScreenDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ABC00142FDC000100000001 /* MacosScreenDriver.h */; };
+		9ABC00052FDC000100000001 /* MacosScreenDriverFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC00152FDC000100000001 /* MacosScreenDriverFactory.cpp */; };
+		9ABC00062FDC000100000001 /* MacosScreenDriverFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ABC00162FDC000100000001 /* MacosScreenDriverFactory.h */; };
+		9ABC00072FDC000100000001 /* MacosInputBlocker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC00172FDC000100000001 /* MacosInputBlocker.cpp */; };
+		9ABC00082FDC000100000001 /* MacosInputBlocker.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ABC00182FDC000100000001 /* MacosInputBlocker.h */; };
 		9AE47A7D2FD2C65E003088D6 /* libremoting_rfb.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE47A722FD2AFD4003088D6 /* libremoting_rfb.dylib */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +87,7 @@
 		9A1906882FB296C900A3C985 /* _factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _factory.cpp; sourceTree = "<group>"; };
 		9A282EAC2FB31BA200B79BB5 /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A4A00002FBB000100000001 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		9A4A00022FBB000100000001 /* libinnate_subsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libinnate_subsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A59408C2FD2AF80007C6F56 /* remoting_rfb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_rfb.xcodeproj; path = ../remoting_rfb/remoting_rfb.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9A6552F52FBA8F120073C202 /* CopyRectDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyRectDetector.h; sourceTree = "<group>"; };
 		9A6552F62FBA8F120073C202 /* CopyRectDetector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CopyRectDetector.cpp; sourceTree = "<group>"; };
@@ -94,6 +104,14 @@
 		9A6553102FBA9B2A0073C202 /* libsubsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libsubsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6553122FBA9B460073C202 /* libappkit.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libappkit.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		9ABC00112FDC000100000001 /* MacosScreenGrabber.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacosScreenGrabber.cpp; sourceTree = "<group>"; };
+		9ABC00122FDC000100000001 /* MacosScreenGrabber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacosScreenGrabber.h; sourceTree = "<group>"; };
+		9ABC00132FDC000100000001 /* MacosScreenDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacosScreenDriver.cpp; sourceTree = "<group>"; };
+		9ABC00142FDC000100000001 /* MacosScreenDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacosScreenDriver.h; sourceTree = "<group>"; };
+		9ABC00152FDC000100000001 /* MacosScreenDriverFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacosScreenDriverFactory.cpp; sourceTree = "<group>"; };
+		9ABC00162FDC000100000001 /* MacosScreenDriverFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacosScreenDriverFactory.h; sourceTree = "<group>"; };
+		9ABC00172FDC000100000001 /* MacosInputBlocker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MacosInputBlocker.cpp; sourceTree = "<group>"; };
+		9ABC00182FDC000100000001 /* MacosInputBlocker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacosInputBlocker.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +125,7 @@
 				9A6553112FBA9B2A0073C202 /* libsubsystem.dylib in Frameworks */,
 				9A6A2C282FB3E4E4004C0ACF /* CoreGraphics.framework in Frameworks */,
 				9A282EAD2FB31BA200B79BB5 /* libacme.dylib in Frameworks */,
+				9A4A00032FBB000100000001 /* libinnate_subsystem.dylib in Frameworks */,
 				9A282EAB2FB31B3C00B79BB5 /* libinnate_subsystem_macos.dylib in Frameworks */,
 				9A0B95902FB31B1700EEAAE1 /* CoreFoundation.framework in Frameworks */,
 			);
@@ -123,6 +142,7 @@
 				9A6553102FBA9B2A0073C202 /* libsubsystem.dylib */,
 				9A6A2C272FB3E4E4004C0ACF /* CoreGraphics.framework */,
 				9A282EAC2FB31BA200B79BB5 /* libacme.dylib */,
+				9A4A00022FBB000100000001 /* libinnate_subsystem.dylib */,
 				9A0B958F2FB31B1700EEAAE1 /* CoreFoundation.framework */,
 			);
 			name = Frameworks;
@@ -182,6 +202,14 @@
 		9A6552F72FBA8F120073C202 /* desktop */ = {
 			isa = PBXGroup;
 			children = (
+				9ABC00182FDC000100000001 /* MacosInputBlocker.h */,
+				9ABC00172FDC000100000001 /* MacosInputBlocker.cpp */,
+				9ABC00162FDC000100000001 /* MacosScreenDriverFactory.h */,
+				9ABC00152FDC000100000001 /* MacosScreenDriverFactory.cpp */,
+				9ABC00142FDC000100000001 /* MacosScreenDriver.h */,
+				9ABC00132FDC000100000001 /* MacosScreenDriver.cpp */,
+				9ABC00122FDC000100000001 /* MacosScreenGrabber.h */,
+				9ABC00112FDC000100000001 /* MacosScreenGrabber.cpp */,
 				9A65530A2FBA980A0073C202 /* WallpaperUtil.h */,
 				9A65530B2FBA980A0073C202 /* WallpaperUtil.mm */,
 				9A6553062FBA91150073C202 /* MacosUserInput.h */,
@@ -213,6 +241,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ABC00082FDC000100000001 /* MacosInputBlocker.h in Headers */,
+				9ABC00062FDC000100000001 /* MacosScreenDriverFactory.h in Headers */,
+				9ABC00042FDC000100000001 /* MacosScreenDriver.h in Headers */,
+				9ABC00022FDC000100000001 /* MacosScreenGrabber.h in Headers */,
 				9A6552FD2FBA8F680073C202 /* DesktopFactory.h in Headers */,
 				9A6553012FBA8FBD0073C202 /* DesktopClientImpl.h in Headers */,
 				9A6553092FBA91150073C202 /* MacosUserInput.h in Headers */,
@@ -313,6 +345,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ABC00072FDC000100000001 /* MacosInputBlocker.cpp in Sources */,
+				9ABC00052FDC000100000001 /* MacosScreenDriverFactory.cpp in Sources */,
+				9ABC00032FDC000100000001 /* MacosScreenDriver.cpp in Sources */,
+				9ABC00012FDC000100000001 /* MacosScreenGrabber.cpp in Sources */,
 				9A65530C2FBA980A0073C202 /* WallpaperUtil.mm in Sources */,
 				9A1906822FB296A400A3C985 /* CopyRectDetector.cpp in Sources */,
 				9A6552FC2FBA8F680073C202 /* DesktopFactory.cpp in Sources */,

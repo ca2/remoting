@@ -33,6 +33,7 @@ namespace remoting_rfb_node_desktop
                                                             ::u32 connectPort, bool viewOnly,
                                                             RfbClientManager *clientManager,
                                                             ::subsystem::LogWriter * plogwriter) :
+Thread("OrfbConnThr"),
        m_connectHost(scopedstrConnectHost), m_connectPort(connectPort), m_viewOnly(viewOnly),
        m_clientManager(clientManager), m_plogwriter(plogwriter)
    {

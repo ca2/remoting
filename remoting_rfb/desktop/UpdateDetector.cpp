@@ -34,7 +34,8 @@ namespace remoting_rfb
    // {
    // }
 
-   UpdateDetector::UpdateDetector()
+   UpdateDetector::UpdateDetector():
+GuiThread("UpdDetct")
    {
    }
 

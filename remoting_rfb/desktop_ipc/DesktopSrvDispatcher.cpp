@@ -38,7 +38,7 @@ namespace remoting_rfb
    // }
 
    DesktopSrvDispatcher::DesktopSrvDispatcher():
-   m_pcontrolgate(nullptr),m_plogwriter(nullptr)
+   GuiThread("DskSrvDsptchr"),m_pcontrolgate(nullptr),m_plogwriter(nullptr)
    {
 
 

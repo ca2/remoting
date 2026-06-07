@@ -32,6 +32,7 @@ namespace remoting_rfb
 
    RfbDispatcher::RfbDispatcher(::remoting_rfb::RfbInputGate *prfbinputgate,
                                 const ::procedure &procedureTermination):
+Thread("rfbDspt"),
     m_prfbinputgate(prfbinputgate),
      m_procedureTermination(procedureTermination)
      //m_terminationEvent(0)

@@ -33,12 +33,12 @@ namespace remoting_rfb_node_desktop
 
 
    ControlServer::ControlServer(::remoting_rfb_node::Configurator * pconfigurator, ::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
-                                ::subsystem::LogWriter * plogwriter) :
+                                ::subsystem::LogWriter * plogwriter) : Thread("CtrlSvr"),
        m_pconfigurator(pconfigurator),m_ppipeserver(pipeServer), m_prfbclientmanager(rfbClientManager), m_plogwriter(plogwriter)
    {
       constructø(m_pthreadCollector);
       m_pcontrolappauthenticator = allocateø ControlAppAuthenticator(30_s, 3);
-      m_plogwriter->debug("{}"), "::innate_subsystem::Control server started";
+      m_plogwriter->debug("{}", "::innate_subsystem::Control server started");
 
       resumeThread();
       

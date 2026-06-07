@@ -52,7 +52,7 @@ namespace remoting_rfb
                         const ViewPortState & viewportstateDynamic,
                         ::i32 idleTimeout,
                         ::subsystem::LogWriter * plogwriter)
-   :m_pconfigurator(pconfigurator),
+   :Thread("rfbClint"), m_pconfigurator(pconfigurator),
    m_psocket(psocket), // now we own the socket
      m_pnewconnectionevents(pnewconnectionevents),
      m_viewOnly(viewOnly),
@@ -328,11 +328,11 @@ void RfbClient::destroy()
          m_pupdatesender->init(::i32_size(rectangleViewport.size()), m_prun->m_pixelformat);
          m_plogwriter->debug("UpdateSender has been initialized");
          // ClientInputHandler initialization
-         m_pclientinputhandler = new ClientInputHandler(m_prun->m_prfbcoderegistrator, this,
+         m_pclientinputhandler = allocateø ClientInputHandler(m_prun->m_prfbcoderegistrator, this,
                                                        m_viewOnly);
          m_plogwriter->debug("ClientInputHandler has been created");
          // ClipboardExchange initialization
-         m_pclipboardexchange = new ClipboardExchange(m_prun->m_prfbcoderegistrator, m_pdesktop, m_prun->m_prfboutputgate,
+         m_pclipboardexchange = allocateø ClipboardExchange(m_prun->m_prfbcoderegistrator, m_pdesktop, m_prun->m_prfboutputgate,
                                                      m_viewOnly, m_plogwriter);
          m_plogwriter->debug("ClipboardExchange has been created");
 

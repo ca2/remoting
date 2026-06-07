@@ -83,7 +83,7 @@ namespace remoting_control_desktop
                                           const ::scoped_string & scopedstrwindowClassName,
 #endif
                                           const ::scoped_string & scopedstrCommandLine)
-    : //WindowsApplication(hinst, windowClassName),
+    : Thread("CtrlAppl"),//WindowsApplication(hinst, windowClassName),
       //m_pcontrolproxy(0),
       m_pcontrolgate(0),
       m_ptransport(0),

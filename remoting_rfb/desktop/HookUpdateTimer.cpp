@@ -29,7 +29,8 @@ namespace remoting_rfb
 
    //HookUpdateTimer::HookUpdateTimer(UpdateListener *pupdatelistener) : m_pupdatelistener = pupdatelistener; { resume(); }
 
-   HookUpdateTimer::HookUpdateTimer()
+   HookUpdateTimer::HookUpdateTimer():
+Thread("HkUpdTimr")
    {
 
 

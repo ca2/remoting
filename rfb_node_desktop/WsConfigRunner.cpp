@@ -31,7 +31,8 @@
 namespace remoting_rfb_node_desktop
 {
 
-   WsConfigRunner::WsConfigRunner() 
+   WsConfigRunner::WsConfigRunner() :
+Thread("wsCfgRunr")
    {
    }
 

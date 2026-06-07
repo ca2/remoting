@@ -6,6 +6,7 @@
 namespace remoting_rfb_client
 {
    UpdateRequestSender::UpdateRequestSender(LockableBase* plockable, ::innate_subsystem::Framebuffer* pframebuffer, ::subsystem::LogWriter* plogwriter):
+Thread("rfbUpdReqSndr"),
       m_bWasUpdateReceived(false),
       m_bIncremental(true),
        m_criticalsectionFramebuffer(plockable),

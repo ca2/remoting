@@ -68,7 +68,8 @@ namespace remoting_macos
    //    resume();
    // }
 
-   DesktopWinImpl::DesktopWinImpl()
+   DesktopWinImpl::DesktopWinImpl():
+GuiThread("DskWinImpl")
    {
 
 
@@ -95,7 +96,7 @@ namespace remoting_macos
 
           try
           {
-             m_pupdatehandler = new ::remoting_rfb::UpdateHandlerImpl(m_pconfigurator, this, m_pscreendriverfactory, m_plogwriter);
+                m_pupdatehandler = allocateø ::remoting_rfb::UpdateHandlerImpl(m_pconfigurator, this, m_pscreendriverfactory, m_plogwriter);
              bool ctrlAltDelEnabled = false;
              constructø(m_puserinput);
              m_puserinput->initialize_user_input(this, ctrlAltDelEnabled, m_plogwriter);

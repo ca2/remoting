@@ -69,6 +69,7 @@ namespace remoting_rfb_node_desktop
    ControlClient::ControlClient(::remoting_rfb_node::Configurator * pconfigurator, ::remoting_control_desktop::Transport *transport, RfbClientManager *rfbClientManager,
                                 ControlAppAuthenticator *pauthenticator, ::subsystem::FileInterface *pfilePipeHandle,
                                 ::subsystem::LogWriter * plogwriter) :
+Thread("CtrlClint"),
        m_pconfigurator(pconfigurator), m_ptransport(transport), m_prfbclientmanager(rfbClientManager), m_pcontrolappauthenticator(pauthenticator), m_uTcpDispId(0),
        m_pfilePipeHandle(pfilePipeHandle), m_authReqMessageId(0), m_plogwriter(plogwriter), m_repeatAuthPassed(false)
    {

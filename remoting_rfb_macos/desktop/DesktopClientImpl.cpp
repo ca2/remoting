@@ -98,7 +98,7 @@ namespace remoting_macos
    // }
 
    DesktopClientImpl::DesktopClientImpl() :
-       m_pchannelClientToServer(0),
+Thread("macDskCliImpl"),m_pchannelClientToServer(0),
        m_pchannelServerToClient(0), m_pgateClientToServer(0), m_pgateServerToClient(0), m_pdesktopserverwatcher(0), m_pdesktopsrvdispatcher(0),
        m_puserinput(0), m_pdesktopconfigclient(0), m_pgatekicker(0)
    {

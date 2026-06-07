@@ -63,7 +63,7 @@
 namespace remoting_rfb_client
 {
    RemoteViewerCore::RemoteViewerCore(::subsystem::LogWriter * plogwriter)
-   : m_plogwriter (plogwriter),
+   : Thread("remViwCore"),m_plogwriter (plogwriter),
      //m_tcpConnection(m_plogwriter),
      //m_pfbupdatenotifier(m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller),
      m_decoderStore(m_plogwriter),
@@ -83,7 +83,7 @@ defer_construct_newø(m_pframebuffer);
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
-   : m_plogwriter(plogwriter),
+   :Thread("remViwCore2"),m_plogwriter(plogwriter),
      //m_tcpConnection(m_plogwriter),
      //m_pfbupdatenotifier(m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller),
      m_decoderStore(m_plogwriter),
@@ -106,7 +106,7 @@ defer_construct_newø(m_pframebuffer);
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
-   : m_plogwriter(plogwriter),
+   : Thread("remViwCore3"),m_plogwriter(plogwriter),
      //m_tcpConnection(m_plogwriter),
      //m_pfbupdatenotifier(m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller),
      m_decoderStore(m_plogwriter),
@@ -129,7 +129,7 @@ defer_construct_newø(m_pframebuffer);
                                       CoreEventsAdapter *adapter,
                                       ::subsystem::LogWriter * plogwriter,
                                       bool sharedFlag)
-   : m_plogwriter (plogwriter),
+   : Thread("remViwCore4"),m_plogwriter (plogwriter),
      //m_tcpConnection(m_plogwriter),
      //m_pfbupdatenotifier(m_pframebuffer, &m_criticalsectionFramebuffer, m_plogwriter, &m_pwatermarkscontroller),
      m_decoderStore(m_plogwriter),
