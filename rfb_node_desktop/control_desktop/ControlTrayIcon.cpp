@@ -72,8 +72,8 @@ initialize(::system());
       //setWindowProcHolder(this);
 
       // Prepare commands for configration dialog.
-      m_pcommandUpdateRemoteConfig = new UpdateRemoteConfigCommand(m_pconfigurator,m_pcontrolproxy);
-      m_pcommandUpdateLocalConfig = new UpdateLocalConfigCommand(m_pconfigurator,m_pcontrolproxy);
+      m_pcommandUpdateRemoteConfig =  allocateø  UpdateRemoteConfigCommand(m_pconfigurator,m_pcontrolproxy);
+      m_pcommandUpdateLocalConfig =  allocateø  UpdateLocalConfigCommand(m_pconfigurator,m_pcontrolproxy);
       m_pmacrocommandApplyChanges = allocateø ::subsystem::MacroCommand();
       m_pmacrocommandApplyChanges->addCommand(m_pcommandUpdateRemoteConfig);
       // m_pmacrocommandApplyChanges->addCommand(m_pcommandUpdateLocalConfig);
@@ -168,9 +168,26 @@ initialize(::system());
 void ControlTrayIcon::trackPopupMenu()
 {
 
-   auto pmenu = system()->innate_ui()->load_menu_from_resource(IDR_TRAYMENU);
-   
-   pmenu->track_popup_menu(operating_system_window(), [this](::i32 iActionId)
+   auto pmenu = system()->innate_ui()->create_menu();
+
+   pmenu->add_item("Configuration...", ID_CONFIGURATION);
+   pmenu->add_separator();
+   pmenu->add_item("Attach Listening Viewer...", ID_OUTGOING_CONN);
+   pmenu->add_item("Disconnect All Viewers", ID_KILLCLIENTS);
+   pmenu->add_separator();
+   pmenu->add_item("About...", ID_ABOUT_REMOTING_MENUITEM);
+   pmenu->add_separator();
+   pmenu->add_item("Shutdown Remoting Node", ID_SHUTDOWN_SERVICE);
+
+   if (!m_pcontrolapplication->m_slaveModeEnabled)
+   {
+      pmenu->add_item("Close Control Interface", ID_CLOSE_CONTROL_INTERFACE);
+   }
+
+   pmenu->track_popup_menu(operating_system_window(), [this](::i32 action)
+   {
+      onAction(action);
+   });   pmenu->track_popup_menu(operating_system_window(), [this](::i32 iActionId)
       {
 
          onAction(iActionId);

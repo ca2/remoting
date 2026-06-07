@@ -7,7 +7,7 @@
 #include "remoting/remoting_rfb_macos/desktop/WallpaperUtil.h"
 
 
-IMPLEMENT_FACTORY(remoting_macos)
+IMPLEMENT_FACTORY(remoting_rfb_macos)
 {
 
    pfactory->add_factory_item<::remoting_macos::DesktopFactory, ::remoting_rfb::DesktopFactory>();

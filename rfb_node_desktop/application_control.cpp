@@ -3,6 +3,7 @@
 //
 #include "framework.h"
 #include "application_control.h"
+#include "resource.h"
 
 
 __IMPLEMENT_APPLICATION_RELEASE_TIME(remoting_rfb_node_desktop_control);
@@ -28,16 +29,14 @@ namespace remoting_rfb_node_desktop_control
    }
 
 
-//    void application::init_instance()
-//    {
-//
-//       ::apex::application::init_instance();
-//
-//       auto pfactory = system()->factory("remoting", OPERATING_SYSTEM_NAME);
-//
-//       pfactory->merge_to_global_factory();
-//
-//    }
+   void application::init_instance()
+   {
+
+      ::remoting_rfb_node_desktop::application::init_instance();
+
+#include "remoting/rfb_node_desktop/__implement_control/macos/resource_names.inl"
+
+   }
 //
 //
 //    void application::on_request(::request * prequest)

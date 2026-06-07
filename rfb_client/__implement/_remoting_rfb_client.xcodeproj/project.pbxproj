@@ -265,7 +265,6 @@
 		9AADA8E629D0A8DD0004D7ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		9ABD52C42FB40BBB006D4DE1 /* networking_bsd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = networking_bsd.xcodeproj; path = ../../../app/networking_bsd/networking_bsd.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9AD3F15A2FB1909800CB9A78 /* remoting_rfb_client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_rfb_client.xcodeproj; path = ../remoting_rfb_client.xcodeproj; sourceTree = SOURCE_ROOT; };
-		9AE5CC8E22CBECAE00EDEAD1 /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		9AE6DF272962ADEE008A1335 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9AE7A1B92D1CC34F00070257 /* libacme_windowing_appkit.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme_windowing_appkit.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AE7A1BA2D1CC34F00070257 /* libacme_windowing_kit.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme_windowing_kit.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -345,7 +344,7 @@
 		9A5940792FD299D9007C6F56 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A59407D2FD299DA007C6F56 /* libremoting_macos.dylib */,
+				9A59407D2FD299DA007C6F56 /* libremoting_rfb_macos.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -450,7 +449,6 @@
 		9AE5CC8A22CBEBF400EDEAD1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9AE5CC8E22CBECAE00EDEAD1 /* en.lproj */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -614,10 +612,10 @@
 			remoteRef = 9A0F418D2FB4053B00BFBB04 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9A59407D2FD299DA007C6F56 /* libremoting_macos.dylib */ = {
+		9A59407D2FD299DA007C6F56 /* libremoting_rfb_macos.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libremoting_macos.dylib;
+			path = libremoting_rfb_macos.dylib;
 			remoteRef = 9A59407C2FD299DA007C6F56 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

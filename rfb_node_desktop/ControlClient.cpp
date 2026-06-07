@@ -74,7 +74,7 @@ namespace remoting_rfb_node_desktop
    {
       m_pchannel = m_ptransport->getIOStream();
 
-      m_pcontrolgate = new ::remoting_control_desktop::ControlGate(m_pchannel);
+      m_pcontrolgate = allocateø ::remoting_control_desktop::ControlGate(m_pchannel);
 
       m_authPassed = false;
    }

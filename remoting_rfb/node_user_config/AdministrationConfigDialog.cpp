@@ -324,7 +324,7 @@ namespace remoting_rfb_node
       m_logSpin.setRange(0, 10);
       m_logSpin.setAccel(0, 1);
 
-      m_cpControl = new PasswordControl(&m_setControlPasswordButton, &m_unsetControlPasswordButton);
+      m_cpControl = allocateø PasswordControl(&m_setControlPasswordButton, &m_unsetControlPasswordButton);
    }
 
    void AdministrationConfigDialog::onShareRadioButtonClick(::i32 number)

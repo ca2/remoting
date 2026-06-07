@@ -78,12 +78,12 @@ namespace remoting_rfb_node_desktop
             auto ppipe = m_ppipeserver->accept();
             auto ptransport = allocateø ::remoting_control_desktop::NamedPipeTransport(ppipe);
 
-            ControlClient *clientThread =
-               new ControlClient(m_pconfigurator, ptransport, m_prfbclientmanager, m_pcontrolappauthenticator, ppipe->getFile(), m_plogwriter);
+            auto pcontrolclient =
+               allocateø ControlClient(m_pconfigurator, ptransport, m_prfbclientmanager, m_pcontrolappauthenticator, ppipe->getFile(), m_plogwriter);
 
-            clientThread->resumeThread();
+            pcontrolclient->resumeThread();
 
-            m_pthreadCollector->addThread(clientThread);
+            m_pthreadCollector->addThread(pcontrolclient);
          }
       }
       catch (::subsystem::Exception &ex)

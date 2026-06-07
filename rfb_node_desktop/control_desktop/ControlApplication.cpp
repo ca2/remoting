@@ -378,7 +378,7 @@ return;
 
    ::i32 ControlApplication::runControlInterface(bool showIcon)
    {
-      m_pcontroltrayicon = new ControlTrayIcon(m_pconfigurator,  m_pcontrolproxy, this, this, showIcon);
+         m_pcontroltrayicon = allocateø ControlTrayIcon(m_pconfigurator,  m_pcontrolproxy, this, this, showIcon);
 
       resumeThread();
 
