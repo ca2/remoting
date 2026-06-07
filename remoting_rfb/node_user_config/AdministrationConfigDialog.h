@@ -107,7 +107,7 @@ namespace remoting_rfb_node
       ::innate_subsystem::SpinControl m_logSpin;
       ::pointer < ::innate_subsystem::DialogInterface > m_pdialogParent;
 
-      PasswordControl *m_cpControl;
+      ::pointer < PasswordControl > m_cpControl;
 
       friend class ConfigDialog;
    };

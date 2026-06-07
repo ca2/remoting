@@ -105,8 +105,8 @@ namespace remoting_rfb_node
       void releaseCryptedPassword();
 
    protected:
-      ::pointer < ::innate_subsystem::Control > m_changeButton;
-      ::pointer < ::innate_subsystem::Control > m_unsetButton;
+      ::innate_subsystem::Control * m_pcontrolChangeButton;
+      ::innate_subsystem::Control * m_pcontrolUnsetButton;
 
       ::array_base<::i8> m_cryptedPassword;
 

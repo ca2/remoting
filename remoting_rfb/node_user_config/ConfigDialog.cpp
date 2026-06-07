@@ -222,14 +222,14 @@ namespace remoting_rfb_node
 
    void ConfigDialog::onCancelButtonClick()
    {
-      closeDialog(0);
+      closeDialog(::innate_subsystem::e_control_id_cancel);
    }
 
    void ConfigDialog::onOKButtonClick()
    {
       onApplyButtonClick();
       if (!m_ctrlApplyButton.isEnabled()) { // onApplyButtonClick() has been successfully processed.
-         closeDialog(0);
+         closeDialog(::innate_subsystem::e_control_id_cancel);
       }
    }
 
