@@ -36,10 +36,10 @@
 
 namespace remoting_rfb_node
 {
-   PasswordControl::PasswordControl(::innate_subsystem::Control *changeButton, ::innate_subsystem::Control *unsetButton)
+   PasswordControl::PasswordControl(::innate_subsystem::Control *pcontrolChangeButton, ::innate_subsystem::Control *pcontrolUnsetButton)
    : m_enabled(true),
-     m_changeButton(changeButton),
-     m_unsetButton(unsetButton),
+     m_pcontrolChangeButton(pcontrolChangeButton),
+     m_pcontrolUnsetButton(pcontrolUnsetButton),
      m_state(NoPassword)
    {
       updateControlsState();
@@ -125,16 +125,16 @@ namespace remoting_rfb_node
 
    void PasswordControl::updateControlsState()
    {
-      if (m_changeButton != 0) {
+      if (m_pcontrolChangeButton != 0) {
          if (m_state == OldPassword || m_state == NewPassword) {
-            m_changeButton->setText(MainSubsystem().StringTable().getString(IDS_CHANGE_PASSWORD_CAPTION));
+            m_pcontrolChangeButton->setText(MainSubsystem().StringTable().getString(IDS_CHANGE_PASSWORD_CAPTION));
          } else {
-            m_changeButton->setText(MainSubsystem().StringTable().getString(IDS_SET_PASSWORD_CAPTION));
+            m_pcontrolChangeButton->setText(MainSubsystem().StringTable().getString(IDS_SET_PASSWORD_CAPTION));
          }
-         m_changeButton->enableWindow(m_enabled);
+         m_pcontrolChangeButton->enableWindow(m_enabled);
       }
-      if (m_unsetButton != 0) {
-         m_unsetButton->enableWindow(m_enabled && (m_state == OldPassword || m_state == NewPassword));
+      if (m_pcontrolUnsetButton != 0) {
+         m_pcontrolUnsetButton->enableWindow(m_enabled && (m_state == OldPassword || m_state == NewPassword));
       }
    }
 

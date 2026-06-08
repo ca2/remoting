@@ -1,0 +1,64 @@
+// Copyright (C) 2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+
+
+// #include aaa_<d3d11.h>
+// #include aaa_<DXGI1_2.h>
+#include "remoting/remoting_rfb_windows/_common_header.h"
+//#include "remoting/remoting_rfb_windows/desktop/WinDxgiSurface.h"
+#include <d3d11.h>
+#include <DXGI1_2.h>
+
+
+namespace remoting_rfb_windows
+{
+
+   // Calls IDXGISurface->Map() function at the constructor and Unmap() at the destructor.
+   class CLASS_DECL_REMOTING_RFB_WINDOWS WinAutoMapDxgiSurface :
+      virtual public ::particle
+   {
+   public:
+      // Surface will be created by the ID3D11Texture2D's QueryInterface() function call.
+      WinAutoMapDxgiSurface(IDXGISurface *pdxgisurface, ::u32 mapFlags);
+      virtual ~WinAutoMapDxgiSurface();
+
+      size_t getStride() const;
+      char_pointer getBuffer() const;
+
+   private:
+      ::comptr < IDXGISurface > m_pdxgisurface;
+      DXGI_MAPPED_RECT m_mappedRect;
+   };
+
+   //// __WINAUTOMAPDXGISURFACE_H__
+
+
+} // namespace remoting_rfb_windows
+
+
+

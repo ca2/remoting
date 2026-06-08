@@ -73,6 +73,7 @@ namespace remoting_rfb
    //    resume();
    // }
 UpdateSender::UpdateSender() :
+Thread("rfbUpdtSendr"),
        m_pupdaterequestlistener(nullptr), m_pdesktop(nullptr), m_senderControlInformation(nullptr),
        m_busy(false), m_incrUpdIsReq(false), m_fullUpdIsReq(false), m_setColorMapEntr(false),// m_prfboutputgate(nullptr),
        //m_enbox(&m_ppixelconverter, m_prfboutputgate), m_id(0), m_videoFrozen(false), m_shareOnlyApp(false)
@@ -119,7 +120,7 @@ void UpdateSender::destroy()
           m_plogwriter = plogwriter;
           construct_newø(m_pcursorupdates);
    m_pcursorupdates->initialize_cursor_updates(plogwriter);
-      m_pupdatekeeper = new UpdateKeeper(::i32_rectangle());
+      m_pupdatekeeper = allocateø UpdateKeeper(::i32_rectangle());
 
       // Capabilities
       m_prfbcoderegistrator->addEncCap(EncodingDefs::COPYRECT, VendorDefs::STANDARD, EncodingDefs::SIG_COPYRECT);

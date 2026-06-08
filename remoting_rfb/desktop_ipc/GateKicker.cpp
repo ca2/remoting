@@ -33,7 +33,7 @@ namespace remoting_rfb
    // {
    //    //resume();
    // }
-   GateKicker::GateKicker() : m_pcontrolgate(nullptr)
+   GateKicker::GateKicker() : Thread("GtKickr"),m_pcontrolgate(nullptr)
    {
       //resume();
    }

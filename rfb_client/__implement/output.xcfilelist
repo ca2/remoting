@@ -1,5 +1,5 @@
-time-macos/_remoting_client
-time-macos/libremoting_client.dylib
+time-macos/_remoting_rfb_client
+time-macos/libremoting_rfb_client.dylib
 time-macos/libacme.dylib
 time-macos/libarchive.dylib
 time-macos/libidn.dylib
@@ -11,5 +11,6 @@ time-macos/libacme_windowing_appkit.dylib
 time-macos/libacme_windowing_kit.dylib
 time-macos/libdarwin.dylib
 time-macos/libnano_graphics_quartz2d.dylib
+time-macos/libnano_idn_libidn.dylib
 time-macos/libremoting.dylib
 time-macos/libfolder_zip.dylib

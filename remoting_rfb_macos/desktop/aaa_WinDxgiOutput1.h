@@ -1,0 +1,67 @@
+// Copyright (C) 2012 GlavSoft LLC.
+// All rights reserved.
+//
+//-------------------------------------------------------------------------
+// This file is part of the T i g h t V N C software.  Please visit our Web site:
+//
+//                       http://www.t i g h t v n c.com/
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, w_rite to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//-------------------------------------------------------------------------
+//
+
+#pragma once
+
+
+
+#include "remoting/remoting_rfb_windows/_common_header.h"
+#include "remoting/remoting_rfb_windows/desktop/aaa_WinDxgiOutput.h"
+
+// #include aaa_<d3d11.h>
+// #include aaa_<DXGI1_2.h>
+//
+//
+// namespace remoting_rfb_windows
+// {
+//
+//
+//    class CLASS_DECL_REMOTING_RFB_WINDOWS WinDxgiOutput1 :
+//    virtual public ::particle
+//    {
+//    public:
+//       WinDxgiOutput1(WinDxgiOutput *dxgiOutput);
+//       //WinDxgiOutput1(const WinDxgiOutput1 &src);
+//       virtual ~WinDxgiOutput1();
+//
+//       //WinDxgiOutput1 &operator=(WinDxgiOutput1 const &src);
+//
+//       // Return pointer to a IDXGIOutput1 object. The pointer will be valid until
+//       // this object destructor has been called.
+//       IDXGIOutput1 *getDxgiOutput1();
+//
+//    //private:
+//       //void copy(const WinDxgiOutput1 &src);
+//
+//      comptr <  IDXGIOutput1 > m_dxgiOutput1;
+//    };
+//
+//
+// } // namespace remoting_rfb_windows
+//
+//
+//
+
+
+

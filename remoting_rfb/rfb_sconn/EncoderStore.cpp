@@ -66,12 +66,12 @@ namespace remoting_rfb
 
    }
 
-   Encoder *EncoderStore::getEncoder() const
+   ::pointer < Encoder > EncoderStore::getEncoder() const
    {
       return m_pencoder;
    }
 
-   JpegEncoder *EncoderStore::getJpegEncoder() const
+   ::pointer < JpegEncoder > EncoderStore::getJpegEncoder() const
    {
       return m_pjpegencoder;
    }
@@ -84,14 +84,14 @@ namespace remoting_rfb
    void EncoderStore::validateJpegEncoder()
    {
       if (m_pjpegencoder == 0) {
-         TightEncoder *tight = (TightEncoder *)validateEncoder(EncodingDefs::TIGHT);
-         m_pjpegencoder = new JpegEncoder(tight);
+         ::cast < TightEncoder> ptight = validateEncoder(EncodingDefs::TIGHT);
+         m_pjpegencoder = allocateø ::remoting_rfb::JpegEncoder(ptight);
       }
    }
 
    //---------------------------- Internal methods ----------------------------//
 
-   Encoder *EncoderStore::validateEncoder(::i32 encType)
+   ::pointer < Encoder > EncoderStore::validateEncoder(::i32 encType)
    {
       // Use Raw encoding instead of unknown codes.
       if (!encodingSupported(encType)) {
@@ -103,7 +103,7 @@ namespace remoting_rfb
          return pencoder;
       }
       // Otherwise, allocate it, store it in m_map and return the pointer to it.
-      Encoder *newEncoder = allocateEncoder(encType);
+      auto newEncoder = allocateEncoder(encType);
       try {
          pencoder = newEncoder;
       } catch (...) {
@@ -128,19 +128,19 @@ namespace remoting_rfb
               encType == EncodingDefs::TIGHT);
    }
 
-   Encoder *EncoderStore::allocateEncoder(::i32 encType) const
+   ::pointer < Encoder > EncoderStore::allocateEncoder(::i32 encType) const
    {
       switch (encType) {
          case EncodingDefs::TIGHT:
-            return new TightEncoder(m_ppixelconverter, m_pdataoutputstream);
+            return allocateø TightEncoder(m_ppixelconverter, m_pdataoutputstream);
          case EncodingDefs::ZRLE:
-            return new ZrleEncoder(m_ppixelconverter, m_pdataoutputstream);
+            return allocateø ZrleEncoder(m_ppixelconverter, m_pdataoutputstream);
          case EncodingDefs::HEXTILE:
-            return new HextileEncoder(m_ppixelconverter, m_pdataoutputstream);
+            return allocateø HextileEncoder(m_ppixelconverter, m_pdataoutputstream);
          case EncodingDefs::RRE:
-            return new RreEncoder(m_ppixelconverter, m_pdataoutputstream);
+            return allocateø RreEncoder(m_ppixelconverter, m_pdataoutputstream);
          case EncodingDefs::RAW:
-            return new Encoder(m_ppixelconverter, m_pdataoutputstream);
+            return allocateø Encoder(m_ppixelconverter, m_pdataoutputstream);
          default:
             throw ::subsystem::Exception("Cannot create encoder of the specified type");
       }

@@ -111,10 +111,15 @@ namespace remoting_rfb_node
       closeDialog(::innate_subsystem::e_control_id_ok);
    }
 
+
    void ChangePasswordDialog::onCancelButtonClick()
    {
-      closeDialog(::innate_subsystem::e_control_id_ok);
+      
+      closeDialog(::innate_subsystem::e_control_id_cancel);
+      
    }
+
+
 
    void ChangePasswordDialog::initControls()
    {

@@ -48,7 +48,8 @@ namespace remoting_rfb
    //  }
 
 
-   DummyScreenDriver::DummyScreenDriver()
+   DummyScreenDriver::DummyScreenDriver():
+Thread("DummyScrDrv")
    {
 
    }

@@ -83,7 +83,7 @@ namespace remoting_control_desktop
                                           const ::scoped_string & scopedstrwindowClassName,
 #endif
                                           const ::scoped_string & scopedstrCommandLine)
-    : //WindowsApplication(hinst, windowClassName),
+    : Thread("CtrlAppl"),//WindowsApplication(hinst, windowClassName),
       //m_pcontrolproxy(0),
       m_pcontrolgate(0),
       m_ptransport(0),
@@ -378,7 +378,7 @@ return;
 
    ::i32 ControlApplication::runControlInterface(bool showIcon)
    {
-      m_pcontroltrayicon = new ControlTrayIcon(m_pconfigurator,  m_pcontrolproxy, this, this, showIcon);
+         m_pcontroltrayicon = allocateø ControlTrayIcon(m_pconfigurator,  m_pcontrolproxy, this, this, showIcon);
 
       resumeThread();
 

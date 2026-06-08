@@ -1,0 +1,1063 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9A3614AD2FBA3636005F1383 /* AuthTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614762FBA3636005F1383 /* AuthTracker.cpp */; };
+		9A3614AE2FBA3636005F1383 /* RfbClientManagerEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614952FBA3636005F1383 /* RfbClientManagerEventListener.cpp */; };
+		9A3614AF2FBA3636005F1383 /* ServiceControlApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614A52FBA3636005F1383 /* ServiceControlApplication.cpp */; };
+		9A3614B02FBA3636005F1383 /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614882FBA3636005F1383 /* framework.cpp */; };
+		9A3614B12FBA3636005F1383 /* DesktopServerApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614802FBA3636005F1383 /* DesktopServerApplication.cpp */; };
+		9A3614B22FBA3636005F1383 /* RfbClientManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614932FBA3636005F1383 /* RfbClientManager.cpp */; };
+		9A3614B32FBA3636005F1383 /* EventLogWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614842FBA3636005F1383 /* EventLogWriter.cpp */; };
+		9A3614B42FBA3636005F1383 /* ServerApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36149B2FBA3636005F1383 /* ServerApplication.cpp */; };
+		9A3614B52FBA3636005F1383 /* ServerCommandLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36149D2FBA3636005F1383 /* ServerCommandLine.cpp */; };
+		9A3614B62FBA3636005F1383 /* ServerListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614A12FBA3636005F1383 /* ServerListener.cpp */; };
+		9A3614B72FBA3636005F1383 /* ServerHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36149F2FBA3636005F1383 /* ServerHelp.cpp */; };
+		9A3614B82FBA3636005F1383 /* application_main_node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614742FBA3636005F1383 /* application_main_node.cpp */; };
+		9A3614B92FBA3636005F1383 /* BuildTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614782FBA3636005F1383 /* BuildTime.cpp */; };
+		9A3614BA2FBA3636005F1383 /* QueryConnectionCommandLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36148F2FBA3636005F1383 /* QueryConnectionCommandLine.cpp */; };
+		9A3614BB2FBA3636005F1383 /* RfbServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614972FBA3636005F1383 /* RfbServer.cpp */; };
+		9A3614BC2FBA3636005F1383 /* ControlServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36147E2FBA3636005F1383 /* ControlServer.cpp */; };
+		9A3614BD2FBA3636005F1383 /* ServiceControlCommandLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614A72FBA3636005F1383 /* ServiceControlCommandLine.cpp */; };
+		9A3614BE2FBA3636005F1383 /* WsConfigRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614AC2FBA3636005F1383 /* WsConfigRunner.cpp */; };
+		9A3614BF2FBA3636005F1383 /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614992FBA3636005F1383 /* Server.cpp */; };
+		9A3614C02FBA3636005F1383 /* Task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614AA2FBA3636005F1383 /* Task.cpp */; };
+		9A3614C12FBA3636005F1383 /* Service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614A32FBA3636005F1383 /* Service.cpp */; };
+		9A3614C22FBA3636005F1383 /* AdditionalActionApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614712FBA3636005F1383 /* AdditionalActionApplication.cpp */; };
+		9A3614C32FBA3636005F1383 /* ControlClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36147C2FBA3636005F1383 /* ControlClient.cpp */; };
+		9A3614C42FBA3636005F1383 /* OutgoingRfbConnectionThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36148B2FBA3636005F1383 /* OutgoingRfbConnectionThread.cpp */; };
+		9A3614C52FBA3636005F1383 /* _.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36146D2FBA3636005F1383 /* _.cpp */; };
+		9A3614C62FBA3636005F1383 /* QueryConnectionApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36148D2FBA3636005F1383 /* QueryConnectionApplication.cpp */; };
+		9A3614C72FBA3636005F1383 /* ControlAppAuthenticator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36147A2FBA3636005F1383 /* ControlAppAuthenticator.cpp */; };
+		9A3614C82FBA3636005F1383 /* QueryConnectionDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614912FBA3636005F1383 /* QueryConnectionDialog.cpp */; };
+		9A3614C92FBA3636005F1383 /* DesktopServerCommandLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614822FBA3636005F1383 /* DesktopServerCommandLine.cpp */; };
+		9A3614CA2FBA3636005F1383 /* application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614732FBA3636005F1383 /* application.cpp */; };
+		9A3614CB2FBA3636005F1383 /* ExtraRfbServers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614862FBA3636005F1383 /* ExtraRfbServers.cpp */; };
+		9A3614CC2FBA3636005F1383 /* ServerHelp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36149E2FBA3636005F1383 /* ServerHelp.h */; };
+		9A3614CD2FBA3636005F1383 /* QueryConnectionCommandLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36148E2FBA3636005F1383 /* QueryConnectionCommandLine.h */; };
+		9A3614CE2FBA3636005F1383 /* ServiceEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614A82FBA3636005F1383 /* ServiceEvents.h */; };
+		9A3614CF2FBA3636005F1383 /* EventLogWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614832FBA3636005F1383 /* EventLogWriter.h */; };
+		9A3614D02FBA3636005F1383 /* ServiceControlCommandLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614A62FBA3636005F1383 /* ServiceControlCommandLine.h */; };
+		9A3614D12FBA3636005F1383 /* Task.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614A92FBA3636005F1383 /* Task.h */; };
+		9A3614D22FBA3636005F1383 /* Service.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614A22FBA3636005F1383 /* Service.h */; };
+		9A3614D32FBA3636005F1383 /* AdditionalActionApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614702FBA3636005F1383 /* AdditionalActionApplication.h */; };
+		9A3614D42FBA3636005F1383 /* RfbClientManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614922FBA3636005F1383 /* RfbClientManager.h */; };
+		9A3614D52FBA3636005F1383 /* DesktopServerApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36147F2FBA3636005F1383 /* DesktopServerApplication.h */; };
+		9A3614D62FBA3636005F1383 /* ServerListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614A02FBA3636005F1383 /* ServerListener.h */; };
+		9A3614D72FBA3636005F1383 /* ExtraRfbServers.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614852FBA3636005F1383 /* ExtraRfbServers.h */; };
+		9A3614D82FBA3636005F1383 /* ServerCommandLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36149C2FBA3636005F1383 /* ServerCommandLine.h */; };
+		9A3614D92FBA3636005F1383 /* QueryConnectionDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614902FBA3636005F1383 /* QueryConnectionDialog.h */; };
+		9A3614DA2FBA3636005F1383 /* ControlClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36147B2FBA3636005F1383 /* ControlClient.h */; };
+		9A3614DB2FBA3636005F1383 /* WsConfigRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614AB2FBA3636005F1383 /* WsConfigRunner.h */; };
+		9A3614DC2FBA3636005F1383 /* ServiceControlApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614A42FBA3636005F1383 /* ServiceControlApplication.h */; };
+		9A3614DD2FBA3636005F1383 /* AuthTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614752FBA3636005F1383 /* AuthTracker.h */; };
+		9A3614DE2FBA3636005F1383 /* BuildTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614772FBA3636005F1383 /* BuildTime.h */; };
+		9A3614DF2FBA3636005F1383 /* LogInitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614892FBA3636005F1383 /* LogInitListener.h */; };
+		9A3614E02FBA3636005F1383 /* RfbServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614962FBA3636005F1383 /* RfbServer.h */; };
+		9A3614E12FBA3636005F1383 /* RfbClientManagerEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614942FBA3636005F1383 /* RfbClientManagerEventListener.h */; };
+		9A3614E22FBA3636005F1383 /* DesktopServerCommandLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614812FBA3636005F1383 /* DesktopServerCommandLine.h */; };
+		9A3614E32FBA3636005F1383 /* _.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36146C2FBA3636005F1383 /* _.h */; };
+		9A3614E42FBA3636005F1383 /* QueryConnectionApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36148C2FBA3636005F1383 /* QueryConnectionApplication.h */; };
+		9A3614E52FBA3636005F1383 /* OutgoingRfbConnectionThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36148A2FBA3636005F1383 /* OutgoingRfbConnectionThread.h */; };
+		9A3614E62FBA3636005F1383 /* application.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614722FBA3636005F1383 /* application.h */; };
+		9A3614E72FBA3636005F1383 /* ControlServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36147D2FBA3636005F1383 /* ControlServer.h */; };
+		9A3614E82FBA3636005F1383 /* ControlAppAuthenticator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614792FBA3636005F1383 /* ControlAppAuthenticator.h */; };
+		9A3614E92FBA3636005F1383 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614872FBA3636005F1383 /* framework.h */; };
+		9A3614EA2FBA3636005F1383 /* Server.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614982FBA3636005F1383 /* Server.h */; };
+		9A3614EB2FBA3636005F1383 /* ServerApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36149A2FBA3636005F1383 /* ServerApplication.h */; };
+		9A3614EE2FBA68CD005F1383 /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3614ED2FBA68CD005F1383 /* libacme.dylib */; };
+		9A3614F02FBA69C6005F1383 /* libsubsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3614EF2FBA69C6005F1383 /* libsubsystem.dylib */; };
+		9A3614F22FBA69DC005F1383 /* libinnate_subsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3614F12FBA69DC005F1383 /* libinnate_subsystem.dylib */; };
+		9A3614F52FBA69FF005F1383 /* libapex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3614F42FBA69FF005F1383 /* libapex.dylib */; };
+		9A36153B2FBA6A42005F1383 /* ControlTrayIcon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615112FBA6A42005F1383 /* ControlTrayIcon.cpp */; };
+		9A36153C2FBA6A42005F1383 /* ShareDisplayCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615242FBA6A42005F1383 /* ShareDisplayCommand.cpp */; };
+		9A36153D2FBA6A42005F1383 /* ReloadConfigCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36151B2FBA6A42005F1383 /* ReloadConfigCommand.cpp */; };
+		9A36153E2FBA6A42005F1383 /* ShareAppCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615222FBA6A42005F1383 /* ShareAppCommand.cpp */; };
+		9A36153F2FBA6A42005F1383 /* ShareFullCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615262FBA6A42005F1383 /* ShareFullCommand.cpp */; };
+		9A3615402FBA6A42005F1383 /* UpdateRemoteConfigCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615382FBA6A42005F1383 /* UpdateRemoteConfigCommand.cpp */; };
+		9A3615412FBA6A42005F1383 /* ConnectCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614FC2FBA6A42005F1383 /* ConnectCommand.cpp */; };
+		9A3615422FBA6A42005F1383 /* OutgoingConnectionDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615192FBA6A42005F1383 /* OutgoingConnectionDialog.cpp */; };
+		9A3615432FBA6A42005F1383 /* SocketIPv4Transport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615302FBA6A42005F1383 /* SocketIPv4Transport.cpp */; };
+		9A3615442FBA6A42005F1383 /* ShutdownCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36152E2FBA6A42005F1383 /* ShutdownCommand.cpp */; };
+		9A3615452FBA6A42005F1383 /* ShareRectCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36152A2FBA6A42005F1383 /* ShareRectCommand.cpp */; };
+		9A3615462FBA6A42005F1383 /* ControlPipeName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36150C2FBA6A42005F1383 /* ControlPipeName.cpp */; };
+		9A3615472FBA6A42005F1383 /* SetPasswordsDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615202FBA6A42005F1383 /* SetPasswordsDialog.cpp */; };
+		9A3615482FBA6A42005F1383 /* RfbClientInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36151D2FBA6A42005F1383 /* RfbClientInfo.cpp */; };
+		9A3615492FBA6A42005F1383 /* DisconnectAllCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615132FBA6A42005F1383 /* DisconnectAllCommand.cpp */; };
+		9A36154A2FBA6A42005F1383 /* ControlApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615002FBA6A42005F1383 /* ControlApplication.cpp */; };
+		9A36154B2FBA6A42005F1383 /* ControlGate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615082FBA6A42005F1383 /* ControlGate.cpp */; };
+		9A36154C2FBA6A42005F1383 /* MakeRfbConnectionCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615152FBA6A42005F1383 /* MakeRfbConnectionCommand.cpp */; };
+		9A36154E2FBA6A42005F1383 /* ConnectStringParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614FE2FBA6A42005F1383 /* ConnectStringParser.cpp */; };
+		9A36154F2FBA6A42005F1383 /* ControlProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36150F2FBA6A42005F1383 /* ControlProxy.cpp */; };
+		9A3615502FBA6A42005F1383 /* ControlAuth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615022FBA6A42005F1383 /* ControlAuth.cpp */; };
+		9A3615512FBA6A42005F1383 /* ShareWindowCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36152C2FBA6A42005F1383 /* ShareWindowCommand.cpp */; };
+		9A3615522FBA6A42005F1383 /* UpdateLocalConfigCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615362FBA6A42005F1383 /* UpdateLocalConfigCommand.cpp */; };
+		9A3615532FBA6A42005F1383 /* AboutDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614FA2FBA6A42005F1383 /* AboutDialog.cpp */; };
+		9A3615542FBA6A42005F1383 /* Transport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615322FBA6A42005F1383 /* Transport.cpp */; };
+		9A3615552FBA6A42005F1383 /* NamedPipeTransport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615172FBA6A42005F1383 /* NamedPipeTransport.cpp */; };
+		9A3615562FBA6A42005F1383 /* ControlAuthDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615042FBA6A42005F1383 /* ControlAuthDialog.cpp */; };
+		9A3615572FBA6A42005F1383 /* TransportFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615342FBA6A42005F1383 /* TransportFactory.cpp */; };
+		9A3615582FBA6A42005F1383 /* ControlCommandLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615062FBA6A42005F1383 /* ControlCommandLine.cpp */; };
+		9A3615592FBA6A42005F1383 /* ControlMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A36150A2FBA6A42005F1383 /* ControlMessage.cpp */; };
+		9A36155A2FBA6A42005F1383 /* SharePrimaryCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3615282FBA6A42005F1383 /* SharePrimaryCommand.cpp */; };
+		9A36155B2FBA6A42005F1383 /* AboutDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614F92FBA6A42005F1383 /* AboutDialog.h */; };
+		9A36155C2FBA6A42005F1383 /* RfbClientInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36151C2FBA6A42005F1383 /* RfbClientInfo.h */; };
+		9A36155D2FBA6A42005F1383 /* ConnectStringParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614FD2FBA6A42005F1383 /* ConnectStringParser.h */; };
+		9A36155E2FBA6A42005F1383 /* MakeRfbConnectionCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615142FBA6A42005F1383 /* MakeRfbConnectionCommand.h */; };
+		9A36155F2FBA6A42005F1383 /* ShareRectCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615292FBA6A42005F1383 /* ShareRectCommand.h */; };
+		9A3615602FBA6A42005F1383 /* ControlGate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615072FBA6A42005F1383 /* ControlGate.h */; };
+		9A3615612FBA6A42005F1383 /* ControlProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36150E2FBA6A42005F1383 /* ControlProxy.h */; };
+		9A3615622FBA6A42005F1383 /* ShareAppCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615212FBA6A42005F1383 /* ShareAppCommand.h */; };
+		9A3615632FBA6A42005F1383 /* ReloadConfigCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36151A2FBA6A42005F1383 /* ReloadConfigCommand.h */; };
+		9A3615642FBA6A42005F1383 /* ShareFullCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615252FBA6A42005F1383 /* ShareFullCommand.h */; };
+		9A3615652FBA6A42005F1383 /* ServerInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36151E2FBA6A42005F1383 /* ServerInfo.h */; };
+		9A3615662FBA6A42005F1383 /* ControlAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615012FBA6A42005F1383 /* ControlAuth.h */; };
+		9A3615672FBA6A42005F1383 /* NamedPipeTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615162FBA6A42005F1383 /* NamedPipeTransport.h */; };
+		9A3615682FBA6A42005F1383 /* ShareDisplayCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615232FBA6A42005F1383 /* ShareDisplayCommand.h */; };
+		9A36156A2FBA6A42005F1383 /* ShareWindowCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36152B2FBA6A42005F1383 /* ShareWindowCommand.h */; };
+		9A36156B2FBA6A42005F1383 /* ControlPipeName.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36150B2FBA6A42005F1383 /* ControlPipeName.h */; };
+		9A36156C2FBA6A42005F1383 /* ControlProto.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36150D2FBA6A42005F1383 /* ControlProto.h */; };
+		9A36156D2FBA6A42005F1383 /* _.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614F62FBA6A42005F1383 /* _.h */; };
+		9A36156E2FBA6A42005F1383 /* ControlTrayIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615102FBA6A42005F1383 /* ControlTrayIcon.h */; };
+		9A36156F2FBA6A42005F1383 /* ConnectCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614FB2FBA6A42005F1383 /* ConnectCommand.h */; };
+		9A3615702FBA6A42005F1383 /* ControlApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614FF2FBA6A42005F1383 /* ControlApplication.h */; };
+		9A3615712FBA6A42005F1383 /* UpdateLocalConfigCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615352FBA6A42005F1383 /* UpdateLocalConfigCommand.h */; };
+		9A3615722FBA6A42005F1383 /* ControlAuthDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615032FBA6A42005F1383 /* ControlAuthDialog.h */; };
+		9A3615732FBA6A42005F1383 /* ControlCommandLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615052FBA6A42005F1383 /* ControlCommandLine.h */; };
+		9A3615742FBA6A42005F1383 /* UpdateRemoteConfigCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615372FBA6A42005F1383 /* UpdateRemoteConfigCommand.h */; };
+		9A3615752FBA6A42005F1383 /* ControlMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615092FBA6A42005F1383 /* ControlMessage.h */; };
+		9A3615762FBA6A42005F1383 /* SharePrimaryCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615272FBA6A42005F1383 /* SharePrimaryCommand.h */; };
+		9A3615772FBA6A42005F1383 /* SocketIPv4Transport.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36152F2FBA6A42005F1383 /* SocketIPv4Transport.h */; };
+		9A3615782FBA6A42005F1383 /* OutgoingConnectionDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615182FBA6A42005F1383 /* OutgoingConnectionDialog.h */; };
+		9A3615792FBA6A42005F1383 /* Transport.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615312FBA6A42005F1383 /* Transport.h */; };
+		9A36157A2FBA6A42005F1383 /* ShutdownCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36152D2FBA6A42005F1383 /* ShutdownCommand.h */; };
+		9A36157B2FBA6A42005F1383 /* TransportFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615332FBA6A42005F1383 /* TransportFactory.h */; };
+		9A36157C2FBA6A42005F1383 /* DisconnectAllCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3615122FBA6A42005F1383 /* DisconnectAllCommand.h */; };
+		9A36157D2FBA6A42005F1383 /* SetPasswordsDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36151F2FBA6A42005F1383 /* SetPasswordsDialog.h */; };
+		9A36158F2FBA71A2005F1383 /* libsubsystem_bsd_sockets.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A36158E2FBA71A2005F1383 /* libsubsystem_bsd_sockets.dylib */; };
+		9A3E22062FD41C9E00AFAF87 /* libremoting_rfb.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3E22032FD41C5300AFAF87 /* libremoting_rfb.dylib */; };
+		9A3E220D2FD41FE800AFAF87 /* application_control.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3E220B2FD41FE800AFAF87 /* application_control.h */; };
+		9A3E220E2FD41FE800AFAF87 /* application_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E220C2FD41FE800AFAF87 /* application_control.cpp */; };
+		9A3E22102FD4201F00AFAF87 /* _control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3E220F2FD4201F00AFAF87 /* _control.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9A3E22022FD41C5300AFAF87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AD3F1832FB191C200CB9A78 /* remoting_rfb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A373EFE2F81647000E892B1;
+			remoteInfo = remoting_rfb;
+		};
+		9A3E22042FD41C6000AFAF87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AD3F1832FB191C200CB9A78 /* remoting_rfb.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A373EFD2F81647000E892B1;
+			remoteInfo = remoting_rfb;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9A36146C2FBA3636005F1383 /* _.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _.h; sourceTree = "<group>"; };
+		9A36146D2FBA3636005F1383 /* _.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _.cpp; sourceTree = "<group>"; };
+		9A3614702FBA3636005F1383 /* AdditionalActionApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdditionalActionApplication.h; sourceTree = "<group>"; };
+		9A3614712FBA3636005F1383 /* AdditionalActionApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AdditionalActionApplication.cpp; sourceTree = "<group>"; };
+		9A3614722FBA3636005F1383 /* application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = application.h; sourceTree = "<group>"; };
+		9A3614732FBA3636005F1383 /* application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = application.cpp; sourceTree = "<group>"; };
+		9A3614742FBA3636005F1383 /* application_main_node.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = application_main_node.cpp; sourceTree = "<group>"; };
+		9A3614752FBA3636005F1383 /* AuthTracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthTracker.h; sourceTree = "<group>"; };
+		9A3614762FBA3636005F1383 /* AuthTracker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AuthTracker.cpp; sourceTree = "<group>"; };
+		9A3614772FBA3636005F1383 /* BuildTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuildTime.h; sourceTree = "<group>"; };
+		9A3614782FBA3636005F1383 /* BuildTime.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BuildTime.cpp; sourceTree = "<group>"; };
+		9A3614792FBA3636005F1383 /* ControlAppAuthenticator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlAppAuthenticator.h; sourceTree = "<group>"; };
+		9A36147A2FBA3636005F1383 /* ControlAppAuthenticator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlAppAuthenticator.cpp; sourceTree = "<group>"; };
+		9A36147B2FBA3636005F1383 /* ControlClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlClient.h; sourceTree = "<group>"; };
+		9A36147C2FBA3636005F1383 /* ControlClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlClient.cpp; sourceTree = "<group>"; };
+		9A36147D2FBA3636005F1383 /* ControlServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlServer.h; sourceTree = "<group>"; };
+		9A36147E2FBA3636005F1383 /* ControlServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlServer.cpp; sourceTree = "<group>"; };
+		9A36147F2FBA3636005F1383 /* DesktopServerApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesktopServerApplication.h; sourceTree = "<group>"; };
+		9A3614802FBA3636005F1383 /* DesktopServerApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DesktopServerApplication.cpp; sourceTree = "<group>"; };
+		9A3614812FBA3636005F1383 /* DesktopServerCommandLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DesktopServerCommandLine.h; sourceTree = "<group>"; };
+		9A3614822FBA3636005F1383 /* DesktopServerCommandLine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DesktopServerCommandLine.cpp; sourceTree = "<group>"; };
+		9A3614832FBA3636005F1383 /* EventLogWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventLogWriter.h; sourceTree = "<group>"; };
+		9A3614842FBA3636005F1383 /* EventLogWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EventLogWriter.cpp; sourceTree = "<group>"; };
+		9A3614852FBA3636005F1383 /* ExtraRfbServers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtraRfbServers.h; sourceTree = "<group>"; };
+		9A3614862FBA3636005F1383 /* ExtraRfbServers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ExtraRfbServers.cpp; sourceTree = "<group>"; };
+		9A3614872FBA3636005F1383 /* framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
+		9A3614882FBA3636005F1383 /* framework.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
+		9A3614892FBA3636005F1383 /* LogInitListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInitListener.h; sourceTree = "<group>"; };
+		9A36148A2FBA3636005F1383 /* OutgoingRfbConnectionThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutgoingRfbConnectionThread.h; sourceTree = "<group>"; };
+		9A36148B2FBA3636005F1383 /* OutgoingRfbConnectionThread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OutgoingRfbConnectionThread.cpp; sourceTree = "<group>"; };
+		9A36148C2FBA3636005F1383 /* QueryConnectionApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QueryConnectionApplication.h; sourceTree = "<group>"; };
+		9A36148D2FBA3636005F1383 /* QueryConnectionApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = QueryConnectionApplication.cpp; sourceTree = "<group>"; };
+		9A36148E2FBA3636005F1383 /* QueryConnectionCommandLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QueryConnectionCommandLine.h; sourceTree = "<group>"; };
+		9A36148F2FBA3636005F1383 /* QueryConnectionCommandLine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = QueryConnectionCommandLine.cpp; sourceTree = "<group>"; };
+		9A3614902FBA3636005F1383 /* QueryConnectionDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QueryConnectionDialog.h; sourceTree = "<group>"; };
+		9A3614912FBA3636005F1383 /* QueryConnectionDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = QueryConnectionDialog.cpp; sourceTree = "<group>"; };
+		9A3614922FBA3636005F1383 /* RfbClientManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RfbClientManager.h; sourceTree = "<group>"; };
+		9A3614932FBA3636005F1383 /* RfbClientManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RfbClientManager.cpp; sourceTree = "<group>"; };
+		9A3614942FBA3636005F1383 /* RfbClientManagerEventListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RfbClientManagerEventListener.h; sourceTree = "<group>"; };
+		9A3614952FBA3636005F1383 /* RfbClientManagerEventListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RfbClientManagerEventListener.cpp; sourceTree = "<group>"; };
+		9A3614962FBA3636005F1383 /* RfbServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RfbServer.h; sourceTree = "<group>"; };
+		9A3614972FBA3636005F1383 /* RfbServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RfbServer.cpp; sourceTree = "<group>"; };
+		9A3614982FBA3636005F1383 /* Server.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Server.h; sourceTree = "<group>"; };
+		9A3614992FBA3636005F1383 /* Server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Server.cpp; sourceTree = "<group>"; };
+		9A36149A2FBA3636005F1383 /* ServerApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerApplication.h; sourceTree = "<group>"; };
+		9A36149B2FBA3636005F1383 /* ServerApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServerApplication.cpp; sourceTree = "<group>"; };
+		9A36149C2FBA3636005F1383 /* ServerCommandLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerCommandLine.h; sourceTree = "<group>"; };
+		9A36149D2FBA3636005F1383 /* ServerCommandLine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServerCommandLine.cpp; sourceTree = "<group>"; };
+		9A36149E2FBA3636005F1383 /* ServerHelp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerHelp.h; sourceTree = "<group>"; };
+		9A36149F2FBA3636005F1383 /* ServerHelp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServerHelp.cpp; sourceTree = "<group>"; };
+		9A3614A02FBA3636005F1383 /* ServerListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerListener.h; sourceTree = "<group>"; };
+		9A3614A12FBA3636005F1383 /* ServerListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServerListener.cpp; sourceTree = "<group>"; };
+		9A3614A22FBA3636005F1383 /* Service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
+		9A3614A32FBA3636005F1383 /* Service.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Service.cpp; sourceTree = "<group>"; };
+		9A3614A42FBA3636005F1383 /* ServiceControlApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceControlApplication.h; sourceTree = "<group>"; };
+		9A3614A52FBA3636005F1383 /* ServiceControlApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServiceControlApplication.cpp; sourceTree = "<group>"; };
+		9A3614A62FBA3636005F1383 /* ServiceControlCommandLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceControlCommandLine.h; sourceTree = "<group>"; };
+		9A3614A72FBA3636005F1383 /* ServiceControlCommandLine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ServiceControlCommandLine.cpp; sourceTree = "<group>"; };
+		9A3614A82FBA3636005F1383 /* ServiceEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceEvents.h; sourceTree = "<group>"; };
+		9A3614A92FBA3636005F1383 /* Task.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		9A3614AA2FBA3636005F1383 /* Task.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Task.cpp; sourceTree = "<group>"; };
+		9A3614AB2FBA3636005F1383 /* WsConfigRunner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WsConfigRunner.h; sourceTree = "<group>"; };
+		9A3614AC2FBA3636005F1383 /* WsConfigRunner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WsConfigRunner.cpp; sourceTree = "<group>"; };
+		9A3614ED2FBA68CD005F1383 /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A3614EF2FBA69C6005F1383 /* libsubsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libsubsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A3614F12FBA69DC005F1383 /* libinnate_subsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libinnate_subsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A3614F42FBA69FF005F1383 /* libapex.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libapex.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A3614F62FBA6A42005F1383 /* _.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _.h; sourceTree = "<group>"; };
+		9A3614F92FBA6A42005F1383 /* AboutDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutDialog.h; sourceTree = "<group>"; };
+		9A3614FA2FBA6A42005F1383 /* AboutDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AboutDialog.cpp; sourceTree = "<group>"; };
+		9A3614FB2FBA6A42005F1383 /* ConnectCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectCommand.h; sourceTree = "<group>"; };
+		9A3614FC2FBA6A42005F1383 /* ConnectCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectCommand.cpp; sourceTree = "<group>"; };
+		9A3614FD2FBA6A42005F1383 /* ConnectStringParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectStringParser.h; sourceTree = "<group>"; };
+		9A3614FE2FBA6A42005F1383 /* ConnectStringParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectStringParser.cpp; sourceTree = "<group>"; };
+		9A3614FF2FBA6A42005F1383 /* ControlApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlApplication.h; sourceTree = "<group>"; };
+		9A3615002FBA6A42005F1383 /* ControlApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlApplication.cpp; sourceTree = "<group>"; };
+		9A3615012FBA6A42005F1383 /* ControlAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlAuth.h; sourceTree = "<group>"; };
+		9A3615022FBA6A42005F1383 /* ControlAuth.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlAuth.cpp; sourceTree = "<group>"; };
+		9A3615032FBA6A42005F1383 /* ControlAuthDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlAuthDialog.h; sourceTree = "<group>"; };
+		9A3615042FBA6A42005F1383 /* ControlAuthDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlAuthDialog.cpp; sourceTree = "<group>"; };
+		9A3615052FBA6A42005F1383 /* ControlCommandLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlCommandLine.h; sourceTree = "<group>"; };
+		9A3615062FBA6A42005F1383 /* ControlCommandLine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlCommandLine.cpp; sourceTree = "<group>"; };
+		9A3615072FBA6A42005F1383 /* ControlGate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlGate.h; sourceTree = "<group>"; };
+		9A3615082FBA6A42005F1383 /* ControlGate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlGate.cpp; sourceTree = "<group>"; };
+		9A3615092FBA6A42005F1383 /* ControlMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlMessage.h; sourceTree = "<group>"; };
+		9A36150A2FBA6A42005F1383 /* ControlMessage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlMessage.cpp; sourceTree = "<group>"; };
+		9A36150B2FBA6A42005F1383 /* ControlPipeName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlPipeName.h; sourceTree = "<group>"; };
+		9A36150C2FBA6A42005F1383 /* ControlPipeName.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPipeName.cpp; sourceTree = "<group>"; };
+		9A36150D2FBA6A42005F1383 /* ControlProto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlProto.h; sourceTree = "<group>"; };
+		9A36150E2FBA6A42005F1383 /* ControlProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlProxy.h; sourceTree = "<group>"; };
+		9A36150F2FBA6A42005F1383 /* ControlProxy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlProxy.cpp; sourceTree = "<group>"; };
+		9A3615102FBA6A42005F1383 /* ControlTrayIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlTrayIcon.h; sourceTree = "<group>"; };
+		9A3615112FBA6A42005F1383 /* ControlTrayIcon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlTrayIcon.cpp; sourceTree = "<group>"; };
+		9A3615122FBA6A42005F1383 /* DisconnectAllCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisconnectAllCommand.h; sourceTree = "<group>"; };
+		9A3615132FBA6A42005F1383 /* DisconnectAllCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DisconnectAllCommand.cpp; sourceTree = "<group>"; };
+		9A3615142FBA6A42005F1383 /* MakeRfbConnectionCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MakeRfbConnectionCommand.h; sourceTree = "<group>"; };
+		9A3615152FBA6A42005F1383 /* MakeRfbConnectionCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MakeRfbConnectionCommand.cpp; sourceTree = "<group>"; };
+		9A3615162FBA6A42005F1383 /* NamedPipeTransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamedPipeTransport.h; sourceTree = "<group>"; };
+		9A3615172FBA6A42005F1383 /* NamedPipeTransport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamedPipeTransport.cpp; sourceTree = "<group>"; };
+		9A3615182FBA6A42005F1383 /* OutgoingConnectionDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutgoingConnectionDialog.h; sourceTree = "<group>"; };
+		9A3615192FBA6A42005F1383 /* OutgoingConnectionDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OutgoingConnectionDialog.cpp; sourceTree = "<group>"; };
+		9A36151A2FBA6A42005F1383 /* ReloadConfigCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReloadConfigCommand.h; sourceTree = "<group>"; };
+		9A36151B2FBA6A42005F1383 /* ReloadConfigCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ReloadConfigCommand.cpp; sourceTree = "<group>"; };
+		9A36151C2FBA6A42005F1383 /* RfbClientInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RfbClientInfo.h; sourceTree = "<group>"; };
+		9A36151D2FBA6A42005F1383 /* RfbClientInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RfbClientInfo.cpp; sourceTree = "<group>"; };
+		9A36151E2FBA6A42005F1383 /* ServerInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerInfo.h; sourceTree = "<group>"; };
+		9A36151F2FBA6A42005F1383 /* SetPasswordsDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetPasswordsDialog.h; sourceTree = "<group>"; };
+		9A3615202FBA6A42005F1383 /* SetPasswordsDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SetPasswordsDialog.cpp; sourceTree = "<group>"; };
+		9A3615212FBA6A42005F1383 /* ShareAppCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareAppCommand.h; sourceTree = "<group>"; };
+		9A3615222FBA6A42005F1383 /* ShareAppCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShareAppCommand.cpp; sourceTree = "<group>"; };
+		9A3615232FBA6A42005F1383 /* ShareDisplayCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareDisplayCommand.h; sourceTree = "<group>"; };
+		9A3615242FBA6A42005F1383 /* ShareDisplayCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShareDisplayCommand.cpp; sourceTree = "<group>"; };
+		9A3615252FBA6A42005F1383 /* ShareFullCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareFullCommand.h; sourceTree = "<group>"; };
+		9A3615262FBA6A42005F1383 /* ShareFullCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShareFullCommand.cpp; sourceTree = "<group>"; };
+		9A3615272FBA6A42005F1383 /* SharePrimaryCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharePrimaryCommand.h; sourceTree = "<group>"; };
+		9A3615282FBA6A42005F1383 /* SharePrimaryCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SharePrimaryCommand.cpp; sourceTree = "<group>"; };
+		9A3615292FBA6A42005F1383 /* ShareRectCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareRectCommand.h; sourceTree = "<group>"; };
+		9A36152A2FBA6A42005F1383 /* ShareRectCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShareRectCommand.cpp; sourceTree = "<group>"; };
+		9A36152B2FBA6A42005F1383 /* ShareWindowCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareWindowCommand.h; sourceTree = "<group>"; };
+		9A36152C2FBA6A42005F1383 /* ShareWindowCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShareWindowCommand.cpp; sourceTree = "<group>"; };
+		9A36152D2FBA6A42005F1383 /* ShutdownCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShutdownCommand.h; sourceTree = "<group>"; };
+		9A36152E2FBA6A42005F1383 /* ShutdownCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShutdownCommand.cpp; sourceTree = "<group>"; };
+		9A36152F2FBA6A42005F1383 /* SocketIPv4Transport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SocketIPv4Transport.h; sourceTree = "<group>"; };
+		9A3615302FBA6A42005F1383 /* SocketIPv4Transport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SocketIPv4Transport.cpp; sourceTree = "<group>"; };
+		9A3615312FBA6A42005F1383 /* Transport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Transport.h; sourceTree = "<group>"; };
+		9A3615322FBA6A42005F1383 /* Transport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transport.cpp; sourceTree = "<group>"; };
+		9A3615332FBA6A42005F1383 /* TransportFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransportFactory.h; sourceTree = "<group>"; };
+		9A3615342FBA6A42005F1383 /* TransportFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TransportFactory.cpp; sourceTree = "<group>"; };
+		9A3615352FBA6A42005F1383 /* UpdateLocalConfigCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateLocalConfigCommand.h; sourceTree = "<group>"; };
+		9A3615362FBA6A42005F1383 /* UpdateLocalConfigCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UpdateLocalConfigCommand.cpp; sourceTree = "<group>"; };
+		9A3615372FBA6A42005F1383 /* UpdateRemoteConfigCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateRemoteConfigCommand.h; sourceTree = "<group>"; };
+		9A3615382FBA6A42005F1383 /* UpdateRemoteConfigCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UpdateRemoteConfigCommand.cpp; sourceTree = "<group>"; };
+		9A36157E2FBA7093005F1383 /* _____debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "_____debug.xcconfig"; sourceTree = "<group>"; };
+		9A36157F2FBA7093005F1383 /* _____release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "_____release.xcconfig"; sourceTree = "<group>"; };
+		9A36158E2FBA71A2005F1383 /* libsubsystem_bsd_sockets.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libsubsystem_bsd_sockets.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A3E220B2FD41FE800AFAF87 /* application_control.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = application_control.h; sourceTree = "<group>"; };
+		9A3E220C2FD41FE800AFAF87 /* application_control.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = application_control.cpp; sourceTree = "<group>"; };
+		9A3E220F2FD4201F00AFAF87 /* _control.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = _control.cpp; sourceTree = "<group>"; };
+		9A6BC8B62F8161D4000A4200 /* libremoting_rfb_node_desktop.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_rfb_node_desktop.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AD3F1832FB191C200CB9A78 /* remoting_rfb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_rfb.xcodeproj; path = ../remoting_rfb/remoting_rfb.xcodeproj; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9A6BC8B42F8161D4000A4200 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A3E22062FD41C9E00AFAF87 /* libremoting_rfb.dylib in Frameworks */,
+				9A36158F2FBA71A2005F1383 /* libsubsystem_bsd_sockets.dylib in Frameworks */,
+				9A3614F52FBA69FF005F1383 /* libapex.dylib in Frameworks */,
+				9A3614F22FBA69DC005F1383 /* libinnate_subsystem.dylib in Frameworks */,
+				9A3614F02FBA69C6005F1383 /* libsubsystem.dylib in Frameworks */,
+				9A3614EE2FBA68CD005F1383 /* libacme.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9A3614692FBA3340005F1383 /* node_desktop */ = {
+			isa = PBXGroup;
+			children = (
+				9A3615392FBA6A42005F1383 /* control_desktop */,
+				9A3E220F2FD4201F00AFAF87 /* _control.cpp */,
+				9A36146C2FBA3636005F1383 /* _.h */,
+				9A36146D2FBA3636005F1383 /* _.cpp */,
+				9A36157E2FBA7093005F1383 /* _____debug.xcconfig */,
+				9A36157F2FBA7093005F1383 /* _____release.xcconfig */,
+				9A3614702FBA3636005F1383 /* AdditionalActionApplication.h */,
+				9A3614712FBA3636005F1383 /* AdditionalActionApplication.cpp */,
+				9A3614722FBA3636005F1383 /* application.h */,
+				9A3614732FBA3636005F1383 /* application.cpp */,
+				9A3E220B2FD41FE800AFAF87 /* application_control.h */,
+				9A3E220C2FD41FE800AFAF87 /* application_control.cpp */,
+				9A3614742FBA3636005F1383 /* application_main_node.cpp */,
+				9A3614752FBA3636005F1383 /* AuthTracker.h */,
+				9A3614762FBA3636005F1383 /* AuthTracker.cpp */,
+				9A3614772FBA3636005F1383 /* BuildTime.h */,
+				9A3614782FBA3636005F1383 /* BuildTime.cpp */,
+				9A3614792FBA3636005F1383 /* ControlAppAuthenticator.h */,
+				9A36147A2FBA3636005F1383 /* ControlAppAuthenticator.cpp */,
+				9A36147B2FBA3636005F1383 /* ControlClient.h */,
+				9A36147C2FBA3636005F1383 /* ControlClient.cpp */,
+				9A36147D2FBA3636005F1383 /* ControlServer.h */,
+				9A36147E2FBA3636005F1383 /* ControlServer.cpp */,
+				9A36147F2FBA3636005F1383 /* DesktopServerApplication.h */,
+				9A3614802FBA3636005F1383 /* DesktopServerApplication.cpp */,
+				9A3614812FBA3636005F1383 /* DesktopServerCommandLine.h */,
+				9A3614822FBA3636005F1383 /* DesktopServerCommandLine.cpp */,
+				9A3614832FBA3636005F1383 /* EventLogWriter.h */,
+				9A3614842FBA3636005F1383 /* EventLogWriter.cpp */,
+				9A3614852FBA3636005F1383 /* ExtraRfbServers.h */,
+				9A3614862FBA3636005F1383 /* ExtraRfbServers.cpp */,
+				9A3614872FBA3636005F1383 /* framework.h */,
+				9A3614882FBA3636005F1383 /* framework.cpp */,
+				9A3614892FBA3636005F1383 /* LogInitListener.h */,
+				9A36148A2FBA3636005F1383 /* OutgoingRfbConnectionThread.h */,
+				9A36148B2FBA3636005F1383 /* OutgoingRfbConnectionThread.cpp */,
+				9A36148C2FBA3636005F1383 /* QueryConnectionApplication.h */,
+				9A36148D2FBA3636005F1383 /* QueryConnectionApplication.cpp */,
+				9A36148E2FBA3636005F1383 /* QueryConnectionCommandLine.h */,
+				9A36148F2FBA3636005F1383 /* QueryConnectionCommandLine.cpp */,
+				9A3614902FBA3636005F1383 /* QueryConnectionDialog.h */,
+				9A3614912FBA3636005F1383 /* QueryConnectionDialog.cpp */,
+				9A3614922FBA3636005F1383 /* RfbClientManager.h */,
+				9A3614932FBA3636005F1383 /* RfbClientManager.cpp */,
+				9A3614942FBA3636005F1383 /* RfbClientManagerEventListener.h */,
+				9A3614952FBA3636005F1383 /* RfbClientManagerEventListener.cpp */,
+				9A3614962FBA3636005F1383 /* RfbServer.h */,
+				9A3614972FBA3636005F1383 /* RfbServer.cpp */,
+				9A3614982FBA3636005F1383 /* Server.h */,
+				9A3614992FBA3636005F1383 /* Server.cpp */,
+				9A36149A2FBA3636005F1383 /* ServerApplication.h */,
+				9A36149B2FBA3636005F1383 /* ServerApplication.cpp */,
+				9A36149C2FBA3636005F1383 /* ServerCommandLine.h */,
+				9A36149D2FBA3636005F1383 /* ServerCommandLine.cpp */,
+				9A36149E2FBA3636005F1383 /* ServerHelp.h */,
+				9A36149F2FBA3636005F1383 /* ServerHelp.cpp */,
+				9A3614A02FBA3636005F1383 /* ServerListener.h */,
+				9A3614A12FBA3636005F1383 /* ServerListener.cpp */,
+				9A3614A22FBA3636005F1383 /* Service.h */,
+				9A3614A32FBA3636005F1383 /* Service.cpp */,
+				9A3614A42FBA3636005F1383 /* ServiceControlApplication.h */,
+				9A3614A52FBA3636005F1383 /* ServiceControlApplication.cpp */,
+				9A3614A62FBA3636005F1383 /* ServiceControlCommandLine.h */,
+				9A3614A72FBA3636005F1383 /* ServiceControlCommandLine.cpp */,
+				9A3614A82FBA3636005F1383 /* ServiceEvents.h */,
+				9A3614A92FBA3636005F1383 /* Task.h */,
+				9A3614AA2FBA3636005F1383 /* Task.cpp */,
+				9A3614AB2FBA3636005F1383 /* WsConfigRunner.h */,
+				9A3614AC2FBA3636005F1383 /* WsConfigRunner.cpp */,
+			);
+			name = node_desktop;
+			sourceTree = "<group>";
+		};
+		9A3614EC2FBA68CD005F1383 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9A36158E2FBA71A2005F1383 /* libsubsystem_bsd_sockets.dylib */,
+				9A3614F42FBA69FF005F1383 /* libapex.dylib */,
+				9A3614F12FBA69DC005F1383 /* libinnate_subsystem.dylib */,
+				9A3614EF2FBA69C6005F1383 /* libsubsystem.dylib */,
+				9A3614ED2FBA68CD005F1383 /* libacme.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9A3615392FBA6A42005F1383 /* control_desktop */ = {
+			isa = PBXGroup;
+			children = (
+				9A3614F62FBA6A42005F1383 /* _.h */,
+				9A3614F92FBA6A42005F1383 /* AboutDialog.h */,
+				9A3614FA2FBA6A42005F1383 /* AboutDialog.cpp */,
+				9A3614FB2FBA6A42005F1383 /* ConnectCommand.h */,
+				9A3614FC2FBA6A42005F1383 /* ConnectCommand.cpp */,
+				9A3614FD2FBA6A42005F1383 /* ConnectStringParser.h */,
+				9A3614FE2FBA6A42005F1383 /* ConnectStringParser.cpp */,
+				9A3614FF2FBA6A42005F1383 /* ControlApplication.h */,
+				9A3615002FBA6A42005F1383 /* ControlApplication.cpp */,
+				9A3615012FBA6A42005F1383 /* ControlAuth.h */,
+				9A3615022FBA6A42005F1383 /* ControlAuth.cpp */,
+				9A3615032FBA6A42005F1383 /* ControlAuthDialog.h */,
+				9A3615042FBA6A42005F1383 /* ControlAuthDialog.cpp */,
+				9A3615052FBA6A42005F1383 /* ControlCommandLine.h */,
+				9A3615062FBA6A42005F1383 /* ControlCommandLine.cpp */,
+				9A3615072FBA6A42005F1383 /* ControlGate.h */,
+				9A3615082FBA6A42005F1383 /* ControlGate.cpp */,
+				9A3615092FBA6A42005F1383 /* ControlMessage.h */,
+				9A36150A2FBA6A42005F1383 /* ControlMessage.cpp */,
+				9A36150B2FBA6A42005F1383 /* ControlPipeName.h */,
+				9A36150C2FBA6A42005F1383 /* ControlPipeName.cpp */,
+				9A36150D2FBA6A42005F1383 /* ControlProto.h */,
+				9A36150E2FBA6A42005F1383 /* ControlProxy.h */,
+				9A36150F2FBA6A42005F1383 /* ControlProxy.cpp */,
+				9A3615102FBA6A42005F1383 /* ControlTrayIcon.h */,
+				9A3615112FBA6A42005F1383 /* ControlTrayIcon.cpp */,
+				9A3615122FBA6A42005F1383 /* DisconnectAllCommand.h */,
+				9A3615132FBA6A42005F1383 /* DisconnectAllCommand.cpp */,
+				9A3615142FBA6A42005F1383 /* MakeRfbConnectionCommand.h */,
+				9A3615152FBA6A42005F1383 /* MakeRfbConnectionCommand.cpp */,
+				9A3615162FBA6A42005F1383 /* NamedPipeTransport.h */,
+				9A3615172FBA6A42005F1383 /* NamedPipeTransport.cpp */,
+				9A3615182FBA6A42005F1383 /* OutgoingConnectionDialog.h */,
+				9A3615192FBA6A42005F1383 /* OutgoingConnectionDialog.cpp */,
+				9A36151A2FBA6A42005F1383 /* ReloadConfigCommand.h */,
+				9A36151B2FBA6A42005F1383 /* ReloadConfigCommand.cpp */,
+				9A36151C2FBA6A42005F1383 /* RfbClientInfo.h */,
+				9A36151D2FBA6A42005F1383 /* RfbClientInfo.cpp */,
+				9A36151E2FBA6A42005F1383 /* ServerInfo.h */,
+				9A36151F2FBA6A42005F1383 /* SetPasswordsDialog.h */,
+				9A3615202FBA6A42005F1383 /* SetPasswordsDialog.cpp */,
+				9A3615212FBA6A42005F1383 /* ShareAppCommand.h */,
+				9A3615222FBA6A42005F1383 /* ShareAppCommand.cpp */,
+				9A3615232FBA6A42005F1383 /* ShareDisplayCommand.h */,
+				9A3615242FBA6A42005F1383 /* ShareDisplayCommand.cpp */,
+				9A3615252FBA6A42005F1383 /* ShareFullCommand.h */,
+				9A3615262FBA6A42005F1383 /* ShareFullCommand.cpp */,
+				9A3615272FBA6A42005F1383 /* SharePrimaryCommand.h */,
+				9A3615282FBA6A42005F1383 /* SharePrimaryCommand.cpp */,
+				9A3615292FBA6A42005F1383 /* ShareRectCommand.h */,
+				9A36152A2FBA6A42005F1383 /* ShareRectCommand.cpp */,
+				9A36152B2FBA6A42005F1383 /* ShareWindowCommand.h */,
+				9A36152C2FBA6A42005F1383 /* ShareWindowCommand.cpp */,
+				9A36152D2FBA6A42005F1383 /* ShutdownCommand.h */,
+				9A36152E2FBA6A42005F1383 /* ShutdownCommand.cpp */,
+				9A36152F2FBA6A42005F1383 /* SocketIPv4Transport.h */,
+				9A3615302FBA6A42005F1383 /* SocketIPv4Transport.cpp */,
+				9A3615312FBA6A42005F1383 /* Transport.h */,
+				9A3615322FBA6A42005F1383 /* Transport.cpp */,
+				9A3615332FBA6A42005F1383 /* TransportFactory.h */,
+				9A3615342FBA6A42005F1383 /* TransportFactory.cpp */,
+				9A3615352FBA6A42005F1383 /* UpdateLocalConfigCommand.h */,
+				9A3615362FBA6A42005F1383 /* UpdateLocalConfigCommand.cpp */,
+				9A3615372FBA6A42005F1383 /* UpdateRemoteConfigCommand.h */,
+				9A3615382FBA6A42005F1383 /* UpdateRemoteConfigCommand.cpp */,
+			);
+			path = control_desktop;
+			sourceTree = "<group>";
+		};
+		9A3E21FB2FD41C5100AFAF87 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A3E22032FD41C5300AFAF87 /* libremoting_rfb.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9A6BC8AD2F8161D4000A4200 = {
+			isa = PBXGroup;
+			children = (
+				9AD3F1832FB191C200CB9A78 /* remoting_rfb.xcodeproj */,
+				9A3614692FBA3340005F1383 /* node_desktop */,
+				9A3614EC2FBA68CD005F1383 /* Frameworks */,
+				9A6BC8B72F8161D4000A4200 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9A6BC8B72F8161D4000A4200 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A6BC8B62F8161D4000A4200 /* libremoting_rfb_node_desktop.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		9A6BC8B22F8161D4000A4200 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A3614CC2FBA3636005F1383 /* ServerHelp.h in Headers */,
+				9A3614CD2FBA3636005F1383 /* QueryConnectionCommandLine.h in Headers */,
+				9A3614CE2FBA3636005F1383 /* ServiceEvents.h in Headers */,
+				9A3614CF2FBA3636005F1383 /* EventLogWriter.h in Headers */,
+				9A3614D02FBA3636005F1383 /* ServiceControlCommandLine.h in Headers */,
+				9A3614D12FBA3636005F1383 /* Task.h in Headers */,
+				9A3614D22FBA3636005F1383 /* Service.h in Headers */,
+				9A3614D32FBA3636005F1383 /* AdditionalActionApplication.h in Headers */,
+				9A3614D42FBA3636005F1383 /* RfbClientManager.h in Headers */,
+				9A3614D52FBA3636005F1383 /* DesktopServerApplication.h in Headers */,
+				9A3614D62FBA3636005F1383 /* ServerListener.h in Headers */,
+				9A3614D72FBA3636005F1383 /* ExtraRfbServers.h in Headers */,
+				9A3614D82FBA3636005F1383 /* ServerCommandLine.h in Headers */,
+				9A3614D92FBA3636005F1383 /* QueryConnectionDialog.h in Headers */,
+				9A3614DA2FBA3636005F1383 /* ControlClient.h in Headers */,
+				9A3614DB2FBA3636005F1383 /* WsConfigRunner.h in Headers */,
+				9A3614DC2FBA3636005F1383 /* ServiceControlApplication.h in Headers */,
+				9A36155B2FBA6A42005F1383 /* AboutDialog.h in Headers */,
+				9A36155C2FBA6A42005F1383 /* RfbClientInfo.h in Headers */,
+				9A36155D2FBA6A42005F1383 /* ConnectStringParser.h in Headers */,
+				9A36155E2FBA6A42005F1383 /* MakeRfbConnectionCommand.h in Headers */,
+				9A36155F2FBA6A42005F1383 /* ShareRectCommand.h in Headers */,
+				9A3E220D2FD41FE800AFAF87 /* application_control.h in Headers */,
+				9A3615602FBA6A42005F1383 /* ControlGate.h in Headers */,
+				9A3615612FBA6A42005F1383 /* ControlProxy.h in Headers */,
+				9A3615622FBA6A42005F1383 /* ShareAppCommand.h in Headers */,
+				9A3615632FBA6A42005F1383 /* ReloadConfigCommand.h in Headers */,
+				9A3615642FBA6A42005F1383 /* ShareFullCommand.h in Headers */,
+				9A3615652FBA6A42005F1383 /* ServerInfo.h in Headers */,
+				9A3615662FBA6A42005F1383 /* ControlAuth.h in Headers */,
+				9A3615672FBA6A42005F1383 /* NamedPipeTransport.h in Headers */,
+				9A3615682FBA6A42005F1383 /* ShareDisplayCommand.h in Headers */,
+				9A36156A2FBA6A42005F1383 /* ShareWindowCommand.h in Headers */,
+				9A36156B2FBA6A42005F1383 /* ControlPipeName.h in Headers */,
+				9A36156C2FBA6A42005F1383 /* ControlProto.h in Headers */,
+				9A36156D2FBA6A42005F1383 /* _.h in Headers */,
+				9A36156E2FBA6A42005F1383 /* ControlTrayIcon.h in Headers */,
+				9A36156F2FBA6A42005F1383 /* ConnectCommand.h in Headers */,
+				9A3615702FBA6A42005F1383 /* ControlApplication.h in Headers */,
+				9A3615712FBA6A42005F1383 /* UpdateLocalConfigCommand.h in Headers */,
+				9A3615722FBA6A42005F1383 /* ControlAuthDialog.h in Headers */,
+				9A3615732FBA6A42005F1383 /* ControlCommandLine.h in Headers */,
+				9A3615742FBA6A42005F1383 /* UpdateRemoteConfigCommand.h in Headers */,
+				9A3615752FBA6A42005F1383 /* ControlMessage.h in Headers */,
+				9A3615762FBA6A42005F1383 /* SharePrimaryCommand.h in Headers */,
+				9A3615772FBA6A42005F1383 /* SocketIPv4Transport.h in Headers */,
+				9A3615782FBA6A42005F1383 /* OutgoingConnectionDialog.h in Headers */,
+				9A3615792FBA6A42005F1383 /* Transport.h in Headers */,
+				9A36157A2FBA6A42005F1383 /* ShutdownCommand.h in Headers */,
+				9A36157B2FBA6A42005F1383 /* TransportFactory.h in Headers */,
+				9A36157C2FBA6A42005F1383 /* DisconnectAllCommand.h in Headers */,
+				9A36157D2FBA6A42005F1383 /* SetPasswordsDialog.h in Headers */,
+				9A3614DD2FBA3636005F1383 /* AuthTracker.h in Headers */,
+				9A3614DE2FBA3636005F1383 /* BuildTime.h in Headers */,
+				9A3614DF2FBA3636005F1383 /* LogInitListener.h in Headers */,
+				9A3614E02FBA3636005F1383 /* RfbServer.h in Headers */,
+				9A3614E12FBA3636005F1383 /* RfbClientManagerEventListener.h in Headers */,
+				9A3614E22FBA3636005F1383 /* DesktopServerCommandLine.h in Headers */,
+				9A3614E32FBA3636005F1383 /* _.h in Headers */,
+				9A3614E42FBA3636005F1383 /* QueryConnectionApplication.h in Headers */,
+				9A3614E52FBA3636005F1383 /* OutgoingRfbConnectionThread.h in Headers */,
+				9A3614E62FBA3636005F1383 /* application.h in Headers */,
+				9A3614E72FBA3636005F1383 /* ControlServer.h in Headers */,
+				9A3614E82FBA3636005F1383 /* ControlAppAuthenticator.h in Headers */,
+				9A3614E92FBA3636005F1383 /* framework.h in Headers */,
+				9A3614EA2FBA3636005F1383 /* Server.h in Headers */,
+				9A3614EB2FBA3636005F1383 /* ServerApplication.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		9A6BC8B52F8161D4000A4200 /* remoting_rfb_node_desktop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_rfb_node_desktop" */;
+			buildPhases = (
+				9A6BC8B22F8161D4000A4200 /* Headers */,
+				9A6BC8B32F8161D4000A4200 /* Sources */,
+				9A6BC8B42F8161D4000A4200 /* Frameworks */,
+				9A3615952FBA7C23005F1383 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9A3E22052FD41C6000AFAF87 /* PBXTargetDependency */,
+			);
+			name = remoting_rfb_node_desktop;
+			packageProductDependencies = (
+			);
+			productName = remoting_rfb_node;
+			productReference = 9A6BC8B62F8161D4000A4200 /* libremoting_rfb_node_desktop.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9A6BC8AE2F8161D4000A4200 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					9A6BC8B52F8161D4000A4200 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+				};
+			};
+			buildConfigurationList = 9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_rfb_node_desktop" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9A6BC8AD2F8161D4000A4200;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9A6BC8B72F8161D4000A4200 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9A3E21FB2FD41C5100AFAF87 /* Products */;
+					ProjectRef = 9AD3F1832FB191C200CB9A78 /* remoting_rfb.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				9A6BC8B52F8161D4000A4200 /* remoting_rfb_node_desktop */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9A3E22032FD41C5300AFAF87 /* libremoting_rfb.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libremoting_rfb.dylib;
+			remoteRef = 9A3E22022FD41C5300AFAF87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9A3615952FBA7C23005F1383 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_NAME)",
+				"$(WorkspaceDir)/output_copy.txt",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(WorkspaceDir)/time-$(PLATFORM_MODIFIER)/output/$(EXECUTABLE_NAME)",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". $HOME/code/operating_system/tool/bin/_on_after_build_dylib\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9A6BC8B32F8161D4000A4200 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A3614AD2FBA3636005F1383 /* AuthTracker.cpp in Sources */,
+				9A3614AE2FBA3636005F1383 /* RfbClientManagerEventListener.cpp in Sources */,
+				9A3614AF2FBA3636005F1383 /* ServiceControlApplication.cpp in Sources */,
+				9A3614B02FBA3636005F1383 /* framework.cpp in Sources */,
+				9A3614B12FBA3636005F1383 /* DesktopServerApplication.cpp in Sources */,
+				9A3614B22FBA3636005F1383 /* RfbClientManager.cpp in Sources */,
+				9A3614B32FBA3636005F1383 /* EventLogWriter.cpp in Sources */,
+				9A3614B42FBA3636005F1383 /* ServerApplication.cpp in Sources */,
+				9A3614B52FBA3636005F1383 /* ServerCommandLine.cpp in Sources */,
+				9A3614B62FBA3636005F1383 /* ServerListener.cpp in Sources */,
+				9A3614B72FBA3636005F1383 /* ServerHelp.cpp in Sources */,
+				9A3614B82FBA3636005F1383 /* application_main_node.cpp in Sources */,
+				9A3614B92FBA3636005F1383 /* BuildTime.cpp in Sources */,
+				9A3614BA2FBA3636005F1383 /* QueryConnectionCommandLine.cpp in Sources */,
+				9A3614BB2FBA3636005F1383 /* RfbServer.cpp in Sources */,
+				9A3614BC2FBA3636005F1383 /* ControlServer.cpp in Sources */,
+				9A3614BD2FBA3636005F1383 /* ServiceControlCommandLine.cpp in Sources */,
+				9A3614BE2FBA3636005F1383 /* WsConfigRunner.cpp in Sources */,
+				9A3614BF2FBA3636005F1383 /* Server.cpp in Sources */,
+				9A3614C02FBA3636005F1383 /* Task.cpp in Sources */,
+				9A3E220E2FD41FE800AFAF87 /* application_control.cpp in Sources */,
+				9A3614C12FBA3636005F1383 /* Service.cpp in Sources */,
+				9A36153B2FBA6A42005F1383 /* ControlTrayIcon.cpp in Sources */,
+				9A36153C2FBA6A42005F1383 /* ShareDisplayCommand.cpp in Sources */,
+				9A36153D2FBA6A42005F1383 /* ReloadConfigCommand.cpp in Sources */,
+				9A36153E2FBA6A42005F1383 /* ShareAppCommand.cpp in Sources */,
+				9A36153F2FBA6A42005F1383 /* ShareFullCommand.cpp in Sources */,
+				9A3615402FBA6A42005F1383 /* UpdateRemoteConfigCommand.cpp in Sources */,
+				9A3615412FBA6A42005F1383 /* ConnectCommand.cpp in Sources */,
+				9A3E22102FD4201F00AFAF87 /* _control.cpp in Sources */,
+				9A3615422FBA6A42005F1383 /* OutgoingConnectionDialog.cpp in Sources */,
+				9A3615432FBA6A42005F1383 /* SocketIPv4Transport.cpp in Sources */,
+				9A3615442FBA6A42005F1383 /* ShutdownCommand.cpp in Sources */,
+				9A3615452FBA6A42005F1383 /* ShareRectCommand.cpp in Sources */,
+				9A3615462FBA6A42005F1383 /* ControlPipeName.cpp in Sources */,
+				9A3615472FBA6A42005F1383 /* SetPasswordsDialog.cpp in Sources */,
+				9A3615482FBA6A42005F1383 /* RfbClientInfo.cpp in Sources */,
+				9A3615492FBA6A42005F1383 /* DisconnectAllCommand.cpp in Sources */,
+				9A36154A2FBA6A42005F1383 /* ControlApplication.cpp in Sources */,
+				9A36154B2FBA6A42005F1383 /* ControlGate.cpp in Sources */,
+				9A36154C2FBA6A42005F1383 /* MakeRfbConnectionCommand.cpp in Sources */,
+				9A36154E2FBA6A42005F1383 /* ConnectStringParser.cpp in Sources */,
+				9A36154F2FBA6A42005F1383 /* ControlProxy.cpp in Sources */,
+				9A3615502FBA6A42005F1383 /* ControlAuth.cpp in Sources */,
+				9A3615512FBA6A42005F1383 /* ShareWindowCommand.cpp in Sources */,
+				9A3615522FBA6A42005F1383 /* UpdateLocalConfigCommand.cpp in Sources */,
+				9A3615532FBA6A42005F1383 /* AboutDialog.cpp in Sources */,
+				9A3615542FBA6A42005F1383 /* Transport.cpp in Sources */,
+				9A3615552FBA6A42005F1383 /* NamedPipeTransport.cpp in Sources */,
+				9A3615562FBA6A42005F1383 /* ControlAuthDialog.cpp in Sources */,
+				9A3615572FBA6A42005F1383 /* TransportFactory.cpp in Sources */,
+				9A3615582FBA6A42005F1383 /* ControlCommandLine.cpp in Sources */,
+				9A3615592FBA6A42005F1383 /* ControlMessage.cpp in Sources */,
+				9A36155A2FBA6A42005F1383 /* SharePrimaryCommand.cpp in Sources */,
+				9A3614C22FBA3636005F1383 /* AdditionalActionApplication.cpp in Sources */,
+				9A3614C32FBA3636005F1383 /* ControlClient.cpp in Sources */,
+				9A3614C42FBA3636005F1383 /* OutgoingRfbConnectionThread.cpp in Sources */,
+				9A3614C52FBA3636005F1383 /* _.cpp in Sources */,
+				9A3614C62FBA3636005F1383 /* QueryConnectionApplication.cpp in Sources */,
+				9A3614C72FBA3636005F1383 /* ControlAppAuthenticator.cpp in Sources */,
+				9A3614C82FBA3636005F1383 /* QueryConnectionDialog.cpp in Sources */,
+				9A3614C92FBA3636005F1383 /* DesktopServerCommandLine.cpp in Sources */,
+				9A3614CA2FBA3636005F1383 /* application.cpp in Sources */,
+				9A3614CB2FBA3636005F1383 /* ExtraRfbServers.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9A3E22052FD41C6000AFAF87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = remoting_rfb;
+			targetProxy = 9A3E22042FD41C6000AFAF87 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		9A6BC8B82F8161D4000A4200 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A36157E2FBA7093005F1383 /* _____debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_GCD = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_MEMORY_MANAGEMENT = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CPP_STATIC_DESTRUCTORS = YES;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_STATIC_ANALYZER_MODE = deep;
+				CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION = deep;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = NO;
+				CLANG_WARN_ENUM_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_PRAGMA_PACK = NO;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				DEVELOPMENT_TEAM = HS8735NRM5;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(WorkspaceDir)/../operating_system/storage-$(PLATFORM_MODIFIER)/$(CONFIGURATION)/framework",
+				);
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = framework.h;
+				GCC_REUSE_STRINGS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path",
+					"@loader_path",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(WorkspaceDir)/operating_system",
+					"$(WorkspaceDir)/../operating_system/storage-$(PLATFORM_MODIFIER)/$(CONFIGURATION)/library",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SKIP_INSTALL = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/include",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/configuration",
+					"$(WorkspaceDir)/port/include",
+					"$(WorkspaceDir)/source/app/include",
+				);
+				USER_HEADER_SEARCH_PATHS = (
+					.,
+					"$(WorkspaceDir)/source",
+					"$(WorkspaceDir)/source/app",
+					"$(WorkspaceDir)/source/app/_include",
+					"$(WorkspaceDir)/operating_system",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/configuration_selection/$(CONFIGURATION)",
+					"$(WorkspaceDir)/port/_",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/..",
+					"$(PROJECT_DIR)/../..",
+					"$(HOME)/sensitive/sensitive/include",
+				);
+				USE_HEADERMAP = NO;
+				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "";
+				WorkspaceDir = "$(SRCROOT)/../../..";
+			};
+			name = Debug;
+		};
+		9A6BC8B92F8161D4000A4200 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A36157F2FBA7093005F1383 /* _____release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_GCD = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_MEMORY_MANAGEMENT = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CPP_STATIC_DESTRUCTORS = YES;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_STATIC_ANALYZER_MODE = deep;
+				CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION = deep;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = NO;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = NO;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = NO;
+				CLANG_WARN_ENUM_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_PRAGMA_PACK = NO;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				DEVELOPMENT_TEAM = HS8735NRM5;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(WorkspaceDir)/../operating_system/storage-$(PLATFORM_MODIFIER)/$(CONFIGURATION)/framework",
+				);
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = framework.h;
+				GCC_REUSE_STRINGS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path",
+					"@loader_path",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(WorkspaceDir)/operating_system",
+					"$(WorkspaceDir)/../operating_system/storage-$(PLATFORM_MODIFIER)/$(CONFIGURATION)/library",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SKIP_INSTALL = YES;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/include",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/configuration",
+					"$(WorkspaceDir)/port/include",
+					"$(WorkspaceDir)/source/app/include",
+				);
+				USER_HEADER_SEARCH_PATHS = (
+					.,
+					"$(WorkspaceDir)/source",
+					"$(WorkspaceDir)/source/app",
+					"$(WorkspaceDir)/source/app/_include",
+					"$(WorkspaceDir)/operating_system",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)",
+					"$(WorkspaceDir)/operating_system/operating_system-$(PLATFORM_MODIFIER)/configuration_selection/$(CONFIGURATION)",
+					"$(WorkspaceDir)/port/_",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/..",
+					"$(PROJECT_DIR)/../..",
+					"$(HOME)/sensitive/sensitive/include",
+				);
+				USE_HEADERMAP = NO;
+				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "";
+				WorkspaceDir = "$(SRCROOT)/../../..";
+			};
+			name = Release;
+		};
+		9A6BC8BB2F8161D4000A4200 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXECUTABLE_EXTENSION = dylib;
+				MACH_O_TYPE = mh_dylib;
+				PLATFORM_MODIFIER = macos;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9A6BC8BC2F8161D4000A4200 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXECUTABLE_EXTENSION = dylib;
+				MACH_O_TYPE = mh_dylib;
+				PLATFORM_MODIFIER = macos;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9A6BC8B12F8161D4000A4200 /* Build configuration list for PBXProject "remoting_rfb_node_desktop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A6BC8B82F8161D4000A4200 /* Debug */,
+				9A6BC8B92F8161D4000A4200 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9A6BC8BA2F8161D4000A4200 /* Build configuration list for PBXNativeTarget "remoting_rfb_node_desktop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A6BC8BB2F8161D4000A4200 /* Debug */,
+				9A6BC8BC2F8161D4000A4200 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9A6BC8AE2F8161D4000A4200 /* Project object */;
+}

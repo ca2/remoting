@@ -37,7 +37,7 @@ namespace remoting_rfb
                                         ::remoting_rfb::RfbOutputGate *output,
                                         bool viewOnly,
                                         ::subsystem::LogWriter * plogwriter)
-   : m_pdesktop(desktop),
+   : Thread("ClpbrdExch"),m_pdesktop(desktop),
      m_output(output),
      m_viewOnly(viewOnly),
      m_hasNewClip(false),

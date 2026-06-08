@@ -34,7 +34,7 @@ namespace remoting_rfb_node_desktop_control
       ~application() override;
       
       
-      // void init_instance() override;
+      void init_instance() override;
 
       // void on_request(::request * prequest) override;
 
@@ -50,5 +50,4 @@ namespace remoting_rfb_node_desktop_control
    };
 
 } // namespace remoting_rfb_node_desktop
-
 

@@ -75,7 +75,7 @@ namespace remoting_rfb
    // }
 
    DesktopServerWatcher::DesktopServerWatcher() :
-   m_preconnectionlistener(nullptr)
+   Thread("DskSvrWatch"),m_preconnectionlistener(nullptr)
    {
 
 

@@ -33,12 +33,12 @@ namespace remoting_rfb_node_desktop
 
 
    ControlServer::ControlServer(::remoting_rfb_node::Configurator * pconfigurator, ::subsystem::PipeServer *pipeServer, RfbClientManager *rfbClientManager,
-                                ::subsystem::LogWriter * plogwriter) :
+                                ::subsystem::LogWriter * plogwriter) : Thread("CtrlSvr"),
        m_pconfigurator(pconfigurator),m_ppipeserver(pipeServer), m_prfbclientmanager(rfbClientManager), m_plogwriter(plogwriter)
    {
       constructø(m_pthreadCollector);
       m_pcontrolappauthenticator = allocateø ControlAppAuthenticator(30_s, 3);
-      m_plogwriter->debug("{}"), "::innate_subsystem::Control server started";
+      m_plogwriter->debug("{}", "::innate_subsystem::Control server started");
 
       resumeThread();
       
@@ -78,12 +78,12 @@ namespace remoting_rfb_node_desktop
             auto ppipe = m_ppipeserver->accept();
             auto ptransport = allocateø ::remoting_control_desktop::NamedPipeTransport(ppipe);
 
-            ControlClient *clientThread =
-               new ControlClient(m_pconfigurator, ptransport, m_prfbclientmanager, m_pcontrolappauthenticator, ppipe->getFile(), m_plogwriter);
+            auto pcontrolclient =
+               allocateø ControlClient(m_pconfigurator, ptransport, m_prfbclientmanager, m_pcontrolappauthenticator, ppipe->getFile(), m_plogwriter);
 
-            clientThread->resumeThread();
+            pcontrolclient->resumeThread();
 
-            m_pthreadCollector->addThread(clientThread);
+            m_pthreadCollector->addThread(pcontrolclient);
          }
       }
       catch (::subsystem::Exception &ex)

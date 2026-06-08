@@ -23,7 +23,7 @@
 //
 #include "framework.h"
 #include "DesktopWinImpl.h"
-#include "remoting/remoting_macos/desktop/MacosUserInput.h"
+#include "remoting/remoting_rfb_macos/desktop/MacosUserInput.h"
 #include "remoting/remoting_rfb/node_config/Configurator.h"
 #include "remoting/remoting_rfb/desktop_ipc/UpdateHandlerClient.h"
 #include "remoting/remoting_rfb/desktop/UpdateHandlerImpl.h"
@@ -68,7 +68,8 @@ namespace remoting_macos
    //    resume();
    // }
 
-   DesktopWinImpl::DesktopWinImpl()
+   DesktopWinImpl::DesktopWinImpl():
+GuiThread("DskWinImpl")
    {
 
 
@@ -95,7 +96,7 @@ namespace remoting_macos
 
           try
           {
-             m_pupdatehandler = new ::remoting_rfb::UpdateHandlerImpl(m_pconfigurator, this, m_pscreendriverfactory, m_plogwriter);
+                m_pupdatehandler = allocateø ::remoting_rfb::UpdateHandlerImpl(m_pconfigurator, this, m_pscreendriverfactory, m_plogwriter);
              bool ctrlAltDelEnabled = false;
              constructø(m_puserinput);
              m_puserinput->initialize_user_input(this, ctrlAltDelEnabled, m_plogwriter);
@@ -194,7 +195,7 @@ namespace remoting_macos
 
       while (!isThreadTerminating())
       {
-         m_happeningNewUpdate.waitThreadToFinish();
+         m_happeningNewUpdate.wait();
          if (!isThreadTerminating())
          {
             m_plogwriter->debug("DesktopWinImpl sendUpdate()");

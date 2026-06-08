@@ -21,7 +21,6 @@
 		9A9A1F9E2FB3E55C002D39AB /* libapex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F9D2FB3E55C002D39AB /* libapex.dylib */; };
 		9A9A1FA02FB3E56E002D39AB /* libsubsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F9F2FB3E56E002D39AB /* libsubsystem.dylib */; };
 		9A9A1FA22FB3E59D002D39AB /* libinnate_subsystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1FA12FB3E59D002D39AB /* libinnate_subsystem.dylib */; };
-		9A9A1FA32FB3E5D1002D39AB /* libremoting.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A9A1F9C2FB3E54E002D39AB /* libremoting.dylib */; };
 		9A9A1FA42FB3E5ED002D39AB /* ResourceStrings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2722F816EF70047ECA2 /* ResourceStrings.cpp */; };
 		9A9A1FA52FB3E603002D39AB /* remoting_impact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B26D2F816ED30047ECA2 /* remoting_impact.cpp */; };
 		9A9A1FA62FB3E618002D39AB /* ViewerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B27F2F816EF70047ECA2 /* ViewerWindow.h */; };
@@ -79,22 +78,25 @@
 		9A9A1FDA2FB3E618002D39AB /* NewFolderDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2692F816ED30047ECA2 /* NewFolderDialog.cpp */; };
 		9A9A1FEF2FB4033F002D39AB /* remoting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A9A1FEE2FB4033F002D39AB /* remoting.cpp */; };
 		9A9A1FF02FB4033F002D39AB /* remoting.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9A1FED2FB4033F002D39AB /* remoting.h */; };
+		9AE47A802FD2C7A6003088D6 /* libremoting_rfb.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AE47A7F2FD2C7A5003088D6 /* libremoting_rfb.dylib */; };
+		9AE47A8B2FD303CB003088D6 /* OperatingSystemApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AE47A892FD303CB003088D6 /* OperatingSystemApplication.h */; };
+		9AE47A8C2FD303CB003088D6 /* OperatingSystemApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AE47A8A2FD303CB003088D6 /* OperatingSystemApplication.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9A9A1F9B2FB3E54E002D39AB /* PBXContainerItemProxy */ = {
+		9A5940982FD2AFAA007C6F56 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9AD3F1632FB190DB00CB9A78 /* remoting.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9A373EFE2F81647000E892B1;
-			remoteInfo = remoting;
-		};
-		9AD3F18B2FB1920C00CB9A78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AD3F1632FB190DB00CB9A78 /* remoting.xcodeproj */;
+			containerPortal = 9A5940812FD2AF6C007C6F56 /* remoting_rfb.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 9A373EFD2F81647000E892B1;
-			remoteInfo = remoting;
+			remoteInfo = remoting_rfb;
+		};
+		9AE47A7E2FD2C7A5003088D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A5940812FD2AF6C007C6F56 /* remoting_rfb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9A373EFE2F81647000E892B1;
+			remoteInfo = remoting_rfb;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -166,14 +168,16 @@
 		9A26B27E2F816EF70047ECA2 /* ViewerVncAuthHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewerVncAuthHandler.cpp; sourceTree = "<group>"; };
 		9A26B27F2F816EF70047ECA2 /* ViewerWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewerWindow.h; sourceTree = "<group>"; };
 		9A26B2802F816EF70047ECA2 /* ViewerWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ViewerWindow.cpp; sourceTree = "<group>"; };
-		9A373EE12F8162F100E892B1 /* libremoting_client.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_client.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A373EE12F8162F100E892B1 /* libremoting_rfb_client.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libremoting_rfb_client.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A5940812FD2AF6C007C6F56 /* remoting_rfb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting_rfb.xcodeproj; path = ../remoting_rfb/remoting_rfb.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9A9A1F992FB3E54C002D39AB /* libacme.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libacme.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9A1F9D2FB3E55C002D39AB /* libapex.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libapex.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9A1F9F2FB3E56E002D39AB /* libsubsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libsubsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9A1FA12FB3E59D002D39AB /* libinnate_subsystem.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libinnate_subsystem.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A9A1FED2FB4033F002D39AB /* remoting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = remoting.h; sourceTree = "<group>"; };
 		9A9A1FEE2FB4033F002D39AB /* remoting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = remoting.cpp; sourceTree = "<group>"; };
-		9AD3F1632FB190DB00CB9A78 /* remoting.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remoting.xcodeproj; path = ../remoting/remoting.xcodeproj; sourceTree = SOURCE_ROOT; };
+		9AE47A892FD303CB003088D6 /* OperatingSystemApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OperatingSystemApplication.h; sourceTree = "<group>"; };
+		9AE47A8A2FD303CB003088D6 /* OperatingSystemApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OperatingSystemApplication.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A9A1FA32FB3E5D1002D39AB /* libremoting.dylib in Frameworks */,
+				9AE47A802FD2C7A6003088D6 /* libremoting_rfb.dylib in Frameworks */,
 				9A9A1FA22FB3E59D002D39AB /* libinnate_subsystem.dylib in Frameworks */,
 				9A9A1FA02FB3E56E002D39AB /* libsubsystem.dylib in Frameworks */,
 				9A9A1F9E2FB3E55C002D39AB /* libapex.dylib in Frameworks */,
@@ -208,7 +212,7 @@
 		9A373ED82F8162F100E892B1 = {
 			isa = PBXGroup;
 			children = (
-				9AD3F1632FB190DB00CB9A78 /* remoting.xcodeproj */,
+				9A5940812FD2AF6C007C6F56 /* remoting_rfb.xcodeproj */,
 				9A373EF02F8163CA00E892B1 /* client */,
 				9A0B949B2FB2CB1900EEAAE1 /* Frameworks */,
 				9A373EE22F8162F100E892B1 /* Products */,
@@ -218,7 +222,7 @@
 		9A373EE22F8162F100E892B1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A373EE12F8162F100E892B1 /* libremoting_client.dylib */,
+				9A373EE12F8162F100E892B1 /* libremoting_rfb_client.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -270,6 +274,8 @@
 				9A26B2652F816ED30047ECA2 /* LoginDialog.cpp */,
 				9A26B2682F816ED30047ECA2 /* NewFolderDialog.h */,
 				9A26B2692F816ED30047ECA2 /* NewFolderDialog.cpp */,
+				9AE47A892FD303CB003088D6 /* OperatingSystemApplication.h */,
+				9AE47A8A2FD303CB003088D6 /* OperatingSystemApplication.cpp */,
 				9A26B26A2F816ED30047ECA2 /* OptionsDialog.h */,
 				9A26B26B2F816ED30047ECA2 /* OptionsDialog.cpp */,
 				9A9A1FED2FB4033F002D39AB /* remoting.h */,
@@ -298,10 +304,10 @@
 			name = client;
 			sourceTree = "<group>";
 		};
-		9AD3F1672FB190DB00CB9A78 /* Products */ = {
+		9A5940872FD2AF6C007C6F56 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A9A1F9C2FB3E54E002D39AB /* libremoting.dylib */,
+				9AE47A7F2FD2C7A5003088D6 /* libremoting_rfb.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -315,6 +321,7 @@
 			files = (
 				9A9A1FA62FB3E618002D39AB /* ViewerWindow.h in Headers */,
 				9A9A1FA72FB3E618002D39AB /* impact_toolbar.h in Headers */,
+				9AE47A8B2FD303CB003088D6 /* OperatingSystemApplication.h in Headers */,
 				9A9A1FA82FB3E618002D39AB /* keyboard_layout_change.h in Headers */,
 				9A9A1FA92FB3E618002D39AB /* FileExistDialog.h in Headers */,
 				9A9A1FAA2FB3E618002D39AB /* framework.h in Headers */,
@@ -364,13 +371,13 @@
 			buildRules = (
 			);
 			dependencies = (
-				9AD3F18C2FB1920C00CB9A78 /* PBXTargetDependency */,
+				9A5940992FD2AFAA007C6F56 /* PBXTargetDependency */,
 			);
 			name = remoting_rfb_client;
 			packageProductDependencies = (
 			);
 			productName = remoting;
-			productReference = 9A373EE12F8162F100E892B1 /* libremoting_client.dylib */;
+			productReference = 9A373EE12F8162F100E892B1 /* libremoting_rfb_client.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -401,8 +408,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 9AD3F1672FB190DB00CB9A78 /* Products */;
-					ProjectRef = 9AD3F1632FB190DB00CB9A78 /* remoting.xcodeproj */;
+					ProductGroup = 9A5940872FD2AF6C007C6F56 /* Products */;
+					ProjectRef = 9A5940812FD2AF6C007C6F56 /* remoting_rfb.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -413,11 +420,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		9A9A1F9C2FB3E54E002D39AB /* libremoting.dylib */ = {
+		9AE47A7F2FD2C7A5003088D6 /* libremoting_rfb.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
-			path = libremoting.dylib;
-			remoteRef = 9A9A1F9B2FB3E54E002D39AB /* PBXContainerItemProxy */;
+			path = libremoting_rfb.dylib;
+			remoteRef = 9AE47A7E2FD2C7A5003088D6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -455,6 +462,7 @@
 				9A26B2832F816F280047ECA2 /* AboutDialog.cpp in Sources */,
 				9A26B2842F816F280047ECA2 /* BuildTime.cpp in Sources */,
 				9A26B2852F816F280047ECA2 /* ConnectingDialog.cpp in Sources */,
+				9AE47A8C2FD303CB003088D6 /* OperatingSystemApplication.cpp in Sources */,
 				9A9A1FC62FB3E618002D39AB /* ViewerWindow.cpp in Sources */,
 				9A9A1FEF2FB4033F002D39AB /* remoting.cpp in Sources */,
 				9A9A1FC72FB3E618002D39AB /* ViewerMenu.cpp in Sources */,
@@ -489,10 +497,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9AD3F18C2FB1920C00CB9A78 /* PBXTargetDependency */ = {
+		9A5940992FD2AFAA007C6F56 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = remoting;
-			targetProxy = 9AD3F18B2FB1920C00CB9A78 /* PBXContainerItemProxy */;
+			name = remoting_rfb;
+			targetProxy = 9A5940982FD2AFAA007C6F56 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

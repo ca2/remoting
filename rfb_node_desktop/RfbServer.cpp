@@ -36,6 +36,7 @@ namespace remoting_rfb_node_desktop
                         ::u16 bindPort,
                         RfbClientManager *clientManager, bool lockAddr, ::subsystem::LogWriter * plogwriter,
                         const ::i32_rectangle &rectangleViewport) :
+Thread("rfbSvr"),
        TcpServer(scopedstrBindHost, bindPort, false, lockAddr), m_pconfigurator(pconfigurator),
       m_clientManager(clientManager), m_plogwriter(plogwriter)
 

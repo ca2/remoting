@@ -26,6 +26,7 @@
 #include "remoting/rfb_node_desktop/resource.h"
 #include "innate_subsystem/gui/Tab.h"
 #include "subsystem/_common_header.h"
+void ns_lets_check_localizable_path();
 namespace remoting_rfb_node
 {
    ConfigDialog::ConfigDialog(Configurator * pconfigurator, ::remoting_rfb_node::ControlCommand *reloadConfigCommand)
@@ -106,7 +107,8 @@ namespace remoting_rfb_node
       //HWND dialogHwnd = operating_system_window();
 
       dialog_item(m_ctrlApplyButton, IDC_APPLY);
-      subclassControlById(m_tabControl, IDC_CONFIG_TAB);
+      //subclassControlById(m_tabControl, IDC_CONFIG_TAB);
+      dialog_item(m_tabControl, IDC_CONFIG_TAB);
 
       //
       // Change caption of dialog
@@ -159,44 +161,48 @@ namespace remoting_rfb_node
       m_pconfigurator->setServiceFlag(m_isConfiguringService);
 
       initControls();
+      
 
-      m_tabControl.addTab(NULL, "Temp");
+
+//      m_tabControl.addTab(NULL, "Temp");
 
       auto pwindowImpl = impl< ::innate_subsystem::WindowInterface>();
 
-      m_serverConfigDialog.setParent(pwindowImpl);
+      m_serverConfigDialog.setParent(&m_tabControl);
       m_serverConfigDialog.setParentDialog(this);
-      m_serverConfigDialog.create();
-      m_tabControl.moveWindowToTabControl(&m_serverConfigDialog);
+      m_serverConfigDialog.create(true);
+      //m_tabControl.moveWindowToTabControl(&m_serverConfigDialog);
 
-      m_portMappingDialog.setParent(pwindowImpl);
+      m_portMappingDialog.setParent(&m_tabControl);
       m_portMappingDialog.setParentDialog(this);
-      m_portMappingDialog.create();
-      m_tabControl.moveWindowToTabControl(&m_portMappingDialog);
-      m_portMappingDialog.hide();
+      m_portMappingDialog.create(true);
+      //m_tabControl.moveWindowToTabControl(&m_portMappingDialog);
+      //m_portMappingDialog.hide(true;
 
-      m_administrationConfigDialog.setParent(pwindowImpl);
+      m_administrationConfigDialog.setParent(&m_tabControl);
       m_administrationConfigDialog.setParentDialog(this);
-      m_administrationConfigDialog.create();
-      m_tabControl.moveWindowToTabControl(&m_administrationConfigDialog);
+      m_administrationConfigDialog.create(true);
+      //m_tabControl.moveWindowToTabControl(&m_administrationConfigDialog);
 
-      m_ipAccessControlDialog.setParent(pwindowImpl);
+      m_ipAccessControlDialog.setParent(&m_tabControl);
       m_ipAccessControlDialog.setParentDialog(this);
-      m_ipAccessControlDialog.create();
-      m_tabControl.moveWindowToTabControl(&m_ipAccessControlDialog);
+      m_ipAccessControlDialog.create(true);
+      //m_tabControl.moveWindowToTabControl(&m_ipAccessControlDialog);
 
-      m_videoRegionsConfigDialog.setParent(pwindowImpl);
+      m_videoRegionsConfigDialog.setParent(&m_tabControl);
       m_videoRegionsConfigDialog.setParentDialog(this);
-      m_videoRegionsConfigDialog.create();
-      m_tabControl.moveWindowToTabControl(&m_videoRegionsConfigDialog);
+      m_videoRegionsConfigDialog.create(true);
+      //m_tabControl.moveWindowToTabControl(&m_videoRegionsConfigDialog);
+      ns_lets_check_localizable_path();
 
+      //m_tabControl.removeTab(0);
+      
       m_tabControl.addTab(&m_serverConfigDialog, MainSubsystem().StringTable().getString(IDS_SERVER_TAB_CAPTION));
       m_tabControl.addTab(&m_portMappingDialog, MainSubsystem().StringTable().getString(IDS_EXTRA_PORTS_TAB_CAPTION));
       m_tabControl.addTab(&m_ipAccessControlDialog, MainSubsystem().StringTable().getString(IDS_ACCESS_CONTROL_TAB_CAPTION));
       m_tabControl.addTab(&m_videoRegionsConfigDialog, MainSubsystem().StringTable().getString(IDS_VIDEO_WINDOWS_TAB_CAPTION));
       m_tabControl.addTab(&m_administrationConfigDialog, MainSubsystem().StringTable().getString(IDS_ADMINISTRATION_TAB_CAPTION));
 
-      m_tabControl.removeTab(0);
 
       m_tabControl.showTab(m_lastSelectedTabIndex);
       m_tabControl.setFocus();
@@ -216,14 +222,14 @@ namespace remoting_rfb_node
 
    void ConfigDialog::onCancelButtonClick()
    {
-      closeDialog(0);
+      closeDialog(::innate_subsystem::e_control_id_cancel);
    }
 
    void ConfigDialog::onOKButtonClick()
    {
       onApplyButtonClick();
       if (!m_ctrlApplyButton.isEnabled()) { // onApplyButtonClick() has been successfully processed.
-         closeDialog(0);
+         closeDialog(::innate_subsystem::e_control_id_cancel);
       }
    }
 

@@ -22,11 +22,11 @@
 //-------------------------------------------------------------------------
 //
 #include "framework.h"
-#include "remoting/remoting_macos/desktop/DesktopFactory.h"
+#include "remoting/remoting_rfb_macos/desktop/DesktopFactory.h"
 
 #include "acme/platform/ProfileLogger.h"
-#include "remoting/remoting_macos/desktop/DesktopClientImpl.h"
-#include "remoting/remoting_macos/desktop/DesktopWinImpl.h"
+#include "remoting/remoting_rfb_macos/desktop/DesktopClientImpl.h"
+#include "remoting/remoting_rfb_macos/desktop/DesktopWinImpl.h"
 #include "remoting/remoting_rfb/node_config/Configurator.h"
 
 

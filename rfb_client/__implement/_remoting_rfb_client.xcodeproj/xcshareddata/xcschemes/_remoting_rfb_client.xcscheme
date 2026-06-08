@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "070B8EE91B6E53F900D26137"
-               BuildableName = "_app_app.app"
-               BlueprintName = "_app_app"
-               ReferencedContainer = "container:_app_app.xcodeproj">
+               BuildableName = "_remoting_rfb_client.app"
+               BlueprintName = "_remoting_rfb_client"
+               ReferencedContainer = "container:_remoting_rfb_client.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,20 +45,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "070B8EE91B6E53F900D26137"
-            BuildableName = "_remoting_client.app"
-            BlueprintName = "_remoting_client"
-            ReferencedContainer = "container:_remoting_client.xcodeproj">
+            BuildableName = "_remoting_rfb_client.app"
+            BlueprintName = "_remoting_rfb_client"
+            ReferencedContainer = "container:_remoting_rfb_client.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "070B8EE91B6E53F900D26137"
-            BuildableName = "_app_app.app"
-            BlueprintName = "_app_app"
-            ReferencedContainer = "container:_app_app.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -66,23 +57,13 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "070B8EE91B6E53F900D26137"
-            BuildableName = "_app_app.app"
-            BlueprintName = "_app_app"
-            ReferencedContainer = "container:_app_app.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "070B8EE91B6E53F900D26137"
-            BuildableName = "_app_app.app"
-            BlueprintName = "_app_app"
-            ReferencedContainer = "container:_app_app.xcodeproj">
+            BuildableName = "_remoting_rfb_client.app"
+            BlueprintName = "_remoting_rfb_client"
+            ReferencedContainer = "container:_remoting_rfb_client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

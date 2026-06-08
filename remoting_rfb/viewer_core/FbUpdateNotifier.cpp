@@ -31,7 +31,7 @@
 namespace remoting_rfb_client
 {
    FbUpdateNotifier::FbUpdateNotifier(::innate_subsystem::Framebuffer *pframebuffer, lockable_critical_section *pcriticalsectionFramebuffer, ::subsystem::LogWriter * plogwriter, WatermarksController* pwatermarkscontroller)
-   : m_pframebuffer(pframebuffer),
+   : Thread("fbUpdNotf"), m_pframebuffer(pframebuffer),
      m_pcriticalsectionFramebuffer(pcriticalsectionFramebuffer),
      m_plogwriter(plogwriter),
      m_cursorpainter(pframebuffer, plogwriter),
