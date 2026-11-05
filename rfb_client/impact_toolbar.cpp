@@ -672,8 +672,8 @@ namespace remoting_rfb_client
       if (eid==id_minimize)
       {
 
-         system()->m_papplication->HideApplication();
-         //m_pdesktopwindow->m_pviewerwindow->minimizeWindow();
+         //system()->m_papplication->HideApplication();
+         m_pdesktopwindow->m_pviewerwindow->minimizeWindow();
 
          return true;
       }
