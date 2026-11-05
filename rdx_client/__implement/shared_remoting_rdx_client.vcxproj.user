@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>C:\Users\camilo\Desktop\eddie.camilothomas.com.remoting_rdx</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>M:\Dropbox\application\app-core\desk\BILBO\main-monitor\3desk\manjaro.eddie.rdp</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArgumentsHistory>C:\Users\camilo\Desktop\fox.remoting|C:\Users\camilo\Desktop\canada5.camilothomas.com.remoting_rdx|C:\Users\camilo\Desktop\eddie.camilothomas.com.remoting_rdx|</LocalDebuggerCommandArgumentsHistory>
+    <LocalDebuggerCommandArgumentsHistory>C:\Users\camilo\Desktop\fox.remoting|C:\Users\camilo\Desktop\canada5.camilothomas.com.remoting_rdx|C:\Users\camilo\Desktop\eddie.camilothomas.com.remoting_rdx|M:\Dropbox\application\app-core\desk\BILBO\main-monitor\3desk\manjaro.eddie.rdp|</LocalDebuggerCommandArgumentsHistory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <LocalDebuggerCommandArguments />
