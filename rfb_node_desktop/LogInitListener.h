@@ -29,7 +29,7 @@ namespace remoting_rfb_node_desktop
    
    
    class CLASS_DECL_REMOTING_RFB_NODE_DESKTOP LogInitListener :
-      virtual public ::Particle
+      virtual public ::subsystem::Particle
    {
    public:
       

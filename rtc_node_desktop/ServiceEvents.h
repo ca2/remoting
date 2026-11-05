@@ -32,7 +32,7 @@ namespace remoting_node_desktop
 
 
    class CLASS_DECL_REMOTING_RTC_NODE_DESKTOP ServiceEvents :
-      virtual public ::Particle
+      virtual public ::subsystem::Particle
    {
    public:
      virtual void onSuccServiceStart() = 0;

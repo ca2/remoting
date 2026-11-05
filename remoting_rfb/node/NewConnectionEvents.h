@@ -30,7 +30,7 @@ namespace remoting_rfb_node
 
 
    class NewConnectionEvents :
-      virtual public ::Particle
+      virtual public ::subsystem::Particle
    {
    public:
       virtual void onSuccAuth(const ::scoped_string &ip) = 0;
