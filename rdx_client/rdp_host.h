@@ -67,7 +67,7 @@ namespace remoting_rdx_client
       //bool on_window_mouse_activate(::i32 &iResult, const operating_system::window &operatingsystemwindowTop, ::i32 iHitTest, ::i32 iMessage) override;
 
 
-      virtual void on_create_window();
+      bool on_window_create(::user::window_create_t * pwindowcreate) override;
 
 
       bool _on_window_procedure(lresult &lresult, u32 message, wparam wparam, lparam lparam) override;

@@ -72,7 +72,7 @@ namespace str
 {
 
 
-   ::string to_ansi(::u8 * puch, ::i32 iSize)
+   ::string to_ansi(::u8 * puch, ::character_count iSize)
    {
 
       ::string str;

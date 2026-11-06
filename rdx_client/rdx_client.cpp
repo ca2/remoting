@@ -229,7 +229,7 @@ namespace remoting_rdx_client
       // m_pmainwindow->m_rectangle.set_width(1400);
       // m_pmainwindow->m_rectangle.set_height(900);
 
-      m_pmainwindow->create_window();
+      m_pmainwindow->create_window(e_parallelization_synchronous);
 
 
       //m_pmainwindow->show_window(SW_SHOW);

@@ -13,6 +13,7 @@
 #include "acme/nano/graphics/context.h"
 #include "acme/nano/idn/idn.h"
 #include "acme/nano/nano.h"
+#include "acme/user/interface/message_box.h"
 //#include "rdp_host.h"
 #include "toolbar.h"
 
@@ -547,12 +548,20 @@ namespace remoting_rdx_client
    }
 
 
-   void rdp_host::on_create_window()
+   bool rdp_host::on_window_create(::user::window_create_t * pwindowcreate)
    {
+
+
+      if (!::windows::com_window::on_window_create(pwindowcreate))
+      {
+
+         return false;
+
+      }
 
       m_rclsid = CLSID_MsRdpClient9NotSafeForScripting;
 
-      com_window::on_create_window();
+      com_window::on_window_create(pwindowcreate);
 
       auto hr = m_poleobject.as(m_pinternal->m_prdpclient);
 
@@ -561,9 +570,13 @@ namespace remoting_rdx_client
       if (FAILED(hr))
       {
 
-         MessageBox(hwnd, L"QueryInterface failed", L"Error", MB_ICONERROR);
+         auto pmessagebox = message_box("QueryInterface failed", L"Error");
 
-         return;
+         pmessagebox->display(::e_display_normal, {});
+
+         pmessagebox->wait_for_dialog_response();
+
+         return false;
 
       }
 

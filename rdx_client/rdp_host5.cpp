@@ -1225,7 +1225,7 @@ LRESULT CALLBACK WndProc(
 
        g_pwindow->m_windowswindow = hwnd;
 
-g_pmainwindow->on_create_window();
+g_pmainwindow->on_window_create();
         // HRESULT hr = CreateRdpControl(hwnd);
         //
         // if (FAILED(hr))

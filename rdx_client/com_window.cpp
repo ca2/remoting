@@ -319,8 +319,15 @@ namespace windows
    }
 
 
-   void com_window::on_create_window()
+   bool com_window::on_window_create(::user::window_create_t * pwindowcreate)
    {
+
+      if (!::acme::user::interaction::on_window_create(pwindowcreate))
+      {
+
+         return false;
+
+      }
 
       auto hwnd = ::as_HWND(this->operating_system_window());
 
@@ -340,7 +347,7 @@ namespace windows
 
          pmessagebox->display(e_display_normal, {});
 
-         return;
+         return false;
 
       }
 
@@ -359,6 +366,8 @@ namespace windows
       ///::comptr < IOleInPlaceObject > pinplaceobject;
 
       m_poleobject.as(m_pclientsite->m_pinplacesite->m_pinplaceframe->m_pinplaceobject);
+
+      return true;
 
    }
 

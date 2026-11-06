@@ -67,7 +67,7 @@ namespace windows
       bool on_window_mouse_activate(::i32 &iResult, const operating_system::window &operatingsystemwindowTop, ::i32 iHitTest, ::i32 iMessage) override;
 
 
-      virtual void on_create_window();
+      bool on_window_create(::user::window_create_t * pwindowcreate) override;
 
       //void install_message_routing(::channel * pchannel) override;
 

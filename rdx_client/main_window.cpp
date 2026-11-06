@@ -881,8 +881,15 @@ namespace remoting_rdx_client
    }
 
 
-   void main_window::on_create_window()
+   bool main_window::on_window_create(::user::window_create_t * pwindowcreate)
    {
+
+      if (::acme::user::interaction::on_window_create(pwindowcreate))
+      {
+
+         return false;
+
+      }
 
       m_papplication->set_main_acme_user_interaction(this);
 
@@ -1010,7 +1017,7 @@ namespace remoting_rdx_client
 
       m_prdphost->m_rectangle = this->m_rectangle;
 
-      m_prdphost->create_window();
+      m_prdphost->create_window(e_parallelization_synchronous);
 
       defer_update_rdp_host_size();
 
@@ -1044,7 +1051,7 @@ namespace remoting_rdx_client
 
      m_ptoolbar->m_pmainwindow = this;
 
-     m_ptoolbar->create_window();
+     m_ptoolbar->create_window(e_parallelization_synchronous);
 
      m_ptoolbar->Place(sizeMainScreen.width() /2 - sizeToolbar.cx / 2, 0, sizeToolbar.cx, sizeToolbar.cy);
 
