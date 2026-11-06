@@ -86,7 +86,7 @@ namespace remoting_rdx_client
 
       string get_title() override;
 
-      void on_window_size() override;
+      void on_window_size(const ::i32_size& size) override;
       //void on_window_set_focus() override;
       //bool on_window_activate(::i32 iActivate, bool bMinimized, const ::operating_system::window & operatingsystemwindow) override;
       //bool on_window_mouse_activate(::i32 &iResult, const operating_system::window &operatingsystemwindowTop, ::i32 iHitTest, ::i32 iMessage) override;

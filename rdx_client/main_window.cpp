@@ -220,7 +220,7 @@ namespace remoting_rdx_client
    // }
    //
    //
-   void main_window::on_window_size()
+   void main_window::on_window_size(const ::i32_size & size)
    {
 
    }
@@ -623,7 +623,7 @@ namespace remoting_rdx_client
             if (wparam == 1453)
             {
 
-               show_window(SW_SHOW);
+               show_window(::user_interface::e_show_window_show_normal);
 
                auto hwnd = ::as_HWND(this->operating_system_window());
                KillTimer(hwnd, 1453);
@@ -859,7 +859,7 @@ namespace remoting_rdx_client
 
       KillTimer(hwnd, 1453);
 
-      show_window(SW_HIDE);
+      show_window(::user_interface::e_show_window_hide);
 
       if (m_prdphost)
       {
@@ -884,7 +884,7 @@ namespace remoting_rdx_client
    void main_window::on_create_window()
    {
 
-      m_papplication->m_pacmeuserinteractionMain = this;
+      m_papplication->set_main_acme_user_interaction(this);
 
       //m_rclsid = __uuidof(RDP::MsRdpClient9);
 
@@ -1031,7 +1031,7 @@ namespace remoting_rdx_client
 
      m_ptoolbar->m_strTitle = papp->m_strHost;
 
-     ::i32_size sizeToolbar(400 * get_window_scale(), 24 * get_window_scale());
+     ::i32_size sizeToolbar(400 * get_density_for_window(), 24 * get_density_for_window());
 
      set_window_text(papp->m_strHost);
 
@@ -1049,7 +1049,7 @@ namespace remoting_rdx_client
      m_ptoolbar->Place(sizeMainScreen.width() /2 - sizeToolbar.cx / 2, 0, sizeToolbar.cx, sizeToolbar.cy);
 
 
-     m_ptoolbar->show_window(SW_SHOW);
+     m_ptoolbar->show_window(::user_interface::e_show_window_show_normal);
      m_ptoolbar->Redraw();
      m_ptoolbar->InstallMouseHook();
      // ShowWindow(m_hwnd, SW_SHOW);
@@ -1366,7 +1366,7 @@ namespace remoting_rdx_client
    void main_window::OnRdpLoginComplete() {
 
 
-      show_window(SW_SHOW);
+      show_window(::user_interface::e_show_window_show_normal);
 
    }
 
@@ -1518,12 +1518,12 @@ namespace remoting_rdx_client
 
       m_prdphost->onExitFullscreen();
 
-      m_ptoolbar->show_window(SW_HIDE);
+      m_ptoolbar->show_window(::user_interface::e_show_window_hide);
       m_ptoolbar ->m_bMouseEnable = false;
       m_ptoolbar->m_ehitHover = toolbar::e_hit_none;
       m_ptoolbar->m_ehitPress = toolbar::e_hit_none;
       m_ptoolbar->Redraw();
-      show_window(SW_MINIMIZE);
+      show_window(::user_interface::e_show_window_minimize);
 
    }
 

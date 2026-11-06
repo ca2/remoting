@@ -4,6 +4,7 @@
 #include "acme/handler/request.h"
 #include "acme/operating_system/windows/window.h"
 #include "acme/platform/system.h"
+#include "acme/user/interface/message_box.h"
 #include "acme_windowing_win32/_.h"
 #include "acme_windowing_win32/windowing.h"
 #include "main_rdp_host.h"
@@ -102,7 +103,11 @@ namespace remoting_rdx_client
          if (strHost.is_empty())
          {
 
-            send_message_box("host: not specified", "host not specified");
+            auto pmessagebox = message_box("host: not specified", "host not specified");
+
+            pmessagebox->display(e_display_normal, {});
+
+            pmessagebox->wait_dialog_response();
 
             set_finish();
 

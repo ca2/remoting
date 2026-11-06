@@ -774,12 +774,16 @@ void toolbar::RenderLayered()
 
             auto ppenBorder = createø<::nano::graphics::pen>();
 
-            ppenBorder->create_pen(::argb(180, 255, 255, 255), 1.5);
+            ppenBorder->create_pen(::nano::graphics::e_pen_solid, 1.5, ::argb(180, 255, 255, 255));
             //Pen border(
             //    Color(180, 255, 255, 255),
             //    1.5f);
 
-            pgraphicscontext->do_path(ppath, pbrushBackground, ppenBorder);
+            pgraphicscontext->set_brush(pbrushBackground);
+            pgraphicscontext->set_pen(ppenBorder);
+
+            //pgraphicscontext->do_path(ppath, pbrushBackground, ppenBorder);
+            pgraphicscontext->do_path(ppath);
 
             //pgraphicscontext->DrawPath(&border, &path);
 
@@ -928,7 +932,7 @@ void toolbar::RenderLayered()
             //    FontStyleRegular,
             //    UnitPixel);
 
-            auto pfontText = pnanographics->create_pixel_font(e_font_sans_ui, 12. * get_window_scale(), false);
+            auto pfontText = pnanographics->create_pixel_font(e_font_sans_ui, 12. * get_density_for_window(), false);
 
 
             auto pbrushText = pnanographics->create_solid_brush(::argb(230, 255, 255, 255));
@@ -942,9 +946,9 @@ void toolbar::RenderLayered()
             //leftAlign.SetLineAlignment(
             //    StringAlignmentCenter);
 
-            auto rectangleTitle = ::f64_rectangle_dimension(10. * get_window_scale(),
+            auto rectangleTitle = ::f64_rectangle_dimension(10. * get_density_for_window(),
                 0.,
-                300. * get_window_scale(),
+                300. * get_density_for_window(),
                 (::f64) m_size.height());
 
             ::wstring wstrTitle(m_strTitle);
@@ -957,15 +961,20 @@ void toolbar::RenderLayered()
                 &leftAlign,
                 &textBrush);*/
 
-            pgraphicscontext->draw_text123(m_strTitle, rectangleTitle, e_align_left_center, e_draw_text_none, nullptr,
-                                           pbrushText, pfontText);
+            pgraphicscontext->set_brush(pbrushText);
+
+            pgraphicscontext->set_font(pfontText);
+
+            pgraphicscontext->draw_text123(m_strTitle, rectangleTitle,
+                e_draw_text_none, e_align_left_center/* , nullptr,
+                                           pbrushText, pfontText*/);
 
             //
             // Window buttons (right side)
             //
 
-            const ::f64 btnSize = m_btnSize * get_window_scale();
-            const ::f64 btnSpce = m_btnSpacing* get_window_scale();
+            const ::f64 btnSize = m_btnSize * get_density_for_window();
+            const ::f64 btnSpce = m_btnSpacing* get_density_for_window();
 
             ::f64 closeX =
                 (::f64)m_size.width() - btnSize - 10.f;
@@ -1022,7 +1031,11 @@ void toolbar::RenderLayered()
             //    &minBrush,
             //    rcMin);
 
-            pgraphicscontext->ellipse(rectangleMinimize, pbrushMinimize, nullptr);
+            pgraphicscontext->set_brush(pbrushMinimize);
+
+            pgraphicscontext->set_pen(nullptr);
+
+            pgraphicscontext->ellipse(rectangleMinimize);
 
             ::color::color colorRestore = m_ehitHover == e_hit_restore
        ? ::argb(120, 255, 255, 255)
@@ -1035,7 +1048,12 @@ void toolbar::RenderLayered()
             //    &resBrush,
             //    rcRestore);
 
-            pgraphicscontext->ellipse(rectangleRestore, pbrushRestore, nullptr);
+            pgraphicscontext->set_brush(pbrushRestore);
+
+            pgraphicscontext->set_pen(nullptr);
+
+
+            pgraphicscontext->ellipse(rectangleRestore);
             ::color::color colorClose = m_ehitHover == e_hit_close
        ? ::argb(200, 255, 80, 80)
        : ::argb(120, 220, 60, 60);
@@ -1047,13 +1065,17 @@ void toolbar::RenderLayered()
             //    &closeBrush,
             //    rectangleClose);
 
-            pgraphicscontext->ellipse(rectangleClose, pbrushClose, nullptr);
+            pgraphicscontext->set_brush(pbrushClose);
+
+            pgraphicscontext->set_pen(nullptr);
+
+            pgraphicscontext->ellipse(rectangleClose);
 
             //
             // Glyph pen
             //
 
-            auto ppenGlyph = pnanographics->create_pen(::argb(240, 255, 255, 255), 1.2 * get_window_scale());
+            auto ppenGlyph = pnanographics->create_pen(::nano::graphics::e_pen_solid, 1.2 * get_density_for_window(), ::argb(240, 255, 255, 255));
             //Pen glyphPen(
             //    Color(240,255,255,255),
             //    1.8f);
@@ -1064,7 +1086,7 @@ void toolbar::RenderLayered()
             //glyphPen.SetStartCap(LineCapRound);
             //glyphPen.SetEndCap(LineCapRound);
 
-            ::f64 fSmaller = 6 * get_window_scale();
+            ::f64 fSmaller = 6 * get_density_for_window();
 
             //
             // Minimize glyph
@@ -1078,9 +1100,11 @@ void toolbar::RenderLayered()
             //    midY,
             //    rcMin.X + rcMin.Width - fSmaller,
             //    midY);
+
+            pgraphicscontext->set_pen(ppenGlyph);
+
             pgraphicscontext->line({rectangleMinimize.left + fSmaller, midY},
-                                   {rectangleMinimize.left + rectangleMinimize.width() - fSmaller, midY}, 
-                ppenGlyph);
+                                   {rectangleMinimize.left + rectangleMinimize.width() - fSmaller, midY});
 
             //
             // Restore glyph
@@ -1094,18 +1118,20 @@ void toolbar::RenderLayered()
             //    &glyphPen,
             //    restoreInner);
 
-            pgraphicscontext->rectangle(rectangleRestoreInner, nullptr, ppenGlyph);
+            pgraphicscontext->set_brush(nullptr);
+
+            pgraphicscontext->set_pen(ppenGlyph);
+
+            pgraphicscontext->rectangle(rectangleRestoreInner);
             //
             // Close glyph
             //
 
             pgraphicscontext->line({rectangleClose.left + fSmaller, rectangleClose.top + fSmaller},
-                                   {rectangleClose.right - fSmaller, rectangleClose.bottom - fSmaller},
-               ppenGlyph);
+                                   {rectangleClose.right - fSmaller, rectangleClose.bottom - fSmaller});
 
             pgraphicscontext->line({rectangleClose.right - fSmaller, rectangleClose.top + fSmaller},
-                                   {rectangleClose.left + fSmaller, rectangleClose.bottom - fSmaller}
-            , ppenGlyph);
+                                   {rectangleClose.left + fSmaller, rectangleClose.bottom - fSmaller});
 
           }
 

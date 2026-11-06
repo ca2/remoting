@@ -7,14 +7,15 @@
 #include "client_site.h"
 #include "in_place_frame.h"
 #include "in_place_site.h"
-//#include "main_window.h"
+#include "acme/user/interface/message_box.h"
+
 
 namespace windows
 {
 
    com_window::com_window()
    {
-      m_bCustomPaint = false;
+      //m_bCustomPaint = false;
       m_bHasOwnWindow = true;
 
    }
@@ -279,7 +280,7 @@ namespace windows
    }
 
 
-   void com_window::on_window_size()
+   void com_window::on_window_size(const ::i32_size & size)
    {
 
       do_control_layout();
@@ -335,7 +336,9 @@ namespace windows
       if (FAILED(hr))
       {
 
-         post_message_box(L"Failed to create RDP ActiveX", L"Error", ::user::e_message_box_icon_error);
+         auto pmessagebox = message_box(L"Failed to create RDP ActiveX", L"Error", ::user::e_message_box_icon_error);
+
+         pmessagebox->display(e_display_normal, {});
 
          return;
 
