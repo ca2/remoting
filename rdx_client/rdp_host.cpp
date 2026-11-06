@@ -16,11 +16,14 @@
 #include "acme/user/interface/message_box.h"
 //#include "rdp_host.h"
 #include "toolbar.h"
+#include <wincred.h>
 
 #import "mstscax.dll" raw_native_types no_namespace named_guids
 
 #pragma comment(lib, "ole32.lib")
 #pragma comment(lib, "oleaut32.lib")
+#pragma comment(lib, "credui.lib")
+#pragma comment(lib, "advapi32.lib")
 
 
 
@@ -92,7 +95,178 @@ namespace remoting_rdx_client
       ::comptr<IMsRdpClientAdvancedSettings7> m_padvancedsettings;
       ::comptr < IMsRdpExtendedSettings > m_pextendedsettings;
       ::comptr<IMsRdpClientSecuredSettings> m_psecuredsettings;
+      bool prepare_credentials(HWND hwnd, const ::string & strHost, int iPort, bool bPrompt)
+      {
 
+         ::string strTarget;
+         strTarget.formatf("remoting_rdx/%s:%d", strHost.c_str(), iPort > 0 ? iPort : 3389);
+         ::wstring wstrTarget(strTarget);
+
+         struct credential_buffers
+         {
+            WCHAR username[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+            WCHAR domain[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+            WCHAR password[CREDUI_MAX_PASSWORD_LENGTH + 1] = {};
+            ~credential_buffers() { SecureZeroMemory(this, sizeof(*this)); }
+         } credentials;
+
+         struct stored_credential
+         {
+            PCREDENTIALW value = nullptr;
+            ~stored_credential()
+            {
+               if (value)
+               {
+                  if (value->CredentialBlob)
+                     SecureZeroMemory(value->CredentialBlob, value->CredentialBlobSize);
+                  CredFree(value);
+               }
+            }
+         } stored;
+
+         bool bHaveCredentials = false;
+         if (!bPrompt)
+         {
+
+            if (CredReadW(wstrTarget, CRED_TYPE_GENERIC, 0, &stored.value))
+            {
+
+               auto bytes = stored.value->CredentialBlobSize;
+               if (!stored.value->UserName ||
+                   bytes % sizeof(WCHAR) != 0 || bytes >= sizeof(credentials.password) ||
+                   (bytes && !stored.value->CredentialBlob) ||
+                   wcscpy_s(credentials.username, stored.value->UserName) != 0)
+               {
+
+                  throw ::hresult_exception(HRESULT_FROM_WIN32(ERROR_INVALID_DATA));
+
+               }
+
+               if (bytes)
+                  memcpy(credentials.password, stored.value->CredentialBlob, bytes);
+               // Match the domain/username split used by the Windows dialog.
+               auto separator = wcschr(credentials.username, L'\\');
+               if (separator)
+               {
+                  auto domainLength = separator - credentials.username;
+                  wcsncpy_s(credentials.domain, credentials.username, domainLength);
+                  memmove(credentials.username, separator + 1,
+                     (wcslen(separator + 1) + 1) * sizeof(WCHAR));
+               }
+               bHaveCredentials = true;
+
+            }
+            else
+            {
+
+               auto error = GetLastError();
+               if (error != ERROR_NOT_FOUND)
+                  throw ::hresult_exception(HRESULT_FROM_WIN32(error));
+
+            }
+
+         }
+
+         if (!bHaveCredentials)
+         {
+
+            CREDUI_INFOW ui = {};
+            ui.cbSize = sizeof(ui);
+            ui.hwndParent = hwnd;
+            ui.pszCaptionText = L"Remoting RDX credentials";
+            ui.pszMessageText = wstrTarget;
+            BOOL save = FALSE;
+            ULONG authPackage = 0;
+            struct authentication_buffer
+            {
+               void * data = nullptr;
+               ULONG size = 0;
+               ~authentication_buffer()
+               {
+                  if (data)
+                  {
+                     SecureZeroMemory(data, size);
+                     CoTaskMemFree(data);
+                  }
+               }
+            } auth;
+
+            auto result = CredUIPromptForWindowsCredentialsW(&ui, 0, &authPackage,
+               nullptr, 0, &auth.data, &auth.size, &save,
+               CREDUIWIN_GENERIC | CREDUIWIN_CHECKBOX);
+            if (result == ERROR_CANCELLED)
+               return false;
+            if (result != NO_ERROR)
+               throw ::hresult_exception(HRESULT_FROM_WIN32(result));
+
+            DWORD usernameLength = _countof(credentials.username);
+            DWORD domainLength = _countof(credentials.domain);
+            DWORD passwordLength = _countof(credentials.password);
+            if (!CredUnPackAuthenticationBufferW(0, auth.data, auth.size,
+               credentials.username, &usernameLength, credentials.domain, &domainLength,
+               credentials.password, &passwordLength))
+            {
+
+               throw ::hresult_exception(HRESULT_FROM_WIN32(GetLastError()));
+
+            }
+
+            // The modern dialog returns the checkbox state; it does not save.
+            // Persist on explicit consent, independently of server login events.
+            if (save)
+            {
+
+               ::wstring wstrUsername;
+               if (credentials.domain[0])
+               {
+                  wstrUsername = credentials.domain;
+                  wstrUsername += L"\\";
+               }
+               wstrUsername += credentials.username;
+               CREDENTIALW entry = {};
+               entry.Type = CRED_TYPE_GENERIC;
+               entry.TargetName = const_cast<LPWSTR>(static_cast<LPCWSTR>(wstrTarget));
+               entry.UserName = const_cast<LPWSTR>(static_cast<LPCWSTR>(wstrUsername));
+               entry.CredentialBlob = reinterpret_cast<LPBYTE>(credentials.password);
+               entry.CredentialBlobSize = static_cast<DWORD>(wcslen(credentials.password) * sizeof(WCHAR));
+               entry.Persist = CRED_PERSIST_LOCAL_MACHINE;
+               if (!CredWriteW(&entry, 0))
+                  throw ::hresult_exception(HRESULT_FROM_WIN32(GetLastError()));
+
+            }
+
+         }
+
+         ::comptr<IMsRdpClientNonScriptable5> pcredentials;
+         auto hr = m_prdpclient.as(pcredentials);
+         if (SUCCEEDED(hr))
+            hr = pcredentials->put_AllowPromptingForCredentials(VARIANT_FALSE);
+         if (SUCCEEDED(hr))
+            hr = m_prdpclient->put_Domain(_bstr_t(credentials.domain));
+         if (SUCCEEDED(hr))
+            hr = m_prdpclient->put_UserName(_bstr_t(credentials.username));
+         if (SUCCEEDED(hr))
+         {
+
+            BSTR password = SysAllocString(credentials.password);
+            if (!password)
+            {
+               hr = E_OUTOFMEMORY;
+            }
+            else
+            {
+               hr = pcredentials->put_ClearTextPassword(password);
+               SecureZeroMemory(password, SysStringByteLen(password));
+               SysFreeString(password);
+            }
+
+         }
+         if (FAILED(hr))
+            throw ::hresult_exception(hr);
+
+         return true;
+
+      }
 
 
          HRESULT STDMETHODCALLTYPE Invoke(DISPID dispIdMember, REFIID, LCID, WORD, DISPPARAMS *pDispParams, VARIANT *,
@@ -115,9 +289,14 @@ namespace remoting_rdx_client
                   m_pmainwindow->OnRdpLoginComplete();
                   break;
                case rdp::DISPID_DISCONNECTED:
-                  information("RDP Happening : Disconnected");
-                  m_pmainwindow->OnRdpDisconnected();
+               {
+                  ::i32 reason = 0;
+                  if (pDispParams && pDispParams->cArgs >= 1 && pDispParams->rgvarg[0].vt == VT_I4)
+                     reason = pDispParams->rgvarg[0].lVal;
+                  informationf("RDP disconnected: reason=%d", reason);
+                  m_pmainwindow->OnRdpDisconnected(reason);
                   break;
+               }
                case rdp::DISPID_ENTERFULLSCREENMODE:
                   information("RDP Happening : Enter full screen");
                   m_pmainwindow->OnRdpEnterFullScreen();
@@ -183,9 +362,7 @@ namespace remoting_rdx_client
    rdp_host::rdp_host()
    {
 
-      m_pinternal = new rdp_host_internal;
-
-      m_pinternal->m_pmainwindow = this;
+      m_pinternal = nullptr;
 
       //m_dwCookie = 0;
 
@@ -203,14 +380,27 @@ namespace remoting_rdx_client
    rdp_host::~rdp_host()
    {
 
-      if (m_pinternal)
-      {
+      //if (m_pinternal)
+      //{
 
-         delete m_pinternal;
+      //   delete m_pinternal;
 
-         m_pinternal = nullptr;
+      //   m_pinternal = nullptr;
 
-      }
+      //}
+
+   }
+
+
+   void rdp_host::initialize(::particle* pparticle)
+   {
+
+      ::windows::com_window::initialize(pparticle);
+
+      m_pinternal = create_newø<rdp_host_internal>();
+
+      m_pinternal->m_pmainwindow = this;
+
    }
 
 
@@ -474,7 +664,16 @@ namespace remoting_rdx_client
    void rdp_host::shutdown_rdp()
    {
 
+
       show_window(::user_interface::e_show_window_hide);
+
+      // Detach callbacks before Disconnect can notify us synchronously.
+      if (m_pinternal)
+      {
+
+         m_pinternal->close_event_sink();
+
+      }
 
       if (m_pinternal)
       {
@@ -510,17 +709,22 @@ namespace remoting_rdx_client
 
       }
 
-      if (m_pinternal)
-      {
-
-         m_pinternal->close_event_sink();
-
-      }
-
       if (m_poleobject)
       {
 
          m_poleobject->Close(OLECLOSE_NOSAVE);
+         m_poleobject->SetClientSite(nullptr);
+
+      }
+
+      if (m_pclientsite && m_pclientsite->m_pinplacesite &&
+          m_pclientsite->m_pinplacesite->m_pinplaceframe)
+      {
+
+         auto pframe = m_pclientsite->m_pinplacesite->m_pinplaceframe;
+         pframe->m_pinplaceactiveobject.release();
+         pframe->m_pinplaceobject.release();
+         pframe->m_pcomwindow.release();
 
       }
 
@@ -531,9 +735,9 @@ namespace remoting_rdx_client
       if (m_pinternal)
       {
 
-         delete m_pinternal;
-
-         m_pinternal = nullptr;
+         m_pinternal->m_prdpclient.release();
+         m_pinternal->m_pmainwindow.release();
+         m_pinternal.release();
 
       }
 
@@ -552,16 +756,14 @@ namespace remoting_rdx_client
    {
 
 
+      m_rclsid = CLSID_MsRdpClient9NotSafeForScripting;
+
       if (!::windows::com_window::on_window_create(pwindowcreate))
       {
 
          return false;
 
       }
-
-      m_rclsid = CLSID_MsRdpClient9NotSafeForScripting;
-
-      com_window::on_window_create(pwindowcreate);
 
       auto hr = m_poleobject.as(m_pinternal->m_prdpclient);
 
@@ -588,6 +790,28 @@ namespace remoting_rdx_client
        
       ::cast<::remoting_rdx_client::application> papp = m_papplication;
 
+      if (papp->m_bUseRedirectionServerName)
+      {
+
+         ::comptr < IMsRdpPreferredRedirectionInfo > predirectioninfo;
+         auto hrRedirection = m_pinternal->m_prdpclient.as(predirectioninfo);
+
+         if (SUCCEEDED(hrRedirection))
+         {
+
+            hrRedirection = predirectioninfo->put_UseRedirectionServerName(VARIANT_TRUE);
+
+         }
+
+         if (FAILED(hrRedirection))
+         {
+
+            throw ::hresult_exception(hrRedirection);
+
+         }
+
+      }
+
       auto strParse = papp->m_strHost;
 
       auto strName = strParse.get_word(":");
@@ -604,6 +828,7 @@ namespace remoting_rdx_client
       }
 
       auto strPunycode = nano()->idn()->idn_to_punycode(strName);
+      strPunycode.make_lower();
 
       ::wstring wstrHost(strPunycode);
 
@@ -689,7 +914,24 @@ namespace remoting_rdx_client
 
       m_pinternal->m_prdpclient->put_DesktopHeight(screenHeight);
 
+      if (papp->m_bUseWindowsCredentialManager &&
+          !m_pinternal->prepare_credentials(hwnd, strPunycode, iPort, papp->m_bPromptForCredentials))
+      {
+
+         papp->set_finish();
+         return false;
+
+      }
+
       auto hrConnect = m_pinternal->m_prdpclient->Connect();
+      if (FAILED(hrConnect))
+      {
+
+         throw ::hresult_exception(hrConnect);
+
+      }
+
+      return true;
 
    }
 
@@ -718,15 +960,38 @@ namespace remoting_rdx_client
    void rdp_host::OnRdpLoginComplete()
    {
 
+
       m_pmainwindow->doFullscreen();
 
    }
 
 
-   void rdp_host::OnRdpDisconnected()
+   void rdp_host::OnRdpDisconnected(::i32 reason)
    {
 
-      m_pmainwindow->shutdown_rdp();
+      if (m_pmainwindow->m_bIsClosing)
+         return;
+
+      ExtendedDisconnectReasonCode extended = static_cast<ExtendedDisconnectReasonCode>(0);
+      m_pinternal->m_prdpclient->get_ExtendedDisconnectReason(&extended);
+      BSTR description = nullptr;
+      m_pinternal->m_prdpclient->raw_GetErrorDescription(reason, extended, &description);
+      ::string message;
+      message.formatf("Remote Desktop disconnected (reason %d, extended %u).", reason,
+         static_cast<unsigned int>(extended));
+      if (description)
+      {
+         message += "\n\n";
+         message += ::string(description);
+         SysFreeString(description);
+      }
+      information(message);
+      if (reason != 1 && reason != 2)
+         m_pmainwindow->m_strDisconnectMessage = message;
+
+      // Report and close only after returning from the ActiveX callback.
+      auto hwnd = ::as_HWND(m_pmainwindow->operating_system_window());
+      ::PostMessageW(hwnd, WM_APP + 101, 0, 0);
 
    }
 
@@ -843,9 +1108,9 @@ namespace remoting_rdx_client
        rc.right - rc.left,
        rc.bottom - rc.top);
 
-         ::i32 iStyle = get_window_style();
+         auto iStyle = get_window_style();
 
-         strMessage.append_formatf(" style=%08x;", iStyle);
+         strMessage.append_formatf(" style=%016x;", iStyle);
 
          if (iStyle & WS_POPUP)
          {

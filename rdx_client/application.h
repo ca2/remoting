@@ -15,6 +15,9 @@ namespace remoting_rdx_client
       
 
       ::string m_strHost;
+      bool m_bUseRedirectionServerName = false;
+      bool m_bUseWindowsCredentialManager = true;
+      bool m_bPromptForCredentials = false;
 
 
       ::pointer < rdx_client > m_prdxclient;

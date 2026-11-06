@@ -30,9 +30,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{5C3FBF49-7D9A-41EE-90D5-E5AF6F7C0E97}</ProjectGuid>
-    <RootNamespace>app</RootNamespace>
+    <RootNamespace>_remoting_rtc_node_desktop</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>shared_remoting_node_desktop</ProjectName>
+    <ProjectName>_remoting_rtc_node_desktop</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

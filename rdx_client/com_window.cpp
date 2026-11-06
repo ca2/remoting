@@ -3,11 +3,12 @@
 //
 #include "platform.h"
 #include "com_window.h"
-#include "acme/windowing/windowing.h"
 #include "client_site.h"
 #include "in_place_frame.h"
 #include "in_place_site.h"
+#include "acme/platform/node.h"
 #include "acme/user/interface/message_box.h"
+#include "acme/windowing/windowing.h"
 
 
 namespace windows
@@ -142,7 +143,7 @@ namespace windows
     rc.right - rc.left,
     rc.bottom - rc.top);
 
-      ::i32 iStyle = get_window_style();
+      auto iStyle = get_window_style();
 
       strMessage.append_formatf(" style=%08x;", iStyle);
 
@@ -330,6 +331,8 @@ namespace windows
       }
 
       auto hwnd = ::as_HWND(this->operating_system_window());
+
+      node()->defer_co_initialize_ex(false);
 
       construct_newø(m_pclientsite);
 

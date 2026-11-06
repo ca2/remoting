@@ -117,6 +117,14 @@ namespace remoting_rdx_client
 
          m_strHost = strHost;
 
+         ::string strUseRedirectionServerName = ini["use_redirection_server_name"];
+         m_bUseRedirectionServerName = strUseRedirectionServerName == "1";
+
+         ::string strCredentialManager = ini["use_windows_credential_manager"];
+         m_bUseWindowsCredentialManager = strCredentialManager != "0";
+         ::string strPromptForCredentials = ini["prompt_for_credentials"];
+         m_bPromptForCredentials = strPromptForCredentials == "1";
+
          defer_start_rdx_client();
          //::cast < ::win32::acme::windowing::windowing > pacmewindowingwindowing = system()->acme_windowing();
 

@@ -196,6 +196,12 @@ namespace remoting_rdx_client
 
       construct_newø(m_pmainwindow);
 
+      // Window creation is dispatched to the UI thread; this worker owns the
+      // second message loop, which must receive its own WM_QUIT on shutdown.
+      MSG pendingMessage;
+      ::PeekMessageW(&pendingMessage, nullptr, 0, 0, PM_NOREMOVE);
+      m_pmainwindow->m_uClientThreadId = ::GetCurrentThreadId();
+
       HICON hiconBig = (HICON)LoadImage(
       GetModuleHandle(nullptr),
       MAKEINTRESOURCE(IDI_APP_ICON),

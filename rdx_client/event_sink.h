@@ -22,7 +22,7 @@ namespace windows
 
       ::comptr < IConnectionPoint  > m_pconnectionpoint;
 
-DWORD m_dwCookie;
+DWORD m_dwCookie = 0;
 
       event_sink()
       {
@@ -222,6 +222,8 @@ DWORD m_dwCookie;
             m_pconnectionpoint->Unadvise(m_dwCookie);
             m_dwCookie = 0;
          }
+
+         m_pconnectionpoint.release();
 
       }
 

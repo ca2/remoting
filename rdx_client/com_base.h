@@ -23,7 +23,7 @@ namespace windows
       ULONG InternalAddRef()
       {
 
-         return (ULONG) ::maximum(this->increment_reference_count(), 0);
+         return (ULONG) ::maximum(this->_increment_reference_count(), 0);
 
       }
 
@@ -31,7 +31,7 @@ namespace windows
       ULONG InternalRelease()
       {
 
-         return (ULONG) ::maximum(this->release(), 0);
+         return (ULONG) ::maximum(this->_release(), 0);
 
       }
 

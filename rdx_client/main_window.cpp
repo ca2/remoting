@@ -63,6 +63,14 @@ namespace remoting_rdx_client
    }
 
 
+   ::i32_rectangle main_window::initial_frame_rectangle()
+   {
+
+      return m_rectangle;
+
+   }
+
+
    i64 main_window::get_style_for_creating_window()
    {
 
@@ -361,9 +369,25 @@ namespace remoting_rdx_client
    void main_window::do_cancel_mode()
    {
 
-      m_ptoolbar->send_message((::user::enum_message) WM_CANCELMODE);
-      send_message((::user::enum_message) WM_CANCELMODE);
-      m_prdphost->send_message((::user::enum_message) WM_CANCELMODE);
+      // These are native windows; element::send_message routes through the
+      // framework message handler, which does not implement WM_CANCELMODE.
+      const HWND windows[] = {
+         m_ptoolbar ? ::as_HWND(m_ptoolbar->operating_system_window()) : nullptr,
+         ::as_HWND(operating_system_window()),
+         m_prdphost ? ::as_HWND(m_prdphost->operating_system_window()) : nullptr
+      };
+
+      for (auto hwnd : windows)
+      {
+
+         if (::IsWindow(hwnd))
+         {
+
+            ::SendMessageW(hwnd, WM_CANCELMODE, 0, 0);
+
+         }
+
+      }
 
    }
 
@@ -659,15 +683,29 @@ namespace remoting_rdx_client
 
             break;
          }
+         case WM_APP + 101:
+         {
+            if (!m_bIsClosing && m_strDisconnectMessage.has_character())
+            {
+               ::wstring message(m_strDisconnectMessage);
+               ::MessageBoxW(::as_HWND(operating_system_window()), message,
+                  L"Remote Desktop connection ended", MB_OK | MB_ICONERROR);
+               m_strDisconnectMessage.empty();
+            }
+            shutdown_rdp();
+            lresult = 0;
+            return true;
+         }
          case WM_CLOSE:
          {
             auto hwnd = ::as_HWND(this->operating_system_window());
             KillTimer(hwnd, 1453);
 
             shutdown_rdp();
+            lresult = 0;
+            return true;
 
          }
-            break;
          case WM_APP + 100:
          {
 
@@ -855,6 +893,15 @@ namespace remoting_rdx_client
 
       m_bIsClosing = true;
 
+      if (m_ptoolbar)
+      {
+
+         m_ptoolbar->m_bMouseEnable = false;
+         m_ptoolbar->UninstallMouseHook();
+         m_ptoolbar->show_window(::user_interface::e_show_window_hide);
+
+      }
+
       auto hwnd = ::as_HWND(this->operating_system_window());
 
       KillTimer(hwnd, 1453);
@@ -868,7 +915,8 @@ namespace remoting_rdx_client
 
       }
 
-      PostQuitMessage(0);
+      if (m_uClientThreadId)
+         ::PostThreadMessageW(m_uClientThreadId, WM_QUIT, 0, 0);
 
    }
 
@@ -884,7 +932,7 @@ namespace remoting_rdx_client
    bool main_window::on_window_create(::user::window_create_t * pwindowcreate)
    {
 
-      if (::acme::user::interaction::on_window_create(pwindowcreate))
+      if (!::acme::user::interaction::on_window_create(pwindowcreate))
       {
 
          return false;
@@ -1067,6 +1115,8 @@ namespace remoting_rdx_client
 
    //
       // auto hrConnect = m_pinternal->m_prdpclient->Connect();
+
+     return true;
 
    }
 

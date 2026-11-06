@@ -50,6 +50,8 @@ namespace remoting_rdx_client
       ~rdp_host() override;
 
 
+      void initialize(::particle* pparticle) override;
+
 
       ::i64 get_style_for_creating_window() override;
 
@@ -99,7 +101,7 @@ namespace remoting_rdx_client
       virtual void OnRdpConnecting();
       virtual void OnRdpConnected();
       virtual void OnRdpLoginComplete();
-      virtual void OnRdpDisconnected();
+      virtual void OnRdpDisconnected(::i32 reason);
       virtual void OnRdpEnterFullScreen();
       virtual void OnRdpLeaveFullScreen();
       virtual void OnRdpRequestGoFullScreen();

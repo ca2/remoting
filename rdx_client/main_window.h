@@ -54,6 +54,8 @@ namespace remoting_rdx_client
       ::pointer < toolbar > m_ptoolbar;
 
       bool m_bIsClosing;
+      ::u32 m_uClientThreadId = 0;
+      ::string m_strDisconnectMessage;
       bool m_bFullscreen;
       bool m_bFullscreenStored;
 
@@ -74,6 +76,8 @@ namespace remoting_rdx_client
       ~main_window() override;
 
 
+
+      ::i32_rectangle initial_frame_rectangle() override;
 
       ::i64 get_style_for_creating_window() override;
       ::i64 get_ex_style_for_creating_window() override;
