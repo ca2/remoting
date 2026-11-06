@@ -94,7 +94,7 @@ namespace remoting
       // Returns "prompt on fullscreen flag"
       bool isPromptOnFullscreenEnabled() const;
 
-      // Returns path to log file if file is avaliable to write,
+      // Returns path to log file if file is available to write,
       // returns NULL otherwise
       ::string getPathToLogFile() const;
 

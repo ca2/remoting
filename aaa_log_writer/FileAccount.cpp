@@ -135,7 +135,7 @@ void FileAccount::format(::u32 processId,
 {
   // FIXME: Remove windows dependence.
   // Format the timestamp.
-  ::string timeString("[Temporary unavaliable]");
+  ::string timeString("[Temporary unavailable]");
   SYSTEMTIME st;
   dt.toUtcSystemTime(&st);
   ::u8 logBarrier;
