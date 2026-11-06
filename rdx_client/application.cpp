@@ -107,7 +107,7 @@ namespace remoting_rdx_client
 
             pmessagebox->display(e_display_normal, {});
 
-            pmessagebox->wait_dialog_response();
+            pmessagebox->wait_for_dialog_response();
 
             set_finish();
 
@@ -133,7 +133,11 @@ namespace remoting_rdx_client
       else
       {
 
-         send_message_box("Usage: specify .remoting_rdx file to open", "No file specified");
+         auto pmessagebox = message_box("Usage: specify .remoting_rdx file to open", "No file specified");
+
+         pmessagebox->display(::e_display_normal, {});
+
+         pmessagebox->wait_for_dialog_response();
 
          set_finish();
 

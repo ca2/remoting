@@ -1537,7 +1537,7 @@ namespace remoting_rdx_client
 
       m_prdphost->onExitFullscreen();
 
-      m_ptoolbar->show_window(SW_HIDE);
+      m_ptoolbar->show_window(::user_interface::e_show_window_hide);
       m_ptoolbar ->m_bMouseEnable = false;
       m_ptoolbar->m_ehitHover = toolbar::e_hit_none;
       m_ptoolbar->m_ehitPress = toolbar::e_hit_none;
@@ -1545,7 +1545,7 @@ namespace remoting_rdx_client
 
       //set_window_style(WS_OVERLAPPEDWINDOW);
 
-      show_window(SW_SHOWNORMAL);
+      show_window(::user_interface::e_show_window_show_normal);
 
       auto r = get_client_rectangle();
 
@@ -1641,7 +1641,7 @@ namespace remoting_rdx_client
       if (is_window_iconic())
       {
 
-         show_window(SW_SHOWNORMAL);
+         show_window(::user_interface::e_show_window_show_normal);
 
       }
 
@@ -1658,7 +1658,7 @@ namespace remoting_rdx_client
 
       m_ptoolbar->m_bMouseEnable = true;
 
-      m_ptoolbar->show_window(SW_SHOW);
+      m_ptoolbar->show_window(::user_interface::e_show_window_show_normal);
 
       m_prdphost->onEnterFullscreen();
 

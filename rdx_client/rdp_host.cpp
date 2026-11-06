@@ -473,8 +473,7 @@ namespace remoting_rdx_client
    void rdp_host::shutdown_rdp()
    {
 
-
-      show_window(SW_HIDE);
+      show_window(::user_interface::e_show_window_hide);
 
       if (m_pinternal)
       {
