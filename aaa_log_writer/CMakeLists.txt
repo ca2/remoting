@@ -5,8 +5,8 @@ project(remoting_log_writer)
 
 
 list(APPEND library_source
-   framework.cpp
-   framework.h
+   platform.cpp
+   platform.h
    resource.h
    ProfileLogWriter.h
    ProfileLogWriter.cpp

@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../FileExistDialog.h"
-#include "../framework.h"
+#include "../platform.h"
 // #include "subsystem/platform/class ::time.h"
 #include "../resource.h"
 ////#include aaa_<crtdbg.h>

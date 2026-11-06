@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "FileLogWriter.h"
 
 FileLogWriter::FileLogWriter(const ::scoped_string & scopedstrLogDir, const ::scoped_string & scopedstrFileName,

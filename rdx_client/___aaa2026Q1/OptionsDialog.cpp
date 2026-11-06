@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "OptionsDialog.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "acme/constant/user_notification.h"
 // #include "remoting/remoting_rtc/remoting.h"
 #include "remoting/remoting_rtc/client_config/ConnectionConfig.h"

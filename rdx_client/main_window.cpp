@@ -1,7 +1,7 @@
 //
 // Created by camilo on 2026-05-25 11:38 <3ThomasBorregaardSørensen!!
 //
-#include "framework.h"
+#include "platform.h"
 #include "main_window.h"
 #include "rdp_host.h"
 #include "client_site.h"

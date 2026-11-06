@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "DesktopWindow.h"
 //#include "acme/operating_system/windows/geometry2d.h"
 #include "impact_toolbar.h"

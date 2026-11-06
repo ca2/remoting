@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "remoting/remoting_rtc_windows/desktop/WinDxCriticalException.h"
 #include "remoting/remoting_rtc_windows/desktop/WinDxRecoverableException.h"
 #include "subsystem/framebuffer/StandardPixelFormatFactory.h"

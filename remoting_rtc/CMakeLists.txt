@@ -410,8 +410,8 @@ list(APPEND library_source
    viewer_core/watermark_bmp.h
    _.cpp
    _.h
-   framework.cpp
-   framework.h
+   platform.cpp
+   platform.h
 )
 
 
@@ -513,14 +513,14 @@ list(APPEND library_include_directories
 
 add_library(${PROJECT_NAME} SHARED ${library_source})
 
-#target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
+#target_precompile_headers(${PROJECT_NAME} PRIVATE platform.h)
 
 
 
 if (NOT ${NO_PRECOMPILED_HEADER})
 
-   target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
-   #target_precompile_headers(static_${PROJECT_NAME} PRIVATE framework.h)
+   target_precompile_headers(${PROJECT_NAME} PRIVATE platform.h)
+   #target_precompile_headers(static_${PROJECT_NAME} PRIVATE platform.h)
    set_source_files_properties(region/x11region.c PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
 endif ()
 

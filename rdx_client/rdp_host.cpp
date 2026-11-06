@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "rdp_host.h"
 #include "main_window.h"
 #include "client_site.h"

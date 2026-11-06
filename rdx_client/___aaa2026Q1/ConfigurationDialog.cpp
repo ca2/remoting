@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../ConfigurationDialog.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "../remoting_impact.h"
 #include "../resource.h"
 #include "acme/filesystem/file/item.h"

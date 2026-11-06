@@ -1,7 +1,7 @@
 //
 // Created by camilo on 5/24/2026.
 //
-#include "framework.h"
+#include "platform.h"
 #include "main_rdp_host.h"
 
 

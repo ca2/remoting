@@ -1,7 +1,7 @@
 //
 // Created by camilo on 2026-02-12 02:03 <3ThomasBorregaardSørensen!!
 //
-#include "framework.h"
+#include "platform.h"
 #include "application.h"
 #include "Server.h"
 #include "ServerApplication.h"

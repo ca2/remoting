@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "ClipboardExchange.h"
 #include "remoting/remoting_rfb/rfb/MsgDefs.h"
 ////#include "subsystem/platform/::string.h"

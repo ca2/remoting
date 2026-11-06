@@ -63,8 +63,8 @@ list(APPEND library_source
    _.h
    application.cpp
    application.h
-   framework.cpp
-   framework.h
+   platform.cpp
+   platform.h
    impact_toolbar.cpp
    impact_toolbar.h
    keyboard_layout_change.cpp
@@ -121,8 +121,8 @@ add_library(${PROJECT_NAME} SHARED ${library_source})
 
 #target_link_directories(${PROJECT_NAME} PRIVATE ${executable_link_directories})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
-#target_precompile_headers(static_${PROJECT_NAME} PRIVATE framework.h)
+target_precompile_headers(${PROJECT_NAME} PRIVATE platform.h)
+#target_precompile_headers(static_${PROJECT_NAME} PRIVATE platform.h)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 

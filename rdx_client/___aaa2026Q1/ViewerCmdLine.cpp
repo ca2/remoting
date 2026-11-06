@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../ViewerCmdLine.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "remoting/remoting_rtc/config/IniFileSettingsManager.h"
 #include "subsystem/node/ProcessCommandLine.h"
 #include "subsystem/node/SystemException.h"

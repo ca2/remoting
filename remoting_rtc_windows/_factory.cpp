@@ -1,7 +1,7 @@
 //
 // Created by camilo on 2026-04-04.
 //
-#include "framework.h"
+#include "platform.h"
 #include "remoting/remoting_rtc_windows/desktop/DesktopWinImpl.h"
 #include "remoting/remoting_rtc_windows/desktop/Win32ScreenDriverFactory.h"
 #include "remoting/remoting_rtc_windows/desktop/WindowsInputBlocker.h"

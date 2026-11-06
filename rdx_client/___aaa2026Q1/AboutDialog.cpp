@@ -23,7 +23,7 @@
 //
 #include "../AboutDialog.h"
 #include "../BuildTime.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "../resource.h"
 #include "acme/filesystem/filesystem/file_context.h"
 #include "innate_subsystem/gui/Control.h"

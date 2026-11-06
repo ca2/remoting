@@ -23,7 +23,7 @@
 //
 #include "../ViewerCollector.h"
 #include "../ViewerInstance.h"
-#include "../framework.h"
+#include "../platform.h"
 // #include "subsystem/thread/lockable_critical_section.h"
 
 namespace remoting_client

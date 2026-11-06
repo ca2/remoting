@@ -239,7 +239,7 @@
     <ClCompile Include="_notify_drawing.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h" />
+    <ClInclude Include="platform.h" />
     <ClInclude Include="notify_drawing.h" />
     <ClInclude Include="notify_drawing_application.h" />
     <ClInclude Include="notify_drawing_document.h" />

@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../ViewerVncAuthHandler.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "AuthenticationDialog.h"
 //// #include aaa_<windows.h>
 //// #include aaa_<wincrypt.h>

@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "UpdateHandlerImpl.h"
 #include "acme/parallelization/happening.h"
 #include "subsystem/platform/Exception.h"

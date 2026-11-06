@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "ConfigDialog.h"
 #include "remoting/node_desktop/resource.h"
 #include "innate_subsystem/gui/Tab.h"

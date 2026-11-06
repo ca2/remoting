@@ -1,5 +1,5 @@
 // Created by camilo on 2026-05-21 15:35 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 #include "WindowsGraphicsCapture.h"
 #include "acme/operating_system/windows_common/com/hresult_exception.h"
 #include "D3D11Device.h"

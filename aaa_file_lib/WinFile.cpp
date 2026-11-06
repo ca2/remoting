@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "WinFile.h"
 #include "acme/operating_system/windows_common/_string.h"
 #include "remoting/win_system/SystemException.h"

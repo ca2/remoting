@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "subsystem/node/OperatingSystem.h"
 //#include "remoting/remoting_rtc/node_user_config/TvnLogFilename.h"
 #include "remoting/remoting_rtc/config/RegistrySettingsManager.h"

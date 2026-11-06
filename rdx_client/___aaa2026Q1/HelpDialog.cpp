@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../HelpDialog.h"
-#include "../framework.h"
+#include "../platform.h"
 
 #include "../resource.h"
 #include "subsystem/platform/ResourceLoader.h"

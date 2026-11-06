@@ -1,7 +1,7 @@
 //
 // Created by camilo on 2026-05-23 10:38 <3ThomasBorregaardSørensen!! Mummi!! Bilbo!!
 //
-#include "framework.h"
+#include "platform.h"
 #include "com_window.h"
 #include "in_place_frame.h"
 

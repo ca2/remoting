@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../FullscreenWarningDialog.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "innate_subsystem/gui/CheckBox.h"
 #include "remoting/client/remoting.h"
 #include "remoting/remoting_rtc/client_config/ViewerConfig.h"

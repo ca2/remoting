@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "remoting/remoting_rfb_macos/desktop/MacosInputBlocker.h"
 
 #include <unistd.h>

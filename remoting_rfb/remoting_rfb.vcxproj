@@ -233,7 +233,7 @@
     <ClCompile Include="framebuffer_update_sender\UpdSenderMsgDefs.cpp" />
     <ClCompile Include="framebuffer_update_sender\ViewPort.cpp" />
     <ClCompile Include="framebuffer_update_sender\ViewPortState.cpp" />
-    <ClCompile Include="framework.cpp">
+    <ClCompile Include="platform.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

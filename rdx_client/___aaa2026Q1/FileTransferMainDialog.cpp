@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../FileTransferMainDialog.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "acme/constant/user_key.h"
 #include "subsystem/_common_header.h"
 //#include "subsystem/platform/winhdr.h"

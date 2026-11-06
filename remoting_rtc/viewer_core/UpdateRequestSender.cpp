@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "UpdateRequestSender.h"
 // #include aaa_<thread/critical_section_lock.h>
 #include "RfbFramebufferUpdateRequestClientMessage.h"

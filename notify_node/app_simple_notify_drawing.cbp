@@ -225,10 +225,10 @@
 		<Unit filename="/home/camilo/solution/basis/source/app-simple/notify_drawing/application.h">
 			<Option target="remoting_notify_node"/>
 		</Unit>
-		<Unit filename="/home/camilo/solution/basis/source/app-simple/notify_drawing/framework.cpp">
+		<Unit filename="/home/camilo/solution/basis/source/app-simple/notify_drawing/platform.cpp">
 			<Option target="remoting_notify_node"/>
 		</Unit>
-		<Unit filename="/home/camilo/solution/basis/source/app-simple/notify_drawing/framework.h">
+		<Unit filename="/home/camilo/solution/basis/source/app-simple/notify_drawing/platform.h">
 			<Option target="remoting_notify_node"/>
 		</Unit>
 		<Unit filename="/home/camilo/solution/basis/source/app-simple/notify_drawing/impact.cpp">

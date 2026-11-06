@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../ViewerInstance.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "remoting/client/remoting.h"
 #include "remoting/remoting_rtc/viewer_core/FileTransferCapability.h"
 #include "remoting/remoting_rtc/viewer_core/RemoteViewerCore.h"

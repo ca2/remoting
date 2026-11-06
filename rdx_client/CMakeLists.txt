@@ -73,8 +73,8 @@ list(APPEND library_source
    com_window_thread.h
    event_sink.cpp
    event_sink.h
-   framework.cpp
-   framework.h
+   platform.cpp
+   platform.h
    in_place_frame.cpp
    in_place_frame.h
    in_place_site.cpp
@@ -152,8 +152,8 @@ add_library(${PROJECT_NAME} SHARED ${library_source})
 
 #target_link_directories(${PROJECT_NAME} PRIVATE ${executable_link_directories})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
-#target_precompile_headers(static_${PROJECT_NAME} PRIVATE framework.h)
+target_precompile_headers(${PROJECT_NAME} PRIVATE platform.h)
+#target_precompile_headers(static_${PROJECT_NAME} PRIVATE platform.h)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 

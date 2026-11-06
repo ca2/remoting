@@ -4,7 +4,7 @@
 #include "impact_toolbar.h"
 #include "DesktopWindow.h"
 #include "___aaa2026Q1/ViewerWindow.h"
-#include "framework.h"
+#include "platform.h"
 
 #include "innate_subsystem/drawing/Bitmap.h"
 #include "innate_subsystem/drawing/Font.h"

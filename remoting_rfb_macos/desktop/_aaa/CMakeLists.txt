@@ -6,8 +6,8 @@ project(remoting_desktop)
 
 
 list(APPEND library_source
-   framework.cpp
-   framework.h
+   platform.cpp
+   platform.h
    WinVideoRegionUpdaterImpl.h
    WinServiceDesktopFactory.h
    Poller.h

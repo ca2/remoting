@@ -1,7 +1,7 @@
 //
 // Created by camilo on 2026-04-04.
 //
-#include "framework.h"
+#include "platform.h"
 #include "remoting/remoting_rfb_macos/desktop/MacosUserInput.h"
 #include "remoting/remoting_rfb_macos/desktop/MacosInputBlocker.h"
 #include "remoting/remoting_rfb_macos/desktop/MacosScreenDriverFactory.h"

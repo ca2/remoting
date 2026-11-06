@@ -1,7 +1,7 @@
 //
 // Created by camilo on 2026-04-26 04:43 <3ThomasBorregaardSørensen!! Mummi!! bilbo!!
 //
-#include "framework.h"
+#include "platform.h"
 #include "ScreenDriverFactory.h"
 
 

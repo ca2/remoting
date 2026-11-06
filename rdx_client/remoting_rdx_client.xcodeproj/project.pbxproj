@@ -28,7 +28,7 @@
 		9A9A1FA72FB3E618002D39AB /* impact_toolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2602F816ED30047ECA2 /* impact_toolbar.h */; };
 		9A9A1FA82FB3E618002D39AB /* keyboard_layout_change.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2622F816ED30047ECA2 /* keyboard_layout_change.h */; };
 		9A9A1FA92FB3E618002D39AB /* FileExistDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2522F816ED30047ECA2 /* FileExistDialog.h */; };
-		9A9A1FAA2FB3E618002D39AB /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B25A2F816ED30047ECA2 /* framework.h */; };
+		9A9A1FAA2FB3E618002D39AB /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B25A2F816ED30047ECA2 /* platform.h */; };
 		9A9A1FAB2FB3E618002D39AB /* ViewerCmdLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2752F816EF70047ECA2 /* ViewerCmdLine.h */; };
 		9A9A1FAC2FB3E618002D39AB /* ScaleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2732F816EF70047ECA2 /* ScaleManager.h */; };
 		9A9A1FAD2FB3E618002D39AB /* DesktopWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A26B2502F816ED30047ECA2 /* DesktopWindow.h */; };
@@ -62,7 +62,7 @@
 		9A9A1FC92FB3E618002D39AB /* DesktopWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2512F816ED30047ECA2 /* DesktopWindow.cpp */; };
 		9A9A1FCA2FB3E618002D39AB /* keyboard_layout_change.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2632F816ED30047ECA2 /* keyboard_layout_change.cpp */; };
 		9A9A1FCB2FB3E618002D39AB /* ViewerVncAuthHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B27E2F816EF70047ECA2 /* ViewerVncAuthHandler.cpp */; };
-		9A9A1FCC2FB3E618002D39AB /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B25B2F816ED30047ECA2 /* framework.cpp */; };
+		9A9A1FCC2FB3E618002D39AB /* platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B25B2F816ED30047ECA2 /* platform.cpp */; };
 		9A9A1FCD2FB3E618002D39AB /* FileExistDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2532F816ED30047ECA2 /* FileExistDialog.cpp */; };
 		9A9A1FCE2FB3E618002D39AB /* _.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B23B2F816ED30047ECA2 /* _.cpp */; };
 		9A9A1FCF2FB3E618002D39AB /* FileInfoListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A26B2552F816ED30047ECA2 /* FileInfoListView.cpp */; };
@@ -132,8 +132,8 @@
 		9A26B2572F816ED30047ECA2 /* FileRenameDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileRenameDialog.cpp; sourceTree = "<group>"; };
 		9A26B2582F816ED30047ECA2 /* FileTransferMainDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileTransferMainDialog.h; sourceTree = "<group>"; };
 		9A26B2592F816ED30047ECA2 /* FileTransferMainDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileTransferMainDialog.cpp; sourceTree = "<group>"; };
-		9A26B25A2F816ED30047ECA2 /* framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
-		9A26B25B2F816ED30047ECA2 /* framework.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
+		9A26B25A2F816ED30047ECA2 /* platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
+		9A26B25B2F816ED30047ECA2 /* platform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cpp; sourceTree = "<group>"; };
 		9A26B25C2F816ED30047ECA2 /* FullscreenWarningDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FullscreenWarningDialog.h; sourceTree = "<group>"; };
 		9A26B25D2F816ED30047ECA2 /* FullscreenWarningDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FullscreenWarningDialog.cpp; sourceTree = "<group>"; };
 		9A26B25E2F816ED30047ECA2 /* HelpDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpDialog.h; sourceTree = "<group>"; };
@@ -256,8 +256,8 @@
 				9A26B2572F816ED30047ECA2 /* FileRenameDialog.cpp */,
 				9A26B2582F816ED30047ECA2 /* FileTransferMainDialog.h */,
 				9A26B2592F816ED30047ECA2 /* FileTransferMainDialog.cpp */,
-				9A26B25A2F816ED30047ECA2 /* framework.h */,
-				9A26B25B2F816ED30047ECA2 /* framework.cpp */,
+				9A26B25A2F816ED30047ECA2 /* platform.h */,
+				9A26B25B2F816ED30047ECA2 /* platform.cpp */,
 				9A26B25C2F816ED30047ECA2 /* FullscreenWarningDialog.h */,
 				9A26B25D2F816ED30047ECA2 /* FullscreenWarningDialog.cpp */,
 				9A26B25E2F816ED30047ECA2 /* HelpDialog.h */,
@@ -317,7 +317,7 @@
 				9A9A1FA72FB3E618002D39AB /* impact_toolbar.h in Headers */,
 				9A9A1FA82FB3E618002D39AB /* keyboard_layout_change.h in Headers */,
 				9A9A1FA92FB3E618002D39AB /* FileExistDialog.h in Headers */,
-				9A9A1FAA2FB3E618002D39AB /* framework.h in Headers */,
+				9A9A1FAA2FB3E618002D39AB /* platform.h in Headers */,
 				9A9A1FAB2FB3E618002D39AB /* ViewerCmdLine.h in Headers */,
 				9A9A1FAC2FB3E618002D39AB /* ScaleManager.h in Headers */,
 				9A9A1FAD2FB3E618002D39AB /* DesktopWindow.h in Headers */,
@@ -462,7 +462,7 @@
 				9A9A1FC92FB3E618002D39AB /* DesktopWindow.cpp in Sources */,
 				9A9A1FCA2FB3E618002D39AB /* keyboard_layout_change.cpp in Sources */,
 				9A9A1FCB2FB3E618002D39AB /* ViewerVncAuthHandler.cpp in Sources */,
-				9A9A1FCC2FB3E618002D39AB /* framework.cpp in Sources */,
+				9A9A1FCC2FB3E618002D39AB /* platform.cpp in Sources */,
 				9A9A1FCD2FB3E618002D39AB /* FileExistDialog.cpp in Sources */,
 				9A9A1FCE2FB3E618002D39AB /* _.cpp in Sources */,
 				9A9A1FCF2FB3E618002D39AB /* FileInfoListView.cpp in Sources */,
@@ -563,7 +563,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
+				GCC_PREFIX_HEADER = platform.h;
 				GCC_REUSE_STRINGS = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
@@ -689,7 +689,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
+				GCC_PREFIX_HEADER = platform.h;
 				GCC_REUSE_STRINGS = YES;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;

@@ -25,7 +25,7 @@
 //
 // TightPalette class implementation.
 //
-#include "framework.h"
+#include "platform.h"
 #include "TightPalette.h"
 
 namespace remoting_rfb

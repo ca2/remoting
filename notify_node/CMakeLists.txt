@@ -9,8 +9,8 @@ list(APPEND library_source
     #_factory.cpp
     application.cpp
     application.h
-    framework.cpp
-    framework.h
+    platform.cpp
+    platform.h
     main_frame.cpp
     main_frame.h
     impact.cpp
@@ -52,8 +52,8 @@ endif()
 
 
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
-target_precompile_headers(static_${PROJECT_NAME} PRIVATE framework.h)
+target_precompile_headers(${PROJECT_NAME} PRIVATE platform.h)
+target_precompile_headers(static_${PROJECT_NAME} PRIVATE platform.h)
 
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)

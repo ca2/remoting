@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../ViewerMenu.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "../resource.h"
 #include "innate_subsystem/platform/ResourceLoader.h"
 #include "innate_subsystem/platform/subsystem.h"

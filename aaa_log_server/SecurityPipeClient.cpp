@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "SecurityPipeClient.h"
 #include "remoting/io/DataInputStream.h"
 #include "remoting/io/DataOutputStream.h"

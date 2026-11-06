@@ -10,7 +10,7 @@
 		9A3614AD2FBA3636005F1383 /* AuthTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614762FBA3636005F1383 /* AuthTracker.cpp */; };
 		9A3614AE2FBA3636005F1383 /* RfbClientManagerEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614952FBA3636005F1383 /* RfbClientManagerEventListener.cpp */; };
 		9A3614AF2FBA3636005F1383 /* ServiceControlApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614A52FBA3636005F1383 /* ServiceControlApplication.cpp */; };
-		9A3614B02FBA3636005F1383 /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614882FBA3636005F1383 /* framework.cpp */; };
+		9A3614B02FBA3636005F1383 /* platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614882FBA3636005F1383 /* platform.cpp */; };
 		9A3614B12FBA3636005F1383 /* DesktopServerApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614802FBA3636005F1383 /* DesktopServerApplication.cpp */; };
 		9A3614B22FBA3636005F1383 /* RfbClientManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614932FBA3636005F1383 /* RfbClientManager.cpp */; };
 		9A3614B32FBA3636005F1383 /* EventLogWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3614842FBA3636005F1383 /* EventLogWriter.cpp */; };
@@ -67,7 +67,7 @@
 		9A3614E62FBA3636005F1383 /* application.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614722FBA3636005F1383 /* application.h */; };
 		9A3614E72FBA3636005F1383 /* ControlServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36147D2FBA3636005F1383 /* ControlServer.h */; };
 		9A3614E82FBA3636005F1383 /* ControlAppAuthenticator.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614792FBA3636005F1383 /* ControlAppAuthenticator.h */; };
-		9A3614E92FBA3636005F1383 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614872FBA3636005F1383 /* framework.h */; };
+		9A3614E92FBA3636005F1383 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614872FBA3636005F1383 /* platform.h */; };
 		9A3614EA2FBA3636005F1383 /* Server.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3614982FBA3636005F1383 /* Server.h */; };
 		9A3614EB2FBA3636005F1383 /* ServerApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A36149A2FBA3636005F1383 /* ServerApplication.h */; };
 		9A3614EE2FBA68CD005F1383 /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3614ED2FBA68CD005F1383 /* libacme.dylib */; };
@@ -186,8 +186,8 @@
 		9A3614842FBA3636005F1383 /* EventLogWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EventLogWriter.cpp; sourceTree = "<group>"; };
 		9A3614852FBA3636005F1383 /* ExtraRfbServers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtraRfbServers.h; sourceTree = "<group>"; };
 		9A3614862FBA3636005F1383 /* ExtraRfbServers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ExtraRfbServers.cpp; sourceTree = "<group>"; };
-		9A3614872FBA3636005F1383 /* framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
-		9A3614882FBA3636005F1383 /* framework.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
+		9A3614872FBA3636005F1383 /* platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
+		9A3614882FBA3636005F1383 /* platform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cpp; sourceTree = "<group>"; };
 		9A3614892FBA3636005F1383 /* LogInitListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInitListener.h; sourceTree = "<group>"; };
 		9A36148A2FBA3636005F1383 /* OutgoingRfbConnectionThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutgoingRfbConnectionThread.h; sourceTree = "<group>"; };
 		9A36148B2FBA3636005F1383 /* OutgoingRfbConnectionThread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OutgoingRfbConnectionThread.cpp; sourceTree = "<group>"; };
@@ -348,8 +348,8 @@
 				9A3614842FBA3636005F1383 /* EventLogWriter.cpp */,
 				9A3614852FBA3636005F1383 /* ExtraRfbServers.h */,
 				9A3614862FBA3636005F1383 /* ExtraRfbServers.cpp */,
-				9A3614872FBA3636005F1383 /* framework.h */,
-				9A3614882FBA3636005F1383 /* framework.cpp */,
+				9A3614872FBA3636005F1383 /* platform.h */,
+				9A3614882FBA3636005F1383 /* platform.cpp */,
 				9A3614892FBA3636005F1383 /* LogInitListener.h */,
 				9A36148A2FBA3636005F1383 /* OutgoingRfbConnectionThread.h */,
 				9A36148B2FBA3636005F1383 /* OutgoingRfbConnectionThread.cpp */,
@@ -570,7 +570,7 @@
 				9A3614E62FBA3636005F1383 /* application.h in Headers */,
 				9A3614E72FBA3636005F1383 /* ControlServer.h in Headers */,
 				9A3614E82FBA3636005F1383 /* ControlAppAuthenticator.h in Headers */,
-				9A3614E92FBA3636005F1383 /* framework.h in Headers */,
+				9A3614E92FBA3636005F1383 /* platform.h in Headers */,
 				9A3614EA2FBA3636005F1383 /* Server.h in Headers */,
 				9A3614EB2FBA3636005F1383 /* ServerApplication.h in Headers */,
 			);
@@ -680,7 +680,7 @@
 				9A3614AD2FBA3636005F1383 /* AuthTracker.cpp in Sources */,
 				9A3614AE2FBA3636005F1383 /* RfbClientManagerEventListener.cpp in Sources */,
 				9A3614AF2FBA3636005F1383 /* ServiceControlApplication.cpp in Sources */,
-				9A3614B02FBA3636005F1383 /* framework.cpp in Sources */,
+				9A3614B02FBA3636005F1383 /* platform.cpp in Sources */,
 				9A3614B12FBA3636005F1383 /* DesktopServerApplication.cpp in Sources */,
 				9A3614B22FBA3636005F1383 /* RfbClientManager.cpp in Sources */,
 				9A3614B32FBA3636005F1383 /* EventLogWriter.cpp in Sources */,
@@ -819,7 +819,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
+				GCC_PREFIX_HEADER = platform.h;
 				GCC_REUSE_STRINGS = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";
@@ -945,7 +945,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
+				GCC_PREFIX_HEADER = platform.h;
 				GCC_REUSE_STRINGS = YES;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;

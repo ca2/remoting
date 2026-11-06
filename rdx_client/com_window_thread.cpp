@@ -1,7 +1,7 @@
 //
 // Created by camilo on 2026-05-22 22:47 <3ThomasBorregaardSørensen!! Mummi!! Bilbo!!
 //
-#include "framework.h"
+#include "platform.h"
 // #include "com_window_thread.h"
 //
 //

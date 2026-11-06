@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../NewFolderDialog.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "../resource.h"
 // #include "remoting/remoting_rtc/remoting.h"
 

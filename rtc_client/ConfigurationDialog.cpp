@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "ConfigurationDialog.h"
 #include "remoting/remoting_rtc/client/NamingDefs.h"
 #include "remoting_impact.h"

@@ -1,7 +1,7 @@
 //
 // Created by camilo on 2026-02-11 23:18 <3ThomasBorregaardSørensen!!
 //
-#include "framework.h"
+#include "platform.h"
 #include "DesktopWindow.h"
 #include "ViewerWindow.h"
 #include "impact_toolbar.h"

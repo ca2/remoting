@@ -23,7 +23,7 @@
 //
 // From ConnectingDialog.cpp by
 // camilo on 2026-02-12 21:12 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 #include "ConnectingDialog.h"
 #include "resource.h"
 #include "acme/constant/id.h"

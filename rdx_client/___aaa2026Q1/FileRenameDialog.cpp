@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../FileRenameDialog.h"
-#include "../framework.h"
+#include "../platform.h"
 
 
 namespace remoting_client

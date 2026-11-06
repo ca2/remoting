@@ -23,7 +23,7 @@
 //
 #include "ControlTrayIcon.h"
 #include "../ResourceStrings.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "innate_subsystem/gui/Window.h"
 
 namespace remoting_client

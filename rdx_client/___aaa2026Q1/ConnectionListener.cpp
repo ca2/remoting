@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../ConnectionListener.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "../remoting_impact.h"
 
 // #include "subsystem/thread/lockable_critical_section.h"

@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "EventLogWriter.h"
 #include "remoting/remoting_rtc/event_log/EventLog.h"
 //#include "win-event-log/MessageProvider.h"

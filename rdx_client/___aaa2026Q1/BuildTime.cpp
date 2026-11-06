@@ -22,7 +22,7 @@
 //-------------------------------------------------------------------------
 //
 #include "../BuildTime.h"
-#include "../framework.h"
+#include "../platform.h"
 
 namespace remoting_client
 {

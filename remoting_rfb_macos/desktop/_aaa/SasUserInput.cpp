@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "SasUserInput.h"
 #include "subsystem/node/OperatingSystem.h"
 #include "subsystem_windows/node/WTS.h"

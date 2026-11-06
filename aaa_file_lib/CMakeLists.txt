@@ -5,8 +5,8 @@ project(remoting_file_lib)
 
 
 list(APPEND library_source
-   framework.cpp
-   framework.h
+   platform.cpp
+   platform.h
    EOFException.cpp
    WinFileChannel.h
    WinFile.cpp

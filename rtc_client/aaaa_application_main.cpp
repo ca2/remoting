@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "remoting/remoting_rtc/client_config/ViewerConfig.h"
 //#include "log_writer/LogWriter.h"
 #include "application.h"

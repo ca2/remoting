@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "FileTransferMessageProcessor.h"
 #include "remoting/remoting_rfb/file_transfer_common/FTMessage.h"
 

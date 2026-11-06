@@ -23,7 +23,7 @@
 //
 #include "LoginDialog.h"
 #include "../OptionsDialog.h"
-#include "../framework.h"
+#include "../platform.h"
 #include "acme/constant/lightui.h"
 #include "innate_subsystem/platform/subsystem.h"
 #include "remoting/client/remoting.h"

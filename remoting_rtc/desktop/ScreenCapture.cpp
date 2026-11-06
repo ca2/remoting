@@ -1,5 +1,5 @@
 // Created by camilo on 2026-05-21 16:20 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 #include "ScreenCapture.h"
 
 

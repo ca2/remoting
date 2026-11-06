@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "SocketIPv4Transport.h"
 #include "subsystem/socket/SocketIPv4.h"
 #include "subsystem/socket/SocketStream.h"

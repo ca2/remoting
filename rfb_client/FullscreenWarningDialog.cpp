@@ -21,7 +21,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //-------------------------------------------------------------------------
 //
-#include "framework.h"
+#include "platform.h"
 #include "FullscreenWarningDialog.h"
 #include "innate_subsystem/gui/CheckBox.h"
 #include "remoting/rfb_client/remoting.h"
